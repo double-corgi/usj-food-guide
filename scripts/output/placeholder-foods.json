@@ -1,0 +1,277 @@
+[
+  {
+    "foodId": "food-1jfqxy1",
+    "name": "ストロベリーチュリトス",
+    "category": "churro",
+    "price": 700,
+    "locations": [
+      {
+        "shopName": "エルモのイマジネーション・プレイランド前カート",
+        "areaName": "その他",
+        "price": 700,
+        "sourceUrl": "https://castel.jp/p/3101"
+      }
+    ],
+    "area": "その他",
+    "sourceUrl": "https://castel.jp/p/3101",
+    "reason": "no-image-candidate"
+  },
+  {
+    "foodId": "food-2wyk6o",
+    "name": "ドルチェ・チュリトス ~ティラミス~",
+    "category": "churro",
+    "price": 850,
+    "locations": [
+      {
+        "shopName": "フードカート",
+        "areaName": "その他",
+        "price": 850,
+        "sourceUrl": "https://castel.jp/p/3101"
+      }
+    ],
+    "area": "その他",
+    "sourceUrl": "https://castel.jp/p/3101",
+    "reason": "no-image-candidate"
+  },
+  {
+    "foodId": "food-5n9awi",
+    "name": "ソルティキャラメルチュリトス",
+    "category": "churro",
+    "price": 700,
+    "locations": [
+      {
+        "shopName": "フードカート",
+        "areaName": "その他",
+        "price": 700,
+        "sourceUrl": "https://castel.jp/p/3101"
+      }
+    ],
+    "area": "その他",
+    "sourceUrl": "https://castel.jp/p/3101",
+    "reason": "no-image-candidate"
+  },
+  {
+    "foodId": "food-ogc1ha",
+    "name": "チョコ&クッキーチュリトス",
+    "category": "churro",
+    "price": 650,
+    "locations": [
+      {
+        "shopName": "フードカート",
+        "areaName": "その他",
+        "price": 650,
+        "sourceUrl": "https://castel.jp/p/3101"
+      }
+    ],
+    "area": "その他",
+    "sourceUrl": "https://castel.jp/p/3101",
+    "reason": "no-image-candidate"
+  },
+  {
+    "foodId": "food-12vork6",
+    "name": "シナモン・チュリトス",
+    "category": "churro",
+    "price": 550,
+    "locations": [
+      {
+        "shopName": "フードカート",
+        "areaName": "その他",
+        "price": 550,
+        "sourceUrl": "https://castel.jp/p/3101"
+      }
+    ],
+    "area": "その他",
+    "sourceUrl": "https://castel.jp/p/3101",
+    "reason": "no-image-candidate"
+  },
+  {
+    "foodId": "food-m0djrd",
+    "name": "ココア&クッキー・チュリトス",
+    "category": "churro",
+    "price": 600,
+    "locations": [
+      {
+        "shopName": "フードカート",
+        "areaName": "その他",
+        "price": 600,
+        "sourceUrl": "https://castel.jp/p/3101"
+      }
+    ],
+    "area": "その他",
+    "sourceUrl": "https://castel.jp/p/3101",
+    "reason": "no-image-candidate"
+  },
+  {
+    "foodId": "food-1qhfvst",
+    "name": "デクの \"ワン・フォー・オール\" チョコレート・チュリトス ~ピスタチオ~",
+    "category": "churro",
+    "price": 700,
+    "locations": [
+      {
+        "shopName": "シネマ 4-D ストア前フードカート",
+        "areaName": "その他",
+        "price": 700,
+        "sourceUrl": "https://castel.jp/p/3101"
+      }
+    ],
+    "area": "その他",
+    "sourceUrl": "https://castel.jp/p/3101",
+    "reason": "no-image-candidate"
+  },
+  {
+    "foodId": "food-eihk29",
+    "name": "極秘修行中!?虎杖チュリトス〜コーラフレーバ〜",
+    "category": "churro",
+    "price": 650,
+    "locations": [
+      {
+        "shopName": "フードカート",
+        "areaName": "その他",
+        "price": 650,
+        "sourceUrl": "https://castel.jp/p/3101"
+      }
+    ],
+    "area": "その他",
+    "sourceUrl": "https://castel.jp/p/3101",
+    "reason": "no-image-candidate"
+  },
+  {
+    "foodId": "food-pe8zd1",
+    "name": "プーギーチュリトス〜ピーチ〜",
+    "category": "churro",
+    "price": 600,
+    "locations": [
+      {
+        "shopName": "モンスターハンター・フードカート(カリフォルニアコンフェクショナリー前)",
+        "areaName": "その他",
+        "price": 600,
+        "sourceUrl": "https://castel.jp/p/3101"
+      }
+    ],
+    "area": "その他",
+    "sourceUrl": "https://castel.jp/p/3101",
+    "reason": "no-image-candidate"
+  },
+  {
+    "foodId": "food-1yvvf8m",
+    "name": "クリスマス・チョコ・チュリトス",
+    "category": "churro",
+    "price": 600,
+    "locations": [
+      {
+        "shopName": "ウォーターワールド入口前カート",
+        "areaName": "その他",
+        "price": 600,
+        "sourceUrl": "https://castel.jp/p/3101"
+      },
+      {
+        "shopName": "ワンダーランド入口前カート",
+        "areaName": "その他",
+        "price": 600,
+        "sourceUrl": "https://castel.jp/p/3101"
+      }
+    ],
+    "area": "その他",
+    "sourceUrl": "https://castel.jp/p/3101",
+    "reason": "no-image-candidate"
+  },
+  {
+    "foodId": "food-o4pm0y",
+    "name": "チョコ&クッキー・チュリトス",
+    "category": "churro",
+    "price": 550,
+    "locations": [
+      {
+        "shopName": "ハンギングジョーズ前フードカート",
+        "areaName": "その他",
+        "price": 550,
+        "sourceUrl": "https://castel.jp/p/3101"
+      }
+    ],
+    "area": "その他",
+    "sourceUrl": "https://castel.jp/p/3101",
+    "reason": "no-image-candidate"
+  },
+  {
+    "foodId": "food-1tbvv8s",
+    "name": "スパイダーマン・チュリトス~ラズベリー~",
+    "category": "churro",
+    "price": 600,
+    "locations": [
+      {
+        "shopName": "スパイダーマン前カート",
+        "areaName": "その他",
+        "price": 600,
+        "sourceUrl": "https://castel.jp/p/3101"
+      }
+    ],
+    "area": "その他",
+    "sourceUrl": "https://castel.jp/p/3101",
+    "reason": "no-image-candidate"
+  },
+  {
+    "foodId": "food-1okawno",
+    "name": "おさるのジョージ・チュリトス",
+    "category": "churro",
+    "price": 600,
+    "locations": [
+      {
+        "shopName": "プレイングウィズおさるのジョージ前カート",
+        "areaName": "その他",
+        "price": 600,
+        "sourceUrl": "https://castel.jp/p/3101"
+      }
+    ],
+    "area": "その他",
+    "sourceUrl": "https://castel.jp/p/3101",
+    "reason": "no-image-candidate"
+  },
+  {
+    "foodId": "food-turqm3",
+    "name": "ドリンク",
+    "category": "drink",
+    "price": null,
+    "locations": [
+      {
+        "shopName": "高級レストラン",
+        "areaName": "サンフランシスコ・エリア",
+        "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/events/universal-cool-japan-2026/conan/restaurant/index.html"
+      }
+    ],
+    "area": "サンフランシスコ・エリア",
+    "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/events/universal-cool-japan-2026/conan/restaurant/index.html",
+    "reason": "ambiguous-tcm-component-multiple-products"
+  },
+  {
+    "foodId": "food-12eyica",
+    "name": "スペシャルドリンク&コースターセット",
+    "category": "set",
+    "price": null,
+    "locations": [
+      {
+        "shopName": "高級レストラン",
+        "areaName": "サンフランシスコ・エリア",
+        "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/events/universal-cool-japan-2026/conan/restaurant/index.html"
+      }
+    ],
+    "area": "サンフランシスコ・エリア",
+    "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/events/universal-cool-japan-2026/conan/restaurant/index.html",
+    "reason": "ambiguous-tcm-component-multiple-products"
+  },
+  {
+    "foodId": "food-1suwi8c",
+    "name": "スペシャル・ケーキ",
+    "category": "dessert",
+    "price": null,
+    "locations": [
+      {
+        "shopName": "マリオカート",
+        "areaName": "スーパー・ニンテンドー・ワールド",
+        "sourceUrl": "https://www.usj.co.jp/company/news/2026/0318/"
+      }
+    ],
+    "area": "スーパー・ニンテンドー・ワールド",
+    "sourceUrl": "https://www.usj.co.jp/company/news/2026/0318/",
+    "reason": "no-image-candidate"
+  }
+]

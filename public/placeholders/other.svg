@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" role="img" aria-label="その他 placeholder">
+  <rect width="800" height="600" fill="#f8fafc"/>
+  <rect x="220" y="170" width="360" height="260" rx="42" fill="#cbd5e1"/>
+  <circle cx="340" cy="300" r="45" fill="#0f766e"/>
+  <circle cx="460" cy="300" r="45" fill="#d9466a"/>
+  <text x="400" y="545" text-anchor="middle" font-family="sans-serif" font-size="42" fill="#334155">Food</text>
+</svg>

@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" role="img" aria-label="季節限定 placeholder">
+  <rect width="800" height="600" fill="#f5f3ff"/>
+  <path d="M400 110l50 130 140 10-108 88 34 137-116-75-116 75 34-137-108-88 140-10z" fill="#d9466a"/>
+  <circle cx="400" cy="306" r="76" fill="#fde68a"/>
+  <text x="400" y="545" text-anchor="middle" font-family="sans-serif" font-size="42" fill="#831843">Limited</text>
+</svg>

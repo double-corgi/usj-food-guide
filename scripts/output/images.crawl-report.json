@@ -1,0 +1,59 @@
+{
+  "mode": "all",
+  "generatedAt": "2026-05-29T08:10:08.143Z",
+  "targets": 26,
+  "attached": 1,
+  "pruned": 0,
+  "watermarkExcluded": 4,
+  "rebalancedSharedRepresentatives": 1,
+  "before": {
+    "visible": 171,
+    "verified": 145,
+    "placeholders": 26,
+    "verifiedByCategory": {
+      "noodle": 3,
+      "burger": 23,
+      "dessert": 31,
+      "chicken": 12,
+      "drink": 21,
+      "kids": 15,
+      "set": 12,
+      "rice": 7,
+      "pizza": 9,
+      "churro": 5,
+      "popcorn": 5,
+      "unknown": 1,
+      "snack": 1
+    },
+    "placeholdersByCategory": {
+      "churro": 24,
+      "drink": 1,
+      "dessert": 1
+    }
+  },
+  "after": {
+    "visible": 171,
+    "verified": 146,
+    "placeholders": 25,
+    "verifiedByCategory": {
+      "noodle": 3,
+      "burger": 23,
+      "dessert": 31,
+      "chicken": 12,
+      "drink": 22,
+      "kids": 15,
+      "set": 12,
+      "rice": 7,
+      "pizza": 9,
+      "churro": 5,
+      "popcorn": 5,
+      "unknown": 1,
+      "snack": 1
+    },
+    "placeholdersByCategory": {
+      "churro": 24,
+      "dessert": 1
+    }
+  },
+  "errors": []
+}

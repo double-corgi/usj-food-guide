@@ -1,0 +1,315 @@
+{
+  "generatedAt": "2026-06-01T07:12:25.282Z",
+  "datasetGeneratedAt": "2026-05-31T12:23:38.388Z",
+  "summary": {
+    "foods": 200,
+    "images": 200,
+    "placeholders": 0,
+    "priceKnown": 192,
+    "priceUnknown": 8,
+    "priceRate": "96%",
+    "uneatenRateSharedBaseline": "100%",
+    "uneatenRateNote": "食べた記録は端末localStorage基準のため、共有DB上の未食率は初期ユーザー基準で算出しています。"
+  },
+  "categoryDistribution": {
+    "dessert": {
+      "total": 39,
+      "share": "19.5%"
+    },
+    "drink": {
+      "total": 26,
+      "share": "13%"
+    },
+    "burger": {
+      "total": 25,
+      "share": "12.5%"
+    },
+    "set": {
+      "total": 21,
+      "share": "10.5%"
+    },
+    "churro": {
+      "total": 20,
+      "share": "10%"
+    },
+    "kids": {
+      "total": 15,
+      "share": "7.5%"
+    },
+    "chicken": {
+      "total": 13,
+      "share": "6.5%"
+    },
+    "rice": {
+      "total": 13,
+      "share": "6.5%"
+    },
+    "pizza": {
+      "total": 12,
+      "share": "6%"
+    },
+    "noodle": {
+      "total": 6,
+      "share": "3%"
+    },
+    "popcorn": {
+      "total": 5,
+      "share": "2.5%"
+    },
+    "snack": {
+      "total": 5,
+      "share": "2.5%"
+    }
+  },
+  "areaDistribution": {
+    "スーパー・ニンテンドー・ワールド": {
+      "total": 32,
+      "share": "16%"
+    },
+    "ハリウッド・エリア": {
+      "total": 32,
+      "share": "16%"
+    },
+    "ジュラシック・パーク": {
+      "total": 26,
+      "share": "13%"
+    },
+    "ニューヨーク・エリア": {
+      "total": 21,
+      "share": "10.5%"
+    },
+    "その他": {
+      "total": 20,
+      "share": "10%"
+    },
+    "サンフランシスコ・エリア": {
+      "total": 19,
+      "share": "9.5%"
+    },
+    "アミティ・ビレッジ": {
+      "total": 17,
+      "share": "8.5%"
+    },
+    "ユニバーサル・ワンダーランド": {
+      "total": 13,
+      "share": "6.5%"
+    },
+    "ウィザーディング・ワールド・オブ・ハリー・ポッター": {
+      "total": 12,
+      "share": "6%"
+    },
+    "パーク内各レストラン": {
+      "total": 4,
+      "share": "2%"
+    },
+    "ミニオン・パーク": {
+      "total": 4,
+      "share": "2%"
+    }
+  },
+  "priceSourceDistribution": {
+    "trusted_report": 120,
+    "official": 69,
+    "unknown": 8,
+    "menu_photo": 1,
+    "social_report": 2
+  },
+  "priceByCategory": {
+    "drink": {
+      "total": 26,
+      "known": 24,
+      "unknown": 2,
+      "rate": "92.3%"
+    },
+    "chicken": {
+      "total": 13,
+      "known": 12,
+      "unknown": 1,
+      "rate": "92.3%"
+    },
+    "dessert": {
+      "total": 39,
+      "known": 37,
+      "unknown": 2,
+      "rate": "94.9%"
+    },
+    "churro": {
+      "total": 20,
+      "known": 19,
+      "unknown": 1,
+      "rate": "95%"
+    },
+    "set": {
+      "total": 21,
+      "known": 20,
+      "unknown": 1,
+      "rate": "95.2%"
+    },
+    "burger": {
+      "total": 25,
+      "known": 24,
+      "unknown": 1,
+      "rate": "96%"
+    },
+    "kids": {
+      "total": 15,
+      "known": 15,
+      "unknown": 0,
+      "rate": "100%"
+    },
+    "noodle": {
+      "total": 6,
+      "known": 6,
+      "unknown": 0,
+      "rate": "100%"
+    },
+    "pizza": {
+      "total": 12,
+      "known": 12,
+      "unknown": 0,
+      "rate": "100%"
+    },
+    "popcorn": {
+      "total": 5,
+      "known": 5,
+      "unknown": 0,
+      "rate": "100%"
+    },
+    "rice": {
+      "total": 13,
+      "known": 13,
+      "unknown": 0,
+      "rate": "100%"
+    },
+    "snack": {
+      "total": 5,
+      "known": 5,
+      "unknown": 0,
+      "rate": "100%"
+    }
+  },
+  "priceByArea": {
+    "ミニオン・パーク": {
+      "total": 4,
+      "known": 3,
+      "unknown": 1,
+      "rate": "75%"
+    },
+    "サンフランシスコ・エリア": {
+      "total": 19,
+      "known": 17,
+      "unknown": 2,
+      "rate": "89.5%"
+    },
+    "ユニバーサル・ワンダーランド": {
+      "total": 13,
+      "known": 12,
+      "unknown": 1,
+      "rate": "92.3%"
+    },
+    "スーパー・ニンテンドー・ワールド": {
+      "total": 32,
+      "known": 30,
+      "unknown": 2,
+      "rate": "93.8%"
+    },
+    "ニューヨーク・エリア": {
+      "total": 21,
+      "known": 20,
+      "unknown": 1,
+      "rate": "95.2%"
+    },
+    "ジュラシック・パーク": {
+      "total": 26,
+      "known": 25,
+      "unknown": 1,
+      "rate": "96.2%"
+    },
+    "アミティ・ビレッジ": {
+      "total": 17,
+      "known": 17,
+      "unknown": 0,
+      "rate": "100%"
+    },
+    "ウィザーディング・ワールド・オブ・ハリー・ポッター": {
+      "total": 12,
+      "known": 12,
+      "unknown": 0,
+      "rate": "100%"
+    },
+    "その他": {
+      "total": 20,
+      "known": 20,
+      "unknown": 0,
+      "rate": "100%"
+    },
+    "パーク内各レストラン": {
+      "total": 4,
+      "known": 4,
+      "unknown": 0,
+      "rate": "100%"
+    },
+    "ハリウッド・エリア": {
+      "total": 32,
+      "known": 32,
+      "unknown": 0,
+      "rate": "100%"
+    }
+  },
+  "priceUnknownByCategory": {
+    "dessert": {
+      "total": 2,
+      "share": "25%"
+    },
+    "drink": {
+      "total": 2,
+      "share": "25%"
+    },
+    "burger": {
+      "total": 1,
+      "share": "12.5%"
+    },
+    "chicken": {
+      "total": 1,
+      "share": "12.5%"
+    },
+    "churro": {
+      "total": 1,
+      "share": "12.5%"
+    },
+    "set": {
+      "total": 1,
+      "share": "12.5%"
+    }
+  },
+  "priceUnknownByArea": {
+    "サンフランシスコ・エリア": {
+      "total": 2,
+      "share": "25%"
+    },
+    "スーパー・ニンテンドー・ワールド": {
+      "total": 2,
+      "share": "25%"
+    },
+    "ジュラシック・パーク": {
+      "total": 1,
+      "share": "12.5%"
+    },
+    "ニューヨーク・エリア": {
+      "total": 1,
+      "share": "12.5%"
+    },
+    "ミニオン・パーク": {
+      "total": 1,
+      "share": "12.5%"
+    },
+    "ユニバーサル・ワンダーランド": {
+      "total": 1,
+      "share": "12.5%"
+    }
+  },
+  "imageSourceDistribution": {
+    "official": 151,
+    "other": 49
+  }
+}

@@ -1,0 +1,112 @@
+{
+  "generatedAt": "2026-05-29T11:21:29.584Z",
+  "before": {
+    "generatedFoods": 309,
+    "visibleFoods": 200,
+    "withImages": 200,
+    "placeholders": 0,
+    "placeholderNames": [],
+    "visibleChurros": 20
+  },
+  "after": {
+    "generatedFoods": 309,
+    "visibleFoods": 200,
+    "withImages": 200,
+    "placeholders": 0,
+    "placeholderNames": [],
+    "visibleChurros": 20
+  },
+  "placeholderReductionFromImmediateBaseline": 0,
+  "adoptedImages": [],
+  "restoredFoods": [],
+  "appendedFoods": [],
+  "statusRestoredFoods": [
+    {
+      "id": "food-1qcrkg3",
+      "name": "アイスクリーム スチュアート・バケツ スプーン",
+      "previousStatus": "ended",
+      "status": "active"
+    },
+    {
+      "id": "food-xagefj",
+      "name": "ピッツァ・デニッシュセット~ツナマヨ&サクラエビ~",
+      "previousStatus": "ended",
+      "status": "active"
+    },
+    {
+      "id": "food-1rsazo8",
+      "name": "ピッツァ・デニッシュセット ~照り焼きチキン~",
+      "previousStatus": "ended",
+      "status": "active"
+    },
+    {
+      "id": "food-1wc5ggu",
+      "name": "DK クラッシュサンデー ~トロピカルバナナ・フレーバー~ マグカップ付き",
+      "previousStatus": "ended",
+      "status": "active"
+    },
+    {
+      "id": "food-1tt1au7",
+      "name": "アメリカン・ホットドッグ",
+      "previousStatus": "ended",
+      "status": "active"
+    },
+    {
+      "id": "food-1tt4lsm",
+      "name": "蝶ネクタイ型サンドウィッチ ボックス",
+      "previousStatus": "ended",
+      "status": "active"
+    },
+    {
+      "id": "food-6vmlhh",
+      "name": "フルーツサングリアティー&シェリービネガー(アイス/ホット)",
+      "previousStatus": "ended",
+      "status": "active"
+    },
+    {
+      "id": "food-yf0vco",
+      "name": "フリーレンのビーフプレート ~赤ワイン香るデミグラスソース~",
+      "previousStatus": "ended",
+      "status": "active"
+    },
+    {
+      "id": "food-mioln1",
+      "name": "ヒンメルのオムレツプレート",
+      "previousStatus": "ended",
+      "status": "active"
+    },
+    {
+      "id": "food-1u1wwri",
+      "name": "アイゼン&ハイターのハンバーグとフィッシュ&チップスプレート",
+      "previousStatus": "ended",
+      "status": "active"
+    },
+    {
+      "id": "food-xitytu",
+      "name": "たのしい旅の宝箱 キッズセット",
+      "previousStatus": "ended",
+      "status": "active"
+    },
+    {
+      "id": "food-13ex3cf",
+      "name": "花香る フリーレンのホワイトソーダ(フリーレンコースター付)",
+      "previousStatus": "ended",
+      "status": "active"
+    },
+    {
+      "id": "food-1rhhv0e",
+      "name": "シュタルクのショコラ&ラズベリーケーキ",
+      "previousStatus": "ended",
+      "status": "active"
+    },
+    {
+      "id": "food-1fmms6w",
+      "name": "フェルンのチェリー&ブルーベリーパフェ(蝶のスプーン付)",
+      "previousStatus": "ended",
+      "status": "active"
+    }
+  ],
+  "imageRegressions": 0,
+  "regressions": [],
+  "remainingPlaceholders": []
+}

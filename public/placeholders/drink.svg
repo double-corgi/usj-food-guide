@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" role="img" aria-label="ドリンク placeholder">
+  <rect width="800" height="600" fill="#ecfeff"/>
+  <path d="M290 150h220l-34 335H324z" fill="#38bdf8"/>
+  <path d="M310 190h180l-28 270H338z" fill="#f0fdfa"/>
+  <path d="M430 115l85-70" stroke="#0f766e" stroke-width="22" stroke-linecap="round"/>
+  <circle cx="515" cy="45" r="30" fill="#fb7185"/>
+  <text x="400" y="545" text-anchor="middle" font-family="sans-serif" font-size="42" fill="#155e75">Drink</text>
+</svg>

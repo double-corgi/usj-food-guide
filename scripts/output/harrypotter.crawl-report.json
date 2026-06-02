@@ -1,0 +1,208 @@
+{
+  "mode": "harrypotter",
+  "category": "seasonal",
+  "generatedAt": "2026-05-28T04:43:34.784Z",
+  "targetedPagesCrawled": 4,
+  "targetedFoodsFound": 0,
+  "targetedErrors": 8,
+  "requiredSourceCoverage": [
+    {
+      "url": "https://www.usj.co.jp/web/ja/jp/restaurants",
+      "fetched": true,
+      "sourceNames": [
+        "official-restaurants"
+      ],
+      "extractedFoods": 0
+    },
+    {
+      "url": "https://www.usj.co.jp/web/ja/jp/restaurants/food-cart",
+      "fetched": true,
+      "sourceNames": [
+        "official-food-carts"
+      ],
+      "extractedFoods": 48
+    },
+    {
+      "url": "https://www.usj.co.jp/web/ja/jp/restaurants/seasonal-food",
+      "fetched": true,
+      "sourceNames": [
+        "official-seasonal-food"
+      ],
+      "extractedFoods": 15
+    },
+    {
+      "url": "https://www.usj.co.jp/web/ja/jp/restaurants/super-nintendo-world-food",
+      "fetched": true,
+      "sourceNames": [
+        "official-food-carts"
+      ],
+      "extractedFoods": 5
+    },
+    {
+      "url": "https://www.usj.co.jp/web/ja/jp/restaurants/the-wizarding-world-of-harry-potter-food",
+      "fetched": true,
+      "sourceNames": [
+        "official-area-harry-potter-food"
+      ],
+      "extractedFoods": 3
+    },
+    {
+      "url": "https://www.usj.co.jp/web/ja/jp/restaurants/minion-food",
+      "fetched": false,
+      "sourceNames": [],
+      "extractedFoods": 3
+    },
+    {
+      "url": "https://castel.jp/p/3101",
+      "fetched": false,
+      "sourceNames": [],
+      "extractedFoods": 0
+    }
+  ],
+  "totalCandidates": 8,
+  "categoryCandidates": 8,
+  "visible": 7,
+  "pending": 1,
+  "verifiedImages": 7,
+  "placeholders": 0,
+  "candidates": [
+    {
+      "id": "food-up3lba",
+      "name": "ローストビーフ",
+      "category": "chicken",
+      "reviewStatus": "approved",
+      "displayQuality": "high",
+      "canonicalFood": true,
+      "hidden": false,
+      "confidenceScore": 100,
+      "nameQualityScore": 90,
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/the-wizarding-world-of-harry-potter-food/index.html",
+      "shop": "店舗未確認",
+      "area": "その他",
+      "imageVerified": true,
+      "imageMatchScore": 96,
+      "rejectionReasons": []
+    },
+    {
+      "id": "food-2qri4c",
+      "name": "ロティサリー・スモークチキン&シェパーズパイ",
+      "category": "dessert",
+      "reviewStatus": "approved",
+      "displayQuality": "high",
+      "canonicalFood": true,
+      "hidden": false,
+      "confidenceScore": 100,
+      "nameQualityScore": 100,
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/three-broomsticks/index.html",
+      "shop": "三本の箒",
+      "area": "ウィザーディング・ワールド・オブ・ハリー・ポッター",
+      "imageVerified": true,
+      "imageMatchScore": 96,
+      "rejectionReasons": []
+    },
+    {
+      "id": "food-1dm0ouy",
+      "name": "ポークリブ",
+      "category": "chicken",
+      "reviewStatus": "approved",
+      "displayQuality": "high",
+      "canonicalFood": true,
+      "hidden": false,
+      "confidenceScore": 100,
+      "nameQualityScore": 90,
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/three-broomsticks/index.html",
+      "shop": "三本の箒",
+      "area": "ウィザーディング・ワールド・オブ・ハリー・ポッター",
+      "imageVerified": true,
+      "imageMatchScore": 96,
+      "rejectionReasons": []
+    },
+    {
+      "id": "food-1m8i41b",
+      "name": "バタービールTM・シュークリーム",
+      "category": "dessert",
+      "reviewStatus": "approved",
+      "displayQuality": "high",
+      "canonicalFood": true,
+      "hidden": false,
+      "confidenceScore": 100,
+      "nameQualityScore": 90,
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/seasonal-food/index.html",
+      "shop": "店舗未確認",
+      "area": "その他",
+      "imageVerified": true,
+      "imageMatchScore": 96,
+      "rejectionReasons": []
+    },
+    {
+      "id": "food-1k9ohlg",
+      "name": "バタービールTM各種",
+      "category": "drink",
+      "reviewStatus": "approved",
+      "displayQuality": "high",
+      "canonicalFood": true,
+      "hidden": false,
+      "confidenceScore": 100,
+      "nameQualityScore": 90,
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/three-broomsticks/index.html",
+      "shop": "三本の箒",
+      "area": "ウィザーディング・ワールド・オブ・ハリー・ポッター",
+      "imageVerified": true,
+      "imageMatchScore": 96,
+      "rejectionReasons": []
+    },
+    {
+      "id": "food-16q65hw",
+      "name": "バタービールTM・プディング",
+      "category": "dessert",
+      "reviewStatus": "approved",
+      "displayQuality": "high",
+      "canonicalFood": true,
+      "hidden": false,
+      "confidenceScore": 100,
+      "nameQualityScore": 90,
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/three-broomsticks/index.html",
+      "shop": "三本の箒",
+      "area": "ウィザーディング・ワールド・オブ・ハリー・ポッター",
+      "imageVerified": true,
+      "imageMatchScore": 96,
+      "rejectionReasons": []
+    },
+    {
+      "id": "food-k2clec",
+      "name": "ホッグズ・ヘッド・ビール ~マグカップ付~",
+      "category": "drink",
+      "reviewStatus": "approved",
+      "displayQuality": "high",
+      "canonicalFood": true,
+      "hidden": false,
+      "confidenceScore": 100,
+      "nameQualityScore": 95,
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/hogs-head/index.html",
+      "shop": "店舗未確認",
+      "area": "その他",
+      "imageVerified": true,
+      "imageMatchScore": 96,
+      "rejectionReasons": []
+    },
+    {
+      "id": "food-1wt0o9t",
+      "name": "バタービールTMカート",
+      "category": "drink",
+      "reviewStatus": "pending",
+      "displayQuality": "low",
+      "canonicalFood": false,
+      "hidden": false,
+      "confidenceScore": 50,
+      "nameQualityScore": 90,
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/the-wizarding-world-of-harry-potter-food/index.html",
+      "shop": "店舗未確認",
+      "area": "その他",
+      "imageVerified": false,
+      "imageMatchScore": 0,
+      "rejectionReasons": [
+        "shop-name-only"
+      ]
+    }
+  ]
+}

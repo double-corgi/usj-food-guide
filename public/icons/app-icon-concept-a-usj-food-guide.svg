@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024" role="img" aria-label="USJフード攻略 アイコン案A">
+  <defs>
+    <linearGradient id="bgA" x1="150" y1="80" x2="900" y2="940" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#101827"/>
+      <stop offset="0.52" stop-color="#087f72"/>
+      <stop offset="1" stop-color="#f3b233"/>
+    </linearGradient>
+    <radialGradient id="glowA" cx="50%" cy="42%" r="58%">
+      <stop stop-color="#ffffff" stop-opacity="0.32"/>
+      <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1024" height="1024" rx="220" fill="url(#bgA)"/>
+  <rect width="1024" height="1024" rx="220" fill="url(#glowA)"/>
+  <circle cx="512" cy="446" r="268" fill="none" stroke="#fff" stroke-width="34" opacity="0.92"/>
+  <path d="M244 446h536M512 178c88 82 136 172 136 268s-48 186-136 268M512 178c-88 82-136 172-136 268s48 186 136 268" fill="none" stroke="#fff" stroke-width="26" stroke-linecap="round" opacity="0.82"/>
+  <path d="M374 724c48-92 228-92 276 0l-36 122H410l-36-122Z" fill="#fff"/>
+  <path d="M382 316h260c36 0 66 30 66 66v112c0 91-73 164-164 164h-64c-91 0-164-73-164-164V382c0-36 30-66 66-66Z" fill="#fff" opacity="0.96"/>
+  <path d="M400 400h224M400 480h224" stroke="#087f72" stroke-width="28" stroke-linecap="round"/>
+  <circle cx="704" cy="694" r="92" fill="#f3b233" stroke="#fff" stroke-width="22"/>
+  <path d="m704 632 18 40 44 5-33 29 9 44-38-23-39 23 9-44-33-29 44-5 19-40Z" fill="#101827"/>
+  <text x="512" y="905" text-anchor="middle" font-family="system-ui, -apple-system, BlinkMacSystemFont, sans-serif" font-size="72" font-weight="900" fill="#fff">FOOD MAP</text>
+</svg>

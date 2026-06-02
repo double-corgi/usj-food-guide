@@ -1,0 +1,139 @@
+{
+  "generatedAt": "2026-05-29T10:36:14.792Z",
+  "target": "churro-placeholder-backfill",
+  "totalChurros": 20,
+  "beforePlaceholderCount": 15,
+  "afterPlaceholderCount": 5,
+  "beforeVerifiedCount": 5,
+  "afterVerifiedCount": 15,
+  "replacedCount": 10,
+  "imageCandidateCount": 20,
+  "watermarkExcludedCount": 5,
+  "lowScoreOrRejectedCount": 7,
+  "replacements": [
+    {
+      "foodId": "food-3g64cm",
+      "name": "チョコレートチュリトス",
+      "imageUrl": "https://usj.opus21.net/usj-re/popcorn/26_01/chu-choco.jpg",
+      "score": 88,
+      "sourceName": "USJ情報サイト"
+    },
+    {
+      "foodId": "food-1jfqxy1",
+      "name": "ストロベリーチュリトス",
+      "imageUrl": "https://fabbie.co.jp/wp-content/uploads/2024/07/2023-04-18-152259-e1681805956594.webp",
+      "score": 90,
+      "sourceName": "Fabbie"
+    },
+    {
+      "foodId": "food-1e11jee",
+      "name": "メープル・チュリトス",
+      "imageUrl": "https://c01.castel.jp/400x/0/20240123102735/maple-churritos-p99175.jpg",
+      "score": 86,
+      "sourceName": "CASTEL"
+    },
+    {
+      "foodId": "food-ogc1ha",
+      "name": "チョコ&クッキーチュリトス",
+      "imageUrl": "https://c02.castel.jp/1200x/0/20230216080517/chocolate-cookie-churritos-p86536.jpg",
+      "score": 91,
+      "sourceName": "CASTEL"
+    },
+    {
+      "foodId": "food-m0djrd",
+      "name": "ココア&クッキー・チュリトス",
+      "imageUrl": "https://fabbie.co.jp/wp-content/uploads/2024/07/2023-04-18-152259-e1681805956594.webp",
+      "score": 90,
+      "sourceName": "Fabbie"
+    },
+    {
+      "foodId": "food-gmhhr6",
+      "name": "スプラッシュ!ゼニガメ・チュリトス~バニラフレーバー~",
+      "imageUrl": "https://c02.castel.jp/400x/1/20240205161857/splash-squirtle-turitos-vanilla-flavor-center-j131974.jpg",
+      "score": 94,
+      "sourceName": "CASTEL"
+    },
+    {
+      "foodId": "food-pe8zd1",
+      "name": "プーギーチュリトス〜ピーチ〜",
+      "imageUrl": "https://usjhack.com/wp/wp-content/uploads/2024/07/usj_food_churritos_15.jpg",
+      "score": 88,
+      "sourceName": "USJハック"
+    },
+    {
+      "foodId": "food-1yvvf8m",
+      "name": "クリスマス・チョコ・チュリトス",
+      "imageUrl": "https://c03.castel.jp/1200x/0/christmas-chocolate-churritos-j66220.jpg",
+      "score": 91,
+      "sourceName": "CASTEL"
+    },
+    {
+      "foodId": "food-o4pm0y",
+      "name": "チョコ&クッキー・チュリトス",
+      "imageUrl": "https://c02.castel.jp/1200x/0/20230216080517/chocolate-cookie-churritos-p86536.jpg",
+      "score": 91,
+      "sourceName": "CASTEL"
+    },
+    {
+      "foodId": "food-j4nvrm",
+      "name": "超!! チョコバナナ・チュリトス",
+      "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-minion-choco-banana-churritos-gallery-a.jpg",
+      "score": 96,
+      "sourceName": "USJ公式"
+    }
+  ],
+  "beforePlaceholderNames": [
+    "チョコレートチュリトス",
+    "ストロベリーチュリトス",
+    "メープル・チュリトス",
+    "ソルティキャラメルチュリトス",
+    "チョコ&クッキーチュリトス",
+    "シナモン・チュリトス",
+    "ココア&クッキー・チュリトス",
+    "スプラッシュ!ゼニガメ・チュリトス~バニラフレーバー~",
+    "決めろ!! 黒閃チュリトス ~パッションフルーツ・フレーバー~",
+    "プーギーチュリトス〜ピーチ〜",
+    "クリスマス・チョコ・チュリトス",
+    "チョコ&クッキー・チュリトス",
+    "スパイダーマン・チュリトス~ラズベリー~",
+    "おさるのジョージ・チュリトス",
+    "超!! チョコバナナ・チュリトス"
+  ],
+  "remainingPlaceholderNames": [
+    "ソルティキャラメルチュリトス",
+    "シナモン・チュリトス",
+    "決めろ!! 黒閃チュリトス ~パッションフルーツ・フレーバー~",
+    "スパイダーマン・チュリトス~ラズベリー~",
+    "おさるのジョージ・チュリトス"
+  ],
+  "rejectedVisualFindings": [
+    {
+      "name": "ソルティキャラメルチュリトス",
+      "reason": "Happyell候補はチュリトスカート店舗外観・看板写真で、商品本体が主役ではないため不採用"
+    },
+    {
+      "name": "チョコ&クッキーチュリトス",
+      "reason": "CASTEL itemページの単体商品画像を採用。陳列棚・透かし付き候補は不採用"
+    },
+    {
+      "name": "シナモン・チュリトス",
+      "reason": "商品本体候補はCASTEL透かしあり。Yota候補はメニュー看板のため不採用"
+    },
+    {
+      "name": "デクの \"ワン・フォー・オール\" チョコレート・チュリトス ~ピスタチオ~",
+      "reason": "USJハック/CASTEL候補はいずれも看板・POP寄り、または透かしあり"
+    },
+    {
+      "name": "スパイダーマン・チュリトス~ラズベリー~",
+      "reason": "USJ365候補は商品本体だがPhoto by USJ365透かしあり。CASTEL候補も透かしあり"
+    },
+    {
+      "name": "クリスマス・チョコ・チュリトス",
+      "reason": "USJハック候補は看板・商品グラフィック寄り。CASTELの1200px商品写真のみ採用対象"
+    },
+    {
+      "name": "おさるのジョージ・チュリトス",
+      "reason": "USJ365候補は商品本体だがPhoto by USJ365透かしあり。USJハック候補は看板・POP寄り"
+    }
+  ]
+}

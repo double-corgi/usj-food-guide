@@ -1,0 +1,265 @@
+{
+  "generatedAt": "2026-06-02T07:13:02.102Z",
+  "codeReady": true,
+  "data": {
+    "foodCount": 200,
+    "imageCount": 200,
+    "placeholderCount": 0,
+    "priceKnown": 192,
+    "priceUnknown": 8
+  },
+  "verdict": {
+    "appStore": "code_ready_human_store_inputs_required",
+    "googlePlay": "code_ready_human_store_inputs_required",
+    "operations": "code_ready_env_configuration_required"
+  },
+  "readiness": {
+    "appStore": {
+      "judgment": "コード側は提出準備完了。App Store Connectの人間入力後に提出可能。",
+      "codeReady": true,
+      "humanRequired": true,
+      "requiredHumanInputs": [
+        "Apple Developer Program / App Store ConnectでBundle ID、署名、年齢区分、App Privacyを入力する",
+        "本番独自ドメインのPrivacy Policy URL、Support URL、Marketing URLを設定する",
+        "Sentry / Analyticsを有効化する場合はApp Privacy申告へ反映する"
+      ]
+    },
+    "googlePlay": {
+      "judgment": "コード側は提出準備完了。Google Play Consoleの人間入力後に提出可能。",
+      "codeReady": true,
+      "humanRequired": true,
+      "requiredHumanInputs": [
+        "Play Consoleでpackage name、target SDK、Data safety、サポート連絡先を入力する",
+        "本番独自ドメインのPrivacy policy URLを設定する",
+        "Sentry / Analyticsを有効化する場合はData safetyへ反映する"
+      ]
+    },
+    "operations": {
+      "judgment": "運営基盤のコードは開始可能。本番環境変数と管理フロー確認後に運営開始可能。",
+      "codeReady": true,
+      "humanRequired": true,
+      "requiredHumanInputs": [
+        "本番環境にADMIN_ACCESS_KEYを設定する",
+        "NEXT_PUBLIC_SITE_URLを本番独自ドメインへ設定する",
+        "問い合わせ、発見報告、削除依頼の対応担当と運用手順を確定する"
+      ]
+    }
+  },
+  "humanInputs": [
+    "独自ドメインを確定しNEXT_PUBLIC_SITE_URLへ設定する",
+    "本番環境にADMIN_ACCESS_KEYを設定する",
+    "App Store Connect / Google Play Consoleへ事業者・サポートURL・審査情報を入力する",
+    "Sentry / Analyticsを有効化する場合はDSN/endpointとストア申告を最終反映する"
+  ],
+  "failed": [],
+  "checks": [
+    {
+      "id": "file:app/privacy/page.tsx",
+      "label": "app/privacy/page.tsx exists",
+      "ok": true
+    },
+    {
+      "id": "file:app/terms/page.tsx",
+      "label": "app/terms/page.tsx exists",
+      "ok": true
+    },
+    {
+      "id": "file:app/contact/page.tsx",
+      "label": "app/contact/page.tsx exists",
+      "ok": true
+    },
+    {
+      "id": "file:app/disclaimer/page.tsx",
+      "label": "app/disclaimer/page.tsx exists",
+      "ok": true
+    },
+    {
+      "id": "file:app/about/page.tsx",
+      "label": "app/about/page.tsx exists",
+      "ok": true
+    },
+    {
+      "id": "file:app/security/page.tsx",
+      "label": "app/security/page.tsx exists",
+      "ok": true
+    },
+    {
+      "id": "file:app/commercial-disclosure/page.tsx",
+      "label": "app/commercial-disclosure/page.tsx exists",
+      "ok": true
+    },
+    {
+      "id": "file:app/error.tsx",
+      "label": "app/error.tsx exists",
+      "ok": true
+    },
+    {
+      "id": "file:app/global-error.tsx",
+      "label": "app/global-error.tsx exists",
+      "ok": true
+    },
+    {
+      "id": "file:app/not-found.tsx",
+      "label": "app/not-found.tsx exists",
+      "ok": true
+    },
+    {
+      "id": "file:components/analytics-tracker.tsx",
+      "label": "components/analytics-tracker.tsx exists",
+      "ok": true
+    },
+    {
+      "id": "file:lib/observability.ts",
+      "label": "lib/observability.ts exists",
+      "ok": true
+    },
+    {
+      "id": "file:proxy.ts",
+      "label": "proxy.ts exists",
+      "ok": true
+    },
+    {
+      "id": "file:next.config.mjs",
+      "label": "next.config.mjs exists",
+      "ok": true
+    },
+    {
+      "id": "file:capacitor.config.ts",
+      "label": "capacitor.config.ts exists",
+      "ok": true
+    },
+    {
+      "id": "file:public/manifest.webmanifest",
+      "label": "public/manifest.webmanifest exists",
+      "ok": true
+    },
+    {
+      "id": "file:public/sw.js",
+      "label": "public/sw.js exists",
+      "ok": true
+    },
+    {
+      "id": "file:docs/mobile-release.md",
+      "label": "docs/mobile-release.md exists",
+      "ok": true
+    },
+    {
+      "id": "file:docs/domain-setup.md",
+      "label": "docs/domain-setup.md exists",
+      "ok": true
+    },
+    {
+      "id": "file:docs/observability.md",
+      "label": "docs/observability.md exists",
+      "ok": true
+    },
+    {
+      "id": "file:docs/app-review-readiness.md",
+      "label": "docs/app-review-readiness.md exists",
+      "ok": true
+    },
+    {
+      "id": "file:docs/app-store-listing-ja.md",
+      "label": "docs/app-store-listing-ja.md exists",
+      "ok": true
+    },
+    {
+      "id": "file:docs/google-play-listing-ja.md",
+      "label": "docs/google-play-listing-ja.md exists",
+      "ok": true
+    },
+    {
+      "id": "file:docs/data-privacy-audit.md",
+      "label": "docs/data-privacy-audit.md exists",
+      "ok": true
+    },
+    {
+      "id": "file:docs/store-assets.md",
+      "label": "docs/store-assets.md exists",
+      "ok": true
+    },
+    {
+      "id": "data:foods",
+      "label": "food count is >= 200",
+      "ok": true,
+      "evidence": "200 visible foods"
+    },
+    {
+      "id": "data:images",
+      "label": "image count is >= 200",
+      "ok": true,
+      "evidence": "200 foods with image"
+    },
+    {
+      "id": "data:placeholder",
+      "label": "placeholder count is 0",
+      "ok": true,
+      "evidence": "0 placeholders"
+    },
+    {
+      "id": "legal:privacy",
+      "label": "privacy page covers unofficial app, localStorage, submissions, ads, analytics, Sentry",
+      "ok": true
+    },
+    {
+      "id": "legal:terms",
+      "label": "terms page covers non-official status, prohibited conduct, disclaimer, intellectual property, governing law",
+      "ok": true
+    },
+    {
+      "id": "form:contact-security",
+      "label": "contact form has honeypot, rate limit, blocked markup, length limits",
+      "ok": true
+    },
+    {
+      "id": "form:request-security",
+      "label": "request form has honeypot, rate limit, URL validation, blocked markup, length limits",
+      "ok": true
+    },
+    {
+      "id": "security:headers",
+      "label": "security headers include CSP, frame, content type, referrer, permissions policy",
+      "ok": true
+    },
+    {
+      "id": "security:admin-lock",
+      "label": "admin routes are protected outside localhost by ADMIN_ACCESS_KEY",
+      "ok": true
+    },
+    {
+      "id": "observability:sentry",
+      "label": "Sentry-compatible error reporting exists and is optional",
+      "ok": true
+    },
+    {
+      "id": "observability:analytics",
+      "label": "Analytics page view tracking exists and is optional",
+      "ok": true
+    },
+    {
+      "id": "mobile:capacitor",
+      "label": "Capacitor dependencies and scripts exist",
+      "ok": true
+    },
+    {
+      "id": "mobile:capacitor-webdir",
+      "label": "Capacitor webDir exists with fallback index",
+      "ok": true
+    },
+    {
+      "id": "mobile:pwa",
+      "label": "PWA manifest and service worker exist",
+      "ok": true
+    },
+    {
+      "id": "env:template",
+      "label": "env templates include domain, admin, Sentry, Analytics, Capacitor",
+      "ok": true
+    },
+    {
+      "id": "docs:domain-review",
+      "label": "domain and review readiness docs describe human final inputs",
+      "ok": true
+    }
+  ]
+}

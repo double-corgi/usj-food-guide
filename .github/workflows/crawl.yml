@@ -1,0 +1,28 @@
+name: Crawl USJ Foods
+
+on:
+  schedule:
+    - cron: "15 18 * * *"
+  workflow_dispatch:
+
+jobs:
+  crawl:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run crawl
+        env:
+          NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
+          NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+          CRAWL_DELAY_MS: "1200"
+          CRAWL_MAX_RESTAURANT_PAGES: "120"
+          CRAWL_MAX_SPECIAL_PAGES: "90"
+          CRAWL_MAX_NEWS_PAGES: "80"
+          CRAWL_MAX_PDFS: "20"

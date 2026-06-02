@@ -1,0 +1,57 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: #f8fafc;
+  color: #18212f;
+  padding-bottom: env(safe-area-inset-bottom);
+  overflow-x: hidden;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  text-decoration: none;
+}
+
+@keyframes achievement-unlock {
+  0% {
+    transform: scale(0.98);
+    box-shadow: 0 0 0 0 rgba(137, 232, 191, 0.5);
+  }
+  45% {
+    transform: scale(1.01);
+    box-shadow: 0 0 0 8px rgba(137, 232, 191, 0.18);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(137, 232, 191, 0);
+  }
+}
+
+@keyframes soft-glow {
+  0%, 100% {
+    opacity: 0.62;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+.animate-achievement-unlock {
+  animation: achievement-unlock 900ms ease-out both;
+}
+
+.animate-soft-glow {
+  animation: soft-glow 2.2s ease-in-out infinite;
+}

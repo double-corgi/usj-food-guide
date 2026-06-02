@@ -1,0 +1,118 @@
+{
+  "generatedAt": "2026-05-31T09:08:20.498Z",
+  "foodTotal": 200,
+  "imageTotal": 200,
+  "placeholderCount": 0,
+  "imageRegression": 0,
+  "changed": 12,
+  "changes": [
+    {
+      "id": "food-u2l4ko",
+      "name": "DK クラッシュサンデー ~トロピカルバナナ・フレーバー~",
+      "beforeShop": "店舗未確認",
+      "afterShop": "ジャングル・ビート・シェイク",
+      "beforeArea": "その他",
+      "afterArea": "スーパー・ニンテンドー・ワールド",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/jungle-beat-shakes/index.html"
+    },
+    {
+      "id": "food-k2clec",
+      "name": "ホッグズ・ヘッド・ビール ~マグカップ付~",
+      "beforeShop": "店舗未確認",
+      "afterShop": "ホッグズ・ヘッド",
+      "beforeArea": "その他",
+      "afterArea": "ウィザーディング・ワールド・オブ・ハリー・ポッター",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/hogs-head/index.html"
+    },
+    {
+      "id": "food-1hcq7im",
+      "name": "モンスターハンター・ワイルズ×USJ限定コースターセット",
+      "beforeShop": "店舗未確認",
+      "afterShop": "ロストワールド・レストラン",
+      "beforeArea": "その他",
+      "afterArea": "ジュラシック・パーク",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/lost-world-restaurant/index.html"
+    },
+    {
+      "id": "food-11pjv41",
+      "name": "オトモアイルーのチョコレートプリン マグカップ付",
+      "beforeShop": "店舗未確認",
+      "afterShop": "ロストワールド・レストラン",
+      "beforeArea": "その他",
+      "afterArea": "ジュラシック・パーク",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/lost-world-restaurant/index.html"
+    },
+    {
+      "id": "food-1ocz8a8",
+      "name": "照り焼きチキン ピッツァ・デニッシュセット",
+      "beforeShop": "店舗未確認",
+      "afterShop": "ボードウォーク・スナック",
+      "beforeArea": "その他",
+      "afterArea": "アミティ・ビレッジ",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/boardwalk-snacks/index.html"
+    },
+    {
+      "id": "food-26b5s0",
+      "name": "ホットドッグ&ドリンクセット",
+      "beforeShop": "店舗未確認",
+      "afterShop": "ワーフカフェ",
+      "beforeArea": "その他",
+      "afterArea": "サンフランシスコ・エリア",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/wharf-cafe/index.html"
+    },
+    {
+      "id": "food-58j4sc",
+      "name": "ハローキティ・ドリンクカップ",
+      "beforeShop": "店舗未確認",
+      "afterShop": "ハローキティのコーナーカフェ",
+      "beforeArea": "その他",
+      "afterArea": "ユニバーサル・ワンダーランド",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/hello-kittys-corner-cafe/index.html"
+    },
+    {
+      "id": "food-14ut653",
+      "name": "ミートスパゲティセット",
+      "beforeShop": "店舗未確認",
+      "afterShop": "スヌーピー・バックロット・カフェ",
+      "beforeArea": "その他",
+      "afterArea": "ユニバーサル・ワンダーランド",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/snoopys-backlot-cafe/index.html"
+    },
+    {
+      "id": "food-1ufz462",
+      "name": "テリヤキビーフバーガーセット",
+      "beforeShop": "店舗未確認",
+      "afterShop": "スヌーピー・バックロット・カフェ",
+      "beforeArea": "その他",
+      "afterArea": "ユニバーサル・ワンダーランド",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/snoopys-backlot-cafe/index.html"
+    },
+    {
+      "id": "food-15u1343",
+      "name": "エビカツバーガーセット",
+      "beforeShop": "店舗未確認",
+      "afterShop": "スヌーピー・バックロット・カフェ",
+      "beforeArea": "その他",
+      "afterArea": "ユニバーサル・ワンダーランド",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/snoopys-backlot-cafe/index.html"
+    },
+    {
+      "id": "food-1rsazo8",
+      "name": "ピッツァ・デニッシュセット ~照り焼きチキン~",
+      "beforeShop": "店舗未確認",
+      "afterShop": "ボードウォーク・スナック",
+      "beforeArea": "エリア未確認",
+      "afterArea": "アミティ・ビレッジ",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/boardwalk-snacks/index.html"
+    },
+    {
+      "id": "food-1wc5ggu",
+      "name": "DK クラッシュサンデー ~トロピカルバナナ・フレーバー~ マグカップ付き",
+      "beforeShop": "店舗未確認",
+      "afterShop": "ジャングル・ビート・シェイク",
+      "beforeArea": "エリア未確認",
+      "afterArea": "スーパー・ニンテンドー・ワールド",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/jungle-beat-shakes/index.html"
+    }
+  ]
+}

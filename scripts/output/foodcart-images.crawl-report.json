@@ -1,0 +1,58 @@
+{
+  "mode": "foodcart",
+  "generatedAt": "2026-05-28T15:43:21.105Z",
+  "targets": 19,
+  "attached": 0,
+  "pruned": 0,
+  "watermarkExcluded": 0,
+  "rebalancedSharedRepresentatives": 0,
+  "before": {
+    "visible": 142,
+    "verified": 120,
+    "placeholders": 22,
+    "verifiedByCategory": {
+      "set": 37,
+      "burger": 2,
+      "dessert": 24,
+      "kids": 12,
+      "chicken": 9,
+      "drink": 16,
+      "churro": 10,
+      "popcorn": 6,
+      "rice": 2,
+      "unknown": 1,
+      "pizza": 1
+    },
+    "placeholdersByCategory": {
+      "churro": 19,
+      "drink": 1,
+      "set": 1,
+      "dessert": 1
+    }
+  },
+  "after": {
+    "visible": 142,
+    "verified": 120,
+    "placeholders": 22,
+    "verifiedByCategory": {
+      "set": 37,
+      "burger": 2,
+      "dessert": 24,
+      "kids": 12,
+      "chicken": 9,
+      "drink": 16,
+      "churro": 10,
+      "popcorn": 6,
+      "rice": 2,
+      "unknown": 1,
+      "pizza": 1
+    },
+    "placeholdersByCategory": {
+      "churro": 19,
+      "drink": 1,
+      "set": 1,
+      "dessert": 1
+    }
+  },
+  "errors": []
+}

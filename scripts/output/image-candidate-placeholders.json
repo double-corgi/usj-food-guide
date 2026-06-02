@@ -1,0 +1,98 @@
+[
+  {
+    "foodId": "food-5n9awi",
+    "name": "ソルティキャラメルチュリトス",
+    "category": "churro",
+    "area": "その他",
+    "shop": "フードカート",
+    "sourceUrl": "https://castel.jp/p/3101",
+    "queryCount": 6,
+    "candidateCount": 20,
+    "bestScore": 0,
+    "placeholderReason": "店舗・棚・遠景のみ"
+  },
+  {
+    "foodId": "food-12vork6",
+    "name": "シナモン・チュリトス",
+    "category": "churro",
+    "area": "その他",
+    "shop": "フードカート",
+    "sourceUrl": "https://castel.jp/p/3101",
+    "queryCount": 6,
+    "candidateCount": 34,
+    "bestScore": 0,
+    "placeholderReason": "店舗・棚・遠景のみ"
+  },
+  {
+    "foodId": "food-1qhfvst",
+    "name": "デクの \"ワン・フォー・オール\" チョコレート・チュリトス ~ピスタチオ~",
+    "category": "churro",
+    "area": "その他",
+    "shop": "シネマ 4-D ストア前フードカート",
+    "sourceUrl": "https://castel.jp/p/3101",
+    "queryCount": 6,
+    "candidateCount": 27,
+    "bestScore": 0,
+    "placeholderReason": "店舗・棚・遠景のみ"
+  },
+  {
+    "foodId": "food-1tbvv8s",
+    "name": "スパイダーマン・チュリトス~ラズベリー~",
+    "category": "churro",
+    "area": "その他",
+    "shop": "スパイダーマン前カート",
+    "sourceUrl": "https://castel.jp/p/3101",
+    "queryCount": 6,
+    "candidateCount": 38,
+    "bestScore": 25,
+    "placeholderReason": "商品本体未確認"
+  },
+  {
+    "foodId": "food-1okawno",
+    "name": "おさるのジョージ・チュリトス",
+    "category": "churro",
+    "area": "その他",
+    "shop": "プレイングウィズおさるのジョージ前カート",
+    "sourceUrl": "https://castel.jp/p/3101",
+    "queryCount": 6,
+    "candidateCount": 24,
+    "bestScore": 0,
+    "placeholderReason": "店舗・棚・遠景のみ"
+  },
+  {
+    "foodId": "food-turqm3",
+    "name": "ドリンク",
+    "category": "drink",
+    "area": "サンフランシスコ・エリア",
+    "shop": "高級レストラン",
+    "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/events/universal-cool-japan-2026/conan/restaurant/index.html",
+    "queryCount": 3,
+    "candidateCount": 22,
+    "bestScore": 100,
+    "placeholderReason": "承認待ち"
+  },
+  {
+    "foodId": "food-12eyica",
+    "name": "スペシャルドリンク&コースターセット",
+    "category": "set",
+    "area": "サンフランシスコ・エリア",
+    "shop": "高級レストラン",
+    "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/events/universal-cool-japan-2026/conan/restaurant/index.html",
+    "queryCount": 3,
+    "candidateCount": 31,
+    "bestScore": 100,
+    "placeholderReason": "承認待ち"
+  },
+  {
+    "foodId": "food-1suwi8c",
+    "name": "スペシャル・ケーキ",
+    "category": "dessert",
+    "area": "スーパー・ニンテンドー・ワールド",
+    "shop": "マリオカート",
+    "sourceUrl": "https://www.usj.co.jp/company/news/2026/0318/",
+    "queryCount": 3,
+    "candidateCount": 0,
+    "bestScore": 0,
+    "placeholderReason": "クロール候補0件 / 手動登録待ち"
+  }
+]

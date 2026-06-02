@@ -1,0 +1,49 @@
+{
+  "mode": "audit",
+  "generatedAt": "2026-05-31T09:39:14.016Z",
+  "before": {
+    "foods": 200,
+    "images": 200,
+    "placeholders": 0,
+    "priceKnown": 79,
+    "priceUnknown": 121
+  },
+  "after": {
+    "foods": 200,
+    "images": 200,
+    "placeholders": 0,
+    "priceKnown": 79,
+    "priceUnknown": 121
+  },
+  "newPrices": 0,
+  "updates": [
+    {
+      "foodId": "food-u0o9uo",
+      "name": "マリオ・バーガー ~ベーコン&チーズ~",
+      "price": 2600,
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/documents/usj-pdf-restaurant-other-menu-kinopios-cafe-en.pdf",
+      "sourceName": "USJ公式 キノピオ・カフェ メニューPDF",
+      "note": "USJ公式メニューPDFに「マリオ・バーガー / Mario's Bacon Cheeseburger ¥2,600」と掲載",
+      "previousPrice": 2600
+    },
+    {
+      "foodId": "food-1gtoojv",
+      "name": "カレーライス・キッズセット",
+      "price": 1400,
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/documents/usj-pdf-restaurant-other-menu-kinopios-cafe-en.pdf",
+      "sourceName": "USJ公式 キノピオ・カフェ メニューPDF",
+      "note": "USJ公式メニューPDFに「カレー・キッズセット / Kids Curry Meal ¥1,400」と掲載",
+      "previousPrice": 1400
+    },
+    {
+      "foodId": "food-it27lt",
+      "name": "マッシュルームスープ",
+      "price": 900,
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/documents/usj-pdf-restaurant-other-menu-kinopios-cafe-en.pdf",
+      "sourceName": "USJ公式 キノピオ・カフェ メニューPDF",
+      "note": "USJ公式メニューPDFに「マッシュルームスープ / Mushroom Soup ¥900」と掲載",
+      "previousPrice": 900
+    }
+  ],
+  "skipped": []
+}

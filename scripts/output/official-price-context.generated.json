@@ -1,0 +1,74 @@
+{
+  "mode": "dry-run",
+  "generatedAt": "2026-06-01T04:30:26.295Z",
+  "totals": {
+    "foodsBefore": 200,
+    "foodsAfter": 200,
+    "imagesBefore": 200,
+    "imagesAfter": 200,
+    "placeholdersBefore": 0,
+    "placeholdersAfter": 0,
+    "priceKnownBefore": 192,
+    "priceKnownAfter": 192,
+    "priceUnknownBefore": 8,
+    "priceUnknownAfter": 8,
+    "priceRateBefore": "96%",
+    "priceRateAfter": "96%",
+    "newPrices": 0,
+    "reducedUnknown": 0,
+    "sourcesChecked": 7,
+    "errors": 0
+  },
+  "hits": [],
+  "noHits": [
+    {
+      "foodId": "food-6d5z2w",
+      "name": "ラプトル・ベーコン&ビーフバーガーセット",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/discovery-restaurant/index.html",
+      "reason": "same-block-official-price-not-found"
+    },
+    {
+      "foodId": "food-zrf59b",
+      "name": "ミニオン・スプーン&フォークセット",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/happiness-cafe/index.html",
+      "reason": "same-block-official-price-not-found"
+    },
+    {
+      "foodId": "food-sfsu3d",
+      "name": "フィルのワッフルチキンプレート",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/happiness-cafe/index.html",
+      "reason": "same-block-official-price-not-found"
+    },
+    {
+      "foodId": "food-1nxl32b",
+      "name": "ジャングル・ビート・シェイク",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/super-nintendo-world-food/index.html",
+      "reason": "same-block-official-price-not-found"
+    },
+    {
+      "foodId": "food-58j4sc",
+      "name": "ハローキティ・ドリンクカップ",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/hello-kittys-corner-cafe/index.html",
+      "reason": "same-block-official-price-not-found"
+    },
+    {
+      "foodId": "food-1l7y3bq",
+      "name": "くいしん坊ミニオンたちの大発明!「クッキー・マシン」で作る絶品サンド",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/delicious-me-the-cookie-kitchen/index.html",
+      "reason": "same-block-official-price-not-found"
+    },
+    {
+      "foodId": "food-o9svxw",
+      "name": "ベビーフード",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/louies-ny-pizza-parlor/index.html",
+      "reason": "same-block-official-price-not-found"
+    },
+    {
+      "foodId": "food-j4nvrm",
+      "name": "超!! チョコバナナ・チュリトス",
+      "sourceUrl": "https://www.usj.co.jp/company/news/2026/0422/",
+      "reason": "same-block-official-price-not-found"
+    }
+  ],
+  "errors": []
+}

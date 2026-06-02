@@ -1,0 +1,67 @@
+{
+  "name": "ユニバフード制覇",
+  "short_name": "ユニバ制覇",
+  "description": "USJフードを食べた記録で集める非公式コレクションアプリ",
+  "start_url": "/",
+  "display": "standalone",
+  "scope": "/",
+  "background_color": "#fffaf5",
+  "theme_color": "#18212f",
+  "lang": "ja",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "/icons/app-icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icons/app-icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icons/app-icon-1024.png",
+      "sizes": "1024x1024",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/app-icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/screenshots/home-iphone14.png",
+      "sizes": "390x1200",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "ホーム"
+    },
+    {
+      "src": "/screenshots/food-detail-iphone14.png",
+      "sizes": "390x1200",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "商品詳細"
+    },
+    {
+      "src": "/screenshots/complete-iphone14.png",
+      "sizes": "390x1200",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "制覇"
+    }
+  ],
+  "shortcuts": [
+    { "name": "フード一覧", "short_name": "探す", "url": "/foods" },
+    { "name": "食べた記録", "short_name": "食べた", "url": "/eaten" },
+    { "name": "エリア制覇", "short_name": "エリア", "url": "/areas" },
+    { "name": "コンプリート", "short_name": "コンプ", "url": "/complete" }
+  ]
+}

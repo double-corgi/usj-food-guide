@@ -1,0 +1,85 @@
+{
+  "mode": "seasonal",
+  "category": "seasonal",
+  "generatedAt": "2026-05-28T04:42:49.507Z",
+  "targetedPagesCrawled": 11,
+  "targetedFoodsFound": 0,
+  "targetedErrors": 15,
+  "requiredSourceCoverage": [
+    {
+      "url": "https://www.usj.co.jp/web/ja/jp/restaurants",
+      "fetched": true,
+      "sourceNames": [
+        "official-restaurants"
+      ],
+      "extractedFoods": 0
+    },
+    {
+      "url": "https://www.usj.co.jp/web/ja/jp/restaurants/food-cart",
+      "fetched": true,
+      "sourceNames": [
+        "official-food-carts"
+      ],
+      "extractedFoods": 48
+    },
+    {
+      "url": "https://www.usj.co.jp/web/ja/jp/restaurants/seasonal-food",
+      "fetched": true,
+      "sourceNames": [
+        "official-seasonal-food"
+      ],
+      "extractedFoods": 15
+    },
+    {
+      "url": "https://www.usj.co.jp/web/ja/jp/restaurants/super-nintendo-world-food",
+      "fetched": true,
+      "sourceNames": [
+        "official-food-carts"
+      ],
+      "extractedFoods": 5
+    },
+    {
+      "url": "https://www.usj.co.jp/web/ja/jp/restaurants/the-wizarding-world-of-harry-potter-food",
+      "fetched": false,
+      "sourceNames": [],
+      "extractedFoods": 3
+    },
+    {
+      "url": "https://www.usj.co.jp/web/ja/jp/restaurants/minion-food",
+      "fetched": false,
+      "sourceNames": [],
+      "extractedFoods": 3
+    },
+    {
+      "url": "https://castel.jp/p/3101",
+      "fetched": false,
+      "sourceNames": [],
+      "extractedFoods": 0
+    }
+  ],
+  "totalCandidates": 1,
+  "categoryCandidates": 1,
+  "visible": 1,
+  "pending": 0,
+  "verifiedImages": 1,
+  "placeholders": 0,
+  "candidates": [
+    {
+      "id": "food-1hcq7im",
+      "name": "モンスターハンター・ワイルズ×USJ限定コースターセット",
+      "category": "set",
+      "reviewStatus": "approved",
+      "displayQuality": "high",
+      "canonicalFood": true,
+      "hidden": false,
+      "confidenceScore": 100,
+      "nameQualityScore": 100,
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/lost-world-restaurant/index.html",
+      "shop": "店舗未確認",
+      "area": "その他",
+      "imageVerified": true,
+      "imageMatchScore": 96,
+      "rejectionReasons": []
+    }
+  ]
+}

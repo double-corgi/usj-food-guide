@@ -1,0 +1,175 @@
+{
+  "generatedAt": "2026-05-29T03:52:06.369Z",
+  "visibleFoods": 142,
+  "placeholderCount": 8,
+  "placeholderByCategory": {
+    "churro": 5,
+    "drink": 1,
+    "set": 1,
+    "dessert": 1
+  },
+  "rows": [
+    {
+      "food_id": "food-5n9awi",
+      "name": "ソルティキャラメルチュリトス",
+      "normalized_name": "ソルティキャラメルチュリトス",
+      "category": "churro",
+      "area": "その他",
+      "shop": "フードカート",
+      "source_url": "https://castel.jp/p/3101",
+      "placeholder_reason": "no image candidates saved",
+      "disabled_image_reasons": []
+    },
+    {
+      "food_id": "food-12vork6",
+      "name": "シナモン・チュリトス",
+      "normalized_name": "シナモンチュリトス",
+      "category": "churro",
+      "area": "その他",
+      "shop": "フードカート",
+      "source_url": "https://castel.jp/p/3101",
+      "placeholder_reason": "no image candidates saved",
+      "disabled_image_reasons": []
+    },
+    {
+      "food_id": "food-1qhfvst",
+      "name": "デクの \"ワン・フォー・オール\" チョコレート・チュリトス ~ピスタチオ~",
+      "normalized_name": "デクのワンフォーオールチョコレートチュリトス~ピスタチオ~",
+      "category": "churro",
+      "area": "その他",
+      "shop": "シネマ 4-D ストア前フードカート",
+      "source_url": "https://castel.jp/p/3101",
+      "placeholder_reason": "no image candidates saved",
+      "disabled_image_reasons": []
+    },
+    {
+      "food_id": "food-1tbvv8s",
+      "name": "スパイダーマン・チュリトス~ラズベリー~",
+      "normalized_name": "スパイダーマンチュリトス~ラズベリー~",
+      "category": "churro",
+      "area": "その他",
+      "shop": "スパイダーマン前カート",
+      "source_url": "https://castel.jp/p/3101",
+      "placeholder_reason": "no image candidates saved",
+      "disabled_image_reasons": []
+    },
+    {
+      "food_id": "food-1okawno",
+      "name": "おさるのジョージ・チュリトス",
+      "normalized_name": "おさるのジョージチュリトス",
+      "category": "churro",
+      "area": "その他",
+      "shop": "プレイングウィズおさるのジョージ前カート",
+      "source_url": "https://castel.jp/p/3101",
+      "placeholder_reason": "no image candidates saved",
+      "disabled_image_reasons": []
+    },
+    {
+      "food_id": "food-turqm3",
+      "name": "ドリンク",
+      "normalized_name": "ドリンク",
+      "category": "drink",
+      "area": "サンフランシスコ・エリア",
+      "shop": "高級レストラン",
+      "source_url": "https://www.usj.co.jp/tridiondata/usj/ja/jp/events/universal-cool-japan-2026/conan/restaurant/index.html",
+      "placeholder_reason": "candidate rejected: product mismatch or low quality",
+      "disabled_image_reasons": [
+        {
+          "image_url": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-detective-conan-mystery-restaurant-2026-experience-image-1-a.jpg",
+          "source_url": "https://www.usj.co.jp/tridiondata/usj/ja/jp/events/universal-cool-japan-2026/conan/restaurant/index.html",
+          "score": 0,
+          "has_watermark": false,
+          "watermark_reason": null,
+          "mismatch_reason": "ambiguous-tcm-component-multiple-products",
+          "match_reason": null
+        },
+        {
+          "image_url": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-detective-conan-mystery-restaurant-2026-experience-image-2-a.jpg",
+          "source_url": "https://www.usj.co.jp/tridiondata/usj/ja/jp/events/universal-cool-japan-2026/conan/restaurant/index.html",
+          "score": 0,
+          "has_watermark": false,
+          "watermark_reason": null,
+          "mismatch_reason": "ambiguous-tcm-component-multiple-products",
+          "match_reason": null
+        },
+        {
+          "image_url": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-detective-conan-kudo-shinichi-a.jpg",
+          "source_url": "https://www.usj.co.jp/tridiondata/usj/ja/jp/events/universal-cool-japan-2026/conan/restaurant/index.html",
+          "score": 0,
+          "has_watermark": false,
+          "watermark_reason": null,
+          "mismatch_reason": "ambiguous-tcm-component-multiple-products",
+          "match_reason": null
+        },
+        {
+          "image_url": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-detective-conan-kudo-shinichi-b.jpg",
+          "source_url": "https://www.usj.co.jp/tridiondata/usj/ja/jp/events/universal-cool-japan-2026/conan/restaurant/index.html",
+          "score": 0,
+          "has_watermark": false,
+          "watermark_reason": null,
+          "mismatch_reason": "ambiguous-tcm-component-multiple-products",
+          "match_reason": null
+        }
+      ]
+    },
+    {
+      "food_id": "food-12eyica",
+      "name": "スペシャルドリンク&コースターセット",
+      "normalized_name": "スペシャルドリンク&コースターセット",
+      "category": "set",
+      "area": "サンフランシスコ・エリア",
+      "shop": "高級レストラン",
+      "source_url": "https://www.usj.co.jp/tridiondata/usj/ja/jp/events/universal-cool-japan-2026/conan/restaurant/index.html",
+      "placeholder_reason": "candidate rejected: product mismatch or low quality",
+      "disabled_image_reasons": [
+        {
+          "image_url": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-detective-conan-mystery-restaurant-2026-experience-image-1-a.jpg",
+          "source_url": "https://www.usj.co.jp/tridiondata/usj/ja/jp/events/universal-cool-japan-2026/conan/restaurant/index.html",
+          "score": 0,
+          "has_watermark": false,
+          "watermark_reason": null,
+          "mismatch_reason": "ambiguous-tcm-component-multiple-products",
+          "match_reason": null
+        },
+        {
+          "image_url": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-detective-conan-mystery-restaurant-2026-experience-image-2-a.jpg",
+          "source_url": "https://www.usj.co.jp/tridiondata/usj/ja/jp/events/universal-cool-japan-2026/conan/restaurant/index.html",
+          "score": 0,
+          "has_watermark": false,
+          "watermark_reason": null,
+          "mismatch_reason": "ambiguous-tcm-component-multiple-products",
+          "match_reason": null
+        },
+        {
+          "image_url": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-detective-conan-kudo-shinichi-a.jpg",
+          "source_url": "https://www.usj.co.jp/tridiondata/usj/ja/jp/events/universal-cool-japan-2026/conan/restaurant/index.html",
+          "score": 0,
+          "has_watermark": false,
+          "watermark_reason": null,
+          "mismatch_reason": "ambiguous-tcm-component-multiple-products",
+          "match_reason": null
+        },
+        {
+          "image_url": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-detective-conan-kudo-shinichi-b.jpg",
+          "source_url": "https://www.usj.co.jp/tridiondata/usj/ja/jp/events/universal-cool-japan-2026/conan/restaurant/index.html",
+          "score": 0,
+          "has_watermark": false,
+          "watermark_reason": null,
+          "mismatch_reason": "ambiguous-tcm-component-multiple-products",
+          "match_reason": null
+        }
+      ]
+    },
+    {
+      "food_id": "food-1suwi8c",
+      "name": "スペシャル・ケーキ",
+      "normalized_name": "スペシャルケーキ",
+      "category": "dessert",
+      "area": "スーパー・ニンテンドー・ワールド",
+      "shop": "マリオカート",
+      "source_url": "https://www.usj.co.jp/company/news/2026/0318/",
+      "placeholder_reason": "no image candidates saved",
+      "disabled_image_reasons": []
+    }
+  ]
+}

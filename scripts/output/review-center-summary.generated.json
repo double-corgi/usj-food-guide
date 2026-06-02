@@ -1,0 +1,259 @@
+{
+  "generatedAt": "2026-05-31T08:20:55.916Z",
+  "totals": {
+    "foodCount": 200,
+    "imageCount": 200,
+    "placeholderCount": 0,
+    "sourceUrlRate": "100%",
+    "priceRate": "39.5%",
+    "shopRate": "81.5%",
+    "areaRate": "94.5%",
+    "duplicateCandidateCount": 23,
+    "highPriorityOpen": 134
+  },
+  "categoryStats": [
+    {
+      "bucket": "パスタ",
+      "total": 6,
+      "priceRate": "50%",
+      "sourceUrlRate": "100%",
+      "shopRate": "83.3%",
+      "areaRate": "100%"
+    },
+    {
+      "bucket": "バーガー",
+      "total": 25,
+      "priceRate": "12%",
+      "sourceUrlRate": "100%",
+      "shopRate": "80%",
+      "areaRate": "96%"
+    },
+    {
+      "bucket": "デザート",
+      "total": 39,
+      "priceRate": "17.9%",
+      "sourceUrlRate": "100%",
+      "shopRate": "76.9%",
+      "areaRate": "92.3%"
+    },
+    {
+      "bucket": "プレート",
+      "total": 34,
+      "priceRate": "35.3%",
+      "sourceUrlRate": "100%",
+      "shopRate": "82.4%",
+      "areaRate": "91.2%"
+    },
+    {
+      "bucket": "ドリンク",
+      "total": 26,
+      "priceRate": "15.4%",
+      "sourceUrlRate": "100%",
+      "shopRate": "76.9%",
+      "areaRate": "96.2%"
+    },
+    {
+      "bucket": "キッズ",
+      "total": 15,
+      "priceRate": "93.3%",
+      "sourceUrlRate": "100%",
+      "shopRate": "73.3%",
+      "areaRate": "93.3%"
+    },
+    {
+      "bucket": "ライス",
+      "total": 13,
+      "priceRate": "46.2%",
+      "sourceUrlRate": "100%",
+      "shopRate": "100%",
+      "areaRate": "100%"
+    },
+    {
+      "bucket": "ピザ",
+      "total": 12,
+      "priceRate": "58.3%",
+      "sourceUrlRate": "100%",
+      "shopRate": "66.7%",
+      "areaRate": "83.3%"
+    },
+    {
+      "bucket": "チュリトス",
+      "total": 20,
+      "priceRate": "95%",
+      "sourceUrlRate": "100%",
+      "shopRate": "95%",
+      "areaRate": "100%"
+    },
+    {
+      "bucket": "その他",
+      "total": 10,
+      "priceRate": "40%",
+      "sourceUrlRate": "100%",
+      "shopRate": "90%",
+      "areaRate": "100%"
+    }
+  ],
+  "duplicateCandidates": [
+    {
+      "foodId": "food-1reufss",
+      "foodName": "ロティサリー・スモークチキン&ポークリブ",
+      "otherFoodId": "food-1yhw1tx",
+      "otherFoodName": "スモークチキン",
+      "reason": "商品名類似"
+    },
+    {
+      "foodId": "food-2qri4c",
+      "foodName": "ロティサリー・スモークチキン&シェパーズパイ",
+      "otherFoodId": "food-1yhw1tx",
+      "otherFoodName": "スモークチキン",
+      "reason": "商品名類似"
+    },
+    {
+      "foodId": "food-17k66nk",
+      "foodName": "カレー・キッズプレート",
+      "otherFoodId": "food-1u4bz3q",
+      "otherFoodName": "カレー・キッズセット",
+      "reason": "商品名類似 / 同source_url"
+    },
+    {
+      "foodId": "food-1efoz95",
+      "foodName": "スタジオ・スターズ 25周年スペシャルプレート",
+      "otherFoodId": "food-w9l17",
+      "otherFoodName": "スタジオ・スターズ・セット",
+      "reason": "商品名類似 / 同店舗"
+    },
+    {
+      "foodId": "food-19tglum",
+      "foodName": "T-REX・ガーリックトマト・ビーフバーガーセット",
+      "otherFoodId": "food-116rf8q",
+      "otherFoodName": "T-REX・バーガーセット",
+      "reason": "同画像 / 同店舗 / 同source_url"
+    },
+    {
+      "foodId": "food-6d5z2w",
+      "foodName": "ラプトル・ベーコン&ビーフバーガーセット",
+      "otherFoodId": "food-e0few1",
+      "otherFoodName": "ラプトル・バーガーセット",
+      "reason": "同画像 / 同店舗 / 同source_url"
+    },
+    {
+      "foodId": "food-1x0ir52",
+      "foodName": "プテラノドン・フライドチキンバーガーセット",
+      "otherFoodId": "food-wn7ivo",
+      "otherFoodName": "プテラノドン・バーガーセット",
+      "reason": "同画像 / 同店舗 / 同source_url"
+    },
+    {
+      "foodId": "food-yhtmyt",
+      "foodName": "モササウルス・フィッシュバーガーセット",
+      "otherFoodId": "food-9un9k0",
+      "otherFoodName": "モササウルス・バーガーセット",
+      "reason": "同画像 / 同店舗 / 同source_url"
+    },
+    {
+      "foodId": "food-1ojz6jw",
+      "foodName": "ボブのワッフルチキンプレート",
+      "otherFoodId": "food-sfsu3d",
+      "otherFoodName": "フィルのワッフルチキンプレート",
+      "reason": "同画像 / 同店舗 / 同source_url"
+    },
+    {
+      "foodId": "food-1435vjy",
+      "foodName": "スチュアートのベーコンチーズ・バーガープレート",
+      "otherFoodId": "food-bcbp5u",
+      "otherFoodName": "スチュアートのビッグベーコンチーズ・バーガープレート",
+      "reason": "同画像 / 同店舗 / 同source_url"
+    },
+    {
+      "foodId": "food-12tnz7b",
+      "foodName": "ミニオンズ・カップデザート",
+      "otherFoodId": "food-uqw79q",
+      "otherFoodName": "デザート&ドリンクバーセット",
+      "reason": "同画像 / 同店舗 / 同source_url"
+    },
+    {
+      "foodId": "food-19nx8rb",
+      "foodName": "ターキーレッグ!? まん",
+      "otherFoodId": "food-1n8s9rw",
+      "otherFoodName": "ターキーレッグ",
+      "reason": "商品名類似 / 同source_url"
+    },
+    {
+      "foodId": "food-gmrx8l",
+      "foodName": "ミニオンのチョコバナナ・チュリトス",
+      "otherFoodId": "food-j4nvrm",
+      "otherFoodName": "超!! チョコバナナ・チュリトス",
+      "reason": "同画像"
+    },
+    {
+      "foodId": "food-1ksr7hg",
+      "foodName": "アイスクリーム スチュアート・バケツ スプーン付き",
+      "otherFoodId": "food-1qcrkg3",
+      "otherFoodName": "アイスクリーム スチュアート・バケツ スプーン",
+      "reason": "商品名類似"
+    },
+    {
+      "foodId": "food-1yi0toj",
+      "foodName": "DK クラッシュサンデー ~トロピカルバナナ・フレーバー~ マグカップ付き",
+      "otherFoodId": "food-u2l4ko",
+      "otherFoodName": "DK クラッシュサンデー ~トロピカルバナナ・フレーバー~",
+      "reason": "商品名類似"
+    },
+    {
+      "foodId": "food-1yi0toj",
+      "foodName": "DK クラッシュサンデー ~トロピカルバナナ・フレーバー~ マグカップ付き",
+      "otherFoodId": "food-1wc5ggu",
+      "otherFoodName": "DK クラッシュサンデー ~トロピカルバナナ・フレーバー~ マグカップ付き",
+      "reason": "商品名類似"
+    },
+    {
+      "foodId": "food-1eqmspw",
+      "foodName": "ハンバーガー・キッズセット(マリオのピック付き)",
+      "otherFoodId": "food-1xe3vuu",
+      "otherFoodName": "ハンバーガー・キッズセット(マリオのピック付)",
+      "reason": "商品名類似 / 同画像 / 同店舗"
+    },
+    {
+      "foodId": "food-u2l4ko",
+      "foodName": "DK クラッシュサンデー ~トロピカルバナナ・フレーバー~",
+      "otherFoodId": "food-1wc5ggu",
+      "otherFoodName": "DK クラッシュサンデー ~トロピカルバナナ・フレーバー~ マグカップ付き",
+      "reason": "商品名類似 / 同source_url"
+    },
+    {
+      "foodId": "food-nzx6eb",
+      "foodName": "マリオの帽子 パンケーキサンド ~いちごのショートケーキ~",
+      "otherFoodId": "food-5ib5k3",
+      "otherFoodName": "パンケーキ・サンド マリオの帽子 ~いちごのショートケーキ~",
+      "reason": "同画像 / 同店舗 / 同source_url"
+    },
+    {
+      "foodId": "food-1ocz8a8",
+      "foodName": "照り焼きチキン ピッツァ・デニッシュセット",
+      "otherFoodId": "food-1rsazo8",
+      "otherFoodName": "ピッツァ・デニッシュセット ~照り焼きチキン~",
+      "reason": "同画像 / 同source_url"
+    },
+    {
+      "foodId": "food-1jfqxy1",
+      "foodName": "ストロベリーチュリトス",
+      "otherFoodId": "food-m0djrd",
+      "otherFoodName": "ココア&クッキー・チュリトス",
+      "reason": "同画像 / 同source_url"
+    },
+    {
+      "foodId": "food-ogc1ha",
+      "foodName": "チョコ&クッキーチュリトス",
+      "otherFoodId": "food-o4pm0y",
+      "otherFoodName": "チョコ&クッキー・チュリトス",
+      "reason": "商品名類似 / 同画像 / 同source_url"
+    },
+    {
+      "foodId": "food-xfenq1",
+      "foodName": "決めろ!! 黒閃チュリトス ~パッションフルーツ・フレーバー~",
+      "otherFoodId": "food-tgucsr",
+      "otherFoodName": "虚式「茈」 チュリトス ~ミックスベリー味~",
+      "reason": "同画像"
+    }
+  ]
+}

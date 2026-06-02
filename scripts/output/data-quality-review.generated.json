@@ -1,0 +1,455 @@
+{
+  "generatedAt": "2026-06-02T05:55:26.513Z",
+  "foodTotal": 200,
+  "imageTotal": 200,
+  "placeholderCount": 0,
+  "priceKnown": 192,
+  "priceUnknown": 8,
+  "priceRate": "96%",
+  "priceReviewed": 200,
+  "priceReviewOpen": 0,
+  "priceReviewRate": "100%",
+  "sourceUrlSet": 200,
+  "sourceUrlMissing": 0,
+  "sourceUrlRate": "100%",
+  "shopSet": 200,
+  "shopUnknown": 0,
+  "shopRate": "100%",
+  "areaSet": 200,
+  "areaUnknown": 0,
+  "areaRate": "100%",
+  "categorySet": 200,
+  "categoryUnknown": 0,
+  "categoryRate": "100%",
+  "categoryPending": 10,
+  "manualUnconfirmable": 9,
+  "priceSourceStats": {
+    "trusted_report": 120,
+    "official": 69,
+    "unknown": 8,
+    "social_report": 2,
+    "menu_photo": 1
+  },
+  "missingPriceReasonStats": {
+    "official_exact_price_not_found": 7,
+    "set_or_size_ambiguous": 1
+  },
+  "missingPriceItems": [
+    {
+      "id": "food-6d5z2w",
+      "name": "ラプトル・ベーコン&ビーフバーガーセット",
+      "category": "burger",
+      "bucket": "バーガー",
+      "shopName": "ディスカバリー・レストラン",
+      "areaName": "ジュラシック・パーク",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/discovery-restaurant/index.html",
+      "reason": "official_exact_price_not_found",
+      "manualStatus": "unconfirmable",
+      "manualReason": "公式ページで同一商品ブロックの価格を確認できず"
+    },
+    {
+      "id": "food-zrf59b",
+      "name": "ミニオン・スプーン&フォークセット",
+      "category": "set",
+      "bucket": "プレート",
+      "shopName": "ハピネス・カフェ",
+      "areaName": "サンフランシスコ・エリア",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/happiness-cafe/index.html",
+      "reason": "set_or_size_ambiguous",
+      "manualStatus": "unconfirmable",
+      "manualReason": "セット/サイズ違いがあり価格の同一性を断定不可"
+    },
+    {
+      "id": "food-1nxl32b",
+      "name": "ジャングル・ビート・シェイク",
+      "category": "drink",
+      "bucket": "ドリンク",
+      "shopName": "ジャングル・ビート・シェイク",
+      "areaName": "スーパー・ニンテンドー・ワールド",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/super-nintendo-world-food/index.html",
+      "reason": "official_exact_price_not_found",
+      "manualStatus": "unconfirmable",
+      "manualReason": "公式ページで同一商品ブロックの価格を確認できず"
+    },
+    {
+      "id": "food-58j4sc",
+      "name": "ハローキティ・ドリンクカップ",
+      "category": "drink",
+      "bucket": "ドリンク",
+      "shopName": "ハローキティのコーナーカフェ",
+      "areaName": "ユニバーサル・ワンダーランド",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/hello-kittys-corner-cafe/index.html",
+      "reason": "official_exact_price_not_found",
+      "manualStatus": "unconfirmable",
+      "manualReason": "公式ページで同一商品ブロックの価格を確認できず"
+    },
+    {
+      "id": "food-sfsu3d",
+      "name": "フィルのワッフルチキンプレート",
+      "category": "dessert",
+      "bucket": "デザート",
+      "shopName": "ハピネス・カフェ",
+      "areaName": "サンフランシスコ・エリア",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/happiness-cafe/index.html",
+      "reason": "official_exact_price_not_found",
+      "manualStatus": "unconfirmable",
+      "manualReason": "公式ページで同一商品ブロックの価格を確認できず"
+    },
+    {
+      "id": "food-1l7y3bq",
+      "name": "くいしん坊ミニオンたちの大発明!「クッキー・マシン」で作る絶品サンド",
+      "category": "dessert",
+      "bucket": "デザート",
+      "shopName": "デリシャス・ミー!ザ・クッキー・キッチン",
+      "areaName": "ミニオン・パーク",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/delicious-me-the-cookie-kitchen/index.html",
+      "reason": "official_exact_price_not_found",
+      "manualStatus": "unconfirmable",
+      "manualReason": "公式ページで同一商品ブロックの価格を確認できず"
+    },
+    {
+      "id": "food-o9svxw",
+      "name": "ベビーフード",
+      "category": "chicken",
+      "bucket": "プレート",
+      "shopName": "ルイズN.Y.ピザパーラー",
+      "areaName": "ニューヨーク・エリア",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/louies-ny-pizza-parlor/index.html",
+      "reason": "official_exact_price_not_found",
+      "manualStatus": "unconfirmable",
+      "manualReason": "公式ページで同一商品ブロックの価格を確認できず"
+    },
+    {
+      "id": "food-j4nvrm",
+      "name": "超!! チョコバナナ・チュリトス",
+      "category": "churro",
+      "bucket": "チュリトス",
+      "shopName": "パーク内レストラン",
+      "areaName": "スーパー・ニンテンドー・ワールド",
+      "sourceUrl": "https://www.usj.co.jp/company/news/2026/0422/",
+      "reason": "official_exact_price_not_found",
+      "manualStatus": "unconfirmable",
+      "manualReason": "公式ページで同一商品ブロックの価格を確認できず"
+    }
+  ],
+  "areaMissingItems": [],
+  "shopMissingItems": [],
+  "categoryPendingItems": [
+    {
+      "id": "food-exqw6q",
+      "name": "ボムへい ポップコーンバケツ",
+      "category": "popcorn",
+      "shopName": "ビバリーヒルズ・ギフト前ポップコーンカート",
+      "areaName": "ハリウッド・エリア",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/food-cart/index.html"
+    },
+    {
+      "id": "food-c2z2tz",
+      "name": "めざせ大悪党! デイブ・ポップコーンバケツ",
+      "category": "popcorn",
+      "shopName": "セントラルパーク入口横ポップコーンカート",
+      "areaName": "ニューヨーク・エリア",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/food-cart/index.html"
+    },
+    {
+      "id": "food-p0tpmw",
+      "name": "アニバーサリー・スーパースター・ポップコーンバケツ",
+      "category": "popcorn",
+      "shopName": "ピットストップ・ポップコーン",
+      "areaName": "スーパー・ニンテンドー・ワールド",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/food-cart/index.html"
+    },
+    {
+      "id": "food-19w9xaa",
+      "name": "ティム・ポップコーンバケツ",
+      "category": "popcorn",
+      "shopName": "ユニバーサル・ワンダーランド入口横ポップコーンカート",
+      "areaName": "ユニバーサル・ワンダーランド",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/food-cart/index.html"
+    },
+    {
+      "id": "food-it27lt",
+      "name": "マッシュルームスープ",
+      "category": "snack",
+      "shopName": "キノピオ・カフェ",
+      "areaName": "スーパー・ニンテンドー・ワールド",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/super-nintendo-world-food/index.html"
+    },
+    {
+      "id": "food-5o6h85",
+      "name": "マリオカート・ポップコーンバケツ",
+      "category": "popcorn",
+      "shopName": "ピットストップ・ポップコーン",
+      "areaName": "スーパー・ニンテンドー・ワールド",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/pit-stop-popcorn/index.html"
+    },
+    {
+      "id": "food-1tt1au7",
+      "name": "アメリカン・ホットドッグ",
+      "category": "snack",
+      "shopName": "ワーフカフェ",
+      "areaName": "サンフランシスコ・エリア",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/food-cart/index.html"
+    },
+    {
+      "id": "food-1xzzwjj",
+      "name": "パックンフラワー・カプレーゼ",
+      "category": "snack",
+      "shopName": "キノピオ・カフェ",
+      "areaName": "スーパー・ニンテンドー・ワールド",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/documents/usj-pdf-restaurant-other-menu-kinopios-cafe-en.pdf"
+    },
+    {
+      "id": "food-12u92cu",
+      "name": "ヨッシーの大好きなフルーツと野菜のサラダ",
+      "category": "snack",
+      "shopName": "キノピオ・カフェ",
+      "areaName": "スーパー・ニンテンドー・ワールド",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/documents/usj-pdf-restaurant-other-menu-kinopios-cafe-en.pdf"
+    },
+    {
+      "id": "food-1hr4tu7",
+      "name": "シュリンプ&めんたいチーズのカルツォーネ",
+      "category": "snack",
+      "shopName": "ボードウォーク・スナック",
+      "areaName": "アミティ・ビレッジ",
+      "sourceUrl": "https://www.usj.co.jp/pdf/map_restaurant.pdf"
+    }
+  ],
+  "duplicateCandidateCount": 23,
+  "highPriorityOpen": 0,
+  "categoryStats": {
+    "パスタ": {
+      "total": 6,
+      "known": 6,
+      "unknown": 0,
+      "reviewed": 6,
+      "reviewOpen": 0,
+      "rate": "100%",
+      "reviewRate": "100%"
+    },
+    "バーガー": {
+      "total": 25,
+      "known": 24,
+      "unknown": 1,
+      "reviewed": 25,
+      "reviewOpen": 0,
+      "rate": "96%",
+      "reviewRate": "100%"
+    },
+    "デザート": {
+      "total": 39,
+      "known": 37,
+      "unknown": 2,
+      "reviewed": 39,
+      "reviewOpen": 0,
+      "rate": "94.9%",
+      "reviewRate": "100%"
+    },
+    "プレート": {
+      "total": 34,
+      "known": 32,
+      "unknown": 2,
+      "reviewed": 34,
+      "reviewOpen": 0,
+      "rate": "94.1%",
+      "reviewRate": "100%"
+    },
+    "ドリンク": {
+      "total": 26,
+      "known": 24,
+      "unknown": 2,
+      "reviewed": 26,
+      "reviewOpen": 0,
+      "rate": "92.3%",
+      "reviewRate": "100%"
+    },
+    "キッズ": {
+      "total": 15,
+      "known": 15,
+      "unknown": 0,
+      "reviewed": 15,
+      "reviewOpen": 0,
+      "rate": "100%",
+      "reviewRate": "100%"
+    },
+    "ライス": {
+      "total": 13,
+      "known": 13,
+      "unknown": 0,
+      "reviewed": 13,
+      "reviewOpen": 0,
+      "rate": "100%",
+      "reviewRate": "100%"
+    },
+    "ピザ": {
+      "total": 12,
+      "known": 12,
+      "unknown": 0,
+      "reviewed": 12,
+      "reviewOpen": 0,
+      "rate": "100%",
+      "reviewRate": "100%"
+    },
+    "チュリトス": {
+      "total": 20,
+      "known": 19,
+      "unknown": 1,
+      "reviewed": 20,
+      "reviewOpen": 0,
+      "rate": "95%",
+      "reviewRate": "100%"
+    },
+    "その他": {
+      "total": 10,
+      "known": 10,
+      "unknown": 0,
+      "reviewed": 10,
+      "reviewOpen": 0,
+      "rate": "100%",
+      "reviewRate": "100%"
+    }
+  },
+  "duplicateCandidates": [
+    {
+      "foodId": "food-6d5z2w",
+      "foodName": "ラプトル・ベーコン&ビーフバーガーセット",
+      "otherFoodId": "food-e0few1",
+      "otherFoodName": "ラプトル・バーガーセット",
+      "reason": "同画像 / 同店舗 / 同source_url"
+    },
+    {
+      "foodId": "food-u2l4ko",
+      "foodName": "DK クラッシュサンデー ~トロピカルバナナ・フレーバー~",
+      "otherFoodId": "food-1wc5ggu",
+      "otherFoodName": "DK クラッシュサンデー ~トロピカルバナナ・フレーバー~ マグカップ付き",
+      "reason": "商品名類似 / 同店舗 / 同source_url"
+    },
+    {
+      "foodId": "food-1yi0toj",
+      "foodName": "DK クラッシュサンデー ~トロピカルバナナ・フレーバー~ マグカップ付き",
+      "otherFoodId": "food-u2l4ko",
+      "otherFoodName": "DK クラッシュサンデー ~トロピカルバナナ・フレーバー~",
+      "reason": "商品名類似 / 同店舗"
+    },
+    {
+      "foodId": "food-1yi0toj",
+      "foodName": "DK クラッシュサンデー ~トロピカルバナナ・フレーバー~ マグカップ付き",
+      "otherFoodId": "food-1wc5ggu",
+      "otherFoodName": "DK クラッシュサンデー ~トロピカルバナナ・フレーバー~ マグカップ付き",
+      "reason": "商品名類似 / 同店舗"
+    },
+    {
+      "foodId": "food-19tglum",
+      "foodName": "T-REX・ガーリックトマト・ビーフバーガーセット",
+      "otherFoodId": "food-116rf8q",
+      "otherFoodName": "T-REX・バーガーセット",
+      "reason": "同画像 / 同店舗 / 同source_url"
+    },
+    {
+      "foodId": "food-1ksr7hg",
+      "foodName": "アイスクリーム スチュアート・バケツ スプーン付き",
+      "otherFoodId": "food-1qcrkg3",
+      "otherFoodName": "アイスクリーム スチュアート・バケツ スプーン",
+      "reason": "商品名類似 / 同店舗"
+    },
+    {
+      "foodId": "food-17k66nk",
+      "foodName": "カレー・キッズプレート",
+      "otherFoodId": "food-1u4bz3q",
+      "otherFoodName": "カレー・キッズセット",
+      "reason": "商品名類似 / 同source_url"
+    },
+    {
+      "foodId": "food-1efoz95",
+      "foodName": "スタジオ・スターズ 25周年スペシャルプレート",
+      "otherFoodId": "food-w9l17",
+      "otherFoodName": "スタジオ・スターズ・セット",
+      "reason": "商品名類似 / 同店舗"
+    },
+    {
+      "foodId": "food-1435vjy",
+      "foodName": "スチュアートのベーコンチーズ・バーガープレート",
+      "otherFoodId": "food-bcbp5u",
+      "otherFoodName": "スチュアートのビッグベーコンチーズ・バーガープレート",
+      "reason": "同画像 / 同店舗 / 同source_url"
+    },
+    {
+      "foodId": "food-1jfqxy1",
+      "foodName": "ストロベリーチュリトス",
+      "otherFoodId": "food-m0djrd",
+      "otherFoodName": "ココア&クッキー・チュリトス",
+      "reason": "同画像 / 同source_url"
+    },
+    {
+      "foodId": "food-ogc1ha",
+      "foodName": "チョコ&クッキーチュリトス",
+      "otherFoodId": "food-o4pm0y",
+      "otherFoodName": "チョコ&クッキー・チュリトス",
+      "reason": "商品名類似 / 同画像 / 同source_url"
+    },
+    {
+      "foodId": "food-1eqmspw",
+      "foodName": "ハンバーガー・キッズセット(マリオのピック付き)",
+      "otherFoodId": "food-1xe3vuu",
+      "otherFoodName": "ハンバーガー・キッズセット(マリオのピック付)",
+      "reason": "商品名類似 / 同画像 / 同店舗"
+    },
+    {
+      "foodId": "food-1x0ir52",
+      "foodName": "プテラノドン・フライドチキンバーガーセット",
+      "otherFoodId": "food-wn7ivo",
+      "otherFoodName": "プテラノドン・バーガーセット",
+      "reason": "同画像 / 同店舗 / 同source_url"
+    },
+    {
+      "foodId": "food-1ojz6jw",
+      "foodName": "ボブのワッフルチキンプレート",
+      "otherFoodId": "food-sfsu3d",
+      "otherFoodName": "フィルのワッフルチキンプレート",
+      "reason": "同画像 / 同店舗 / 同source_url"
+    },
+    {
+      "foodId": "food-nzx6eb",
+      "foodName": "マリオの帽子 パンケーキサンド ~いちごのショートケーキ~",
+      "otherFoodId": "food-5ib5k3",
+      "otherFoodName": "パンケーキ・サンド マリオの帽子 ~いちごのショートケーキ~",
+      "reason": "同画像 / 同店舗 / 同source_url"
+    },
+    {
+      "foodId": "food-12tnz7b",
+      "foodName": "ミニオンズ・カップデザート",
+      "otherFoodId": "food-uqw79q",
+      "otherFoodName": "デザート&ドリンクバーセット",
+      "reason": "同画像 / 同店舗 / 同source_url"
+    },
+    {
+      "foodId": "food-gmrx8l",
+      "foodName": "ミニオンのチョコバナナ・チュリトス",
+      "otherFoodId": "food-j4nvrm",
+      "otherFoodName": "超!! チョコバナナ・チュリトス",
+      "reason": "同画像"
+    },
+    {
+      "foodId": "food-yhtmyt",
+      "foodName": "モササウルス・フィッシュバーガーセット",
+      "otherFoodId": "food-9un9k0",
+      "otherFoodName": "モササウルス・バーガーセット",
+      "reason": "同画像 / 同店舗 / 同source_url"
+    },
+    {
+      "foodId": "food-xfenq1",
+      "foodName": "決めろ!! 黒閃チュリトス ~パッションフルーツ・フレーバー~",
+      "otherFoodId": "food-tgucsr",
+      "otherFoodName": "虚式「茈」 チュリトス ~ミックスベリー味~",
+      "reason": "同画像"
+    },
+    {
+      "foodId": "food-1ocz8a8",
+      "foodName": "照り焼きチキン ピッツァ・デニッシュセット",
+      "otherFoodId": "food-1rsazo8",
+      "otherFoodName": "ピッツァ・デニッシュセット ~照り焼きチキン~",
+      "reason": "同画像 / 同店舗 / 同source_url"
+    }
+  ]
+}

@@ -1,0 +1,308 @@
+{
+  "mode": "audit",
+  "generatedAt": "2026-06-01T14:39:44.934Z",
+  "totals": {
+    "foods": 200,
+    "images": 200,
+    "placeholders": 0,
+    "priceKnownBefore": 192,
+    "priceUnknownBefore": 8,
+    "priceKnownAfter": 192,
+    "priceUnknownAfter": 8,
+    "priceRateAfter": "96%",
+    "newPrices": 0,
+    "reducedUnknown": 0
+  },
+  "missingByCategory": {
+    "バーガー": 1,
+    "プレート": 2,
+    "ドリンク": 2,
+    "デザート": 2,
+    "チュリトス": 1
+  },
+  "categoryStats": {
+    "パスタ": {
+      "total": 6,
+      "known": 6,
+      "unknown": 0,
+      "rate": "100%"
+    },
+    "バーガー": {
+      "total": 25,
+      "known": 24,
+      "unknown": 1,
+      "rate": "96%"
+    },
+    "デザート": {
+      "total": 39,
+      "known": 37,
+      "unknown": 2,
+      "rate": "94.9%"
+    },
+    "プレート": {
+      "total": 34,
+      "known": 32,
+      "unknown": 2,
+      "rate": "94.1%"
+    },
+    "ドリンク": {
+      "total": 26,
+      "known": 24,
+      "unknown": 2,
+      "rate": "92.3%"
+    },
+    "キッズ": {
+      "total": 15,
+      "known": 15,
+      "unknown": 0,
+      "rate": "100%"
+    },
+    "ライス": {
+      "total": 13,
+      "known": 13,
+      "unknown": 0,
+      "rate": "100%"
+    },
+    "ピザ": {
+      "total": 12,
+      "known": 12,
+      "unknown": 0,
+      "rate": "100%"
+    },
+    "チュリトス": {
+      "total": 20,
+      "known": 19,
+      "unknown": 1,
+      "rate": "95%"
+    },
+    "その他": {
+      "total": 10,
+      "known": 10,
+      "unknown": 0,
+      "rate": "100%"
+    }
+  },
+  "updates": [],
+  "skipped": [
+    {
+      "foodId": "food-6d5z2w",
+      "name": "ラプトル・ベーコン&ビーフバーガーセット",
+      "reason": "official-exact-price-candidate-not-found"
+    },
+    {
+      "foodId": "food-zrf59b",
+      "name": "ミニオン・スプーン&フォークセット",
+      "reason": "official-exact-price-candidate-not-found"
+    },
+    {
+      "foodId": "food-1nxl32b",
+      "name": "ジャングル・ビート・シェイク",
+      "reason": "official-exact-price-candidate-not-found"
+    },
+    {
+      "foodId": "food-58j4sc",
+      "name": "ハローキティ・ドリンクカップ",
+      "reason": "official-exact-price-candidate-not-found"
+    },
+    {
+      "foodId": "food-sfsu3d",
+      "name": "フィルのワッフルチキンプレート",
+      "reason": "official-exact-price-candidate-not-found"
+    },
+    {
+      "foodId": "food-1l7y3bq",
+      "name": "くいしん坊ミニオンたちの大発明!「クッキー・マシン」で作る絶品サンド",
+      "reason": "official-exact-price-candidate-not-found"
+    },
+    {
+      "foodId": "food-o9svxw",
+      "name": "ベビーフード",
+      "reason": "official-exact-price-candidate-not-found"
+    },
+    {
+      "foodId": "food-j4nvrm",
+      "name": "超!! チョコバナナ・チュリトス",
+      "reason": "official-exact-price-candidate-not-found"
+    }
+  ],
+  "missingRows": [
+    {
+      "foodId": "food-6d5z2w",
+      "name": "ラプトル・ベーコン&ビーフバーガーセット",
+      "category": "burger",
+      "bucket": "バーガー",
+      "area": "ジュラシック・パーク",
+      "shop": "ディスカバリー・レストラン",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/discovery-restaurant/index.html",
+      "hasImage": true,
+      "priceStatus": "missing"
+    },
+    {
+      "foodId": "food-zrf59b",
+      "name": "ミニオン・スプーン&フォークセット",
+      "category": "set",
+      "bucket": "プレート",
+      "area": "サンフランシスコ・エリア",
+      "shop": "ハピネス・カフェ",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/happiness-cafe/index.html",
+      "hasImage": true,
+      "priceStatus": "missing"
+    },
+    {
+      "foodId": "food-1nxl32b",
+      "name": "ジャングル・ビート・シェイク",
+      "category": "drink",
+      "bucket": "ドリンク",
+      "area": "スーパー・ニンテンドー・ワールド",
+      "shop": "ジャングル・ビート・シェイク",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/super-nintendo-world-food/index.html",
+      "hasImage": true,
+      "priceStatus": "missing"
+    },
+    {
+      "foodId": "food-58j4sc",
+      "name": "ハローキティ・ドリンクカップ",
+      "category": "drink",
+      "bucket": "ドリンク",
+      "area": "ユニバーサル・ワンダーランド",
+      "shop": "ハローキティのコーナーカフェ",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/hello-kittys-corner-cafe/index.html",
+      "hasImage": true,
+      "priceStatus": "missing"
+    },
+    {
+      "foodId": "food-sfsu3d",
+      "name": "フィルのワッフルチキンプレート",
+      "category": "dessert",
+      "bucket": "デザート",
+      "area": "サンフランシスコ・エリア",
+      "shop": "ハピネス・カフェ",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/happiness-cafe/index.html",
+      "hasImage": true,
+      "priceStatus": "missing"
+    },
+    {
+      "foodId": "food-1l7y3bq",
+      "name": "くいしん坊ミニオンたちの大発明!「クッキー・マシン」で作る絶品サンド",
+      "category": "dessert",
+      "bucket": "デザート",
+      "area": "ミニオン・パーク",
+      "shop": "デリシャス・ミー!ザ・クッキー・キッチン",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/delicious-me-the-cookie-kitchen/index.html",
+      "hasImage": true,
+      "priceStatus": "missing"
+    },
+    {
+      "foodId": "food-o9svxw",
+      "name": "ベビーフード",
+      "category": "chicken",
+      "bucket": "プレート",
+      "area": "ニューヨーク・エリア",
+      "shop": "ルイズN.Y.ピザパーラー",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/louies-ny-pizza-parlor/index.html",
+      "hasImage": true,
+      "priceStatus": "missing"
+    },
+    {
+      "foodId": "food-j4nvrm",
+      "name": "超!! チョコバナナ・チュリトス",
+      "category": "churro",
+      "bucket": "チュリトス",
+      "area": "スーパー・ニンテンドー・ワールド",
+      "shop": "パーク内レストラン",
+      "sourceUrl": "https://www.usj.co.jp/company/news/2026/0422/",
+      "hasImage": true,
+      "priceStatus": "missing"
+    }
+  ],
+  "missingTop50": [
+    {
+      "foodId": "food-1nxl32b",
+      "name": "ジャングル・ビート・シェイク",
+      "category": "drink",
+      "bucket": "ドリンク",
+      "area": "スーパー・ニンテンドー・ワールド",
+      "shop": "ジャングル・ビート・シェイク",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/super-nintendo-world-food/index.html",
+      "hasImage": true,
+      "priceStatus": "missing"
+    },
+    {
+      "foodId": "food-58j4sc",
+      "name": "ハローキティ・ドリンクカップ",
+      "category": "drink",
+      "bucket": "ドリンク",
+      "area": "ユニバーサル・ワンダーランド",
+      "shop": "ハローキティのコーナーカフェ",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/hello-kittys-corner-cafe/index.html",
+      "hasImage": true,
+      "priceStatus": "missing"
+    },
+    {
+      "foodId": "food-1l7y3bq",
+      "name": "くいしん坊ミニオンたちの大発明!「クッキー・マシン」で作る絶品サンド",
+      "category": "dessert",
+      "bucket": "デザート",
+      "area": "ミニオン・パーク",
+      "shop": "デリシャス・ミー!ザ・クッキー・キッチン",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/delicious-me-the-cookie-kitchen/index.html",
+      "hasImage": true,
+      "priceStatus": "missing"
+    },
+    {
+      "foodId": "food-sfsu3d",
+      "name": "フィルのワッフルチキンプレート",
+      "category": "dessert",
+      "bucket": "デザート",
+      "area": "サンフランシスコ・エリア",
+      "shop": "ハピネス・カフェ",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/happiness-cafe/index.html",
+      "hasImage": true,
+      "priceStatus": "missing"
+    },
+    {
+      "foodId": "food-6d5z2w",
+      "name": "ラプトル・ベーコン&ビーフバーガーセット",
+      "category": "burger",
+      "bucket": "バーガー",
+      "area": "ジュラシック・パーク",
+      "shop": "ディスカバリー・レストラン",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/discovery-restaurant/index.html",
+      "hasImage": true,
+      "priceStatus": "missing"
+    },
+    {
+      "foodId": "food-o9svxw",
+      "name": "ベビーフード",
+      "category": "chicken",
+      "bucket": "プレート",
+      "area": "ニューヨーク・エリア",
+      "shop": "ルイズN.Y.ピザパーラー",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/louies-ny-pizza-parlor/index.html",
+      "hasImage": true,
+      "priceStatus": "missing"
+    },
+    {
+      "foodId": "food-zrf59b",
+      "name": "ミニオン・スプーン&フォークセット",
+      "category": "set",
+      "bucket": "プレート",
+      "area": "サンフランシスコ・エリア",
+      "shop": "ハピネス・カフェ",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/happiness-cafe/index.html",
+      "hasImage": true,
+      "priceStatus": "missing"
+    },
+    {
+      "foodId": "food-j4nvrm",
+      "name": "超!! チョコバナナ・チュリトス",
+      "category": "churro",
+      "bucket": "チュリトス",
+      "area": "スーパー・ニンテンドー・ワールド",
+      "shop": "パーク内レストラン",
+      "sourceUrl": "https://www.usj.co.jp/company/news/2026/0422/",
+      "hasImage": true,
+      "priceStatus": "missing"
+    }
+  ]
+}

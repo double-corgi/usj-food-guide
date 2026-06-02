@@ -1,0 +1,95 @@
+{
+  "generatedAt": "2026-06-02T06:21:51.688Z",
+  "rows": [
+    {
+      "dataName": "食べた記録",
+      "storage": "localStorage: uniba-food-logs-v1 / Supabase optional",
+      "personalData": "端末内記録。メモに個人情報を入力した場合のみ該当可能性あり",
+      "purpose": "食べた履歴、制覇率、プロフィール表示",
+      "deletion": "ブラウザデータ削除、またはアプリ内記録削除。Supabase利用時は削除依頼対応",
+      "appStoreDisclosure": "User Content / Other User Data depending on sync setting",
+      "googlePlayDisclosure": "App activity / User-provided content depending on sync setting"
+    },
+    {
+      "dataName": "最近見た商品",
+      "storage": "localStorage: uniba-recent-foods-v1",
+      "personalData": "いいえ",
+      "purpose": "ホームの最近見た商品表示",
+      "deletion": "ブラウザデータ削除",
+      "appStoreDisclosure": "Usage Data if collected off-device; local onlyなら収集なし",
+      "googlePlayDisclosure": "App activity if collected off-device; local onlyなら収集なし"
+    },
+    {
+      "dataName": "検索履歴",
+      "storage": "localStorage: uniba-recent-searches-v1",
+      "personalData": "検索内容次第で該当可能性あり",
+      "purpose": "検索候補表示",
+      "deletion": "ブラウザデータ削除",
+      "appStoreDisclosure": "Search History if collected off-device; local onlyなら収集なし",
+      "googlePlayDisclosure": "App activity/Search history if collected off-device; local onlyなら収集なし"
+    },
+    {
+      "dataName": "PWA案内状態",
+      "storage": "localStorage: uniba-pwa-ios-hint-dismissed",
+      "personalData": "いいえ",
+      "purpose": "同じ案内を繰り返さない",
+      "deletion": "ブラウザデータ削除",
+      "appStoreDisclosure": "収集なし",
+      "googlePlayDisclosure": "収集なし"
+    },
+    {
+      "dataName": "発見報告",
+      "storage": "scripts/output/product-submissions.generated.json",
+      "personalData": "任意連絡先を入力した場合は該当",
+      "purpose": "商品追加、価格修正、販売終了報告、情報修正の管理者確認",
+      "deletion": "お問い合わせから削除依頼",
+      "appStoreDisclosure": "Contact Info / User Content / Customer Support",
+      "googlePlayDisclosure": "Personal info / App info and performance / User-provided content"
+    },
+    {
+      "dataName": "お問い合わせ",
+      "storage": "scripts/output/contact-submissions.generated.json",
+      "personalData": "任意連絡先を入力した場合は該当",
+      "purpose": "問い合わせ対応、削除依頼、セキュリティ連絡",
+      "deletion": "お問い合わせから削除依頼",
+      "appStoreDisclosure": "Contact Info / Customer Support",
+      "googlePlayDisclosure": "Personal info / App activity"
+    },
+    {
+      "dataName": "管理者アクセスキー",
+      "storage": "Cookie: admin_key / query parameter",
+      "personalData": "いいえ",
+      "purpose": "本番外部アクセス時の管理画面保護",
+      "deletion": "Cookie削除",
+      "appStoreDisclosure": "収集なし",
+      "googlePlayDisclosure": "収集なし"
+    },
+    {
+      "dataName": "エラー監視",
+      "storage": "NEXT_PUBLIC_SENTRY_DSN設定時にSentryへ送信",
+      "personalData": "通常いいえ。エラーに入力値を含めない運用方針",
+      "purpose": "障害調査、品質改善",
+      "deletion": "Sentry側保持期間設定、削除依頼",
+      "appStoreDisclosure": "Diagnostics",
+      "googlePlayDisclosure": "App info and performance"
+    },
+    {
+      "dataName": "アクセス解析",
+      "storage": "NEXT_PUBLIC_ANALYTICS_ENDPOINT設定時に指定endpointへ送信 / localStorage: uniba-local-analytics-v1は開発設定時のみ",
+      "personalData": "通常いいえ",
+      "purpose": "ページ表示傾向、改善優先度判断",
+      "deletion": "endpoint側削除、設定解除、ブラウザデータ削除",
+      "appStoreDisclosure": "Usage Data if sent off-device; local onlyなら収集なし",
+      "googlePlayDisclosure": "App activity if sent off-device; local onlyなら収集なし"
+    },
+    {
+      "dataName": "Cookie / sessionStorage / IndexedDB",
+      "storage": "標準機能では未使用。Supabase認証利用時は認証Cookieを使用",
+      "personalData": "認証利用時は該当可能性あり",
+      "purpose": "認証状態管理",
+      "deletion": "ログアウト、Cookie削除、削除依頼",
+      "appStoreDisclosure": "User ID if account sync is enabled",
+      "googlePlayDisclosure": "Personal info if account sync is enabled"
+    }
+  ]
+}

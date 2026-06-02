@@ -1,0 +1,1179 @@
+{
+  "mode": "dry-run",
+  "generatedAt": "2026-05-31T09:39:14.052Z",
+  "totals": {
+    "foodsBefore": 200,
+    "foodsAfter": 200,
+    "imagesBefore": 200,
+    "imagesAfter": 200,
+    "placeholdersBefore": 0,
+    "placeholdersAfter": 0,
+    "priceKnownBefore": 79,
+    "priceKnownAfter": 79,
+    "priceUnknownBefore": 121,
+    "priceUnknownAfter": 121,
+    "priceRateBefore": "39.5%",
+    "priceRateAfter": "39.5%",
+    "newPrices": 0,
+    "reducedUnknown": 0,
+    "trustedRegistrySize": 184,
+    "skippedConflicts": 0,
+    "imageRegressions": 0
+  },
+  "categoryStats": {
+    "パスタ": {
+      "total": 6,
+      "known": 3,
+      "unknown": 3,
+      "rate": "50%"
+    },
+    "バーガー": {
+      "total": 25,
+      "known": 3,
+      "unknown": 22,
+      "rate": "12%"
+    },
+    "デザート": {
+      "total": 39,
+      "known": 7,
+      "unknown": 32,
+      "rate": "17.9%"
+    },
+    "プレート": {
+      "total": 34,
+      "known": 12,
+      "unknown": 22,
+      "rate": "35.3%"
+    },
+    "ドリンク": {
+      "total": 26,
+      "known": 4,
+      "unknown": 22,
+      "rate": "15.4%"
+    },
+    "キッズ": {
+      "total": 15,
+      "known": 14,
+      "unknown": 1,
+      "rate": "93.3%"
+    },
+    "ライス": {
+      "total": 13,
+      "known": 6,
+      "unknown": 7,
+      "rate": "46.2%"
+    },
+    "ピザ": {
+      "total": 12,
+      "known": 7,
+      "unknown": 5,
+      "rate": "58.3%"
+    },
+    "チュリトス": {
+      "total": 20,
+      "known": 19,
+      "unknown": 1,
+      "rate": "95%"
+    },
+    "その他": {
+      "total": 10,
+      "known": 4,
+      "unknown": 6,
+      "rate": "40%"
+    }
+  },
+  "updates": [],
+  "skipped": [],
+  "stillUnknown": [
+    {
+      "foodId": "food-62sv4l",
+      "name": "スーパースター・アニバーサリープレート ~マッシュルーム・ラザニア&フライドチキン~",
+      "category": "noodle",
+      "bucket": "パスタ",
+      "shop": "キノピオ・カフェ",
+      "area": "スーパー・ニンテンドー・ワールド",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/kinopios-cafe/index.html"
+    },
+    {
+      "foodId": "food-cygfys",
+      "name": "スーパー・ニンテンドー・ワールド・アニバーサリーケーキ(4名様分)",
+      "category": "dessert",
+      "bucket": "デザート",
+      "shop": "キノピオ・カフェ",
+      "area": "スーパー・ニンテンドー・ワールド",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/kinopios-cafe/index.html"
+    },
+    {
+      "foodId": "food-15srg5l",
+      "name": "スーパースター・プラザ・アイス ~ベリー&りんご~(無果汁)",
+      "category": "dessert",
+      "bucket": "デザート",
+      "shop": "キノピオ・カフェ",
+      "area": "スーパー・ニンテンドー・ワールド",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/kinopios-cafe/index.html"
+    },
+    {
+      "foodId": "food-up3lba",
+      "name": "ローストビーフ",
+      "category": "chicken",
+      "bucket": "プレート",
+      "shop": "三本の箒",
+      "area": "ウィザーディング・ワールド・オブ・ハリー・ポッター",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/the-wizarding-world-of-harry-potter-food/index.html"
+    },
+    {
+      "foodId": "food-1reufss",
+      "name": "ロティサリー・スモークチキン&ポークリブ",
+      "category": "chicken",
+      "bucket": "プレート",
+      "shop": "三本の箒",
+      "area": "ウィザーディング・ワールド・オブ・ハリー・ポッター",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/the-wizarding-world-of-harry-potter-food/index.html"
+    },
+    {
+      "foodId": "food-2qri4c",
+      "name": "ロティサリー・スモークチキン&シェパーズパイ",
+      "category": "chicken",
+      "bucket": "プレート",
+      "shop": "三本の箒",
+      "area": "ウィザーディング・ワールド・オブ・ハリー・ポッター",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/three-broomsticks/index.html"
+    },
+    {
+      "foodId": "food-1dm0ouy",
+      "name": "ポークリブ",
+      "category": "chicken",
+      "bucket": "プレート",
+      "shop": "三本の箒",
+      "area": "ウィザーディング・ワールド・オブ・ハリー・ポッター",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/three-broomsticks/index.html"
+    },
+    {
+      "foodId": "food-1m8i41b",
+      "name": "バタービールTM・シュークリーム",
+      "category": "dessert",
+      "bucket": "デザート",
+      "shop": "三本の箒",
+      "area": "ウィザーディング・ワールド・オブ・ハリー・ポッター",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/seasonal-food/index.html"
+    },
+    {
+      "foodId": "food-16q65hw",
+      "name": "バタービールTM・プディング",
+      "category": "dessert",
+      "bucket": "デザート",
+      "shop": "三本の箒",
+      "area": "ウィザーディング・ワールド・オブ・ハリー・ポッター",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/three-broomsticks/index.html"
+    },
+    {
+      "foodId": "food-1efoz95",
+      "name": "スタジオ・スターズ 25周年スペシャルプレート",
+      "category": "set",
+      "bucket": "プレート",
+      "shop": "スタジオ・スターズ・レストラン",
+      "area": "ハリウッド・エリア",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/studio-stars-restaurant/index.html"
+    },
+    {
+      "foodId": "food-1hhn874",
+      "name": "BBQ ポークリブ&フライドチキン・プレート",
+      "category": "chicken",
+      "bucket": "プレート",
+      "shop": "スタジオ・スターズ・レストラン",
+      "area": "ハリウッド・エリア",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/studio-stars-restaurant/index.html"
+    },
+    {
+      "foodId": "food-ehewed",
+      "name": "スタジオ・スターズ BLT バーガー・プレート",
+      "category": "burger",
+      "bucket": "バーガー",
+      "shop": "スタジオ・スターズ・レストラン",
+      "area": "ハリウッド・エリア",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/studio-stars-restaurant/index.html"
+    },
+    {
+      "foodId": "food-1f1v45i",
+      "name": "チキンレッグカレー・プレート",
+      "category": "rice",
+      "bucket": "ライス",
+      "shop": "スタジオ・スターズ・レストラン",
+      "area": "ハリウッド・エリア",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/studio-stars-restaurant/index.html"
+    },
+    {
+      "foodId": "food-ajq9zg",
+      "name": "クラムチャウダーグラタン・プレート",
+      "category": "set",
+      "bucket": "プレート",
+      "shop": "スタジオ・スターズ・レストラン",
+      "area": "ハリウッド・エリア",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/studio-stars-restaurant/index.html"
+    },
+    {
+      "foodId": "food-dn0p3s",
+      "name": "25周年アニバーサリー・ドリンクカップ",
+      "category": "drink",
+      "bucket": "ドリンク",
+      "shop": "スタジオ・スターズ・レストラン",
+      "area": "ハリウッド・エリア",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/studio-stars-restaurant/index.html"
+    },
+    {
+      "foodId": "food-rvos7a",
+      "name": "プルドポークバーガー 25周年コースターセット",
+      "category": "burger",
+      "bucket": "バーガー",
+      "shop": "メルズ・ドライブイン",
+      "area": "ハリウッド・エリア",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/seasonal-food/index.html"
+    },
+    {
+      "foodId": "food-hyfchi",
+      "name": "BBQベーコンチーズバーガーセット",
+      "category": "burger",
+      "bucket": "バーガー",
+      "shop": "メルズ・ドライブイン",
+      "area": "ハリウッド・エリア",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/mels-drive-in/index.html"
+    },
+    {
+      "foodId": "food-1ulknep",
+      "name": "クラシックチーズバーガーセット",
+      "category": "burger",
+      "bucket": "バーガー",
+      "shop": "メルズ・ドライブイン",
+      "area": "ハリウッド・エリア",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/mels-drive-in/index.html"
+    },
+    {
+      "foodId": "food-1qzo3v2",
+      "name": "クラシックバーガーセット",
+      "category": "burger",
+      "bucket": "バーガー",
+      "shop": "メルズ・ドライブイン",
+      "area": "ハリウッド・エリア",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/mels-drive-in/index.html"
+    },
+    {
+      "foodId": "food-14hntqo",
+      "name": "アメリカン・アップルクランブルパイ",
+      "category": "dessert",
+      "bucket": "デザート",
+      "shop": "メルズ・ドライブイン",
+      "area": "ハリウッド・エリア",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/mels-drive-in/index.html"
+    },
+    {
+      "foodId": "food-19tglum",
+      "name": "T-REX・ガーリックトマト・ビーフバーガーセット",
+      "category": "burger",
+      "bucket": "バーガー",
+      "shop": "ディスカバリー・レストラン",
+      "area": "ジュラシック・パーク",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/discovery-restaurant/index.html"
+    },
+    {
+      "foodId": "food-6d5z2w",
+      "name": "ラプトル・ベーコン&ビーフバーガーセット",
+      "category": "burger",
+      "bucket": "バーガー",
+      "shop": "ディスカバリー・レストラン",
+      "area": "ジュラシック・パーク",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/discovery-restaurant/index.html"
+    },
+    {
+      "foodId": "food-1x0ir52",
+      "name": "プテラノドン・フライドチキンバーガーセット",
+      "category": "burger",
+      "bucket": "バーガー",
+      "shop": "ディスカバリー・レストラン",
+      "area": "ジュラシック・パーク",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/discovery-restaurant/index.html"
+    },
+    {
+      "foodId": "food-yhtmyt",
+      "name": "モササウルス・フィッシュバーガーセット",
+      "category": "burger",
+      "bucket": "バーガー",
+      "shop": "ディスカバリー・レストラン",
+      "area": "ジュラシック・パーク",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/discovery-restaurant/index.html"
+    },
+    {
+      "foodId": "food-alnomv",
+      "name": "ジュラシック・パーク・ドリンクボトル",
+      "category": "drink",
+      "bucket": "ドリンク",
+      "shop": "ディスカバリー・レストラン",
+      "area": "ジュラシック・パーク",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/discovery-restaurant/index.html"
+    },
+    {
+      "foodId": "food-9s2577",
+      "name": "ジュラシックパーク・ケーキ ~チョコ&ダークチェリー~",
+      "category": "dessert",
+      "bucket": "デザート",
+      "shop": "ディスカバリー・レストラン",
+      "area": "ジュラシック・パーク",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/discovery-restaurant/index.html"
+    },
+    {
+      "foodId": "food-15hqyi6",
+      "name": "フライングダイナソー・カップケーキ ~チョコ&ラズベリー~",
+      "category": "dessert",
+      "bucket": "デザート",
+      "shop": "ディスカバリー・レストラン",
+      "area": "ジュラシック・パーク",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/discovery-restaurant/index.html"
+    },
+    {
+      "foodId": "food-ei17e1",
+      "name": "スパイシーシュリンプ・ブリトーセット",
+      "category": "set",
+      "bucket": "プレート",
+      "shop": "アミティ・ランディング・レストラン",
+      "area": "アミティ・ビレッジ",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/amity-landing-restaurant/index.html"
+    },
+    {
+      "foodId": "food-k6pr7l",
+      "name": "チキン&アボカド・ブリトーセット",
+      "category": "set",
+      "bucket": "プレート",
+      "shop": "アミティ・ランディング・レストラン",
+      "area": "アミティ・ビレッジ",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/amity-landing-restaurant/index.html"
+    },
+    {
+      "foodId": "food-1mjhxhz",
+      "name": "バーベキューポーク・ブリトーセット",
+      "category": "set",
+      "bucket": "プレート",
+      "shop": "アミティ・ランディング・レストラン",
+      "area": "アミティ・ビレッジ",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/amity-landing-restaurant/index.html"
+    },
+    {
+      "foodId": "food-1u4li6v",
+      "name": "チリコンカンビーンズ・ブリトーセット",
+      "category": "set",
+      "bucket": "プレート",
+      "shop": "アミティ・ランディング・レストラン",
+      "area": "アミティ・ビレッジ",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/amity-landing-restaurant/index.html"
+    },
+    {
+      "foodId": "food-161ftzo",
+      "name": "JAWSがくるぞ!~クリームソーダ・ロールケーキ~",
+      "category": "dessert",
+      "bucket": "デザート",
+      "shop": "アミティ・ランディング・レストラン",
+      "area": "アミティ・ビレッジ",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/amity-landing-restaurant/index.html"
+    },
+    {
+      "foodId": "food-13uu2tv",
+      "name": "ジョーズ・スプラッシュ ~ブルーハワイ&ソーダ~",
+      "category": "drink",
+      "bucket": "ドリンク",
+      "shop": "アミティ・ランディング・レストラン",
+      "area": "アミティ・ビレッジ",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/amity-landing-restaurant/index.html"
+    },
+    {
+      "foodId": "food-1ojz6jw",
+      "name": "ボブのワッフルチキンプレート",
+      "category": "dessert",
+      "bucket": "デザート",
+      "shop": "ハピネス・カフェ",
+      "area": "サンフランシスコ・エリア",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/happiness-cafe/index.html"
+    },
+    {
+      "foodId": "food-1435vjy",
+      "name": "スチュアートのベーコンチーズ・バーガープレート",
+      "category": "burger",
+      "bucket": "バーガー",
+      "shop": "ハピネス・カフェ",
+      "area": "サンフランシスコ・エリア",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/happiness-cafe/index.html"
+    },
+    {
+      "foodId": "food-1fcbolg",
+      "name": "デイブのキーマカレープレート",
+      "category": "rice",
+      "bucket": "ライス",
+      "shop": "ハピネス・カフェ",
+      "area": "サンフランシスコ・エリア",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/happiness-cafe/index.html"
+    },
+    {
+      "foodId": "food-12tnz7b",
+      "name": "ミニオンズ・カップデザート",
+      "category": "dessert",
+      "bucket": "デザート",
+      "shop": "ハピネス・カフェ",
+      "area": "サンフランシスコ・エリア",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/happiness-cafe/index.html"
+    },
+    {
+      "foodId": "food-zrf59b",
+      "name": "ミニオン・スプーン&フォークセット",
+      "category": "set",
+      "bucket": "プレート",
+      "shop": "ハピネス・カフェ",
+      "area": "サンフランシスコ・エリア",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/happiness-cafe/index.html"
+    },
+    {
+      "foodId": "food-mvm1if",
+      "name": "呪術高専1年ズのサンドウィッチセット",
+      "category": "burger",
+      "bucket": "バーガー",
+      "shop": "ビバリーヒルズ・ブランジェリー",
+      "area": "ハリウッド・エリア",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/beverly-hills-boulangerie/index.html"
+    },
+    {
+      "foodId": "food-5wzkg2",
+      "name": "呪術高専のグレープフルーツ・レモネード(ホット/アイス)",
+      "category": "drink",
+      "bucket": "ドリンク",
+      "shop": "ビバリーヒルズ・ブランジェリー",
+      "area": "ハリウッド・エリア",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/beverly-hills-boulangerie/index.html"
+    },
+    {
+      "foodId": "food-2p64jq",
+      "name": "トラウトサーモンとミニアスパラのサンドウィッチセット",
+      "category": "burger",
+      "bucket": "バーガー",
+      "shop": "ビバリーヒルズ・ブランジェリー",
+      "area": "ハリウッド・エリア",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/beverly-hills-boulangerie/index.html"
+    },
+    {
+      "foodId": "food-qx91pr",
+      "name": "彩り野菜のミックスサンドウィッチセット",
+      "category": "burger",
+      "bucket": "バーガー",
+      "shop": "ビバリーヒルズ・ブランジェリー",
+      "area": "ハリウッド・エリア",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/beverly-hills-boulangerie/index.html"
+    },
+    {
+      "foodId": "food-exqw6q",
+      "name": "ボムへい ポップコーンバケツ",
+      "category": "popcorn",
+      "bucket": "その他",
+      "shop": "ビバリーヒルズ・ギフト前ポップコーンカート",
+      "area": "ハリウッド・エリア",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/food-cart/index.html"
+    },
+    {
+      "foodId": "food-19nx8rb",
+      "name": "ターキーレッグ!? まん",
+      "category": "chicken",
+      "bucket": "プレート",
+      "shop": "スペース・ファンタジー・ザ・ライド前フードカート",
+      "area": "その他",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/food-cart/index.html"
+    },
+    {
+      "foodId": "food-c2z2tz",
+      "name": "めざせ大悪党! デイブ・ポップコーンバケツ",
+      "category": "popcorn",
+      "bucket": "その他",
+      "shop": "セントラルパーク入口横ポップコーンカート",
+      "area": "ニューヨーク・エリア",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/food-cart/index.html"
+    },
+    {
+      "foodId": "food-1n8s9rw",
+      "name": "ターキーレッグ",
+      "category": "chicken",
+      "bucket": "プレート",
+      "shop": "バッテリーパーク北側フードカート",
+      "area": "その他",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/food-cart/index.html"
+    },
+    {
+      "foodId": "food-r24nsm",
+      "name": "大悪党のためのドーナツ・バーガー ~BBQ ポーク&ベーコン~",
+      "category": "burger",
+      "bucket": "バーガー",
+      "shop": "イーブル・イーツ",
+      "area": "ミニオン・パーク",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/food-cart/index.html"
+    },
+    {
+      "foodId": "food-1kvqau2",
+      "name": "憧れの大悪党? ボブ・ドリンクボトル",
+      "category": "drink",
+      "bucket": "ドリンク",
+      "shop": "デリシャス・ミー! ザ・クッキー・キッチン",
+      "area": "その他",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/food-cart/index.html"
+    },
+    {
+      "foodId": "food-1rqbb9j",
+      "name": "ミニオン・クッキーサンド バナナアイス&フルーツ",
+      "category": "dessert",
+      "bucket": "デザート",
+      "shop": "デリシャス・ミー!ザ・クッキー・キッチン",
+      "area": "ミニオン・パーク",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/food-cart/index.html"
+    },
+    {
+      "foodId": "food-103cri5",
+      "name": "ミニオンまん ~ハチャメチャカレー~",
+      "category": "rice",
+      "bucket": "ライス",
+      "shop": "ミニオン・ハッピー・キッチン",
+      "area": "その他",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/food-cart/index.html"
+    },
+    {
+      "foodId": "food-bsvsuj",
+      "name": "チャイニーズ・ポークリブ",
+      "category": "chicken",
+      "bucket": "プレート",
+      "shop": "ザ・ドラゴンズ・パール前フードカート",
+      "area": "サンフランシスコ・エリア",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/food-cart/index.html"
+    },
+    {
+      "foodId": "food-dmnp8a",
+      "name": "ヤクルト・ソフトクリームサンデー ~マンゴー~",
+      "category": "dessert",
+      "bucket": "デザート",
+      "shop": "ワーフカフェ",
+      "area": "サンフランシスコ・エリア",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/food-cart/index.html"
+    },
+    {
+      "foodId": "food-84qjxm",
+      "name": "ブラックペッパー・ポークリブ",
+      "category": "chicken",
+      "bucket": "プレート",
+      "shop": "ロストワールド・レストラン入口横フードカート",
+      "area": "ジュラシック・パーク",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/food-cart/index.html"
+    },
+    {
+      "foodId": "food-1kx2jev",
+      "name": "ツナマヨ&サクラエビ ピッツァ・デニッシュセット",
+      "category": "pizza",
+      "bucket": "ピザ",
+      "shop": "ボードウォーク・スナック",
+      "area": "アミティ・ビレッジ",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/food-cart/index.html"
+    },
+    {
+      "foodId": "food-1ksr7hg",
+      "name": "アイスクリーム スチュアート・バケツ スプーン付き",
+      "category": "dessert",
+      "bucket": "デザート",
+      "shop": "アミティ・アイスクリーム",
+      "area": "アミティ・ビレッジ",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/food-cart/index.html"
+    },
+    {
+      "foodId": "food-p0tpmw",
+      "name": "アニバーサリー・スーパースター・ポップコーンバケツ",
+      "category": "popcorn",
+      "bucket": "その他",
+      "shop": "ピットストップ・ポップコーン",
+      "area": "スーパー・ニンテンドー・ワールド",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/food-cart/index.html"
+    },
+    {
+      "foodId": "food-1yi0toj",
+      "name": "DK クラッシュサンデー ~トロピカルバナナ・フレーバー~ マグカップ付き",
+      "category": "dessert",
+      "bucket": "デザート",
+      "shop": "ジャングル・ビート・シェイク",
+      "area": "スーパー・ニンテンドー・ワールド",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/food-cart/index.html"
+    },
+    {
+      "foodId": "food-mt4krf",
+      "name": "ハローキティ・アップルパイ ~マスカルポーネ~",
+      "category": "dessert",
+      "bucket": "デザート",
+      "shop": "カップケーキ・ドリーム横フードカート",
+      "area": "ユニバーサル・ワンダーランド",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/food-cart/index.html"
+    },
+    {
+      "foodId": "food-8wrsbw",
+      "name": "ハローキティ・ドリンク ~ホワイトウォーター&いちご~",
+      "category": "drink",
+      "bucket": "ドリンク",
+      "shop": "カップケーキ・ドリーム横フードカート",
+      "area": "ユニバーサル・ワンダーランド",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/food-cart/index.html"
+    },
+    {
+      "foodId": "food-19w9xaa",
+      "name": "ティム・ポップコーンバケツ",
+      "category": "popcorn",
+      "bucket": "その他",
+      "shop": "ユニバーサル・ワンダーランド入口横ポップコーンカート",
+      "area": "ユニバーサル・ワンダーランド",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/food-cart/index.html"
+    },
+    {
+      "foodId": "food-11urhsj",
+      "name": "チキンとトマトクリーム・スパゲティセット",
+      "category": "noodle",
+      "bucket": "パスタ",
+      "shop": "・バックロット・カフェ",
+      "area": "ユニバーサル・ワンダーランド",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/seasonal-food/index.html"
+    },
+    {
+      "foodId": "food-1swgjnq",
+      "name": "ウッドストックのふんわりケーキ ~レモン&リンゴ~",
+      "category": "dessert",
+      "bucket": "デザート",
+      "shop": "・バックロット・カフェ",
+      "area": "ユニバーサル・ワンダーランド",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/seasonal-food/index.html"
+    },
+    {
+      "foodId": "food-1nxl32b",
+      "name": "ジャングル・ビート・シェイク",
+      "category": "drink",
+      "bucket": "ドリンク",
+      "shop": "ジャングル・ビート・シェイク",
+      "area": "スーパー・ニンテンドー・ワールド",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/super-nintendo-world-food/index.html"
+    },
+    {
+      "foodId": "food-176nkkn",
+      "name": "アンガス牛と阿波尾鶏のグリルプレート ガーリックライス添え",
+      "category": "rice",
+      "bucket": "ライス",
+      "shop": "パークサイド・グリル",
+      "area": "ニューヨーク・エリア",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/park-side-grille/index.html"
+    },
+    {
+      "foodId": "food-frqwfd",
+      "name": "サーモンと有頭エビのグリルプレート ガーリックライス添え",
+      "category": "rice",
+      "bucket": "ライス",
+      "shop": "パークサイド・グリル",
+      "area": "ニューヨーク・エリア",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/park-side-grille/index.html"
+    },
+    {
+      "foodId": "food-dfcoum",
+      "name": "シェアカクテル ~スパークリング・サングリア~",
+      "category": "drink",
+      "bucket": "ドリンク",
+      "shop": "パークサイド・グリル",
+      "area": "ニューヨーク・エリア",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/park-side-grille/index.html"
+    },
+    {
+      "foodId": "food-v999yl",
+      "name": "フルーティ・カクテル",
+      "category": "drink",
+      "bucket": "ドリンク",
+      "shop": "パークサイド・グリル",
+      "area": "ニューヨーク・エリア",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/park-side-grille/index.html"
+    },
+    {
+      "foodId": "food-9i5pia",
+      "name": "牛ステーキ丼御膳",
+      "category": "rice",
+      "bucket": "ライス",
+      "shop": "SAIDO",
+      "area": "ニューヨーク・エリア",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/saido/index.html"
+    },
+    {
+      "foodId": "food-fypsmi",
+      "name": "海鮮丼御膳",
+      "category": "rice",
+      "bucket": "ライス",
+      "shop": "SAIDO",
+      "area": "ニューヨーク・エリア",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/saido/index.html"
+    },
+    {
+      "foodId": "food-1nthc13",
+      "name": "NYチーズケーキ&ほうじ茶の和風パフェ",
+      "category": "dessert",
+      "bucket": "デザート",
+      "shop": "SAIDO",
+      "area": "ニューヨーク・エリア",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/saido/index.html"
+    },
+    {
+      "foodId": "food-u2l4ko",
+      "name": "DK クラッシュサンデー ~トロピカルバナナ・フレーバー~",
+      "category": "dessert",
+      "bucket": "デザート",
+      "shop": "ジャングル・ビート・シェイク",
+      "area": "スーパー・ニンテンドー・ワールド",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/jungle-beat-shakes/index.html"
+    },
+    {
+      "foodId": "food-5o6h85",
+      "name": "マリオカート・ポップコーンバケツ",
+      "category": "popcorn",
+      "bucket": "その他",
+      "shop": "ピットストップ・ポップコーン",
+      "area": "スーパー・ニンテンドー・ワールド",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/pit-stop-popcorn/index.html"
+    },
+    {
+      "foodId": "food-k2clec",
+      "name": "ホッグズ・ヘッド・ビール ~マグカップ付~",
+      "category": "drink",
+      "bucket": "ドリンク",
+      "shop": "ホッグズ・ヘッド",
+      "area": "ウィザーディング・ワールド・オブ・ハリー・ポッター",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/hogs-head/index.html"
+    },
+    {
+      "foodId": "food-uftmep",
+      "name": "無敵! スーパースター・パンケーキサンド ~マンゴー~",
+      "category": "dessert",
+      "bucket": "デザート",
+      "shop": "マリオ・カフェ&ストア",
+      "area": "ハリウッド・エリア",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/mario-cafe-and-store/index.html"
+    },
+    {
+      "foodId": "food-nzx6eb",
+      "name": "マリオの帽子 パンケーキサンド ~いちごのショートケーキ~",
+      "category": "dessert",
+      "bucket": "デザート",
+      "shop": "マリオ・カフェ&ストア",
+      "area": "ハリウッド・エリア",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/mario-cafe-and-store/index.html"
+    },
+    {
+      "foodId": "food-19z617n",
+      "name": "パワーアップ! マリオのストロベリーソーダ",
+      "category": "drink",
+      "bucket": "ドリンク",
+      "shop": "マリオ・カフェ&ストア",
+      "area": "ハリウッド・エリア",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/mario-cafe-and-store/index.html"
+    },
+    {
+      "foodId": "food-804x7o",
+      "name": "パワーアップ! ルイージのマスカットソーダ",
+      "category": "drink",
+      "bucket": "ドリンク",
+      "shop": "マリオ・カフェ&ストア",
+      "area": "ハリウッド・エリア",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/mario-cafe-and-store/index.html"
+    },
+    {
+      "foodId": "food-1lvypnn",
+      "name": "パワーアップ! ピーチ姫のピーチソーダ",
+      "category": "drink",
+      "bucket": "ドリンク",
+      "shop": "マリオ・カフェ&ストア",
+      "area": "ハリウッド・エリア",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/mario-cafe-and-store/index.html"
+    },
+    {
+      "foodId": "food-6dk3cs",
+      "name": "ファイアフラワー×ハテナブロック・ドリンクボトル",
+      "category": "drink",
+      "bucket": "ドリンク",
+      "shop": "マリオ・カフェ&ストア",
+      "area": "ハリウッド・エリア",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/mario-cafe-and-store/index.html"
+    },
+    {
+      "foodId": "food-fcx2hy",
+      "name": "スーパーキノコ・ドリンクボトル",
+      "category": "drink",
+      "bucket": "ドリンク",
+      "shop": "マリオ・カフェ&ストア",
+      "area": "ハリウッド・エリア",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/mario-cafe-and-store/index.html"
+    },
+    {
+      "foodId": "food-1hcq7im",
+      "name": "モンスターハンター・ワイルズ×USJ限定コースターセット",
+      "category": "set",
+      "bucket": "プレート",
+      "shop": "ロストワールド・レストラン",
+      "area": "ジュラシック・パーク",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/lost-world-restaurant/index.html"
+    },
+    {
+      "foodId": "food-11pjv41",
+      "name": "オトモアイルーのチョコレートプリン マグカップ付",
+      "category": "dessert",
+      "bucket": "デザート",
+      "shop": "ロストワールド・レストラン",
+      "area": "ジュラシック・パーク",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/lost-world-restaurant/index.html"
+    },
+    {
+      "foodId": "food-2n4el4",
+      "name": "アイスクリームフロート",
+      "category": "dessert",
+      "bucket": "デザート",
+      "shop": "アミティ・アイスクリーム",
+      "area": "アミティ・ビレッジ",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/amity-ice-cream/index.html"
+    },
+    {
+      "foodId": "food-1ocz8a8",
+      "name": "照り焼きチキン ピッツァ・デニッシュセット",
+      "category": "pizza",
+      "bucket": "ピザ",
+      "shop": "ボードウォーク・スナック",
+      "area": "アミティ・ビレッジ",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/boardwalk-snacks/index.html"
+    },
+    {
+      "foodId": "food-fhqonz",
+      "name": "ザ・ドラゴンズ・パール・コンボ",
+      "category": "set",
+      "bucket": "プレート",
+      "shop": "ザ・ドラゴンズ・パール",
+      "area": "サンフランシスコ・エリア",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/the-dragons-pearl/index.html"
+    },
+    {
+      "foodId": "food-26b5s0",
+      "name": "ホットドッグ&ドリンクセット",
+      "category": "drink",
+      "bucket": "ドリンク",
+      "shop": "ワーフカフェ",
+      "area": "サンフランシスコ・エリア",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/wharf-cafe/index.html"
+    },
+    {
+      "foodId": "food-58j4sc",
+      "name": "ハローキティ・ドリンクカップ",
+      "category": "drink",
+      "bucket": "ドリンク",
+      "shop": "ハローキティのコーナーカフェ",
+      "area": "ユニバーサル・ワンダーランド",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/hello-kittys-corner-cafe/index.html"
+    },
+    {
+      "foodId": "food-12eyica",
+      "name": "スペシャルドリンク&コースターセット",
+      "category": "drink",
+      "bucket": "ドリンク",
+      "shop": "高級レストラン",
+      "area": "サンフランシスコ・エリア",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/events/universal-cool-japan-2026/conan/restaurant/index.html"
+    },
+    {
+      "foodId": "food-5ib5k3",
+      "name": "パンケーキ・サンド マリオの帽子 ~いちごのショートケーキ~",
+      "category": "dessert",
+      "bucket": "デザート",
+      "shop": "マリオ・カフェ&ストア",
+      "area": "ハリウッド・エリア",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/mario-cafe-and-store/index.html"
+    },
+    {
+      "foodId": "food-116rf8q",
+      "name": "T-REX・バーガーセット",
+      "category": "burger",
+      "bucket": "バーガー",
+      "shop": "ディスカバリー・レストラン",
+      "area": "ジュラシック・パーク",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/discovery-restaurant/index.html"
+    },
+    {
+      "foodId": "food-e0few1",
+      "name": "ラプトル・バーガーセット",
+      "category": "burger",
+      "bucket": "バーガー",
+      "shop": "ディスカバリー・レストラン",
+      "area": "ジュラシック・パーク",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/discovery-restaurant/index.html"
+    },
+    {
+      "foodId": "food-wn7ivo",
+      "name": "プテラノドン・バーガーセット",
+      "category": "burger",
+      "bucket": "バーガー",
+      "shop": "ディスカバリー・レストラン",
+      "area": "ジュラシック・パーク",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/discovery-restaurant/index.html"
+    },
+    {
+      "foodId": "food-9un9k0",
+      "name": "モササウルス・バーガーセット",
+      "category": "burger",
+      "bucket": "バーガー",
+      "shop": "ディスカバリー・レストラン",
+      "area": "ジュラシック・パーク",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/discovery-restaurant/index.html"
+    },
+    {
+      "foodId": "food-sfsu3d",
+      "name": "フィルのワッフルチキンプレート",
+      "category": "dessert",
+      "bucket": "デザート",
+      "shop": "ハピネス・カフェ",
+      "area": "サンフランシスコ・エリア",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/happiness-cafe/index.html"
+    },
+    {
+      "foodId": "food-bcbp5u",
+      "name": "スチュアートのビッグベーコンチーズ・バーガープレート",
+      "category": "burger",
+      "bucket": "バーガー",
+      "shop": "ハピネス・カフェ",
+      "area": "サンフランシスコ・エリア",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/happiness-cafe/index.html"
+    },
+    {
+      "foodId": "food-uqw79q",
+      "name": "デザート&ドリンクバーセット",
+      "category": "dessert",
+      "bucket": "デザート",
+      "shop": "ハピネス・カフェ",
+      "area": "サンフランシスコ・エリア",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/happiness-cafe/index.html"
+    },
+    {
+      "foodId": "food-1l7y3bq",
+      "name": "くいしん坊ミニオンたちの大発明!「クッキー・マシン」で作る絶品サンド",
+      "category": "dessert",
+      "bucket": "デザート",
+      "shop": "デリシャス・ミー!ザ・クッキー・キッチン",
+      "area": "ミニオン・パーク",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/delicious-me-the-cookie-kitchen/index.html"
+    },
+    {
+      "foodId": "food-7nyguw",
+      "name": "ミニオン・クッキーサンド ストロベリーレアチーズ",
+      "category": "dessert",
+      "bucket": "デザート",
+      "shop": "デリシャス・ミー!ザ・クッキー・キッチン",
+      "area": "ミニオン・パーク",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/delicious-me-the-cookie-kitchen/index.html"
+    },
+    {
+      "foodId": "food-o9svxw",
+      "name": "ベビーフード",
+      "category": "chicken",
+      "bucket": "プレート",
+      "shop": "ルイズN.Y.ピザパーラー",
+      "area": "ニューヨーク・エリア",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/louies-ny-pizza-parlor/index.html"
+    },
+    {
+      "foodId": "food-14ut653",
+      "name": "ミートスパゲティセット",
+      "category": "noodle",
+      "bucket": "パスタ",
+      "shop": "スヌーピー・バックロット・カフェ",
+      "area": "ユニバーサル・ワンダーランド",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/snoopys-backlot-cafe/index.html"
+    },
+    {
+      "foodId": "food-1ufz462",
+      "name": "テリヤキビーフバーガーセット",
+      "category": "burger",
+      "bucket": "バーガー",
+      "shop": "スヌーピー・バックロット・カフェ",
+      "area": "ユニバーサル・ワンダーランド",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/snoopys-backlot-cafe/index.html"
+    },
+    {
+      "foodId": "food-15u1343",
+      "name": "エビカツバーガーセット",
+      "category": "burger",
+      "bucket": "バーガー",
+      "shop": "スヌーピー・バックロット・カフェ",
+      "area": "ユニバーサル・ワンダーランド",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/snoopys-backlot-cafe/index.html"
+    },
+    {
+      "foodId": "food-j4nvrm",
+      "name": "超!! チョコバナナ・チュリトス",
+      "category": "churro",
+      "bucket": "チュリトス",
+      "shop": "パーク内レストラン",
+      "area": "スーパー・ニンテンドー・ワールド",
+      "sourceUrl": "https://www.usj.co.jp/company/news/2026/0422/"
+    },
+    {
+      "foodId": "food-1t33gzj",
+      "name": "呪術高専のグレープフルーツ・レモネード(アイス/ホット)",
+      "category": "drink",
+      "bucket": "ドリンク",
+      "shop": "ビバリーヒルズ・ブランジェリー",
+      "area": "ハリウッド・エリア",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/events/universal-cool-japan-2026/jujutsukaisen/index.html"
+    },
+    {
+      "foodId": "food-1pc1exr",
+      "name": "黒閃! チキンピザブレッド ~旨辛ガーリック~",
+      "category": "pizza",
+      "bucket": "ピザ",
+      "shop": "シネマ 4-D 前フードカート",
+      "area": "ハリウッド・エリア",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/events/universal-cool-japan-2026/jujutsukaisen/index.html"
+    },
+    {
+      "foodId": "food-1qcrkg3",
+      "name": "アイスクリーム スチュアート・バケツ スプーン",
+      "category": "dessert",
+      "bucket": "デザート",
+      "shop": "アミティ・アイスクリーム",
+      "area": "アミティ・ビレッジ",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/amity-ice-cream/index.html"
+    },
+    {
+      "foodId": "food-xagefj",
+      "name": "ピッツァ・デニッシュセット~ツナマヨ&サクラエビ~",
+      "category": "pizza",
+      "bucket": "ピザ",
+      "shop": "ボードウォーク・スナック",
+      "area": "アミティ・ビレッジ",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/food-cart/index.html"
+    },
+    {
+      "foodId": "food-1rsazo8",
+      "name": "ピッツァ・デニッシュセット ~照り焼きチキン~",
+      "category": "pizza",
+      "bucket": "ピザ",
+      "shop": "ボードウォーク・スナック",
+      "area": "アミティ・ビレッジ",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/boardwalk-snacks/index.html"
+    },
+    {
+      "foodId": "food-1wc5ggu",
+      "name": "DK クラッシュサンデー ~トロピカルバナナ・フレーバー~ マグカップ付き",
+      "category": "dessert",
+      "bucket": "デザート",
+      "shop": "ジャングル・ビート・シェイク",
+      "area": "スーパー・ニンテンドー・ワールド",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/jungle-beat-shakes/index.html"
+    },
+    {
+      "foodId": "food-1tt1au7",
+      "name": "アメリカン・ホットドッグ",
+      "category": "snack",
+      "bucket": "その他",
+      "shop": "ワーフカフェ",
+      "area": "サンフランシスコ・エリア",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/food-cart/index.html"
+    },
+    {
+      "foodId": "food-1tt4lsm",
+      "name": "蝶ネクタイ型サンドウィッチ ボックス",
+      "category": "burger",
+      "bucket": "バーガー",
+      "shop": "ロンバーズ・ランディング™ 前テラス",
+      "area": "サンフランシスコ・エリア",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/events/universal-cool-japan-2026/conan/more-enjoy/index.html"
+    },
+    {
+      "foodId": "food-6vmlhh",
+      "name": "フルーツサングリアティー&シェリービネガー(アイス/ホット)",
+      "category": "dessert",
+      "bucket": "デザート",
+      "shop": "ロンバーズ・ランディング™ 前テラス",
+      "area": "サンフランシスコ・エリア",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/events/universal-cool-japan-2026/conan/more-enjoy/index.html"
+    },
+    {
+      "foodId": "food-yf0vco",
+      "name": "フリーレンのビーフプレート ~赤ワイン香るデミグラスソース~",
+      "category": "set",
+      "bucket": "プレート",
+      "shop": "ロストワールド・レストラン",
+      "area": "ジュラシック・パーク",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/events/universal-cool-japan-2026/frieren/restaurant/index.html"
+    },
+    {
+      "foodId": "food-mioln1",
+      "name": "ヒンメルのオムレツプレート",
+      "category": "set",
+      "bucket": "プレート",
+      "shop": "ロストワールド・レストラン",
+      "area": "ジュラシック・パーク",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/events/universal-cool-japan-2026/frieren/restaurant/index.html"
+    },
+    {
+      "foodId": "food-1u1wwri",
+      "name": "アイゼン&ハイターのハンバーグとフィッシュ&チップスプレート",
+      "category": "set",
+      "bucket": "プレート",
+      "shop": "ロストワールド・レストラン",
+      "area": "ジュラシック・パーク",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/events/universal-cool-japan-2026/frieren/restaurant/index.html"
+    },
+    {
+      "foodId": "food-xitytu",
+      "name": "たのしい旅の宝箱 キッズセット",
+      "category": "kids",
+      "bucket": "キッズ",
+      "shop": "ロストワールド・レストラン",
+      "area": "ジュラシック・パーク",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/events/universal-cool-japan-2026/frieren/restaurant/index.html"
+    },
+    {
+      "foodId": "food-13ex3cf",
+      "name": "花香る フリーレンのホワイトソーダ(フリーレンコースター付)",
+      "category": "drink",
+      "bucket": "ドリンク",
+      "shop": "ロストワールド・レストラン",
+      "area": "ジュラシック・パーク",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/events/universal-cool-japan-2026/frieren/restaurant/index.html"
+    },
+    {
+      "foodId": "food-1rhhv0e",
+      "name": "シュタルクのショコラ&ラズベリーケーキ",
+      "category": "dessert",
+      "bucket": "デザート",
+      "shop": "ロストワールド・レストラン",
+      "area": "ジュラシック・パーク",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/events/universal-cool-japan-2026/frieren/restaurant/index.html"
+    },
+    {
+      "foodId": "food-1fmms6w",
+      "name": "フェルンのチェリー&ブルーベリーパフェ(蝶のスプーン付)",
+      "category": "dessert",
+      "bucket": "デザート",
+      "shop": "ロストワールド・レストラン",
+      "area": "ジュラシック・パーク",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/events/universal-cool-japan-2026/frieren/restaurant/index.html"
+    },
+    {
+      "foodId": "food-manual-バタービールtm-マグカップ付き-ノンアルコール",
+      "name": "バタービール™ ～マグカップ付き～（ノンアルコール）",
+      "category": "drink",
+      "bucket": "ドリンク",
+      "shop": "ホッグズ・ヘッド・パブ",
+      "area": "ウィザーディング・ワールド・オブ・ハリー・ポッター",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/the-wizarding-world-of-harry-potter-food/index.html"
+    },
+    {
+      "foodId": "food-manual-バタービールtm-プレミアムマグカップ付き-ノンアルコール",
+      "name": "バタービール™ ～プレミアムマグカップ付き～（ノンアルコール）",
+      "category": "drink",
+      "bucket": "ドリンク",
+      "shop": "三本の箒™",
+      "area": "ウィザーディング・ワールド・オブ・ハリー・ポッター",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/the-wizarding-world-of-harry-potter-food/index.html"
+    }
+  ],
+  "imageRegressions": []
+}

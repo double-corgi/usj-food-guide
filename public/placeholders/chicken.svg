@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" role="img" aria-label="チキン placeholder">
+  <rect width="800" height="600" fill="#fef2f2"/>
+  <path d="M250 335c0-80 72-145 160-145s160 65 160 145-72 145-160 145-160-65-160-145z" fill="#b45309"/>
+  <path d="M500 238l82-76c28-26 70 17 43 44l-76 76z" fill="#fde68a"/>
+  <circle cx="623" cy="165" r="32" fill="#fff7ed"/>
+  <text x="400" y="545" text-anchor="middle" font-family="sans-serif" font-size="42" fill="#991b1b">Chicken</text>
+</svg>

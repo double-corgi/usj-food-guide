@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" role="img" aria-label="スナック placeholder">
+  <rect width="800" height="600" fill="#f5f3ff"/>
+  <path d="M270 180h260l-34 310H304z" fill="#7c3aed"/>
+  <path d="M290 150h220v70H290z" fill="#c4b5fd"/>
+  <circle cx="365" cy="315" r="58" fill="#facc15"/>
+  <circle cx="435" cy="350" r="45" fill="#fde68a"/>
+  <text x="400" y="545" text-anchor="middle" font-family="sans-serif" font-size="42" fill="#5b21b6">Snack</text>
+</svg>

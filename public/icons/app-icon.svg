@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="ユニバフード制覇">
+  <rect width="512" height="512" rx="112" fill="#18212f"/>
+  <circle cx="256" cy="256" r="164" fill="#89e8bf"/>
+  <circle cx="256" cy="256" r="124" fill="#ffffff"/>
+  <path d="M175 248c0-51 33-89 81-89s81 38 81 89c0 61-39 102-81 102s-81-41-81-102Z" fill="#0f766e"/>
+  <path d="M216 226c10-21 25-32 40-32s30 11 40 32" fill="none" stroke="#ffffff" stroke-width="26" stroke-linecap="round"/>
+  <path d="M205 286h102" stroke="#ffffff" stroke-width="26" stroke-linecap="round"/>
+  <path d="m359 129 12 36 38 1-30 23 11 37-31-22-32 22 12-37-31-23 38-1 13-36Z" fill="#fb7185"/>
+</svg>

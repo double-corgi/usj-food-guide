@@ -1,0 +1,91 @@
+{
+  "mode": "apply",
+  "generatedAt": "2026-05-31T09:49:37.245Z",
+  "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ko/kr/files/documents/usj-pdf-restaurant-other-menu-three-broomsticks.pdf",
+  "before": {
+    "foodTotal": 200,
+    "imageTotal": 200,
+    "placeholderCount": 0,
+    "priceKnown": 79,
+    "priceUnknown": 121,
+    "priceRate": "39.5%"
+  },
+  "after": {
+    "foodTotal": 200,
+    "imageTotal": 200,
+    "placeholderCount": 0,
+    "priceKnown": 87,
+    "priceUnknown": 113,
+    "priceRate": "43.5%"
+  },
+  "newPrices": 8,
+  "imageRegressionCount": 0,
+  "imageRegressions": [],
+  "updates": [
+    {
+      "foodId": "food-up3lba",
+      "name": "ローストビーフ",
+      "price": 3100,
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ko/kr/files/documents/usj-pdf-restaurant-other-menu-three-broomsticks.pdf",
+      "sourceName": "USJ公式 三本の箒 メニューPDF",
+      "sourceQuote": "BEEF SUNDAY ROAST / ローストビーフ 3,100"
+    },
+    {
+      "foodId": "food-1reufss",
+      "name": "ロティサリー・スモークチキン&ポークリブ",
+      "price": 2600,
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ko/kr/files/documents/usj-pdf-restaurant-other-menu-three-broomsticks.pdf",
+      "sourceName": "USJ公式 三本の箒 メニューPDF",
+      "sourceQuote": "ROTISSERIE SMOKED CHICKEN AND PORK RIBS PLATE / ロティサリー・スモークチキン＆ポークリブ 2,600"
+    },
+    {
+      "foodId": "food-2qri4c",
+      "name": "ロティサリー・スモークチキン&シェパーズパイ",
+      "price": 2500,
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ko/kr/files/documents/usj-pdf-restaurant-other-menu-three-broomsticks.pdf",
+      "sourceName": "USJ公式 三本の箒 メニューPDF",
+      "sourceQuote": "ROTISSERIE SMOKED CHICKEN AND SHEPHERD'S PIE PLATE / ロティサリー・スモークチキン＆シェパーズパイ 2,500"
+    },
+    {
+      "foodId": "food-1dm0ouy",
+      "name": "ポークリブ",
+      "price": 2200,
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ko/kr/files/documents/usj-pdf-restaurant-other-menu-three-broomsticks.pdf",
+      "sourceName": "USJ公式 三本の箒 メニューPDF",
+      "sourceQuote": "PORK RIBS PLATE / ポークリブ 2,200"
+    },
+    {
+      "foodId": "food-16q65hw",
+      "name": "バタービールTM・プディング",
+      "price": 600,
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ko/kr/files/documents/usj-pdf-restaurant-other-menu-three-broomsticks.pdf",
+      "sourceName": "USJ公式 三本の箒 メニューPDF",
+      "sourceQuote": "BUTTERBEER POTTED CREAM / バタービール™・プディング 600"
+    },
+    {
+      "foodId": "food-k2clec",
+      "name": "ホッグズ・ヘッド・ビール ~マグカップ付~",
+      "price": 1400,
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ko/kr/files/documents/usj-pdf-restaurant-other-menu-three-broomsticks.pdf",
+      "sourceName": "USJ公式 三本の箒 メニューPDF",
+      "sourceQuote": "HOG'S HEAD BREW / ホッグズ・ヘッド・ビール 850 / with souvenir マグカップ付 1,400"
+    },
+    {
+      "foodId": "food-manual-バタービールtm-マグカップ付き-ノンアルコール",
+      "name": "バタービール™ ～マグカップ付き～（ノンアルコール）",
+      "price": 1200,
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ko/kr/files/documents/usj-pdf-restaurant-other-menu-three-broomsticks.pdf",
+      "sourceName": "USJ公式 三本の箒 メニューPDF",
+      "sourceQuote": "BUTTERBEER [NON-ALCOHOLIC] / バタービール™（ノンアルコール） with souvenir マグカップ付 1,200"
+    },
+    {
+      "foodId": "food-manual-バタービールtm-プレミアムマグカップ付き-ノンアルコール",
+      "name": "バタービール™ ～プレミアムマグカップ付き～（ノンアルコール）",
+      "price": 4600,
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ko/kr/files/documents/usj-pdf-restaurant-other-menu-three-broomsticks.pdf",
+      "sourceName": "USJ公式 三本の箒 メニューPDF",
+      "sourceQuote": "BUTTERBEER [NON-ALCOHOLIC] / バタービール™（ノンアルコール） in Premium Stein プレミアムマグカップ付 4,600"
+    }
+  ],
+  "skipped": []
+}

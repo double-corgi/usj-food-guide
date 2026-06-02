@@ -1,0 +1,66 @@
+{
+  "generatedAt": "2026-05-31T09:34:57.072Z",
+  "before": {
+    "foodTotal": 200,
+    "imageTotal": 200,
+    "placeholderCount": 0,
+    "priceKnown": 79,
+    "priceUnknown": 121,
+    "shopUnknown": 3,
+    "areaUnknown": 23,
+    "categoryUnknown": 0
+  },
+  "after": {
+    "foodTotal": 200,
+    "imageTotal": 200,
+    "placeholderCount": 0,
+    "priceKnown": 79,
+    "priceUnknown": 121,
+    "shopUnknown": 0,
+    "areaUnknown": 20,
+    "categoryUnknown": 0
+  },
+  "changed": 3,
+  "imageRegression": 0,
+  "changes": [
+    {
+      "id": "food-c4k9tn",
+      "name": "サンドウィッチ・キッズプレート",
+      "before": {
+        "shop": "店舗未確認",
+        "area": "その他"
+      },
+      "after": {
+        "shop": "三本の箒",
+        "area": "ウィザーディング・ワールド・オブ・ハリー・ポッター"
+      },
+      "reason": "official kids menu gallery item lists this kids plate at Three Broomsticks"
+    },
+    {
+      "id": "food-17k66nk",
+      "name": "カレー・キッズプレート",
+      "before": {
+        "shop": "店舗未確認",
+        "area": "その他"
+      },
+      "after": {
+        "shop": "三本の箒",
+        "area": "ウィザーディング・ワールド・オブ・ハリー・ポッター"
+      },
+      "reason": "official kids menu gallery item lists this kids plate at Three Broomsticks"
+    },
+    {
+      "id": "food-7yyri",
+      "name": "キッズ・ハンバーガーセット",
+      "before": {
+        "shop": "店舗未確認",
+        "area": "その他"
+      },
+      "after": {
+        "shop": "ディスカバリー・レストラン",
+        "area": "ジュラシック・パーク"
+      },
+      "reason": "official kids menu gallery item lists this kids hamburger set at Discovery Restaurant"
+    }
+  ]
+}

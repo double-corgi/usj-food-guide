@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024" role="img" aria-label="USJ制覇メダル アイコン案C">
+  <defs>
+    <linearGradient id="bgC" x1="108" y1="124" x2="892" y2="916" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0f172a"/>
+      <stop offset="0.55" stop-color="#1d4ed8"/>
+      <stop offset="1" stop-color="#14b8a6"/>
+    </linearGradient>
+    <linearGradient id="goldC" x1="348" y1="286" x2="714" y2="774" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#fff7ad"/>
+      <stop offset="0.5" stop-color="#f4b738"/>
+      <stop offset="1" stop-color="#b86b0b"/>
+    </linearGradient>
+  </defs>
+  <rect width="1024" height="1024" rx="220" fill="url(#bgC)"/>
+  <path d="M330 126h128l54 220 54-220h128l-92 318H422L330 126Z" fill="#ef4444"/>
+  <path d="M422 126h180L512 444 422 126Z" fill="#fff" opacity="0.92"/>
+  <circle cx="512" cy="572" r="270" fill="url(#goldC)" stroke="#fff" stroke-width="30"/>
+  <circle cx="512" cy="572" r="202" fill="none" stroke="#111827" stroke-width="24" opacity="0.78"/>
+  <path d="m512 394 46 100 109 14-80 73 21 108-96-54-96 54 21-108-80-73 109-14 46-100Z" fill="#111827"/>
+  <path d="M318 770c96 72 292 112 388 0" fill="none" stroke="#fff" stroke-width="30" stroke-linecap="round" opacity="0.72"/>
+  <text x="512" y="898" text-anchor="middle" font-family="system-ui, -apple-system, BlinkMacSystemFont, sans-serif" font-size="70" font-weight="900" fill="#fff">MASTER</text>
+</svg>

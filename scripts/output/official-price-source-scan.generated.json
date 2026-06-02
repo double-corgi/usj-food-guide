@@ -1,0 +1,878 @@
+{
+  "mode": "scan",
+  "generatedAt": "2026-05-31T09:39:43.743Z",
+  "totals": {
+    "foods": 200,
+    "images": 200,
+    "placeholders": 0,
+    "priceKnownBefore": 79,
+    "priceUnknownBefore": 121,
+    "priceKnownAfter": 79,
+    "priceUnknownAfter": 121,
+    "newPrices": 0,
+    "reducedUnknown": 0,
+    "scannedFoods": 121,
+    "fetchedSourceUrls": 32
+  },
+  "matches": [],
+  "skips": [
+    {
+      "foodId": "food-62sv4l",
+      "name": "スーパースター・アニバーサリープレート ~マッシュルーム・ラザニア&フライドチキン~",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/kinopios-cafe/index.html",
+      "reason": "exact-name-price-not-found",
+      "prices": []
+    },
+    {
+      "foodId": "food-cygfys",
+      "name": "スーパー・ニンテンドー・ワールド・アニバーサリーケーキ(4名様分)",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/kinopios-cafe/index.html",
+      "reason": "exact-name-price-not-found",
+      "prices": []
+    },
+    {
+      "foodId": "food-15srg5l",
+      "name": "スーパースター・プラザ・アイス ~ベリー&りんご~(無果汁)",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/kinopios-cafe/index.html",
+      "reason": "exact-name-price-not-found",
+      "prices": []
+    },
+    {
+      "foodId": "food-up3lba",
+      "name": "ローストビーフ",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/the-wizarding-world-of-harry-potter-food/index.html",
+      "reason": "exact-name-price-not-found",
+      "prices": []
+    },
+    {
+      "foodId": "food-1reufss",
+      "name": "ロティサリー・スモークチキン&ポークリブ",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/the-wizarding-world-of-harry-potter-food/index.html",
+      "reason": "exact-name-price-not-found",
+      "prices": []
+    },
+    {
+      "foodId": "food-2qri4c",
+      "name": "ロティサリー・スモークチキン&シェパーズパイ",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/three-broomsticks/index.html",
+      "reason": "exact-name-price-not-found",
+      "prices": []
+    },
+    {
+      "foodId": "food-1dm0ouy",
+      "name": "ポークリブ",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/three-broomsticks/index.html",
+      "reason": "exact-name-price-not-found",
+      "prices": []
+    },
+    {
+      "foodId": "food-1m8i41b",
+      "name": "バタービールTM・シュークリーム",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/seasonal-food/index.html",
+      "reason": "exact-name-price-not-found",
+      "prices": []
+    },
+    {
+      "foodId": "food-16q65hw",
+      "name": "バタービールTM・プディング",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/three-broomsticks/index.html",
+      "reason": "exact-name-price-not-found",
+      "prices": []
+    },
+    {
+      "foodId": "food-1efoz95",
+      "name": "スタジオ・スターズ 25周年スペシャルプレート",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/studio-stars-restaurant/index.html",
+      "reason": "exact-name-price-not-found",
+      "prices": []
+    },
+    {
+      "foodId": "food-1hhn874",
+      "name": "BBQ ポークリブ&フライドチキン・プレート",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/studio-stars-restaurant/index.html",
+      "reason": "exact-name-price-not-found",
+      "prices": []
+    },
+    {
+      "foodId": "food-ehewed",
+      "name": "スタジオ・スターズ BLT バーガー・プレート",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/studio-stars-restaurant/index.html",
+      "reason": "exact-name-price-not-found",
+      "prices": []
+    },
+    {
+      "foodId": "food-1f1v45i",
+      "name": "チキンレッグカレー・プレート",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/studio-stars-restaurant/index.html",
+      "reason": "exact-name-price-not-found",
+      "prices": []
+    },
+    {
+      "foodId": "food-ajq9zg",
+      "name": "クラムチャウダーグラタン・プレート",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/studio-stars-restaurant/index.html",
+      "reason": "exact-name-price-not-found",
+      "prices": []
+    },
+    {
+      "foodId": "food-dn0p3s",
+      "name": "25周年アニバーサリー・ドリンクカップ",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/studio-stars-restaurant/index.html",
+      "reason": "exact-name-price-not-found",
+      "prices": []
+    },
+    {
+      "foodId": "food-rvos7a",
+      "name": "プルドポークバーガー 25周年コースターセット",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/seasonal-food/index.html",
+      "reason": "exact-name-price-not-found",
+      "prices": []
+    },
+    {
+      "foodId": "food-hyfchi",
+      "name": "BBQベーコンチーズバーガーセット",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/mels-drive-in/index.html",
+      "reason": "exact-name-price-not-found",
+      "prices": []
+    },
+    {
+      "foodId": "food-1ulknep",
+      "name": "クラシックチーズバーガーセット",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/mels-drive-in/index.html",
+      "reason": "exact-name-price-not-found",
+      "prices": []
+    },
+    {
+      "foodId": "food-1qzo3v2",
+      "name": "クラシックバーガーセット",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/mels-drive-in/index.html",
+      "reason": "exact-name-price-not-found",
+      "prices": []
+    },
+    {
+      "foodId": "food-14hntqo",
+      "name": "アメリカン・アップルクランブルパイ",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/mels-drive-in/index.html",
+      "reason": "exact-name-price-not-found",
+      "prices": []
+    },
+    {
+      "foodId": "food-19tglum",
+      "name": "T-REX・ガーリックトマト・ビーフバーガーセット",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/discovery-restaurant/index.html",
+      "reason": "exact-name-price-not-found",
+      "prices": []
+    },
+    {
+      "foodId": "food-6d5z2w",
+      "name": "ラプトル・ベーコン&ビーフバーガーセット",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/discovery-restaurant/index.html",
+      "reason": "exact-name-price-not-found",
+      "prices": []
+    },
+    {
+      "foodId": "food-1x0ir52",
+      "name": "プテラノドン・フライドチキンバーガーセット",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/discovery-restaurant/index.html",
+      "reason": "exact-name-price-not-found",
+      "prices": []
+    },
+    {
+      "foodId": "food-yhtmyt",
+      "name": "モササウルス・フィッシュバーガーセット",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/discovery-restaurant/index.html",
+      "reason": "exact-name-price-not-found",
+      "prices": []
+    },
+    {
+      "foodId": "food-alnomv",
+      "name": "ジュラシック・パーク・ドリンクボトル",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/discovery-restaurant/index.html",
+      "reason": "exact-name-price-not-found",
+      "prices": []
+    },
+    {
+      "foodId": "food-9s2577",
+      "name": "ジュラシックパーク・ケーキ ~チョコ&ダークチェリー~",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/discovery-restaurant/index.html",
+      "reason": "ambiguous-nearby-prices",
+      "prices": [
+        1200,
+        700,
+        800
+      ]
+    },
+    {
+      "foodId": "food-15hqyi6",
+      "name": "フライングダイナソー・カップケーキ ~チョコ&ラズベリー~",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/discovery-restaurant/index.html",
+      "reason": "ambiguous-nearby-prices",
+      "prices": [
+        1200,
+        700,
+        800
+      ]
+    },
+    {
+      "foodId": "food-ei17e1",
+      "name": "スパイシーシュリンプ・ブリトーセット",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/amity-landing-restaurant/index.html",
+      "reason": "exact-name-price-not-found",
+      "prices": []
+    },
+    {
+      "foodId": "food-k6pr7l",
+      "name": "チキン&アボカド・ブリトーセット",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/amity-landing-restaurant/index.html",
+      "reason": "exact-name-price-not-found",
+      "prices": []
+    },
+    {
+      "foodId": "food-1mjhxhz",
+      "name": "バーベキューポーク・ブリトーセット",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/amity-landing-restaurant/index.html",
+      "reason": "exact-name-price-not-found",
+      "prices": []
+    },
+    {
+      "foodId": "food-1u4li6v",
+      "name": "チリコンカンビーンズ・ブリトーセット",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/amity-landing-restaurant/index.html",
+      "reason": "exact-name-price-not-found",
+      "prices": []
+    },
+    {
+      "foodId": "food-161ftzo",
+      "name": "JAWSがくるぞ!~クリームソーダ・ロールケーキ~",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/amity-landing-restaurant/index.html",
+      "reason": "exact-name-price-not-found",
+      "prices": []
+    },
+    {
+      "foodId": "food-13uu2tv",
+      "name": "ジョーズ・スプラッシュ ~ブルーハワイ&ソーダ~",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/amity-landing-restaurant/index.html",
+      "reason": "exact-name-price-not-found",
+      "prices": []
+    },
+    {
+      "foodId": "food-1ojz6jw",
+      "name": "ボブのワッフルチキンプレート",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/happiness-cafe/index.html",
+      "reason": "exact-name-price-not-found",
+      "prices": []
+    },
+    {
+      "foodId": "food-1435vjy",
+      "name": "スチュアートのベーコンチーズ・バーガープレート",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/happiness-cafe/index.html",
+      "reason": "exact-name-price-not-found",
+      "prices": []
+    },
+    {
+      "foodId": "food-1fcbolg",
+      "name": "デイブのキーマカレープレート",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/happiness-cafe/index.html",
+      "reason": "exact-name-price-not-found",
+      "prices": []
+    },
+    {
+      "foodId": "food-12tnz7b",
+      "name": "ミニオンズ・カップデザート",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/happiness-cafe/index.html",
+      "reason": "exact-name-price-not-found",
+      "prices": []
+    },
+    {
+      "foodId": "food-zrf59b",
+      "name": "ミニオン・スプーン&フォークセット",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/happiness-cafe/index.html",
+      "reason": "exact-name-price-not-found",
+      "prices": []
+    },
+    {
+      "foodId": "food-mvm1if",
+      "name": "呪術高専1年ズのサンドウィッチセット",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/beverly-hills-boulangerie/index.html",
+      "reason": "exact-name-price-not-found",
+      "prices": []
+    },
+    {
+      "foodId": "food-5wzkg2",
+      "name": "呪術高専のグレープフルーツ・レモネード(ホット/アイス)",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/beverly-hills-boulangerie/index.html",
+      "reason": "exact-name-price-not-found",
+      "prices": []
+    },
+    {
+      "foodId": "food-2p64jq",
+      "name": "トラウトサーモンとミニアスパラのサンドウィッチセット",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/beverly-hills-boulangerie/index.html",
+      "reason": "exact-name-price-not-found",
+      "prices": []
+    },
+    {
+      "foodId": "food-qx91pr",
+      "name": "彩り野菜のミックスサンドウィッチセット",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/beverly-hills-boulangerie/index.html",
+      "reason": "exact-name-price-not-found",
+      "prices": []
+    },
+    {
+      "foodId": "food-exqw6q",
+      "name": "ボムへい ポップコーンバケツ",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/food-cart/index.html",
+      "reason": "exact-name-price-not-found",
+      "prices": []
+    },
+    {
+      "foodId": "food-19nx8rb",
+      "name": "ターキーレッグ!? まん",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/food-cart/index.html",
+      "reason": "exact-name-price-not-found",
+      "prices": []
+    },
+    {
+      "foodId": "food-c2z2tz",
+      "name": "めざせ大悪党! デイブ・ポップコーンバケツ",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/food-cart/index.html",
+      "reason": "exact-name-price-not-found",
+      "prices": []
+    },
+    {
+      "foodId": "food-1n8s9rw",
+      "name": "ターキーレッグ",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/food-cart/index.html",
+      "reason": "exact-name-price-not-found",
+      "prices": []
+    },
+    {
+      "foodId": "food-r24nsm",
+      "name": "大悪党のためのドーナツ・バーガー ~BBQ ポーク&ベーコン~",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/food-cart/index.html",
+      "reason": "exact-name-price-not-found",
+      "prices": []
+    },
+    {
+      "foodId": "food-1kvqau2",
+      "name": "憧れの大悪党? ボブ・ドリンクボトル",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/food-cart/index.html",
+      "reason": "exact-name-price-not-found",
+      "prices": []
+    },
+    {
+      "foodId": "food-1rqbb9j",
+      "name": "ミニオン・クッキーサンド バナナアイス&フルーツ",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/food-cart/index.html",
+      "reason": "exact-name-price-not-found",
+      "prices": []
+    },
+    {
+      "foodId": "food-103cri5",
+      "name": "ミニオンまん ~ハチャメチャカレー~",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/food-cart/index.html",
+      "reason": "exact-name-price-not-found",
+      "prices": []
+    },
+    {
+      "foodId": "food-bsvsuj",
+      "name": "チャイニーズ・ポークリブ",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/food-cart/index.html",
+      "reason": "exact-name-price-not-found",
+      "prices": []
+    },
+    {
+      "foodId": "food-dmnp8a",
+      "name": "ヤクルト・ソフトクリームサンデー ~マンゴー~",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/food-cart/index.html",
+      "reason": "exact-name-price-not-found",
+      "prices": []
+    },
+    {
+      "foodId": "food-84qjxm",
+      "name": "ブラックペッパー・ポークリブ",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/food-cart/index.html",
+      "reason": "exact-name-price-not-found",
+      "prices": []
+    },
+    {
+      "foodId": "food-1kx2jev",
+      "name": "ツナマヨ&サクラエビ ピッツァ・デニッシュセット",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/food-cart/index.html",
+      "reason": "exact-name-price-not-found",
+      "prices": []
+    },
+    {
+      "foodId": "food-1ksr7hg",
+      "name": "アイスクリーム スチュアート・バケツ スプーン付き",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/food-cart/index.html",
+      "reason": "exact-name-price-not-found",
+      "prices": []
+    },
+    {
+      "foodId": "food-p0tpmw",
+      "name": "アニバーサリー・スーパースター・ポップコーンバケツ",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/food-cart/index.html",
+      "reason": "exact-name-price-not-found",
+      "prices": []
+    },
+    {
+      "foodId": "food-1yi0toj",
+      "name": "DK クラッシュサンデー ~トロピカルバナナ・フレーバー~ マグカップ付き",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/food-cart/index.html",
+      "reason": "exact-name-price-not-found",
+      "prices": []
+    },
+    {
+      "foodId": "food-mt4krf",
+      "name": "ハローキティ・アップルパイ ~マスカルポーネ~",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/food-cart/index.html",
+      "reason": "exact-name-price-not-found",
+      "prices": []
+    },
+    {
+      "foodId": "food-8wrsbw",
+      "name": "ハローキティ・ドリンク ~ホワイトウォーター&いちご~",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/food-cart/index.html",
+      "reason": "exact-name-price-not-found",
+      "prices": []
+    },
+    {
+      "foodId": "food-19w9xaa",
+      "name": "ティム・ポップコーンバケツ",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/food-cart/index.html",
+      "reason": "exact-name-price-not-found",
+      "prices": []
+    },
+    {
+      "foodId": "food-11urhsj",
+      "name": "チキンとトマトクリーム・スパゲティセット",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/seasonal-food/index.html",
+      "reason": "exact-name-price-not-found",
+      "prices": []
+    },
+    {
+      "foodId": "food-1swgjnq",
+      "name": "ウッドストックのふんわりケーキ ~レモン&リンゴ~",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/seasonal-food/index.html",
+      "reason": "exact-name-price-not-found",
+      "prices": []
+    },
+    {
+      "foodId": "food-1nxl32b",
+      "name": "ジャングル・ビート・シェイク",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/super-nintendo-world-food/index.html",
+      "reason": "exact-name-price-not-found",
+      "prices": []
+    },
+    {
+      "foodId": "food-176nkkn",
+      "name": "アンガス牛と阿波尾鶏のグリルプレート ガーリックライス添え",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/park-side-grille/index.html",
+      "reason": "exact-name-price-not-found",
+      "prices": []
+    },
+    {
+      "foodId": "food-frqwfd",
+      "name": "サーモンと有頭エビのグリルプレート ガーリックライス添え",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/park-side-grille/index.html",
+      "reason": "exact-name-price-not-found",
+      "prices": []
+    },
+    {
+      "foodId": "food-dfcoum",
+      "name": "シェアカクテル ~スパークリング・サングリア~",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/park-side-grille/index.html",
+      "reason": "exact-name-price-not-found",
+      "prices": []
+    },
+    {
+      "foodId": "food-v999yl",
+      "name": "フルーティ・カクテル",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/park-side-grille/index.html",
+      "reason": "exact-name-price-not-found",
+      "prices": []
+    },
+    {
+      "foodId": "food-9i5pia",
+      "name": "牛ステーキ丼御膳",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/saido/index.html",
+      "reason": "exact-name-price-not-found",
+      "prices": []
+    },
+    {
+      "foodId": "food-fypsmi",
+      "name": "海鮮丼御膳",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/saido/index.html",
+      "reason": "exact-name-price-not-found",
+      "prices": []
+    },
+    {
+      "foodId": "food-1nthc13",
+      "name": "NYチーズケーキ&ほうじ茶の和風パフェ",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/saido/index.html",
+      "reason": "exact-name-price-not-found",
+      "prices": []
+    },
+    {
+      "foodId": "food-u2l4ko",
+      "name": "DK クラッシュサンデー ~トロピカルバナナ・フレーバー~",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/jungle-beat-shakes/index.html",
+      "reason": "exact-name-price-not-found",
+      "prices": []
+    },
+    {
+      "foodId": "food-5o6h85",
+      "name": "マリオカート・ポップコーンバケツ",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/pit-stop-popcorn/index.html",
+      "reason": "exact-name-price-not-found",
+      "prices": []
+    },
+    {
+      "foodId": "food-k2clec",
+      "name": "ホッグズ・ヘッド・ビール ~マグカップ付~",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/hogs-head/index.html",
+      "reason": "ambiguous-nearby-prices",
+      "prices": [
+        900,
+        1500
+      ]
+    },
+    {
+      "foodId": "food-uftmep",
+      "name": "無敵! スーパースター・パンケーキサンド ~マンゴー~",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/mario-cafe-and-store/index.html",
+      "reason": "exact-name-price-not-found",
+      "prices": []
+    },
+    {
+      "foodId": "food-nzx6eb",
+      "name": "マリオの帽子 パンケーキサンド ~いちごのショートケーキ~",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/mario-cafe-and-store/index.html",
+      "reason": "exact-name-price-not-found",
+      "prices": []
+    },
+    {
+      "foodId": "food-19z617n",
+      "name": "パワーアップ! マリオのストロベリーソーダ",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/mario-cafe-and-store/index.html",
+      "reason": "exact-name-price-not-found",
+      "prices": []
+    },
+    {
+      "foodId": "food-804x7o",
+      "name": "パワーアップ! ルイージのマスカットソーダ",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/mario-cafe-and-store/index.html",
+      "reason": "exact-name-price-not-found",
+      "prices": []
+    },
+    {
+      "foodId": "food-1lvypnn",
+      "name": "パワーアップ! ピーチ姫のピーチソーダ",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/mario-cafe-and-store/index.html",
+      "reason": "exact-name-price-not-found",
+      "prices": []
+    },
+    {
+      "foodId": "food-6dk3cs",
+      "name": "ファイアフラワー×ハテナブロック・ドリンクボトル",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/mario-cafe-and-store/index.html",
+      "reason": "exact-name-price-not-found",
+      "prices": []
+    },
+    {
+      "foodId": "food-fcx2hy",
+      "name": "スーパーキノコ・ドリンクボトル",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/mario-cafe-and-store/index.html",
+      "reason": "exact-name-price-not-found",
+      "prices": []
+    },
+    {
+      "foodId": "food-1hcq7im",
+      "name": "モンスターハンター・ワイルズ×USJ限定コースターセット",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/lost-world-restaurant/index.html",
+      "reason": "exact-name-price-not-found",
+      "prices": []
+    },
+    {
+      "foodId": "food-11pjv41",
+      "name": "オトモアイルーのチョコレートプリン マグカップ付",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/lost-world-restaurant/index.html",
+      "reason": "exact-name-price-not-found",
+      "prices": []
+    },
+    {
+      "foodId": "food-2n4el4",
+      "name": "アイスクリームフロート",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/amity-ice-cream/index.html",
+      "reason": "exact-name-price-not-found",
+      "prices": []
+    },
+    {
+      "foodId": "food-1ocz8a8",
+      "name": "照り焼きチキン ピッツァ・デニッシュセット",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/boardwalk-snacks/index.html",
+      "reason": "exact-name-price-not-found",
+      "prices": []
+    },
+    {
+      "foodId": "food-fhqonz",
+      "name": "ザ・ドラゴンズ・パール・コンボ",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/the-dragons-pearl/index.html",
+      "reason": "exact-name-price-not-found",
+      "prices": []
+    },
+    {
+      "foodId": "food-26b5s0",
+      "name": "ホットドッグ&ドリンクセット",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/wharf-cafe/index.html",
+      "reason": "exact-name-price-not-found",
+      "prices": []
+    },
+    {
+      "foodId": "food-58j4sc",
+      "name": "ハローキティ・ドリンクカップ",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/hello-kittys-corner-cafe/index.html",
+      "reason": "exact-name-price-not-found",
+      "prices": []
+    },
+    {
+      "foodId": "food-12eyica",
+      "name": "スペシャルドリンク&コースターセット",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/events/universal-cool-japan-2026/conan/restaurant/index.html",
+      "reason": "exact-name-price-not-found",
+      "prices": []
+    },
+    {
+      "foodId": "food-5ib5k3",
+      "name": "パンケーキ・サンド マリオの帽子 ~いちごのショートケーキ~",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/mario-cafe-and-store/index.html",
+      "reason": "exact-name-price-not-found",
+      "prices": []
+    },
+    {
+      "foodId": "food-116rf8q",
+      "name": "T-REX・バーガーセット",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/discovery-restaurant/index.html",
+      "reason": "exact-name-price-not-found",
+      "prices": []
+    },
+    {
+      "foodId": "food-e0few1",
+      "name": "ラプトル・バーガーセット",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/discovery-restaurant/index.html",
+      "reason": "exact-name-price-not-found",
+      "prices": []
+    },
+    {
+      "foodId": "food-wn7ivo",
+      "name": "プテラノドン・バーガーセット",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/discovery-restaurant/index.html",
+      "reason": "exact-name-price-not-found",
+      "prices": []
+    },
+    {
+      "foodId": "food-9un9k0",
+      "name": "モササウルス・バーガーセット",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/discovery-restaurant/index.html",
+      "reason": "exact-name-price-not-found",
+      "prices": []
+    },
+    {
+      "foodId": "food-sfsu3d",
+      "name": "フィルのワッフルチキンプレート",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/happiness-cafe/index.html",
+      "reason": "exact-name-price-not-found",
+      "prices": []
+    },
+    {
+      "foodId": "food-bcbp5u",
+      "name": "スチュアートのビッグベーコンチーズ・バーガープレート",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/happiness-cafe/index.html",
+      "reason": "exact-name-price-not-found",
+      "prices": []
+    },
+    {
+      "foodId": "food-uqw79q",
+      "name": "デザート&ドリンクバーセット",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/happiness-cafe/index.html",
+      "reason": "exact-name-price-not-found",
+      "prices": []
+    },
+    {
+      "foodId": "food-1l7y3bq",
+      "name": "くいしん坊ミニオンたちの大発明!「クッキー・マシン」で作る絶品サンド",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/delicious-me-the-cookie-kitchen/index.html",
+      "reason": "exact-name-price-not-found",
+      "prices": []
+    },
+    {
+      "foodId": "food-7nyguw",
+      "name": "ミニオン・クッキーサンド ストロベリーレアチーズ",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/delicious-me-the-cookie-kitchen/index.html",
+      "reason": "exact-name-price-not-found",
+      "prices": []
+    },
+    {
+      "foodId": "food-o9svxw",
+      "name": "ベビーフード",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/louies-ny-pizza-parlor/index.html",
+      "reason": "exact-name-price-not-found",
+      "prices": []
+    },
+    {
+      "foodId": "food-14ut653",
+      "name": "ミートスパゲティセット",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/snoopys-backlot-cafe/index.html",
+      "reason": "exact-name-price-not-found",
+      "prices": []
+    },
+    {
+      "foodId": "food-1ufz462",
+      "name": "テリヤキビーフバーガーセット",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/snoopys-backlot-cafe/index.html",
+      "reason": "exact-name-price-not-found",
+      "prices": []
+    },
+    {
+      "foodId": "food-15u1343",
+      "name": "エビカツバーガーセット",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/snoopys-backlot-cafe/index.html",
+      "reason": "exact-name-price-not-found",
+      "prices": []
+    },
+    {
+      "foodId": "food-j4nvrm",
+      "name": "超!! チョコバナナ・チュリトス",
+      "sourceUrl": "https://www.usj.co.jp/company/news/2026/0422/",
+      "reason": "exact-name-price-not-found",
+      "prices": []
+    },
+    {
+      "foodId": "food-1t33gzj",
+      "name": "呪術高専のグレープフルーツ・レモネード(アイス/ホット)",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/events/universal-cool-japan-2026/jujutsukaisen/index.html",
+      "reason": "exact-name-price-not-found",
+      "prices": []
+    },
+    {
+      "foodId": "food-1pc1exr",
+      "name": "黒閃! チキンピザブレッド ~旨辛ガーリック~",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/events/universal-cool-japan-2026/jujutsukaisen/index.html",
+      "reason": "exact-name-price-not-found",
+      "prices": []
+    },
+    {
+      "foodId": "food-1qcrkg3",
+      "name": "アイスクリーム スチュアート・バケツ スプーン",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/amity-ice-cream/index.html",
+      "reason": "exact-name-price-not-found",
+      "prices": []
+    },
+    {
+      "foodId": "food-xagefj",
+      "name": "ピッツァ・デニッシュセット~ツナマヨ&サクラエビ~",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/food-cart/index.html",
+      "reason": "exact-name-price-not-found",
+      "prices": []
+    },
+    {
+      "foodId": "food-1rsazo8",
+      "name": "ピッツァ・デニッシュセット ~照り焼きチキン~",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/boardwalk-snacks/index.html",
+      "reason": "exact-name-price-not-found",
+      "prices": []
+    },
+    {
+      "foodId": "food-1wc5ggu",
+      "name": "DK クラッシュサンデー ~トロピカルバナナ・フレーバー~ マグカップ付き",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/jungle-beat-shakes/index.html",
+      "reason": "exact-name-price-not-found",
+      "prices": []
+    },
+    {
+      "foodId": "food-1tt1au7",
+      "name": "アメリカン・ホットドッグ",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/food-cart/index.html",
+      "reason": "exact-name-price-not-found",
+      "prices": []
+    },
+    {
+      "foodId": "food-1tt4lsm",
+      "name": "蝶ネクタイ型サンドウィッチ ボックス",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/events/universal-cool-japan-2026/conan/more-enjoy/index.html",
+      "reason": "exact-name-price-not-found",
+      "prices": []
+    },
+    {
+      "foodId": "food-6vmlhh",
+      "name": "フルーツサングリアティー&シェリービネガー(アイス/ホット)",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/events/universal-cool-japan-2026/conan/more-enjoy/index.html",
+      "reason": "exact-name-price-not-found",
+      "prices": []
+    },
+    {
+      "foodId": "food-yf0vco",
+      "name": "フリーレンのビーフプレート ~赤ワイン香るデミグラスソース~",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/events/universal-cool-japan-2026/frieren/restaurant/index.html",
+      "reason": "exact-name-price-not-found",
+      "prices": []
+    },
+    {
+      "foodId": "food-mioln1",
+      "name": "ヒンメルのオムレツプレート",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/events/universal-cool-japan-2026/frieren/restaurant/index.html",
+      "reason": "exact-name-price-not-found",
+      "prices": []
+    },
+    {
+      "foodId": "food-1u1wwri",
+      "name": "アイゼン&ハイターのハンバーグとフィッシュ&チップスプレート",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/events/universal-cool-japan-2026/frieren/restaurant/index.html",
+      "reason": "exact-name-price-not-found",
+      "prices": []
+    },
+    {
+      "foodId": "food-xitytu",
+      "name": "たのしい旅の宝箱 キッズセット",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/events/universal-cool-japan-2026/frieren/restaurant/index.html",
+      "reason": "exact-name-price-not-found",
+      "prices": []
+    },
+    {
+      "foodId": "food-13ex3cf",
+      "name": "花香る フリーレンのホワイトソーダ(フリーレンコースター付)",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/events/universal-cool-japan-2026/frieren/restaurant/index.html",
+      "reason": "exact-name-price-not-found",
+      "prices": []
+    },
+    {
+      "foodId": "food-1rhhv0e",
+      "name": "シュタルクのショコラ&ラズベリーケーキ",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/events/universal-cool-japan-2026/frieren/restaurant/index.html",
+      "reason": "exact-name-price-not-found",
+      "prices": []
+    },
+    {
+      "foodId": "food-1fmms6w",
+      "name": "フェルンのチェリー&ブルーベリーパフェ(蝶のスプーン付)",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/events/universal-cool-japan-2026/frieren/restaurant/index.html",
+      "reason": "exact-name-price-not-found",
+      "prices": []
+    },
+    {
+      "foodId": "food-manual-バタービールtm-マグカップ付き-ノンアルコール",
+      "name": "バタービール™ ～マグカップ付き～（ノンアルコール）",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/the-wizarding-world-of-harry-potter-food/index.html",
+      "reason": "exact-name-price-not-found",
+      "prices": []
+    },
+    {
+      "foodId": "food-manual-バタービールtm-プレミアムマグカップ付き-ノンアルコール",
+      "name": "バタービール™ ～プレミアムマグカップ付き～（ノンアルコール）",
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/the-wizarding-world-of-harry-potter-food/index.html",
+      "reason": "exact-name-price-not-found",
+      "prices": []
+    }
+  ]
+}

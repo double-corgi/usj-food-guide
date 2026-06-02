@@ -1,0 +1,15 @@
+{
+  "generatedAt": "2026-05-31T09:28:57.925Z",
+  "foodTotal": 200,
+  "priceKnown": 79,
+  "priceUnknown": 121,
+  "addedUnconfirmable": 0,
+  "refreshedUnconfirmable": 8,
+  "keptConfirmed": 0,
+  "keptExistingUnconfirmable": 113,
+  "unconfirmableTotal": 121,
+  "reasonStats": {
+    "official_exact_price_not_found": 108,
+    "set_or_size_ambiguous": 13
+  }
+}

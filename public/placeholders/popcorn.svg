@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" role="img" aria-label="ポップコーン placeholder">
+  <rect width="800" height="600" fill="#fefce8"/>
+  <path d="M230 220h340l-38 270H268z" fill="#ef4444"/>
+  <path d="M310 220h70v270h-70zM450 220h70v270h-70z" fill="#fff7ed"/>
+  <circle cx="290" cy="190" r="58" fill="#fde68a"/>
+  <circle cx="380" cy="160" r="68" fill="#fef3c7"/>
+  <circle cx="485" cy="190" r="62" fill="#fde68a"/>
+  <text x="400" y="545" text-anchor="middle" font-family="sans-serif" font-size="42" fill="#7f1d1d">Popcorn</text>
+</svg>

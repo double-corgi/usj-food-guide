@@ -1,0 +1,88 @@
+{
+  "generatedAt": "2026-06-01T14:54:04.733Z",
+  "summary": {
+    "foodTotal": 200,
+    "imageTotal": 200,
+    "placeholderCount": 0,
+    "priceKnown": 192,
+    "priceUnknown": 8,
+    "priceRate": "96%"
+  },
+  "checks": [
+    {
+      "name": "food 200件維持",
+      "ok": true,
+      "evidence": 200
+    },
+    {
+      "name": "画像200件維持",
+      "ok": true,
+      "evidence": 200
+    },
+    {
+      "name": "placeholder 0維持",
+      "ok": true,
+      "evidence": 0
+    },
+    {
+      "name": "価格確認率96%以上",
+      "ok": true,
+      "evidence": "192/200"
+    },
+    {
+      "name": "旧ランキング名がホームから消えている",
+      "ok": true,
+      "evidence": []
+    },
+    {
+      "name": "人間向けランキング名が揃っている",
+      "ok": true,
+      "evidence": []
+    },
+    {
+      "name": "ホーム/商品カードの価格確認ラベルが消えている",
+      "ok": true,
+      "evidence": []
+    },
+    {
+      "name": "人気ジャンルのみホームに表示",
+      "ok": true,
+      "evidence": [
+        "すべて",
+        "チュリトス",
+        "ポップコーン",
+        "ドリンク",
+        "ピザ",
+        "バーガー",
+        "スイーツ",
+        "キッズ"
+      ]
+    },
+    {
+      "name": "詳細フィルタ導線が探す画面へ集約",
+      "ok": true,
+      "evidence": "詳細フィルタへ"
+    },
+    {
+      "name": "攻略スコアが詳細で意味付き表示",
+      "ok": true,
+      "evidence": []
+    },
+    {
+      "name": "攻略スコアがホームカードにも表示",
+      "ok": true,
+      "evidence": "攻略{score.total}点"
+    },
+    {
+      "name": "価格ソースと確認日が詳細のみで確認可能",
+      "ok": true,
+      "evidence": "price source / checked date"
+    },
+    {
+      "name": "初心者に分かりにくいスコア語を除去",
+      "ok": true,
+      "evidence": []
+    }
+  ],
+  "passed": true
+}

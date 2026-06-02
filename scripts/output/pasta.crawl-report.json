@@ -1,0 +1,152 @@
+{
+  "mode": "pasta",
+  "category": "noodle",
+  "generatedAt": "2026-05-29T10:02:01.148Z",
+  "targetedPagesCrawled": 90,
+  "targetedFoodsFound": 0,
+  "targetedErrors": 49,
+  "requiredSourceCoverage": [
+    {
+      "url": "https://www.usj.co.jp/web/ja/jp/restaurants",
+      "fetched": true,
+      "sourceNames": [
+        "official-category-pasta-and-noodles"
+      ],
+      "extractedFoods": 0
+    },
+    {
+      "url": "https://www.usj.co.jp/web/ja/jp/restaurants/food-cart",
+      "fetched": true,
+      "sourceNames": [
+        "official-restaurant-menu-supplement",
+        "official-category-pasta-and-noodles"
+      ],
+      "extractedFoods": 42
+    },
+    {
+      "url": "https://www.usj.co.jp/web/ja/jp/restaurants/seasonal-food",
+      "fetched": true,
+      "sourceNames": [
+        "official-restaurant-menu-supplement"
+      ],
+      "extractedFoods": 36
+    },
+    {
+      "url": "https://www.usj.co.jp/web/ja/jp/restaurants/super-nintendo-world-food",
+      "fetched": false,
+      "sourceNames": [],
+      "extractedFoods": 0
+    },
+    {
+      "url": "https://www.usj.co.jp/web/ja/jp/restaurants/the-wizarding-world-of-harry-potter-food",
+      "fetched": false,
+      "sourceNames": [],
+      "extractedFoods": 0
+    },
+    {
+      "url": "https://www.usj.co.jp/web/ja/jp/restaurants/minion-food",
+      "fetched": false,
+      "sourceNames": [],
+      "extractedFoods": 0
+    },
+    {
+      "url": "https://castel.jp/p/3101",
+      "fetched": false,
+      "sourceNames": [],
+      "extractedFoods": 0
+    }
+  ],
+  "totalCandidates": 5,
+  "categoryCandidates": 5,
+  "visible": 3,
+  "pending": 2,
+  "verifiedImages": 3,
+  "placeholders": 0,
+  "candidates": [
+    {
+      "id": "food-62sv4l",
+      "name": "スーパースター・アニバーサリープレート ~マッシュルーム・ラザニア&フライドチキン~",
+      "category": "noodle",
+      "reviewStatus": "approved",
+      "displayQuality": "high",
+      "canonicalFood": true,
+      "hidden": false,
+      "confidenceScore": 100,
+      "nameQualityScore": 90,
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/kinopios-cafe/index.html",
+      "shop": "キノピオ・カフェ",
+      "area": "スーパー・ニンテンドー・ワールド",
+      "imageVerified": true,
+      "imageMatchScore": 96,
+      "rejectionReasons": []
+    },
+    {
+      "id": "food-1ra6hp8",
+      "name": "チキンとトマトクリーム・スパゲティセット",
+      "category": "noodle",
+      "reviewStatus": "approved",
+      "displayQuality": "high",
+      "canonicalFood": true,
+      "hidden": false,
+      "confidenceScore": 100,
+      "nameQualityScore": 100,
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/snoopys-backlot-cafe/index.html",
+      "shop": "店舗未確認",
+      "area": "その他",
+      "imageVerified": true,
+      "imageMatchScore": 96,
+      "rejectionReasons": []
+    },
+    {
+      "id": "food-11urhsj",
+      "name": "チキンとトマトクリーム・スパゲティセット",
+      "category": "noodle",
+      "reviewStatus": "approved",
+      "displayQuality": "high",
+      "canonicalFood": false,
+      "hidden": true,
+      "confidenceScore": 100,
+      "nameQualityScore": 100,
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/seasonal-food/index.html",
+      "shop": "・バックロット・カフェ",
+      "area": "ユニバーサル・ワンダーランド",
+      "imageVerified": true,
+      "imageMatchScore": 96,
+      "rejectionReasons": []
+    },
+    {
+      "id": "food-5ye0ue",
+      "name": "スーパースター・アニバーサリープレート ~マッシュルーム・ラザニア&フライドチキン~",
+      "category": "noodle",
+      "reviewStatus": "approved",
+      "displayQuality": "high",
+      "canonicalFood": false,
+      "hidden": true,
+      "confidenceScore": 100,
+      "nameQualityScore": 90,
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/seasonal-food/index.html",
+      "shop": "キノピオ・カフェ",
+      "area": "スーパー・ニンテンドー・ワールド",
+      "imageVerified": true,
+      "imageMatchScore": 96,
+      "rejectionReasons": []
+    },
+    {
+      "id": "food-14ut653",
+      "name": "ミートスパゲティセット",
+      "category": "noodle",
+      "reviewStatus": "approved",
+      "displayQuality": "high",
+      "canonicalFood": true,
+      "hidden": false,
+      "confidenceScore": 95,
+      "nameQualityScore": 100,
+      "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/snoopys-backlot-cafe/index.html",
+      "shop": "店舗未確認",
+      "area": "その他",
+      "imageVerified": true,
+      "imageMatchScore": 96,
+      "rejectionReasons": []
+    }
+  ]
+}
