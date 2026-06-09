@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import {
   calculateArchiveRecordRate,
@@ -39,39 +40,43 @@ export function HomeCollectionHero({ foods }: { foods: FoodWithRelations[] }) {
   const remaining = Math.max(completion.total - completion.eaten, 0);
 
   return (
-    <section className="py-1">
-      <div className="grid gap-6 lg:grid-cols-[minmax(0,1.08fr)_minmax(350px,0.72fr)] lg:items-center lg:gap-10">
-        <div className="relative overflow-hidden rounded-[2rem] bg-[#f4c76d] shadow-[0_24px_70px_rgba(15,23,42,0.14)] ring-1 ring-white/70">
-          <div
-            className="animate-hero-globe-drift aspect-[16/9] min-h-[242px] bg-[url('/hero/unicore-globe-hero.svg')] bg-cover bg-center sm:min-h-[350px] lg:min-h-[460px]"
+    <section className="pt-0">
+      <div className="mx-auto max-w-[1120px]">
+        <div className="relative mx-auto max-w-[980px] overflow-hidden rounded-[1.55rem] bg-[#f4c76d] shadow-[0_22px_68px_rgba(15,23,42,0.13)] ring-1 ring-white/80 sm:rounded-[2rem]">
+          <Image
+            src="/hero/unicore-globe-firstview.png"
+            alt=""
+            width={1680}
+            height={945}
+            priority
+            className="animate-hero-globe-drift aspect-[16/9] h-auto w-full select-none object-cover"
             aria-hidden="true"
           />
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_24%,rgba(255,255,255,0.2),transparent_42%),linear-gradient(180deg,rgba(7,27,58,0.02)_0%,rgba(7,27,58,0.18)_72%,rgba(7,27,58,0.45)_100%)]" aria-hidden />
-          <div className="absolute inset-x-0 bottom-4 flex justify-center px-4 sm:bottom-6">
-            <div className="select-none text-center">
-              <p
-                className="text-[3.4rem] font-black leading-none tracking-[-0.08em] text-[#fff8e8] sm:text-[5rem] lg:text-[6.2rem]"
-                style={{
-                  WebkitTextStroke: "0.12em #06265f",
-                  paintOrder: "stroke fill",
-                  textShadow: "0 8px 0 #d59a27, 0 18px 24px rgba(7,27,58,0.24)"
-                }}
-              >
-                {appBrand.shortName}
-              </p>
-            </div>
-          </div>
+          <div
+            className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_20%,rgba(255,255,255,0.2),transparent_46%),linear-gradient(180deg,rgba(255,255,255,0)_0%,rgba(7,27,58,0.08)_100%)]"
+            aria-hidden
+          />
         </div>
 
-        <div className="mx-auto w-full max-w-[520px] space-y-5 text-center">
+        <div className="mx-auto mt-5 max-w-[620px] space-y-5 text-center sm:mt-7">
           <div className="space-y-3">
+            <h1
+              className="select-none text-[4.2rem] font-black leading-none tracking-[-0.08em] text-[#fff8e8] sm:text-[5.6rem] lg:text-[6.4rem]"
+              style={{
+                WebkitTextStroke: "0.11em #06265f",
+                paintOrder: "stroke fill",
+                textShadow: "0 6px 0 #d59a27, 0 14px 22px rgba(7,27,58,0.2)"
+              }}
+            >
+              {appBrand.shortName}
+            </h1>
             <p className="text-base font-black leading-7 text-slate-700 sm:text-lg">{appBrand.tagline}</p>
             <p className="mx-auto max-w-md whitespace-pre-line text-sm font-bold leading-7 text-slate-500">
               {"ユニバ（USJ）フードを写真で集めて、\n食べた記録をコレクションとして残せます。"}
             </p>
           </div>
 
-          <div className="rounded-[1.6rem] bg-white/88 p-5 text-left shadow-[0_20px_60px_rgba(15,23,42,0.08)] ring-1 ring-slate-200/70">
+          <div className="mx-auto max-w-[520px] rounded-[1.45rem] bg-white/88 p-4 text-left shadow-[0_18px_52px_rgba(15,23,42,0.07)] ring-1 ring-slate-200/70 sm:p-5">
             <div className="flex items-end justify-between gap-4">
               <div className="text-left">
                 <p className="text-xs font-black text-slate-500">コレクション進捗</p>

@@ -1,7 +1,5 @@
 import Link from "next/link";
 import { CheckCircle2, Globe2, House, Search, Store } from "lucide-react";
-import { BrandMark } from "@/components/brand-mark";
-import { appBrand } from "@/lib/constants";
 
 const navItems = [
   { href: "/", label: "ホーム", icon: House },
@@ -14,15 +12,9 @@ const navItems = [
 export function AppHeader() {
   return (
     <>
-      <header className="sticky top-0 z-30 border-b border-slate-200/60 bg-white/78 pt-[env(safe-area-inset-top)] backdrop-blur-xl">
-        <div className="mx-auto flex w-full max-w-7xl items-center justify-between gap-4 px-4 py-1.5 sm:px-6 md:py-2.5 lg:px-8">
-          <Link href="/" className="flex items-center gap-2">
-            <BrandMark className="h-7 w-7 rounded-lg md:h-9 md:w-9 md:rounded-xl" />
-            <span>
-              <span className="block text-xs font-black leading-tight text-ink md:text-base">{appBrand.shortName}</span>
-            </span>
-          </Link>
-          <nav className="hidden items-center gap-1 md:flex">
+      <header className="sticky top-0 z-30 hidden border-b border-slate-200/60 bg-white/78 pt-[env(safe-area-inset-top)] backdrop-blur-xl md:block">
+        <div className="mx-auto flex w-full max-w-7xl items-center justify-end px-6 py-2.5 lg:px-8">
+          <nav className="flex items-center gap-1">
             {navItems.map((item) => (
               <Link
                 key={item.href}

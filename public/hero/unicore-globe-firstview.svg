@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1680 945" role="img" aria-label="ユニコレ グローブビジュアル">
+  <defs>
+    <radialGradient id="goldBase" cx="50%" cy="34%" r="76%">
+      <stop offset="0%" stop-color="#fff1bf"/>
+      <stop offset="45%" stop-color="#f6c865"/>
+      <stop offset="100%" stop-color="#d69a33"/>
+    </radialGradient>
+    <radialGradient id="globeBlue" cx="40%" cy="28%" r="74%">
+      <stop offset="0%" stop-color="#25a9ff"/>
+      <stop offset="42%" stop-color="#0057b8"/>
+      <stop offset="100%" stop-color="#071b3a"/>
+    </radialGradient>
+    <linearGradient id="landBlue" x1="430" x2="1180" y1="160" y2="740" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#7ce0ff"/>
+      <stop offset="100%" stop-color="#1b83da"/>
+    </linearGradient>
+    <linearGradient id="shine" x1="550" x2="1090" y1="150" y2="760" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity=".42"/>
+      <stop offset="44%" stop-color="#ffffff" stop-opacity=".08"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+    </linearGradient>
+    <filter id="softShadow" x="-18%" y="-18%" width="136%" height="136%">
+      <feDropShadow dx="0" dy="18" stdDeviation="22" flood-color="#6b4615" flood-opacity=".34"/>
+    </filter>
+    <filter id="utensilShadow" x="-24%" y="-24%" width="148%" height="148%">
+      <feDropShadow dx="0" dy="12" stdDeviation="10" flood-color="#071b3a" flood-opacity=".28"/>
+    </filter>
+  </defs>
+
+  <rect width="1680" height="945" fill="url(#goldBase)"/>
+  <rect width="1680" height="945" fill="#fff3cf" opacity=".08"/>
+
+  <g fill="none" stroke="#93651f" stroke-linecap="round" opacity=".18">
+    <circle cx="840" cy="472" r="690" stroke-width="18"/>
+    <circle cx="840" cy="472" r="500" stroke-width="12"/>
+    <path d="M118 476h1444" stroke-width="14"/>
+    <path d="M840 -40v1025" stroke-width="12" opacity=".55"/>
+    <path d="M160 85c196 145 431 213 704 202 244-9 464-78 656-202" stroke-width="11"/>
+    <path d="M160 860c196-145 431-213 704-202 244 9 464 78 656 202" stroke-width="11"/>
+    <path d="M384 0c143 216 209 480 198 790" stroke-width="11"/>
+    <path d="M1296 0c-143 216-209 480-198 790" stroke-width="11"/>
+  </g>
+
+  <g opacity=".2" fill="#8a5d1c">
+    <path d="M139 206c44-38 94-66 145-88 26 35 62 62 98 87-68 21-126 52-174 94-28-30-52-62-69-93Z"/>
+    <path d="M1115 80c75 5 146 21 212 50-12 35-28 70-47 105-75-29-146-42-209-44 10-64 24-106 44-111Z"/>
+    <path d="M1268 544c79-23 160-21 248 6-22 64-55 120-98 169-69-34-139-44-213-31 23-55 42-109 63-144Z"/>
+    <path d="M219 644c76-34 148-41 214-22 15 43 33 90 61 137-89-1-170 18-242 59-42-48-72-105-33-174Z"/>
+  </g>
+
+  <g filter="url(#softShadow)">
+    <circle cx="840" cy="472" r="394" fill="#fff9e6"/>
+    <circle cx="840" cy="472" r="366" fill="#f1c25d"/>
+    <circle cx="840" cy="472" r="347" fill="#081f52"/>
+    <circle cx="840" cy="472" r="316" fill="url(#globeBlue)"/>
+
+    <g fill="url(#landBlue)" opacity=".95">
+      <path d="M636 260c68-61 146-94 239-94 31 0 60 4 88 12 14 29-3 54-43 73-68 31-128 32-178 1-41-24-74-18-106 8Z"/>
+      <path d="M541 352c44-87 123-151 225-178 21 31 4 62-51 95-45 27-80 51-106 91-19 29-48 46-88 49-7-18 1-37 20-57Z"/>
+      <path d="M594 498c62 59 142 82 240 76 60-3 110 22 150 73 31 40 30 83-2 123-95-19-184-59-267-121-64-48-112-93-144-136-17-23 5-36 23-15Z"/>
+      <path d="M990 299c68-41 143-34 200 17 63 56 66 126 9 189-44 49-105 69-181 61-41-4-74 12-98 49-21 31-42 20-34-17 23-111 84-191 183-242 30-15 27-35-79-57Z"/>
+    </g>
+    <circle cx="840" cy="472" r="316" fill="url(#shine)"/>
+    <circle cx="840" cy="472" r="316" fill="none" stroke="#0d367c" stroke-width="14"/>
+  </g>
+
+  <g filter="url(#utensilShadow)" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M726 280v184c0 66 28 123 84 169l70 58" fill="none" stroke="#d7a12f" stroke-width="26"/>
+    <path d="M677 282v145M718 254v166M760 276v145" fill="none" stroke="#d7a12f" stroke-width="23"/>
+    <path d="M726 280v184c0 66 28 123 84 169l70 58" fill="none" stroke="#fffdf4" stroke-width="20"/>
+    <path d="M677 282v145M718 254v166M760 276v145" fill="none" stroke="#fffdf4" stroke-width="17"/>
+
+    <path d="M987 230c71-26 132 19 126 100-5 75-57 122-114 150-45 22-70 53-81 103l-44 195c-7 32-48 42-68 17-14-18-12-42 5-59l123-122c42-42 56-90 43-146-18-78-39-139 10-238Z" fill="#d7a12f"/>
+    <path d="M996 251c52-19 95 17 90 76-5 58-43 92-95 119-55 29-86 69-99 130l-43 188c-2 9-14 13-20 5-4-5-4-12 1-17l124-123c48-48 66-104 50-173-15-67-31-116 11-202Z" fill="#fffdf4"/>
+  </g>
+
+  <rect width="1680" height="945" fill="url(#goldBase)" opacity=".05"/>
+</svg>
