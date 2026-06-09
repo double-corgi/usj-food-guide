@@ -1,6 +1,6 @@
-# ユニバで食べたものリスト
+# ユニバフードコレクション（ユニコレ）
 
-USJ内のフードを「食べたい」「食べた」で管理する、非公式ファン向けフード記録アプリです。
+食べた記録が、そのままコレクションになる。ユニバ（USJ）フードを集めて楽しむための非公式コレクションアプリです。
 
 > このアプリはUSJ公式アプリではありません。公開情報をもとにした非公式ファン向けフード記録アプリです。最新情報は必ず公式サイトをご確認ください。
 
@@ -8,29 +8,58 @@ USJ内のフードを「食べたい」「食べた」で管理する、非公�
 
 - Next.js App Router + TypeScript + Tailwind CSS
 - Supabase本接続対応。未設定時は`script/output/*.generated.json`をfallback表示
-- ログイン時は`user_food_logs`へ保存、未ログイン時は匿名モード
+- 食べた記録、レビュー、星評価は端末内localStorageへ保存
 - スマホ優先の図鑑型カードUI、下部ナビ、skeleton、PWA install prompt
-- 食べたものリスト、食べたいリスト、optimistic update
+- 食べたものリスト、レビュー、optimistic update
 - 全体・エリア別・ジャンル別・期間限定コンプリート率
 - エリア別、店舗別、ジャンル別の導線
 - 管理画面の集計、crawl_logs表示、candidate review表示
 - PWA manifest、service worker、offline cache
 - Supabase用SQLスキーマ、RLS、index、サンプルseed
 - source別crawler、Tridion JSON追跡、HTML/OG/alt/JSON-LD/PDF parser、quality scoring
-- 広告枠placeholder
 - CapacitorによるiOS / Android化準備
 - 公開前必須ページ: `/privacy`, `/terms`, `/contact`, `/disclaimer`, `/about`, `/security`, `/commercial-disclosure`
 
-ログイン前は匿名モードとしてブラウザ内に一時保存します。Supabaseログイン後は`user_food_logs`へ保存します。
+ユーザーの記録はログイン不要でブラウザ内に保存します。
 
 ## セットアップ
 
 ```bash
 npm install
-npm run dev
+npm run dev:auto
 ```
 
 ブラウザで `http://localhost:3000` を開きます。
+
+### 開発開始手順
+
+普段の開発は次のコマンドだけで起動します。
+
+```bash
+npm run dev:auto
+```
+
+`dev:auto` は以下を自動で行います。
+
+- port 3000を使用中の既存プロセスを停止
+- Next.js dev serverを `http://localhost:3000` で起動
+- `/`, `/foods`, `/eaten`, `/areas` が200 OKになるまで確認
+- 起動後も定期監視し、落下時は自動再起動
+
+Mac再起動後も、プロジェクトディレクトリで `npm run dev:auto` を実行すれば `localhost:3000` を復旧できます。
+
+### 停止手順
+
+起動中のターミナルで `Ctrl+C` を押します。
+
+別ターミナルから止める場合:
+
+```bash
+pkill -f "scripts/dev-watch.ts"
+pkill -f "next dev"
+```
+
+通常のNext.js起動だけを使いたい場合は、従来どおり `npm run dev -- -p 3000` も利用できます。
 
 ## 公開前ドキュメント
 
@@ -52,7 +81,7 @@ npm run cap:android
 npm run cap:sync
 ```
 
-通常のNext.js起動は従来どおり `npm run dev` です。Capacitor検証でホスト済みURLを使う場合のみ `CAPACITOR_SERVER_URL` を設定します。
+通常の開発起動は `npm run dev:auto` です。Capacitor検証でホスト済みURLを使う場合のみ `CAPACITOR_SERVER_URL` を設定します。
 
 ## 実機確認: Cloudflare Tunnel
 
@@ -79,7 +108,7 @@ Homebrewを使わない場合は、Cloudflare公式ドキュメントからmacOS
 1つ目:
 
 ```bash
-npm run dev
+npm run dev:auto
 ```
 
 2つ目:
@@ -105,13 +134,13 @@ https://example-words.trycloudflare.com
 
 ### iPhone SafariでPWA確認
 
-1. Macで `npm run dev` を起動します。
+1. Macで `npm run dev:auto` を起動します。
 2. 別ターミナルで `cloudflared tunnel --url http://localhost:3000` を起動します。
 3. 表示された `https://...trycloudflare.com` をiPhoneのSafariで開きます。
 4. `/`, `/foods`, `/foods/[id]`, `/areas`, `/eaten` を確認します。
 5. Safari下部の共有ボタンを押します。
 6. 「ホーム画面に追加」を選びます。
-7. ホーム画面から起動し、standalone表示、下部ナビ、safe-area、画像表示、食べた記録のlocalStorage保存を確認します。
+7. ホーム画面から起動し、standalone表示、下部ナビ、safe-area、画像表示、Google/Appleログイン後の食べた記録Supabase同期を確認します。
 8. 機内モードまたは通信が弱い状態で、PWAのoffline cacheが破綻しないか確認します。
 
 確認観点:
@@ -124,7 +153,7 @@ https://example-words.trycloudflare.com
 
 ### Android ChromeでPWA確認
 
-1. Macで `npm run dev` を起動します。
+1. Macで `npm run dev:auto` を起動します。
 2. 別ターミナルで `cloudflared tunnel --url http://localhost:3000` を起動します。
 3. 表示された `https://...trycloudflare.com` をAndroid Chromeで開きます。
 4. Chromeのメニューから「アプリをインストール」または「ホーム画面に追加」を選びます。
@@ -174,6 +203,7 @@ cp .env.local.example .env.local
 ```env
 NEXT_PUBLIC_SUPABASE_URL=
 NEXT_PUBLIC_SUPABASE_ANON_KEY=
+NEXT_PUBLIC_REQUEST_FORM_URL=https://forms.gle/cpLfsGziu9avEeZUA
 SUPABASE_SERVICE_ROLE_KEY=
 CRON_SECRET=
 CRAWL_DELAY_MS=700
@@ -213,14 +243,12 @@ Supabase SQL Editorで以下の順に実行します。
 - `/foods` 全フード一覧
 - `/foods/[id]` メニュー詳細
 - `/eaten` 食べたものリスト
-- `/want` 食べたいリスト
 - `/complete` コンプリート画面
 - `/areas` エリア別ページ
 - `/shops` 店舗別ページ
 - `/genres` ジャンル別ページ
 - `/admin` 管理画面MVP
 - `/admin/prices` 価格確認センター
-- `/admin/submissions` 発見報告管理
 
 ## 公開前監査
 
@@ -252,7 +280,6 @@ app/
   shops/page.tsx
   genres/page.tsx
   eaten/page.tsx
-  want/page.tsx
   complete/page.tsx
   admin/page.tsx
 components/
@@ -335,6 +362,12 @@ Vercel:
 - `NEXT_PUBLIC_SUPABASE_URL`
 - `NEXT_PUBLIC_SUPABASE_ANON_KEY`
 - `SUPABASE_SERVICE_ROLE_KEY`
+
+ユーザーデータ:
+
+- ログイン不要で利用
+- 食べた記録、レビュー、星評価は端末内localStorageへ保存
+- 別端末へ移す場合は設定画面のバックアップJSON出力・復元を使用
 
 GitHub Actions:
 

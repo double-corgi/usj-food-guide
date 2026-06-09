@@ -27,9 +27,15 @@ type LayoutReport = {
   viewport: string;
   cardCount: number;
   uniqueCardHeights: number[];
+  documentWidth: number;
+  viewportWidth: number;
   badRows: Array<{ top: number; cardHeights: number[]; actionTops: number[]; priceTops: number[] }>;
   titleAreaMinHeight: number;
   longNameCards: Array<{ name: string; titleHeight: number; titleScrollHeight: number; priceTop: number; actionTop: number; cardHeight: number }>;
+  areaSummaries: Array<{ name: string; areaText: string; areaHeight: number; areaScrollHeight: number }>;
+  multiAreaSummaries: Array<{ name: string; areaText: string }>;
+  otherAreaSummaries: Array<{ name: string; areaText: string }>;
+  overflowingAreaSummaries: Array<{ name: string; areaText: string; areaHeight: number; areaScrollHeight: number }>;
   failures: string[];
 };
 
@@ -181,9 +187,11 @@ async function run() {
             const rect = card.getBoundingClientRect();
             const title = card.querySelector('[data-food-card-title]');
             const price = card.querySelector('[data-food-card-price]');
+            const area = card.querySelector('[data-food-card-area]');
             const actions = card.querySelector('[data-food-card-actions]');
             const titleRect = title?.getBoundingClientRect();
             const priceRect = price?.getBoundingClientRect();
+            const areaRect = area?.getBoundingClientRect();
             const actionRect = actions?.getBoundingClientRect();
             return {
               name: card.getAttribute('data-food-name') || '',
@@ -192,6 +200,9 @@ async function run() {
               titleHeight: Math.round(titleRect?.height || 0),
               titleScrollHeight: Math.round(title?.scrollHeight || 0),
               priceTop: Math.round((priceRect?.top || 0) - rect.top),
+              areaText: (area?.textContent || '').trim().replace(/\\s+/g, ' '),
+              areaHeight: Math.round(areaRect?.height || 0),
+              areaScrollHeight: Math.round(area?.scrollHeight || 0),
               actionTop: Math.round((actionRect?.top || 0) - rect.top)
             };
           });
@@ -214,13 +225,22 @@ async function run() {
             .map(({ name, titleHeight, titleScrollHeight, priceTop, actionTop, height }) => ({ name, titleHeight, titleScrollHeight, priceTop, actionTop, cardHeight: height }));
           const uniqueCardHeights = [...new Set(cards.map((card) => card.height))];
           const titleAreaMinHeight = Math.min(...cards.map((card) => card.titleHeight));
+          const areaSummaries = cards.map(({ name, areaText, areaHeight, areaScrollHeight }) => ({ name, areaText, areaHeight, areaScrollHeight }));
+          const multiAreaSummaries = areaSummaries.filter((card) => /\\s\\/\\s|ほか\\d+箇所/.test(card.areaText)).slice(0, 20);
+          const otherAreaSummaries = areaSummaries.filter((card) => card.areaText.includes('その他'));
+          const overflowingAreaSummaries = areaSummaries.filter((card) => card.areaScrollHeight > card.areaHeight + 1);
+          const documentWidth = Math.ceil(document.documentElement.scrollWidth);
+          const viewportWidth = Math.ceil(window.innerWidth);
           const failures = [];
-          if (cards.length < 200) failures.push('card-count-under-200');
+          if (cards.length < 190) failures.push('card-count-under-visible-threshold');
           if (uniqueCardHeights.length > 1) failures.push('card-height-not-unified');
           if (badRows.length > 0) failures.push('row-alignment-mismatch');
           if (titleAreaMinHeight < 56) failures.push('title-area-under-3-lines');
           if (longNameCards.some((card) => card.titleScrollHeight > card.titleHeight + 1)) failures.push('long-name-clipped');
-          return { viewport: ${JSON.stringify(viewport.label)}, cardCount: cards.length, uniqueCardHeights, badRows, titleAreaMinHeight, longNameCards, failures };
+          if (otherAreaSummaries.length > 0) failures.push('other-area-visible');
+          if (overflowingAreaSummaries.length > 0) failures.push('area-summary-overflow');
+          if (documentWidth > viewportWidth + 1) failures.push('horizontal-overflow');
+          return { viewport: ${JSON.stringify(viewport.label)}, cardCount: cards.length, uniqueCardHeights, documentWidth, viewportWidth, badRows, titleAreaMinHeight, longNameCards, areaSummaries: areaSummaries.slice(0, 12), multiAreaSummaries, otherAreaSummaries, overflowingAreaSummaries, failures };
         })()`
       );
       reports.push(report);

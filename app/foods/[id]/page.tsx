@@ -6,7 +6,7 @@ export const revalidate = 3600;
 
 export async function generateStaticParams() {
   const foods = await listFoods();
-  return foods.slice(0, 100).map((food) => ({ id: food.id }));
+  return foods.map((food) => ({ id: food.id }));
 }
 
 export default async function FoodDetailPage({ params }: { params: Promise<{ id: string }> }) {

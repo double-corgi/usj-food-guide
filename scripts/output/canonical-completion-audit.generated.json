@@ -1,0 +1,247 @@
+{
+  "generatedAt": "2026-06-09T05:21:36.716Z",
+  "foodCount": 188,
+  "imageCount": 188,
+  "placeholderCount": 0,
+  "canonicalFoodCount": 184,
+  "duplicateCandidateCount": 1,
+  "explicitDuplicateGroupCount": 3,
+  "canonicalFoodIdUnsetInDuplicateCandidates": 0,
+  "saleUnknownCount": 0,
+  "activeCompletableCanonicalCount": 183,
+  "archiveCanonicalCount": 184,
+  "areaReviewNeededCount": 8,
+  "rawOtherAreaCount": 0,
+  "displayOtherAreaCount": 0,
+  "areaCanonicalDuplicateRawCount": 1,
+  "eatenLogRuntimeNote": "食べた記録はlocalStorage保存のため、重複カウント監査は画面実行時にcanonicalFoodId単位で行います。",
+  "areaProgress": [
+    {
+      "id": "area-apf4z5",
+      "name": "スーパー・ニンテンドー・ワールド",
+      "activeDenominator": 30,
+      "archiveDenominator": 31,
+      "eatenCanonicalCount": 0,
+      "archiveEatenCanonicalCount": 0,
+      "rawFoods": 32,
+      "canonicalFoods": 31,
+      "duplicateRawRowsExcluded": 1
+    },
+    {
+      "id": "area-1a9heim",
+      "name": "ミニオン・パーク",
+      "activeDenominator": 8,
+      "archiveDenominator": 8,
+      "eatenCanonicalCount": 0,
+      "archiveEatenCanonicalCount": 0,
+      "rawFoods": 8,
+      "canonicalFoods": 8,
+      "duplicateRawRowsExcluded": 0
+    },
+    {
+      "id": "area-bheu57",
+      "name": "ウィザーディング・ワールド・オブ・ハリー・ポッター",
+      "activeDenominator": 12,
+      "archiveDenominator": 12,
+      "eatenCanonicalCount": 0,
+      "archiveEatenCanonicalCount": 0,
+      "rawFoods": 12,
+      "canonicalFoods": 12,
+      "duplicateRawRowsExcluded": 0
+    },
+    {
+      "id": "area-olb56e",
+      "name": "ハリウッド・エリア",
+      "activeDenominator": 37,
+      "archiveDenominator": 37,
+      "eatenCanonicalCount": 0,
+      "archiveEatenCanonicalCount": 0,
+      "rawFoods": 37,
+      "canonicalFoods": 37,
+      "duplicateRawRowsExcluded": 0
+    },
+    {
+      "id": "area-1qz9zry",
+      "name": "ニューヨーク・エリア",
+      "activeDenominator": 23,
+      "archiveDenominator": 23,
+      "eatenCanonicalCount": 0,
+      "archiveEatenCanonicalCount": 0,
+      "rawFoods": 23,
+      "canonicalFoods": 23,
+      "duplicateRawRowsExcluded": 0
+    },
+    {
+      "id": "area-12fbro0",
+      "name": "ジュラシック・パーク",
+      "activeDenominator": 23,
+      "archiveDenominator": 23,
+      "eatenCanonicalCount": 0,
+      "archiveEatenCanonicalCount": 0,
+      "rawFoods": 23,
+      "canonicalFoods": 23,
+      "duplicateRawRowsExcluded": 0
+    },
+    {
+      "id": "area-gb6hrj",
+      "name": "アミティ・ビレッジ",
+      "activeDenominator": 17,
+      "archiveDenominator": 17,
+      "eatenCanonicalCount": 0,
+      "archiveEatenCanonicalCount": 0,
+      "rawFoods": 17,
+      "canonicalFoods": 17,
+      "duplicateRawRowsExcluded": 0
+    },
+    {
+      "id": "area-yeysd1",
+      "name": "サンフランシスコ・エリア",
+      "activeDenominator": 19,
+      "archiveDenominator": 19,
+      "eatenCanonicalCount": 0,
+      "archiveEatenCanonicalCount": 0,
+      "rawFoods": 19,
+      "canonicalFoods": 19,
+      "duplicateRawRowsExcluded": 0
+    },
+    {
+      "id": "area-14mt2ff",
+      "name": "ユニバーサル・ワンダーランド",
+      "activeDenominator": 14,
+      "archiveDenominator": 14,
+      "eatenCanonicalCount": 0,
+      "archiveEatenCanonicalCount": 0,
+      "rawFoods": 14,
+      "canonicalFoods": 14,
+      "duplicateRawRowsExcluded": 0
+    },
+    {
+      "id": "area-review-pending",
+      "name": "エリア確認中",
+      "activeDenominator": 8,
+      "archiveDenominator": 8,
+      "eatenCanonicalCount": 0,
+      "archiveEatenCanonicalCount": 0,
+      "rawFoods": 8,
+      "canonicalFoods": 8,
+      "duplicateRawRowsExcluded": 0
+    }
+  ],
+  "duplicateCandidates": [
+    {
+      "key": "dkクラッシュサンデー~トロピカルバナナフレーバー~マグカップ付き|2200|スーパー・ニンテンドー・ワールド|ジャングル・ビート・シェイク",
+      "count": 2,
+      "foods": [
+        {
+          "id": "food-1yi0toj",
+          "canonicalKey": "group-1imiecz",
+          "name": "DK クラッシュサンデー ~トロピカルバナナ・フレーバー~ マグカップ付き",
+          "price": 2200,
+          "area": "スーパー・ニンテンドー・ワールド",
+          "saleStatus": "active"
+        },
+        {
+          "id": "food-1wc5ggu",
+          "canonicalKey": "group-1imiecz",
+          "name": "DK クラッシュサンデー ~トロピカルバナナ・フレーバー~ マグカップ付き",
+          "price": 2200,
+          "area": "スーパー・ニンテンドー・ワールド",
+          "saleStatus": "active"
+        }
+      ]
+    }
+  ],
+  "saleUnknownFoods": [],
+  "areaReviewFoods": [
+    {
+      "id": "food-5n9awi",
+      "canonicalKey": "group-fgbsow",
+      "name": "ソルティキャラメルチュリトス",
+      "category": "churro",
+      "area": "エリア確認中",
+      "shop": "フードカート",
+      "saleStatus": "active",
+      "sourceUrl": "https://castel.jp/p/3101"
+    },
+    {
+      "id": "food-12vork6",
+      "canonicalKey": "group-1cqb3vc",
+      "name": "シナモン・チュリトス",
+      "category": "churro",
+      "area": "エリア確認中",
+      "shop": "フードカート",
+      "saleStatus": "active",
+      "sourceUrl": "https://castel.jp/p/3101"
+    },
+    {
+      "id": "food-m0djrd",
+      "canonicalKey": "group-1bv8b3p",
+      "name": "ココア&クッキー・チュリトス",
+      "category": "churro",
+      "area": "エリア確認中",
+      "shop": "フードカート",
+      "saleStatus": "active",
+      "sourceUrl": "https://castel.jp/p/3101"
+    },
+    {
+      "id": "food-xfenq1",
+      "canonicalKey": "group-uj9t5n",
+      "name": "決めろ!! 黒閃チュリトス ~パッションフルーツ・フレーバー~",
+      "category": "churro",
+      "area": "エリア確認中",
+      "shop": "フードカート",
+      "saleStatus": "active",
+      "sourceUrl": "https://castel.jp/p/3101"
+    },
+    {
+      "id": "food-manual-低アレルゲン-カレーライス-ハンバーグ-デザート付き",
+      "canonicalKey": "food-manual-低アレルゲン-カレーライス-ハンバーグ-デザート付き",
+      "name": "低アレルゲン・カレーライス（ハンバーグ、デザート付き）",
+      "category": "rice",
+      "area": "エリア確認中",
+      "shop": "低アレルゲンメニュー取扱レストラン",
+      "saleStatus": "active",
+      "sourceUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/files/documents/usj-pdf-serviceguide-food-allergies-detail-20260303.pdf"
+    },
+    {
+      "id": "food-manual-低アレルゲン-カレーライス-トッピングなし-デザート付き",
+      "canonicalKey": "food-manual-低アレルゲン-カレーライス-トッピングなし-デザート付き",
+      "name": "低アレルゲン・カレーライス（トッピングなし、デザート付き）",
+      "category": "rice",
+      "area": "エリア確認中",
+      "shop": "低アレルゲンメニュー取扱レストラン",
+      "saleStatus": "active",
+      "sourceUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/files/documents/usj-pdf-serviceguide-food-allergies-detail-20260303.pdf"
+    },
+    {
+      "id": "food-manual-低アレルゲン-ハヤシライス-ミートボール-デザート付き",
+      "canonicalKey": "food-manual-低アレルゲン-ハヤシライス-ミートボール-デザート付き",
+      "name": "低アレルゲン・ハヤシライス（ミートボール、デザート付き）",
+      "category": "rice",
+      "area": "エリア確認中",
+      "shop": "低アレルゲンメニュー取扱レストラン",
+      "saleStatus": "active",
+      "sourceUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/files/documents/usj-pdf-serviceguide-food-allergies-detail-20260303.pdf"
+    },
+    {
+      "id": "food-manual-低アレルゲン-ハヤシライス-トッピングなし-デザート付き",
+      "canonicalKey": "food-manual-低アレルゲン-ハヤシライス-トッピングなし-デザート付き",
+      "name": "低アレルゲン・ハヤシライス（トッピングなし、デザート付き）",
+      "category": "rice",
+      "area": "エリア確認中",
+      "shop": "低アレルゲンメニュー取扱レストラン",
+      "saleStatus": "active",
+      "sourceUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/files/documents/usj-pdf-serviceguide-food-allergies-detail-20260303.pdf"
+    }
+  ],
+  "displayOtherFoods": [],
+  "checks": {
+    "foodCountPreserved": false,
+    "imageCountPreserved": false,
+    "placeholderZero": true,
+    "displayOtherZero": true,
+    "activeCompletableUsesCanonical": true,
+    "archiveUsesCanonical": true,
+    "areaProgressUsesCanonical": true
+  }
+}

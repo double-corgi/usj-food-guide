@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-01T14:54:04.733Z",
+  "generatedAt": "2026-06-06T06:50:09.791Z",
   "summary": {
     "foodTotal": 200,
     "imageTotal": 200,
@@ -41,8 +41,10 @@
     },
     {
       "name": "ホーム/商品カードの価格確認ラベルが消えている",
-      "ok": true,
-      "evidence": []
+      "ok": false,
+      "evidence": [
+        "確認済"
+      ]
     },
     {
       "name": "人気ジャンルのみホームに表示",
@@ -65,12 +67,19 @@
     },
     {
       "name": "攻略スコアが詳細で意味付き表示",
-      "ok": true,
-      "evidence": []
+      "ok": false,
+      "evidence": [
+        "攻略スコア",
+        "スコアの見方",
+        "選ぶ理由",
+        "注意ポイント",
+        "向いている人",
+        "向いていない人"
+      ]
     },
     {
       "name": "攻略スコアがホームカードにも表示",
-      "ok": true,
+      "ok": false,
       "evidence": "攻略{score.total}点"
     },
     {
@@ -84,5 +93,5 @@
       "evidence": []
     }
   ],
-  "passed": true
+  "passed": false
 }

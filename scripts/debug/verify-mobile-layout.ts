@@ -15,7 +15,18 @@ type CdpMessage = {
 const chromePath = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome";
 const baseUrl = process.argv[2] ?? "http://localhost:3000";
 const widths = (process.env.VERIFY_WIDTHS ?? "390,430").split(",").map((width) => Number(width.trim())).filter(Boolean);
-const paths = ["/", "/foods", "/foods/food-62sv4l", "/eaten", "/areas"];
+const paths = [
+  "/",
+  "/foods",
+  "/foods/food-62sv4l",
+  "/eaten",
+  "/areas",
+  "/areas/area-olb56e",
+  "/stores",
+  "/stores/shop-102yaa2",
+  "/request",
+  "/settings"
+];
 
 async function findFreePort() {
   return await new Promise<number>((resolve, reject) => {

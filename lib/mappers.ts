@@ -1,11 +1,10 @@
-import type { Area, CrawlLog, FoodImage, FoodLocation, FoodWithRelations, Shop, UserFoodLog } from "@/types/domain";
+import type { Area, CrawlLog, FoodImage, FoodLocation, FoodWithRelations, Shop } from "@/types/domain";
 import type { Database } from "@/types/database";
 
 type AreaRow = Database["public"]["Tables"]["areas"]["Row"];
 type ShopRow = Database["public"]["Tables"]["shops"]["Row"];
 type FoodRow = Database["public"]["Tables"]["foods"]["Row"];
 type ImageRow = Database["public"]["Tables"]["food_images"]["Row"];
-type LogRow = Database["public"]["Tables"]["user_food_logs"]["Row"];
 type CrawlLogRow = Database["public"]["Tables"]["crawl_logs"]["Row"];
 type LocationRow = {
   id: string;
@@ -226,20 +225,6 @@ function inferPriceSource(sourceUrl?: string | null) {
   if (/menu[_-]?photo|menus?|photo/i.test(sourceUrl)) return "menu_photo" as const;
   if (/x\.com|twitter\.com|instagram\.com|threads\.net/i.test(sourceUrl)) return "social_report" as const;
   return "trusted_report" as const;
-}
-
-export function mapUserFoodLog(row: LogRow): UserFoodLog {
-  return {
-    foodId: row.food_id,
-    status: row.status,
-    rating: row.rating ?? undefined,
-    memo: row.memo ?? undefined,
-    eatenAt: row.eaten_at ?? undefined,
-    userPhotoUrl: row.user_photo_url ?? undefined,
-    repeatWant: row.repeat_want ?? undefined,
-    recommended: row.recommended ?? undefined,
-    sharedAt: row.shared_at ?? undefined
-  };
 }
 
 export function mapCrawlLog(row: CrawlLogRow): CrawlLog {

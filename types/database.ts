@@ -1,4 +1,4 @@
-import type { DiningType, FoodCategory, FoodImageSource, FoodStatus, ReviewStatus, SaleStatus, ShopType, UserFoodStatus } from "@/types/domain";
+import type { DiningType, FoodCategory, FoodImageSource, FoodStatus, ReviewStatus, SaleStatus, ShopType } from "@/types/domain";
 
 export type Json = string | number | boolean | null | { [key: string]: Json | undefined } | Json[];
 
@@ -279,58 +279,6 @@ export type Database = {
         Update: Partial<Database["public"]["Tables"]["image_candidates"]["Insert"]>;
         Relationships: [];
       };
-      profiles: {
-        Row: {
-          id: string;
-          user_id: string;
-          display_name: string | null;
-          created_at: string;
-          updated_at: string;
-        };
-        Insert: {
-          id?: string;
-          user_id: string;
-          display_name?: string | null;
-          created_at?: string;
-          updated_at?: string;
-        };
-        Update: Partial<Database["public"]["Tables"]["profiles"]["Insert"]>;
-        Relationships: [];
-      };
-      user_food_logs: {
-        Row: {
-          id: string;
-          user_id: string;
-          food_id: string;
-          status: UserFoodStatus;
-          rating: number | null;
-          memo: string | null;
-          eaten_at: string | null;
-          user_photo_url: string | null;
-          repeat_want: boolean | null;
-          recommended: boolean | null;
-          shared_at: string | null;
-          created_at: string;
-          updated_at: string;
-        };
-        Insert: {
-          id?: string;
-          user_id: string;
-          food_id: string;
-          status: UserFoodStatus;
-          rating?: number | null;
-          memo?: string | null;
-          eaten_at?: string | null;
-          user_photo_url?: string | null;
-          repeat_want?: boolean | null;
-          recommended?: boolean | null;
-          shared_at?: string | null;
-          created_at?: string;
-          updated_at?: string;
-        };
-        Update: Partial<Database["public"]["Tables"]["user_food_logs"]["Insert"]>;
-        Relationships: [];
-      };
       crawl_logs: {
         Row: {
           id: string;
@@ -363,7 +311,8 @@ export type Database = {
       };
     };
     Views: Record<string, never>;
-    Functions: Record<string, never>;
+    Functions: {
+    };
     Enums: Record<string, never>;
     CompositeTypes: Record<string, never>;
   };

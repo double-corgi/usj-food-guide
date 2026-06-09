@@ -3,66 +3,66 @@
     "id": "area-apf4z5",
     "name": "スーパー・ニンテンドー・ワールド",
     "sortOrder": 1,
-    "foodCount": 10
+    "foodCount": 47
   },
   {
     "id": "area-1a9heim",
     "name": "ミニオン・パーク",
     "sortOrder": 2,
-    "foodCount": 0
+    "foodCount": 17
   },
   {
     "id": "area-bheu57",
     "name": "ウィザーディング・ワールド・オブ・ハリー・ポッター",
     "sortOrder": 3,
-    "foodCount": 6
+    "foodCount": 15
   },
   {
     "id": "area-olb56e",
     "name": "ハリウッド・エリア",
     "sortOrder": 4,
-    "foodCount": 24
+    "foodCount": 57
   },
   {
     "id": "area-1qz9zry",
     "name": "ニューヨーク・エリア",
     "sortOrder": 5,
-    "foodCount": 14
+    "foodCount": 30
   },
   {
     "id": "area-12fbro0",
     "name": "ジュラシック・パーク",
     "sortOrder": 6,
-    "foodCount": 15
+    "foodCount": 35
   },
   {
     "id": "area-gb6hrj",
     "name": "アミティ・ビレッジ",
     "sortOrder": 7,
-    "foodCount": 9
+    "foodCount": 20
   },
   {
     "id": "area-yeysd1",
     "name": "サンフランシスコ・エリア",
     "sortOrder": 8,
-    "foodCount": 14
+    "foodCount": 32
   },
   {
     "id": "area-1xl8b4x",
     "name": "ウォーターワールド",
     "sortOrder": 9,
-    "foodCount": 0
+    "foodCount": 2
   },
   {
     "id": "area-14mt2ff",
     "name": "ユニバーサル・ワンダーランド",
     "sortOrder": 10,
-    "foodCount": 2
+    "foodCount": 25
   },
   {
-    "id": "area-7bosl",
-    "name": "その他",
-    "sortOrder": 11,
-    "foodCount": 45
+    "id": "area-review-pending",
+    "name": "エリア確認中",
+    "sortOrder": 999,
+    "foodCount": 29
   }
 ]

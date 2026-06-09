@@ -2,6 +2,7 @@
 
 import { useActionState, useMemo, useState } from "react";
 import { ExternalLink } from "lucide-react";
+import { getFoodAreaSummary } from "@/lib/food-utils";
 import type { FoodWithRelations } from "@/types/domain";
 import { keepPlaceholderImage, saveManualImageUrl, type ManualImageState } from "./actions";
 
@@ -27,7 +28,7 @@ export function ManualImageForm({ food }: { food: FoodWithRelations }) {
           <div>
             <div className="flex flex-wrap gap-2 text-xs font-black text-slate-500">
               <span className="rounded-full bg-slate-100 px-2.5 py-1">{food.category}</span>
-              <span className="rounded-full bg-slate-100 px-2.5 py-1">{food.area.name}</span>
+              <span className="rounded-full bg-slate-100 px-2.5 py-1">{getFoodAreaSummary(food)}</span>
               <span className="rounded-full bg-slate-100 px-2.5 py-1">{food.shop.name}</span>
             </div>
             <h3 className="mt-2 text-lg font-black text-ink">{food.name}</h3>

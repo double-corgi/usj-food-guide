@@ -3,7 +3,7 @@
 import { useActionState, useEffect, useMemo, useRef, useState } from "react";
 import { Check, ExternalLink, Pause, Search } from "lucide-react";
 import { categoryLabels } from "@/lib/constants";
-import { formatFoodPrice, getPriceSource, getPriceSourceLabel } from "@/lib/food-utils";
+import { formatFoodPrice, getFoodAreaSummary, getPriceSource, getPriceSourceLabel, needsAreaReview } from "@/lib/food-utils";
 import type { FoodWithRelations, PriceSource } from "@/types/domain";
 import { holdManualPriceReview, saveManualMetadata, saveManualPrice, type ManualPriceState } from "./actions";
 
@@ -95,7 +95,7 @@ export function PriceReviewCard({
           <h3 className="mt-2 text-lg font-black leading-snug text-ink">{food.name}</h3>
           <div className="mt-2 grid gap-1 text-xs font-bold text-slate-500">
             <p>店舗: {food.shop.name}</p>
-            <p>エリア: {food.area.name}</p>
+            <p>エリア: {getFoodAreaSummary(food)}</p>
             <p>
               現在価格: <span className={knownPrice ? "font-black text-park" : "font-black text-rose-600"}>{formatFoodPrice(food)}</span>
             </p>
@@ -229,7 +229,7 @@ export function PriceReviewCard({
             </label>
             <label className="block">
               <span className="text-xs font-black text-slate-500">エリア</span>
-              <input name="areaName" defaultValue={food.area.name} className="mt-1 h-10 w-full rounded-xl border border-slate-200 px-3 text-xs font-bold outline-none focus:border-park" />
+              <input name="areaName" defaultValue={needsAreaReview(food) ? "エリア確認中" : getFoodAreaSummary(food, 1)} className="mt-1 h-10 w-full rounded-xl border border-slate-200 px-3 text-xs font-bold outline-none focus:border-park" />
             </label>
             <button type="submit" disabled={metadataSaving} className="inline-flex h-10 w-full items-center justify-center rounded-xl bg-slate-900 text-xs font-black text-white disabled:bg-slate-300">
               監査情報を保存
@@ -250,7 +250,7 @@ function defaultReasonCode(food: FoodWithRelations, sourceUrl: string) {
   if (!sourceUrl) return "source_url_missing";
   if (food.category === "set" || food.category === "kids") return "set_or_size_ambiguous";
   if (/pdf/i.test(sourceUrl)) return "pdf_manual_check_required";
-  if (food.shop.name === "店舗未確認" || food.area.name === "エリア未確認") return "shop_page_check_required";
+  if (food.shop.name === "店舗未確認" || needsAreaReview(food)) return "shop_page_check_required";
   return "official_exact_price_not_found";
 }
 

@@ -1,7 +1,7 @@
 {
-  "name": "ユニバフード制覇",
-  "short_name": "ユニバ制覇",
-  "description": "USJフードを食べた記録で集める非公式コレクションアプリ",
+  "name": "ユニバフードコレクション",
+  "short_name": "ユニコレ",
+  "description": "食べた記録が、そのままコレクションになる。ユニバ（USJ）フードを集めて楽しむ非公式コレクションアプリ",
   "start_url": "/",
   "display": "standalone",
   "scope": "/",
@@ -55,13 +55,13 @@
       "sizes": "390x1200",
       "type": "image/png",
       "form_factor": "narrow",
-      "label": "制覇"
+      "label": "食べた記録"
     }
   ],
   "shortcuts": [
     { "name": "フード一覧", "short_name": "探す", "url": "/foods" },
     { "name": "食べた記録", "short_name": "食べた", "url": "/eaten" },
-    { "name": "エリア制覇", "short_name": "エリア", "url": "/areas" },
-    { "name": "コンプリート", "short_name": "コンプ", "url": "/complete" }
+    { "name": "エリア", "short_name": "エリア", "url": "/areas" },
+    { "name": "店舗", "short_name": "店舗", "url": "/stores" }
   ]
 }

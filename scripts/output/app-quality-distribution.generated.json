@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-06-01T07:12:25.282Z",
-  "datasetGeneratedAt": "2026-05-31T12:23:38.388Z",
+  "generatedAt": "2026-06-05T15:42:40.675Z",
+  "datasetGeneratedAt": "2026-06-02T06:07:02.362Z",
   "summary": {
     "foods": 200,
     "images": 200,
@@ -8,8 +8,8 @@
     "priceKnown": 192,
     "priceUnknown": 8,
     "priceRate": "96%",
-    "uneatenRateSharedBaseline": "100%",
-    "uneatenRateNote": "食べた記録は端末localStorage基準のため、共有DB上の未食率は初期ユーザー基準で算出しています。"
+    "userProgressDataSource": "localStorage: uniba-food-logs-v1",
+    "uneatenRateNote": "未食率は端末内localStorageの食べた記録から画面側で算出します。このレポートは共有商品データ品質のみを集計します。"
   },
   "categoryDistribution": {
     "dessert": {
@@ -62,49 +62,49 @@
     }
   },
   "areaDistribution": {
-    "スーパー・ニンテンドー・ワールド": {
-      "total": 32,
-      "share": "16%"
-    },
     "ハリウッド・エリア": {
-      "total": 32,
-      "share": "16%"
+      "total": 36,
+      "share": "18%"
+    },
+    "スーパー・ニンテンドー・ワールド": {
+      "total": 33,
+      "share": "16.5%"
     },
     "ジュラシック・パーク": {
-      "total": 26,
-      "share": "13%"
+      "total": 27,
+      "share": "13.5%"
     },
     "ニューヨーク・エリア": {
-      "total": 21,
-      "share": "10.5%"
+      "total": 22,
+      "share": "11%"
     },
-    "その他": {
+    "サンフランシスコ・エリア": {
       "total": 20,
       "share": "10%"
     },
-    "サンフランシスコ・エリア": {
-      "total": 19,
-      "share": "9.5%"
-    },
     "アミティ・ビレッジ": {
-      "total": 17,
-      "share": "8.5%"
+      "total": 18,
+      "share": "9%"
     },
     "ユニバーサル・ワンダーランド": {
-      "total": 13,
-      "share": "6.5%"
+      "total": 14,
+      "share": "7%"
     },
     "ウィザーディング・ワールド・オブ・ハリー・ポッター": {
       "total": 12,
       "share": "6%"
     },
-    "パーク内各レストラン": {
-      "total": 4,
-      "share": "2%"
+    "エリア確認中": {
+      "total": 10,
+      "share": "5%"
     },
     "ミニオン・パーク": {
-      "total": 4,
-      "share": "2%"
+      "total": 7,
+      "share": "3.5%"
+    },
+    "ウォーターワールド": {
+      "total": 1,
+      "share": "0.5%"
     }
   },
   "priceSourceDistribution": {
@@ -190,44 +190,44 @@
   },
   "priceByArea": {
     "ミニオン・パーク": {
-      "total": 4,
-      "known": 3,
+      "total": 7,
+      "known": 6,
       "unknown": 1,
-      "rate": "75%"
+      "rate": "85.7%"
     },
     "サンフランシスコ・エリア": {
-      "total": 19,
-      "known": 17,
+      "total": 20,
+      "known": 18,
       "unknown": 2,
-      "rate": "89.5%"
+      "rate": "90%"
     },
     "ユニバーサル・ワンダーランド": {
-      "total": 13,
-      "known": 12,
+      "total": 14,
+      "known": 13,
       "unknown": 1,
-      "rate": "92.3%"
+      "rate": "92.9%"
     },
     "スーパー・ニンテンドー・ワールド": {
-      "total": 32,
-      "known": 30,
+      "total": 33,
+      "known": 31,
       "unknown": 2,
-      "rate": "93.8%"
+      "rate": "93.9%"
     },
     "ニューヨーク・エリア": {
-      "total": 21,
-      "known": 20,
+      "total": 22,
+      "known": 21,
       "unknown": 1,
-      "rate": "95.2%"
+      "rate": "95.5%"
     },
     "ジュラシック・パーク": {
-      "total": 26,
-      "known": 25,
+      "total": 27,
+      "known": 26,
       "unknown": 1,
-      "rate": "96.2%"
+      "rate": "96.3%"
     },
     "アミティ・ビレッジ": {
-      "total": 17,
-      "known": 17,
+      "total": 18,
+      "known": 18,
       "unknown": 0,
       "rate": "100%"
     },
@@ -237,21 +237,21 @@
       "unknown": 0,
       "rate": "100%"
     },
-    "その他": {
-      "total": 20,
-      "known": 20,
+    "ウォーターワールド": {
+      "total": 1,
+      "known": 1,
       "unknown": 0,
       "rate": "100%"
     },
-    "パーク内各レストラン": {
-      "total": 4,
-      "known": 4,
+    "エリア確認中": {
+      "total": 10,
+      "known": 10,
       "unknown": 0,
       "rate": "100%"
     },
     "ハリウッド・エリア": {
-      "total": 32,
-      "known": 32,
+      "total": 36,
+      "known": 36,
       "unknown": 0,
       "rate": "100%"
     }

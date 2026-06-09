@@ -22,10 +22,12 @@ const shots = [
   { path: "/foods", output: `screenshots/foods-${viewportSuffix}.png` },
   { path: "/eaten", output: `screenshots/eaten-${viewportSuffix}.png` },
   { path: "/areas", output: `screenshots/areas-${viewportSuffix}.png` },
-  { path: "/complete", output: `screenshots/complete-${viewportSuffix}.png` },
+  { path: "/areas/area-olb56e", output: `screenshots/area-detail-${viewportSuffix}.png` },
+  { path: "/stores", output: `screenshots/stores-${viewportSuffix}.png` },
+  { path: "/stores/shop-102yaa2", output: `screenshots/store-detail-${viewportSuffix}.png` },
   { path: "/foods/food-62sv4l", output: `screenshots/food-detail-${viewportSuffix}.png` },
   { path: "/request", output: `screenshots/request-${viewportSuffix}.png` },
-  { path: "/admin/prices", output: `screenshots/admin-prices-${viewportSuffix}.png` }
+  { path: "/settings", output: `screenshots/settings-${viewportSuffix}.png` }
 ];
 
 async function findFreePort() {

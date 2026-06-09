@@ -4,7 +4,7 @@ import { AlertTriangle, ReceiptText } from "lucide-react";
 import Link from "next/link";
 import type { ReactNode } from "react";
 import { categoryLabels } from "@/lib/constants";
-import { getPriceSource, getPriceSourceLabel, getSaleEndDate, getSaleStartDate } from "@/lib/food-utils";
+import { getFoodAreaSummary, getPriceSource, getPriceSourceLabel, getSaleEndDate, getSaleStartDate, needsAreaReview } from "@/lib/food-utils";
 import { readGeneratedFoods } from "@/lib/repositories/generated-data";
 import type { FoodCategory, FoodWithRelations, PriceSource } from "@/types/domain";
 import { recordDuplicateDecision } from "./actions";
@@ -20,7 +20,7 @@ type Bucket =
   | "キッズ"
   | "ドリンク"
   | "デザート"
-  | "その他";
+  | "分類確認中";
 
 type PriceFilter = "missing" | "all";
 type BucketFilter = Bucket | "すべて";
@@ -37,7 +37,7 @@ type AdminPriceSearchParams = Promise<{
   image?: string;
 }>;
 
-const bucketFilters: BucketFilter[] = ["すべて", "ドリンク", "デザート", "バーガー", "プレート", "ピザ", "パスタ", "キッズ", "ライス", "チュリトス", "その他"];
+const bucketFilters: BucketFilter[] = ["すべて", "ドリンク", "デザート", "バーガー", "プレート", "ピザ", "パスタ", "キッズ", "ライス", "チュリトス", "分類確認中"];
 
 export default async function AdminPricesPage({ searchParams }: { searchParams?: AdminPriceSearchParams }) {
   const params = (await searchParams) ?? {};
@@ -55,25 +55,25 @@ export default async function AdminPricesPage({ searchParams }: { searchParams?:
   const duplicateCandidates = buildDuplicateCandidates(foods);
   const duplicateFoodIds = new Set(duplicateCandidates.flatMap((candidate) => [candidate.food.id, candidate.other.id]));
   const shopUnknown = foods.filter((food) => isUnknownName(food.shop.name)).length;
-  const areaUnknown = foods.filter((food) => isUnknownName(food.area.name)).length;
+  const areaUnknown = foods.filter((food) => needsAreaReview(food)).length;
   const sourceMissing = foods.filter((food) => !food.sourceUrl).length;
   const priceSourceStats = buildPriceSourceStats(foods);
-  const categoryPending = foods.filter((food) => food.category === "unknown" || bucketFor(food.category) === "その他").length;
+  const categoryPending = foods.filter((food) => food.category === "unknown" || bucketFor(food.category) === "分類確認中").length;
   const salePeriodMissing = foods.filter((food) => !getSaleStartDate(food) && !getSaleEndDate(food)).length;
   const saleEndMissing = foods.filter((food) => !getSaleEndDate(food)).length;
   const highPriorityOpen = foods.filter((food) => {
     const priceOpen = !hasKnownPrice(food) && manualDecisions[food.id]?.status !== "unconfirmable";
-    return priceOpen || isUnknownName(food.shop.name) || isUnknownName(food.area.name) || food.category === "unknown" || !food.sourceUrl;
+    return priceOpen || isUnknownName(food.shop.name) || needsAreaReview(food) || food.category === "unknown" || !food.sourceUrl;
   }).length;
   const categoryStats = buildCategoryStats(foods);
   const shopStats = buildNameStats(foods, (food) => food.shop.name);
-  const areaStats = buildNameStats(foods, (food) => food.area.name);
+  const areaStats = buildNameStats(foods, (food) => getFoodAreaSummary(food));
   const sourceUrlRate = percent(foods.length - sourceMissing, foods.length);
   const shopRate = percent(foods.length - shopUnknown, foods.length);
   const areaRate = percent(foods.length - areaUnknown, foods.length);
   const missingWithSource = missing.filter((food) => Boolean(food.sourceUrl)).length;
   const missingWithoutSource = missing.length - missingWithSource;
-  const informationShortage = missing.filter((food) => !food.sourceUrl || isUnknownName(food.shop.name) || isUnknownName(food.area.name)).length;
+  const informationShortage = missing.filter((food) => !food.sourceUrl || isUnknownName(food.shop.name) || needsAreaReview(food)).length;
   const priceUnconfirmed = missing.length - informationShortage;
   const unconfirmableCount = missing.filter((food) => manualDecisions[food.id]?.status === "unconfirmable").length;
   const priceReviewed = known + unconfirmableCount;
@@ -82,7 +82,7 @@ export default async function AdminPricesPage({ searchParams }: { searchParams?:
   const displayFoods = (priceFilter === "missing" ? missing : foods)
     .filter((food) => bucketFilter === "すべて" || bucketFor(food.category) === bucketFilter)
     .filter((food) => shopFilter === "すべて" || food.shop.name === shopFilter)
-    .filter((food) => areaFilter === "すべて" || food.area.name === areaFilter)
+    .filter((food) => areaFilter === "すべて" || getFoodAreaSummary(food) === areaFilter)
     .filter((food) => sourceFilter === "all" || (sourceFilter === "withSource" ? Boolean(food.sourceUrl) : !food.sourceUrl))
     .filter((food) => priceSourceFilter === "all" || getPriceSource(food) === priceSourceFilter)
     .filter((food) => imageFilter === "all" || hasPublicImage(food))
@@ -151,7 +151,7 @@ export default async function AdminPricesPage({ searchParams }: { searchParams?:
                   </div>
                   <p className="mt-2 break-words text-sm font-black leading-5 text-ink [overflow-wrap:anywhere]">{food.name}</p>
                   <dl className="mt-2 grid gap-1 text-xs font-bold text-slate-500">
-                    <div className="flex gap-2"><dt className="w-20 shrink-0 text-slate-400">エリア</dt><dd>{food.area.name}</dd></div>
+                    <div className="flex gap-2"><dt className="w-20 shrink-0 text-slate-400">エリア</dt><dd>{getFoodAreaSummary(food)}</dd></div>
                     <div className="flex gap-2"><dt className="w-20 shrink-0 text-slate-400">店舗</dt><dd>{food.shop.name}</dd></div>
                     <div className="flex gap-2"><dt className="w-20 shrink-0 text-slate-400">未確認理由</dt><dd>{manual?.reason ?? reasonCodeLabel(manual?.reasonCode)}</dd></div>
                     <div className="flex gap-2"><dt className="w-20 shrink-0 text-slate-400">確認済ソース</dt><dd>{manual?.checkedSourceUrl ? "手動確認メモあり" : food.sourceUrl ? "公式URL確認待ち" : "source_url未設定"}</dd></div>
@@ -616,7 +616,7 @@ function reviewPriorityScore(food: FoodWithRelations, duplicateCandidate: boolea
   if (["drink", "dessert", "burger", "set", "rice", "noodle", "pizza", "kids", "churro"].includes(food.category)) score += 15;
   if (duplicateCandidate) score += 15;
   if (!isUnknownName(food.shop.name)) score += 5;
-  if (!isUnknownName(food.area.name)) score += 5;
+  if (!needsAreaReview(food)) score += 5;
   return Math.min(score, 100);
 }
 
@@ -625,7 +625,7 @@ function qualityScore(food: FoodWithRelations) {
   if (hasPublicImage(food)) score += 20;
   if (hasKnownPrice(food)) score += 20;
   if (!isUnknownName(food.shop.name)) score += 15;
-  if (!isUnknownName(food.area.name)) score += 15;
+  if (!needsAreaReview(food)) score += 15;
   if (food.sourceUrl) score += 20;
   if (food.description) score += 10;
   return Math.min(score, 100);
@@ -684,7 +684,7 @@ function isUnknownName(value?: string) {
 }
 
 function priorityForBucket(bucket: Bucket) {
-  const order: Bucket[] = ["ドリンク", "デザート", "バーガー", "プレート", "キッズ", "ピザ", "パスタ", "ライス", "チュリトス", "その他"];
+  const order: Bucket[] = ["ドリンク", "デザート", "バーガー", "プレート", "キッズ", "ピザ", "パスタ", "ライス", "チュリトス", "分類確認中"];
   const index = order.indexOf(bucket);
   return index === -1 ? order.length : index;
 }
@@ -699,7 +699,7 @@ function bucketFor(category: FoodCategory): Bucket {
   if (category === "kids") return "キッズ";
   if (category === "drink") return "ドリンク";
   if (category === "dessert") return "デザート";
-  return "その他";
+  return "分類確認中";
 }
 
 function isBucketFilter(value?: string): value is BucketFilter {

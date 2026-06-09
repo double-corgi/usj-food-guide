@@ -10,7 +10,7 @@
 
 - 設定ファイル: `capacitor.config.ts`
 - App ID案: `jp.unibafood.conquest`
-- App Name: `ユニバフード制覇`
+- App Name: `ユニコレ`
 - WebDir: `public/capacitor-web`
 - 通常検証: `npm run dev`
 - ネイティブ同期: `npm run cap:sync`

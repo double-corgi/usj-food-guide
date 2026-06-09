@@ -79,7 +79,7 @@ export async function saveManualMetadata(_previousState: ManualPriceState, formD
   const foodId = String(formData.get("foodId") ?? "").trim();
   const category = String(formData.get("category") ?? "").trim() as FoodCategory;
   const shopName = String(formData.get("shopName") ?? "").trim();
-  const areaName = String(formData.get("areaName") ?? "").trim();
+  const areaName = normalizeManualAreaName(String(formData.get("areaName") ?? "").trim());
 
   if (!foodId) return { ok: false, message: "food_idがありません。" };
   if (!foodCategories.includes(category)) return { ok: false, message: "カテゴリが不正です。", foodId };
@@ -123,6 +123,12 @@ export async function saveManualMetadata(_previousState: ManualPriceState, formD
   });
   revalidatePricePaths(foodId);
   return { ok: true, message: "監査情報を保存しました。", foodId };
+}
+
+function normalizeManualAreaName(value: string) {
+  if (!value) return "";
+  if (/^(その他|エリア未確認|未確認|不明|unknown)$/i.test(value)) return "エリア確認中";
+  return value;
 }
 
 export async function holdManualPriceReview(_previousState: ManualPriceState, formData: FormData): Promise<ManualPriceState> {

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Database, Image, Link2, MapPin, Store, Tag, WalletCards } from "lucide-react";
 import { categoryLabels } from "@/lib/constants";
+import { getFoodAreaSummary, needsAreaReview } from "@/lib/food-utils";
 import { readGeneratedFoods } from "@/lib/repositories/generated-data";
 import { getFoodImage } from "@/lib/utils/image";
 
@@ -72,7 +73,7 @@ export default function AdminDashboardPage() {
               <img src={getFoodImage(food)} alt="" className="h-[72px] w-[72px] rounded-xl object-cover" />
               <div className="min-w-0">
                 <p className="line-clamp-2 text-sm font-black text-ink">{food.name}</p>
-                <p className="mt-1 truncate text-xs font-bold text-slate-500">{food.shop.name} / {food.area.name}</p>
+                <p className="mt-1 truncate text-xs font-bold text-slate-500">{food.shop.name} / {getFoodAreaSummary(food)}</p>
                 <p className="mt-1 text-[11px] font-black text-berry">価格未確認</p>
               </div>
             </Link>
@@ -90,7 +91,7 @@ function buildMetrics(foods: ReturnType<typeof readGeneratedFoods>) {
   const priceKnown = foods.filter(hasPrice).length;
   const sourceCount = foods.filter((food) => Boolean(food.sourceUrl)).length;
   const shopCount = foods.filter((food) => !/未確認|不明|unknown/i.test(food.shop?.name ?? "")).length;
-  const areaCount = foods.filter((food) => !/未確認|不明|unknown/i.test(food.area?.name ?? "")).length;
+  const areaCount = foods.filter((food) => !needsAreaReview(food)).length;
   const categoryKnown = foods.filter((food) => food.category !== "unknown").length;
   const categoryMap = new Map<string, { category: keyof typeof categoryLabels; total: number; priceKnown: number }>();
   for (const food of foods) {

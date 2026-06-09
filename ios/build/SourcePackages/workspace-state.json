@@ -1,0 +1,44 @@
+{
+  "object" : {
+    "artifacts" : [
+
+    ],
+    "dependencies" : [
+      {
+        "basedOn" : null,
+        "packageRef" : {
+          "identity" : "capacitor-swift-pm",
+          "kind" : "remoteSourceControl",
+          "location" : "https://github.com/ionic-team/capacitor-swift-pm.git",
+          "name" : "capacitor-swift-pm"
+        },
+        "state" : {
+          "checkoutState" : {
+            "revision" : "992959f0467c781eb6a1637e69d87481238c3672",
+            "version" : "8.3.4"
+          },
+          "name" : "sourceControlCheckout"
+        },
+        "subpath" : "capacitor-swift-pm"
+      },
+      {
+        "basedOn" : null,
+        "packageRef" : {
+          "identity" : "capapp-spm",
+          "kind" : "fileSystem",
+          "location" : "/Users/u/new-app/ios/App/CapApp-SPM",
+          "name" : "CapApp-SPM"
+        },
+        "state" : {
+          "name" : "fileSystem",
+          "path" : "/Users/u/new-app/ios/App/CapApp-SPM"
+        },
+        "subpath" : "capapp-spm"
+      }
+    ],
+    "prebuilts" : [
+
+    ]
+  },
+  "version" : 7
+}

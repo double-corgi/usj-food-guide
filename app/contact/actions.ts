@@ -41,6 +41,6 @@ export async function submitContact(_previousState: ContactState, formData: Form
     updatedAt: now
   });
   writeContactSubmissions(submissions);
-  revalidatePath("/admin/submissions");
+  revalidatePath("/admin");
   return { ok: true, message: "お問い合わせを送信しました。必要に応じて内容を確認します。" };
 }

@@ -4,7 +4,9 @@ import { ChevronLeft, MapPin, Sparkles, Store, Utensils } from "lucide-react";
 import { FoodGrid } from "@/components/food-grid";
 import { FoodImage } from "@/components/food-image";
 import { AreaCollectionSummary } from "@/components/area-collection-summary";
-import { formatFoodPrice, getRemainingDays, getSaleUrgencyLabel, isEndingSoon } from "@/lib/food-utils";
+import { AreaEatenFoods } from "@/components/area-eaten-foods";
+import { AreaFoodStatusLists } from "@/components/area-food-status-lists";
+import { dedupeFoodsByCanonical, foodMatchesArea, formatFoodPrice, getRemainingDays, getSaleUrgencyLabel, isEndingSoon } from "@/lib/food-utils";
 import { rankFoodsByStrategy } from "@/lib/food-value-score";
 import { listFoods } from "@/lib/repositories/foods";
 import { listAreas } from "@/lib/repositories/areas";
@@ -22,12 +24,13 @@ export default async function AreaDetailPage({ params }: { params: Promise<{ id:
   const area = areas.find((candidate) => candidate.id === id);
   if (!area) notFound();
 
-  const areaFoods = foods.filter((food) => food.areaId === area.id || food.locations?.some((location) => location.areaId === area.id || location.areaName === area.name));
-  const limited = areaFoods.filter((food) => food.isLimited).length;
-  const foodCart = areaFoods.filter((food) => food.diningType === "food_cart" || food.locations?.some((location) => location.shopType === "cart" || location.shopType === "wagon")).length;
+  const areaFoods = foods.filter((food) => foodMatchesArea(food, area.id, area.name));
+  const canonicalAreaFoods = dedupeFoodsByCanonical(areaFoods);
+  const limited = canonicalAreaFoods.filter((food) => food.isLimited).length;
+  const foodCart = canonicalAreaFoods.filter((food) => food.diningType === "food_cart" || food.locations?.some((location) => location.shopType === "cart" || location.shopType === "wagon")).length;
   const shops = Array.from(new Set(areaFoods.flatMap((food) => food.locations?.map((location) => location.shopName) ?? [food.shop.name]))).filter(Boolean);
-  const firstBites = rankFoodsByStrategy(areaFoods, "first-visit", [], 3);
-  const endingSoonFoods = [...areaFoods]
+  const firstBites = rankFoodsByStrategy(canonicalAreaFoods, "first-visit", [], 3);
+  const endingSoonFoods = [...canonicalAreaFoods]
     .filter((food) => isEndingSoon(food, 30))
     .sort((a, b) => (getRemainingDays(a) ?? Number.MAX_SAFE_INTEGER) - (getRemainingDays(b) ?? Number.MAX_SAFE_INTEGER) || a.name.localeCompare(b.name, "ja"))
     .slice(0, 3);
@@ -47,10 +50,10 @@ export default async function AreaDetailPage({ params }: { params: Promise<{ id:
           </div>
         </div>
         <div className="mt-5">
-          <AreaCollectionSummary foods={areaFoods} />
+          <AreaCollectionSummary foods={areaFoods} allFoods={foods} />
         </div>
         <div className="mt-5 grid grid-cols-2 gap-3 md:grid-cols-4">
-          <AreaStat icon={Utensils} label="フード" value={areaFoods.length} />
+          <AreaStat icon={Utensils} label="フード" value={canonicalAreaFoods.length} />
           <AreaStat icon={Store} label="販売場所" value={shops.length} />
           <AreaStat icon={Sparkles} label="期間限定" value={limited} />
           <AreaStat icon={MapPin} label="カート販売" value={foodCart} />
@@ -71,10 +74,14 @@ export default async function AreaDetailPage({ params }: { params: Promise<{ id:
         </section>
       ) : null}
 
+      <AreaEatenFoods foods={areaFoods} />
+
+      <AreaFoodStatusLists foods={areaFoods} />
+
       {firstBites.length > 0 ? (
         <section className="rounded-[1.5rem] border border-amber-100 bg-[linear-gradient(135deg,#fff8e1_0%,#ffffff_72%)] p-5 shadow-soft">
-          <p className="text-xs font-black uppercase tracking-[0.22em] text-amber-700">Area Strategy</p>
-          <h2 className="mt-1 text-xl font-black text-ink">まず食うべき3品</h2>
+          <p className="text-xs font-black text-amber-700">エリアの注目フード</p>
+          <h2 className="mt-1 text-xl font-black text-ink">注目フード3品</h2>
           <div className="mt-4 grid gap-3 md:grid-cols-3">
             {firstBites.map((food, index) => (
               <Link key={food.id} href={`/foods/${food.id}`} className="grid grid-cols-[84px_1fr] gap-3 rounded-2xl bg-white p-2 shadow-sm transition active:scale-[0.99] hover:-translate-y-0.5">
@@ -95,8 +102,8 @@ export default async function AreaDetailPage({ params }: { params: Promise<{ id:
 
       {endingSoonFoods.length > 0 ? (
         <section className="rounded-[1.5rem] border border-rose-100 bg-[linear-gradient(135deg,#fff1f2_0%,#ffffff_72%)] p-5 shadow-soft">
-          <p className="text-xs font-black uppercase tracking-[0.22em] text-berry">Limited Route</p>
-          <h2 className="mt-1 text-xl font-black text-ink">終了間近TOP3</h2>
+          <p className="text-xs font-black text-berry">終了間近</p>
+          <h2 className="mt-1 text-xl font-black text-ink">終了間近のフード</h2>
           <p className="mt-1 text-sm font-bold text-slate-500">このエリアで逃しやすい商品を販売終了日が近い順に表示します。</p>
           <div className="mt-4 grid gap-3 md:grid-cols-3">
             {endingSoonFoods.map((food) => (

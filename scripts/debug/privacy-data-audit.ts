@@ -4,30 +4,48 @@ import path from "node:path";
 const rows = [
   {
     dataName: "食べた記録",
-    storage: "localStorage: uniba-food-logs-v1 / Supabase optional",
-    personalData: "端末内記録。メモに個人情報を入力した場合のみ該当可能性あり",
-    purpose: "食べた履歴、制覇率、プロフィール表示",
-    deletion: "ブラウザデータ削除、またはアプリ内記録削除。Supabase利用時は削除依頼対応",
-    appStoreDisclosure: "User Content / Other User Data depending on sync setting",
-    googlePlayDisclosure: "App activity / User-provided content depending on sync setting"
+    storage: "localStorage: uniba-food-logs-v1",
+    personalData: "メモ、写真URL、支払金額の入力内容次第で該当可能性あり。ただし通常利用では運営者へ自動送信しません。",
+    purpose: "食べた履歴、現在販売中コンプ率、図鑑コンプ率、総消費金額",
+    deletion: "設定画面または食べたページの全データ削除、バックアップ復元、ブラウザデータ削除",
+    appStoreDisclosure: "端末内のみなら収集なし。ユーザーが問い合わせ等で送信した場合のみUser Content",
+    googlePlayDisclosure: "端末内のみなら収集なし。ユーザーが問い合わせ等で送信した場合のみUser-provided content"
+  },
+  {
+    dataName: "レビュー・星評価",
+    storage: "localStorage: uniba-food-reviews-v1",
+    personalData: "コメント内容次第で該当可能性あり。ただし通常利用では運営者へ自動送信しません。",
+    purpose: "商品レビュー、平均評価、本人レビュー管理",
+    deletion: "設定画面または食べたページの全データ削除、ブラウザデータ削除",
+    appStoreDisclosure: "端末内のみなら収集なし",
+    googlePlayDisclosure: "端末内のみなら収集なし"
+  },
+  {
+    dataName: "レビュー連投制限",
+    storage: "localStorage: uniba-food-review-last-submit-v1",
+    personalData: "いいえ",
+    purpose: "同一端末の短時間連投防止",
+    deletion: "設定画面またはブラウザデータ削除",
+    appStoreDisclosure: "収集なし",
+    googlePlayDisclosure: "収集なし"
   },
   {
     dataName: "最近見た商品",
     storage: "localStorage: uniba-recent-foods-v1",
     personalData: "いいえ",
     purpose: "ホームの最近見た商品表示",
-    deletion: "ブラウザデータ削除",
-    appStoreDisclosure: "Usage Data if collected off-device; local onlyなら収集なし",
-    googlePlayDisclosure: "App activity if collected off-device; local onlyなら収集なし"
+    deletion: "設定画面またはブラウザデータ削除",
+    appStoreDisclosure: "収集なし",
+    googlePlayDisclosure: "収集なし"
   },
   {
     dataName: "検索履歴",
     storage: "localStorage: uniba-recent-searches-v1",
-    personalData: "検索内容次第で該当可能性あり",
+    personalData: "検索内容次第で該当可能性あり。ただし端末内のみ",
     purpose: "検索候補表示",
-    deletion: "ブラウザデータ削除",
-    appStoreDisclosure: "Search History if collected off-device; local onlyなら収集なし",
-    googlePlayDisclosure: "App activity/Search history if collected off-device; local onlyなら収集なし"
+    deletion: "設定画面またはブラウザデータ削除",
+    appStoreDisclosure: "収集なし",
+    googlePlayDisclosure: "収集なし"
   },
   {
     dataName: "PWA案内状態",
@@ -40,12 +58,12 @@ const rows = [
   },
   {
     dataName: "発見報告",
-    storage: "scripts/output/product-submissions.generated.json",
+    storage: "Googleフォーム（NEXT_PUBLIC_REQUEST_FORM_URL）",
     personalData: "任意連絡先を入力した場合は該当",
     purpose: "商品追加、価格修正、販売終了報告、情報修正の管理者確認",
-    deletion: "お問い合わせから削除依頼",
+    deletion: "お問い合わせから削除依頼。管理者がGoogleフォーム回答を確認して対応",
     appStoreDisclosure: "Contact Info / User Content / Customer Support",
-    googlePlayDisclosure: "Personal info / App info and performance / User-provided content"
+    googlePlayDisclosure: "Personal info / User-provided content"
   },
   {
     dataName: "お問い合わせ",
@@ -85,12 +103,12 @@ const rows = [
   },
   {
     dataName: "Cookie / sessionStorage / IndexedDB",
-    storage: "標準機能では未使用。Supabase認証利用時は認証Cookieを使用",
-    personalData: "認証利用時は該当可能性あり",
-    purpose: "認証状態管理",
-    deletion: "ログアウト、Cookie削除、削除依頼",
-    appStoreDisclosure: "User ID if account sync is enabled",
-    googlePlayDisclosure: "Personal info if account sync is enabled"
+    storage: "標準機能では未使用。ログインCookieや認証用sessionStorageは使用しません。",
+    personalData: "いいえ",
+    purpose: "通常機能では使用しません",
+    deletion: "ブラウザデータ削除",
+    appStoreDisclosure: "収集なし",
+    googlePlayDisclosure: "収集なし"
   }
 ];
 

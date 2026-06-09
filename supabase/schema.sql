@@ -4,7 +4,7 @@
 create extension if not exists pgcrypto;
 
 create table if not exists public.areas (
-  id uuid primary key default gen_random_uuid(),
+  id text primary key default ('area-' || replace(gen_random_uuid()::text, '-', '')),
   name text not null unique,
   sort_order integer not null default 0,
   created_at timestamptz not null default now(),
@@ -12,8 +12,8 @@ create table if not exists public.areas (
 );
 
 create table if not exists public.shops (
-  id uuid primary key default gen_random_uuid(),
-  area_id uuid references public.areas(id) on delete set null,
+  id text primary key default ('shop-' || replace(gen_random_uuid()::text, '-', '')),
+  area_id text references public.areas(id) on delete set null,
   name text not null,
   type text not null default 'unknown' check (type in ('restaurant', 'cart', 'wagon', 'unknown')),
   official_url text,
@@ -24,9 +24,9 @@ create table if not exists public.shops (
 );
 
 create table if not exists public.foods (
-  id uuid primary key default gen_random_uuid(),
-  shop_id uuid references public.shops(id) on delete set null,
-  area_id uuid references public.areas(id) on delete set null,
+  id text primary key default ('food-' || replace(gen_random_uuid()::text, '-', '')),
+  shop_id text references public.shops(id) on delete set null,
+  area_id text references public.areas(id) on delete set null,
   name text not null,
   normalized_name text not null,
   category text not null default 'unknown' check (category in ('churro', 'popcorn', 'drink', 'dessert', 'burger', 'pizza', 'chicken', 'rice', 'noodle', 'snack', 'kids', 'seasonal', 'set', 'unknown')),
@@ -74,8 +74,8 @@ create table if not exists public.foods (
 );
 
 create table if not exists public.food_images (
-  id uuid primary key default gen_random_uuid(),
-  food_id uuid not null references public.foods(id) on delete cascade,
+  id text primary key default ('img-' || replace(gen_random_uuid()::text, '-', '')),
+  food_id text not null references public.foods(id) on delete cascade,
   image_url text not null,
   source_type text not null check (source_type in ('official', 'own', 'user', 'ai', 'placeholder')),
   source_url text,
@@ -105,11 +105,11 @@ create table if not exists public.food_images (
 );
 
 create table if not exists public.food_locations (
-  id uuid primary key default gen_random_uuid(),
-  food_id uuid not null references public.foods(id) on delete cascade,
-  shop_id uuid references public.shops(id) on delete set null,
+  id text primary key default ('loc-' || replace(gen_random_uuid()::text, '-', '')),
+  food_id text not null references public.foods(id) on delete cascade,
+  shop_id text references public.shops(id) on delete set null,
   shop_name text not null,
-  area_id uuid references public.areas(id) on delete set null,
+  area_id text references public.areas(id) on delete set null,
   area_name text not null,
   shop_type text not null default 'unknown' check (shop_type in ('restaurant', 'cart', 'wagon', 'unknown')),
   source_url text,
@@ -135,7 +135,7 @@ create table if not exists public.food_events (
 
 create table if not exists public.image_candidates (
   id uuid primary key default gen_random_uuid(),
-  food_id uuid not null references public.foods(id) on delete cascade,
+  food_id text not null references public.foods(id) on delete cascade,
   candidate_url text not null,
   thumbnail_url text,
   source_page text,
@@ -164,7 +164,7 @@ create table if not exists public.image_candidates (
 );
 
 create table if not exists public.food_collections (
-  id uuid primary key default gen_random_uuid(),
+  id text primary key default ('collection-' || replace(gen_random_uuid()::text, '-', '')),
   name text not null unique,
   description text,
   sort_order integer not null default 999,
@@ -174,7 +174,7 @@ create table if not exists public.food_collections (
 
 create table if not exists public.food_variants (
   id uuid primary key default gen_random_uuid(),
-  food_id uuid not null references public.foods(id) on delete cascade,
+  food_id text not null references public.foods(id) on delete cascade,
   canonical_group_id text,
   flavor text,
   event_name text,
@@ -187,68 +187,12 @@ create table if not exists public.food_variants (
 
 create table if not exists public.food_release_history (
   id uuid primary key default gen_random_uuid(),
-  food_id uuid not null references public.foods(id) on delete cascade,
+  food_id text not null references public.foods(id) on delete cascade,
   event_name text,
   start_date date,
   end_date date,
   source_url text,
   created_at timestamptz not null default now()
-);
-
-create table if not exists public.user_food_reviews (
-  id uuid primary key default gen_random_uuid(),
-  user_id uuid not null references auth.users(id) on delete cascade,
-  food_id uuid not null references public.foods(id) on delete cascade,
-  rating integer check (rating between 1 and 5),
-  memo text,
-  repeat_want boolean,
-  recommended boolean,
-  created_at timestamptz not null default now(),
-  updated_at timestamptz not null default now(),
-  unique (user_id, food_id)
-);
-
-create table if not exists public.user_food_photos (
-  id uuid primary key default gen_random_uuid(),
-  user_id uuid not null references auth.users(id) on delete cascade,
-  food_id uuid not null references public.foods(id) on delete cascade,
-  image_url text not null,
-  created_at timestamptz not null default now()
-);
-
-create table if not exists public.user_collection_progress (
-  id uuid primary key default gen_random_uuid(),
-  user_id uuid not null references auth.users(id) on delete cascade,
-  collection_id uuid not null references public.food_collections(id) on delete cascade,
-  completed_count integer not null default 0,
-  total_count integer not null default 0,
-  updated_at timestamptz not null default now(),
-  unique (user_id, collection_id)
-);
-
-create table if not exists public.profiles (
-  id uuid primary key default gen_random_uuid(),
-  user_id uuid not null unique references auth.users(id) on delete cascade,
-  display_name text,
-  created_at timestamptz not null default now(),
-  updated_at timestamptz not null default now()
-);
-
-create table if not exists public.user_food_logs (
-  id uuid primary key default gen_random_uuid(),
-  user_id uuid not null references auth.users(id) on delete cascade,
-  food_id uuid not null references public.foods(id) on delete cascade,
-  status text not null check (status in ('want', 'eaten')),
-  rating integer check (rating between 1 and 5),
-  memo text,
-  eaten_at date,
-  user_photo_url text,
-  repeat_want boolean,
-  recommended boolean,
-  shared_at timestamptz,
-  created_at timestamptz not null default now(),
-  updated_at timestamptz not null default now(),
-  unique (user_id, food_id, status)
 );
 
 create table if not exists public.crawl_logs (
@@ -268,7 +212,7 @@ create table if not exists public.crawl_logs (
 create table if not exists public.admin_flags (
   id uuid primary key default gen_random_uuid(),
   target_type text not null,
-  target_id uuid not null,
+  target_id text not null,
   note text not null,
   created_at timestamptz not null default now()
 );
@@ -297,20 +241,10 @@ drop trigger if exists food_images_set_updated_at on public.food_images;
 create trigger food_images_set_updated_at before update on public.food_images
 for each row execute function public.set_updated_at();
 
-drop trigger if exists profiles_set_updated_at on public.profiles;
-create trigger profiles_set_updated_at before update on public.profiles
-for each row execute function public.set_updated_at();
-
-drop trigger if exists user_food_logs_set_updated_at on public.user_food_logs;
-create trigger user_food_logs_set_updated_at before update on public.user_food_logs
-for each row execute function public.set_updated_at();
-
 alter table public.areas enable row level security;
 alter table public.shops enable row level security;
 alter table public.foods enable row level security;
 alter table public.food_images enable row level security;
-alter table public.profiles enable row level security;
-alter table public.user_food_logs enable row level security;
 alter table public.crawl_logs enable row level security;
 alter table public.admin_flags enable row level security;
 
@@ -318,13 +252,6 @@ create policy "Public can read areas" on public.areas for select using (true);
 create policy "Public can read active shops" on public.shops for select using (true);
 create policy "Public can read foods" on public.foods for select using (true);
 create policy "Public can read enabled images" on public.food_images for select using (enabled = true);
-create policy "Users can read own profile" on public.profiles for select using (auth.uid() = user_id);
-create policy "Users can insert own profile" on public.profiles for insert with check (auth.uid() = user_id);
-create policy "Users can update own profile" on public.profiles for update using (auth.uid() = user_id);
-create policy "Users can read own logs" on public.user_food_logs for select using (auth.uid() = user_id);
-create policy "Users can insert own logs" on public.user_food_logs for insert with check (auth.uid() = user_id);
-create policy "Users can update own logs" on public.user_food_logs for update using (auth.uid() = user_id);
-create policy "Users can delete own logs" on public.user_food_logs for delete using (auth.uid() = user_id);
 
 create index if not exists foods_status_idx on public.foods(status);
 create index if not exists foods_category_idx on public.foods(category);
@@ -334,6 +261,5 @@ create index if not exists foods_image_url_idx on public.foods(image_url);
 create index if not exists foods_area_id_idx on public.foods(area_id);
 create index if not exists foods_shop_id_idx on public.foods(shop_id);
 create index if not exists food_images_food_priority_idx on public.food_images(food_id, enabled, priority);
-create index if not exists user_food_logs_user_food_idx on public.user_food_logs(user_id, food_id);
 
 -- Admin writes and crawler writes should use Supabase service role in server-side code.

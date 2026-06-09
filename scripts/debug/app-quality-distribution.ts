@@ -27,8 +27,8 @@ const report = {
     priceKnown: priceKnown.length,
     priceUnknown: priceUnknown.length,
     priceRate: percent(priceKnown.length, foods.length),
-    uneatenRateSharedBaseline: "100%",
-    uneatenRateNote: "食べた記録は端末localStorage基準のため、共有DB上の未食率は初期ユーザー基準で算出しています。"
+    userProgressDataSource: "localStorage: uniba-food-logs-v1",
+    uneatenRateNote: "未食率は端末内localStorageの食べた記録から画面側で算出します。このレポートは共有商品データ品質のみを集計します。"
   },
   categoryDistribution: buildStats(foods, (food) => food.category),
   areaDistribution: buildStats(foods, (food) => food.area?.name || "エリア未確認"),

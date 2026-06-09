@@ -9,11 +9,11 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        ink: "#18212f",
-        park: "#0f766e",
-        berry: "#be123c",
-        sun: "#f59e0b",
-        mint: "#dff5ef"
+        ink: "#071b3a",
+        park: "#0057b8",
+        berry: "#c8102e",
+        sun: "#fdbb30",
+        mint: "#e8f2ff"
       },
       boxShadow: {
         soft: "0 18px 45px rgba(15, 23, 42, 0.08)"

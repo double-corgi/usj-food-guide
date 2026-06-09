@@ -4,25 +4,38 @@ import { AnalyticsTracker } from "@/components/analytics-tracker";
 import { AppFooter } from "@/components/app-footer";
 import { AppHeader } from "@/components/app-header";
 import { PwaRegister } from "@/components/pwa-register";
+import { appBrand } from "@/lib/constants";
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL;
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://new-app-chi-rosy.vercel.app";
+const siteOrigin = siteUrl.replace(/\/$/, "");
+const appTitle = appBrand.name;
+const appDescription = appBrand.description;
+const ogImageUrl = `${siteOrigin}/og-image.png`;
 
 export const metadata: Metadata = {
-  ...(siteUrl ? { metadataBase: new URL(siteUrl) } : {}),
-  title: "ユニバフード制覇",
-  description: "USJで今日食べるものを探せる非公式フード制覇アプリ",
+  metadataBase: new URL(siteOrigin),
+  title: appTitle,
+  description: appDescription,
+  applicationName: appTitle,
+  keywords: ["USJ", "ユニバ", "フード", "グルメ", "食べた記録", "非公式ガイド"],
+  alternates: {
+    canonical: "/"
+  },
   manifest: "/manifest.webmanifest",
   openGraph: {
-    title: "ユニバフード制覇",
-    description: "USJで今日食べるものを探せる非公式フード制覇アプリ",
+    title: appTitle,
+    description: appDescription,
     type: "website",
-    ...(siteUrl ? { images: [{ url: "/icons/app-icon-1024.png", width: 1024, height: 1024, alt: "ユニバフード制覇" }] } : {})
+    url: siteOrigin,
+    siteName: appTitle,
+    locale: "ja_JP",
+    images: [{ url: ogImageUrl, width: 1200, height: 630, alt: `${appTitle} - ${appDescription}` }]
   },
   twitter: {
-    card: "summary",
-    title: "ユニバフード制覇",
-    description: "USJで今日食べるものを探せる非公式フード制覇アプリ",
-    ...(siteUrl ? { images: ["/icons/app-icon-1024.png"] } : {})
+    card: "summary_large_image",
+    title: appTitle,
+    description: appDescription,
+    images: [ogImageUrl]
   },
   icons: {
     icon: [
@@ -34,7 +47,7 @@ export const metadata: Metadata = {
   },
   appleWebApp: {
     capable: true,
-    title: "ユニバフード",
+    title: appBrand.shortName,
     statusBarStyle: "default"
   }
 };
@@ -42,7 +55,8 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
-  themeColor: "#18212f"
+  viewportFit: "cover",
+  themeColor: "#071b3a"
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -50,7 +64,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="ja">
       <body className="flex min-h-dvh flex-col">
         <AppHeader />
-        <main className="mx-auto w-full max-w-7xl flex-1 px-4 pb-44 pt-6 sm:px-6 md:pb-8 md:pt-8 lg:px-8">{children}</main>
+        <main className="mx-auto w-full max-w-7xl flex-1 px-4 pb-28 pt-6 sm:px-6 md:pb-8 md:pt-8 lg:px-8">{children}</main>
         <AppFooter />
         <AnalyticsTracker />
         <PwaRegister />

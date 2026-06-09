@@ -4,9 +4,9 @@
 
 ## 基本情報
 
-- Android app name: ユニバフード制覇
+- Android app name: ユニバフードコレクション
 - Package name案: `jp.unibafood.conquest`
-- Short description: USJで今日食べるフードを探して記録する非公式攻略アプリ
+- Short description: USJフードを写真で探して食べた記録を残す非公式図鑑
 - Privacy policy URL: `https://example.com/privacy` TODO 独自ドメイン公開URLへ差し替え
 - Support contact: `https://example.com/contact` TODO 独自ドメイン公開URLへ差し替え
 - Target SDK確認メモ: 公開・更新時点のGoogle Play target API level要件を公式ドキュメントで確認する
@@ -15,9 +15,9 @@
 
 ## Full description
 
-ユニバフード制覇は、USJで食べたいフードを探し、食べた記録を残し、制覇率を上げていく非公式フード攻略アプリです。
+ユニバフードコレクション（ユニコレ）は、ユニバ（USJ）フードを集めて楽しむための非公式コレクションアプリです。
 
-画像、価格、エリア、販売場所、攻略スコアを見ながら、来園前の計画、現地でのフード選び、帰宅後の記録まで使えます。
+画像、価格、エリア、販売場所を見ながら、販売中の商品検索、食べた記録、店舗・エリア別のコレクション管理まで使えます。
 
 本アプリはユニバーサル・スタジオ・ジャパン公式アプリではありません。掲載情報は変更される場合があるため、来園前と現地では公式情報を確認してください。
 
@@ -25,7 +25,8 @@
 
 - 任意連絡先: 問い合わせ・発見報告でユーザーが入力した場合のみ
 - User-provided content: 発見報告、問い合わせ、メモ
-- App activity: 食べた記録や検索履歴をサーバー同期する場合。現状は主にlocalStorage
+- App activity: 食べた記録、レビュー、星評価、総消費金額用の支払金額、検索履歴は端末内localStorageのみ。ログインやクラウド同期は行わないため、通常利用では収集なし
+- Search history: 検索履歴はlocalStorageのみ。サーバー送信する運用に変更した場合はData safetyを更新する
 - Location / Contacts / Camera / Microphone / Payment: 現時点では取得なし
 - 広告SDK: 未導入。導入時はData safetyとPrivacy policyを更新
 - Diagnostics / App info and performance: `NEXT_PUBLIC_SENTRY_DSN` を設定してSentry監視を有効にする場合

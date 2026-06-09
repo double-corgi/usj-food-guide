@@ -6,7 +6,7 @@
     "type": "restaurant",
     "officialUrl": "https://www.usj.co.jp/web/ja/jp/restaurants/kids-menu",
     "isActive": true,
-    "foodCount": 1
+    "foodCount": 3
   },
   {
     "id": "shop-1ptfw3y",
@@ -24,7 +24,7 @@
     "type": "restaurant",
     "officialUrl": "https://www.usj.co.jp/web/ja/jp/restaurants/amity-ice-cream",
     "isActive": true,
-    "foodCount": 2
+    "foodCount": 1
   },
   {
     "id": "shop-1tdzkex",
@@ -33,11 +33,11 @@
     "type": "restaurant",
     "officialUrl": "https://www.usj.co.jp/web/ja/jp/restaurants/amity-landing-restaurant",
     "isActive": true,
-    "foodCount": 7
+    "foodCount": 8
   },
   {
     "id": "shop-1d7mcxr",
-    "areaId": "area-7bosl",
+    "areaId": "area-14mt2ff",
     "name": "カップケーキ・ドリーム横フードカート",
     "type": "cart",
     "officialUrl": "https://www.usj.co.jp/web/ja/jp/restaurants/food-cart",
@@ -51,7 +51,7 @@
     "type": "restaurant",
     "officialUrl": "https://www.usj.co.jp/web/ja/jp/restaurants/kinopios-cafe",
     "isActive": true,
-    "foodCount": 8
+    "foodCount": 17
   },
   {
     "id": "shop-1jnbp5c",
@@ -60,7 +60,7 @@
     "type": "cart",
     "officialUrl": "https://www.usj.co.jp/web/ja/jp/restaurants/food-cart",
     "isActive": true,
-    "foodCount": 0
+    "foodCount": 1
   },
   {
     "id": "shop-1v0tbtg",
@@ -87,7 +87,7 @@
     "type": "cart",
     "officialUrl": "https://www.usj.co.jp/web/ja/jp/restaurants/food-cart",
     "isActive": true,
-    "foodCount": 0
+    "foodCount": 1
   },
   {
     "id": "shop-1whvzq1",
@@ -96,7 +96,7 @@
     "type": "cart",
     "officialUrl": "https://www.usj.co.jp/web/ja/jp/restaurants/food-cart",
     "isActive": true,
-    "foodCount": 0
+    "foodCount": 1
   },
   {
     "id": "shop-c8yjbq",
@@ -105,25 +105,25 @@
     "type": "restaurant",
     "officialUrl": "https://www.usj.co.jp/web/ja/jp/restaurants/studio-stars-restaurant",
     "isActive": true,
-    "foodCount": 7
+    "foodCount": 15
   },
   {
     "id": "shop-1qsyx94",
-    "areaId": "area-7bosl",
+    "areaId": "area-olb56e",
     "name": "スペース・ファンタジー・ザ・ライド前フードカート",
     "type": "cart",
     "officialUrl": "https://www.usj.co.jp/web/ja/jp/restaurants/food-cart",
     "isActive": true,
-    "foodCount": 0
+    "foodCount": 2
   },
   {
     "id": "shop-1wo41fl",
-    "areaId": "area-7bosl",
+    "areaId": "area-1a9heim",
     "name": "セントラルパーク入口横ポップコーンカート",
     "type": "cart",
     "officialUrl": "https://www.usj.co.jp/web/ja/jp/restaurants/food-cart",
     "isActive": true,
-    "foodCount": 1
+    "foodCount": 2
   },
   {
     "id": "shop-1t5w62",
@@ -132,25 +132,25 @@
     "type": "restaurant",
     "officialUrl": "https://www.usj.co.jp/web/ja/jp/restaurants/discovery-restaurant",
     "isActive": true,
-    "foodCount": 12
+    "foodCount": 14
   },
   {
     "id": "shop-dvw6dt",
-    "areaId": "area-7bosl",
+    "areaId": "area-1a9heim",
     "name": "デリシャス・ミー! ザ・クッキー・キッチン",
     "type": "cart",
     "officialUrl": "https://www.usj.co.jp/web/ja/jp/restaurants/food-cart",
     "isActive": true,
-    "foodCount": 1
+    "foodCount": 2
   },
   {
     "id": "shop-1i0x5ad",
-    "areaId": "area-7bosl",
+    "areaId": "area-1a9heim",
     "name": "デリシャス・ミー!ザ・クッキー・キッチン",
     "type": "restaurant",
     "officialUrl": "https://www.usj.co.jp/web/ja/jp/restaurants/delicious-me-the-cookie-kitchen",
     "isActive": true,
-    "foodCount": 3
+    "foodCount": 4
   },
   {
     "id": "shop-1f4jraw",
@@ -168,7 +168,7 @@
     "type": "restaurant",
     "officialUrl": "https://www.usj.co.jp/web/ja/jp/restaurants/park-side-grille",
     "isActive": true,
-    "foodCount": 7
+    "foodCount": 10
   },
   {
     "id": "shop-1hehv6j",
@@ -177,11 +177,11 @@
     "type": "cart",
     "officialUrl": "https://www.usj.co.jp/web/ja/jp/restaurants/food-cart",
     "isActive": true,
-    "foodCount": 0
+    "foodCount": 1
   },
   {
     "id": "shop-bie1ke",
-    "areaId": "area-7bosl",
+    "areaId": "area-1qz9zry",
     "name": "バッテリーパーク北側フードカート",
     "type": "cart",
     "officialUrl": "https://www.usj.co.jp/web/ja/jp/restaurants/food-cart",
@@ -195,16 +195,16 @@
     "type": "restaurant",
     "officialUrl": "https://www.usj.co.jp/web/ja/jp/restaurants/happiness-cafe",
     "isActive": true,
-    "foodCount": 9
+    "foodCount": 13
   },
   {
     "id": "shop-8r3pag",
-    "areaId": "area-7bosl",
+    "areaId": "area-olb56e",
     "name": "ハリウッド・ドリーム・ザ・ライド前フードカート",
     "type": "cart",
     "officialUrl": "https://www.usj.co.jp/web/ja/jp/restaurants/seasonal-food",
     "isActive": true,
-    "foodCount": 0
+    "foodCount": 1
   },
   {
     "id": "shop-zt1x7c",
@@ -213,7 +213,7 @@
     "type": "restaurant",
     "officialUrl": "https://www.usj.co.jp/web/ja/jp/restaurants/seasonal-food",
     "isActive": true,
-    "foodCount": 0
+    "foodCount": 1
   },
   {
     "id": "shop-1vma23e",
@@ -226,7 +226,7 @@
   },
   {
     "id": "shop-2z32lo",
-    "areaId": "area-7bosl",
+    "areaId": "area-olb56e",
     "name": "ビバリーヒルズ・ギフト前ポップコーンカート",
     "type": "cart",
     "officialUrl": "https://www.usj.co.jp/web/ja/jp/restaurants/food-cart",
@@ -253,16 +253,16 @@
   },
   {
     "id": "shop-12taxpu",
-    "areaId": "area-olb56e",
+    "areaId": "area-apf4z5",
     "name": "マリオ・カフェ&ストア",
     "type": "restaurant",
     "officialUrl": "https://www.usj.co.jp/web/ja/jp/restaurants/mario-cafe-and-store",
     "isActive": true,
-    "foodCount": 9
+    "foodCount": 8
   },
   {
     "id": "shop-17yebwe",
-    "areaId": "area-7bosl",
+    "areaId": "area-1a9heim",
     "name": "ミニオン・ハッピー・キッチン",
     "type": "cart",
     "officialUrl": "https://www.usj.co.jp/web/ja/jp/restaurants/food-cart",
@@ -280,7 +280,7 @@
   },
   {
     "id": "shop-1yu64jg",
-    "areaId": "area-7bosl",
+    "areaId": "area-olb56e",
     "name": "ユニバーサル・モンスター・ライブ・ロックンロール・ショー前フードカート",
     "type": "cart",
     "officialUrl": "https://www.usj.co.jp/web/ja/jp/restaurants/food-cart",
@@ -294,7 +294,7 @@
     "type": "cart",
     "officialUrl": "https://www.usj.co.jp/web/ja/jp/restaurants/food-cart",
     "isActive": true,
-    "foodCount": 1
+    "foodCount": 2
   },
   {
     "id": "shop-ui13qw",
@@ -303,7 +303,7 @@
     "type": "restaurant",
     "officialUrl": "https://www.usj.co.jp/web/ja/jp/restaurants/yoshis-snack-island",
     "isActive": true,
-    "foodCount": 0
+    "foodCount": 1
   },
   {
     "id": "shop-mhw30e",
@@ -312,7 +312,7 @@
     "type": "restaurant",
     "officialUrl": "https://www.usj.co.jp/web/ja/jp/restaurants/louies-ny-pizza-parlor",
     "isActive": true,
-    "foodCount": 4
+    "foodCount": 6
   },
   {
     "id": "shop-3v2j9p",
@@ -330,7 +330,7 @@
     "type": "cart",
     "officialUrl": "https://www.usj.co.jp/web/ja/jp/restaurants/food-cart",
     "isActive": true,
-    "foodCount": 1
+    "foodCount": 4
   },
   {
     "id": "shop-7ba324",
@@ -348,7 +348,7 @@
     "type": "restaurant",
     "officialUrl": "https://www.usj.co.jp/web/ja/jp/events/universal-cool-japan-2026/conan/restaurant",
     "isActive": true,
-    "foodCount": 1
+    "foodCount": 2
   },
   {
     "id": "shop-nokw9",
@@ -357,16 +357,16 @@
     "type": "restaurant",
     "officialUrl": "https://www.usj.co.jp/web/ja/jp/restaurants/three-broomsticks",
     "isActive": true,
-    "foodCount": 6
+    "foodCount": 4
   },
   {
     "id": "shop-1tt48e8",
-    "areaId": "area-7bosl",
+    "areaId": "area-bheu57",
     "name": "店舗未確認",
     "type": "restaurant",
     "officialUrl": "https://www.usj.co.jp/web/ja/jp/restaurants/seasonal-food",
     "isActive": true,
-    "foodCount": 33
+    "foodCount": 40
   },
   {
     "id": "shop-1ielufv",
@@ -375,6 +375,6 @@
     "type": "restaurant",
     "officialUrl": "https://www.usj.co.jp/web/ja/jp/restaurants/jungle-beat-shakes",
     "isActive": true,
-    "foodCount": 1
+    "foodCount": 0
   }
 ]

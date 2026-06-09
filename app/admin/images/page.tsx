@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { CheckCircle2, ExternalLink, ImageOff, Sparkles, XCircle } from "lucide-react";
 import { categoryLabels } from "@/lib/constants";
+import { getFoodAreaSummary } from "@/lib/food-utils";
 import { getImageCandidateOverview } from "@/lib/repositories/image-candidates";
 import { approveImageCandidate, rejectImageCandidate } from "./actions";
 import { ManualImageForm } from "./manual-image-form";
@@ -153,7 +154,7 @@ export default async function AdminImagesPage() {
             {noCandidateFoods.slice(0, 120).map((food) => (
               <div key={food.id} className="py-3">
                 <p className="font-black text-ink">{food.name}</p>
-                <p className="mt-1 text-xs font-bold text-slate-500">{categoryLabels[food.category] ?? food.category} / {food.area.name} / {food.shop.name}</p>
+                <p className="mt-1 text-xs font-bold text-slate-500">{categoryLabels[food.category] ?? food.category} / {getFoodAreaSummary(food)} / {food.shop.name}</p>
                 <p className="mt-1 text-xs font-bold text-slate-400">候補なし。上の手動登録欄から画像URLを登録できます。</p>
                 <a href={food.sourceUrl} target="_blank" rel="noopener noreferrer" className="mt-1 inline-block text-xs font-black text-park underline underline-offset-2">source</a>
               </div>

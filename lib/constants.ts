@@ -1,5 +1,13 @@
 import type { DiningType, FoodCategory, FoodStatus, ShopType } from "@/types/domain";
 
+export const appBrand = {
+  name: "ユニバフードコレクション",
+  shortName: "ユニコレ",
+  tagline: "食べた記録が、そのままコレクションになる。",
+  description:
+    "ユニバ（USJ）フードを集めて楽しむための非公式コレクションアプリ。販売中の商品検索、食べた記録、店舗・エリア別のコレクション管理ができます。"
+} as const;
+
 export const unofficialNotice =
   "このアプリはUSJ公式アプリではありません。公開情報をもとにした非公式ファン向けフード記録アプリです。最新情報は必ず公式サイトをご確認ください。";
 
@@ -17,7 +25,7 @@ export const categoryLabels: Record<FoodCategory, string> = {
   kids: "キッズ",
   seasonal: "季節限定",
   set: "セットメニュー",
-  unknown: "その他"
+  unknown: "カテゴリ確認中"
 };
 
 export const shopTypeLabels: Record<ShopType, string> = {
@@ -45,7 +53,7 @@ export const statusLabels: Record<FoodStatus, string> = {
 
 export const statusTone: Record<FoodStatus, string> = {
   active: "bg-slate-100 text-slate-700",
-  scheduled: "bg-sun text-ink",
+  scheduled: "bg-sun/70 text-ink",
   ended: "bg-slate-700 text-white",
   inactive: "bg-slate-200 text-slate-700",
   unknown: "bg-slate-100 text-slate-700"

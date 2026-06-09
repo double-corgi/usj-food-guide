@@ -1,6 +1,6 @@
 import { categoryLabels } from "@/lib/constants";
 import { getCategoryPlaceholder, getFoodImage } from "@/lib/utils/image";
-import type { FoodCategory, FoodImage, FoodStatus, FoodWithRelations, PriceSource, SaleStatus, SaleType, UserFoodLog } from "@/types/domain";
+import type { FoodCategory, FoodImage, FoodLocation, FoodStatus, FoodWithRelations, PriceSource, SaleStatus, SaleType, UserFoodLog } from "@/types/domain";
 
 const categoryPrefixes: Record<FoodCategory, string> = {
   churro: "CHR",
@@ -190,10 +190,10 @@ export function getSaleStatusLabel(food: Pick<FoodWithRelations, "saleStatus" | 
 
 export function getSaleStatusTone(food: Pick<FoodWithRelations, "saleStatus" | "status" | "saleStartDate" | "saleEndDate" | "startDate" | "endDate">) {
   const tones: Record<SaleStatus, string> = {
-    active: "bg-emerald-50 text-emerald-700",
+    active: "bg-mint text-park",
     ended: "bg-slate-100 text-slate-600",
-    upcoming: "bg-sky-50 text-sky-700",
-    unknown: "bg-amber-50 text-amber-700"
+    upcoming: "bg-sun/25 text-ink",
+    unknown: "bg-slate-100 text-slate-600"
   };
   return tones[getSaleStatus(food)];
 }
@@ -202,17 +202,50 @@ export function isEaten(logs: UserFoodLog[], foodId: string) {
   return logs.some((log) => log.foodId === foodId && log.status === "eaten");
 }
 
-export function isWanted(logs: UserFoodLog[], foodId: string) {
-  return logs.some((log) => log.foodId === foodId && log.status === "want");
+export function getCanonicalFoodKey(food: Pick<FoodWithRelations, "id" | "canonicalGroupId" | "duplicateGroupId">) {
+  return food.canonicalGroupId ?? food.duplicateGroupId ?? food.id;
+}
+
+export function getCanonicalFoodId(foods: FoodWithRelations[], food: FoodWithRelations | string) {
+  const target = typeof food === "string" ? foods.find((candidate) => candidate.id === food) : food;
+  if (!target) return typeof food === "string" ? food : food.id;
+  return chooseCanonicalRepresentative(foods.filter((candidate) => getCanonicalFoodKey(candidate) === getCanonicalFoodKey(target))).id;
+}
+
+export function dedupeFoodsByCanonical(foods: FoodWithRelations[]) {
+  const groups = new Map<string, FoodWithRelations[]>();
+  for (const food of foods) {
+    const key = getCanonicalFoodKey(food);
+    groups.set(key, [...(groups.get(key) ?? []), food]);
+  }
+  return Array.from(groups.values()).map(chooseCanonicalRepresentative);
+}
+
+export function getCanonicalFoodMap(foods: FoodWithRelations[]) {
+  return new Map(foods.map((food) => [food.id, getCanonicalFoodKey(food)]));
+}
+
+export function getEatenCanonicalKeys(foods: FoodWithRelations[], logs: UserFoodLog[]) {
+  const canonicalMap = getCanonicalFoodMap(foods);
+  return new Set(
+    logs
+      .filter((log) => log.status === "eaten")
+      .map((log) => canonicalMap.get(log.foodId) ?? log.foodId)
+  );
+}
+
+export function isEatenCanonical(foods: FoodWithRelations[], logs: UserFoodLog[], food: FoodWithRelations) {
+  return getEatenCanonicalKeys(foods, logs).has(getCanonicalFoodKey(food));
 }
 
 export function activeFoods(foods: FoodWithRelations[]) {
-  return foods.filter(isCompletableFood);
+  return dedupeFoodsByCanonical(foods.filter(isCompletableFood));
 }
 
 export function calculateCompletion(foods: FoodWithRelations[], logs: UserFoodLog[]) {
-  const eligible = foods.filter(isCompletableFood);
-  const eatenCount = eligible.filter((food) => isEaten(logs, food.id)).length;
+  const eligible = dedupeFoodsByCanonical(foods.filter(isCompletableFood));
+  const eatenKeys = getEatenCanonicalKeys(foods, logs);
+  const eatenCount = eligible.filter((food) => eatenKeys.has(getCanonicalFoodKey(food))).length;
   return {
     total: eligible.length,
     eaten: eatenCount,
@@ -221,16 +254,154 @@ export function calculateCompletion(foods: FoodWithRelations[], logs: UserFoodLo
 }
 
 export function calculateArchiveRecordRate(foods: FoodWithRelations[], logs: UserFoodLog[]) {
-  const eatenCount = foods.filter((food) => isEaten(logs, food.id)).length;
+  const canonicalFoods = dedupeFoodsByCanonical(foods);
+  const eatenKeys = getEatenCanonicalKeys(foods, logs);
+  const eatenCount = canonicalFoods.filter((food) => eatenKeys.has(getCanonicalFoodKey(food))).length;
   return {
-    total: foods.length,
+    total: canonicalFoods.length,
     eaten: eatenCount,
-    rate: foods.length === 0 ? 0 : Math.round((eatenCount / foods.length) * 100)
+    rate: canonicalFoods.length === 0 ? 0 : Math.round((eatenCount / canonicalFoods.length) * 100)
   };
 }
 
+function chooseCanonicalRepresentative(group: FoodWithRelations[]) {
+  if (group.length === 0) throw new Error("Cannot choose canonical representative from an empty group.");
+  return [...group].sort(compareRepresentativeQuality)[0];
+}
+
+function compareRepresentativeQuality(a: FoodWithRelations, b: FoodWithRelations) {
+  const score = (food: FoodWithRelations) => {
+    const publicImage = getFoodImage(food) !== getCategoryPlaceholder(food.category);
+    const priceKnown = Boolean(food.price ?? food.priceMin ?? food.locations?.find((location) => location.price)?.price);
+    return (
+      Number(food.canonicalFood !== false) * 10_000 +
+      Number(isCompletableFood(food)) * 1_000 +
+      Number(publicImage) * 400 +
+      Number(priceKnown) * 200 +
+      (food.confidenceScore ?? 0) +
+      (food.nameQualityScore ?? 0) / 10
+    );
+  };
+  return score(b) - score(a) || (b.lastCheckedAt ?? "").localeCompare(a.lastCheckedAt ?? "") || a.name.localeCompare(b.name, "ja") || a.id.localeCompare(b.id);
+}
+
+type AreaDisplayFood = Pick<FoodWithRelations, "area" | "shop" | "locations" | "name"> &
+  Partial<Pick<FoodWithRelations, "sourceUrl" | "officialUrl" | "sourceNames" | "eventName" | "collaborationName" | "description">> & {
+    locationText?: string | null;
+    sourceText?: string | null;
+    salesLocations?: Array<{ areaName?: string | null; shopName?: string | null; name?: string | null; sourceUrl?: string | null; locationText?: string | null }>;
+    shops?: Array<{ areaName?: string | null; shopName?: string | null; name?: string | null; sourceUrl?: string | null }>;
+  };
+
+export function getFoodAreaNames(food: AreaDisplayFood, limit?: number) {
+  const names: string[] = [];
+  const addArea = (value?: string | null) => {
+    const displayName = normalizeDisplayAreaName(value);
+    if (displayName && !names.includes(displayName)) names.push(displayName);
+  };
+
+  for (const location of food.locations ?? []) {
+    addArea(normalizeDisplayAreaName(location.areaName) ?? inferAreaFromLocation(location, food));
+  }
+  for (const location of food.salesLocations ?? []) {
+    addArea(normalizeDisplayAreaName(location.areaName) ?? inferAreaFromText([location.shopName, location.name, location.locationText, location.sourceUrl, buildFoodAreaContext(food)].filter(Boolean).join(" ")));
+  }
+  for (const shop of food.shops ?? []) {
+    addArea(normalizeDisplayAreaName(shop.areaName) ?? inferAreaFromText([shop.shopName, shop.name, shop.sourceUrl, buildFoodAreaContext(food)].filter(Boolean).join(" ")));
+  }
+  addArea(normalizeDisplayAreaName(food.area?.name) ?? inferAreaFromFood(food));
+
+  const result = names.length > 0 ? names : ["エリア確認中"];
+  return typeof limit === "number" ? result.slice(0, limit) : result;
+}
+
+export function getFoodAreaDisplay(food: AreaDisplayFood, maxVisible = 2) {
+  const areas = getFoodAreaNames(food);
+  const visibleAreas = areas.slice(0, maxVisible);
+  const hiddenCount = Math.max(areas.length - visibleAreas.length, 0);
+  return {
+    areas,
+    visibleAreas,
+    hiddenCount,
+    summary: `${visibleAreas.join(" / ")}${hiddenCount > 0 ? ` ほか${hiddenCount}箇所` : ""}`
+  };
+}
+
+export function getFoodAreaSummary(food: AreaDisplayFood, maxVisible = 2) {
+  return getFoodAreaDisplay(food, maxVisible).summary;
+}
+
+export function foodMatchesArea(food: AreaDisplayFood & Partial<Pick<FoodWithRelations, "areaId">>, areaId: string, areaName?: string | null) {
+  if (areaId === "all") return true;
+  if (food.areaId === areaId) return true;
+  if (food.locations?.some((location) => location.areaId === areaId)) return true;
+  if (areaName && getFoodAreaNames(food).includes(areaName)) return true;
+  return false;
+}
+
+export function getDisplayLocationAreaName(location: Pick<FoodLocation, "areaName" | "shopName" | "sourceUrl">, food: AreaDisplayFood | Pick<FoodWithRelations, "name">) {
+  return normalizeDisplayAreaName(location.areaName) ?? inferAreaFromLocation(location, food) ?? "エリア確認中";
+}
+
+export function isAreaOtherLike(value?: string | null) {
+  return !value || /^(その他|エリア未確認|未確認|不明|unknown)$/i.test(value.trim());
+}
+
+export function isExactOtherAreaName(value?: string | null) {
+  return value?.trim() === "その他";
+}
+
+export function needsAreaReview(food: AreaDisplayFood) {
+  return getFoodAreaNames(food)[0] === "エリア確認中";
+}
+
+export function normalizeDisplayAreaName(value?: string | null) {
+  if (isAreaOtherLike(value)) return null;
+  return value!.trim();
+}
+
+function inferAreaFromLocation(location: Pick<FoodLocation, "areaName" | "shopName" | "sourceUrl">, food: AreaDisplayFood | Pick<FoodWithRelations, "name">) {
+  return inferAreaFromText([location.shopName, location.sourceUrl, buildFoodAreaContext(food)].filter(Boolean).join(" "));
+}
+
+function inferAreaFromFood(food: AreaDisplayFood) {
+  return inferAreaFromText([food.shop?.name, buildFoodAreaContext(food)].filter(Boolean).join(" "));
+}
+
+function buildFoodAreaContext(food: AreaDisplayFood | Pick<FoodWithRelations, "name">) {
+  const richFood = food as AreaDisplayFood;
+  return [
+    food.name,
+    richFood.locationText,
+    richFood.sourceText,
+    richFood.sourceUrl,
+    richFood.officialUrl,
+    richFood.sourceNames?.join(" "),
+    richFood.eventName,
+    richFood.collaborationName,
+    richFood.description
+  ].filter(Boolean).join(" ");
+}
+
+export function inferAreaFromText(text?: string | null) {
+  const normalized = text ?? "";
+  if (/super-nintendo-world|kinopios-cafe|キノピオ|ヨッシー|マリオ|ピーチ|ドンキー|ジャングル・ビート|ピットストップ/.test(normalized)) return "スーパー・ニンテンドー・ワールド";
+  if (/harry-potter|three-broomsticks|hog|三本の箒|ホッグズ|ホグワーツ|ハリー|ポッター/.test(normalized)) return "ウィザーディング・ワールド・オブ・ハリー・ポッター";
+  if (/minion|delicious-me|ミニオン|デリシャス・ミー|イーブル・イーツ|ティム/.test(normalized)) return "ミニオン・パーク";
+  if (/wonderland|snoopy|hello-kitty|cupcake-dream|elmo|スヌーピー|エルモ|キティ|ワンダーランド|カップケーキ・ドリーム|イマジネーション・プレイランド/.test(normalized)) return "ユニバーサル・ワンダーランド";
+  if (/hollywood|beverly|space-fantasy|universal-monsters|curious-george|california-confectionery|メルズ|スペース・ファンタジー|ハリウッド|ハリウッド・ドリーム|ビバリーヒルズ|ユニバーサル・モンスター|ユニモン|おさるのジョージ|プレイングウィズ|シネマ 4-D|シネマ4-D|カリフォルニアコンフェクショナリー/.test(normalized)) return "ハリウッド・エリア";
+  if (/new-york|finnegans|louies|saido|park-side|battery-park|spider-man|フィネガンズ|ルイズ|SAIDO|パークサイド|アズーラ|スパイダーマン|バッテリーパーク/.test(normalized)) return "ニューヨーク・エリア";
+  if (/san-francisco|lombards|dragons-pearl|wharf|happiness-cafe|ロンバーズ|ドラゴンズ・パール|ワーフカフェ|ハピネス・カフェ/.test(normalized)) return "サンフランシスコ・エリア";
+  if (/jurassic|discovery|lost-world|ジュラシック|ディスカバリー|ロストワールド/.test(normalized)) return "ジュラシック・パーク";
+  if (/amity|jaws|boardwalk|アミティ|ジョーズ|ハンギングジョーズ|ボードウォーク/.test(normalized)) return "アミティ・ビレッジ";
+  if (/waterworld|ウォーターワールド/.test(normalized)) return "ウォーターワールド";
+  return null;
+}
+
 export function countEatenEndedFoods(foods: FoodWithRelations[], logs: UserFoodLog[]) {
-  return foods.filter((food) => !isCompletableFood(food) && isEaten(logs, food.id)).length;
+  const endedFoods = dedupeFoodsByCanonical(foods.filter((food) => !isCompletableFood(food)));
+  const eatenKeys = getEatenCanonicalKeys(foods, logs);
+  return endedFoods.filter((food) => eatenKeys.has(getCanonicalFoodKey(food))).length;
 }
 
 export function getZukanCode(food: FoodWithRelations, foods?: FoodWithRelations[]) {
@@ -252,7 +423,7 @@ export function completionByArea(foods: FoodWithRelations[], logs: UserFoodLog[]
   return Array.from(new Map(foods.map((food) => [food.area.id, food.area])).values())
     .sort((a, b) => a.sortOrder - b.sortOrder)
     .map((area) => {
-      const areaFoods = foods.filter((food) => food.areaId === area.id || food.locations?.some((location) => location.areaId === area.id || location.areaName === area.name));
+      const areaFoods = foods.filter((food) => food.areaId === area.id || getFoodAreaNames(food).includes(area.name));
       return {
         id: area.id,
         label: area.name,

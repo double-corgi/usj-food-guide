@@ -3,14 +3,14 @@ import type { CapacitorConfig } from "@capacitor/cli";
 const serverUrl = process.env.CAPACITOR_SERVER_URL;
 
 const config: CapacitorConfig = {
-  appId: "jp.unibafood.conquest",
-  appName: "ユニバフード制覇",
-  webDir: "public/capacitor-web",
+  appId: "com.usjfoodguide.app",
+  appName: "ユニコレ",
+  webDir: "out",
   ...(serverUrl
     ? {
         server: {
           url: serverUrl,
-          cleartext: false
+          cleartext: serverUrl.startsWith("http://")
         }
       }
     : {})

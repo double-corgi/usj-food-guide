@@ -59,10 +59,6 @@ create table if not exists public.food_locations (
 );
 create index if not exists food_locations_food_idx on public.food_locations(food_id);
 
-alter table public.user_food_logs add column if not exists repeat_want boolean;
-alter table public.user_food_logs add column if not exists recommended boolean;
-alter table public.user_food_logs add column if not exists shared_at timestamptz;
-
 create index if not exists foods_review_visible_idx on public.foods(review_status, hidden, display_quality, name_quality_score desc, confidence_score desc);
 create index if not exists foods_canonical_idx on public.foods(canonical_food, hidden, review_status);
 create index if not exists foods_canonical_group_idx on public.foods(canonical_group_id);
@@ -109,35 +105,4 @@ create table if not exists public.food_release_history (
   end_date date,
   source_url text,
   created_at timestamptz not null default now()
-);
-
-create table if not exists public.user_food_reviews (
-  id uuid primary key default gen_random_uuid(),
-  user_id uuid not null references auth.users(id) on delete cascade,
-  food_id uuid not null references public.foods(id) on delete cascade,
-  rating integer check (rating between 1 and 5),
-  memo text,
-  repeat_want boolean,
-  recommended boolean,
-  created_at timestamptz not null default now(),
-  updated_at timestamptz not null default now(),
-  unique (user_id, food_id)
-);
-
-create table if not exists public.user_food_photos (
-  id uuid primary key default gen_random_uuid(),
-  user_id uuid not null references auth.users(id) on delete cascade,
-  food_id uuid not null references public.foods(id) on delete cascade,
-  image_url text not null,
-  created_at timestamptz not null default now()
-);
-
-create table if not exists public.user_collection_progress (
-  id uuid primary key default gen_random_uuid(),
-  user_id uuid not null references auth.users(id) on delete cascade,
-  collection_id uuid not null references public.food_collections(id) on delete cascade,
-  completed_count integer not null default 0,
-  total_count integer not null default 0,
-  updated_at timestamptz not null default now(),
-  unique (user_id, collection_id)
 );

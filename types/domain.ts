@@ -19,7 +19,7 @@ export type FoodCategory =
   | "unknown";
 export type FoodImageSource = "official" | "own" | "user" | "ai" | "placeholder";
 export type PriceSource = "official" | "official_app" | "menu_photo" | "trusted_report" | "social_report" | "unknown";
-export type UserFoodStatus = "want" | "eaten";
+export type UserFoodStatus = "eaten";
 export type ReviewStatus = "pending" | "approved" | "rejected";
 export type DisplayQuality = "high" | "medium" | "low";
 export type DiningType = "takeout" | "eat_in" | "both" | "food_cart" | "unknown";
@@ -180,6 +180,7 @@ export type UserFoodLog = {
   memo?: string;
   eatenAt?: string;
   eatenCount?: number;
+  spentAmount?: number;
   userPhotoUrl?: string;
   repeatWant?: boolean;
   recommended?: boolean;

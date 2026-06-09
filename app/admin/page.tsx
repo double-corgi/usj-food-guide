@@ -1,4 +1,4 @@
-import { AlertTriangle, Database, Image, ListChecks, Store } from "lucide-react";
+import { AlertTriangle, Database, Image, ListChecks, PencilLine, Store } from "lucide-react";
 import Link from "next/link";
 import { categoryLabels } from "@/lib/constants";
 import { getAdminOverview } from "@/lib/repositories/admin";
@@ -69,12 +69,28 @@ export default async function AdminPage() {
       </div>
       <div className="rounded-lg border border-slate-200 bg-white p-5 shadow-soft">
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-          <div>
-            <h2 className="text-lg font-black text-ink">商品追加リクエスト</h2>
-            <p className="mt-1 text-sm font-bold text-slate-600">ユーザー投稿を確認し、採用・不採用の状態管理とfood候補コピーを行います。</p>
+          <div className="flex gap-3">
+            <span className="grid h-11 w-11 shrink-0 place-items-center rounded-2xl bg-mint text-park">
+              <PencilLine size={22} aria-hidden />
+            </span>
+            <div>
+              <h2 className="text-lg font-black text-ink">カタログ管理</h2>
+              <p className="mt-1 text-sm font-bold text-slate-600">商品追加、商品編集、非表示、店舗追加、店舗編集、エリア編集のドラフトを作成します。</p>
+            </div>
           </div>
-          <Link href="/admin/submissions" className="inline-flex h-11 items-center justify-center rounded-full bg-park px-5 text-sm font-black text-white shadow-soft">
-            リクエストを確認
+          <Link href="/admin/catalog" className="inline-flex h-11 items-center justify-center rounded-full bg-park px-5 text-sm font-black text-white shadow-soft">
+            カタログを編集
+          </Link>
+        </div>
+      </div>
+      <div className="rounded-lg border border-slate-200 bg-white p-5 shadow-soft">
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+          <div>
+            <h2 className="text-lg font-black text-ink">レビュー管理</h2>
+            <p className="mt-1 text-sm font-bold text-slate-600">商品レビューの通報数、非表示状態、投稿内容を確認します。</p>
+          </div>
+          <Link href="/admin/reviews" className="inline-flex h-11 items-center justify-center rounded-full bg-ink px-5 text-sm font-black text-white shadow-soft">
+            レビューを確認
           </Link>
         </div>
       </div>

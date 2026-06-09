@@ -2,7 +2,7 @@ import { FoodGrid } from "@/components/food-grid";
 import { readGeneratedSummary } from "@/lib/repositories/generated-data";
 import { listFoods } from "@/lib/repositories/foods";
 import type { DiningType, FoodCategory } from "@/types/domain";
-import type { SaleFilter } from "@/components/food-grid";
+import type { ListMode, SaleFilter, SortMode } from "@/components/food-grid";
 
 export const revalidate = 3600;
 
@@ -56,10 +56,33 @@ function parseSaleFilter(value?: string): SaleFilter | undefined {
   return undefined;
 }
 
+function parseMode(value?: string): ListMode | undefined {
+  if (value === "all" || value === "eaten") return value;
+  return undefined;
+}
+
+function parseSort(value?: string): SortMode | undefined {
+  if (
+    value === "recommended" ||
+    value === "new" ||
+    value === "image" ||
+    value === "status" ||
+    value === "uneaten" ||
+    value === "category" ||
+    value === "shop" ||
+    value === "priceAsc" ||
+    value === "priceDesc" ||
+    value === "walk"
+  ) {
+    return value;
+  }
+  return undefined;
+}
+
 export default async function FoodsPage({
   searchParams
 }: {
-  searchParams: Promise<{ category?: string; area?: string; shop?: string; diningType?: string; status?: string; sale?: string }>;
+  searchParams: Promise<{ category?: string; area?: string; shop?: string; diningType?: string; status?: string; sale?: string; mode?: string; sort?: string }>;
 }) {
   const resolvedSearchParams = await searchParams;
   const foods = await listFoods();
@@ -67,13 +90,15 @@ export default async function FoodsPage({
   return (
     <FoodGrid
       foods={foods}
-      title="食べたいものを探す"
+      mode={parseMode(resolvedSearchParams.mode)}
+      title="フードを探す"
       generatedAt={typeof generatedSummary.generatedAt === "string" ? generatedSummary.generatedAt : undefined}
       initialCategory={parseCategory(resolvedSearchParams.category)}
       initialAreaId={resolvedSearchParams.area}
       initialShopId={resolvedSearchParams.shop}
       initialDiningType={parseDiningType(resolvedSearchParams.diningType) as DiningType | undefined}
       initialSaleFilter={parseSaleFilter(resolvedSearchParams.sale ?? resolvedSearchParams.status)}
+      initialSort={parseSort(resolvedSearchParams.sort)}
     />
   );
 }

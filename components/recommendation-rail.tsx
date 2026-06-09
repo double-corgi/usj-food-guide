@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { ArrowRight, Sparkles } from "lucide-react";
 import { categoryLabels } from "@/lib/constants";
-import { formatFoodPrice } from "@/lib/food-utils";
+import { formatFoodPrice, getFoodAreaSummary } from "@/lib/food-utils";
 import { recommendNextFoods } from "@/lib/recommendations";
 import { useFoodLogs } from "@/lib/use-food-logs";
 import type { FoodWithRelations } from "@/types/domain";
@@ -55,7 +55,7 @@ export function RecommendationRail({
               </div>
               <p className="mt-1 line-clamp-2 text-sm font-black leading-snug text-ink">{food.name}</p>
               <p className="mt-1 text-xs font-black text-park">{formatFoodPrice(food)}</p>
-              <p className="mt-1 truncate text-xs font-bold text-slate-400">{food.locations?.[0]?.shopName ?? food.shop.name}</p>
+              <p className="mt-1 line-clamp-2 h-8 text-xs font-bold leading-4 text-slate-400">{getFoodAreaSummary(food)}</p>
             </div>
           </Link>
         ))}

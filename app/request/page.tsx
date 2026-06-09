@@ -1,25 +1,38 @@
 import Link from "next/link";
-import { ChevronLeft, Plus } from "lucide-react";
-import { ProductRequestForm } from "./request-form";
+import { ChevronLeft, ExternalLink, Plus } from "lucide-react";
+import { REQUEST_FORM_URL } from "@/lib/request-form-url";
 
 export default function ProductRequestPage() {
   return (
-    <div className="mx-auto max-w-3xl space-y-5">
-      <Link href="/" className="inline-flex min-h-10 items-center gap-2 rounded-xl border border-slate-200 bg-white px-3 text-sm font-black text-slate-700 shadow-soft">
+    <div className="mx-auto max-w-3xl space-y-7">
+      <Link href="/" className="inline-flex min-h-10 items-center gap-2 rounded-full border border-slate-200 bg-white/78 px-3 text-sm font-black text-slate-700">
         <ChevronLeft size={17} aria-hidden />
         ホームへ戻る
       </Link>
-      <section className="rounded-[1.85rem] bg-[radial-gradient(circle_at_top_left,#22c55e_0%,#0f172a_42%,#111827_100%)] p-5 text-white shadow-[0_22px_60px_rgba(15,23,42,0.18)]">
-        <div className="grid h-12 w-12 place-items-center rounded-2xl bg-white/14 ring-1 ring-white/14">
+      <section className="space-y-4 py-2">
+        <div className="grid h-12 w-12 place-items-center rounded-2xl bg-ink text-white">
           <Plus size={26} aria-hidden />
         </div>
-        <p className="mt-4 text-sm font-black text-mint">FOOD INFO</p>
-        <h1 className="mt-2 text-3xl font-black">情報提供センター</h1>
-        <p className="mt-3 text-sm font-bold leading-7 text-slate-200">
-          新商品、情報修正、販売終了報告、お問い合わせをここから送れます。画像URLだけでも情報提供できます。
+        <h1 className="text-3xl font-black tracking-tight text-ink sm:text-4xl">情報提供センター</h1>
+        <p className="max-w-2xl text-sm font-semibold leading-7 text-slate-500">
+          掲載されていない商品や掲載情報の誤りを見つけた場合は、こちらからお知らせください。管理者が確認後に反映します。
         </p>
       </section>
-      <ProductRequestForm />
+      <section className="border-t border-slate-200 pt-6">
+        <p className="text-lg font-black text-ink">Googleフォームで受け付けています</p>
+        <p className="mt-2 text-sm font-semibold leading-7 text-slate-500">
+          商品追加、価格修正、販売場所、販売期間、画像などの情報提供をまとめて送信できます。投稿内容は即公開されず、確認後に必要に応じて反映します。
+        </p>
+        <a
+          href={REQUEST_FORM_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="mt-5 inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-full bg-park px-5 py-4 text-sm font-black text-white transition active:scale-[0.98] sm:w-auto"
+        >
+          Googleフォームで情報提供する
+          <ExternalLink size={17} aria-hidden />
+        </a>
+      </section>
     </div>
   );
 }

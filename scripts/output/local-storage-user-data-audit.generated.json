@@ -1,0 +1,155 @@
+{
+  "generatedAt": "2026-06-06T07:29:38.630Z",
+  "summary": {
+    "ok": true,
+    "foodCount": 200,
+    "imageCount": 200,
+    "placeholderCount": 0,
+    "googleAuthImplemented": false,
+    "appleAuthImplemented": false,
+    "supabaseAuthImplementedForUserRecords": false,
+    "storage": "localStorage"
+  },
+  "checks": [
+    {
+      "name": "components/auth-panel.tsx removed",
+      "ok": true,
+      "detail": "Google/Apple/Supabase認証同期の実装ファイルを残さない"
+    },
+    {
+      "name": "app/auth/callback/route.ts removed",
+      "ok": true,
+      "detail": "Google/Apple/Supabase認証同期の実装ファイルを残さない"
+    },
+    {
+      "name": "app/actions/user-food-logs.ts removed",
+      "ok": true,
+      "detail": "Google/Apple/Supabase認証同期の実装ファイルを残さない"
+    },
+    {
+      "name": "lib/repositories/user-food-logs.ts removed",
+      "ok": true,
+      "detail": "Google/Apple/Supabase認証同期の実装ファイルを残さない"
+    },
+    {
+      "name": "lib/user-sync-migration.ts removed",
+      "ok": true,
+      "detail": "Google/Apple/Supabase認証同期の実装ファイルを残さない"
+    },
+    {
+      "name": "lib/supabase-rate-limit.ts removed",
+      "ok": true,
+      "detail": "Google/Apple/Supabase認証同期の実装ファイルを残さない"
+    },
+    {
+      "name": "docs/supabase-user-sync.md removed",
+      "ok": true,
+      "detail": "Google/Apple/Supabase認証同期の実装ファイルを残さない"
+    },
+    {
+      "name": "food logs use localStorage helper",
+      "ok": true,
+      "detail": "食べた記録と次回食べたいはlocalStorage helper経由"
+    },
+    {
+      "name": "food logs do not use Supabase auth tables",
+      "ok": true,
+      "detail": "食べた記録hookにSupabase認証同期なし"
+    },
+    {
+      "name": "reviews use localStorage helper",
+      "ok": true,
+      "detail": "レビューと星評価はlocalStorage helper経由"
+    },
+    {
+      "name": "reviews do not use Supabase auth tables",
+      "ok": true,
+      "detail": "レビューhookにSupabase認証同期なし"
+    },
+    {
+      "name": "next-want is single localStorage item",
+      "ok": true,
+      "detail": "次回食べたいはlocalStorage上で1件に正規化"
+    },
+    {
+      "name": "backup schema contains logs and reviews",
+      "ok": true,
+      "detail": "バックアップJSONは食べた記録・次回食べたい・レビュー・星評価を含む"
+    },
+    {
+      "name": "backup export implemented",
+      "ok": true,
+      "detail": "バックアップ出力UIあり"
+    },
+    {
+      "name": "restore implemented",
+      "ok": true,
+      "detail": "バックアップ復元UIあり"
+    },
+    {
+      "name": "delete all data implemented",
+      "ok": true,
+      "detail": "全データ削除UIあり"
+    },
+    {
+      "name": "settings page exposes data management",
+      "ok": true,
+      "detail": "設定画面からバックアップ・復元・削除へ到達可能"
+    },
+    {
+      "name": "privacy says no personal collection",
+      "ok": true,
+      "detail": "プライバシーポリシーに個人情報収集なしを明記"
+    },
+    {
+      "name": "privacy says login unnecessary",
+      "ok": true,
+      "detail": "プライバシーポリシーにログイン不要を明記"
+    },
+    {
+      "name": "privacy says local storage",
+      "ok": true,
+      "detail": "プライバシーポリシーに端末内保存を明記"
+    },
+    {
+      "name": "privacy says ads update policy",
+      "ok": true,
+      "detail": "広告導入時のポリシー更新を明記"
+    },
+    {
+      "name": "Google auth not implemented",
+      "ok": true,
+      "detail": "Google認証未実装"
+    },
+    {
+      "name": "Apple auth not implemented",
+      "ok": true,
+      "detail": "Apple認証未実装"
+    },
+    {
+      "name": "Supabase auth not implemented for user records",
+      "ok": true,
+      "detail": "ユーザー記録のSupabase認証同期なし"
+    },
+    {
+      "name": "food count preserved",
+      "ok": true,
+      "detail": "200 foods"
+    },
+    {
+      "name": "image count preserved",
+      "ok": true,
+      "detail": "200 images"
+    },
+    {
+      "name": "placeholder remains zero",
+      "ok": true,
+      "detail": "0 placeholders"
+    },
+    {
+      "name": "no auth-sync runtime references",
+      "ok": true,
+      "detail": "[]"
+    }
+  ]
+}

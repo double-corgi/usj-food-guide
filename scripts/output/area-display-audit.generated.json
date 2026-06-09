@@ -1,0 +1,221 @@
+{
+  "generatedAt": "2026-06-05T07:52:58.462Z",
+  "visibleFoodCount": 200,
+  "imageCount": 200,
+  "placeholderCount": 0,
+  "rawOtherFoodCount": 0,
+  "rawOtherLikeFoodCount": 0,
+  "displayOtherFoodCount": 0,
+  "pendingAreaFoodCount": 10,
+  "displayPendingAreaFoodCount": 10,
+  "multiLocationFoodCount": 12,
+  "multiAreaFoodCount": 6,
+  "displayOtherFoods": [],
+  "pendingAreaFoods": [
+    {
+      "id": "food-5n9awi",
+      "name": "ソルティキャラメルチュリトス"
+    },
+    {
+      "id": "food-ogc1ha",
+      "name": "チョコ&クッキーチュリトス"
+    },
+    {
+      "id": "food-12vork6",
+      "name": "シナモン・チュリトス"
+    },
+    {
+      "id": "food-m0djrd",
+      "name": "ココア&クッキー・チュリトス"
+    },
+    {
+      "id": "food-gmhhr6",
+      "name": "スプラッシュ!ゼニガメ・チュリトス~バニラフレーバー~"
+    },
+    {
+      "id": "food-xfenq1",
+      "name": "決めろ!! 黒閃チュリトス ~パッションフルーツ・フレーバー~"
+    },
+    {
+      "id": "food-manual-低アレルゲン-カレーライス-ハンバーグ-デザート付き",
+      "name": "低アレルゲン・カレーライス（ハンバーグ、デザート付き）"
+    },
+    {
+      "id": "food-manual-低アレルゲン-カレーライス-トッピングなし-デザート付き",
+      "name": "低アレルゲン・カレーライス（トッピングなし、デザート付き）"
+    },
+    {
+      "id": "food-manual-低アレルゲン-ハヤシライス-ミートボール-デザート付き",
+      "name": "低アレルゲン・ハヤシライス（ミートボール、デザート付き）"
+    },
+    {
+      "id": "food-manual-低アレルゲン-ハヤシライス-トッピングなし-デザート付き",
+      "name": "低アレルゲン・ハヤシライス（トッピングなし、デザート付き）"
+    }
+  ],
+  "multiLocationFoods": [
+    {
+      "id": "food-vxhvlr",
+      "name": "ミートボール・ピッツァ 25周年コースターセット",
+      "locationCount": 2,
+      "areas": [
+        "ニューヨーク・エリア"
+      ],
+      "displayAreas": [
+        "ニューヨーク・エリア"
+      ],
+      "cardSummary": "ニューヨーク・エリア"
+    },
+    {
+      "id": "food-2jv220",
+      "name": "ウィキッド・チュリトス ~ピーナッツバター・フレーバー~",
+      "locationCount": 2,
+      "areas": [
+        "ハリウッド・エリア"
+      ],
+      "displayAreas": [
+        "ハリウッド・エリア"
+      ],
+      "cardSummary": "ハリウッド・エリア"
+    },
+    {
+      "id": "food-19nx8rb",
+      "name": "ターキーレッグ!? まん",
+      "locationCount": 2,
+      "areas": [
+        "ハリウッド・エリア"
+      ],
+      "displayAreas": [
+        "ハリウッド・エリア"
+      ],
+      "cardSummary": "ハリウッド・エリア"
+    },
+    {
+      "id": "food-ymiw07",
+      "name": "キャラメルポップコーン!? チュリトス",
+      "locationCount": 4,
+      "areas": [
+        "ユニバーサル・ワンダーランド",
+        "ニューヨーク・エリア"
+      ],
+      "displayAreas": [
+        "ニューヨーク・エリア",
+        "ユニバーサル・ワンダーランド"
+      ],
+      "cardSummary": "ニューヨーク・エリア / ユニバーサル・ワンダーランド"
+    },
+    {
+      "id": "food-c2z2tz",
+      "name": "めざせ大悪党! デイブ・ポップコーンバケツ",
+      "locationCount": 2,
+      "areas": [
+        "ニューヨーク・エリア",
+        "ユニバーサル・ワンダーランド"
+      ],
+      "displayAreas": [
+        "ニューヨーク・エリア",
+        "ユニバーサル・ワンダーランド"
+      ],
+      "cardSummary": "ニューヨーク・エリア / ユニバーサル・ワンダーランド"
+    },
+    {
+      "id": "food-1n8s9rw",
+      "name": "ターキーレッグ",
+      "locationCount": 2,
+      "areas": [
+        "ジュラシック・パーク",
+        "ニューヨーク・エリア"
+      ],
+      "displayAreas": [
+        "ジュラシック・パーク",
+        "ニューヨーク・エリア"
+      ],
+      "cardSummary": "ジュラシック・パーク / ニューヨーク・エリア"
+    },
+    {
+      "id": "food-gmrx8l",
+      "name": "ミニオンのチョコバナナ・チュリトス",
+      "locationCount": 2,
+      "areas": [
+        "ミニオン・パーク"
+      ],
+      "displayAreas": [
+        "ミニオン・パーク"
+      ],
+      "cardSummary": "ミニオン・パーク"
+    },
+    {
+      "id": "food-1yhw1tx",
+      "name": "スモークチキン",
+      "locationCount": 2,
+      "areas": [
+        "ジュラシック・パーク"
+      ],
+      "displayAreas": [
+        "ジュラシック・パーク"
+      ],
+      "cardSummary": "ジュラシック・パーク"
+    },
+    {
+      "id": "food-xpn4ok",
+      "name": "ハローキティ・チュリトス ~いちごミルク~",
+      "locationCount": 2,
+      "areas": [
+        "ユニバーサル・ワンダーランド"
+      ],
+      "displayAreas": [
+        "ユニバーサル・ワンダーランド"
+      ],
+      "cardSummary": "ユニバーサル・ワンダーランド"
+    },
+    {
+      "id": "food-19w9xaa",
+      "name": "ティム・ポップコーンバケツ",
+      "locationCount": 2,
+      "areas": [
+        "ユニバーサル・ワンダーランド",
+        "ミニオン・パーク"
+      ],
+      "displayAreas": [
+        "ミニオン・パーク",
+        "ユニバーサル・ワンダーランド"
+      ],
+      "cardSummary": "ミニオン・パーク / ユニバーサル・ワンダーランド"
+    },
+    {
+      "id": "food-3g64cm",
+      "name": "チョコレートチュリトス",
+      "locationCount": 2,
+      "areas": [
+        "サンフランシスコ・エリア",
+        "ハリウッド・エリア"
+      ],
+      "displayAreas": [
+        "サンフランシスコ・エリア",
+        "ハリウッド・エリア"
+      ],
+      "cardSummary": "サンフランシスコ・エリア / ハリウッド・エリア"
+    },
+    {
+      "id": "food-1yvvf8m",
+      "name": "クリスマス・チョコ・チュリトス",
+      "locationCount": 2,
+      "areas": [
+        "ウォーターワールド",
+        "ユニバーサル・ワンダーランド"
+      ],
+      "displayAreas": [
+        "ウォーターワールド",
+        "ユニバーサル・ワンダーランド"
+      ],
+      "cardSummary": "ウォーターワールド / ユニバーサル・ワンダーランド"
+    }
+  ],
+  "checks": {
+    "foodCountPreserved": true,
+    "imageCountPreserved": true,
+    "placeholderZero": true,
+    "displayOtherZero": true,
+    "cardSummariesDoNotContainOther": true
+  }
+}

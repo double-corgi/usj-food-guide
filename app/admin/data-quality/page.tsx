@@ -3,7 +3,7 @@ import path from "node:path";
 import { AlertTriangle, CalendarDays, Database, Image as ImageIcon, Link2, MapPin, ReceiptText, Store, Tags } from "lucide-react";
 import Link from "next/link";
 import { categoryLabels } from "@/lib/constants";
-import { getPriceSource, getPriceSourceLabel, getSaleEndDate, getSaleStartDate, getSaleStatus, isCompletableFood } from "@/lib/food-utils";
+import { dedupeFoodsByCanonical, getCanonicalFoodKey, getFoodAreaSummary, getPriceSource, getPriceSourceLabel, getSaleEndDate, getSaleStartDate, getSaleStatus, isAreaOtherLike, isCompletableFood, isExactOtherAreaName, needsAreaReview, normalizeFoodName } from "@/lib/food-utils";
 import { readGeneratedFoods } from "@/lib/repositories/generated-data";
 import { getFoodImage } from "@/lib/utils/image";
 import type { FoodCategory, FoodWithRelations } from "@/types/domain";
@@ -18,11 +18,20 @@ type QualityRow = {
 
 export default function DataQualityPage() {
   const foods = readGeneratedFoods({ includeHidden: true }).filter((food) => food.reviewStatus === "approved" && food.canonicalFood !== false && !food.hidden);
+  const canonicalFoods = dedupeFoodsByCanonical(foods);
+  const canonicalGroups = groupBy(foods, getCanonicalFoodKey);
+  const explicitDuplicateGroups = Array.from(canonicalGroups.values()).filter((group) => group.length >= 2);
+  const duplicateCandidates = buildDuplicateCandidates(foods);
   const priceKnown = foods.filter(hasKnownPrice);
   const priceUnknown = foods.filter((food) => !hasKnownPrice(food));
   const imageFoods = foods.filter(hasPublicImage);
   const placeholderFoods = foods.filter((food) => getFoodImage(food).startsWith("/placeholders/"));
   const areaMissing = foods.filter((food) => isUnknownName(food.area?.name));
+  const rawOtherAreaFoods = foods.filter((food) => isExactOtherAreaName(food.area?.name) || food.locations?.some((location) => isExactOtherAreaName(location.areaName)));
+  const rawUnclassifiedAreaFoods = foods.filter((food) => isAreaOtherLike(food.area?.name) || food.locations?.some((location) => isAreaOtherLike(location.areaName)));
+  const displayOtherAreaFoods = foods.filter((food) => getFoodAreaSummary(food).includes("その他"));
+  const areaReviewNeeded = foods.filter(needsAreaReview);
+  const multiLocationFoods = foods.filter((food) => (food.locations ?? []).length >= 2);
   const shopMissing = foods.filter((food) => isUnknownName(food.shop?.name));
   const categoryMissing = foods.filter((food) => food.category === "unknown");
   const sourceMissing = foods.filter((food) => !food.sourceUrl);
@@ -31,7 +40,7 @@ export default function DataQualityPage() {
   const activeStartMissing = foods.filter((food) => getSaleStatus(food) === "active" && !getSaleStartDate(food));
   const endedEndMissing = foods.filter((food) => getSaleStatus(food) === "ended" && !getSaleEndDate(food));
   const nonCompletableActiveMismatch = foods.filter((food) => getSaleStatus(food) !== "active" && food.isCompletable === true);
-  const completableFoods = foods.filter(isCompletableFood);
+  const completableFoods = canonicalFoods.filter(isCompletableFood);
   const manualPriceDecisions = readManualPriceDecisions();
   const priceUnconfirmable = priceUnknown.filter((food) => manualPriceDecisions[food.id]?.status === "unconfirmable").length;
   const priceReviewed = priceKnown.length + priceUnconfirmable;
@@ -76,7 +85,15 @@ export default function DataQualityPage() {
         <Metric icon={ReceiptText} label="確認不能理由保存済" value={priceUnconfirmable} />
         <Metric icon={AlertTriangle} label="価格未レビュー" value={priceReviewOpen} tone={priceReviewOpen > 0 ? "warn" : "default"} />
         <Metric icon={CalendarDays} label="コンプ対象" value={completableFoods.length} />
+        <Metric icon={Database} label="canonical商品" value={canonicalFoods.length} />
+        <Metric icon={AlertTriangle} label="重複候補" value={duplicateCandidates.length} tone={duplicateCandidates.length > 0 ? "warn" : "default"} />
+        <Metric icon={Database} label="canonical重複グループ" value={explicitDuplicateGroups.length} />
         <Metric icon={AlertTriangle} label="販売期間確認中" value={saleUnknown.length} tone={saleUnknown.length > 0 ? "warn" : "default"} />
+        <Metric icon={MapPin} label="area=その他" value={rawOtherAreaFoods.length} tone={rawOtherAreaFoods.length > 0 ? "warn" : "default"} />
+        <Metric icon={MapPin} label="表示上その他" value={displayOtherAreaFoods.length} tone={displayOtherAreaFoods.length > 0 ? "warn" : "default"} />
+        <Metric icon={MapPin} label="raw未分類エリア" value={rawUnclassifiedAreaFoods.length} tone={rawUnclassifiedAreaFoods.length > 0 ? "warn" : "default"} />
+        <Metric icon={AlertTriangle} label="エリア確認中" value={areaReviewNeeded.length} tone={areaReviewNeeded.length > 0 ? "warn" : "default"} />
+        <Metric icon={Store} label="2箇所以上販売" value={multiLocationFoods.length} />
       </section>
 
       <section className="rounded-2xl border border-slate-200 bg-white p-5 shadow-soft">
@@ -110,6 +127,12 @@ export default function DataQualityPage() {
       <section className="grid gap-4 xl:grid-cols-2">
         <MissingList title="価格未確認" foods={priceUnknown} field="price" />
         <MissingList title="エリア未設定" foods={areaMissing} field="area" />
+        <MissingList title="area=その他" foods={rawOtherAreaFoods} field="area" />
+        <MissingList title="表示上その他" foods={displayOtherAreaFoods} field="area" />
+        <MissingList title="raw未分類エリア" foods={rawUnclassifiedAreaFoods} field="area" />
+        <MissingList title="エリア確認中" foods={areaReviewNeeded} field="area" />
+        <MissingList title="2箇所以上販売" foods={multiLocationFoods} field="area" />
+        <MissingList title="重複候補" foods={duplicateCandidates.flatMap((group) => group.foods).slice(0, 80)} field="source" />
         <MissingList title="店舗未設定" foods={shopMissing} field="shop" />
         <MissingList title="カテゴリ未設定" foods={categoryMissing} field="category" />
         <MissingList title="source_url未設定" foods={sourceMissing} field="source" />
@@ -119,6 +142,27 @@ export default function DataQualityPage() {
       </section>
     </div>
   );
+}
+
+function groupBy<T>(items: T[], getKey: (item: T) => string) {
+  const groups = new Map<string, T[]>();
+  for (const item of items) {
+    const key = getKey(item);
+    groups.set(key, [...(groups.get(key) ?? []), item]);
+  }
+  return groups;
+}
+
+function buildDuplicateCandidates(foods: FoodWithRelations[]) {
+  const groups = groupBy(foods, (food) => [
+    normalizeFoodName(food.name),
+    food.priceMin ?? food.price ?? "unknown-price",
+    food.shop?.name ?? "unknown-shop",
+    getFoodAreaSummary(food)
+  ].join("|"));
+  return Array.from(groups.entries())
+    .filter(([, group]) => group.length >= 2)
+    .map(([key, group]) => ({ key, foods: group }));
 }
 
 function Metric({
@@ -177,7 +221,7 @@ function MissingList({ title, foods, field }: { title: string; foods: FoodWithRe
             <div className="min-w-0">
               <p className="line-clamp-2 text-sm font-black text-ink">{food.name}</p>
               <p className="mt-1 line-clamp-1 text-xs font-bold text-slate-500">
-                {categoryLabels[food.category] ?? food.category} / {food.area?.name ?? "エリア未確認"} / {food.shop?.name ?? "店舗未確認"}
+                {categoryLabels[food.category] ?? food.category} / {getFoodAreaSummary(food)} / {food.shop?.name ?? "店舗未確認"}
               </p>
               <div className="mt-2 flex flex-wrap gap-2 text-xs font-black">
                 <Link href={`/admin/prices?status=missing&bucket=すべて`} className="rounded-full bg-mint px-2 py-1 text-park">
@@ -210,7 +254,7 @@ function hasPublicImage(food: FoodWithRelations) {
 }
 
 function isUnknownName(value?: string) {
-  return !value || /未確認|不明|unknown/i.test(value);
+  return !value || /未確認|不明|unknown|その他/i.test(value);
 }
 
 function buildRateRows(foods: FoodWithRelations[], getLabel: (food: FoodWithRelations) => string, isOk: (food: FoodWithRelations) => boolean): QualityRow[] {

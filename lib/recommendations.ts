@@ -1,9 +1,8 @@
 import { categoryLabels } from "@/lib/constants";
-import { completionByArea, completionByCollection, isEaten, isWanted } from "@/lib/food-utils";
+import { completionByArea, completionByCollection, getFoodAreaNames, isEatenCanonical } from "@/lib/food-utils";
 import type { FoodCategory, FoodWithRelations, UserFoodLog } from "@/types/domain";
 
 export type RecommendationReason =
-  | "want"
   | "limited"
   | "same-area"
   | "same-category"
@@ -104,7 +103,7 @@ export function recommendNextFoods(
   const displayedIds = new Set(options.displayedIds ?? []);
   const newestCheckedAt = Math.max(0, ...foods.map((food) => parseFoodTime(food.lastCheckedAt)));
   const areaRepresentativeIds = buildAreaRepresentativeIds(foods);
-  const candidates = foods.filter((food) => food.id !== baseFood?.id && !excludeIds.has(food.id) && !isEaten(logs, food.id) && food.status !== "ended" && food.status !== "inactive");
+  const candidates = foods.filter((food) => food.id !== baseFood?.id && !excludeIds.has(food.id) && !isEatenCanonical(foods, logs, food) && food.status !== "ended" && food.status !== "inactive");
   const collectionProgress = new Map(completionByCollection(foods, logs).map((collection) => [collection.id, collection]));
   const areaProgress = new Map(completionByArea(foods, logs).map((area) => [area.id, area]));
 
@@ -120,11 +119,6 @@ export function recommendNextFoods(
       const categoryRemaining = remainingFor(categoryProgress);
       const areaRemaining = remainingFor(areaMission);
 
-      if (isWanted(logs, food.id)) {
-        score += 45;
-        reason = "want";
-        label = "保存済み";
-      }
       if (categoryRemaining > 0 && categoryRemaining <= 3) {
         score += 130 - categoryRemaining * 15;
         reason = "unfinished";
@@ -134,7 +128,7 @@ export function recommendNextFoods(
         score += 105 - areaRemaining * 12;
         if (reason !== "unfinished") {
           reason = "same-area";
-          label = `あと${areaRemaining}件で${areaMission?.label ?? food.area.name}コンプ`;
+          label = `あと${areaRemaining}件で${areaMission?.label ?? getFoodAreaNames(food, 1)[0]}コンプ`;
         }
       }
       const foodCartRemaining = remainingFor(foodCartProgress);
@@ -161,7 +155,7 @@ export function recommendNextFoods(
       }
       if (food.isLimited || food.rarity === "limited" || food.rarity === "event") {
         score += food.endDate ? 100 : 70;
-        const keepActionLabel = reason === "want" || reason === "unfinished";
+        const keepActionLabel = reason === "unfinished";
         if (!keepActionLabel) {
           reason = "limited";
           label = limitedLabel(food);
@@ -169,18 +163,18 @@ export function recommendNextFoods(
       }
       if (options.areaId && (food.areaId === options.areaId || food.locations?.some((location) => location.areaId === options.areaId))) {
         score += 65;
-        reason = reason === "want" ? reason : "same-area";
-        label = reason === "want" ? label : "このエリア";
+        reason = "same-area";
+        label = "このエリア";
       }
       if (baseFood && food.category === baseFood.category) {
         score += 45;
-        reason = reason === "want" ? reason : "same-category";
-        label = reason === "want" ? label : `同じ${categoryLabels[food.category]}`;
+        reason = "same-category";
+        label = `同じ${categoryLabels[food.category]}`;
       }
       if (baseFood && (food.areaId === baseFood.areaId || food.locations?.some((location) => location.areaId === baseFood.areaId))) {
         score += 40;
-        reason = reason === "want" ? reason : "same-area";
-        label = reason === "want" ? label : "同じエリア";
+        reason = "same-area";
+        label = "同じエリア";
       }
       if (isWalkFood(food)) {
         score += 30;
@@ -203,7 +197,7 @@ export function recommendNextFoods(
 
 export function getPopularSearchTerms(foods: FoodWithRelations[]) {
   const fixed = ["ピザ", "バーガー", "キッズ", "スイーツ", "ドリンク", "食べ歩き", "チュリトス", "ポップコーン", "期間限定", "フードカート"];
-  const dynamic = Array.from(new Set(foods.flatMap((food) => [categoryLabels[food.category], food.area.name].filter(Boolean)))).slice(0, 8);
+  const dynamic = Array.from(new Set(foods.flatMap((food) => [categoryLabels[food.category], ...getFoodAreaNames(food, 1)].filter(Boolean)))).slice(0, 8);
   return [...fixed, ...dynamic].slice(0, 12);
 }
 
