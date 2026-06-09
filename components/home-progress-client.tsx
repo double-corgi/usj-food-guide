@@ -42,9 +42,9 @@ export function HomeCollectionHero({ foods }: { foods: FoodWithRelations[] }) {
   return (
     <section className="pt-0">
       <div className="mx-auto max-w-[1120px]">
-        <div className="relative mx-auto max-w-[980px] overflow-hidden rounded-[1.55rem] bg-[#f4c76d] shadow-[0_22px_68px_rgba(15,23,42,0.13)] ring-1 ring-white/80 sm:rounded-[2rem]">
+        <div className="relative mx-auto max-w-[980px] overflow-hidden rounded-[1.35rem] bg-[#f4c76d] shadow-[0_18px_54px_rgba(15,23,42,0.12)] ring-1 ring-white/80 sm:rounded-[1.75rem]">
           <Image
-            src="/hero/unicore-globe-firstview.png"
+            src="/hero/unicole-firstview.png"
             alt=""
             width={1680}
             height={945}
@@ -53,23 +53,19 @@ export function HomeCollectionHero({ foods }: { foods: FoodWithRelations[] }) {
             aria-hidden="true"
           />
           <div
-            className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_20%,rgba(255,255,255,0.2),transparent_46%),linear-gradient(180deg,rgba(255,255,255,0)_0%,rgba(7,27,58,0.08)_100%)]"
+            className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_18%,rgba(255,255,255,0.18),transparent_44%),linear-gradient(180deg,rgba(255,255,255,0)_0%,rgba(7,27,58,0.05)_100%)]"
             aria-hidden
           />
         </div>
 
         <div className="mx-auto mt-5 max-w-[620px] space-y-5 text-center sm:mt-7">
           <div className="space-y-3">
-            <h1
-              className="select-none text-[4.2rem] font-black leading-none tracking-[-0.08em] text-[#fff8e8] sm:text-[5.6rem] lg:text-[6.4rem]"
-              style={{
-                WebkitTextStroke: "0.11em #06265f",
-                paintOrder: "stroke fill",
-                textShadow: "0 6px 0 #d59a27, 0 14px 22px rgba(7,27,58,0.2)"
-              }}
-            >
-              {appBrand.shortName}
-            </h1>
+            <div className="inline-flex flex-col items-center">
+              <h1 className="select-none text-[3.7rem] font-black leading-none tracking-[-0.04em] text-[#071b3a] drop-shadow-[0_8px_20px_rgba(7,27,58,0.12)] sm:text-[5rem] lg:text-[5.6rem]">
+                {appBrand.shortName}
+              </h1>
+              <span className="mt-2 h-1.5 w-24 rounded-full bg-[linear-gradient(90deg,#0057b8,#f6b73c)] shadow-[0_6px_18px_rgba(246,183,60,0.22)] sm:w-32" aria-hidden />
+            </div>
             <p className="text-base font-black leading-7 text-slate-700 sm:text-lg">{appBrand.tagline}</p>
             <p className="mx-auto max-w-md whitespace-pre-line text-sm font-bold leading-7 text-slate-500">
               {"ユニバ（USJ）フードを写真で集めて、\n食べた記録をコレクションとして残せます。"}
