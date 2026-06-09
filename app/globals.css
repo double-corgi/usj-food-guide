@@ -53,7 +53,7 @@ a {
     transform: scale(1) translate3d(0, 0, 0);
   }
   100% {
-    transform: scale(1.035) translate3d(1.2%, -1%, 0);
+    transform: scale(1.008) translate3d(0.35%, -0.25%, 0);
   }
 }
 
