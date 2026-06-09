@@ -48,10 +48,25 @@ a {
   }
 }
 
+@keyframes hero-globe-drift {
+  0% {
+    transform: scale(1) translate3d(0, 0, 0);
+  }
+  100% {
+    transform: scale(1.035) translate3d(1.2%, -1%, 0);
+  }
+}
+
 .animate-achievement-unlock {
   animation: achievement-unlock 900ms ease-out both;
 }
 
 .animate-soft-glow {
   animation: soft-glow 2.2s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .animate-hero-globe-drift {
+    animation: hero-globe-drift 18s ease-in-out infinite alternate;
+  }
 }

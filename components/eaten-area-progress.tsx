@@ -31,7 +31,7 @@ export function EatenAreaProgress({ foods }: { foods: FoodWithRelations[] }) {
 
             <div className="mt-1.5 flex items-center justify-between gap-3 text-[11px] font-black text-slate-500">
               <span>{progress.active.eaten} / {progress.active.total}</span>
-              <span>未食 {progress.active.uneaten}</span>
+              <span>残り {progress.active.uneaten}</span>
             </div>
 
             <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-slate-200">
@@ -51,7 +51,7 @@ export function EatenAreaProgress({ foods }: { foods: FoodWithRelations[] }) {
                 食べた商品
               </Link>
               <Link href={`/areas/${progress.area.id}?view=missing#area-missing-foods`} className="text-slate-500 underline-offset-4 hover:underline">
-                未食商品
+                残り商品
               </Link>
               <Link href={`/areas/${progress.area.id}`} className="text-slate-500 underline-offset-4 hover:underline">
                 エリアを見る

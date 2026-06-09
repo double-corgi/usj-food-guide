@@ -37,58 +37,41 @@ export function HomeCollectionHero({ foods }: { foods: FoodWithRelations[] }) {
   const { logs } = useFoodLogs();
   const completion = calculateCompletion(foods, logs);
   const remaining = Math.max(completion.total - completion.eaten, 0);
-  const activeFoods = dedupeFoodsByCanonical(foods.filter(isCompletableFood));
-  const visualFoods = pickHeroFoods(activeFoods);
 
   return (
     <section className="py-1">
-      <div className="grid gap-7 lg:grid-cols-[minmax(0,1.05fr)_minmax(360px,0.78fr)] lg:items-center lg:gap-10">
-        <div className="relative">
-          <div className="absolute -left-4 -top-4 h-24 w-24 rounded-full bg-[#f6b73c]/20 blur-2xl" aria-hidden />
-          <div className="absolute -bottom-6 right-4 h-28 w-28 rounded-full bg-[#0057b8]/10 blur-2xl" aria-hidden />
-          <div className="relative grid h-[250px] grid-cols-6 grid-rows-2 gap-2 sm:h-[340px] lg:h-[430px]">
-            {visualFoods.map((food, index) => (
-              <div
-                key={food.id}
-                className={`min-h-0 overflow-hidden bg-slate-100 shadow-[0_18px_45px_rgba(15,23,42,0.08)] ${
-                  index === 0
-                    ? "col-span-4 row-span-2 rounded-[1.8rem]"
-                    : index === 1
-                      ? "col-span-2 rounded-[1.35rem]"
-                      : index === 2
-                        ? "col-span-2 rounded-[1.35rem]"
-                        : "hidden"
-                }`}
-                aria-hidden="true"
+      <div className="grid gap-6 lg:grid-cols-[minmax(0,1.08fr)_minmax(350px,0.72fr)] lg:items-center lg:gap-10">
+        <div className="relative overflow-hidden rounded-[2rem] bg-[#f4c76d] shadow-[0_24px_70px_rgba(15,23,42,0.14)] ring-1 ring-white/70">
+          <div
+            className="animate-hero-globe-drift aspect-[16/9] min-h-[242px] bg-[url('/hero/unicore-globe-hero.svg')] bg-cover bg-center sm:min-h-[350px] lg:min-h-[460px]"
+            aria-hidden="true"
+          />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_24%,rgba(255,255,255,0.2),transparent_42%),linear-gradient(180deg,rgba(7,27,58,0.02)_0%,rgba(7,27,58,0.18)_72%,rgba(7,27,58,0.45)_100%)]" aria-hidden />
+          <div className="absolute inset-x-0 bottom-4 flex justify-center px-4 sm:bottom-6">
+            <div className="select-none text-center">
+              <p
+                className="text-[3.4rem] font-black leading-none tracking-[-0.08em] text-[#fff8e8] sm:text-[5rem] lg:text-[6.2rem]"
+                style={{
+                  WebkitTextStroke: "0.12em #06265f",
+                  paintOrder: "stroke fill",
+                  textShadow: "0 8px 0 #d59a27, 0 18px 24px rgba(7,27,58,0.24)"
+                }}
               >
-                <FoodImage food={food} eager={index === 0} className="h-full w-full" alt="" />
-              </div>
-            ))}
-            {visualFoods.slice(3, 5).map((food, index) => (
-              <div
-                key={food.id}
-                className={`absolute hidden h-28 w-28 overflow-hidden rounded-[1.4rem] bg-slate-100 shadow-[0_16px_38px_rgba(15,23,42,0.14)] ring-4 ring-white sm:block lg:h-36 lg:w-36 ${
-                  index === 0 ? "-bottom-5 left-8" : "-right-3 top-1/2"
-                }`}
-                aria-hidden="true"
-              >
-                <FoodImage food={food} className="h-full w-full" alt="" />
-              </div>
-            ))}
+                {appBrand.shortName}
+              </p>
+            </div>
           </div>
         </div>
 
-        <div className="mx-auto w-full max-w-[520px] space-y-5 text-center lg:text-left">
+        <div className="mx-auto w-full max-w-[520px] space-y-5 text-center">
           <div className="space-y-3">
-            <p className="text-[11px] font-black tracking-[0.18em] text-[#0057b8]">{appBrand.name}</p>
-            <h1 className="text-5xl font-black tracking-tight text-ink sm:text-6xl lg:text-7xl">{appBrand.shortName}</h1>
             <p className="text-base font-black leading-7 text-slate-700 sm:text-lg">{appBrand.tagline}</p>
-            <p className="mx-auto max-w-md text-sm font-bold leading-6 text-slate-500 lg:mx-0">
-              ユニバ（USJ）フードを写真で集めて、食べた記録をコレクションとして残せます。
+            <p className="mx-auto max-w-md whitespace-pre-line text-sm font-bold leading-7 text-slate-500">
+              {"ユニバ（USJ）フードを写真で集めて、\n食べた記録をコレクションとして残せます。"}
             </p>
           </div>
 
-          <div className="rounded-[1.6rem] bg-white/88 p-5 shadow-[0_20px_60px_rgba(15,23,42,0.08)] ring-1 ring-slate-200/70">
+          <div className="rounded-[1.6rem] bg-white/88 p-5 text-left shadow-[0_20px_60px_rgba(15,23,42,0.08)] ring-1 ring-slate-200/70">
             <div className="flex items-end justify-between gap-4">
               <div className="text-left">
                 <p className="text-xs font-black text-slate-500">コレクション進捗</p>
@@ -196,30 +179,6 @@ function is25thFood(food: FoodWithRelations) {
     ...(food.images ?? []).flatMap((image) => [image.imageUrl, image.altText, image.imageSourceContext, image.sourceUrl])
   ].filter(Boolean).join(" ");
   return /25th-anniversary|25th|25周年/i.test(evidenceText) && !/5th-anniversary/i.test(evidenceText);
-}
-
-function pickHeroFoods(foods: FoodWithRelations[]) {
-  const preferredCategories = ["churro", "burger", "popcorn", "drink", "dessert"] as const;
-  const picks: FoodWithRelations[] = [];
-  const usedKeys = new Set<string>();
-
-  for (const category of preferredCategories) {
-    const found = foods.find((food) => food.category === category && !usedKeys.has(getCanonicalFoodKey(food)));
-    if (found) {
-      picks.push(found);
-      usedKeys.add(getCanonicalFoodKey(found));
-    }
-  }
-
-  for (const food of foods) {
-    const key = getCanonicalFoodKey(food);
-    if (usedKeys.has(key)) continue;
-    picks.push(food);
-    usedKeys.add(key);
-    if (picks.length >= 5) break;
-  }
-
-  return picks.slice(0, 5);
 }
 
 function StatusMini({ label, value }: { label: string; value: string }) {

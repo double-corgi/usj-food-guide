@@ -33,14 +33,14 @@ export function AreaFoodStatusLists({ foods }: { foods: FoodWithRelations[] }) {
         <div className="flex flex-wrap items-end justify-between gap-3">
           <div>
             <p className="text-xs font-black uppercase tracking-[0.2em] text-amber-700">Missing Foods</p>
-            <h2 className="mt-1 text-xl font-black text-ink">このエリアの未食フード</h2>
+            <h2 className="mt-1 text-xl font-black text-ink">このエリアの残りフード</h2>
           </div>
           <p className="rounded-full bg-amber-50 px-3 py-1 text-xs font-black text-amber-700">{missingFoods.length}品</p>
         </div>
-        <FoodList foods={missingFoods.slice(0, 12)} empty="現在販売中の未食商品はありません。" />
+        <FoodList foods={missingFoods.slice(0, 12)} empty="現在販売中の残り商品はありません。" />
         {missingFoods.length > 12 ? (
           <Link href="/foods?sort=uneaten&sale=active" className="mt-4 inline-flex h-10 items-center justify-center rounded-full bg-ink px-4 text-xs font-black text-white">
-            さらに未食を探す
+            さらに残りを探す
           </Link>
         ) : null}
       </section>

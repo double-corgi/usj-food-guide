@@ -123,7 +123,7 @@ export function FoodGrid({
           <p className="text-xs font-black tracking-[0.16em] text-park/70">フード図鑑</p>
           <h1 className="mt-2 text-3xl font-black tracking-tight text-ink md:text-4xl">{title ?? "フードを探す"}</h1>
           <p className="mt-2 max-w-2xl text-sm font-semibold leading-6 text-slate-500">
-            写真で選んで、未食を埋める。
+            写真で選んで、残りを見つける。
           </p>
         </div>
       </div>
@@ -267,7 +267,7 @@ export function FoodGrid({
           <option value="new">新しい順</option>
           <option value="image">画像あり優先</option>
           <option value="status">公開情報確認順</option>
-          <option value="uneaten">未食優先</option>
+          <option value="uneaten">残り優先</option>
           <option value="category">カテゴリ順</option>
           <option value="shop">店舗順</option>
           <option value="priceAsc">価格安い順</option>

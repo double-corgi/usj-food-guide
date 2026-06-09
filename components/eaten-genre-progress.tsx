@@ -47,7 +47,7 @@ export function EatenGenreProgress({ foods }: { foods: FoodWithRelations[] }) {
 
             <div className="mt-1.5 flex items-center justify-between gap-3 text-[11px] font-black text-slate-500">
               <span>{item.active.eaten} / {item.active.total}</span>
-              <span>未食 {item.active.uneaten}</span>
+              <span>残り {item.active.uneaten}</span>
             </div>
 
             <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-slate-200">
@@ -67,7 +67,7 @@ export function EatenGenreProgress({ foods }: { foods: FoodWithRelations[] }) {
                 食べた商品
               </Link>
               <Link href={`/foods?category=${item.id}&sort=uneaten`} className="text-slate-500 underline-offset-4 hover:underline">
-                未食商品
+                残り商品
               </Link>
             </div>
           </article>

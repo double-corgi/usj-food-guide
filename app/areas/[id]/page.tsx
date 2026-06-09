@@ -123,7 +123,7 @@ export default async function AreaDetailPage({ params }: { params: Promise<{ id:
         </section>
       ) : null}
 
-      <FoodGrid foods={areaFoods} title={`${area.name}の未食・フード一覧`} initialAreaId={area.id} />
+      <FoodGrid foods={areaFoods} title={`${area.name}の残り・フード一覧`} initialAreaId={area.id} />
     </div>
   );
 }

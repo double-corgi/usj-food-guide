@@ -14,7 +14,7 @@ type HomeDashboardProps = {
 export function HomeDashboard({ foods, areas = [] }: HomeDashboardProps) {
   return (
     <main className="min-h-screen overflow-x-hidden bg-[#f6f8fa] pb-32 text-ink">
-      <div className="mx-auto flex w-full min-w-0 max-w-[1080px] flex-col gap-12 px-4 py-7 sm:px-6 lg:px-8">
+      <div className="mx-auto flex w-full min-w-0 max-w-[1080px] flex-col gap-12 px-4 py-4 sm:px-6 sm:py-6 lg:px-8">
         <HomeCollectionHero foods={foods} />
 
         <section className="space-y-12" aria-label="ホーム">

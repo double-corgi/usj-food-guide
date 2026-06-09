@@ -9,7 +9,7 @@ export default async function AreasPage() {
       <div>
         <p className="text-xs font-black tracking-[0.16em] text-park/70">エリア別フード図鑑</p>
         <h1 className="mt-2 text-3xl font-black tracking-tight text-ink md:text-4xl">エリアから探す</h1>
-        <p className="mt-2 max-w-2xl text-sm font-semibold leading-6 text-slate-500">未食フードをエリアごとに確認できます。</p>
+        <p className="mt-2 max-w-2xl text-sm font-semibold leading-6 text-slate-500">残りフードをエリアごとに確認できます。</p>
       </div>
       <AreaOverview areas={areas} foods={foodsWithRelations} />
     </div>

@@ -14,7 +14,7 @@ export function RecommendationRail({
   baseFood,
   areaId,
   title = "チェック候補",
-  description = "未食・限定・近いジャンルから、候補を絞れます。"
+  description = "残り・限定・近いジャンルから、候補を絞れます。"
 }: {
   foods: FoodWithRelations[];
   baseFood?: FoodWithRelations;

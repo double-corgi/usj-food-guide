@@ -22,7 +22,7 @@ export function AreaCollectionSummary({ foods, allFoods = foods }: { foods: Food
     <div className="rounded-2xl bg-white/10 p-4 ring-1 ring-white/10">
       <div className="flex items-end justify-between gap-4">
         <div>
-          <p className="text-xs font-black text-white/60">未食</p>
+          <p className="text-xs font-black text-white/60">残り</p>
           <p className="mt-1 text-3xl font-black leading-none text-white">{uneaten}品</p>
         </div>
         <p className="shrink-0 text-right text-sm font-black text-white/85">

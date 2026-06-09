@@ -14,13 +14,12 @@ const navItems = [
 export function AppHeader() {
   return (
     <>
-      <header className="sticky top-0 z-30 border-b border-slate-200/70 bg-white/86 pt-[env(safe-area-inset-top)] backdrop-blur-xl">
-        <div className="mx-auto flex w-full max-w-7xl items-center justify-between gap-4 px-4 py-3 sm:px-6 lg:px-8">
+      <header className="sticky top-0 z-30 border-b border-slate-200/60 bg-white/78 pt-[env(safe-area-inset-top)] backdrop-blur-xl">
+        <div className="mx-auto flex w-full max-w-7xl items-center justify-between gap-4 px-4 py-1.5 sm:px-6 md:py-2.5 lg:px-8">
           <Link href="/" className="flex items-center gap-2">
-            <BrandMark />
+            <BrandMark className="h-7 w-7 rounded-lg md:h-9 md:w-9 md:rounded-xl" />
             <span>
-              <span className="block text-base font-black leading-tight text-ink">{appBrand.shortName}</span>
-              <span className="block text-xs font-bold text-slate-500">{appBrand.tagline}</span>
+              <span className="block text-xs font-black leading-tight text-ink md:text-base">{appBrand.shortName}</span>
             </span>
           </Link>
           <nav className="hidden items-center gap-1 md:flex">

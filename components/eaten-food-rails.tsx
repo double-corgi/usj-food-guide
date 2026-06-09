@@ -21,7 +21,7 @@ export function EatenFoodRails({ foods }: { foods: FoodWithRelations[] }) {
   return (
     <div className="grid gap-4 lg:grid-cols-2">
       <FoodRailCard icon={Sparkles} title="次に食べるべき商品" foods={nextFoods} empty="候補はまだありません。" />
-      <FoodRailCard icon={Clock} title="終了前に確認したい商品" foods={endingSoonFoods} empty="終了間近の未食商品はありません。" showRemaining />
+      <FoodRailCard icon={Clock} title="終了前に確認したい商品" foods={endingSoonFoods} empty="終了間近の残り商品はありません。" showRemaining />
     </div>
   );
 }
@@ -45,7 +45,7 @@ function FoodRailCard({ icon: Icon, title, foods, empty, showRemaining = false }
               <p className="line-clamp-2 text-sm font-black leading-5 text-ink">{food.name}</p>
               <p className="mt-1 text-xs font-black text-park">{formatFoodPrice(food)}</p>
               <p className="mt-0.5 text-[11px] font-bold text-slate-500">
-                {showRemaining ? getSaleUrgencyLabel(food) ?? "終了間近" : food.isLimited ? "限定" : "未食候補"}
+                {showRemaining ? getSaleUrgencyLabel(food) ?? "終了間近" : food.isLimited ? "限定" : "残り候補"}
               </p>
             </div>
           </Link>
