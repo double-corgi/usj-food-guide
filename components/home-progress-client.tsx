@@ -62,10 +62,10 @@ export function HomeCollectionHero({ foods }: { foods: FoodWithRelations[] }) {
         <div className="mx-auto mt-5 max-w-[620px] space-y-5 text-center sm:mt-7">
           <div className="space-y-3">
             <div className="inline-flex flex-col items-center">
-              <h1 className="select-none text-[3.45rem] font-black leading-none tracking-[-0.02em] text-[#071b3a] drop-shadow-[0_5px_14px_rgba(7,27,58,0.1)] sm:text-[4.6rem] lg:text-[5.15rem]">
+              <h1 className="select-none text-[3.1rem] font-extrabold leading-none tracking-[-0.02em] text-[#071b3a] sm:text-[4.05rem] lg:text-[4.55rem]">
                 {appBrand.shortName}
               </h1>
-              <span className="mt-2 h-1 w-20 rounded-full bg-[linear-gradient(90deg,#0057b8,#c08a24,#f6b73c)] shadow-[0_5px_14px_rgba(192,138,36,0.18)] sm:w-28" aria-hidden />
+              <span className="mt-2 h-1 w-16 rounded-full bg-[linear-gradient(90deg,#0057b8,#c08a24,#f6b73c)] sm:w-24" aria-hidden />
             </div>
             <p className="text-base font-black leading-7 text-slate-700 sm:text-lg">{appBrand.tagline}</p>
             <p className="mx-auto max-w-md whitespace-pre-line text-sm font-bold leading-7 text-slate-500">
