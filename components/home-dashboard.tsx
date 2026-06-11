@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { AreaOverview } from "@/components/area-overview";
-import { HomeAnniversaryProgress, HomeCollectionHero } from "@/components/home-progress-client";
+import { HomeActiveFoodCollection, HomeAnniversaryProgress, HomeCollectionHero } from "@/components/home-progress-client";
 import { dedupeFoodsByCanonical } from "@/lib/food-utils";
 import { REQUEST_FORM_URL } from "@/lib/request-form-url";
 import type { Area, FoodWithRelations } from "@/types/domain";
@@ -18,7 +18,7 @@ export function HomeDashboard({ foods, areas = [] }: HomeDashboardProps) {
         <HomeCollectionHero foods={foods} />
 
         <section className="space-y-12" aria-label="ホーム">
-          <HomeAnniversaryProgress foods={foods} />
+          <HomeActiveFoodCollection foods={foods} />
           <section className="space-y-4">
             <div className="flex items-end justify-between gap-3">
               <div>
@@ -28,11 +28,29 @@ export function HomeDashboard({ foods, areas = [] }: HomeDashboardProps) {
             </div>
             <AreaOverview areas={areas} foods={foods} />
           </section>
+          <StoresEntryCard />
+          <HomeAnniversaryProgress foods={foods} />
           <ExploreAllCard total={dedupeFoodsByCanonical(foods).length} />
           <FoodRequestPrompt />
         </section>
       </div>
     </main>
+  );
+}
+
+function StoresEntryCard() {
+  return (
+    <section className="border-t border-slate-200/80 pt-7">
+      <div className="flex items-center justify-between gap-4">
+        <div className="min-w-0">
+          <h2 className="text-xl font-black text-ink">店舗から探す</h2>
+          <p className="mt-1 text-sm font-bold text-slate-500">レストランやカートから買えるフードを確認できます。</p>
+        </div>
+        <Link href="/stores" className="inline-flex h-11 shrink-0 items-center justify-center rounded-full border border-slate-200 bg-white px-5 text-sm font-black text-ink active:scale-[0.98]">
+          店舗
+        </Link>
+      </div>
+    </section>
   );
 }
 
