@@ -3,7 +3,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import {
-  calculateArchiveRecordRate,
   calculateCompletion,
   dedupeFoodsByCanonical,
   formatFoodPrice,
@@ -20,44 +19,31 @@ import { appBrand, featuredLimitedCollection } from "@/lib/constants";
 import type { FoodWithRelations, UserFoodLog } from "@/types/domain";
 
 const SHELF_SLOTS = 18;
-const MOBILE_SHELF_SLOTS = 10;
+const MOBILE_SHELF_SLOTS = 8;
 const TABLET_SHELF_SLOTS = 16;
-
-export function HomeHeaderStats({
-  foods
-}: {
-  foods: FoodWithRelations[];
-}) {
-  const { logs } = useFoodLogs();
-  const completion = calculateCompletion(foods, logs);
-  const archive = calculateArchiveRecordRate(foods, logs);
-
-  return (
-    <div className="flex items-center gap-2 overflow-x-auto pb-0.5 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-      <StatusMini label="現在販売中" value={`${completion.eaten}/${completion.total}`} />
-      <StatusMini label="現在販売中コンプ率" value={`${completion.rate}%`} />
-      <StatusMini label="図鑑コンプ率" value={`${archive.rate}%`} />
-    </div>
-  );
-}
+const LIMITED_COLLECTION_MAX = 24;
+const LIMITED_COLLECTION_MIN = 3;
+const LIMITED_GROUP_RATIO = 0.7;
+const PURE_IP_GROUP_NAMES = ["ミニオン", "マリオ", "ハローキティ", "ジュラシック・パーク", "ハリー・ポッター", "スヌーピー", "セサミストリート"];
+const LIMITED_WORDS = ["25th", "25周年", "期間限定", "限定", "イベント", "コラボ", "ハロウィーン", "ハロウィン", "クリスマス", "イースター", "夏", "冬"];
 
 export function HomeCollectionHero({ foods }: { foods: FoodWithRelations[] }) {
-  const { logs } = useFoodLogs();
+  const { logs, ready } = useFoodLogs();
   const completion = calculateCompletion(foods, logs);
   const remaining = Math.max(completion.total - completion.eaten, 0);
   const eatenKeys = getEatenCanonicalKeys(foods, logs);
-  const stampedKeys = useNewlyStampedKeys(eatenKeys);
+  const stampedKeys = useNewlyStampedKeys(eatenKeys, ready);
   const shelfFoods = useMemo(() => pickShelfFoods(foods, logs, SHELF_SLOTS), [foods, logs]);
+  const hasCollection = completion.eaten > 0;
 
   return (
-    <section className="relative isolate -mx-4 bg-[#fffaf5] px-4 pb-2 pt-4 sm:-mx-6 sm:px-6 sm:pt-5 lg:mx-0 lg:rounded-[2rem] lg:px-8 lg:py-8">
-      <div className="mx-auto grid max-w-[1080px] gap-4 lg:grid-cols-[0.38fr_0.62fr] lg:grid-rows-[auto_auto] lg:items-center lg:gap-x-8 lg:gap-y-5">
+    <section className="relative isolate -mx-4 bg-[#fffaf5] px-4 pb-4 pt-4 sm:-mx-6 sm:px-6 sm:pt-5 lg:mx-0 lg:rounded-[2rem] lg:px-8 lg:py-8">
+      <div className="mx-auto grid max-w-[1080px] gap-4 lg:grid-cols-[0.36fr_0.64fr] lg:grid-rows-[auto_1fr] lg:items-start lg:gap-x-8 lg:gap-y-4">
         <div className="order-1 space-y-1.5 text-center lg:col-start-1 lg:row-start-1 lg:text-left">
           <div className="flex items-center justify-center gap-3 lg:justify-start">
             <span className="h-px w-5 bg-[#fdbb30]" aria-hidden />
             <h1
-              className="home-unicole-logo relative select-none text-[1.85rem] font-black leading-none tracking-[0.04em] text-[#071b3a] sm:text-[2rem] lg:text-[2.15rem]"
-              data-logo={appBrand.shortName}
+              className="home-unicole-logo select-none text-[1.85rem] font-black leading-none tracking-[0.04em] text-[#071b3a] sm:text-[2rem] lg:text-[2.15rem]"
             >
               {appBrand.shortName}
             </h1>
@@ -66,54 +52,67 @@ export function HomeCollectionHero({ foods }: { foods: FoodWithRelations[] }) {
           <p className="text-[13px] font-bold leading-6 text-slate-500">{appBrand.tagline}</p>
         </div>
 
-        <div className="order-3 space-y-2.5 lg:col-start-1 lg:row-start-2">
-          <div className="flex flex-wrap items-end justify-center gap-x-2 gap-y-1 lg:justify-start">
-            <p className="text-[13px] font-black text-[#071b3a]">コレクション</p>
-            <p className="animate-home-stat-pop text-[2.35rem] font-black leading-none tracking-[-0.04em] text-[#071b3a] sm:text-[2.5rem]">
-              {completion.eaten}
-            </p>
-            <p className="pb-1 text-[12px] font-bold leading-5 text-slate-500">
-              / 販売中 {completion.total}品（登録分）・残り {remaining}
-            </p>
-          </div>
-          <div className="flex items-center gap-2">
-            <div className="h-1 min-w-0 flex-1 overflow-hidden rounded-full bg-[#e7dccb]">
-              <div
-                className="animate-home-progress-fill h-full rounded-full bg-[linear-gradient(90deg,#0057b8_0%,#0a74db_50%,#fdbb30_100%)]"
-                style={{ width: `${Math.max(completion.rate, completion.eaten > 0 ? 1 : 0)}%` }}
-              />
+        <div className="order-3 space-y-2.5 lg:col-start-1 lg:row-start-2 lg:self-start">
+          {hasCollection ? (
+            <>
+              <div className="flex flex-wrap items-end justify-center gap-x-2 gap-y-1 lg:justify-start">
+                <p className="text-[13px] font-black text-[#071b3a]">コレクション数</p>
+                <p className="animate-home-stat-pop text-[2.35rem] font-black leading-none tracking-[-0.04em] text-[#071b3a] sm:text-[2.5rem]">
+                  {completion.eaten}
+                </p>
+                <p className="pb-1 text-[12px] font-bold leading-5 text-slate-500">
+                  / 販売中 {completion.total}品（登録分）・残り {remaining}
+                </p>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="h-1 min-w-0 flex-1 overflow-hidden rounded-full bg-[#e7dccb]">
+                  <div
+                    className="animate-home-progress-fill h-full rounded-full bg-[linear-gradient(90deg,#0057b8_0%,#0a74db_50%,#fdbb30_100%)]"
+                    style={{ width: `${Math.max(completion.rate, 1)}%` }}
+                  />
+                </div>
+                <span className="w-8 shrink-0 text-right text-[11px] font-black text-slate-500">{completion.rate}%</span>
+              </div>
+            </>
+          ) : (
+            <div className="space-y-1.5 text-center lg:text-left">
+              <p className="text-[13px] font-black text-[#071b3a]">コレクション数</p>
+              <p className="text-sm font-black leading-7 text-[#071b3a]">最初の1品を記録すると、棚が色づきます。</p>
+              <p className="text-[12px] font-bold text-slate-500">販売中 {completion.total}品（登録分）</p>
             </div>
-            <span className="w-8 shrink-0 text-right text-[11px] font-black text-slate-500">{completion.rate}%</span>
-          </div>
+          )}
         </div>
 
-        <div className="order-2 grid grid-cols-5 gap-1.5 md:grid-cols-8 lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:grid-cols-6">
-          {shelfFoods.map((food, index) => {
-            const canonicalKey = getCanonicalFoodKey(food);
-            const eaten = eatenKeys.has(canonicalKey);
-            const hiddenForViewport = index >= TABLET_SHELF_SLOTS ? "hidden lg:block" : index >= MOBILE_SHELF_SLOTS ? "hidden md:block" : "";
-            return (
-              <Link
-                key={`${food.id}-${index}`}
-                href={`/foods/${food.id}`}
-                className={`group relative aspect-square min-w-0 overflow-hidden rounded-[10px] bg-[#efe1cd] ${hiddenForViewport}`}
-                aria-label={`${food.name}の詳細を見る`}
-              >
-                <FoodImage
-                  food={food}
-                  className={`h-full w-full transition duration-300 group-hover:scale-[1.03] ${eaten ? "saturate-100" : "opacity-90 sepia-[0.18] saturate-[0.56] brightness-[1.06]"}`}
-                />
-                {eaten ? (
-                  <span
-                    className={`absolute bottom-1 right-1 grid h-4 w-4 place-items-center rounded-full bg-[#fdbb30] text-[10px] font-black leading-none text-[#071b3a] ring-1 ring-white/80 ${stampedKeys.has(canonicalKey) ? "animate-achievement-unlock" : ""}`}
-                    aria-hidden
-                  >
-                    ✓
-                  </span>
-                ) : null}
-              </Link>
-            );
-          })}
+        <div className="order-2 space-y-2 lg:col-start-2 lg:row-span-2 lg:row-start-1">
+          <p className="text-center text-[12px] font-black tracking-[0.02em] text-[#8a5b16] lg:text-left">食べると、棚が色づく。</p>
+          <div className="grid grid-cols-4 gap-1.5 md:grid-cols-8 lg:grid-cols-6">
+            {shelfFoods.map((food, index) => {
+              const canonicalKey = getCanonicalFoodKey(food);
+              const eaten = eatenKeys.has(canonicalKey);
+              const hiddenForViewport = index >= TABLET_SHELF_SLOTS ? "hidden lg:block" : index >= MOBILE_SHELF_SLOTS ? "hidden md:block" : "";
+              return (
+                <Link
+                  key={`${food.id}-${index}`}
+                  href={`/foods/${food.id}`}
+                  className={`group relative aspect-square min-w-0 overflow-hidden rounded-[11px] bg-[#f1e4d2] ${eaten ? "ring-2 ring-[#fdbb30]/85 ring-offset-1 ring-offset-[#fffaf5]" : ""} ${hiddenForViewport}`}
+                  aria-label={`${food.name}の詳細を見る`}
+                >
+                  <FoodImage
+                    food={food}
+                    className={`h-full w-full transition duration-300 group-hover:scale-[1.03] ${eaten ? "saturate-100" : "saturate-[0.88] brightness-[1.03]"}`}
+                  />
+                  {eaten ? (
+                    <span
+                      className={`absolute bottom-1 right-1 grid h-6 w-6 place-items-center rounded-full bg-[#fdbb30] text-[13px] font-black leading-none text-[#071b3a] ring-1 ring-white/90 shadow-[inset_0_0_6px_rgba(255,255,255,0.42),0_1px_4px_rgba(7,27,58,0.18)] ${stampedKeys.has(canonicalKey) ? "animate-achievement-unlock" : ""}`}
+                      aria-hidden
+                    >
+                      ✓
+                    </span>
+                  ) : null}
+                </Link>
+              );
+            })}
+          </div>
         </div>
       </div>
     </section>
@@ -122,7 +121,8 @@ export function HomeCollectionHero({ foods }: { foods: FoodWithRelations[] }) {
 
 export function HomeActiveFoodCollection({ foods }: { foods: FoodWithRelations[] }) {
   const { logs } = useFoodLogs();
-  const activeFoods = useMemo(() => pickActiveCollectionFoods(foods, logs), [foods, logs]);
+  const shelfKeys = useMemo(() => new Set(pickShelfFoods(foods, logs, SHELF_SLOTS).map(getCanonicalFoodKey)), [foods, logs]);
+  const activeFoods = useMemo(() => pickActiveCollectionFoods(foods, logs, shelfKeys), [foods, logs, shelfKeys]);
 
   return (
     <section className="space-y-4">
@@ -183,9 +183,9 @@ export function HomeLimitedCollection({ foods }: { foods: FoodWithRelations[] })
           return (
             <Link key={food.id} href={`/foods/${food.id}`} className="w-[136px] shrink-0 transition active:scale-[0.99] md:hover:-translate-y-0.5">
               <div className="relative aspect-square overflow-hidden rounded-[1rem] bg-[#efe1cd]">
-                <FoodImage food={food} className={`h-full w-full ${eaten ? "saturate-100" : "opacity-90 sepia-[0.18] saturate-[0.56] brightness-[1.06]"}`} />
+                <FoodImage food={food} className={`h-full w-full ${eaten ? "saturate-100" : "saturate-[0.88] brightness-[1.03]"}`} />
                 {eaten ? (
-                  <span className="absolute bottom-1.5 right-1.5 grid h-4 w-4 place-items-center rounded-full bg-[#fdbb30] text-[10px] font-black leading-none text-[#071b3a] ring-1 ring-white/80" aria-hidden>
+                  <span className="absolute bottom-1.5 right-1.5 grid h-6 w-6 place-items-center rounded-full bg-[#fdbb30] text-[13px] font-black leading-none text-[#071b3a] ring-1 ring-white/90 shadow-[inset_0_0_6px_rgba(255,255,255,0.42),0_1px_4px_rgba(7,27,58,0.18)]" aria-hidden>
                     ✓
                   </span>
                 ) : null}
@@ -227,24 +227,6 @@ export function HomeRecentRecords({ foods }: { foods: FoodWithRelations[] }) {
   );
 }
 
-export function HomeProgressStatusClient({ foodIds, total, archiveTotal }: { foodIds: string[]; total: number; archiveTotal?: number }) {
-  const { logs } = useFoodLogs();
-  const eatenCount = logs.filter((log) => foodIds.includes(log.foodId) && log.status === "eaten").length;
-  const completionRate = total ? Math.round((eatenCount / total) * 100) : 0;
-  const remainingCount = Math.max(total - eatenCount, 0);
-
-  return (
-    <section className="rounded-2xl border border-white/80 bg-white/90 px-3 py-2.5 shadow-[0_10px_28px_rgba(31,41,55,0.06)]">
-      <div className="flex gap-2 overflow-x-auto [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-        <StatusMini label="販売中GET" value={`${eatenCount}/${total}件`} />
-        <StatusMini label="現在コンプ" value={`${completionRate}%`} />
-        <StatusMini label="残り" value={`${remainingCount}件`} />
-        {archiveTotal ? <StatusMini label="図鑑総数" value={`${archiveTotal}件`} /> : null}
-      </div>
-    </section>
-  );
-}
-
 function HomeFoodRailCard({ food, className = "" }: { food: FoodWithRelations; className?: string }) {
   const chip = getHomeFoodChip(food);
 
@@ -266,13 +248,14 @@ function HomeFoodRailCard({ food, className = "" }: { food: FoodWithRelations; c
   );
 }
 
-function useNewlyStampedKeys(eatenKeys: Set<string>) {
+function useNewlyStampedKeys(eatenKeys: Set<string>, ready: boolean) {
   const [stampedKeys, setStampedKeys] = useState<Set<string>>(new Set());
   const previousKeys = useRef<Set<string> | null>(null);
   const signature = Array.from(eatenKeys).sort().join("|");
   const keys = useMemo(() => (signature ? signature.split("|") : []), [signature]);
 
   useEffect(() => {
+    if (!ready) return;
     const currentKeys = new Set(keys);
     if (!previousKeys.current) {
       previousKeys.current = currentKeys;
@@ -288,7 +271,7 @@ function useNewlyStampedKeys(eatenKeys: Set<string>) {
     setStampedKeys(nextStamped);
     const timer = window.setTimeout(() => setStampedKeys(new Set()), 900);
     return () => window.clearTimeout(timer);
-  }, [keys]);
+  }, [keys, ready]);
 
   return stampedKeys;
 }
@@ -310,13 +293,23 @@ function pickShelfFoods(foods: FoodWithRelations[], logs: UserFoodLog[], limit: 
   return [...eatenFoods, ...uneatenFoods].slice(0, limit);
 }
 
-function pickActiveCollectionFoods(foods: FoodWithRelations[], logs: UserFoodLog[]) {
+function pickActiveCollectionFoods(foods: FoodWithRelations[], logs: UserFoodLog[], excludedShelfKeys: Set<string>) {
   const eatenKeys = getEatenCanonicalKeys(foods, logs);
   const seed = getDailySeedKey();
-  return dedupeFoodsByCanonical(foods.filter((food) => isCompletableFood(food) && hasDisplayImage(food) && hasKnownPrice(food)))
+  const candidates = dedupeFoodsByCanonical(foods.filter((food) => isCompletableFood(food) && hasDisplayImage(food) && hasKnownPrice(food)))
     .filter((food) => !eatenKeys.has(getCanonicalFoodKey(food)))
-    .sort((a, b) => activeFoodScore(b, seed) - activeFoodScore(a, seed) || a.name.localeCompare(b.name, "ja"))
-    .slice(0, 8);
+    .sort((a, b) => activeFoodScore(b, seed) - activeFoodScore(a, seed) || a.name.localeCompare(b.name, "ja"));
+  const nonShelfFoods = candidates.filter((food) => !excludedShelfKeys.has(getCanonicalFoodKey(food)));
+  if (nonShelfFoods.length >= 8) return nonShelfFoods.slice(0, 8);
+
+  const selected = [...nonShelfFoods];
+  candidates.forEach((food) => {
+    if (selected.length >= 8) return;
+    const key = getCanonicalFoodKey(food);
+    if (selected.some((item) => getCanonicalFoodKey(item) === key)) return;
+    selected.push(food);
+  });
+  return selected;
 }
 
 function buildLimitedCollection(foods: FoodWithRelations[]) {
@@ -332,17 +325,28 @@ function buildLimitedCollection(foods: FoodWithRelations[]) {
   });
 
   const eventGroup = Array.from(grouped.entries())
-    .filter(([, groupFoods]) => groupFoods.length >= 3)
-    .sort((a, b) => b[1].length - a[1].length || a[0].localeCompare(b[0], "ja"))[0];
-  if (eventGroup) return { title: eventGroup[0], foods: eventGroup[1], stage: "event" as const };
+    .map(([title, groupFoods]) => {
+      const candidateFoods = groupFoods.filter(isLimitedCollectionCandidate);
+      return {
+        title,
+        foods: candidateFoods,
+        ratio: groupFoods.length ? candidateFoods.length / groupFoods.length : 0
+      };
+    })
+    .filter((group) => {
+      const pureIpOnly = PURE_IP_GROUP_NAMES.includes(group.title) && !containsLimitedWord(group.title);
+      return group.foods.length >= LIMITED_COLLECTION_MIN && group.foods.length <= LIMITED_COLLECTION_MAX && group.ratio >= LIMITED_GROUP_RATIO && !pureIpOnly;
+    })
+    .sort((a, b) => b.foods.length - a.foods.length || a.title.localeCompare(b.title, "ja"))[0];
+  if (eventGroup) return { title: eventGroup.title, foods: eventGroup.foods, stage: "event" as const };
 
-  const keywordFoods = activeFoods.filter(matchesFeaturedLimitedCollection);
+  const keywordFoods = activeFoods.filter(matchesFeaturedLimitedCollection).slice(0, LIMITED_COLLECTION_MAX);
   if (keywordFoods.length > 0) {
     return { title: featuredLimitedCollection.title, foods: keywordFoods, stage: "featured" as const };
   }
 
-  const limitedFoods = activeFoods.filter((food) => food.isLimited || food.saleType === "limited" || food.saleType === "event" || food.rarity === "limited" || food.rarity === "event");
-  if (limitedFoods.length > 0) return { title: "期間限定", foods: limitedFoods, stage: "limited" as const };
+  const limitedFoods = activeFoods.filter((food) => food.isLimited);
+  if (limitedFoods.length > 0 && limitedFoods.length <= LIMITED_COLLECTION_MAX) return { title: "期間限定", foods: limitedFoods, stage: "limited" as const };
   return null;
 }
 
@@ -398,8 +402,28 @@ function matchesFeaturedLimitedCollection(food: FoodWithRelations) {
   return featuredLimitedCollection.keywords.some((keyword) => normalized.includes(keyword.toLowerCase()));
 }
 
+function isLimitedCollectionCandidate(food: FoodWithRelations) {
+  return Boolean(
+    food.isLimited ||
+      food.saleType === "limited" ||
+      food.saleType === "event" ||
+      food.rarity === "limited" ||
+      food.rarity === "event" ||
+      food.salePeriodLabel ||
+      food.saleEndDate ||
+      food.endDate ||
+      food.releasePeriod ||
+      containsLimitedWord([food.eventName, food.collaborationName, food.name, food.description, food.seasonalVersion].filter(Boolean).join(" "))
+  );
+}
+
+function containsLimitedWord(value: string) {
+  const normalized = value.toLowerCase();
+  return LIMITED_WORDS.some((word) => normalized.includes(word.toLowerCase()));
+}
+
 function shelfScore(food: FoodWithRelations, seed: string) {
-  return (food.isLimited ? 1000 : 0) + (hasKnownPrice(food) ? 80 : 0) + (hasDisplayImage(food) ? 40 : 0) + seededScore(`${seed}:${getCanonicalFoodKey(food)}`);
+  return (food.isLimited ? 1000 : 0) + (hasKnownPrice(food) ? 80 : 0) + imageQualityScore(food) + seededScore(`${seed}:${getCanonicalFoodKey(food)}`);
 }
 
 function activeFoodScore(food: FoodWithRelations, seed: string) {
@@ -432,6 +456,17 @@ function hasKnownPrice(food: FoodWithRelations) {
   return Boolean(food.price ?? food.priceMin ?? food.locations?.find((location) => location.price)?.price) && food.priceSource !== "unknown";
 }
 
+function imageQualityScore(food: FoodWithRelations) {
+  const imageScore = Math.max(
+    food.imageUrl ? 60 : 0,
+    ...(food.images ?? []).map((image) => {
+      const sourceScore = image.sourceType === "official" ? 42 : image.sourceType === "own" ? 32 : image.sourceType === "user" ? 24 : 8;
+      return sourceScore + (image.imageMatchScore ?? 0) / 4 + (image.imageConfidenceScore ?? 0) / 5 - (image.priority ?? 100) / 25;
+    })
+  );
+  return Math.max(0, imageScore);
+}
+
 function getDailySeedKey() {
   return new Intl.DateTimeFormat("en-CA", {
     timeZone: "Asia/Tokyo",
@@ -448,13 +483,4 @@ function seededScore(value: string) {
     hash = Math.imul(hash, 16777619);
   }
   return (hash >>> 0) % 1000;
-}
-
-function StatusMini({ label, value }: { label: string; value: string }) {
-  return (
-    <span className="inline-flex min-w-[132px] shrink-0 items-center justify-between gap-2 rounded-full bg-white/70 px-3 py-2 text-xs font-black text-slate-500 ring-1 ring-slate-200/60">
-      {label}
-      <strong className="text-ink">{value}</strong>
-    </span>
-  );
 }
