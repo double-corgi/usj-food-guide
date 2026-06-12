@@ -57,6 +57,40 @@ a {
   }
 }
 
+@keyframes home-stat-pop {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 8px, 0) scale(0.98);
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
+@keyframes home-progress-fill {
+  0% {
+    transform: scaleX(0);
+  }
+  100% {
+    transform: scaleX(1);
+  }
+}
+
+@keyframes home-light-sweep {
+  0% {
+    transform: translateX(-20%) rotate(12deg);
+    opacity: 0.12;
+  }
+  50% {
+    opacity: 0.32;
+  }
+  100% {
+    transform: translateX(260%) rotate(12deg);
+    opacity: 0.1;
+  }
+}
+
 .animate-achievement-unlock {
   animation: achievement-unlock 900ms ease-out both;
 }
@@ -65,8 +99,25 @@ a {
   animation: soft-glow 2.2s ease-in-out infinite;
 }
 
+.home-unicole-logo {
+  text-shadow: 0 1px 0 rgba(253, 187, 48, 0.55), 0 8px 22px rgba(7, 27, 58, 0.08);
+}
+
 @media (prefers-reduced-motion: no-preference) {
   .animate-hero-collection-drift {
     animation: hero-collection-drift 20s ease-in-out infinite alternate;
+  }
+
+  .animate-home-stat-pop {
+    animation: home-stat-pop 520ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  }
+
+  .animate-home-progress-fill {
+    animation: home-progress-fill 900ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+    transform-origin: left center;
+  }
+
+  .animate-home-light-sweep {
+    animation: home-light-sweep 9s ease-in-out infinite;
   }
 }

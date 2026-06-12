@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import {
   calculateArchiveRecordRate,
@@ -42,61 +41,51 @@ export function HomeCollectionHero({ foods }: { foods: FoodWithRelations[] }) {
   const remaining = Math.max(completion.total - completion.eaten, 0);
 
   return (
-    <section className="pt-0">
-      <div className="mx-auto grid max-w-[1120px] gap-5 lg:grid-cols-[minmax(0,1.1fr)_minmax(340px,0.9fr)] lg:items-center lg:gap-8">
-        <div className="relative mx-auto w-full max-w-[980px] overflow-hidden rounded-[1.25rem] bg-[#f8d58b] shadow-[0_18px_54px_rgba(7,27,58,0.12)] ring-1 ring-white/90 sm:rounded-[1.75rem]">
-          <Image
-            src="/hero/unicole-collection-hero.png"
-            alt=""
-            width={1680}
-            height={945}
-            priority
-            unoptimized
-            className="animate-hero-collection-drift aspect-[16/9] h-auto w-full select-none object-cover"
-            aria-hidden="true"
-          />
-          <div
-            className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_30%_12%,rgba(255,255,255,0.22),transparent_36%),linear-gradient(180deg,rgba(255,255,255,0)_0%,rgba(7,27,58,0.06)_100%)]"
-            aria-hidden
-          />
+    <section className="relative isolate overflow-hidden rounded-[1.75rem] px-5 py-6 text-center sm:px-8 sm:py-8 lg:px-12 lg:py-10">
+      <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_20%_18%,rgba(253,187,48,0.24),transparent_31%),radial-gradient(circle_at_86%_12%,rgba(0,87,184,0.15),transparent_30%),linear-gradient(135deg,#fffdf8_0%,#f7fbff_46%,#fff7e1_100%)]" aria-hidden />
+      <div className="pointer-events-none absolute -left-20 top-4 -z-10 h-56 w-56 rounded-full border border-[#0057b8]/12" aria-hidden />
+      <div className="pointer-events-none absolute -right-16 bottom-4 -z-10 h-64 w-64 rounded-full border border-[#fdbb30]/24" aria-hidden />
+      <div className="animate-home-light-sweep pointer-events-none absolute inset-y-0 left-[-32%] -z-10 w-1/2 rotate-12 bg-[linear-gradient(90deg,transparent,rgba(255,255,255,0.56),transparent)]" aria-hidden />
+
+      <div className="mx-auto max-w-[980px] space-y-5">
+        <div className="space-y-2">
+          <div className="inline-flex flex-col items-center">
+            <h1 className="home-unicole-logo select-none text-[2rem] font-black leading-none tracking-[0.02em] text-[#071b3a] sm:text-[2.35rem] lg:text-[2.55rem]">
+              {appBrand.shortName}
+            </h1>
+            <span className="mt-2 h-[3px] w-16 rounded-full bg-[linear-gradient(90deg,#0057b8_0%,#fdbb30_58%,#8a5b16_100%)]" aria-hidden />
+          </div>
+          <p className="text-[0.95rem] font-black leading-7 text-[#10233f]">{appBrand.tagline}</p>
+          <p className="mx-auto max-w-[31rem] whitespace-pre-line text-sm font-bold leading-7 text-slate-500 sm:text-[0.95rem]">
+            {"ユニバ（USJ）フードを写真で集めて、\n食べた記録をコレクションとして残せます。"}
+          </p>
         </div>
 
-        <div className="mx-auto max-w-[640px] space-y-5 text-center lg:mx-0 lg:max-w-none lg:text-left">
-          <div className="mx-auto max-w-[560px] rounded-[1.45rem] bg-white/94 p-4 text-left shadow-[0_20px_54px_rgba(7,27,58,0.09)] ring-1 ring-[#f6b73c]/35 sm:p-5">
-            <div className="flex items-end justify-between gap-4">
-              <div className="text-left">
-                <p className="text-xs font-black text-slate-500">コレクション進捗</p>
-                <p className="mt-1 text-5xl font-black tracking-tight text-[#071b3a] sm:text-6xl">{completion.eaten} / {completion.total}</p>
-              </div>
-              <div className="text-right">
-                <p className="text-5xl font-black leading-none text-[#0057b8] sm:text-6xl">{completion.rate}%</p>
-                <p className="mt-1 text-xs font-black text-slate-500">残り {remaining}品</p>
-              </div>
+        <div className="mx-auto max-w-[760px] pt-1 text-left">
+          <div className="flex flex-wrap items-end justify-between gap-x-5 gap-y-3">
+            <div>
+              <p className="text-xs font-black tracking-[0.14em] text-[#0057b8]">コレクション数</p>
+              <p className="animate-home-stat-pop mt-1 text-[3.65rem] font-black leading-none tracking-[-0.05em] text-[#071b3a] sm:text-[5rem]">
+                {completion.eaten}
+                <span className="mx-1 text-[0.54em] text-slate-400">/</span>
+                <span>{completion.total}</span>
+              </p>
             </div>
-            <div className="mt-4 h-3 overflow-hidden rounded-full bg-[#e5e7eb]">
-              <div
-                className="h-full rounded-full bg-[linear-gradient(90deg,#0057b8_0%,#0a6bdc_46%,#fdbb30_100%)] shadow-[0_0_18px_rgba(253,187,48,0.36)]"
-                style={{ width: `${completion.rate}%` }}
-              />
-            </div>
-            <div className="mt-3 flex items-center justify-between text-[11px] font-black text-slate-400">
-              <span>食べた記録</span>
-              <span>達成率</span>
-              <span>残り</span>
+            <div className="animate-home-stat-pop text-right [animation-delay:120ms]">
+              <p className="text-[3.75rem] font-black leading-none tracking-[-0.05em] text-[#0057b8] sm:text-[5.1rem]">{completion.rate}%</p>
+              <p className="mt-1 text-sm font-black text-[#8a5b16]">残り {remaining}品</p>
             </div>
           </div>
-
-          <div className="space-y-2">
-            <div className="inline-flex flex-col items-center lg:items-start">
-              <h1 className="select-none text-[1.45rem] font-extrabold leading-none tracking-[-0.01em] text-[#071b3a] sm:text-[1.75rem] lg:text-[2rem]">
-                {appBrand.shortName}
-              </h1>
-              <span className="mt-2 h-0.5 w-10 rounded-full bg-[linear-gradient(90deg,#0057b8,#c08a24,#f6b73c)] sm:w-14" aria-hidden />
-            </div>
-            <p className="text-xs font-black leading-5 text-slate-700 sm:text-sm">{appBrand.tagline}</p>
-            <p className="mx-auto max-w-md whitespace-pre-line text-sm font-bold leading-7 text-slate-500 lg:mx-0">
-              {"ユニバ（USJ）フードを写真で集めて、\n食べた記録をコレクションとして残せます。"}
-            </p>
+          <div className="mt-5 h-3 overflow-hidden rounded-full bg-[#dfe5ee] shadow-inner">
+            <div
+              className="animate-home-progress-fill h-full rounded-full bg-[linear-gradient(90deg,#0057b8_0%,#0776df_46%,#fdbb30_100%)] shadow-[0_0_22px_rgba(253,187,48,0.42)]"
+              style={{ width: `${Math.max(completion.rate, completion.eaten > 0 ? 2 : 0)}%` }}
+            />
+          </div>
+          <div className="mt-3 flex items-center justify-between text-[11px] font-black text-slate-400">
+            <span>食べた記録</span>
+            <span>達成率</span>
+            <span>残り</span>
           </div>
         </div>
       </div>
