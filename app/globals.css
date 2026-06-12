@@ -80,6 +80,22 @@ a {
   text-shadow: 1px 1px 0 rgba(253, 187, 48, 0.55);
 }
 
+.home-collection-hero {
+  padding-top: max(env(safe-area-inset-top), 1rem);
+}
+
+@media (min-width: 640px) {
+  .home-collection-hero {
+    padding-top: 1.25rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .home-collection-hero {
+    padding-top: 2rem;
+  }
+}
+
 @media (prefers-reduced-motion: no-preference) {
   .animate-home-stat-pop {
     animation: home-stat-pop 520ms cubic-bezier(0.2, 0.8, 0.2, 1) both;

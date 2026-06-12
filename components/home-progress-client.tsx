@@ -37,7 +37,7 @@ export function HomeCollectionHero({ foods }: { foods: FoodWithRelations[] }) {
   const hasCollection = completion.eaten > 0;
 
   return (
-    <section className="relative isolate -mx-4 bg-[#fffaf5] px-4 pb-4 pt-4 sm:-mx-6 sm:px-6 sm:pt-5 lg:mx-0 lg:rounded-[2rem] lg:px-8 lg:py-8">
+    <section className="home-collection-hero relative isolate -mx-4 bg-[#fffaf5] px-4 pb-4 sm:-mx-6 sm:px-6 lg:mx-0 lg:rounded-[2rem] lg:px-8 lg:pb-8">
       <div className="mx-auto grid max-w-[1080px] gap-4 lg:grid-cols-[0.36fr_0.64fr] lg:grid-rows-[auto_1fr] lg:items-start lg:gap-x-8 lg:gap-y-4">
         <div className="order-1 space-y-1.5 text-center lg:col-start-1 lg:row-start-1 lg:text-left">
           <div className="flex items-center justify-center gap-3 lg:justify-start">
@@ -76,8 +76,7 @@ export function HomeCollectionHero({ foods }: { foods: FoodWithRelations[] }) {
             </>
           ) : (
             <div className="space-y-1.5 text-center lg:text-left">
-              <p className="text-[13px] font-black text-[#071b3a]">コレクション数</p>
-              <p className="text-sm font-black leading-7 text-[#071b3a]">最初の1品を記録すると、棚が色づきます。</p>
+              <p className="text-sm font-black leading-7 text-[#071b3a]">最初の1品から。</p>
               <p className="text-[12px] font-bold text-slate-500">販売中 {completion.total}品（登録分）</p>
             </div>
           )}
