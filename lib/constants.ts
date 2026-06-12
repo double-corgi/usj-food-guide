@@ -11,6 +11,12 @@ export const appBrand = {
 export const unofficialNotice =
   "このアプリはUSJ公式アプリではありません。公開情報をもとにした非公式ファン向けフード記録アプリです。最新情報は必ず公式サイトをご確認ください。";
 
+export const featuredLimitedCollection = {
+  title: "25thアニバーサリー",
+  keywords: ["25th", "25周年"],
+  excludeKeywords: ["5th-anniversary", "5周年"]
+} as const;
+
 export const categoryLabels: Record<FoodCategory, string> = {
   churro: "チュリトス",
   popcorn: "ポップコーン",

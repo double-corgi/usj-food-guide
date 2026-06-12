@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { AreaOverview } from "@/components/area-overview";
-import { HomeActiveFoodCollection, HomeAnniversaryProgress, HomeCollectionHero } from "@/components/home-progress-client";
+import { HomeActiveFoodCollection, HomeCollectionHero, HomeLimitedCollection, HomeRecentRecords } from "@/components/home-progress-client";
 import { dedupeFoodsByCanonical } from "@/lib/food-utils";
 import { REQUEST_FORM_URL } from "@/lib/request-form-url";
 import type { Area, FoodWithRelations } from "@/types/domain";
@@ -13,12 +13,13 @@ type HomeDashboardProps = {
 
 export function HomeDashboard({ foods, areas = [] }: HomeDashboardProps) {
   return (
-    <main className="min-h-screen overflow-x-hidden bg-[#f6f8fa] pb-32 text-ink">
-      <div className="mx-auto flex w-full min-w-0 max-w-[1080px] flex-col gap-12 px-4 pb-4 pt-2 sm:px-6 sm:py-6 lg:px-8">
+    <div className="min-h-screen overflow-x-hidden bg-[#fffdf9] pb-32 text-ink">
+      <div className="mx-auto flex w-full min-w-0 max-w-[1080px] flex-col gap-10 px-4 pb-4 pt-0 sm:px-6 sm:py-6 lg:px-8">
         <HomeCollectionHero foods={foods} />
 
-        <section className="space-y-12" aria-label="ホーム">
+        <div className="space-y-12" aria-label="ホーム">
           <HomeActiveFoodCollection foods={foods} />
+          <HomeLimitedCollection foods={foods} />
           <section className="space-y-4">
             <div className="flex items-end justify-between gap-3">
               <div>
@@ -28,13 +29,13 @@ export function HomeDashboard({ foods, areas = [] }: HomeDashboardProps) {
             </div>
             <AreaOverview areas={areas} foods={foods} />
           </section>
+          <HomeRecentRecords foods={foods} />
           <StoresEntryCard />
-          <HomeAnniversaryProgress foods={foods} />
           <ExploreAllCard total={dedupeFoodsByCanonical(foods).length} />
           <FoodRequestPrompt />
-        </section>
+        </div>
       </div>
-    </main>
+    </div>
   );
 }
 
