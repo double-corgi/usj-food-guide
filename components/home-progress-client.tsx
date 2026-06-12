@@ -43,46 +43,53 @@ export function HomeCollectionHero({ foods }: { foods: FoodWithRelations[] }) {
   const nextGoal = getNextGoal(completion.eaten, completion.total);
 
   return (
-    <section className="pt-2">
-      <div className="mx-auto max-w-[880px]">
-        <div className="text-center">
-          <h1 className="text-[30px] font-semibold leading-[1.8] tracking-[0.03em] text-[#1b1b1b]">{appBrand.shortName}</h1>
-          <p className="mx-auto max-w-[520px] text-base font-medium leading-[2] text-[#3c3c3c]">
-            食べた記録が、<br className="sm:hidden" />
-            そのままコレクションになる。
+    <section className="pt-0">
+      <div className="relative isolate mx-auto overflow-hidden rounded-[1.35rem] bg-[#071b3a] px-4 py-4 text-white shadow-[0_18px_46px_rgba(7,27,58,0.18)] ring-1 ring-[#fdbb30]/35 sm:rounded-[1.85rem] sm:px-6 sm:py-5 lg:px-7">
+        <Image
+          src="/hero/unicole-collection-hero.png"
+          alt=""
+          width={1680}
+          height={945}
+          priority
+          unoptimized
+          className="animate-hero-collection-drift pointer-events-none absolute inset-0 -z-10 h-full w-full select-none object-cover opacity-20 mix-blend-screen md:inset-y-0 md:left-auto md:right-0 md:w-[58%] md:opacity-30"
+          aria-hidden="true"
+        />
+        <div
+          className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(circle_at_84%_18%,rgba(253,187,48,0.28),transparent_30%),linear-gradient(90deg,rgba(7,27,58,0.98)_0%,rgba(7,27,58,0.9)_54%,rgba(7,27,58,0.62)_100%)]"
+          aria-hidden
+        />
+
+        <div className="max-w-[760px]">
+          <div className="flex items-center justify-between gap-3">
+            <div className="min-w-0">
+              <p className="text-[1.45rem] font-black leading-none tracking-[-0.01em] text-white sm:text-[1.75rem]">{appBrand.shortName}</p>
+            </div>
+            <span className="shrink-0 rounded-full bg-white/10 px-3 py-1.5 text-[11px] font-black text-[#fdbb30] ring-1 ring-white/15">COLLECTION</span>
+          </div>
+
+          <div className="mt-5">
+            <p className="text-xs font-black text-white/66">コレクション進捗</p>
+            <div className="mt-1 flex items-end justify-between gap-4">
+              <p className="text-[3.7rem] font-black leading-none tracking-[-0.06em] text-white sm:text-[5.2rem]">{completion.eaten}<span className="mx-1 text-white/36">/</span>{completion.total}</p>
+              <p className="pb-1 text-right text-[2.8rem] font-black leading-none text-[#fdbb30] sm:text-[4.2rem]">{completion.rate}%</p>
+            </div>
+            <div className="mt-3 h-3 overflow-hidden rounded-full bg-white/18">
+              <div
+                className="h-full rounded-full bg-[linear-gradient(90deg,#fdbb30_0%,#ffe29a_52%,#ffffff_100%)] shadow-[0_0_22px_rgba(253,187,48,0.46)]"
+                style={{ width: `${completion.rate}%` }}
+              />
+            </div>
+            <div className="mt-3 grid grid-cols-3 gap-2 text-center">
+              <ProgressMini label="残り" value={`${remaining}品`} />
+              <ProgressMini label="達成率" value={`${completion.rate}%`} />
+              <ProgressMini label="次の目標" value={nextGoal} />
+            </div>
+          </div>
+
+          <p className="mt-4 max-w-[520px] whitespace-pre-line text-xs font-bold leading-5 text-white/64 sm:text-sm sm:leading-6">
+            {"ユニバ（USJ）フードを写真で集めて、\n食べた記録をコレクションとして残せます。"}
           </p>
-        </div>
-
-        <div className="mt-7 border-y border-[#e6e6e6] py-6 sm:mt-9 sm:py-8">
-          <p className="text-center text-sm font-semibold leading-[2] tracking-[0.03em] text-[#8c8c8c]">コレクション進捗</p>
-          <div className="mt-2 flex items-end justify-center gap-4 sm:gap-6">
-            <p className="text-[4.4rem] font-semibold leading-none tracking-[-0.05em] text-[#071b3a] sm:text-[6rem]">{completion.eaten}<span className="mx-1 text-[#c8c8c8]">/</span>{completion.total}</p>
-            <p className="pb-2 text-[2.8rem] font-semibold leading-none text-[#0057b8] sm:text-[4rem]">{completion.rate}%</p>
-          </div>
-          <div className="mx-auto mt-5 h-1.5 max-w-[620px] overflow-hidden rounded-full bg-[#e6e6e6]">
-            <div
-              className="h-full rounded-full bg-[linear-gradient(90deg,#0057b8_0%,#fdbb30_100%)]"
-              style={{ width: `${completion.rate}%` }}
-            />
-          </div>
-          <div className="mx-auto mt-5 grid max-w-[620px] grid-cols-3 divide-x divide-[#e6e6e6] text-center">
-            <ProgressMini label="残り" value={`${remaining}品`} />
-            <ProgressMini label="達成率" value={`${completion.rate}%`} />
-            <ProgressMini label="次の目標" value={nextGoal} />
-          </div>
-        </div>
-
-        <div className="mx-auto mt-7 max-w-[620px] overflow-hidden rounded-[1.15rem] bg-[#f8f7f6] ring-1 ring-[#e6e6e6]">
-          <Image
-            src="/hero/unicole-collection-hero.png"
-            alt=""
-            width={1680}
-            height={945}
-            priority
-            unoptimized
-            className="animate-hero-collection-drift aspect-[16/5] h-auto w-full select-none object-cover opacity-90"
-            aria-hidden="true"
-          />
         </div>
       </div>
     </section>
@@ -94,24 +101,24 @@ export function HomeActiveFoodCollection({ foods }: { foods: FoodWithRelations[]
   if (activeFoods.length === 0) return null;
 
   return (
-    <section className="space-y-5">
+    <section className="space-y-4">
       <div className="flex items-end justify-between gap-3">
         <div>
-          <h2 className="text-[1.55rem] font-semibold leading-[1.7] tracking-[0.02em] text-[#1b1b1b] sm:text-[1.875rem] sm:leading-[1.8]">今集められるフード</h2>
-          <p className="text-base font-medium leading-[2] text-[#64748b]">販売中のフードから、写真でコレクションを選べます。</p>
+          <p className="text-[11px] font-black tracking-[0.16em] text-[#0057b8]">販売中フード</p>
+          <h2 className="mt-1 text-xl font-black text-ink">今集められるフード</h2>
         </div>
-        <Link href="/foods" className="shrink-0 text-sm font-semibold leading-[2] text-[#0057b8]">すべて見る</Link>
+        <Link href="/foods" className="shrink-0 text-xs font-black text-park">すべて見る</Link>
       </div>
-      <div className="grid grid-cols-2 gap-x-3 gap-y-5 sm:grid-cols-3 sm:gap-x-4 lg:grid-cols-6">
+      <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
         {activeFoods.map((food) => (
           <Link key={food.id} href={`/foods/${food.id}`} className="group min-w-0">
-            <div className="aspect-[4/5] overflow-hidden rounded-[1rem] bg-[#f0f2f4] ring-1 ring-[#e6e6e6]">
+            <div className="aspect-[4/5] overflow-hidden rounded-[1.15rem] bg-slate-100 ring-1 ring-slate-200/60">
               <FoodImage food={food} className="h-full w-full transition duration-300 group-hover:scale-105" />
             </div>
             <div className="mt-2 space-y-1">
-              <p className="line-clamp-2 min-h-10 text-sm font-semibold leading-[1.55] text-[#1b1b1b]">{food.name}</p>
-              <p className="text-xs font-semibold leading-[1.8] text-[#0057b8]">{formatFoodPrice(food)}</p>
-              <p className="line-clamp-1 text-xs font-medium leading-[1.7] text-[#64748b]">{getFoodAreaSummary(food)}</p>
+              <p className="line-clamp-2 min-h-9 text-xs font-black leading-[1.45] text-ink">{food.name}</p>
+              <p className="text-[11px] font-black text-[#0057b8]">{formatFoodPrice(food)}</p>
+              <p className="line-clamp-1 text-[11px] font-bold text-slate-500">{getFoodAreaSummary(food)}</p>
             </div>
           </Link>
         ))}
@@ -127,13 +134,13 @@ export function HomeAnniversaryProgress({ foods }: { foods: FoodWithRelations[] 
   if (anniversaryFoods.length === 0) return null;
 
   return (
-    <section className="space-y-5">
+    <section className="space-y-4">
       <div className="flex items-start justify-between gap-3">
         <div className="min-w-0">
-          <h2 className="text-[1.55rem] font-semibold leading-[1.7] tracking-[0.02em] text-[#1b1b1b] sm:text-[1.875rem] sm:leading-[1.8]">25thアニバーサリー</h2>
-          <p className="text-base font-medium leading-[2] text-[#64748b]">対象フードだけを集めた小さな特集です。</p>
+          <p className="text-[11px] font-black tracking-[0.16em] text-sun">25thコレクション</p>
+          <h2 className="mt-1 text-xl font-black text-ink">25thアニバーサリー</h2>
         </div>
-        <Link href="/foods?q=25%E5%91%A8%E5%B9%B4" className="shrink-0 rounded-full border border-[#d9dde3] bg-white px-4 py-2 text-sm font-semibold text-[#071b3a] transition active:scale-95 md:hover:border-[#0057b8]">
+        <Link href="/foods?q=25%E5%91%A8%E5%B9%B4" className="shrink-0 rounded-full bg-ink px-4 py-2 text-xs font-black text-white active:scale-95">
           25th商品を見る
         </Link>
       </div>
@@ -146,12 +153,12 @@ export function HomeAnniversaryProgress({ foods }: { foods: FoodWithRelations[] 
               href={`/foods/${food.id}`}
               className="w-[158px] shrink-0 transition active:scale-[0.99] md:hover:-translate-y-0.5"
             >
-              <div className="aspect-[4/3] overflow-hidden rounded-[1rem] bg-[#f0f2f4]">
+              <div className="aspect-[4/3] overflow-hidden rounded-[1.25rem] bg-slate-100">
                 <FoodImage food={food} className="h-full w-full" />
               </div>
               <div className="mt-2 space-y-1">
-                <p className="line-clamp-2 min-h-10 text-sm font-semibold leading-[1.55] text-[#1b1b1b]">{food.name}</p>
-                <p className="text-xs font-medium leading-[1.8] text-[#64748b]">{eaten ? "食べた" : "残り"} / {getSaleStatusLabel(food)}</p>
+                <p className="line-clamp-2 min-h-9 text-xs font-black leading-[1.45] text-ink">{food.name}</p>
+                <p className="text-[11px] font-black text-slate-500">{eaten ? "食べた" : "残り"} / {getSaleStatusLabel(food)}</p>
               </div>
             </Link>
           );
@@ -168,7 +175,7 @@ export function HomeProgressStatusClient({ foodIds, total, archiveTotal }: { foo
   const remainingCount = Math.max(total - eatenCount, 0);
 
   return (
-    <section className="border-y border-[#e6e6e6] bg-white/55 px-3 py-2.5">
+    <section className="rounded-2xl border border-white/80 bg-white/90 px-3 py-2.5 shadow-[0_10px_28px_rgba(31,41,55,0.06)]">
       <div className="flex gap-2 overflow-x-auto [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
         <StatusMini label="販売中GET" value={`${eatenCount}/${total}件`} />
         <StatusMini label="現在コンプ" value={`${completionRate}%`} />
@@ -181,9 +188,9 @@ export function HomeProgressStatusClient({ foodIds, total, archiveTotal }: { foo
 
 function ProgressMini({ label, value }: { label: string; value: string }) {
   return (
-    <div className="min-w-0 px-2">
-      <p className="text-xs font-semibold leading-[2] text-[#8c8c8c]">{label}</p>
-      <p className="truncate text-base font-semibold leading-[1.8] text-[#1b1b1b]">{value}</p>
+    <div className="min-w-0 rounded-2xl bg-white/9 px-2.5 py-2 ring-1 ring-white/12">
+      <p className="text-[10px] font-black text-white/46">{label}</p>
+      <p className="mt-0.5 truncate text-sm font-black text-white">{value}</p>
     </div>
   );
 }
@@ -234,9 +241,9 @@ function scoreHomeFood(food: FoodWithRelations) {
 
 function StatusMini({ label, value }: { label: string; value: string }) {
   return (
-    <span className="inline-flex min-w-[132px] shrink-0 items-center justify-between gap-2 rounded-full bg-white/70 px-3 py-2 text-xs font-semibold leading-[1.8] text-[#64748b] ring-1 ring-[#e6e6e6]">
+    <span className="inline-flex min-w-[132px] shrink-0 items-center justify-between gap-2 rounded-full bg-white/70 px-3 py-2 text-xs font-black text-slate-500 ring-1 ring-slate-200/60">
       {label}
-      <strong className="text-[#1b1b1b]">{value}</strong>
+      <strong className="text-ink">{value}</strong>
     </span>
   );
 }
