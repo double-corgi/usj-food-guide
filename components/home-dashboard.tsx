@@ -13,18 +13,18 @@ type HomeDashboardProps = {
 
 export function HomeDashboard({ foods, areas = [] }: HomeDashboardProps) {
   return (
-    <main className="min-h-screen overflow-x-hidden bg-[#f6f8fa] pb-32 text-ink">
-      <div className="mx-auto flex w-full min-w-0 max-w-[1080px] flex-col gap-8 px-4 pb-4 pt-2 sm:px-6 sm:gap-10 sm:py-6 lg:px-8">
+    <main className="min-h-screen overflow-x-hidden bg-[#f8f7f4] pb-32 text-ink">
+      <div className="mx-auto flex w-full min-w-0 max-w-[1080px] flex-col gap-12 px-4 pb-4 pt-2 sm:gap-16 sm:px-6 sm:py-8 lg:px-8">
         <HomeCollectionHero foods={foods} />
 
-        <section className="space-y-10" aria-label="ホーム">
+        <section className="space-y-16 sm:space-y-20" aria-label="ホーム">
           <HomeActiveFoodCollection foods={foods} />
-          <section className="space-y-4">
+          <section className="space-y-5">
             <div className="flex items-end justify-between gap-3">
               <div>
-                <h2 className="text-lg font-black text-ink">エリア一覧</h2>
+                <h2 className="text-[1.55rem] font-semibold leading-[1.7] tracking-[0.02em] text-[#1b1b1b] sm:text-[1.875rem] sm:leading-[1.8]">エリア</h2>
               </div>
-              <Link href="/areas" className="shrink-0 text-xs font-black text-park">全エリア</Link>
+              <Link href="/areas" className="shrink-0 text-sm font-semibold leading-[2] text-[#0057b8]">すべて見る</Link>
             </div>
             <AreaOverview areas={areas} foods={foods} />
           </section>
@@ -40,13 +40,13 @@ export function HomeDashboard({ foods, areas = [] }: HomeDashboardProps) {
 
 function StoresEntryCard() {
   return (
-    <section className="border-t border-slate-200/80 pt-7">
+    <section className="border-t border-[#e6e6e6] pt-8 sm:pt-10">
       <div className="flex items-center justify-between gap-4">
         <div className="min-w-0">
-          <h2 className="text-xl font-black text-ink">店舗から探す</h2>
-          <p className="mt-1 text-sm font-bold text-slate-500">レストランやカートから買えるフードを確認できます。</p>
+          <h2 className="text-[1.55rem] font-semibold leading-[1.7] tracking-[0.02em] text-[#1b1b1b] sm:text-[1.875rem] sm:leading-[1.8]">店舗</h2>
+          <p className="mt-1 text-base font-medium leading-[2] text-[#64748b]">レストランやカートから、買えるフードを探せます。</p>
         </div>
-        <Link href="/stores" className="inline-flex h-11 shrink-0 items-center justify-center rounded-full border border-slate-200 bg-white px-5 text-sm font-black text-ink active:scale-[0.98]">
+        <Link href="/stores" className="inline-flex h-11 shrink-0 items-center justify-center rounded-full border border-[#d9dde3] bg-white px-5 text-sm font-semibold text-[#071b3a] transition active:scale-[0.98] md:hover:border-[#0057b8]">
           店舗
         </Link>
       </div>
@@ -56,13 +56,13 @@ function StoresEntryCard() {
 
 function FoodRequestPrompt() {
   return (
-    <section className="border-t border-slate-200/70 pt-6">
+    <section className="border-t border-[#e6e6e6] pt-7">
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div className="min-w-0">
-          <p className="text-sm font-black text-ink">掲載されていない商品を見つけた？</p>
-          <p className="mt-1 text-xs font-bold leading-5 text-slate-500">図鑑を完成させるための情報提供はこちら。</p>
+          <p className="text-base font-semibold leading-[1.8] text-[#1b1b1b]">掲載されていない商品を見つけた？</p>
+          <p className="mt-1 text-sm font-medium leading-[2] text-[#64748b]">図鑑を完成させるための情報提供はこちら。</p>
         </div>
-        <a href={REQUEST_FORM_URL} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-10 shrink-0 items-center justify-center rounded-full border border-slate-200 bg-white px-4 text-xs font-black text-ink active:scale-[0.98]">
+        <a href={REQUEST_FORM_URL} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-10 shrink-0 items-center justify-center rounded-full border border-[#d9dde3] bg-white px-4 text-sm font-semibold text-[#071b3a] transition active:scale-[0.98] md:hover:border-[#0057b8]">
           情報提供する
         </a>
       </div>
@@ -72,13 +72,13 @@ function FoodRequestPrompt() {
 
 function ExploreAllCard({ total }: { total: number }) {
   return (
-    <section className="border-t border-slate-200/80 pt-7">
+    <section className="border-t border-[#e6e6e6] pt-8 sm:pt-10">
       <div className="flex items-center justify-between gap-4">
         <div className="min-w-0">
-          <h2 className="text-xl font-black text-ink">全商品を見る</h2>
-          <p className="mt-1 text-sm font-bold text-slate-500">図鑑に登録された{total}種類を写真で探せます。</p>
+          <h2 className="text-[1.55rem] font-semibold leading-[1.7] tracking-[0.02em] text-[#1b1b1b] sm:text-[1.875rem] sm:leading-[1.8]">全商品を見る</h2>
+          <p className="mt-1 text-base font-medium leading-[2] text-[#64748b]">図鑑に登録された{total}種類を写真で探せます。</p>
         </div>
-        <Link href="/foods" className="inline-flex h-12 shrink-0 items-center justify-center rounded-full bg-ink px-5 text-sm font-black text-white shadow-sm active:scale-[0.98]">
+        <Link href="/foods" className="inline-flex h-12 shrink-0 items-center justify-center rounded-full bg-[#071b3a] px-5 text-sm font-semibold text-white transition active:scale-[0.98] md:hover:bg-[#0057b8]">
           探す
         </Link>
       </div>
