@@ -40,64 +40,56 @@ export function HomeCollectionHero({ foods }: { foods: FoodWithRelations[] }) {
   const { logs } = useFoodLogs();
   const completion = calculateCompletion(foods, logs);
   const remaining = Math.max(completion.total - completion.eaten, 0);
+  const nextGoal = getNextGoal(completion.eaten, completion.total);
 
   return (
     <section className="pt-0">
-      <div className="mx-auto grid max-w-[1120px] gap-5 lg:grid-cols-[minmax(0,1.1fr)_minmax(340px,0.9fr)] lg:items-center lg:gap-8">
-        <div className="relative mx-auto w-full max-w-[980px] overflow-hidden rounded-[1.25rem] bg-[#f8d58b] shadow-[0_18px_54px_rgba(7,27,58,0.12)] ring-1 ring-white/90 sm:rounded-[1.75rem]">
-          <Image
-            src="/hero/unicole-collection-hero.png"
-            alt=""
-            width={1680}
-            height={945}
-            priority
-            unoptimized
-            className="animate-hero-collection-drift aspect-[16/9] h-auto w-full select-none object-cover"
-            aria-hidden="true"
-          />
-          <div
-            className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_30%_12%,rgba(255,255,255,0.22),transparent_36%),linear-gradient(180deg,rgba(255,255,255,0)_0%,rgba(7,27,58,0.06)_100%)]"
-            aria-hidden
-          />
-        </div>
+      <div className="relative isolate mx-auto overflow-hidden rounded-[1.35rem] bg-[#071b3a] px-4 py-4 text-white shadow-[0_18px_46px_rgba(7,27,58,0.18)] ring-1 ring-[#fdbb30]/35 sm:rounded-[1.85rem] sm:px-6 sm:py-5 lg:px-7">
+        <Image
+          src="/hero/unicole-collection-hero.png"
+          alt=""
+          width={1680}
+          height={945}
+          priority
+          unoptimized
+          className="animate-hero-collection-drift pointer-events-none absolute inset-0 -z-10 h-full w-full select-none object-cover opacity-20 mix-blend-screen md:inset-y-0 md:left-auto md:right-0 md:w-[58%] md:opacity-30"
+          aria-hidden="true"
+        />
+        <div
+          className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(circle_at_84%_18%,rgba(253,187,48,0.28),transparent_30%),linear-gradient(90deg,rgba(7,27,58,0.98)_0%,rgba(7,27,58,0.9)_54%,rgba(7,27,58,0.62)_100%)]"
+          aria-hidden
+        />
 
-        <div className="mx-auto max-w-[640px] space-y-5 text-center lg:mx-0 lg:max-w-none lg:text-left">
-          <div className="mx-auto max-w-[560px] rounded-[1.45rem] bg-white/94 p-4 text-left shadow-[0_20px_54px_rgba(7,27,58,0.09)] ring-1 ring-[#f6b73c]/35 sm:p-5">
-            <div className="flex items-end justify-between gap-4">
-              <div className="text-left">
-                <p className="text-xs font-black text-slate-500">コレクション進捗</p>
-                <p className="mt-1 text-5xl font-black tracking-tight text-[#071b3a] sm:text-6xl">{completion.eaten} / {completion.total}</p>
-              </div>
-              <div className="text-right">
-                <p className="text-5xl font-black leading-none text-[#0057b8] sm:text-6xl">{completion.rate}%</p>
-                <p className="mt-1 text-xs font-black text-slate-500">残り {remaining}品</p>
-              </div>
+        <div className="max-w-[760px]">
+          <div className="flex items-center justify-between gap-3">
+            <div className="min-w-0">
+              <p className="text-[1.45rem] font-black leading-none tracking-[-0.01em] text-white sm:text-[1.75rem]">{appBrand.shortName}</p>
             </div>
-            <div className="mt-4 h-3 overflow-hidden rounded-full bg-[#e5e7eb]">
+            <span className="shrink-0 rounded-full bg-white/10 px-3 py-1.5 text-[11px] font-black text-[#fdbb30] ring-1 ring-white/15">COLLECTION</span>
+          </div>
+
+          <div className="mt-5">
+            <p className="text-xs font-black text-white/66">コレクション進捗</p>
+            <div className="mt-1 flex items-end justify-between gap-4">
+              <p className="text-[3.7rem] font-black leading-none tracking-[-0.06em] text-white sm:text-[5.2rem]">{completion.eaten}<span className="mx-1 text-white/36">/</span>{completion.total}</p>
+              <p className="pb-1 text-right text-[2.8rem] font-black leading-none text-[#fdbb30] sm:text-[4.2rem]">{completion.rate}%</p>
+            </div>
+            <div className="mt-3 h-3 overflow-hidden rounded-full bg-white/18">
               <div
-                className="h-full rounded-full bg-[linear-gradient(90deg,#0057b8_0%,#0a6bdc_46%,#fdbb30_100%)] shadow-[0_0_18px_rgba(253,187,48,0.36)]"
+                className="h-full rounded-full bg-[linear-gradient(90deg,#fdbb30_0%,#ffe29a_52%,#ffffff_100%)] shadow-[0_0_22px_rgba(253,187,48,0.46)]"
                 style={{ width: `${completion.rate}%` }}
               />
             </div>
-            <div className="mt-3 flex items-center justify-between text-[11px] font-black text-slate-400">
-              <span>食べた記録</span>
-              <span>達成率</span>
-              <span>残り</span>
+            <div className="mt-3 grid grid-cols-3 gap-2 text-center">
+              <ProgressMini label="残り" value={`${remaining}品`} />
+              <ProgressMini label="達成率" value={`${completion.rate}%`} />
+              <ProgressMini label="次の目標" value={nextGoal} />
             </div>
           </div>
 
-          <div className="space-y-2">
-            <div className="inline-flex flex-col items-center lg:items-start">
-              <h1 className="select-none text-[1.45rem] font-extrabold leading-none tracking-[-0.01em] text-[#071b3a] sm:text-[1.75rem] lg:text-[2rem]">
-                {appBrand.shortName}
-              </h1>
-              <span className="mt-2 h-0.5 w-10 rounded-full bg-[linear-gradient(90deg,#0057b8,#c08a24,#f6b73c)] sm:w-14" aria-hidden />
-            </div>
-            <p className="text-xs font-black leading-5 text-slate-700 sm:text-sm">{appBrand.tagline}</p>
-            <p className="mx-auto max-w-md whitespace-pre-line text-sm font-bold leading-7 text-slate-500 lg:mx-0">
-              {"ユニバ（USJ）フードを写真で集めて、\n食べた記録をコレクションとして残せます。"}
-            </p>
-          </div>
+          <p className="mt-4 max-w-[520px] whitespace-pre-line text-xs font-bold leading-5 text-white/64 sm:text-sm sm:leading-6">
+            {"ユニバ（USJ）フードを写真で集めて、\n食べた記録をコレクションとして残せます。"}
+          </p>
         </div>
       </div>
     </section>
@@ -192,6 +184,22 @@ export function HomeProgressStatusClient({ foodIds, total, archiveTotal }: { foo
       </div>
     </section>
   );
+}
+
+function ProgressMini({ label, value }: { label: string; value: string }) {
+  return (
+    <div className="min-w-0 rounded-2xl bg-white/9 px-2.5 py-2 ring-1 ring-white/12">
+      <p className="text-[10px] font-black text-white/46">{label}</p>
+      <p className="mt-0.5 truncate text-sm font-black text-white">{value}</p>
+    </div>
+  );
+}
+
+function getNextGoal(eaten: number, total: number) {
+  const milestones = [5, 10, 25, 50, 100, 150, total].filter((value, index, values) => value > 0 && values.indexOf(value) === index);
+  const next = milestones.find((milestone) => eaten < milestone);
+  if (!next) return "達成済み";
+  return `あと${next - eaten}品`;
 }
 
 function is25thFood(food: FoodWithRelations) {
