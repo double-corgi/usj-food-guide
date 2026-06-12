@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import {
   calculateArchiveRecordRate,
@@ -40,76 +41,48 @@ export function HomeCollectionHero({ foods }: { foods: FoodWithRelations[] }) {
   const completion = calculateCompletion(foods, logs);
   const remaining = Math.max(completion.total - completion.eaten, 0);
   const nextGoal = getNextGoal(completion.eaten, completion.total);
-  const previewFoods = pickActiveCollectionFoods(foods).slice(0, 4);
 
   return (
-    <section className="pt-1">
-      <div className="relative mx-auto max-w-[980px] overflow-hidden rounded-[1.55rem] bg-[#fff7e8] px-4 py-4 ring-1 ring-[#efd9a9] sm:rounded-[2rem] sm:px-7 sm:py-6">
-        <div className="pointer-events-none absolute -right-20 -top-24 h-56 w-56 rounded-full bg-[#0057b8]/10 blur-2xl" aria-hidden />
-        <div className="pointer-events-none absolute -bottom-28 -left-20 h-64 w-64 rounded-full bg-[#fdbb30]/25 blur-3xl" aria-hidden />
-        <div
-          className="pointer-events-none absolute inset-0 opacity-[0.34] [background-image:radial-gradient(#f0c465_1px,transparent_1px)] [background-size:18px_18px]"
-          aria-hidden
-        />
+    <section className="pt-2">
+      <div className="mx-auto max-w-[880px]">
+        <div className="text-center">
+          <h1 className="text-[30px] font-semibold leading-[1.8] tracking-[0.03em] text-[#1b1b1b]">{appBrand.shortName}</h1>
+          <p className="mx-auto max-w-[520px] text-base font-medium leading-[2] text-[#3c3c3c]">
+            食べた記録が、<br className="sm:hidden" />
+            そのままコレクションになる。
+          </p>
+        </div>
 
-        <div className="relative z-10">
-          <div className="flex items-center justify-between gap-3">
-            <div className="flex min-w-0 items-center gap-3">
-              <div className="relative h-10 w-10 shrink-0 overflow-hidden rounded-2xl bg-[#0057b8] shadow-[inset_0_0_0_2px_rgba(253,187,48,0.62)] ring-1 ring-[#d8b56d]/50" aria-hidden="true">
-                <div className="absolute inset-[7px] rounded-full border border-white/75" />
-                <div className="absolute left-[13px] top-[9px] h-[22px] w-[4px] rotate-[-24deg] rounded-full bg-white shadow-[0_0_0_1px_rgba(253,187,48,0.35)]" />
-                <div className="absolute right-[13px] top-[9px] h-[22px] w-[4px] rotate-[24deg] rounded-full bg-white shadow-[0_0_0_1px_rgba(253,187,48,0.35)]" />
-              </div>
-              <div className="min-w-0">
-                <h1 className="text-[1.35rem] font-semibold leading-[1.2] tracking-[0.02em] text-[#071b3a] sm:text-[1.55rem]">{appBrand.shortName}</h1>
-                <p className="mt-0.5 text-xs font-semibold leading-[1.7] text-[#7b6a44] sm:text-sm">食べた記録が、そのままコレクションになる。</p>
-              </div>
-            </div>
-            <div className="hidden shrink-0 rounded-full border border-[#d8b56d]/70 bg-white/70 px-3 py-1 text-xs font-semibold text-[#8a6418] sm:block">
-              図鑑ホーム
-            </div>
+        <div className="mt-7 border-y border-[#e6e6e6] py-6 sm:mt-9 sm:py-8">
+          <p className="text-center text-sm font-semibold leading-[2] tracking-[0.03em] text-[#8c8c8c]">コレクション進捗</p>
+          <div className="mt-2 flex items-end justify-center gap-4 sm:gap-6">
+            <p className="text-[4.4rem] font-semibold leading-none tracking-[-0.05em] text-[#071b3a] sm:text-[6rem]">{completion.eaten}<span className="mx-1 text-[#c8c8c8]">/</span>{completion.total}</p>
+            <p className="pb-2 text-[2.8rem] font-semibold leading-none text-[#0057b8] sm:text-[4rem]">{completion.rate}%</p>
           </div>
-
-          <div className="mt-5 grid gap-4 lg:grid-cols-[1.1fr_0.9fr] lg:items-end">
-            <div>
-              <p className="text-sm font-semibold leading-[1.8] text-[#6f7f96]">現在販売中コレクション</p>
-              <div className="mt-1 flex items-end gap-2">
-                <span className="pb-3 text-lg font-semibold leading-none text-[#071b3a]">残り</span>
-                <strong className="text-[4.9rem] font-semibold leading-none tracking-[-0.07em] text-[#071b3a] sm:text-[6.4rem]">{remaining}</strong>
-                <span className="pb-3 text-lg font-semibold leading-none text-[#071b3a]">品</span>
-              </div>
-              <div className="mt-3 flex items-center justify-between gap-4">
-                <p className="text-base font-semibold leading-[1.6] text-[#071b3a]">
-                  {completion.eaten}<span className="mx-1 text-[#a3a3a3]">/</span>{completion.total}
-                </p>
-                <p className="text-base font-semibold leading-[1.6] text-[#0057b8]">達成率 {completion.rate}%</p>
-              </div>
-              <div className="mt-2 h-3 overflow-hidden rounded-full bg-white/70 ring-1 ring-[#ead9b2]">
-                <div
-                  className="h-full rounded-full bg-[linear-gradient(90deg,#0057b8_0%,#1b74d8_55%,#fdbb30_100%)] shadow-[0_0_16px_rgba(253,187,48,0.24)]"
-                  style={{ width: `${completion.rate}%` }}
-                />
-              </div>
-              <div className="mt-3 inline-flex rounded-full bg-[#071b3a] px-4 py-2 text-sm font-semibold leading-[1.6] text-white shadow-[0_10px_26px_rgba(7,27,58,0.16)]">
-                {nextGoal}
-              </div>
-            </div>
-
-            <div className="rounded-[1.25rem] border border-white/70 bg-white/65 p-3 backdrop-blur-sm">
-              <div className="mb-2 flex items-center justify-between gap-3">
-                <p className="text-xs font-semibold leading-[1.7] text-[#7b6a44]">今開けられるコレクション</p>
-                <p className="text-xs font-semibold leading-[1.7] text-[#0057b8]">{previewFoods.length}品</p>
-              </div>
-              <div className="grid grid-cols-5 gap-2">
-                {previewFoods.map((food, index) => (
-                  <CollectionSlot key={food.id} food={food} index={index} />
-                ))}
-                <div className="flex aspect-square items-center justify-center rounded-2xl border border-dashed border-[#d7c6a1] bg-[#fffaf0]/80 text-lg font-semibold text-[#b8953c]">
-                  ?
-                </div>
-              </div>
-            </div>
+          <div className="mx-auto mt-5 h-1.5 max-w-[620px] overflow-hidden rounded-full bg-[#e6e6e6]">
+            <div
+              className="h-full rounded-full bg-[linear-gradient(90deg,#0057b8_0%,#fdbb30_100%)]"
+              style={{ width: `${completion.rate}%` }}
+            />
           </div>
+          <div className="mx-auto mt-5 grid max-w-[620px] grid-cols-3 divide-x divide-[#e6e6e6] text-center">
+            <ProgressMini label="残り" value={`${remaining}品`} />
+            <ProgressMini label="達成率" value={`${completion.rate}%`} />
+            <ProgressMini label="次の目標" value={nextGoal} />
+          </div>
+        </div>
+
+        <div className="mx-auto mt-7 max-w-[620px] overflow-hidden rounded-[1.15rem] bg-[#f8f7f6] ring-1 ring-[#e6e6e6]">
+          <Image
+            src="/hero/unicole-collection-hero.png"
+            alt=""
+            width={1680}
+            height={945}
+            priority
+            unoptimized
+            className="animate-hero-collection-drift aspect-[16/5] h-auto w-full select-none object-cover opacity-90"
+            aria-hidden="true"
+          />
         </div>
       </div>
     </section>
@@ -206,22 +179,20 @@ export function HomeProgressStatusClient({ foodIds, total, archiveTotal }: { foo
   );
 }
 
+function ProgressMini({ label, value }: { label: string; value: string }) {
+  return (
+    <div className="min-w-0 px-2">
+      <p className="text-xs font-semibold leading-[2] text-[#8c8c8c]">{label}</p>
+      <p className="truncate text-base font-semibold leading-[1.8] text-[#1b1b1b]">{value}</p>
+    </div>
+  );
+}
+
 function getNextGoal(eaten: number, total: number) {
   const milestones = [5, 10, 25, 50, 100, 150, total].filter((value, index, values) => value > 0 && values.indexOf(value) === index);
   const next = milestones.find((milestone) => eaten < milestone);
-  if (!next) return "現在販売中フードを達成済み";
-  return `${next}品達成まであと${next - eaten}品`;
-}
-
-function CollectionSlot({ food, index }: { food: FoodWithRelations; index: number }) {
-  return (
-    <div className="relative aspect-square overflow-hidden rounded-2xl bg-white ring-1 ring-[#ead9b2]">
-      <FoodImage food={food} eager={index === 0} className="h-full w-full" />
-      <span className="absolute left-1 top-1 inline-flex h-5 min-w-5 items-center justify-center rounded-full bg-[#071b3a]/88 px-1 text-[10px] font-semibold text-white">
-        {index + 1}
-      </span>
-    </div>
-  );
+  if (!next) return "達成済み";
+  return `あと${next - eaten}品`;
 }
 
 function is25thFood(food: FoodWithRelations) {
