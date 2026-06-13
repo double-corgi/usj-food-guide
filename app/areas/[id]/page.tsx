@@ -1,15 +1,17 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { ChevronLeft, MapPin, Sparkles, Store, Utensils } from "lucide-react";
-import { FoodGrid } from "@/components/food-grid";
+import { ChevronDown, ChevronLeft } from "lucide-react";
 import { FoodImage } from "@/components/food-image";
 import { AreaCollectionSummary } from "@/components/area-collection-summary";
 import { AreaEatenFoods } from "@/components/area-eaten-foods";
 import { AreaFoodStatusLists } from "@/components/area-food-status-lists";
+import { getAreaImageByName } from "@/lib/area-images";
+import { shopTypeLabels } from "@/lib/constants";
 import { dedupeFoodsByCanonical, foodMatchesArea, formatFoodPrice, getRemainingDays, getSaleUrgencyLabel, isEndingSoon } from "@/lib/food-utils";
 import { rankFoodsByStrategy } from "@/lib/food-value-score";
 import { listFoods } from "@/lib/repositories/foods";
 import { listAreas } from "@/lib/repositories/areas";
+import type { FoodLocation, FoodWithRelations, ShopType } from "@/types/domain";
 
 export const revalidate = 3600;
 
@@ -26,114 +28,174 @@ export default async function AreaDetailPage({ params }: { params: Promise<{ id:
 
   const areaFoods = foods.filter((food) => foodMatchesArea(food, area.id, area.name));
   const canonicalAreaFoods = dedupeFoodsByCanonical(areaFoods);
-  const limited = canonicalAreaFoods.filter((food) => food.isLimited).length;
-  const foodCart = canonicalAreaFoods.filter((food) => food.diningType === "food_cart" || food.locations?.some((location) => location.shopType === "cart" || location.shopType === "wagon")).length;
-  const shops = Array.from(new Set(areaFoods.flatMap((food) => food.locations?.map((location) => location.shopName) ?? [food.shop.name]))).filter(Boolean);
+  const areaImage = getAreaImageByName(area.name);
+  const shops = buildAreaShopRows(areaFoods);
   const firstBites = rankFoodsByStrategy(canonicalAreaFoods, "first-visit", [], 3);
   const endingSoonFoods = [...canonicalAreaFoods]
     .filter((food) => isEndingSoon(food, 30))
     .sort((a, b) => (getRemainingDays(a) ?? Number.MAX_SAFE_INTEGER) - (getRemainingDays(b) ?? Number.MAX_SAFE_INTEGER) || a.name.localeCompare(b.name, "ja"))
     .slice(0, 3);
   return (
-    <div className="space-y-6">
-      <Link href="/areas" className="inline-flex min-h-10 items-center gap-2 rounded-lg border border-slate-200 bg-white px-3 text-sm font-black text-slate-700 shadow-soft">
-        <ChevronLeft size={17} aria-hidden />
-        エリア一覧へ戻る
-      </Link>
+    <div className="area-detail-page -mx-4 bg-[#fffaf5] px-4 pb-28 sm:-mx-6 sm:px-6 lg:mx-0 lg:px-0">
+      <div className="mx-auto max-w-[1080px] space-y-10">
+        <Link href="/areas" className="inline-flex items-center gap-2 text-sm font-black text-[#071b3a]">
+          <ChevronLeft size={17} aria-hidden />
+          エリア一覧へ戻る
+        </Link>
 
-      <section className="rounded-lg bg-ink p-5 text-white shadow-soft md:p-6">
-        <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
-          <div>
-            <p className="text-sm font-black text-mint">エリア別フード</p>
-            <h1 className="mt-1 text-3xl font-black md:text-4xl">{area.name}</h1>
-            <p className="mt-2 text-sm font-bold text-slate-200">エリアのフード、限定メニュー、販売場所をまとめて確認できます。</p>
-          </div>
-        </div>
-        <div className="mt-5">
+        <section className="space-y-5">
+          {areaImage ? (
+            <div className="relative -mx-4 h-[240px] overflow-hidden bg-[#efe1cd] sm:-mx-6 lg:mx-0 lg:h-[320px] lg:rounded-[2rem]">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={areaImage.image} alt="" className="h-full w-full object-cover" />
+              <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(2,8,23,0.02)_0%,rgba(2,8,23,0.24)_42%,rgba(2,8,23,0.86)_100%)]" />
+              <div className="absolute inset-x-0 bottom-0 p-5 text-white drop-shadow-[0_2px_10px_rgba(0,0,0,0.55)] sm:p-6">
+                <h1 className="max-w-[820px] text-3xl font-black leading-tight md:text-4xl">{area.name}</h1>
+              </div>
+            </div>
+          ) : (
+            <div className="border-y border-[#eadcc8] py-12">
+              <h1 className="text-3xl font-black leading-tight text-[#071b3a] md:text-4xl">{area.name}</h1>
+            </div>
+          )}
+
           <AreaCollectionSummary foods={areaFoods} allFoods={foods} />
-        </div>
-        <div className="mt-5 grid grid-cols-2 gap-3 md:grid-cols-4">
-          <AreaStat icon={Utensils} label="フード" value={canonicalAreaFoods.length} />
-          <AreaStat icon={Store} label="販売場所" value={shops.length} />
-          <AreaStat icon={Sparkles} label="期間限定" value={limited} />
-          <AreaStat icon={MapPin} label="カート販売" value={foodCart} />
-        </div>
-      </section>
-
-      {shops.length > 0 ? (
-        <section className="rounded-lg border border-slate-200 bg-white p-5 shadow-soft">
-          <h2 className="text-lg font-black text-ink">販売場所</h2>
-          <div className="mt-3 flex flex-wrap gap-2">
-            {shops.slice(0, 24).map((shop) => (
-              <span key={shop} className="rounded-full bg-slate-100 px-3 py-1 text-xs font-black text-slate-600">
-                {shop}
-              </span>
-            ))}
-            {shops.length > 24 ? <span className="rounded-full bg-mint px-3 py-1 text-xs font-black text-ink">ほか{shops.length - 24}か所</span> : null}
-          </div>
         </section>
-      ) : null}
 
-      <AreaEatenFoods foods={areaFoods} />
-
-      <AreaFoodStatusLists foods={areaFoods} />
-
-      {firstBites.length > 0 ? (
-        <section className="rounded-[1.5rem] border border-amber-100 bg-[linear-gradient(135deg,#fff8e1_0%,#ffffff_72%)] p-5 shadow-soft">
-          <p className="text-xs font-black text-amber-700">エリアの注目フード</p>
-          <h2 className="mt-1 text-xl font-black text-ink">注目フード3品</h2>
-          <div className="mt-4 grid gap-3 md:grid-cols-3">
-            {firstBites.map((food, index) => (
-              <Link key={food.id} href={`/foods/${food.id}`} className="grid grid-cols-[84px_1fr] gap-3 rounded-2xl bg-white p-2 shadow-sm transition active:scale-[0.99] hover:-translate-y-0.5">
-                <div className="relative h-[84px] overflow-hidden rounded-xl bg-slate-100">
-                  <FoodImage food={food} className="h-full w-full" />
-                  <span className="absolute left-2 top-2 rounded-full bg-white/92 px-2 py-0.5 text-[10px] font-black text-park">#{index + 1}</span>
-                </div>
-                <div className="min-w-0 py-1">
-                  <p className="line-clamp-2 text-sm font-black leading-5 text-ink">{food.name}</p>
+        {firstBites.length > 0 ? (
+          <section className="space-y-4">
+            <div>
+              <h2 className="text-xl font-black text-ink">まず食べたい3品</h2>
+              <p className="mt-1 text-sm font-bold leading-6 text-slate-500">このエリアで見つけるならここから。</p>
+            </div>
+            <div className="flex snap-x gap-4 overflow-x-auto pb-2 [-ms-overflow-style:none] [scrollbar-width:none] lg:grid lg:grid-cols-3 lg:overflow-visible lg:pb-0 [&::-webkit-scrollbar]:hidden">
+              {firstBites.map((food) => (
+                <Link key={food.id} href={`/foods/${food.id}`} className="w-[74vw] max-w-[300px] shrink-0 snap-start transition active:scale-[0.99] lg:w-auto lg:max-w-none">
+                  <div className="aspect-[4/3] overflow-hidden rounded-[1.15rem] bg-[#f1e4d2]">
+                    <FoodImage food={food} className="h-full w-full" />
+                  </div>
+                  <p className="mt-3 line-clamp-2 min-h-11 text-sm font-black leading-[1.55] text-ink">{food.name}</p>
                   <p className="mt-1 text-sm font-black text-park">{formatFoodPrice(food)}</p>
-                  <p className="mt-1 text-[11px] font-bold text-slate-500">{food.isLimited ? "限定" : "エリア代表候補"}</p>
-                </div>
-              </Link>
-            ))}
-          </div>
-        </section>
-      ) : null}
+                </Link>
+              ))}
+            </div>
+          </section>
+        ) : null}
 
-      {endingSoonFoods.length > 0 ? (
-        <section className="rounded-[1.5rem] border border-rose-100 bg-[linear-gradient(135deg,#fff1f2_0%,#ffffff_72%)] p-5 shadow-soft">
-          <p className="text-xs font-black text-berry">終了間近</p>
-          <h2 className="mt-1 text-xl font-black text-ink">終了間近のフード</h2>
-          <p className="mt-1 text-sm font-bold text-slate-500">このエリアで逃しやすい商品を販売終了日が近い順に表示します。</p>
-          <div className="mt-4 grid gap-3 md:grid-cols-3">
-            {endingSoonFoods.map((food) => (
-              <Link key={food.id} href={`/foods/${food.id}`} className="grid grid-cols-[84px_1fr] gap-3 rounded-2xl bg-white p-2 shadow-sm transition active:scale-[0.99] hover:-translate-y-0.5">
-                <div className="relative h-[84px] overflow-hidden rounded-xl bg-slate-100">
-                  <FoodImage food={food} className="h-full w-full" />
-                  <span className="absolute left-2 top-2 rounded-full bg-berry px-2 py-0.5 text-[10px] font-black text-white">{getSaleUrgencyLabel(food) ?? "終了間近"}</span>
-                </div>
-                <div className="min-w-0 py-1">
-                  <p className="line-clamp-2 text-sm font-black leading-5 text-ink">{food.name}</p>
+        {endingSoonFoods.length > 0 ? (
+          <section className="space-y-4">
+            <h2 className="text-xl font-black text-ink">終了間近のフード</h2>
+            <p className="mt-1 text-sm font-bold text-slate-500">このエリアで逃しやすい商品を販売終了日が近い順に表示します。</p>
+            <div className="flex snap-x gap-4 overflow-x-auto pb-2 [-ms-overflow-style:none] [scrollbar-width:none] lg:grid lg:grid-cols-3 lg:overflow-visible lg:pb-0 [&::-webkit-scrollbar]:hidden">
+              {endingSoonFoods.map((food) => (
+                <Link key={food.id} href={`/foods/${food.id}`} className="w-[74vw] max-w-[300px] shrink-0 snap-start transition active:scale-[0.99] lg:w-auto lg:max-w-none">
+                  <div className="aspect-[4/3] overflow-hidden rounded-[1.15rem] bg-[#f1e4d2]">
+                    <FoodImage food={food} className="h-full w-full" />
+                  </div>
+                  <p className="mt-3 line-clamp-2 min-h-11 text-sm font-black leading-[1.55] text-ink">{food.name}</p>
                   <p className="mt-1 text-sm font-black text-park">{formatFoodPrice(food)}</p>
-                  <p className="mt-1 text-[11px] font-bold text-slate-500">残り{getRemainingDays(food) ?? "未確認"}日</p>
-                </div>
-              </Link>
-            ))}
-          </div>
-        </section>
-      ) : null}
+                  <p className="mt-1 text-[11px] font-bold text-slate-500">{getSaleUrgencyLabel(food) ?? `残り${getRemainingDays(food) ?? "未確認"}日`}</p>
+                </Link>
+              ))}
+            </div>
+          </section>
+        ) : null}
 
-      <FoodGrid foods={areaFoods} title={`${area.name}の残り・フード一覧`} initialAreaId={area.id} />
+        <AreaEatenFoods foods={areaFoods} />
+
+        <AreaFoodStatusLists foods={areaFoods} areaId={area.id} />
+
+        {shops.length > 0 ? <AreaShopList shops={shops} /> : null}
+      </div>
     </div>
   );
 }
 
-function AreaStat({ icon: Icon, label, value }: { icon: typeof Utensils; label: string; value: number }) {
+type AreaShopRow = {
+  key: string;
+  name: string;
+  type: ShopType;
+  href?: string;
+};
+
+function AreaShopList({ shops }: { shops: AreaShopRow[] }) {
+  const visible = shops.slice(0, 6);
+  const hidden = shops.slice(6);
   return (
-    <div className="rounded-lg bg-white/10 p-3">
-      <Icon size={18} aria-hidden />
-      <p className="mt-2 text-[11px] font-bold text-slate-300">{label}</p>
-      <p className="text-xl font-black">{value}</p>
-    </div>
+    <section className="space-y-4">
+      <div className="flex items-end justify-between gap-3 border-b border-[#eadcc8] pb-3">
+        <h2 className="text-xl font-black text-ink">販売場所</h2>
+        <p className="text-xs font-black text-slate-500">{shops.length}か所</p>
+      </div>
+      <div className="grid gap-0 lg:grid-cols-2 lg:gap-x-8">
+        {visible.map((shop) => (
+          <ShopRow key={shop.key} shop={shop} />
+        ))}
+      </div>
+      {hidden.length > 0 ? (
+        <details className="border-t border-[#eadcc8] pt-3">
+          <summary className="flex cursor-pointer list-none items-center justify-between gap-3 text-sm font-black text-park">
+            すべての販売場所を見る（あと{hidden.length}か所）
+            <ChevronDown size={15} aria-hidden />
+          </summary>
+          <div className="mt-3 grid gap-0 lg:grid-cols-2 lg:gap-x-8">
+            {hidden.map((shop) => (
+              <ShopRow key={shop.key} shop={shop} />
+            ))}
+          </div>
+        </details>
+      ) : null}
+    </section>
   );
+}
+
+function ShopRow({ shop }: { shop: AreaShopRow }) {
+  const content = (
+    <>
+      <span className="min-w-0 truncate text-sm font-black text-[#071b3a]">{shop.name}</span>
+      <span className="shrink-0 text-xs font-bold text-slate-500">{shopTypeLabels[shop.type] ?? "フード施設"}</span>
+    </>
+  );
+  const className = "flex min-h-12 items-center justify-between gap-4 border-b border-[#eadcc8]/80 py-3";
+  if (shop.href) {
+    return (
+      <Link href={shop.href} className={`${className} transition hover:text-park`}>
+        {content}
+      </Link>
+    );
+  }
+  return <div className={className}>{content}</div>;
+}
+
+function buildAreaShopRows(foods: FoodWithRelations[]) {
+  const rows = new Map<string, AreaShopRow>();
+  for (const food of foods) {
+    const locations = food.locations?.length ? food.locations : [foodToLocation(food)];
+    for (const location of locations) {
+      if (!isDisplayableShopName(location.shopName)) continue;
+      const key = location.shopId ?? `${location.shopName}-${location.shopType}`;
+      const current = rows.get(key);
+      const next = {
+        key,
+        name: location.shopName,
+        type: location.shopType,
+        href: location.shopId ? `/stores/${location.shopId}` : undefined
+      };
+      rows.set(key, current?.href ? current : next);
+    }
+  }
+  return Array.from(rows.values()).sort((a, b) => a.name.localeCompare(b.name, "ja"));
+}
+
+function foodToLocation(food: FoodWithRelations): Pick<FoodLocation, "shopId" | "shopName" | "shopType"> {
+  return {
+    shopId: food.shop.id,
+    shopName: food.shop.name,
+    shopType: food.shop.type
+  };
+}
+
+function isDisplayableShopName(name?: string | null) {
+  if (!name) return false;
+  return !/^(店舗未確認|エリア確認中|未確認|不明|unknown)$/i.test(name.trim());
 }

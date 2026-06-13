@@ -84,14 +84,26 @@ a {
   padding-top: max(env(safe-area-inset-top), 1rem);
 }
 
+.area-detail-page {
+  padding-top: max(env(safe-area-inset-top), 1rem);
+}
+
 @media (min-width: 640px) {
   .home-collection-hero {
+    padding-top: 1.25rem;
+  }
+
+  .area-detail-page {
     padding-top: 1.25rem;
   }
 }
 
 @media (min-width: 1024px) {
   .home-collection-hero {
+    padding-top: 2rem;
+  }
+
+  .area-detail-page {
     padding-top: 2rem;
   }
 }

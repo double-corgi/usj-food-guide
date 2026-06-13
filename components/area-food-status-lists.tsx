@@ -7,16 +7,14 @@ import {
   formatFoodPrice,
   getCanonicalFoodKey,
   getEatenCanonicalKeys,
-  getFoodAreaSummary,
   getSaleStatus,
-  getSaleStatusLabel,
   isCompletableFood
 } from "@/lib/food-utils";
 import { useFoodLogs } from "@/lib/use-food-logs";
 import type { FoodWithRelations } from "@/types/domain";
 import { FoodImage } from "@/components/food-image";
 
-export function AreaFoodStatusLists({ foods }: { foods: FoodWithRelations[] }) {
+export function AreaFoodStatusLists({ foods, areaId }: { foods: FoodWithRelations[]; areaId?: string }) {
   const { logs } = useFoodLogs();
   const canonicalFoods = dedupeFoodsByCanonical(foods);
   const eatenKeys = getEatenCanonicalKeys(foods, logs);
@@ -28,66 +26,56 @@ export function AreaFoodStatusLists({ foods }: { foods: FoodWithRelations[] }) {
     .sort((a, b) => (b.saleEndDate ?? b.endDate ?? "").localeCompare(a.saleEndDate ?? a.endDate ?? "") || a.name.localeCompare(b.name, "ja"));
 
   return (
-    <div className="grid gap-4">
-      <section id="area-missing-foods" className="scroll-mt-24 rounded-[1.5rem] border border-amber-100 bg-white p-5 shadow-soft">
+    <div className="grid gap-10">
+      <section id="area-missing-foods" className="scroll-mt-24 space-y-4">
         <div className="flex flex-wrap items-end justify-between gap-3">
           <div>
-            <p className="text-xs font-black uppercase tracking-[0.2em] text-amber-700">Missing Foods</p>
-            <h2 className="mt-1 text-xl font-black text-ink">このエリアの残りフード</h2>
+            <h2 className="text-xl font-black text-ink">残りのフード</h2>
           </div>
-          <p className="rounded-full bg-amber-50 px-3 py-1 text-xs font-black text-amber-700">{missingFoods.length}品</p>
+          {missingFoods.length > 0 ? <p className="rounded-full bg-[#fffaf5] px-3 py-1 text-xs font-black text-[#8a5b16] ring-1 ring-[#eadcc8]">あと{missingFoods.length}品</p> : null}
         </div>
-        <FoodList foods={missingFoods.slice(0, 12)} empty="現在販売中の残り商品はありません。" />
+        <FoodTileGrid foods={missingFoods.slice(0, 12)} empty="現在販売中の残り商品はありません。" />
         {missingFoods.length > 12 ? (
-          <Link href="/foods?sort=uneaten&sale=active" className="mt-4 inline-flex h-10 items-center justify-center rounded-full bg-ink px-4 text-xs font-black text-white">
-            さらに残りを探す
+          <Link href={`/foods?${new URLSearchParams({ ...(areaId ? { area: areaId } : {}), sale: "active", sort: "uneaten" }).toString()}`} className="inline-flex text-sm font-black text-park">
+            残りをすべて見る
           </Link>
         ) : null}
       </section>
 
-      <details className="rounded-[1.5rem] border border-slate-200 bg-white p-5 shadow-soft">
+      <details className="border-y border-[#eadcc8] py-4">
         <summary className="flex cursor-pointer list-none items-center justify-between gap-3">
-          <span>
-            <span className="block text-xs font-black uppercase tracking-[0.2em] text-slate-500">Archive Foods</span>
-            <span className="mt-1 block text-xl font-black text-ink">販売終了フード一覧</span>
-          </span>
-          <span className="inline-flex items-center gap-2 rounded-full bg-slate-100 px-3 py-1 text-xs font-black text-slate-600">
+          <span className="text-lg font-black text-ink">販売終了フード</span>
+          <span className="inline-flex items-center gap-2 text-xs font-black text-slate-500">
             {endedFoods.length}品
             <ChevronDown size={14} aria-hidden />
           </span>
         </summary>
         <div className="mt-4">
-          <FoodList foods={endedFoods} empty="このエリアに販売終了フードはありません。" />
+          <FoodTileGrid foods={endedFoods} empty="このエリアに販売終了フードはありません。" ended />
         </div>
       </details>
     </div>
   );
 }
 
-function FoodList({ foods, empty }: { foods: FoodWithRelations[]; empty: string }) {
+function FoodTileGrid({ foods, empty, ended = false }: { foods: FoodWithRelations[]; empty: string; ended?: boolean }) {
   if (foods.length === 0) {
     return (
-      <div className="mt-4 rounded-2xl border border-dashed border-slate-200 bg-slate-50 p-5 text-sm font-bold text-slate-500">
+      <p className="text-sm font-bold leading-6 text-slate-500">
         {empty}
-      </div>
+      </p>
     );
   }
 
   return (
-    <div className="mt-4 grid gap-3 md:grid-cols-2">
+    <div className="grid grid-cols-3 gap-3 lg:grid-cols-6">
       {foods.map((food) => (
-        <Link key={food.id} href={`/foods/${food.id}`} className="grid grid-cols-[82px_1fr] gap-3 rounded-2xl border border-slate-100 bg-slate-50 p-2 transition active:scale-[0.99] hover:border-park hover:bg-mint/40">
-          <div className="h-[82px] overflow-hidden rounded-xl bg-white">
-            <FoodImage food={food} className="h-full w-full" />
+        <Link key={food.id} href={`/foods/${food.id}`} className="group min-w-0 transition active:scale-[0.99]">
+          <div className="aspect-square overflow-hidden rounded-[13px] bg-[#f1e4d2]">
+            <FoodImage food={food} className="h-full w-full saturate-[0.88] brightness-[1.03] transition duration-300 group-hover:scale-[1.03]" />
           </div>
-          <div className="min-w-0 py-1">
-            <div className="flex flex-wrap gap-1.5 text-[10px] font-black">
-              <span className="rounded-full bg-white px-2 py-0.5 text-slate-500">{getSaleStatusLabel(food)}</span>
-              <span className="rounded-full bg-white px-2 py-0.5 text-park">{formatFoodPrice(food)}</span>
-            </div>
-            <p className="mt-1 line-clamp-2 text-sm font-black leading-5 text-ink">{food.name}</p>
-            <p className="mt-1 line-clamp-2 text-[11px] font-bold leading-4 text-slate-500">{getFoodAreaSummary(food)}</p>
-          </div>
+          <p className="mt-2 line-clamp-2 min-h-9 text-xs font-black leading-[1.45] text-ink">{food.name}</p>
+          <p className="mt-1 text-[11px] font-bold text-slate-500">{ended ? "販売終了" : formatFoodPrice(food)}</p>
         </Link>
       ))}
     </div>
