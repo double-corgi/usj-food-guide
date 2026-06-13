@@ -173,18 +173,34 @@ function buildAreaShopRows(foods: FoodWithRelations[]) {
     const locations = food.locations?.length ? food.locations : [foodToLocation(food)];
     for (const location of locations) {
       if (!isDisplayableShopName(location.shopName)) continue;
-      const key = location.shopId ?? `${location.shopName}-${location.shopType}`;
+      const key = normalizeShopName(location.shopName);
       const current = rows.get(key);
       const next = {
         key,
-        name: location.shopName,
+        name: location.shopName.trim(),
         type: location.shopType,
         href: location.shopId ? `/stores/${location.shopId}` : undefined
       };
-      rows.set(key, current?.href ? current : next);
+      rows.set(key, pickRepresentativeShopRow(current, next));
     }
   }
   return Array.from(rows.values()).sort((a, b) => a.name.localeCompare(b.name, "ja"));
+}
+
+function normalizeShopName(name: string) {
+  return name.normalize("NFKC").trim().replace(/\s+/g, " ");
+}
+
+function pickRepresentativeShopRow(current: AreaShopRow | undefined, next: AreaShopRow) {
+  if (!current) return next;
+  if (!current.href && next.href) return next;
+  if (current.href && !next.href) return current;
+  if (!isKnownShopType(current.type) && isKnownShopType(next.type)) return next;
+  return current;
+}
+
+function isKnownShopType(type: ShopType) {
+  return type !== "unknown";
 }
 
 function foodToLocation(food: FoodWithRelations): Pick<FoodLocation, "shopId" | "shopName" | "shopType"> {

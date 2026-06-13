@@ -42,18 +42,20 @@ export function AreaFoodStatusLists({ foods, areaId }: { foods: FoodWithRelation
         ) : null}
       </section>
 
-      <details className="border-y border-[#eadcc8] py-4">
-        <summary className="flex cursor-pointer list-none items-center justify-between gap-3">
-          <span className="text-lg font-black text-ink">販売終了フード</span>
-          <span className="inline-flex items-center gap-2 text-xs font-black text-slate-500">
-            {endedFoods.length}品
-            <ChevronDown size={14} aria-hidden />
-          </span>
-        </summary>
-        <div className="mt-4">
-          <FoodTileGrid foods={endedFoods} empty="このエリアに販売終了フードはありません。" ended />
-        </div>
-      </details>
+      {endedFoods.length > 0 ? (
+        <details className="border-y border-[#eadcc8] py-4">
+          <summary className="flex cursor-pointer list-none items-center justify-between gap-3">
+            <span className="text-lg font-black text-ink">販売終了フード</span>
+            <span className="inline-flex items-center gap-2 text-xs font-black text-slate-500">
+              {endedFoods.length}品
+              <ChevronDown size={14} aria-hidden />
+            </span>
+          </summary>
+          <div className="mt-4">
+            <FoodTileGrid foods={endedFoods} empty="このエリアに販売終了フードはありません。" ended />
+          </div>
+        </details>
+      ) : null}
     </div>
   );
 }

@@ -52,10 +52,12 @@ export function AreaCollectionSummary({ foods, allFoods = foods }: { foods: Food
           <p className="text-xs font-black text-[#8a5b16]">このエリアであと</p>
           <p className="mt-1 text-[2rem] font-black leading-none tracking-[-0.04em] text-[#071b3a]">{uneaten}品</p>
         </div>
-        <p className="shrink-0 text-right text-sm font-black text-[#071b3a]">
-          {completion.eaten} / {completion.total}
-          <span className="block text-[11px] text-slate-500">コンプ率 {completion.rate}%</span>
-        </p>
+        {completion.eaten > 0 ? (
+          <p className="shrink-0 text-right text-sm font-black text-[#071b3a]">
+            {completion.eaten} / {completion.total}
+            <span className="block text-[11px] text-slate-500">コンプ率 {completion.rate}%</span>
+          </p>
+        ) : null}
       </div>
       <p className="mt-2 text-xs font-bold leading-5 text-slate-500">食べた {completion.eaten} / 販売中 {completion.total}品（登録分）</p>
       <div className="mt-4 h-1 overflow-hidden rounded-full bg-[#e7dccb]">
