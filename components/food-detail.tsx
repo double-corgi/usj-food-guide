@@ -13,6 +13,7 @@ import { FoodImage } from "@/components/food-image";
 import { FoodCorrectionReportForm } from "@/components/food-correction-report-form";
 import { FoodReviews } from "@/components/food-reviews";
 import { UnofficialNotice } from "@/components/unofficial-notice";
+import { useLocale } from "@/lib/i18n/use-locale";
 
 type RelatedGroups = {
   sameCategory: FoodWithRelations[];
@@ -36,6 +37,7 @@ export function FoodDetail({
   nextFood?: FoodWithRelations;
   relatedGroups?: RelatedGroups;
 }) {
+  const { t } = useLocale();
   const { logs, toggleEaten } = useFoodLogs();
   const foodPool = allFoods ?? [food];
   const { isWanted, toggleWanted } = useNextWantFoods(foodPool);
@@ -54,7 +56,7 @@ export function FoodDetail({
   const knownPrice = Boolean(food.price ?? food.priceMin);
   const diningLabel = food.diningType && food.diningType !== "unknown" ? diningTypeLabels[food.diningType] : inferDiningLabel(food);
   const officialHref = food.officialUrl ?? food.sourceUrl;
-  const salesSummary = getSalesSummary(food);
+  const salesSummary = getSalesSummary(food, t);
   const relatedFoods = buildRelatedFoods(food, foodPool, relatedGroups).slice(0, 12);
 
   useEffect(() => {
@@ -74,18 +76,18 @@ export function FoodDetail({
       <div className="flex flex-wrap items-center justify-between gap-3">
         <Link href="/foods" className="inline-flex min-h-10 items-center gap-2 rounded-full border border-slate-200 bg-white/70 px-3 text-sm font-black text-slate-700">
           <ChevronLeft size={17} aria-hidden />
-          一覧へ戻る
+          {t("foodDetail.backToList")}
         </Link>
         <div className="grid grid-cols-2 gap-2">
           {previousFood ? (
             <Link href={`/foods/${previousFood.id}`} className="inline-flex min-h-10 items-center justify-center gap-1 rounded-full bg-white/70 px-3 text-xs font-black text-slate-600">
               <ChevronLeft size={15} aria-hidden />
-              前
+              {t("foodDetail.previous")}
             </Link>
           ) : null}
           {nextFood ? (
             <Link href={`/foods/${nextFood.id}`} className="inline-flex min-h-10 items-center justify-center gap-1 rounded-full bg-white/70 px-3 text-xs font-black text-slate-600">
-              次
+              {t("foodDetail.next")}
               <ChevronRight size={15} aria-hidden />
             </Link>
           ) : null}
@@ -98,13 +100,13 @@ export function FoodDetail({
           <div className="absolute left-3 top-3 flex flex-wrap gap-2">
             <span className="rounded-full bg-white/90 px-3 py-1.5 text-xs font-black text-park shadow-sm">{getZukanCode(food, allFoods)}</span>
             {saleStatus === "ended" ? (
-              <span className="rounded-full bg-slate-800/88 px-3 py-1.5 text-xs font-black text-white shadow-sm">× 販売終了</span>
+              <span className="rounded-full bg-slate-800/88 px-3 py-1.5 text-xs font-black text-white shadow-sm">× {t("common.ended")}</span>
             ) : null}
             {saleStatus === "upcoming" ? (
-              <span className="rounded-full bg-sun px-3 py-1.5 text-xs font-black text-ink shadow-sm">近日販売</span>
+              <span className="rounded-full bg-sun px-3 py-1.5 text-xs font-black text-ink shadow-sm">{t("foods.badgeUpcoming")}</span>
             ) : null}
           {food.isLimited ? (
-              <span className="rounded-full bg-berry px-3 py-1.5 text-xs font-black text-white shadow-sm">◇ 限定</span>
+              <span className="rounded-full bg-berry px-3 py-1.5 text-xs font-black text-white shadow-sm">◇ {t("foods.badgeLimited")}</span>
             ) : null}
           </div>
         </div>
@@ -119,9 +121,9 @@ export function FoodDetail({
               <p className="text-3xl font-black leading-none text-park">{formatFoodPrice(food)}</p>
               <span className={`rounded-full px-3 py-1 text-xs font-black ${getSaleStatusTone(food)}`}>{getSaleStatusLabel(food)}</span>
               {urgencyLabel ? <span className="rounded-full bg-berry px-3 py-1 text-xs font-black text-white">{urgencyLabel}</span> : null}
-              {food.isLimited ? <span className="rounded-full bg-sun/30 px-3 py-1 text-xs font-black text-ink">限定</span> : null}
+              {food.isLimited ? <span className="rounded-full bg-sun/30 px-3 py-1 text-xs font-black text-ink">{t("foods.badgeLimited")}</span> : null}
             </div>
-            {!knownPrice ? <p className="text-xs font-black leading-5 text-amber-700">価格未確認。公式・現地情報の確認を推奨します。</p> : null}
+            {!knownPrice ? <p className="text-xs font-black leading-5 text-amber-700">{t("foodDetail.priceUnknownNote")}</p> : null}
             <p className="flex min-w-0 items-start gap-2 text-sm font-bold text-slate-600">
               <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-park" aria-hidden />
               <span className="min-w-0 break-words [overflow-wrap:anywhere]">{primaryLocation?.shopName ?? food.shop.name}</span>
@@ -134,7 +136,7 @@ export function FoodDetail({
               className={`inline-flex h-14 w-full items-center justify-center gap-2 rounded-full text-base font-black shadow-sm active:scale-[0.98] ${eaten ? "bg-park text-white" : "bg-ink text-white"}`}
             >
               <Check size={20} aria-hidden />
-              {eaten ? "食べた済み" : "食べた"}
+              {eaten ? t("foodCard.eatenDone") : t("foodCard.markEaten")}
             </button>
             <button
               type="button"
@@ -145,7 +147,7 @@ export function FoodDetail({
               aria-pressed={wanted}
             >
               <Flag size={18} aria-hidden />
-              {wanted ? "保存済み" : "次回食べたい"}
+              {wanted ? t("foodDetail.wantSaved") : t("foodDetail.wantNext")}
             </button>
           </div>
         </div>
@@ -154,10 +156,10 @@ export function FoodDetail({
       <section className="space-y-4 border-y border-slate-200 py-6">
         <div className="flex flex-wrap items-end justify-between gap-3">
           <div>
-            <p className="text-xs font-black text-park">どこで買える？</p>
+            <p className="text-xs font-black text-park">{t("foodDetail.howToBuy")}</p>
             <h2 className="mt-1 flex items-center gap-2 text-xl font-black text-ink">
               <Store size={20} aria-hidden className="text-park" />
-              販売場所
+              {t("area.salesLocations")}
             </h2>
           </div>
           <p className="text-xs font-black leading-5 text-slate-500">
@@ -206,59 +208,59 @@ export function FoodDetail({
           rel="noopener noreferrer"
           className="inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-full border border-slate-200 bg-white/75 text-sm font-black text-slate-700"
         >
-          公式サイトを見る
+          {t("foodDetail.officialSite")}
           <ExternalLink size={17} aria-hidden />
         </a>
       ) : null}
 
       <section className="space-y-4 border-b border-slate-200 pb-6">
         <div>
-          <p className="text-xs font-black text-park">図鑑を巡る</p>
-          <h2 className="mt-1 text-lg font-black text-ink">関連商品</h2>
+          <p className="text-xs font-black text-park">{t("foodDetail.relatedKicker")}</p>
+          <h2 className="mt-1 text-lg font-black text-ink">{t("foodDetail.relatedTitle")}</h2>
         </div>
-        <RelatedRail title="関連度順" foods={relatedFoods} />
+        <RelatedRail title={t("foodDetail.relatedRailTitle")} foods={relatedFoods} />
       </section>
 
       <details className="border-b border-slate-200 pb-4 text-xs font-bold text-slate-500">
-        <summary className="cursor-pointer text-xs font-black text-slate-500">確認情報</summary>
+        <summary className="cursor-pointer text-xs font-black text-slate-500">{t("foodDetail.confirmationInfo")}</summary>
         <dl className="mt-3 grid gap-2">
           <div className="flex items-center justify-between gap-3">
-            <dt className="text-slate-400">カテゴリ</dt>
+            <dt className="text-slate-400">{t("foodDetail.category")}</dt>
             <dd className="font-black text-slate-700">{categoryLabels[food.category]}</dd>
           </div>
           <div className="flex items-center justify-between gap-3">
-            <dt className="text-slate-400">形式</dt>
+            <dt className="text-slate-400">{t("foodDetail.diningType")}</dt>
             <dd className="font-black text-slate-700">{diningLabel}</dd>
           </div>
           <div className="flex items-center justify-between gap-3">
-            <dt className="text-slate-400">期間</dt>
+            <dt className="text-slate-400">{t("foodDetail.period")}</dt>
             <dd className="font-black text-slate-700">{period.label}</dd>
           </div>
           <div className="flex items-center justify-between gap-3">
-            <dt className="text-slate-400">現在コンプ対象</dt>
-            <dd className="font-black text-slate-700">{isCompletableFood(food) ? "対象" : "対象外"}</dd>
+            <dt className="text-slate-400">{t("foodDetail.completable")}</dt>
+            <dd className="font-black text-slate-700">{isCompletableFood(food) ? t("foodDetail.completableYes") : t("foodDetail.completableNo")}</dd>
           </div>
           <div className="flex items-center justify-between gap-3">
-            <dt className="text-slate-400">販売開始</dt>
-            <dd className="font-black text-slate-700">{formatDateLong(saleStartDate) ?? "未確認"}</dd>
+            <dt className="text-slate-400">{t("foodDetail.saleStart")}</dt>
+            <dd className="font-black text-slate-700">{formatDateLong(saleStartDate) ?? t("foodDetail.dateUnknown")}</dd>
           </div>
           <div className="flex items-center justify-between gap-3">
-            <dt className="text-slate-400">販売終了</dt>
-            <dd className="font-black text-slate-700">{saleEndDate ? formatDateLong(saleEndDate) ?? "未確認" : saleStatus === "active" ? "未定" : "未確認"}</dd>
+            <dt className="text-slate-400">{t("foodDetail.saleEnd")}</dt>
+            <dd className="font-black text-slate-700">{saleEndDate ? formatDateLong(saleEndDate) ?? t("foodDetail.dateUnknown") : saleStatus === "active" ? t("foodDetail.dateUndecided") : t("foodDetail.dateUnknown")}</dd>
           </div>
           <div className="flex items-center justify-between gap-3">
-            <dt className="text-slate-400">価格確認</dt>
+            <dt className="text-slate-400">{t("foodDetail.priceCheck")}</dt>
             <dd className="font-black text-slate-700">{getPriceSourceLabel(priceSource)}</dd>
           </div>
           {!knownPrice ? (
             <div className="flex items-center justify-between gap-3">
-              <dt className="text-slate-400">価格状態</dt>
-              <dd className="font-black text-amber-700">価格未確認</dd>
+              <dt className="text-slate-400">{t("foodDetail.priceStatus")}</dt>
+              <dd className="font-black text-amber-700">{t("foods.priceUnknown")}</dd>
             </div>
           ) : null}
           <div className="flex items-center justify-between gap-3">
-            <dt className="text-slate-400">確認日</dt>
-            <dd className="font-black text-slate-700">{formatDateShort(food.priceLastCheckedAt)}</dd>
+            <dt className="text-slate-400">{t("foodDetail.checkedDate")}</dt>
+            <dd className="font-black text-slate-700">{formatDateShort(food.priceLastCheckedAt, t("foodDetail.dateUnknown"))}</dd>
           </div>
         </dl>
       </details>
@@ -312,7 +314,7 @@ function buildRelatedFoods(food: FoodWithRelations, allFoods: FoodWithRelations[
     .map((item) => item.food);
 }
 
-function getSalesSummary(food: FoodWithRelations) {
+function getSalesSummary(food: FoodWithRelations, t: ReturnType<typeof useLocale>["t"]) {
   const shops = new Set<string>();
   const areas = new Set<string>();
   for (const location of food.locations ?? []) {
@@ -327,8 +329,8 @@ function getSalesSummary(food: FoodWithRelations) {
   return {
     shopCount: shops.size,
     areaCount: areas.size,
-    shopLabel: shops.size <= 1 ? "1店舗のみ" : `${shops.size}店舗`,
-    areaLabel: areas.size === 0 ? "エリア確認中" : areas.size === 1 ? "1エリア" : `${areas.size}エリア`
+    shopLabel: shops.size <= 1 ? t("foodDetail.shopCountSingle") : t("foodDetail.shopCount", { count: shops.size }),
+    areaLabel: areas.size === 0 ? t("foodDetail.areaChecking") : areas.size === 1 ? t("foodDetail.areaCountSingle") : t("foodDetail.areaCount", { count: areas.size })
   };
 }
 
@@ -414,8 +416,8 @@ function inferDiningLabel(food: FoodWithRelations) {
   return "形式未確認";
 }
 
-function formatDateShort(value?: string | null) {
-  if (!value) return "未確認";
+function formatDateShort(value?: string | null, fallback = "未確認") {
+  if (!value) return fallback;
   const date = new Date(value);
   if (Number.isNaN(date.getTime())) return value;
   return new Intl.DateTimeFormat("ja-JP", { month: "numeric", day: "numeric", timeZone: "Asia/Tokyo" }).format(date);
