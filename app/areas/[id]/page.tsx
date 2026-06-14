@@ -146,7 +146,9 @@ function AreaShopList({ shops }: { shops: AreaShopRow[] }) {
       {hidden.length > 0 ? (
         <details className="border-t border-[#eadcc8] pt-3">
           <summary className="flex cursor-pointer list-none items-center justify-between gap-3 text-sm font-black text-park">
-            すべての販売場所を見る（あと{hidden.length}か所）
+            <span>
+              <I18nText k="area.viewAllSalesLocations" />（あと{hidden.length}か所）
+            </span>
             <ChevronDown size={15} aria-hidden />
           </summary>
           <div className="mt-3 grid gap-0 lg:grid-cols-2 lg:gap-x-8">

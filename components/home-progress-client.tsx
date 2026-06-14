@@ -51,19 +51,19 @@ export function HomeCollectionHero({ foods }: { foods: FoodWithRelations[] }) {
             </h1>
             <span className="h-px w-5 bg-[#fdbb30]" aria-hidden />
           </div>
-          <p className="text-[13px] font-bold leading-6 text-slate-500">{appBrand.tagline}</p>
+          <p className="text-[13px] font-bold leading-6 text-slate-500">{t("footer.tagline")}</p>
         </div>
 
         <div className="order-3 space-y-2.5 lg:col-start-1 lg:row-start-2 lg:self-start">
           {hasCollection ? (
             <>
               <div className="flex flex-wrap items-end justify-center gap-x-2 gap-y-1 lg:justify-start">
-                <p className="text-[13px] font-black text-[#071b3a]">コレクション数</p>
+                <p className="text-[13px] font-black text-[#071b3a]">{t("home.collectionCount")}</p>
                 <p className="animate-home-stat-pop text-[2.35rem] font-black leading-none tracking-[-0.04em] text-[#071b3a] sm:text-[2.5rem]">
                   {completion.eaten}
                 </p>
                 <p className="pb-1 text-[12px] font-bold leading-5 text-slate-500">
-                  / 販売中 {completion.total}品（登録分）・残り {remaining}
+                  / {t("home.activeCount", { count: completion.total })}・{t("home.remainingCount", { count: remaining })}
                 </p>
               </div>
               <div className="flex items-center gap-2">
@@ -79,7 +79,7 @@ export function HomeCollectionHero({ foods }: { foods: FoodWithRelations[] }) {
           ) : (
             <div className="space-y-1.5 text-center lg:text-left">
               <p className="text-sm font-black leading-7 text-[#071b3a]">{t("collection.firstBite")}</p>
-              <p className="text-[12px] font-bold text-slate-500">販売中 {completion.total}品（登録分）</p>
+              <p className="text-[12px] font-bold text-slate-500">{t("home.activeCount", { count: completion.total })}</p>
             </div>
           )}
         </div>
@@ -121,6 +121,7 @@ export function HomeCollectionHero({ foods }: { foods: FoodWithRelations[] }) {
 }
 
 export function HomeActiveFoodCollection({ foods }: { foods: FoodWithRelations[] }) {
+  const { t } = useLocale();
   const { logs } = useFoodLogs();
   const shelfKeys = useMemo(() => new Set(pickShelfFoods(foods, logs, SHELF_SLOTS).map(getCanonicalFoodKey)), [foods, logs]);
   const activeFoods = useMemo(() => pickActiveCollectionFoods(foods, logs, shelfKeys), [foods, logs, shelfKeys]);
@@ -129,8 +130,8 @@ export function HomeActiveFoodCollection({ foods }: { foods: FoodWithRelations[]
     <section className="space-y-4">
       <div className="flex items-end justify-between gap-3">
         <div>
-          <h2 className="text-xl font-black text-ink">今集められるフード</h2>
-          <p className="mt-1 text-xs font-bold text-slate-500">写真で選べる、販売中の登録フード。</p>
+          <h2 className="text-xl font-black text-ink">{t("home.collectibleFoods")}</h2>
+          <p className="mt-1 text-xs font-bold text-slate-500">{t("home.collectibleFoodsDescription")}</p>
         </div>
         <Link href="/foods" className="hidden shrink-0 text-xs font-black text-park lg:inline">すべて見る</Link>
       </div>
@@ -159,6 +160,7 @@ export function HomeActiveFoodCollection({ foods }: { foods: FoodWithRelations[]
 }
 
 export function HomeLimitedCollection({ foods }: { foods: FoodWithRelations[] }) {
+  const { t } = useLocale();
   const { logs } = useFoodLogs();
   const eatenKeys = getEatenCanonicalKeys(foods, logs);
   const collection = useMemo(() => buildLimitedCollection(foods), [foods]);
@@ -171,7 +173,7 @@ export function HomeLimitedCollection({ foods }: { foods: FoodWithRelations[] })
     <section className="space-y-4">
       <div className="flex items-start justify-between gap-3">
         <div className="min-w-0">
-          <h2 className="text-xl font-black text-ink">期間限定コレクション</h2>
+          <h2 className="text-xl font-black text-ink">{t("home.limitedCollection")}</h2>
           <p className="mt-1 text-xs font-bold text-slate-500">{collection.title}</p>
         </div>
         <div className={`shrink-0 rounded-full px-3 py-1.5 text-xs font-black ${complete ? "bg-[#fdbb30] text-[#071b3a]" : "bg-[#fffaf5] text-[#8a5b16] ring-1 ring-[#eadcc8]"}`}>

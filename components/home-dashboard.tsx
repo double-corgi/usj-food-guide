@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { AreaOverview } from "@/components/area-overview";
 import { HomeActiveFoodCollection, HomeCollectionHero, HomeLimitedCollection, HomeRecentRecords } from "@/components/home-progress-client";
+import { I18nText } from "@/components/i18n-text";
 import { dedupeFoodsByCanonical } from "@/lib/food-utils";
 import { REQUEST_FORM_URL } from "@/lib/request-form-url";
 import type { Area, FoodWithRelations } from "@/types/domain";
@@ -76,7 +77,9 @@ function ExploreAllCard({ total }: { total: number }) {
     <section className="border-t border-slate-200/80 pt-7">
       <div className="flex items-center justify-between gap-4">
         <div className="min-w-0">
-          <h2 className="text-xl font-black text-ink">登録済みコレクションを見る</h2>
+          <h2 className="text-xl font-black text-ink">
+            <I18nText k="home.viewRegisteredCollection" />
+          </h2>
           <p className="mt-1 text-sm font-bold text-slate-500">図鑑に登録された{total}種類を写真で探せます。</p>
         </div>
         <Link href="/foods" className="inline-flex h-12 shrink-0 items-center justify-center rounded-full bg-ink px-5 text-sm font-black text-white shadow-sm active:scale-[0.98]">

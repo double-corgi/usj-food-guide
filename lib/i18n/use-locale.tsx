@@ -7,7 +7,7 @@ import { defaultLocale, isSupportedLocale, localeStorageKey, type Locale } from 
 type LocaleContextValue = {
   locale: Locale;
   setLocale: (locale: Locale) => void;
-  t: (key: TranslationKey) => string;
+  t: (key: TranslationKey, params?: Record<string, string | number>) => string;
 };
 
 const LocaleContext = createContext<LocaleContextValue | null>(null);
@@ -48,8 +48,13 @@ export function LocaleProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   const t = useCallback(
-    (key: TranslationKey) => {
-      return dictionaries[locale][key] ?? dictionaries[defaultLocale][key] ?? key;
+    (key: TranslationKey, params?: Record<string, string | number>) => {
+      let value: string = dictionaries[locale][key] ?? dictionaries[defaultLocale][key] ?? key;
+      if (!params) return value;
+      for (const [paramKey, paramValue] of Object.entries(params)) {
+        value = value.replaceAll(`{{${paramKey}}}`, String(paramValue));
+      }
+      return value;
     },
     [locale]
   );

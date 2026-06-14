@@ -58,11 +58,21 @@ export const dictionaries = {
     "area.salesLocations": "販売場所",
     "area.complete": "このエリアはコンプリート",
     "area.checkingNow": "このエリアの販売中フードは現在確認中です",
+    "area.remainingCount": "このエリアであと{{count}}品",
+    "area.eatenProgress": "食べた{{eaten}} / 販売中{{total}}品（登録分）",
+    "area.viewAllSalesLocations": "すべての販売場所を見る",
     "store.backToList": "店舗一覧へ戻る",
     "store.availableFoods": "この店舗で買える商品",
     "store.availableFoodsEmpty": "この店舗で買える商品はまだ登録されていません。",
     "collection.firstBite": "最初の1品から。",
-    "collection.tagline": "食べると、棚が色づく。"
+    "collection.tagline": "食べると、棚が色づく。",
+    "home.collectibleFoods": "今集められるフード",
+    "home.collectibleFoodsDescription": "写真で選べる、販売中の登録フード。",
+    "home.limitedCollection": "期間限定コレクション",
+    "home.viewRegisteredCollection": "登録済みコレクションを見る",
+    "home.activeCount": "販売中{{count}}品（登録分）",
+    "home.remainingCount": "残り{{count}}品",
+    "home.collectionCount": "コレクション数"
   },
   en: {
     "nav.home": "Home",
@@ -121,11 +131,21 @@ export const dictionaries = {
     "area.salesLocations": "Sales Locations",
     "area.complete": "This area is complete",
     "area.checkingNow": "Foods currently on sale in this area are being checked.",
+    "area.remainingCount": "{{count}} left in this area",
+    "area.eatenProgress": "Eaten {{eaten}} / On sale {{total}} items (registered)",
+    "area.viewAllSalesLocations": "View all sales locations",
     "store.backToList": "Back to Stores",
     "store.availableFoods": "Foods Available at This Store",
     "store.availableFoodsEmpty": "No foods have been registered for this store yet.",
     "collection.firstBite": "Start with your first bite.",
-    "collection.tagline": "The shelf colors in as you eat."
+    "collection.tagline": "The shelf colors in as you eat.",
+    "home.collectibleFoods": "Foods to Collect Now",
+    "home.collectibleFoodsDescription": "Registered foods currently on sale, easy to choose by photo.",
+    "home.limitedCollection": "Limited-Time Collection",
+    "home.viewRegisteredCollection": "View Registered Collection",
+    "home.activeCount": "On sale {{count}} items (registered)",
+    "home.remainingCount": "{{count}} left",
+    "home.collectionCount": "Collection Count"
   },
   ko: {
     "nav.home": "홈",
@@ -184,11 +204,21 @@ export const dictionaries = {
     "area.salesLocations": "판매 장소",
     "area.complete": "이 에리어는 컴플리트",
     "area.checkingNow": "이 에리어의 판매 중 푸드는 현재 확인 중입니다.",
+    "area.remainingCount": "이 에리어에서 {{count}}개 남음",
+    "area.eatenProgress": "먹은 것 {{eaten}} / 판매 중 {{total}}개(등록분)",
+    "area.viewAllSalesLocations": "모든 판매 장소 보기",
     "store.backToList": "매장 목록으로 돌아가기",
     "store.availableFoods": "이 매장에서 살 수 있는 상품",
     "store.availableFoodsEmpty": "이 매장에서 살 수 있는 상품은 아직 등록되어 있지 않습니다.",
     "collection.firstBite": "첫 한 입부터.",
-    "collection.tagline": "먹을수록 선반에 색이 채워집니다."
+    "collection.tagline": "먹을수록 선반에 색이 채워집니다.",
+    "home.collectibleFoods": "지금 모을 수 있는 푸드",
+    "home.collectibleFoodsDescription": "사진으로 고를 수 있는 판매 중 등록 푸드.",
+    "home.limitedCollection": "기간 한정 컬렉션",
+    "home.viewRegisteredCollection": "등록된 컬렉션 보기",
+    "home.activeCount": "판매 중 {{count}}개(등록분)",
+    "home.remainingCount": "{{count}}개 남음",
+    "home.collectionCount": "컬렉션 수"
   },
   "zh-TW": {
     "nav.home": "首頁",
@@ -247,11 +277,21 @@ export const dictionaries = {
     "area.salesLocations": "販售地點",
     "area.complete": "這個區域已完成",
     "area.checkingNow": "這個區域的販售中餐點目前確認中。",
+    "area.remainingCount": "這個區域還剩{{count}}品",
+    "area.eatenProgress": "已吃{{eaten}} / 販售中{{total}}品（登錄項目）",
+    "area.viewAllSalesLocations": "查看所有販售地點",
     "store.backToList": "返回店鋪列表",
     "store.availableFoods": "這間店可購買的商品",
     "store.availableFoodsEmpty": "這間店尚未登錄可購買的商品。",
     "collection.firstBite": "從第一品開始。",
-    "collection.tagline": "吃過後，收藏架就會染上色彩。"
+    "collection.tagline": "吃過後，收藏架就會染上色彩。",
+    "home.collectibleFoods": "現在可以收集的餐點",
+    "home.collectibleFoodsDescription": "用照片挑選目前販售中的登錄餐點。",
+    "home.limitedCollection": "期間限定收藏",
+    "home.viewRegisteredCollection": "查看已登錄收藏",
+    "home.activeCount": "販售中{{count}}品（登錄項目）",
+    "home.remainingCount": "剩下{{count}}品",
+    "home.collectionCount": "收藏數"
   }
 } as const satisfies Record<Locale, Record<string, string>>;
 
