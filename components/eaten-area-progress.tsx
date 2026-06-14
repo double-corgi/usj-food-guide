@@ -2,10 +2,12 @@
 
 import Link from "next/link";
 import { calculateAreaProgressList } from "@/lib/area-progress";
+import { useLocale } from "@/lib/i18n/use-locale";
 import { useFoodLogs } from "@/lib/use-food-logs";
 import type { FoodWithRelations } from "@/types/domain";
 
 export function EatenAreaProgress({ foods }: { foods: FoodWithRelations[] }) {
+  const { t } = useLocale();
   const { logs } = useFoodLogs();
   const areaProgress = calculateAreaProgressList(foods, logs).sort(
     (a, b) => b.active.rate - a.active.rate || b.active.total - a.active.total || a.area.name.localeCompare(b.area.name, "ja")
@@ -15,10 +17,10 @@ export function EatenAreaProgress({ foods }: { foods: FoodWithRelations[] }) {
     <section className="space-y-3 border-t border-slate-200 pt-6">
       <div className="flex flex-wrap items-end justify-between gap-3">
         <div>
-          <p className="text-xs font-black text-park">エリア別進捗</p>
-          <h2 className="mt-1 text-xl font-black text-ink">エリアごとの記録</h2>
+          <p className="text-xs font-black text-park">{t("eaten.areaProgress.kicker")}</p>
+          <h2 className="mt-1 text-xl font-black text-ink">{t("eaten.areaProgress.title")}</h2>
         </div>
-        <p className="text-xs font-black text-slate-400">{areaProgress.length}エリア</p>
+        <p className="text-xs font-black text-slate-400">{t("eaten.areaProgress.areaCount", { count: areaProgress.length })}</p>
       </div>
 
       <div className="grid gap-2.5 md:grid-cols-2 xl:grid-cols-3">
@@ -31,7 +33,7 @@ export function EatenAreaProgress({ foods }: { foods: FoodWithRelations[] }) {
 
             <div className="mt-1.5 flex items-center justify-between gap-3 text-[11px] font-black text-slate-500">
               <span>{progress.active.eaten} / {progress.active.total}</span>
-              <span>残り {progress.active.uneaten}</span>
+              <span>{t("eaten.areaProgress.remaining", { count: progress.active.uneaten })}</span>
             </div>
 
             <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-slate-200">
@@ -42,19 +44,19 @@ export function EatenAreaProgress({ foods }: { foods: FoodWithRelations[] }) {
             </div>
 
             <div className="mt-1.5 flex items-center justify-between gap-3 text-[10px] font-bold text-slate-400">
-              <span>図鑑 {progress.archive.eaten}/{progress.archive.total}</span>
+              <span>{t("eaten.areaProgress.archive", { eaten: progress.archive.eaten, total: progress.archive.total })}</span>
               <span>{progress.archive.rate}%</span>
             </div>
 
             <div className="mt-2 flex flex-wrap gap-2.5 text-[11px] font-black">
               <Link href={`/areas/${progress.area.id}?view=eaten#area-eaten-foods`} className="text-park underline-offset-4 hover:underline">
-                食べた商品
+                {t("eaten.areaProgress.viewEaten")}
               </Link>
               <Link href={`/areas/${progress.area.id}?view=missing#area-missing-foods`} className="text-slate-500 underline-offset-4 hover:underline">
-                残り商品
+                {t("eaten.areaProgress.viewRemaining")}
               </Link>
               <Link href={`/areas/${progress.area.id}`} className="text-slate-500 underline-offset-4 hover:underline">
-                エリアを見る
+                {t("eaten.areaProgress.viewArea")}
               </Link>
             </div>
           </article>
