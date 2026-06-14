@@ -51,7 +51,11 @@ export function AreaCollectionSummary({ foods, allFoods = foods }: { foods: Food
     <div className="border-b border-[#eadcc8] pb-5">
       <div className="flex items-end justify-between gap-4">
         <div>
-          <p className="max-w-[14rem] text-[1.35rem] font-black leading-tight tracking-[-0.03em] text-[#071b3a] sm:text-[1.5rem]">{t("area.remainingCount", { count: uneaten })}</p>
+          <p className="text-xs font-black text-[#8a5b16]">{t("area.remainingInAreaPrefix")}</p>
+          <p className="mt-1 text-[2rem] font-black leading-none tracking-[-0.04em] text-[#071b3a]">
+            {uneaten}
+            <span className="ml-1 text-[1.15rem] tracking-normal">{t("area.remainingInAreaUnit")}</span>
+          </p>
         </div>
         {completion.eaten > 0 ? (
           <p className="shrink-0 text-right text-sm font-black text-[#071b3a]">
