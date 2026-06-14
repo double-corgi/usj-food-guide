@@ -4,12 +4,14 @@ import Link from "next/link";
 import { Check, Flag } from "lucide-react";
 import { FoodImage } from "@/components/food-image";
 import { formatFoodPrice, getFoodAreaSummary, isEatenCanonical } from "@/lib/food-utils";
+import { useLocale } from "@/lib/i18n/use-locale";
 import { getStoreDisplayFoods } from "@/lib/store-utils";
 import { useFoodLogs } from "@/lib/use-food-logs";
 import { useNextWantFoods } from "@/lib/use-next-want-foods";
 import type { FoodWithRelations } from "@/types/domain";
 
 export function StoreFoodList({ foods }: { foods: FoodWithRelations[] }) {
+  const { t } = useLocale();
   const displayFoods = getStoreDisplayFoods(foods);
   const { logs } = useFoodLogs();
   const { isWanted } = useNextWantFoods(displayFoods);
@@ -17,7 +19,7 @@ export function StoreFoodList({ foods }: { foods: FoodWithRelations[] }) {
   if (displayFoods.length === 0) {
     return (
       <p className="rounded-2xl border border-dashed border-slate-200 bg-white/60 p-6 text-center text-sm font-bold text-slate-500">
-        この店舗で買える商品はまだ登録されていません。
+        {t("store.availableFoodsEmpty")}
       </p>
     );
   }
@@ -33,7 +35,7 @@ export function StoreFoodList({ foods }: { foods: FoodWithRelations[] }) {
               <FoodImage food={food} alt={food.name} className="h-full w-full transition duration-300 group-hover:scale-105" />
               <div className="absolute left-2 top-2 flex gap-1.5">
                 {eaten ? (
-                  <span className="grid h-7 w-7 place-items-center rounded-full bg-park text-white shadow-sm" aria-label="食べた">
+                  <span className="grid h-7 w-7 place-items-center rounded-full bg-park text-white shadow-sm" aria-label={t("common.eaten")}>
                     <Check size={14} aria-hidden />
                   </span>
                 ) : null}

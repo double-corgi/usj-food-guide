@@ -13,6 +13,7 @@ import {
   getSaleUrgencyLabel,
   isCompletableFood
 } from "@/lib/food-utils";
+import { useLocale } from "@/lib/i18n/use-locale";
 import { useFoodLogs } from "@/lib/use-food-logs";
 import { FoodImage } from "@/components/food-image";
 import { appBrand, featuredLimitedCollection } from "@/lib/constants";
@@ -28,6 +29,7 @@ const PURE_IP_GROUP_NAMES = ["ミニオン", "マリオ", "ハローキティ", 
 const LIMITED_WORDS = ["25th", "25周年", "期間限定", "限定", "イベント", "コラボ", "ハロウィーン", "ハロウィン", "クリスマス", "イースター", "夏", "冬"];
 
 export function HomeCollectionHero({ foods }: { foods: FoodWithRelations[] }) {
+  const { t } = useLocale();
   const { logs, ready } = useFoodLogs();
   const completion = calculateCompletion(foods, logs);
   const remaining = Math.max(completion.total - completion.eaten, 0);
@@ -76,14 +78,14 @@ export function HomeCollectionHero({ foods }: { foods: FoodWithRelations[] }) {
             </>
           ) : (
             <div className="space-y-1.5 text-center lg:text-left">
-              <p className="text-sm font-black leading-7 text-[#071b3a]">最初の1品から。</p>
+              <p className="text-sm font-black leading-7 text-[#071b3a]">{t("collection.firstBite")}</p>
               <p className="text-[12px] font-bold text-slate-500">販売中 {completion.total}品（登録分）</p>
             </div>
           )}
         </div>
 
         <div className="order-2 space-y-2 lg:col-start-2 lg:row-span-2 lg:row-start-1">
-          <p className="text-center text-[12px] font-black tracking-[0.02em] text-[#8a5b16] lg:text-left">食べると、棚が色づく。</p>
+          <p className="text-center text-[12px] font-black tracking-[0.02em] text-[#8a5b16] lg:text-left">{t("collection.tagline")}</p>
           <div className="grid grid-cols-4 gap-1.5 md:grid-cols-8 lg:grid-cols-6">
             {shelfFoods.map((food, index) => {
               const canonicalKey = getCanonicalFoodKey(food);

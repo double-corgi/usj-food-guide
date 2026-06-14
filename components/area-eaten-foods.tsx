@@ -2,11 +2,13 @@
 
 import Link from "next/link";
 import { dedupeFoodsByCanonical, getCanonicalFoodKey, getEatenCanonicalKeys } from "@/lib/food-utils";
+import { useLocale } from "@/lib/i18n/use-locale";
 import { useFoodLogs } from "@/lib/use-food-logs";
 import type { FoodWithRelations } from "@/types/domain";
 import { FoodImage } from "@/components/food-image";
 
 export function AreaEatenFoods({ foods }: { foods: FoodWithRelations[] }) {
+  const { t } = useLocale();
   const { logs } = useFoodLogs();
   const canonicalFoods = dedupeFoodsByCanonical(foods);
   const eatenKeys = getEatenCanonicalKeys(foods, logs);
@@ -16,8 +18,8 @@ export function AreaEatenFoods({ foods }: { foods: FoodWithRelations[] }) {
     <section id="area-eaten-foods" className="scroll-mt-24 space-y-4">
       <div className="flex flex-wrap items-end justify-between gap-3">
         <div>
-          <h2 className="text-xl font-black text-ink">このエリアで食べたフード</h2>
-          {eatenFoods.length === 0 ? <p className="mt-1 text-sm font-bold leading-6 text-slate-500">このエリアの1品目を見つけよう。</p> : null}
+          <h2 className="text-xl font-black text-ink">{t("area.eatenFoods")}</h2>
+          {eatenFoods.length === 0 ? <p className="mt-1 text-sm font-bold leading-6 text-slate-500">{t("area.eatenFoodsEmpty")}</p> : null}
         </div>
         {eatenFoods.length > 0 ? <p className="text-xs font-black text-[#8a5b16]">{eatenFoods.length}品</p> : null}
       </div>
@@ -38,7 +40,7 @@ export function AreaEatenFoods({ foods }: { foods: FoodWithRelations[] }) {
           </div>
           {eatenFoods.length > 8 ? (
             <Link href="/eaten" className="inline-flex text-sm font-black text-park">
-              すべて見る
+              {t("area.eatenFoodsViewAll")}
             </Link>
           ) : null}
         </>

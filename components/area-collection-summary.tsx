@@ -1,10 +1,12 @@
 "use client";
 
 import { dedupeFoodsByCanonical, getCanonicalFoodKey, getEatenCanonicalKeys, isCompletableFood } from "@/lib/food-utils";
+import { useLocale } from "@/lib/i18n/use-locale";
 import { useFoodLogs } from "@/lib/use-food-logs";
 import type { FoodWithRelations } from "@/types/domain";
 
 export function AreaCollectionSummary({ foods, allFoods = foods }: { foods: FoodWithRelations[]; allFoods?: FoodWithRelations[] }) {
+  const { t } = useLocale();
   const { logs } = useFoodLogs();
   const canonicalFoods = dedupeFoodsByCanonical(foods);
   const eatenCanonicalKeys = getEatenCanonicalKeys(allFoods, logs);
@@ -20,8 +22,8 @@ export function AreaCollectionSummary({ foods, allFoods = foods }: { foods: Food
   if (completion.total === 0) {
     return (
       <div className="border-b border-[#eadcc8] pb-5">
-        <p className="text-lg font-black leading-8 text-[#071b3a]">このエリアの販売中フードは現在確認中です</p>
-        <p className="mt-1 text-xs font-bold leading-5 text-slate-500">販売終了フードは図鑑の記録として残ります。</p>
+        <p className="text-lg font-black leading-8 text-[#071b3a]">{t("area.checkingNow")}</p>
+        <p className="mt-1 text-xs font-bold leading-5 text-slate-500">{t("area.endedFoodsNote")}</p>
       </div>
     );
   }
@@ -31,7 +33,7 @@ export function AreaCollectionSummary({ foods, allFoods = foods }: { foods: Food
       <div className="border-b border-[#eadcc8] pb-5">
         <div className="flex items-center justify-between gap-4">
           <div>
-            <p className="text-lg font-black leading-8 text-[#071b3a]">このエリアはコンプリート</p>
+            <p className="text-lg font-black leading-8 text-[#071b3a]">{t("area.complete")}</p>
             <p className="mt-1 text-xs font-bold leading-5 text-slate-500">食べた {completion.eaten} / 販売中 {completion.total}品（登録分）</p>
           </div>
           <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-[#fdbb30] text-lg font-black leading-none text-[#071b3a] ring-1 ring-white/90 shadow-[inset_0_0_6px_rgba(255,255,255,0.42),0_1px_4px_rgba(7,27,58,0.18)]" aria-hidden>

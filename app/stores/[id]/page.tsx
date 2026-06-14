@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ChevronLeft, Clock, ExternalLink, MapPin, Store, type LucideIcon } from "lucide-react";
+import { I18nText } from "@/components/i18n-text";
 import { StoreFoodList } from "@/components/store-food-list";
 import { StoreVisual } from "@/components/store-visual";
 import { listFoods } from "@/lib/repositories/foods";
@@ -31,7 +32,7 @@ export default async function StoreDetailPage({ params }: { params: Promise<{ id
     <div className="mx-auto max-w-4xl space-y-8">
       <Link href="/stores" className="inline-flex min-h-10 items-center gap-2 rounded-full border border-slate-200 bg-white/70 px-3 text-sm font-black text-slate-700">
         <ChevronLeft size={17} aria-hidden />
-        店舗一覧へ戻る
+        <I18nText k="store.backToList" />
       </Link>
 
       <section className="space-y-5 border-b border-slate-200 pb-7">
@@ -53,7 +54,9 @@ export default async function StoreDetailPage({ params }: { params: Promise<{ id
       <section className="space-y-4">
         <div>
           <p className="text-xs font-black text-park">販売商品</p>
-          <h2 className="mt-1 text-2xl font-black text-ink">この店舗で買える商品</h2>
+          <h2 className="mt-1 text-2xl font-black text-ink">
+            <I18nText k="store.availableFoods" />
+          </h2>
           <p className="mt-2 text-sm font-bold text-slate-500">{displayFoods.length}品を掲載しています。</p>
         </div>
         <StoreFoodList foods={displayFoods} />

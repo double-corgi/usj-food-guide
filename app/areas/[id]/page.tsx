@@ -5,6 +5,7 @@ import { FoodImage } from "@/components/food-image";
 import { AreaCollectionSummary } from "@/components/area-collection-summary";
 import { AreaEatenFoods } from "@/components/area-eaten-foods";
 import { AreaFoodStatusLists } from "@/components/area-food-status-lists";
+import { I18nText } from "@/components/i18n-text";
 import { getAreaImageByName } from "@/lib/area-images";
 import { shopTypeLabels } from "@/lib/constants";
 import { dedupeFoodsByCanonical, foodMatchesArea, formatFoodPrice, getRemainingDays, getSaleUrgencyLabel, isEndingSoon } from "@/lib/food-utils";
@@ -40,7 +41,7 @@ export default async function AreaDetailPage({ params }: { params: Promise<{ id:
       <div className="mx-auto max-w-[1080px] space-y-10">
         <Link href="/areas" className="inline-flex items-center gap-2 text-sm font-black text-[#071b3a]">
           <ChevronLeft size={17} aria-hidden />
-          エリア一覧へ戻る
+          <I18nText k="area.backToList" />
         </Link>
 
         <section className="space-y-5">
@@ -65,8 +66,12 @@ export default async function AreaDetailPage({ params }: { params: Promise<{ id:
         {firstBites.length > 0 ? (
           <section className="space-y-4">
             <div>
-              <h2 className="text-xl font-black text-ink">まず食べたい3品</h2>
-              <p className="mt-1 text-sm font-bold leading-6 text-slate-500">このエリアで見つけるならここから。</p>
+              <h2 className="text-xl font-black text-ink">
+                <I18nText k="area.firstPicks" />
+              </h2>
+              <p className="mt-1 text-sm font-bold leading-6 text-slate-500">
+                <I18nText k="area.firstPicksDescription" />
+              </p>
             </div>
             <div className="flex snap-x gap-4 overflow-x-auto pb-2 [-ms-overflow-style:none] [scrollbar-width:none] lg:grid lg:grid-cols-3 lg:overflow-visible lg:pb-0 [&::-webkit-scrollbar]:hidden">
               {firstBites.map((food) => (
@@ -84,8 +89,12 @@ export default async function AreaDetailPage({ params }: { params: Promise<{ id:
 
         {endingSoonFoods.length > 0 ? (
           <section className="space-y-4">
-            <h2 className="text-xl font-black text-ink">終了間近のフード</h2>
-            <p className="mt-1 text-sm font-bold text-slate-500">このエリアで逃しやすい商品を販売終了日が近い順に表示します。</p>
+            <h2 className="text-xl font-black text-ink">
+              <I18nText k="area.endingSoon" />
+            </h2>
+            <p className="mt-1 text-sm font-bold text-slate-500">
+              <I18nText k="area.endingSoonDescription" />
+            </p>
             <div className="flex snap-x gap-4 overflow-x-auto pb-2 [-ms-overflow-style:none] [scrollbar-width:none] lg:grid lg:grid-cols-3 lg:overflow-visible lg:pb-0 [&::-webkit-scrollbar]:hidden">
               {endingSoonFoods.map((food) => (
                 <Link key={food.id} href={`/foods/${food.id}`} className="w-[74vw] max-w-[300px] shrink-0 snap-start transition active:scale-[0.99] lg:w-auto lg:max-w-none">
@@ -124,7 +133,9 @@ function AreaShopList({ shops }: { shops: AreaShopRow[] }) {
   return (
     <section className="space-y-4">
       <div className="flex items-end justify-between gap-3 border-b border-[#eadcc8] pb-3">
-        <h2 className="text-xl font-black text-ink">販売場所</h2>
+        <h2 className="text-xl font-black text-ink">
+          <I18nText k="area.salesLocations" />
+        </h2>
         <p className="text-xs font-black text-slate-500">{shops.length}か所</p>
       </div>
       <div className="grid gap-0 lg:grid-cols-2 lg:gap-x-8">

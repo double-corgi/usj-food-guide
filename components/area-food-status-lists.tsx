@@ -10,11 +10,13 @@ import {
   getSaleStatus,
   isCompletableFood
 } from "@/lib/food-utils";
+import { useLocale } from "@/lib/i18n/use-locale";
 import { useFoodLogs } from "@/lib/use-food-logs";
 import type { FoodWithRelations } from "@/types/domain";
 import { FoodImage } from "@/components/food-image";
 
 export function AreaFoodStatusLists({ foods, areaId }: { foods: FoodWithRelations[]; areaId?: string }) {
+  const { t } = useLocale();
   const { logs } = useFoodLogs();
   const canonicalFoods = dedupeFoodsByCanonical(foods);
   const eatenKeys = getEatenCanonicalKeys(foods, logs);
@@ -30,14 +32,14 @@ export function AreaFoodStatusLists({ foods, areaId }: { foods: FoodWithRelation
       <section id="area-missing-foods" className="scroll-mt-24 space-y-4">
         <div className="flex flex-wrap items-end justify-between gap-3">
           <div>
-            <h2 className="text-xl font-black text-ink">残りのフード</h2>
+            <h2 className="text-xl font-black text-ink">{t("area.remainingFoods")}</h2>
           </div>
           {missingFoods.length > 0 ? <p className="rounded-full bg-[#fffaf5] px-3 py-1 text-xs font-black text-[#8a5b16] ring-1 ring-[#eadcc8]">あと{missingFoods.length}品</p> : null}
         </div>
-        <FoodTileGrid foods={missingFoods.slice(0, 12)} empty="現在販売中の残り商品はありません。" />
+        <FoodTileGrid foods={missingFoods.slice(0, 12)} empty={t("area.remainingFoodsEmpty")} />
         {missingFoods.length > 12 ? (
           <Link href={`/foods?${new URLSearchParams({ ...(areaId ? { area: areaId } : {}), sale: "active", sort: "uneaten" }).toString()}`} className="inline-flex text-sm font-black text-park">
-            残りをすべて見る
+            {t("area.viewAllRemaining")}
           </Link>
         ) : null}
       </section>
@@ -45,14 +47,14 @@ export function AreaFoodStatusLists({ foods, areaId }: { foods: FoodWithRelation
       {endedFoods.length > 0 ? (
         <details className="border-y border-[#eadcc8] py-4">
           <summary className="flex cursor-pointer list-none items-center justify-between gap-3">
-            <span className="text-lg font-black text-ink">販売終了フード</span>
+            <span className="text-lg font-black text-ink">{t("area.endedFoods")}</span>
             <span className="inline-flex items-center gap-2 text-xs font-black text-slate-500">
               {endedFoods.length}品
               <ChevronDown size={14} aria-hidden />
             </span>
           </summary>
           <div className="mt-4">
-            <FoodTileGrid foods={endedFoods} empty="このエリアに販売終了フードはありません。" ended />
+            <FoodTileGrid foods={endedFoods} empty={t("area.endedFoodsEmpty")} ended />
           </div>
         </details>
       ) : null}
