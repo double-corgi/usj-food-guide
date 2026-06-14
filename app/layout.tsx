@@ -5,6 +5,7 @@ import { AppFooter } from "@/components/app-footer";
 import { AppHeader } from "@/components/app-header";
 import { PwaRegister } from "@/components/pwa-register";
 import { appBrand } from "@/lib/constants";
+import { LocaleProvider } from "@/lib/i18n/use-locale";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://new-app-chi-rosy.vercel.app";
 const siteOrigin = siteUrl.replace(/\/$/, "");
@@ -63,11 +64,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="ja">
       <body className="flex min-h-dvh flex-col">
-        <AppHeader />
-        <main className="mx-auto w-full max-w-7xl flex-1 px-4 pb-28 pt-6 sm:px-6 md:pb-8 md:pt-8 lg:px-8">{children}</main>
-        <AppFooter />
-        <AnalyticsTracker />
-        <PwaRegister />
+        <LocaleProvider>
+          <AppHeader />
+          <main className="mx-auto w-full max-w-7xl flex-1 px-4 pb-28 pt-6 sm:px-6 md:pb-8 md:pt-8 lg:px-8">{children}</main>
+          <AppFooter />
+          <AnalyticsTracker />
+          <PwaRegister />
+        </LocaleProvider>
       </body>
     </html>
   );
