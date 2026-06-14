@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { MapPin } from "lucide-react";
 import { formatFoodPrice, formatPrice, getCanonicalFoodId, getCanonicalFoodKey, getDisplayLocationAreaName, getFoodAreaDisplay, getSaleStatus, getSaleUrgencyLabel, isEatenCanonical } from "@/lib/food-utils";
+import { useLocale } from "@/lib/i18n/use-locale";
 import type { FoodWithRelations, UserFoodLog } from "@/types/domain";
 import { FoodImage } from "@/components/food-image";
 
@@ -15,6 +16,7 @@ export function FoodCard({
   logs: UserFoodLog[];
   onToggleEaten: (foodId: string, spentAmount?: number) => void;
 }) {
+  const { t } = useLocale();
   const locations = getDisplayLocations(food);
   const primaryLocation = locations[0];
   const areaDisplay = getFoodAreaDisplay(food);
@@ -24,7 +26,7 @@ export function FoodCard({
   const eaten = isEatenCanonical(canonicalFoods, logs, food);
   const eatToggleFoodId = eatenActionFoodId;
   const state = eaten ? cardStates.eaten : cardStates.uneaten;
-  const badges = getCardBadges({ food });
+  const badges = getCardBadges({ food, t });
 
   return (
     <article data-food-card data-food-name={food.name} className={`group relative h-[462px] min-w-0 overflow-hidden rounded-[1.25rem] bg-white/86 ring-1 ring-slate-200/55 transition duration-200 active:scale-[0.99] md:hover:-translate-y-0.5 ${state.borderClass} ${getSaleStatus(food) === "ended" ? "opacity-75 grayscale" : ""}`}>
@@ -45,7 +47,7 @@ export function FoodCard({
               {food.name}
             </p>
             <p data-food-card-price className={`mt-2 h-7 truncate ${knownPrice ? "text-lg font-black leading-7 text-park" : "text-xs font-bold leading-7 text-slate-500"}`}>
-              {displayPrice(food)}
+              {displayPrice(food, t)}
             </p>
           </div>
           <p data-food-card-area className="mt-auto flex h-8 min-w-0 items-start gap-1.5 text-xs font-bold leading-4 text-slate-500">
@@ -68,7 +70,7 @@ export function FoodCard({
             eaten ? "bg-park text-white" : "bg-ink text-white"
           }`}
         >
-          {eaten ? "食べた済み" : "食べた"}
+          {eaten ? t("foodCard.eatenDone") : t("common.eaten")}
         </button>
       </div>
     </article>
@@ -105,10 +107,10 @@ function hasPrice(food: FoodWithRelations) {
   return Boolean(food.priceMin ?? food.price ?? food.locations?.find((location) => location.price)?.price);
 }
 
-function displayPrice(food: FoodWithRelations) {
+function displayPrice(food: FoodWithRelations, t: ReturnType<typeof useLocale>["t"]) {
   const locationPrice = food.locations?.find((location) => location.price)?.price;
   if (!food.price && !food.priceMin && locationPrice) return formatPrice(locationPrice);
-  return hasPrice(food) ? formatFoodPrice(food) : "価格未確認";
+  return hasPrice(food) ? formatFoodPrice(food) : t("foods.priceUnknown");
 }
 
 function getStoredSpendAmount(food: FoodWithRelations) {
@@ -126,15 +128,17 @@ function getCanonicalActionFoodId(foods: FoodWithRelations[], logs: UserFoodLog[
 }
 
 function getCardBadges({
-  food
+  food,
+  t
 }: {
   food: FoodWithRelations;
+  t: ReturnType<typeof useLocale>["t"];
 }) {
   const badges: Array<{ label: string; className: string }> = [];
   const urgencyLabel = getSaleUrgencyLabel(food);
   if (urgencyLabel && getSaleStatus(food) === "active") badges.push({ label: urgencyLabel, className: "bg-berry text-white" });
-  if (food.isLimited) badges.push({ label: "限定", className: "animate-soft-glow bg-berry text-white" });
-  if (getSaleStatus(food) === "ended") badges.unshift({ label: "販売終了", className: "bg-slate-800/88 text-white" });
-  if (getSaleStatus(food) === "upcoming") badges.unshift({ label: "近日販売", className: "bg-sun text-ink" });
+  if (food.isLimited) badges.push({ label: t("foods.badgeLimited"), className: "animate-soft-glow bg-berry text-white" });
+  if (getSaleStatus(food) === "ended") badges.unshift({ label: t("common.ended"), className: "bg-slate-800/88 text-white" });
+  if (getSaleStatus(food) === "upcoming") badges.unshift({ label: t("foods.badgeUpcoming"), className: "bg-sun text-ink" });
   return badges.slice(0, 2);
 }

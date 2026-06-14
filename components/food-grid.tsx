@@ -6,6 +6,7 @@ import { ChevronDown, Search, SlidersHorizontal } from "lucide-react";
 import { categoryLabels, diningTypeLabels, shopTypeLabels, statusLabels } from "@/lib/constants";
 import { dedupeFoodsByCanonical, foodMatchesArea, getFoodAreaNames, getFoodAreaSummary, getSaleStatus, getSaleType, isEndingSoon, getCanonicalFoodKey, getEatenCanonicalKeys, isEatenCanonical, normalizeDisplayAreaName, normalizeFoodName } from "@/lib/food-utils";
 import { REQUEST_FORM_URL } from "@/lib/request-form-url";
+import { useLocale } from "@/lib/i18n/use-locale";
 import { getCategoryPlaceholder, getFoodImage } from "@/lib/utils/image";
 import { useFoodLogs } from "@/lib/use-food-logs";
 import type { DiningType, FoodCategory, FoodStatus, FoodWithRelations, ShopType } from "@/types/domain";
@@ -56,6 +57,7 @@ export function FoodGrid({
   generatedAt?: string;
   showRequestCta?: boolean;
 }) {
+  const { t } = useLocale();
   const { logs, ready, error, toggleEaten } = useFoodLogs();
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState<FoodCategory | "all">(initialCategory ?? "all");
@@ -120,10 +122,10 @@ export function FoodGrid({
     <section className="min-w-0 space-y-6 overflow-x-hidden">
       <div className="min-w-0">
         <div>
-          <p className="text-xs font-black tracking-[0.16em] text-park/70">フード図鑑</p>
-          <h1 className="mt-2 text-3xl font-black tracking-tight text-ink md:text-4xl">{title ?? "フードを探す"}</h1>
+          <p className="text-xs font-black tracking-[0.16em] text-park/70">{t("foods.kicker")}</p>
+          <h1 className="mt-2 text-3xl font-black tracking-tight text-ink md:text-4xl">{title ?? t("foods.title")}</h1>
           <p className="mt-2 max-w-2xl text-sm font-semibold leading-6 text-slate-500">
-            写真で選んで、残りを見つける。
+            {t("foods.subtitle")}
           </p>
         </div>
       </div>
@@ -146,7 +148,7 @@ export function FoodGrid({
                 }`}
               >
                 <span className="text-sm leading-none" aria-hidden>{item.icon}</span>
-                {item.label}
+                {item.value === "all" ? t("foods.categoryAll") : item.label}
               </button>
             ))}
           </div>
@@ -165,7 +167,7 @@ export function FoodGrid({
               if (event.key === "Enter") commitSearch(event.currentTarget.value);
             }}
             className="h-12 w-full rounded-full border border-slate-200 bg-white pl-10 pr-4 text-base font-bold outline-none focus:border-park focus:ring-4 focus:ring-mint"
-            placeholder="メニュー・店舗・エリアで検索"
+            placeholder={t("foods.searchPlaceholder")}
           />
           </div>
           <button
@@ -174,13 +176,13 @@ export function FoodGrid({
             className="inline-flex h-12 items-center justify-center gap-2 rounded-full border border-slate-200 bg-white/78 px-4 text-sm font-black text-slate-700"
           >
             <SlidersHorizontal size={18} aria-hidden />
-            表示条件
+            {t("foods.filterToggle")}
             <ChevronDown size={17} aria-hidden className={filtersOpen ? "rotate-180" : ""} />
           </button>
         </div>
         <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[11px] font-bold text-slate-400">
-          <span>{filteredFoods.length}品</span>
-          <span>図鑑 {canonicalFoods.length}品</span>
+          <span>{t("foods.resultCount", { count: filteredFoods.length })}</span>
+          <span>{t("foods.catalogCount", { count: canonicalFoods.length })}</span>
         </div>
 
         {query.trim() ? (
@@ -194,23 +196,23 @@ export function FoodGrid({
                 </span>
               </Link>
             ))}
-            {filteredFoods.length === 0 ? <p className="px-2 py-1 text-xs font-black text-slate-500">該当なし</p> : null}
+            {filteredFoods.length === 0 ? <p className="px-2 py-1 text-xs font-black text-slate-500">{t("foods.noResultsInline")}</p> : null}
           </div>
         ) : null}
 
         <div className={`${filtersOpen ? "grid" : "hidden"} gap-3 md:grid-cols-4 lg:grid-cols-6`}>
         <select value={saleFilter} onChange={(event) => { setSaleFilter(event.target.value as SaleFilter); setVisibleCount(60); }} className="h-11 rounded-lg border border-slate-200 px-3 text-sm font-bold">
-          <option value="active">販売中</option>
-          <option value="endingSoon">終了間近</option>
-          <option value="ended">販売終了</option>
-          <option value="permanent">常設</option>
-          <option value="limited">期間限定</option>
-          <option value="upcoming">近日販売</option>
-          <option value="unknown">販売期間確認中</option>
-          <option value="all">図鑑すべて</option>
+          <option value="active">{t("common.saleActive")}</option>
+          <option value="endingSoon">{t("foods.saleFilterEndingSoon")}</option>
+          <option value="ended">{t("common.ended")}</option>
+          <option value="permanent">{t("foods.saleFilterPermanent")}</option>
+          <option value="limited">{t("common.limited")}</option>
+          <option value="upcoming">{t("foods.saleFilterUpcoming")}</option>
+          <option value="unknown">{t("foods.saleFilterUnknown")}</option>
+          <option value="all">{t("foods.saleFilterAll")}</option>
         </select>
         <select value={category} onChange={(event) => { setCategory(event.target.value as FoodCategory | "all"); setVisibleCount(60); }} className="h-11 rounded-lg border border-slate-200 px-3 text-sm font-bold">
-          <option value="all">全ジャンル</option>
+          <option value="all">{t("foods.categoryFilterAll")}</option>
           {Object.entries(categoryLabels).map(([value, label]) => (
             <option key={value} value={value}>
               {label}
@@ -218,7 +220,7 @@ export function FoodGrid({
           ))}
         </select>
         <select value={areaId} onChange={(event) => { setAreaId(event.target.value); setVisibleCount(60); }} className="h-11 rounded-lg border border-slate-200 px-3 text-sm font-bold">
-          <option value="all">全エリア</option>
+          <option value="all">{t("foods.areaFilterAll")}</option>
           {areas.map((area) => (
             <option key={area.id} value={area.id}>
               {area.name}
@@ -226,7 +228,7 @@ export function FoodGrid({
           ))}
         </select>
         <select value={shopId} onChange={(event) => { setShopId(event.target.value); setVisibleCount(60); }} className="h-11 rounded-lg border border-slate-200 px-3 text-sm font-bold">
-          <option value="all">全店舗</option>
+          <option value="all">{t("foods.shopFilterAll")}</option>
           {shops.map((shop) => (
             <option key={shop.id} value={shop.id}>
               {shop.name}
@@ -234,7 +236,7 @@ export function FoodGrid({
           ))}
         </select>
         <select value={shopType} onChange={(event) => { setShopType(event.target.value as ShopType | "all"); setVisibleCount(60); }} className="h-11 rounded-lg border border-slate-200 px-3 text-sm font-bold">
-          <option value="all">全店舗種別</option>
+          <option value="all">{t("foods.shopTypeFilterAll")}</option>
           {Object.entries(shopTypeLabels).map(([value, label]) => (
             <option key={value} value={value}>
               {label}
@@ -242,7 +244,7 @@ export function FoodGrid({
           ))}
         </select>
         <select value={diningType} onChange={(event) => { setDiningType(event.target.value as DiningType | "all"); setVisibleCount(60); }} className="h-11 rounded-lg border border-slate-200 px-3 text-sm font-bold">
-          <option value="all">食べ方すべて</option>
+          <option value="all">{t("foods.diningTypeFilterAll")}</option>
           {Object.entries(diningTypeLabels).map(([value, label]) => (
             <option key={value} value={value}>
               {label}
@@ -250,7 +252,7 @@ export function FoodGrid({
           ))}
         </select>
         <select value={status} onChange={(event) => { setStatus(event.target.value as FoodStatus | "all"); setVisibleCount(60); }} className="h-11 rounded-lg border border-slate-200 px-3 text-sm font-bold">
-          <option value="all">確認状況すべて</option>
+          <option value="all">{t("foods.statusFilterAll")}</option>
           {Object.entries(statusLabels).map(([value, label]) => (
             <option key={value} value={value}>
               {label}
@@ -258,35 +260,35 @@ export function FoodGrid({
           ))}
         </select>
         <select value={priceFilter} onChange={(event) => { setPriceFilter(event.target.value as PriceFilter); setVisibleCount(60); }} className="h-11 rounded-lg border border-slate-200 px-3 text-sm font-bold">
-          <option value="all">価格すべて</option>
-          <option value="known">価格確認済</option>
-          <option value="unknown">価格未確認</option>
+          <option value="all">{t("foods.priceFilterAll")}</option>
+          <option value="known">{t("foods.priceFilterKnown")}</option>
+          <option value="unknown">{t("foods.priceFilterUnknown")}</option>
         </select>
         <select value={sort} onChange={(event) => setSort(event.target.value as SortMode)} className="h-11 rounded-lg border border-slate-200 px-3 text-sm font-bold">
-          <option value="recommended">おすすめ順</option>
-          <option value="new">新しい順</option>
-          <option value="image">画像あり優先</option>
-          <option value="status">公開情報確認順</option>
-          <option value="uneaten">残り優先</option>
-          <option value="category">カテゴリ順</option>
-          <option value="shop">店舗順</option>
-          <option value="priceAsc">価格安い順</option>
-          <option value="priceDesc">価格高い順</option>
-          <option value="walk">食べ歩き優先</option>
+          <option value="recommended">{t("foods.sortRecommended")}</option>
+          <option value="new">{t("foods.sortNew")}</option>
+          <option value="image">{t("foods.sortImage")}</option>
+          <option value="status">{t("foods.sortStatus")}</option>
+          <option value="uneaten">{t("foods.sortUneaten")}</option>
+          <option value="category">{t("foods.sortCategory")}</option>
+          <option value="shop">{t("foods.sortShop")}</option>
+          <option value="priceAsc">{t("foods.sortPriceAsc")}</option>
+          <option value="priceDesc">{t("foods.sortPriceDesc")}</option>
+          <option value="walk">{t("foods.sortWalk")}</option>
         </select>
         </div>
         <div className={`${filtersOpen ? "flex" : "hidden"} flex-wrap gap-2`}>
-          <TogglePill active={imageOnly} label="写真あり" onClick={() => setImageOnly((current) => !current)} />
-          <TogglePill active={priceFilter === "known"} label="価格確認済" onClick={() => setPriceFilter((current) => current === "known" ? "all" : "known")} />
-          <TogglePill active={priceFilter === "unknown"} label="価格未確認" onClick={() => setPriceFilter((current) => current === "unknown" ? "all" : "unknown")} />
-          <TogglePill active={saleFilter === "active"} label="販売中" onClick={() => setSaleFilter((current) => current === "active" ? "all" : "active")} />
-          <TogglePill active={saleFilter === "endingSoon"} label="終了間近" onClick={() => setSaleFilter((current) => current === "endingSoon" ? "all" : "endingSoon")} />
-          <TogglePill active={saleFilter === "permanent"} label="常設" onClick={() => setSaleFilter((current) => current === "permanent" ? "all" : "permanent")} />
-          <TogglePill active={saleFilter === "limited"} label="期間限定" onClick={() => setSaleFilter((current) => current === "limited" ? "all" : "limited")} />
-          <TogglePill active={saleFilter === "all"} label="図鑑すべて" onClick={() => setSaleFilter("all")} />
-          <TogglePill active={diningType === "takeout"} label="テイクアウト可" onClick={() => setDiningType((current) => current === "takeout" ? "all" : "takeout")} />
-          <TogglePill active={diningType === "eat_in"} label="店内飲食" onClick={() => setDiningType((current) => current === "eat_in" ? "all" : "eat_in")} />
-          <TogglePill active={diningType === "food_cart"} label="カート販売" onClick={() => setDiningType((current) => current === "food_cart" ? "all" : "food_cart")} />
+          <TogglePill active={imageOnly} label={t("foods.toggleImageOnly")} onClick={() => setImageOnly((current) => !current)} />
+          <TogglePill active={priceFilter === "known"} label={t("foods.priceFilterKnown")} onClick={() => setPriceFilter((current) => current === "known" ? "all" : "known")} />
+          <TogglePill active={priceFilter === "unknown"} label={t("foods.priceFilterUnknown")} onClick={() => setPriceFilter((current) => current === "unknown" ? "all" : "unknown")} />
+          <TogglePill active={saleFilter === "active"} label={t("common.saleActive")} onClick={() => setSaleFilter((current) => current === "active" ? "all" : "active")} />
+          <TogglePill active={saleFilter === "endingSoon"} label={t("foods.saleFilterEndingSoon")} onClick={() => setSaleFilter((current) => current === "endingSoon" ? "all" : "endingSoon")} />
+          <TogglePill active={saleFilter === "permanent"} label={t("foods.saleFilterPermanent")} onClick={() => setSaleFilter((current) => current === "permanent" ? "all" : "permanent")} />
+          <TogglePill active={saleFilter === "limited"} label={t("common.limited")} onClick={() => setSaleFilter((current) => current === "limited" ? "all" : "limited")} />
+          <TogglePill active={saleFilter === "all"} label={t("foods.saleFilterAll")} onClick={() => setSaleFilter("all")} />
+          <TogglePill active={diningType === "takeout"} label={t("foods.toggleTakeout")} onClick={() => setDiningType((current) => current === "takeout" ? "all" : "takeout")} />
+          <TogglePill active={diningType === "eat_in"} label={t("foods.toggleEatIn")} onClick={() => setDiningType((current) => current === "eat_in" ? "all" : "eat_in")} />
+          <TogglePill active={diningType === "food_cart"} label={t("foods.toggleFoodCart")} onClick={() => setDiningType((current) => current === "food_cart" ? "all" : "food_cart")} />
         </div>
       </div>
 
@@ -311,26 +313,26 @@ export function FoodGrid({
               onClick={() => setVisibleCount((current) => current + 60)}
               className="mx-auto block min-h-12 rounded-lg bg-ink px-6 text-sm font-black text-white"
             >
-              さらに60件表示
+              {t("foods.loadMore")}
             </button>
           ) : null}
         </>
       ) : (
         <div className="rounded-lg border border-slate-200 bg-white p-8 text-center">
-          <p className="text-lg font-black text-ink">該当するメニューがありません</p>
-          <p className="mt-2 text-sm text-slate-500">検索条件やチェック状態を変更してください。</p>
+          <p className="text-lg font-black text-ink">{t("foods.noMatchTitle")}</p>
+          <p className="mt-2 text-sm text-slate-500">{t("foods.noMatchDescription")}</p>
           <a href={REQUEST_FORM_URL} target="_blank" rel="noopener noreferrer" className="mt-4 inline-flex min-h-11 items-center justify-center rounded-full bg-park px-5 text-sm font-black text-white">
-            情報提供
+            {t("foods.requestCta")}
           </a>
         </div>
       )}
 
       {showRequestCta ? (
         <section className="border-t border-slate-200 pt-5 text-center">
-          <p className="text-sm font-black text-ink">掲載してほしい商品を送る</p>
-          <p className="mt-1 text-xs font-bold text-slate-500">投稿内容は管理者確認後に必要に応じて反映します。</p>
+          <p className="text-sm font-black text-ink">{t("foods.requestSectionTitle")}</p>
+          <p className="mt-1 text-xs font-bold text-slate-500">{t("foods.requestSectionDescription")}</p>
           <a href={REQUEST_FORM_URL} target="_blank" rel="noopener noreferrer" className="mt-3 inline-flex min-h-11 items-center justify-center rounded-full bg-ink px-5 text-sm font-black text-white">
-            情報提供
+            {t("foods.requestCta")}
           </a>
         </section>
       ) : null}

@@ -91,7 +91,6 @@ export default async function FoodsPage({
     <FoodGrid
       foods={foods}
       mode={parseMode(resolvedSearchParams.mode)}
-      title="フードを探す"
       generatedAt={typeof generatedSummary.generatedAt === "string" ? generatedSummary.generatedAt : undefined}
       initialCategory={parseCategory(resolvedSearchParams.category)}
       initialAreaId={resolvedSearchParams.area}
