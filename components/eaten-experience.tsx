@@ -277,7 +277,7 @@ function NextWantCard({ food }: { food: FoodWithRelations }) {
           <span className="text-park">{formatFoodPrice(food)}</span>
           <span className="line-clamp-1 text-slate-500">{getFoodAreaSummary(food)}</span>
         </div>
-        <p className="mt-1 text-[11px] font-bold text-slate-400">{food.isLimited ? `${t("common.limited")} / ` : ""}{getSaleStatusLabel(food)}</p>
+        <p className="mt-1 text-[11px] font-bold text-slate-400">{food.isLimited ? `${t("foods.badgeLimited")} / ` : ""}{getSaleStatusLabel(food)}</p>
       </div>
     </Link>
   );
