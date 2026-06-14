@@ -70,7 +70,7 @@ export function FoodCard({
             eaten ? "bg-park text-white" : "bg-ink text-white"
           }`}
         >
-          {eaten ? t("foodCard.eatenDone") : t("common.eaten")}
+          {eaten ? t("foodCard.eatenDone") : t("foodCard.markEaten")}
         </button>
       </div>
     </article>

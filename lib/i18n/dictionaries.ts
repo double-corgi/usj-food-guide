@@ -121,7 +121,8 @@ export const dictionaries = {
     "foods.priceUnknown": "価格未確認",
     "foods.badgeLimited": "限定",
     "foods.badgeUpcoming": "近日販売",
-    "foodCard.eatenDone": "食べた済み"
+    "foodCard.eatenDone": "食べた済み",
+    "foodCard.markEaten": "食べた"
   },
   en: {
     "nav.home": "Home",
@@ -243,7 +244,8 @@ export const dictionaries = {
     "foods.priceUnknown": "Price not confirmed",
     "foods.badgeLimited": "Limited",
     "foods.badgeUpcoming": "Upcoming",
-    "foodCard.eatenDone": "Eaten"
+    "foodCard.eatenDone": "Eaten",
+    "foodCard.markEaten": "Mark as eaten"
   },
   ko: {
     "nav.home": "홈",
@@ -365,7 +367,8 @@ export const dictionaries = {
     "foods.priceUnknown": "가격 미확인",
     "foods.badgeLimited": "한정",
     "foods.badgeUpcoming": "곧 판매",
-    "foodCard.eatenDone": "먹음"
+    "foodCard.eatenDone": "먹었어요",
+    "foodCard.markEaten": "먹은 것으로 기록"
   },
   "zh-TW": {
     "nav.home": "首頁",
@@ -487,7 +490,8 @@ export const dictionaries = {
     "foods.priceUnknown": "價格未確認",
     "foods.badgeLimited": "限定",
     "foods.badgeUpcoming": "即將販售",
-    "foodCard.eatenDone": "已吃"
+    "foodCard.eatenDone": "已吃過",
+    "foodCard.markEaten": "標記為已吃"
   }
 } as const satisfies Record<Locale, Record<string, string>>;
 
