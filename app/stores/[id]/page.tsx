@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ChevronLeft, Clock, ExternalLink, MapPin, Store, type LucideIcon } from "lucide-react";
+import type { ReactNode } from "react";
 import { I18nText } from "@/components/i18n-text";
 import { StoreFoodList } from "@/components/store-food-list";
 import { StoreVisual } from "@/components/store-visual";
@@ -41,7 +42,9 @@ export default async function StoreDetailPage({ params }: { params: Promise<{ id
         </div>
 
         <div className="space-y-3">
-          <p className="text-xs font-black text-park">店舗</p>
+          <p className="text-xs font-black text-park">
+            <I18nText k="store.detailKicker" />
+          </p>
           <h1 className="text-3xl font-black leading-tight tracking-tight text-ink md:text-4xl">{store.name}</h1>
           <p className="inline-flex items-center gap-2 text-sm font-black text-slate-500">
             <MapPin size={16} className="text-park" aria-hidden />
@@ -53,33 +56,47 @@ export default async function StoreDetailPage({ params }: { params: Promise<{ id
 
       <section className="space-y-4">
         <div>
-          <p className="text-xs font-black text-park">販売商品</p>
+          <p className="text-xs font-black text-park">
+            <I18nText k="store.availableFoodsKicker" />
+          </p>
           <h2 className="mt-1 text-2xl font-black text-ink">
             <I18nText k="store.availableFoods" />
           </h2>
-          <p className="mt-2 text-sm font-bold text-slate-500">{displayFoods.length}品を掲載しています。</p>
+          <p className="mt-2 text-sm font-bold text-slate-500">
+            <I18nText k="store.availableFoodsCount" params={{ count: displayFoods.length }} />
+          </p>
         </div>
         <StoreFoodList foods={displayFoods} />
       </section>
 
       <section className="space-y-4 border-t border-slate-200 pt-7">
         <div>
-          <p className="text-xs font-black text-park">店舗情報</p>
-          <h2 className="mt-1 text-xl font-black text-ink">確認できる情報</h2>
+          <p className="text-xs font-black text-park">
+            <I18nText k="store.infoKicker" />
+          </p>
+          <h2 className="mt-1 text-xl font-black text-ink">
+            <I18nText k="store.infoSectionTitle" />
+          </h2>
         </div>
         <div className="grid gap-4 sm:grid-cols-2">
-          <StoreInfoItem icon={MapPin} title="エリア" body={store.areaName} />
-          <StoreInfoItem icon={Store} title="店舗種別" body={getStoreTypeLabel(store)} />
+          <StoreInfoItem icon={MapPin} title={<I18nText k="store.infoAreaLabel" />} body={store.areaName} />
+          <StoreInfoItem icon={Store} title={<I18nText k="store.infoTypeLabel" />} body={getStoreTypeLabel(store)} />
         </div>
         <StoreInfoItem
           icon={Clock}
-          title="営業時間・スケジュール"
-          body={officialUrl ? "正確な営業時間は公式サイトでご確認ください" : "営業時間は現地または公式情報でご確認ください"}
+          title={<I18nText k="store.infoScheduleLabel" />}
+          body={officialUrl ? <I18nText k="store.scheduleBodyWithUrl" /> : <I18nText k="store.scheduleBodyWithoutUrl" />}
           linkHref={officialUrl}
-          linkLabel="公式サイトで確認"
+          linkLabel={<I18nText k="store.scheduleLinkLabel" />}
         />
         {officialUrl ? (
-          <StoreInfoItem icon={ExternalLink} title="公式サイト" body="最新情報は公式サイトで確認できます" linkHref={officialUrl} linkLabel="公式サイトを開く" />
+          <StoreInfoItem
+            icon={ExternalLink}
+            title={<I18nText k="store.infoOfficialLabel" />}
+            body={<I18nText k="store.officialBody" />}
+            linkHref={officialUrl}
+            linkLabel={<I18nText k="store.officialLinkLabel" />}
+          />
         ) : null}
       </section>
     </div>
@@ -94,10 +111,10 @@ function StoreInfoItem({
   linkLabel
 }: {
   icon: LucideIcon;
-  title: string;
-  body: string;
+  title: ReactNode;
+  body: ReactNode;
   linkHref?: string;
-  linkLabel?: string;
+  linkLabel?: ReactNode;
 }) {
   return (
     <div className="flex gap-3">
