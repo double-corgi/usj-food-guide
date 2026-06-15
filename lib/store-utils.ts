@@ -88,13 +88,16 @@ export function buildStoresFromFoods(foods: FoodWithRelations[]): StoreWithFoods
     }
   }
 
-  return Array.from(storeMap.values()).sort((a, b) => {
-    return a.areaName.localeCompare(b.areaName, "ja") || a.name.localeCompare(b.name, "ja");
-  });
+  return resolveStoreDisplayIds(
+    Array.from(storeMap.values()).sort((a, b) => {
+      return compareStoresByAreaAndName(a, b);
+    })
+  );
 }
 
 export function findStoreById(stores: StoreWithFoods[], id: string) {
-  return stores.find((store) => store.id === id || store.aliases.includes(id));
+  const ids = new Set([id, safeDecodeStoreId(id)]);
+  return stores.find((store) => ids.has(store.id) || store.aliases.some((alias) => ids.has(alias)));
 }
 
 export function getStoreTypeLabel(store: Pick<StoreWithFoods, "type"> | Pick<Shop, "type">) {
@@ -318,6 +321,70 @@ function getFirstSafeStoreOfficialUrl(...urls: Array<string | null | undefined>)
 
 function getPrimaryAreaName(food: FoodWithRelations) {
   return getFoodAreaNames(food)[0] ?? food.area.name ?? "エリア確認中";
+}
+
+function resolveStoreDisplayIds(stores: StoreWithFoods[]) {
+  const idCounts = new Map<string, number>();
+  for (const store of stores) {
+    idCounts.set(store.id, (idCounts.get(store.id) ?? 0) + 1);
+  }
+
+  const aliasCounts = new Map<string, number>();
+  for (const store of stores) {
+    for (const alias of store.aliases) {
+      aliasCounts.set(alias, (aliasCounts.get(alias) ?? 0) + 1);
+    }
+  }
+
+  const reservedIds = new Set<string>();
+  for (const store of stores) {
+    reservedIds.add(store.id);
+    for (const alias of store.aliases) reservedIds.add(alias);
+  }
+
+  const seenIds = new Map<string, number>();
+  const nextStores = stores.map((store) => {
+    const seen = seenIds.get(store.id) ?? 0;
+    seenIds.set(store.id, seen + 1);
+
+    if ((idCounts.get(store.id) ?? 0) <= 1 || seen === 0) {
+      return store;
+    }
+
+    const id = createUniqueStoreDisplayId(store, reservedIds);
+    reservedIds.add(id);
+    return { ...store, id };
+  });
+
+  const finalIds = new Set(nextStores.map((store) => store.id));
+  return nextStores.map((store) => ({
+    ...store,
+    aliases: store.aliases.filter((alias) => alias !== store.id && !finalIds.has(alias) && (aliasCounts.get(alias) ?? 0) === 1)
+  }));
+}
+
+function createUniqueStoreDisplayId(store: Pick<StoreWithFoods, "name" | "areaName">, reservedIds: Set<string>) {
+  const areaSlug = normalizeAreaName(store.areaName) || normalizeShopName(store.areaName);
+  const base = `shop-${normalizeShopName(store.name)}-${areaSlug || "area"}`;
+  let id = base;
+  let suffix = 2;
+  while (reservedIds.has(id)) {
+    id = `${base}-${suffix}`;
+    suffix += 1;
+  }
+  return id;
+}
+
+function compareStoresByAreaAndName(a: Pick<StoreWithFoods, "areaName" | "name">, b: Pick<StoreWithFoods, "areaName" | "name">) {
+  return a.areaName.localeCompare(b.areaName, "ja") || a.name.localeCompare(b.name, "ja");
+}
+
+function safeDecodeStoreId(id: string) {
+  try {
+    return decodeURIComponent(id);
+  } catch {
+    return id;
+  }
 }
 
 function normalizeShopName(name: string) {

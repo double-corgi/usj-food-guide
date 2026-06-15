@@ -62,9 +62,11 @@ export default async function StoreDetailPage({ params }: { params: Promise<{ id
           <h2 className="mt-1 text-2xl font-black text-ink">
             <I18nText k="store.availableFoods" />
           </h2>
-          <p className="mt-2 text-sm font-bold text-slate-500">
-            <I18nText k="store.availableFoodsCount" params={{ count: displayFoods.length }} />
-          </p>
+          {displayFoods.length > 0 ? (
+            <p className="mt-2 text-sm font-bold text-slate-500">
+              <I18nText k="store.availableFoodsCount" params={{ count: displayFoods.length }} />
+            </p>
+          ) : null}
         </div>
         <StoreFoodList foods={displayFoods} />
       </section>
