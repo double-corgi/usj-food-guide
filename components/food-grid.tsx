@@ -6,6 +6,8 @@ import { ChevronDown, Search, SlidersHorizontal } from "lucide-react";
 import { categoryLabels, diningTypeLabels, shopTypeLabels, statusLabels } from "@/lib/constants";
 import { dedupeFoodsByCanonical, foodMatchesArea, getFoodAreaNames, getFoodAreaSummary, getSaleStatus, getSaleType, isEndingSoon, getCanonicalFoodKey, getEatenCanonicalKeys, isEatenCanonical, normalizeDisplayAreaName, normalizeFoodName } from "@/lib/food-utils";
 import { REQUEST_FORM_URL } from "@/lib/request-form-url";
+import { tAreaName } from "@/lib/i18n/area-name";
+import type { TranslationKey } from "@/lib/i18n/dictionaries";
 import { useLocale } from "@/lib/i18n/use-locale";
 import { getCategoryPlaceholder, getFoodImage } from "@/lib/utils/image";
 import { useFoodLogs } from "@/lib/use-food-logs";
@@ -86,7 +88,7 @@ export function FoodGrid({
   const shops = useMemo(() => Array.from(new Map(canonicalFoods.map((food) => [food.shop.id, food.shop])).values()), [canonicalFoods]);
   const filteredFoods = useMemo(() => {
     const result = canonicalFoods.filter((food) => {
-      if (query && !matchesFoodQuery(food, query)) return false;
+      if (query && !matchesFoodQuery(food, query, t)) return false;
       if (category !== "all" && food.category !== category) return false;
       const selectedArea = areas.find((area) => area.id === areaId);
       if (areaId !== "all" && !foodMatchesArea(food, areaId, selectedArea?.name)) return false;
@@ -103,7 +105,7 @@ export function FoodGrid({
       return true;
     });
     return result.sort((a, b) => sortFood(a, b, sort, foods, logs));
-  }, [areaId, areas, canonicalFoods, category, diningType, eatenCanonicalKeys, foods, imageOnly, logs, mode, priceFilter, query, saleFilter, shopId, shopType, sort, status]);
+  }, [areaId, areas, canonicalFoods, category, diningType, eatenCanonicalKeys, foods, imageOnly, logs, mode, priceFilter, query, saleFilter, shopId, shopType, sort, status, t]);
 
   const displayedFoods = filteredFoods.slice(0, visibleCount);
   const commitSearch = (value: string) => {
@@ -148,7 +150,7 @@ export function FoodGrid({
                 }`}
               >
                 <span className="text-sm leading-none" aria-hidden>{item.icon}</span>
-                {item.value === "all" ? t("foods.categoryAll") : item.label}
+                {item.value === "all" ? t("foods.categoryAll") : t(`category.${item.value}` as TranslationKey)}
               </button>
             ))}
           </div>
@@ -213,9 +215,9 @@ export function FoodGrid({
         </select>
         <select value={category} onChange={(event) => { setCategory(event.target.value as FoodCategory | "all"); setVisibleCount(60); }} className="h-11 rounded-lg border border-slate-200 px-3 text-sm font-bold">
           <option value="all">{t("foods.categoryFilterAll")}</option>
-          {Object.entries(categoryLabels).map(([value, label]) => (
+          {(Object.keys(categoryLabels) as FoodCategory[]).map((value) => (
             <option key={value} value={value}>
-              {label}
+              {t(`category.${value}` as TranslationKey)}
             </option>
           ))}
         </select>
@@ -223,7 +225,7 @@ export function FoodGrid({
           <option value="all">{t("foods.areaFilterAll")}</option>
           {areas.map((area) => (
             <option key={area.id} value={area.id}>
-              {area.name}
+              {tAreaName(area.name, t)}
             </option>
           ))}
         </select>
@@ -237,17 +239,17 @@ export function FoodGrid({
         </select>
         <select value={shopType} onChange={(event) => { setShopType(event.target.value as ShopType | "all"); setVisibleCount(60); }} className="h-11 rounded-lg border border-slate-200 px-3 text-sm font-bold">
           <option value="all">{t("foods.shopTypeFilterAll")}</option>
-          {Object.entries(shopTypeLabels).map(([value, label]) => (
+          {(Object.keys(shopTypeLabels) as ShopType[]).map((value) => (
             <option key={value} value={value}>
-              {label}
+              {t(`shopType.${value}` as TranslationKey)}
             </option>
           ))}
         </select>
         <select value={diningType} onChange={(event) => { setDiningType(event.target.value as DiningType | "all"); setVisibleCount(60); }} className="h-11 rounded-lg border border-slate-200 px-3 text-sm font-bold">
           <option value="all">{t("foods.diningTypeFilterAll")}</option>
-          {Object.entries(diningTypeLabels).map(([value, label]) => (
+          {(Object.keys(diningTypeLabels) as DiningType[]).map((value) => (
             <option key={value} value={value}>
-              {label}
+              {t(`diningType.${value}` as TranslationKey)}
             </option>
           ))}
         </select>
@@ -363,7 +365,7 @@ function readRecentSearches() {
   }
 }
 
-function matchesFoodQuery(food: FoodWithRelations, query: string) {
+function matchesFoodQuery(food: FoodWithRelations, query: string, t: (key: TranslationKey) => string) {
   if (matchesNaturalIntent(food, query)) return true;
   const normalizedQuery = normalizeFoodName(expandSearchTerm(query));
   const haystack = normalizeFoodName(
@@ -374,7 +376,7 @@ function matchesFoodQuery(food: FoodWithRelations, query: string) {
       food.description,
       food.eventName,
       food.flavor,
-      categoryLabels[food.category],
+      t(`category.${food.category}` as TranslationKey),
       food.locations?.map((location) => `${location.shopName}${location.areaName}`).join("")
     ].filter(Boolean).join("")
   );

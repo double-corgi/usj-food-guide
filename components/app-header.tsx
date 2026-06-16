@@ -72,7 +72,7 @@ export function AppHeader() {
         </div>
       </header>
       <nav
-        aria-label={t("nav.home")}
+        aria-label={t("nav.label")}
         className="fixed inset-x-4 bottom-[calc(env(safe-area-inset-bottom)+0.75rem)] z-50 grid grid-cols-5 rounded-[1.55rem] border border-slate-200/60 bg-white/94 p-1 shadow-[0_16px_42px_rgba(15,23,42,0.16)] backdrop-blur-2xl md:hidden"
       >
         {navItems.map((item) => {

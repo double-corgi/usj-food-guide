@@ -4,6 +4,7 @@ import Link from "next/link";
 import { MapPin } from "lucide-react";
 import { areaImageDefinitions, normalizeAreaImageName } from "@/lib/area-images";
 import { calculateAreaProgress } from "@/lib/area-progress";
+import { tAreaName } from "@/lib/i18n/area-name";
 import { useLocale } from "@/lib/i18n/use-locale";
 import { useFoodLogs } from "@/lib/use-food-logs";
 import type { Area, FoodWithRelations } from "@/types/domain";
@@ -46,7 +47,7 @@ export function AreaOverview({ areas, foods }: { areas: Area[]; foods: FoodWithR
                   <div className="flex items-start gap-2">
                     <MapPin className="mt-0.5 text-mint" size={18} aria-hidden />
                     <div className="min-w-0">
-                      <h2 className="line-clamp-2 text-xl font-black leading-tight">{area.name}</h2>
+                      <h2 className="line-clamp-2 text-xl font-black leading-tight">{tAreaName(area.name, t)}</h2>
                       <p className="mt-2 text-xs font-black text-white/80">{t("areas.cardProgress", { count: completion.uneaten, rate: completion.rate })}</p>
                       <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-white/25">
                         <div className="h-full rounded-full bg-mint" style={{ width: `${completion.rate}%` }} />

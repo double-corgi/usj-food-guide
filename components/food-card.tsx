@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { MapPin } from "lucide-react";
 import { formatFoodPrice, formatPrice, getCanonicalFoodId, getCanonicalFoodKey, getDisplayLocationAreaName, getFoodAreaDisplay, getSaleStatus, getSaleUrgencyLabel, isEatenCanonical } from "@/lib/food-utils";
+import { tAreaName } from "@/lib/i18n/area-name";
 import { useLocale } from "@/lib/i18n/use-locale";
 import type { FoodWithRelations, UserFoodLog } from "@/types/domain";
 import { FoodImage } from "@/components/food-image";
@@ -20,6 +21,7 @@ export function FoodCard({
   const locations = getDisplayLocations(food);
   const primaryLocation = locations[0];
   const areaDisplay = getFoodAreaDisplay(food);
+  const areaSummary = getTranslatedAreaSummary(areaDisplay, t);
   const knownPrice = hasPrice(food);
   const canonicalFoods = allFoods ?? [food];
   const eatenActionFoodId = getCanonicalActionFoodId(canonicalFoods, logs, food, "eaten");
@@ -52,8 +54,8 @@ export function FoodCard({
           </div>
           <p data-food-card-area className="mt-auto flex h-8 min-w-0 items-start gap-1.5 text-xs font-bold leading-4 text-slate-500">
             <MapPin size={13} aria-hidden className="shrink-0" />
-            <span className="line-clamp-2 break-words [overflow-wrap:anywhere]" title={`${primaryLocation?.shopName ?? food.shop.name} / ${areaDisplay.areas.join(" / ")}`}>
-              {areaDisplay.summary}
+            <span className="line-clamp-2 break-words [overflow-wrap:anywhere]" title={`${primaryLocation?.shopName ?? food.shop.name} / ${areaDisplay.areas.map((areaName) => tAreaName(areaName, t)).join(" / ")}`}>
+              {areaSummary}
             </span>
           </p>
         </div>
@@ -75,6 +77,11 @@ export function FoodCard({
       </div>
     </article>
   );
+}
+
+function getTranslatedAreaSummary(areaDisplay: ReturnType<typeof getFoodAreaDisplay>, t: ReturnType<typeof useLocale>["t"]) {
+  const visibleAreas = areaDisplay.visibleAreas.map((areaName) => tAreaName(areaName, t));
+  return `${visibleAreas.join(" / ")}${areaDisplay.hiddenCount > 0 ? ` ほか${areaDisplay.hiddenCount}箇所` : ""}`;
 }
 
 const cardStates = {

@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { calculateAreaProgressList } from "@/lib/area-progress";
+import { tAreaName } from "@/lib/i18n/area-name";
 import { useLocale } from "@/lib/i18n/use-locale";
 import { useFoodLogs } from "@/lib/use-food-logs";
 import type { FoodWithRelations } from "@/types/domain";
@@ -27,7 +28,7 @@ export function EatenAreaProgress({ foods }: { foods: FoodWithRelations[] }) {
         {areaProgress.map((progress) => (
           <article key={progress.area.id} className="rounded-2xl bg-white/45 px-3 py-2.5 ring-1 ring-slate-200/45">
             <div className="flex items-start justify-between gap-3">
-              <h3 className="line-clamp-2 min-w-0 text-sm font-black leading-5 text-ink">{progress.area.name}</h3>
+              <h3 className="line-clamp-2 min-w-0 text-sm font-black leading-5 text-ink">{tAreaName(progress.area.name, t)}</h3>
               <p className="shrink-0 text-xl font-black leading-none text-park">{progress.active.rate}%</p>
             </div>
 

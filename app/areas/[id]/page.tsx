@@ -1,13 +1,13 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { ChevronDown, ChevronLeft } from "lucide-react";
+import { ChevronLeft } from "lucide-react";
 import { FoodImage } from "@/components/food-image";
 import { AreaCollectionSummary } from "@/components/area-collection-summary";
 import { AreaEatenFoods } from "@/components/area-eaten-foods";
 import { AreaFoodStatusLists } from "@/components/area-food-status-lists";
+import { AreaShopList, type AreaShopRow } from "@/components/area-shop-list";
 import { I18nText } from "@/components/i18n-text";
 import { getAreaImageByName } from "@/lib/area-images";
-import { shopTypeLabels } from "@/lib/constants";
 import { dedupeFoodsByCanonical, foodMatchesArea, formatFoodPrice, getRemainingDays, getSaleUrgencyLabel, isEndingSoon } from "@/lib/food-utils";
 import { rankFoodsByStrategy } from "@/lib/food-value-score";
 import { listFoods } from "@/lib/repositories/foods";
@@ -118,66 +118,6 @@ export default async function AreaDetailPage({ params }: { params: Promise<{ id:
       </div>
     </div>
   );
-}
-
-type AreaShopRow = {
-  key: string;
-  name: string;
-  type: ShopType;
-  href?: string;
-};
-
-function AreaShopList({ shops }: { shops: AreaShopRow[] }) {
-  const visible = shops.slice(0, 6);
-  const hidden = shops.slice(6);
-  return (
-    <section className="space-y-4">
-      <div className="flex items-end justify-between gap-3 border-b border-[#eadcc8] pb-3">
-        <h2 className="text-xl font-black text-ink">
-          <I18nText k="area.salesLocations" />
-        </h2>
-        <p className="text-xs font-black text-slate-500">{shops.length}か所</p>
-      </div>
-      <div className="grid gap-0 lg:grid-cols-2 lg:gap-x-8">
-        {visible.map((shop) => (
-          <ShopRow key={shop.key} shop={shop} />
-        ))}
-      </div>
-      {hidden.length > 0 ? (
-        <details className="border-t border-[#eadcc8] pt-3">
-          <summary className="flex cursor-pointer list-none items-center justify-between gap-3 text-sm font-black text-park">
-            <span>
-              <I18nText k="area.viewAllSalesLocations" />（あと{hidden.length}か所）
-            </span>
-            <ChevronDown size={15} aria-hidden />
-          </summary>
-          <div className="mt-3 grid gap-0 lg:grid-cols-2 lg:gap-x-8">
-            {hidden.map((shop) => (
-              <ShopRow key={shop.key} shop={shop} />
-            ))}
-          </div>
-        </details>
-      ) : null}
-    </section>
-  );
-}
-
-function ShopRow({ shop }: { shop: AreaShopRow }) {
-  const content = (
-    <>
-      <span className="min-w-0 truncate text-sm font-black text-[#071b3a]">{shop.name}</span>
-      <span className="shrink-0 text-xs font-bold text-slate-500">{shopTypeLabels[shop.type] ?? "フード施設"}</span>
-    </>
-  );
-  const className = "flex min-h-12 items-center justify-between gap-4 border-b border-[#eadcc8]/80 py-3";
-  if (shop.href) {
-    return (
-      <Link href={shop.href} className={`${className} transition hover:text-park`}>
-        {content}
-      </Link>
-    );
-  }
-  return <div className={className}>{content}</div>;
 }
 
 function buildAreaShopRows(foods: FoodWithRelations[]) {

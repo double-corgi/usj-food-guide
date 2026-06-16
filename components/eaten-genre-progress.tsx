@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { categoryLabels } from "@/lib/constants";
 import { dedupeFoodsByCanonical, getCanonicalFoodKey, getEatenCanonicalKeys, isCompletableFood } from "@/lib/food-utils";
+import type { TranslationKey } from "@/lib/i18n/dictionaries";
 import { useLocale } from "@/lib/i18n/use-locale";
 import { useFoodLogs } from "@/lib/use-food-logs";
 import type { FoodCategory, FoodWithRelations } from "@/types/domain";
@@ -27,7 +28,7 @@ export function EatenGenreProgress({ foods }: { foods: FoodWithRelations[] }) {
   const { t } = useLocale();
   const { logs } = useFoodLogs();
   const eatenKeys = getEatenCanonicalKeys(foods, logs);
-  const progress = calculateGenreProgress(foods, eatenKeys);
+  const progress = calculateGenreProgress(foods, eatenKeys, t);
 
   return (
     <section className="space-y-3 border-t border-slate-200 pt-6">
@@ -79,9 +80,9 @@ export function EatenGenreProgress({ foods }: { foods: FoodWithRelations[] }) {
   );
 }
 
-function calculateGenreProgress(foods: FoodWithRelations[], eatenKeys: Set<string>): GenreProgress[] {
-  return (Object.entries(categoryLabels) as Array<[FoodCategory, string]>)
-    .map(([category, label]) => {
+function calculateGenreProgress(foods: FoodWithRelations[], eatenKeys: Set<string>, t: (key: TranslationKey) => string): GenreProgress[] {
+  return (Object.keys(categoryLabels) as FoodCategory[])
+    .map((category) => {
       const categoryFoods = foods.filter((food) => food.category === category);
       const activeFoods = dedupeFoodsByCanonical(categoryFoods.filter(isCompletableFood));
       const archiveFoods = dedupeFoodsByCanonical(categoryFoods);
@@ -89,7 +90,7 @@ function calculateGenreProgress(foods: FoodWithRelations[], eatenKeys: Set<strin
       const archiveEaten = archiveFoods.filter((food) => eatenKeys.has(getCanonicalFoodKey(food))).length;
       return {
         id: category,
-        label,
+        label: t(`category.${category}` as TranslationKey),
         active: {
           total: activeFoods.length,
           eaten: activeEaten,

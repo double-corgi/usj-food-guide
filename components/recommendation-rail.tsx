@@ -2,8 +2,9 @@
 
 import Link from "next/link";
 import { ArrowRight, Sparkles } from "lucide-react";
-import { categoryLabels } from "@/lib/constants";
 import { formatFoodPrice, getFoodAreaSummary } from "@/lib/food-utils";
+import type { TranslationKey } from "@/lib/i18n/dictionaries";
+import { useLocale } from "@/lib/i18n/use-locale";
 import { recommendNextFoods } from "@/lib/recommendations";
 import { useFoodLogs } from "@/lib/use-food-logs";
 import type { FoodWithRelations } from "@/types/domain";
@@ -22,6 +23,7 @@ export function RecommendationRail({
   title?: string;
   description?: string;
 }) {
+  const { t } = useLocale();
   const { logs } = useFoodLogs();
   const recommendations = recommendNextFoods(foods, logs, { baseFood, areaId, limit: 6 });
   if (recommendations.length === 0) return null;
@@ -51,7 +53,7 @@ export function RecommendationRail({
             <div className="min-w-0">
               <div className="flex items-center gap-2">
                 <span className="rounded-full bg-berry/10 px-2 py-0.5 text-[11px] font-black text-berry">{label}</span>
-                <span className="truncate text-[11px] font-black text-slate-400">{categoryLabels[food.category]}</span>
+                <span className="truncate text-[11px] font-black text-slate-400">{t(`category.${food.category}` as TranslationKey)}</span>
               </div>
               <p className="mt-1 line-clamp-2 text-sm font-black leading-snug text-ink">{food.name}</p>
               <p className="mt-1 text-xs font-black text-park">{formatFoodPrice(food)}</p>

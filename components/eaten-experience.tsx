@@ -5,6 +5,8 @@ import Link from "next/link";
 import { CalendarDays } from "lucide-react";
 import { categoryLabels } from "@/lib/constants";
 import { calculateArchiveRecordRate, calculateCompletion, dedupeFoodsByCanonical, formatFoodPrice, getCanonicalFoodKey, getFoodAreaNames, getFoodAreaSummary, getSaleStatusLabel } from "@/lib/food-utils";
+import { tAreaName } from "@/lib/i18n/area-name";
+import type { TranslationKey } from "@/lib/i18n/dictionaries";
 import { useFoodLogs } from "@/lib/use-food-logs";
 import { useNextWantFoods } from "@/lib/use-next-want-foods";
 import type { FoodCategory, FoodWithRelations, UserFoodLog } from "@/types/domain";
@@ -62,7 +64,7 @@ export function EatenExperience({ foods }: { foods: FoodWithRelations[] }) {
         return compareByDate(b.log, a.log);
       });
   }, [areaFilter, categoryFilter, eatenRecords, sort]);
-  const albumSections = useMemo(() => buildAlbumSections(filteredEatenRecords, albumMode), [albumMode, filteredEatenRecords]);
+  const albumSections = useMemo(() => buildAlbumSections(filteredEatenRecords, albumMode, t), [albumMode, filteredEatenRecords, t]);
   const displayedRecordCount = albumSections.reduce((sum, section) => sum + section.records.length, 0);
   const totalSpend = logs
     .filter((log) => log.status === "eaten")
@@ -209,13 +211,13 @@ export function EatenExperience({ foods }: { foods: FoodWithRelations[] }) {
             <select value={areaFilter} onChange={(event) => setAreaFilter(event.target.value)} className="h-11 rounded-full border border-slate-200 bg-white px-3 text-xs font-black text-slate-600">
               <option value="all">{t("foods.areaFilterAll")}</option>
               {areaOptions.map((areaName) => (
-                <option key={areaName} value={areaName}>{areaName}</option>
+                <option key={areaName} value={areaName}>{tAreaName(areaName, t)}</option>
               ))}
             </select>
             <select value={categoryFilter} onChange={(event) => setCategoryFilter(event.target.value as FoodCategory | "all")} className="h-11 rounded-full border border-slate-200 bg-white px-3 text-xs font-black text-slate-600">
               <option value="all">{t("foods.categoryFilterAll")}</option>
-              {(Object.entries(categoryLabels) as Array<[FoodCategory, string]>).map(([category, label]) => (
-                <option key={category} value={category}>{label}</option>
+              {(Object.keys(categoryLabels) as FoodCategory[]).map((category) => (
+                <option key={category} value={category}>{t(`category.${category}` as TranslationKey)}</option>
               ))}
             </select>
             <select value={sort} onChange={(event) => setSort(event.target.value as EatenSort)} className="h-11 rounded-full border border-slate-200 bg-white px-3 text-xs font-black text-slate-600">
@@ -333,7 +335,7 @@ function EatenAlbumCard({ record }: { record: EatenAlbumRecord }) {
   );
 }
 
-function buildAlbumSections(records: EatenAlbumRecord[], mode: AlbumMode) {
+function buildAlbumSections(records: EatenAlbumRecord[], mode: AlbumMode, t: (key: TranslationKey) => string) {
   if (mode === "recent") {
     return [{ id: "recent", title: "", records: records.slice(0, 24), total: records.length }];
   }
@@ -348,18 +350,18 @@ function buildAlbumSections(records: EatenAlbumRecord[], mode: AlbumMode) {
       groups.set(areaName, [...(groups.get(areaName) ?? []), record]);
     }
     return Array.from(groups.entries())
-      .map(([areaName, items]) => ({ id: `area-${areaName}`, title: areaName, records: items.slice(0, 4), total: items.length }))
+      .map(([areaName, items]) => ({ id: `area-${areaName}`, title: tAreaName(areaName, t), records: items.slice(0, 4), total: items.length }))
       .sort((a, b) => b.total - a.total || a.title.localeCompare(b.title, "ja"))
       .slice(0, 8);
   }
   if (mode === "genre") {
-    const groups = new Map<string, EatenAlbumRecord[]>();
+    const groups = new Map<FoodCategory, EatenAlbumRecord[]>();
     for (const record of records) {
-      const label = categoryLabels[record.food.category] ?? "カテゴリ確認中";
-      groups.set(label, [...(groups.get(label) ?? []), record]);
+      const category = record.food.category;
+      groups.set(category, [...(groups.get(category) ?? []), record]);
     }
     return Array.from(groups.entries())
-      .map(([label, items]) => ({ id: `genre-${label}`, title: label, records: items.slice(0, 4), total: items.length }))
+      .map(([category, items]) => ({ id: `genre-${category}`, title: t(`category.${category}` as TranslationKey), records: items.slice(0, 4), total: items.length }))
       .sort((a, b) => b.total - a.total || a.title.localeCompare(b.title, "ja"))
       .slice(0, 8);
   }

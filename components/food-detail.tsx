@@ -3,16 +3,16 @@
 import Link from "next/link";
 import { useEffect } from "react";
 import { Check, ChevronLeft, ChevronRight, ExternalLink, Flag, MapPin, Store } from "lucide-react";
-import { categoryLabels, diningTypeLabels, shopTypeLabels } from "@/lib/constants";
 import { formatFoodPrice, formatPrice, getCanonicalFoodId, getCanonicalFoodKey, getDisplayLocationAreaName, getFoodAreaSummary, getFoodAreaNames, getPriceSource, getPriceSourceLabel, getSaleEndDate, getSalePeriodLabel, getSaleStartDate, getSaleStatus, getSaleStatusLabel, getSaleStatusTone, getSaleUrgencyLabel, getZukanCode, isCompletableFood, isEatenCanonical } from "@/lib/food-utils";
 import { useFoodLogs } from "@/lib/use-food-logs";
 import { useNextWantFoods } from "@/lib/use-next-want-foods";
 import { filterDeletedFoodIds, isDeletedFoodId } from "@/lib/deleted-foods";
-import type { FoodCategory, FoodLocation, FoodWithRelations } from "@/types/domain";
+import type { DiningType, FoodCategory, FoodLocation, FoodWithRelations } from "@/types/domain";
 import { FoodImage } from "@/components/food-image";
 import { FoodCorrectionReportForm } from "@/components/food-correction-report-form";
 import { FoodReviews } from "@/components/food-reviews";
 import { UnofficialNotice } from "@/components/unofficial-notice";
+import type { TranslationKey } from "@/lib/i18n/dictionaries";
 import { useLocale } from "@/lib/i18n/use-locale";
 
 type RelatedGroups = {
@@ -54,7 +54,8 @@ export function FoodDetail({
   const urgencyLabel = getSaleUrgencyLabel(food);
   const priceSource = getPriceSource(food);
   const knownPrice = Boolean(food.price ?? food.priceMin);
-  const diningLabel = food.diningType && food.diningType !== "unknown" ? diningTypeLabels[food.diningType] : inferDiningLabel(food);
+  const diningType = food.diningType && food.diningType !== "unknown" ? food.diningType : inferDiningType(food);
+  const diningLabel = t(`diningType.${diningType}` as TranslationKey);
   const officialHref = food.officialUrl ?? food.sourceUrl;
   const salesSummary = getSalesSummary(food, t);
   const relatedFoods = buildRelatedFoods(food, foodPool, relatedGroups).slice(0, 12);
@@ -113,7 +114,7 @@ export function FoodDetail({
 
         <div className="grid gap-5 px-1 sm:px-0 lg:grid-cols-[1fr_auto] lg:items-end">
           <div className="min-w-0 space-y-3">
-            <p className="text-xs font-black text-park">{categoryLabels[food.category]}</p>
+            <p className="text-xs font-black text-park">{t(`category.${food.category}` as TranslationKey)}</p>
             <h1 className="break-words text-3xl font-black leading-tight tracking-tight text-ink [overflow-wrap:anywhere] sm:text-5xl">
               {food.name}
             </h1>
@@ -189,7 +190,7 @@ export function FoodDetail({
                     <span className="line-clamp-2">{getDisplayLocationAreaName(location, food)}</span>
                   </p>
                 </div>
-                <span className="shrink-0 text-[11px] font-black text-slate-400">{shopTypeLabels[location.shopType]}</span>
+                <span className="shrink-0 text-[11px] font-black text-slate-400">{t(`shopType.${location.shopType}` as TranslationKey)}</span>
               </div>
               <p className="mt-2 text-xs font-bold text-slate-500">
                 {location.price ? formatPrice(location.price) : formatFoodPrice(food)} / {diningLabel}
@@ -226,7 +227,7 @@ export function FoodDetail({
         <dl className="mt-3 grid gap-2">
           <div className="flex items-center justify-between gap-3">
             <dt className="text-slate-400">{t("foodDetail.category")}</dt>
-            <dd className="font-black text-slate-700">{categoryLabels[food.category]}</dd>
+            <dd className="font-black text-slate-700">{t(`category.${food.category}` as TranslationKey)}</dd>
           </div>
           <div className="flex items-center justify-between gap-3">
             <dt className="text-slate-400">{t("foodDetail.diningType")}</dt>
@@ -409,11 +410,11 @@ function getPeriodSummary(food: FoodWithRelations) {
   return { label: getSalePeriodLabel(food) };
 }
 
-function inferDiningLabel(food: FoodWithRelations) {
-  if (food.shop.type === "cart" || food.shop.type === "wagon") return "カート販売";
-  if (food.category === "churro" || food.category === "popcorn" || food.category === "drink" || food.category === "snack") return "食べ歩き";
-  if (food.shop.type === "restaurant") return "店内飲食";
-  return "形式未確認";
+function inferDiningType(food: FoodWithRelations): DiningType {
+  if (food.shop.type === "cart" || food.shop.type === "wagon") return "food_cart";
+  if (food.category === "churro" || food.category === "popcorn" || food.category === "drink" || food.category === "snack") return "takeout";
+  if (food.shop.type === "restaurant") return "eat_in";
+  return "unknown";
 }
 
 function formatDateShort(value?: string | null, fallback = "未確認") {
