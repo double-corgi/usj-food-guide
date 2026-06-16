@@ -344,33 +344,46 @@ function resolveStoreDisplayIds(stores: StoreWithFoods[]) {
 
   const seenIds = new Map<string, number>();
   const nextStores = stores.map((store) => {
-    const seen = seenIds.get(store.id) ?? 0;
-    seenIds.set(store.id, seen + 1);
+    const originalId = store.id;
+    const seen = seenIds.get(originalId) ?? 0;
+    const isDuplicated = (idCounts.get(originalId) ?? 0) > 1;
+    seenIds.set(originalId, seen + 1);
 
-    if ((idCounts.get(store.id) ?? 0) <= 1 || seen === 0) {
-      return store;
+    if (isAsciiSafeStoreId(originalId) && (!isDuplicated || seen === 0)) {
+      return { store, legacyAliasToKeep: undefined };
     }
 
-    const id = createUniqueStoreDisplayId(store, reservedIds);
+    const id = createUniqueStoreDisplayId(store, reservedIds, originalId);
     reservedIds.add(id);
-    return { ...store, id };
+    return {
+      store: { ...store, id },
+      legacyAliasToKeep: seen === 0 ? originalId : undefined
+    };
   });
 
-  const finalIds = new Set(nextStores.map((store) => store.id));
-  return nextStores.map((store) => ({
+  const finalIds = new Set(nextStores.map((item) => item.store.id));
+  return nextStores.map(({ store, legacyAliasToKeep }) => ({
     ...store,
-    aliases: store.aliases.filter((alias) => alias !== store.id && !finalIds.has(alias) && (aliasCounts.get(alias) ?? 0) === 1)
+    aliases: store.aliases.filter((alias) => {
+      if (alias === store.id || finalIds.has(alias)) return false;
+      if (alias === legacyAliasToKeep) return true;
+      return (aliasCounts.get(alias) ?? 0) === 1;
+    })
   }));
 }
 
-function createUniqueStoreDisplayId(store: Pick<StoreWithFoods, "name" | "areaName">, reservedIds: Set<string>) {
-  const areaSlug = normalizeAreaName(store.areaName) || normalizeShopName(store.areaName);
-  const base = `shop-${normalizeShopName(store.name)}-${areaSlug || "area"}`;
+function createUniqueStoreDisplayId(store: Pick<StoreWithFoods, "name" | "areaName" | "type">, reservedIds: Set<string>, originalId: string) {
+  const originalBase = isAsciiSafeStoreId(originalId) ? originalId : "shop";
+  const slug = [normalizeAsciiSlug(store.name), normalizeAsciiSlug(normalizeAreaName(store.areaName) || store.areaName), normalizeAsciiSlug(store.type)]
+    .filter(Boolean)
+    .join("-");
+  const suffix = `${slug || "store"}-${shortStoreHash(`${store.name}|${store.areaName}|${store.type}`)}`;
+  const base = `${originalBase}-${suffix}`.replace(/-+/g, "-").replace(/-$/g, "");
   let id = base;
-  let suffix = 2;
+  let counter = 2;
   while (reservedIds.has(id)) {
-    id = `${base}-${suffix}`;
-    suffix += 1;
+    id = `${base}-${counter}`;
+    counter += 1;
   }
   return id;
 }
@@ -385,6 +398,30 @@ function safeDecodeStoreId(id: string) {
   } catch {
     return id;
   }
+}
+
+function isAsciiSafeStoreId(id: string) {
+  return /^shop-[a-z0-9]+(?:-[a-z0-9]+)*$/.test(id);
+}
+
+function normalizeAsciiSlug(input: string) {
+  return input
+    .normalize("NFKD")
+    .replace(/[™®]/g, "")
+    .replace(/&/g, " and ")
+    .replace(/[^a-zA-Z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "")
+    .replace(/-+/g, "-")
+    .toLowerCase();
+}
+
+function shortStoreHash(input: string) {
+  let hash = 2166136261;
+  for (let index = 0; index < input.length; index += 1) {
+    hash ^= input.charCodeAt(index);
+    hash = Math.imul(hash, 16777619);
+  }
+  return (hash >>> 0).toString(36).slice(0, 6);
 }
 
 function normalizeShopName(name: string) {
