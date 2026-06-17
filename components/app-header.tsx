@@ -73,7 +73,7 @@ export function AppHeader() {
       </header>
       <nav
         aria-label={t("nav.label")}
-        className="fixed inset-x-4 bottom-[calc(env(safe-area-inset-bottom)+0.75rem)] z-50 grid grid-cols-5 rounded-[1.55rem] border border-slate-200/60 bg-white/94 p-1 shadow-[0_16px_42px_rgba(15,23,42,0.16)] backdrop-blur-2xl md:hidden"
+        className="fixed inset-x-4 bottom-[calc(env(safe-area-inset-bottom)+0.75rem)] z-50 grid grid-cols-5 rounded-[1.55rem] border border-slate-200/60 bg-white p-1 shadow-[0_-1px_0_rgba(0,0,0,0.06),0_4px_16px_rgba(0,0,0,0.08)] md:hidden"
       >
         {navItems.map((item) => {
           const active = isNavActive(pathname, item.href);
@@ -83,7 +83,7 @@ export function AppHeader() {
               href={item.href}
               aria-current={active ? "page" : undefined}
               className={`flex min-h-12 touch-manipulation flex-col items-center justify-center gap-0.5 rounded-[1.15rem] text-[10.5px] font-black transition active:scale-95 ${
-                active ? "bg-mint text-park" : "text-slate-500 hover:bg-white/70 active:bg-mint"
+                active ? "bg-mint text-park" : "text-slate-400 hover:bg-white/70 active:bg-mint"
               }`}
             >
               <item.icon size={19} aria-hidden />

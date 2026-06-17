@@ -33,7 +33,7 @@ export function FoodCard({
   const badges = getCardBadges({ food, t });
 
   return (
-    <article data-food-card data-food-name={food.name} className={`group relative h-[462px] min-w-0 overflow-hidden rounded-[1.25rem] bg-white/86 ring-1 ring-slate-200/55 transition duration-200 active:scale-[0.99] md:hover:-translate-y-0.5 ${state.borderClass} ${getSaleStatus(food) === "ended" ? "opacity-75 grayscale" : ""}`}>
+    <article data-food-card data-food-name={food.name} className={`group relative h-[462px] min-w-0 overflow-hidden rounded-[1.25rem] bg-white ring-1 ring-slate-200/70 transition duration-200 active:scale-[0.99] md:hover:-translate-y-0.5 ${state.borderClass} ${getSaleStatus(food) === "ended" ? "opacity-75 grayscale" : ""}`}>
       <Link href={`/foods/${food.id}`} className="flex h-full min-w-0 flex-col">
         <div className="relative h-[252px] shrink-0 overflow-hidden bg-slate-100">
           <FoodImage food={food} className="h-full w-full transition duration-300 group-hover:scale-105" />
@@ -62,7 +62,7 @@ export function FoodCard({
           </p>
         </div>
       </Link>
-      <div data-food-card-actions className="absolute inset-x-0 bottom-0 z-10 grid h-[50px] border-t border-slate-100 bg-white/90 px-3 py-2">
+      <div data-food-card-actions className="absolute inset-x-0 bottom-0 z-10 grid h-[50px] border-t border-slate-100 bg-white px-3 py-2">
         <button
           type="button"
           onClick={(event) => {

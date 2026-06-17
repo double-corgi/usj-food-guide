@@ -18,7 +18,7 @@ export function StoreFoodList({ foods }: { foods: FoodWithRelations[] }) {
 
   if (displayFoods.length === 0) {
     return (
-      <p className="rounded-2xl border border-dashed border-slate-200 bg-white/60 p-6 text-center text-sm font-bold text-slate-500">
+      <p className="rounded-2xl border border-dashed border-slate-200 bg-white p-6 text-center text-sm font-bold text-slate-500">
         {t("store.availableFoodsEmpty")}
       </p>
     );

@@ -133,7 +133,7 @@ export function FoodReviews({ food, allFoods }: { food: FoodWithRelations; allFo
 
 function RatingInput({ label, value, onChange }: { label: string; value: number; onChange: (value: number) => void }) {
   return (
-    <div className="rounded-2xl bg-white/65 p-2 ring-1 ring-slate-200/55">
+    <div className="rounded-2xl bg-white p-2 ring-1 ring-slate-200/70">
       <p className="text-[11px] font-black text-slate-500">{label}</p>
       <div className="mt-1 flex gap-0.5">
         {[1, 2, 3, 4, 5].map((item) => (
