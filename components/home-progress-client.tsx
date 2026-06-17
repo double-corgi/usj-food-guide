@@ -41,17 +41,18 @@ export function HomeCollectionHero({ foods }: { foods: FoodWithRelations[] }) {
   return (
     <section className="home-collection-hero relative isolate -mx-4 bg-[#fffaf5] px-4 pb-4 sm:-mx-6 sm:px-6 lg:mx-0 lg:rounded-[2rem] lg:px-8 lg:pb-8">
       <div className="mx-auto grid max-w-[1080px] gap-4 lg:grid-cols-[0.36fr_0.64fr] lg:grid-rows-[auto_1fr] lg:items-start lg:gap-x-8 lg:gap-y-4">
-        <div className="order-1 space-y-1.5 text-center lg:col-start-1 lg:row-start-1 lg:text-left">
-          <div className="flex items-center justify-center gap-3 lg:justify-start">
-            <span className="h-px w-5 bg-[#fdbb30]" aria-hidden />
-            <h1
-              className="home-unicole-logo select-none text-[1.85rem] font-black leading-none tracking-[0.04em] text-[#071b3a] sm:text-[2rem] lg:text-[2.15rem]"
-            >
-              {appBrand.shortName}
-            </h1>
-            <span className="h-px w-5 bg-[#fdbb30]" aria-hidden />
+        <div className="order-1 space-y-2 text-center lg:col-start-1 lg:row-start-1 lg:text-left">
+          <div className="flex items-center justify-center gap-2.5 lg:justify-start">
+            <span className="h-px w-4 shrink-0 bg-[#fdbb30]" aria-hidden />
+            <p className="select-none text-[10.5px] font-black tracking-[0.14em] text-[#8a5b16] sm:text-[11px] lg:text-[11.5px]">
+              USJ FOOD COLLECTION
+            </p>
+            <span className="h-px w-4 shrink-0 bg-[#fdbb30]" aria-hidden />
           </div>
-          <p className="text-[13px] font-bold leading-6 text-slate-500">{t("footer.tagline")}</p>
+          <h1 className="select-none text-[1.4rem] font-black leading-[1.2] tracking-[0.02em] text-[#071b3a] sm:text-[1.6rem] lg:text-[1.45rem]">
+            {appBrand.name}
+          </h1>
+          <p className="text-[12px] font-bold leading-6 text-slate-500 sm:text-[13px]">{t("footer.tagline")}</p>
         </div>
 
         <div className="order-3 space-y-2.5 lg:col-start-1 lg:row-start-2 lg:self-start">
