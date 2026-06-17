@@ -1,1 +1,296 @@
-{}
+{
+  "shop-ztyaw1": {
+    "en": "Backlot Café",
+    "ko": "백로트 카페",
+    "zh-TW": "製片廠後場咖啡廳",
+    "_source": "provisional",
+    "_status": "needs_review"
+  },
+  "shop-1ptfw3y": {
+    "en": "SAIDO",
+    "ko": "사이도",
+    "zh-TW": "SAIDO",
+    "_source": "official",
+    "_status": "verified"
+  },
+  "shop-102yaa2": {
+    "en": "Amity Ice Cream",
+    "ko": "어미티 아이스크림",
+    "zh-TW": "阿米提冰淇淋",
+    "_source": "official",
+    "_status": "verified"
+  },
+  "shop-1tdzkex": {
+    "en": "Amity Landing Restaurant",
+    "ko": "어미티 랜딩 레스토랑",
+    "zh-TW": "阿米提碼頭餐廳",
+    "_source": "official",
+    "_status": "verified"
+  },
+  "shop-1d7mcxr": {
+    "en": "Cupcake Dream Food Cart",
+    "ko": "컵케이크 드림 푸드 카트",
+    "zh-TW": "杯子蛋糕夢境小食車",
+    "_source": "provisional",
+    "_status": "needs_review"
+  },
+  "shop-1vff8rf": {
+    "en": "Kinopio's Café",
+    "ko": "키노피오 카페",
+    "zh-TW": "奇諾比奧咖啡廳",
+    "_source": "official",
+    "_status": "verified"
+  },
+  "shop-1jnbp5c": {
+    "en": "Corner Café",
+    "ko": "코너 카페",
+    "zh-TW": "街角咖啡廳",
+    "_source": "provisional",
+    "_status": "needs_review"
+  },
+  "shop-1v0tbtg": {
+    "en": "The Dragon's Pearl",
+    "ko": "더 드래곤스 펄",
+    "zh-TW": "龍珠餐廳",
+    "_source": "official",
+    "_status": "verified"
+  },
+  "shop-1og3n66": {
+    "en": "The Dragon's Pearl Food Cart",
+    "ko": "더 드래곤스 펄 푸드 카트",
+    "zh-TW": "龍珠餐廳前小食車",
+    "_source": "provisional",
+    "_status": "needs_review"
+  },
+  "shop-1ixf7xp": {
+    "en": "Jurassic Park Gate Food Cart",
+    "ko": "쥬라기 공원 게이트 푸드 카트",
+    "zh-TW": "侏羅紀公園入口小食車",
+    "_source": "provisional",
+    "_status": "needs_review"
+  },
+  "shop-1whvzq1": {
+    "en": "Jurassic Park The Ride Splashdown Food Cart",
+    "ko": "쥬라기 공원 더 라이드 스플래시다운 푸드 카트",
+    "zh-TW": "侏羅紀公園遊樂設施終點小食車",
+    "_source": "provisional",
+    "_status": "needs_review"
+  },
+  "shop-c8yjbq": {
+    "en": "Studio Stars Restaurant",
+    "ko": "스튜디오 스타즈 레스토랑",
+    "zh-TW": "明星餐廳",
+    "_source": "official",
+    "_status": "verified"
+  },
+  "shop-1qsyx94": {
+    "en": "Space Fantasy The Ride Food Cart",
+    "ko": "스페이스 판타지 더 라이드 푸드 카트",
+    "zh-TW": "太空幻想遊樂設施前小食車",
+    "_source": "provisional",
+    "_status": "needs_review"
+  },
+  "shop-1wo41fl": {
+    "en": "Central Park Entrance Popcorn Cart",
+    "ko": "센트럴 파크 입구 팝콘 카트",
+    "zh-TW": "中央公園入口爆米花車",
+    "_source": "provisional",
+    "_status": "needs_review"
+  },
+  "shop-1t5w62": {
+    "en": "Discovery Restaurant",
+    "ko": "디스커버리 레스토랑",
+    "zh-TW": "探索餐廳",
+    "_source": "official",
+    "_status": "verified"
+  },
+  "shop-dvw6dt": {
+    "en": "Delicious Me! The Cookie Kitchen",
+    "ko": "딜리셔스 미! 더 쿠키 키친",
+    "zh-TW": "美味的我！曲奇廚房",
+    "_source": "provisional",
+    "_status": "needs_review"
+  },
+  "shop-1i0x5ad": {
+    "en": "Delicious Me! The Cookie Kitchen",
+    "ko": "딜리셔스 미! 더 쿠키 키친",
+    "zh-TW": "美味的我！曲奇廚房",
+    "_source": "official",
+    "_status": "verified"
+  },
+  "shop-1f4jraw": {
+    "en": "Delicious Me! The Cookie Kitchen",
+    "ko": "딜리셔스 미! 더 쿠키 키친",
+    "zh-TW": "美味的我！曲奇廚房",
+    "_source": "official",
+    "_status": "verified"
+  },
+  "shop-uokkys": {
+    "en": "Park Side Grille",
+    "ko": "파크사이드 그릴",
+    "zh-TW": "公園旁燒烤",
+    "_source": "official",
+    "_status": "verified"
+  },
+  "shop-1hehv6j": {
+    "en": "Park Side Grille Food Cart",
+    "ko": "파크사이드 그릴 푸드 카트",
+    "zh-TW": "公園旁燒烤前小食車",
+    "_source": "provisional",
+    "_status": "needs_review"
+  },
+  "shop-bie1ke": {
+    "en": "Battery Park North Food Cart",
+    "ko": "배터리 파크 북쪽 푸드 카트",
+    "zh-TW": "炮台公園北側小食車",
+    "_source": "provisional",
+    "_status": "needs_review"
+  },
+  "shop-19qxymy": {
+    "en": "Happiness Café",
+    "ko": "해피니스 카페",
+    "zh-TW": "幸福咖啡廳",
+    "_source": "official",
+    "_status": "verified"
+  },
+  "shop-8r3pag": {
+    "en": "Hollywood Dream The Ride Food Cart",
+    "ko": "할리우드 드림 더 라이드 푸드 카트",
+    "zh-TW": "好萊塢美夢乘車遊前小食車",
+    "_source": "provisional",
+    "_status": "needs_review"
+  },
+  "shop-zt1x7c": {
+    "en": "Pizza Parlour",
+    "ko": "피자 팔러",
+    "zh-TW": "比薩店",
+    "_source": "provisional",
+    "_status": "needs_review"
+  },
+  "shop-1vma23e": {
+    "en": "Pit Stop Popcorn",
+    "ko": "핏 스탑 팝콘",
+    "zh-TW": "加油站爆米花",
+    "_source": "official",
+    "_status": "verified"
+  },
+  "shop-2z32lo": {
+    "en": "Beverly Hills Gift Popcorn Cart",
+    "ko": "비버리힐스 기프트 팝콘 카트",
+    "zh-TW": "比佛利山禮品店前爆米花車",
+    "_source": "provisional",
+    "_status": "needs_review"
+  },
+  "shop-152bmpp": {
+    "en": "Beverly Hills Boulangerie",
+    "ko": "비버리힐스 불랑제리",
+    "zh-TW": "比佛利山莊法式麵包坊",
+    "_source": "official",
+    "_status": "verified"
+  },
+  "shop-1r3y9l7": {
+    "en": "Fossil Fuels",
+    "ko": "포슬 퓨얼스",
+    "zh-TW": "化石燃料",
+    "_source": "official",
+    "_status": "verified"
+  },
+  "shop-12taxpu": {
+    "en": "Mario Café & Store",
+    "ko": "마리오 카페 & 스토어",
+    "zh-TW": "瑪利歐咖啡廳 & 商店",
+    "_source": "official",
+    "_status": "verified"
+  },
+  "shop-17yebwe": {
+    "en": "Minion Happy Kitchen",
+    "ko": "미니언 해피 키친",
+    "zh-TW": "小小兵快樂廚房",
+    "_source": "provisional",
+    "_status": "needs_review"
+  },
+  "shop-1yvdndz": {
+    "en": "Mel's Drive-In",
+    "ko": "멜스 드라이브 인",
+    "zh-TW": "梅爾免下車餐廳",
+    "_source": "official",
+    "_status": "verified"
+  },
+  "shop-1yu64jg": {
+    "en": "Universal Monsters Live Rock & Roll Show Food Cart",
+    "ko": "유니버설 몬스터 라이브 로큰롤 쇼 푸드 카트",
+    "zh-TW": "環球怪獸搖滾秀前小食車",
+    "_source": "provisional",
+    "_status": "needs_review"
+  },
+  "shop-93p373": {
+    "en": "Universal Wonderland Entrance Popcorn Cart",
+    "ko": "유니버설 원더랜드 입구 팝콘 카트",
+    "zh-TW": "環球奇境入口爆米花車",
+    "_source": "provisional",
+    "_status": "needs_review"
+  },
+  "shop-ui13qw": {
+    "en": "Yoshi's Snack Island",
+    "ko": "요시 스낵 아일랜드",
+    "zh-TW": "耀西零食島",
+    "_source": "official",
+    "_status": "verified"
+  },
+  "shop-mhw30e": {
+    "en": "Louie's N.Y. Pizza Parlor",
+    "ko": "루이스 뉴욕 피자 팔러",
+    "zh-TW": "路易紐約比薩店",
+    "_source": "official",
+    "_status": "verified"
+  },
+  "shop-3v2j9p": {
+    "en": "Lost World Restaurant",
+    "ko": "로스트 월드 레스토랑",
+    "zh-TW": "失落世界餐廳",
+    "_source": "provisional",
+    "_status": "needs_review"
+  },
+  "shop-e5oqc": {
+    "en": "Lost World Restaurant Food Cart",
+    "ko": "로스트 월드 레스토랑 푸드 카트",
+    "zh-TW": "失落世界餐廳入口小食車",
+    "_source": "provisional",
+    "_status": "needs_review"
+  },
+  "shop-7ba324": {
+    "en": "Wharf Café",
+    "ko": "워프 카페",
+    "zh-TW": "碼頭咖啡廳",
+    "_source": "provisional",
+    "_status": "needs_review"
+  },
+  "shop-1b3f2nw": {
+    "en": "Premium Restaurant",
+    "ko": "프리미엄 레스토랑",
+    "zh-TW": "高級餐廳",
+    "_source": "provisional",
+    "_status": "needs_review"
+  },
+  "shop-nokw9": {
+    "en": "Three Broomsticks",
+    "ko": "세 개의 빗자루",
+    "zh-TW": "三根掃帚",
+    "_source": "official",
+    "_status": "verified"
+  },
+  "shop-1tt48e8": {
+    "en": "Seasonal Food (Venue TBD)",
+    "ko": "시즌 푸드 (미확인 장소)",
+    "zh-TW": "季節性美食（場所待確認）",
+    "_source": "provisional",
+    "_status": "needs_review"
+  },
+  "shop-1ielufv": {
+    "en": "Jungle Beat Shakes",
+    "ko": "정글 비트 쉐이크",
+    "zh-TW": "叢林節奏奶昔",
+    "_source": "provisional",
+    "_status": "needs_review"
+  }
+}
