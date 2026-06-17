@@ -5,14 +5,15 @@ import Link from "next/link";
 import {
   calculateCompletion,
   dedupeFoodsByCanonical,
-  formatFoodPrice,
   getCanonicalFoodKey,
   getEatenCanonicalKeys,
   getFoodAreaSummary,
   getRemainingDays,
-  getSaleUrgencyLabel,
   isCompletableFood
 } from "@/lib/food-utils";
+import type { TranslationKey } from "@/lib/i18n/dictionaries";
+import { formatPriceI18n } from "@/lib/i18n/format-price";
+import { getUrgencyLabelI18n } from "@/lib/i18n/sale-label-utils";
 import { useLocale } from "@/lib/i18n/use-locale";
 import { useFoodLogs } from "@/lib/use-food-logs";
 import { FoodImage } from "@/components/food-image";
@@ -27,6 +28,8 @@ const LIMITED_COLLECTION_MIN = 3;
 const LIMITED_GROUP_RATIO = 0.7;
 const PURE_IP_GROUP_NAMES = ["ミニオン", "マリオ", "ハローキティ", "ジュラシック・パーク", "ハリー・ポッター", "スヌーピー", "セサミストリート"];
 const LIMITED_WORDS = ["25th", "25周年", "期間限定", "限定", "イベント", "コラボ", "ハロウィーン", "ハロウィン", "クリスマス", "イースター", "夏", "冬"];
+
+type TFn = (key: TranslationKey, params?: Record<string, string | number>) => string;
 
 export function HomeCollectionHero({ foods }: { foods: FoodWithRelations[] }) {
   const { t } = useLocale();
@@ -233,7 +236,8 @@ export function HomeRecentRecords({ foods }: { foods: FoodWithRelations[] }) {
 }
 
 function HomeFoodRailCard({ food, className = "" }: { food: FoodWithRelations; className?: string }) {
-  const chip = getHomeFoodChip(food);
+  const { t, locale } = useLocale();
+  const chip = getHomeFoodChip(food, t);
 
   return (
     <Link href={`/foods/${food.id}`} className={`group w-[74vw] max-w-[300px] shrink-0 snap-start lg:w-auto lg:max-w-none ${className}`}>
@@ -243,7 +247,7 @@ function HomeFoodRailCard({ food, className = "" }: { food: FoodWithRelations; c
       <div className="mt-3 space-y-1">
         <p className="line-clamp-2 min-h-[42px] text-[15px] font-black leading-[1.45] text-ink">{food.name}</p>
         <p className="line-clamp-1 text-xs font-bold text-slate-500">
-          <span className="font-black text-[#071b3a]">{formatFoodPrice(food)}</span>
+          <span className="font-black text-[#071b3a]">{formatPriceI18n(food, locale, t)}</span>
           <span className="px-1.5 text-slate-300">/</span>
           {getFoodAreaSummary(food)}
         </p>
@@ -446,10 +450,10 @@ function scoreHomeFood(food: FoodWithRelations) {
   return score;
 }
 
-function getHomeFoodChip(food: FoodWithRelations) {
-  const urgency = getSaleUrgencyLabel(food);
+function getHomeFoodChip(food: FoodWithRelations, t: TFn) {
+  const urgency = getUrgencyLabelI18n(food, t);
   if (urgency) return { label: urgency, tone: "bg-rose-50 text-rose-700" };
-  if (food.isLimited) return { label: "限定", tone: "bg-[#fff4d7] text-[#8a5b16]" };
+  if (food.isLimited) return { label: t("common.limited"), tone: "bg-[#fff4d7] text-[#8a5b16]" };
   return null;
 }
 
