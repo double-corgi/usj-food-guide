@@ -20,7 +20,10 @@ UNICOLLE 全体の背景色・下部ナビ・カード背景を「白・明る�
 - ロジックの変更禁止
 - コンポーネントの props / interface 変更禁止
 - generated JSON・DB・翻訳ファイルの変更禁止
-- git 以外のコマンド実行禁止（build / deploy / test runner 等）
+- deploy / 外部通信 / DB / crawler / generated JSON 生成コマンドは禁止
+- grep / git diff / npm run lint / npm run typecheck / npm run build は検証目的で実行可
+- Vercel deploy や本番反映コマンドは禁止
+- テスト runner を追加で実行する必要がある場合は停止して確認
 - i18n 関連ファイルへの変更禁止
 - このゴールのスコープ外のファイル変更禁止
 
@@ -79,13 +82,26 @@ grep -n "backdrop-blur\|bg-white/94\|bg-white\/94" components/app-header.tsx
 
 以下のファイルで `bg-white/86`、`bg-white/70`、`bg-white/80` を `bg-white` に置き換える。
 
+**置換スコープの原則:**
+- 置換対象は、カード・セクション・コンテナの**通常背景クラスのみ**
+- `hover:bg-white/70` / `active:bg-white/70` / `group-hover:bg-white/70` などの状態クラスは**原則変更しない**
+- バッジ・アイコン背景・小オーバーレイも**変更しない**
+- 判断に迷う場合は変更せず、完了報告の「変更しなかった箇所」に記録する
+
+**Stop条件（以下に該当する場合は停止して報告すること）:**
+- `bg-white/xx` が多数ファイルに散らばっており、どこまで変更すべきか判断できない場合
+- `hover` / `active` / `group-hover` などの状態クラスとの区別が難しい場合
+- コンテナ背景ではなく、バッジ・ラベル・オーバーレイ背景に使われている場合
+- `app-header.tsx` / `food-card.tsx` / `store-food-list.tsx` 以外のファイル変更が 5 ファイルを超えそうな場合
+- ロジック変更や props 変更が必要になった場合
+
 ### 3-1. `components/food-card.tsx`
 
 ```bash
 grep -n "bg-white/" components/food-card.tsx
 ```
 
-見つかったすべての `bg-white/{数値}` クラスを `bg-white` に変更。
+見つかった `bg-white/{数値}` クラスのうち、カード・コンテナ背景のみ `bg-white` に変更。
 
 ### 3-2. `components/store-food-list.tsx`
 
@@ -93,13 +109,9 @@ grep -n "bg-white/" components/food-card.tsx
 grep -n "bg-white/" components/store-food-list.tsx
 ```
 
-`bg-white/60`、`bg-white/92` 等を `bg-white` に変更。
+`bg-white/60` 等のカード・コンテナ背景を `bg-white` に変更。
 
 **例外:** `bg-white/92` が `<span>` の半透明オーバーレイ（バッジ・ラベル等）に使われている場合は変更しない。食べたい Flag バッジの `bg-white/92` はそのままにする。
-
-判断基準:
-- カード・セクション・コンテナ → `bg-white`
-- バッジ・アイコン背景・小オーバーレイ → そのまま
 
 ### 3-3. その他のコンポーネント
 
@@ -109,7 +121,7 @@ grep -n "bg-white/" components/store-food-list.tsx
 grep -rn "bg-white/[0-9]" components/ app/ --include="*.tsx" | grep -v "node_modules"
 ```
 
-同じ判断基準（コンテナ → bg-white / バッジ → そのまま）を適用する。
+同じ判断基準（コンテナ通常背景 → `bg-white` / 状態クラス・バッジ → そのまま）を適用する。5 ファイルを超える場合は Stop 条件を参照すること。
 
 ---
 
@@ -158,11 +170,15 @@ git diff --stat -- "lib/i18n/**" "data/translations/**" "components/i18n-text.ts
 
 変更ゼロであること。
 
-### 4. TypeScript エラー確認（省略可）
+### 4. lint / typecheck / build
 
 ```bash
-npx tsc --noEmit 2>&1 | head -20
+npm run lint
+npm run typecheck
+npm run build
 ```
+
+すべて成功すること（エラーがゼロであること）。既存の警告が新たに増えていないことを確認する。
 
 ---
 
@@ -179,12 +195,35 @@ npx tsc --noEmit 2>&1 | head -20
 - components/food-card.tsx: bg-white/86 → bg-white、ring-slate-200/55 → ring-slate-200/70
 - （その他変更したファイル）
 
-### 半透明背景で変更しなかった箇所（バッジ等）
-- （例: store-food-list.tsx の Flag バッジ bg-white/92 は維持）
+### 変更した bg-white/xx の件数
+- 合計 X 箇所を bg-white に変更
+
+### 変更しなかった bg-white/xx の件数と理由
+- 合計 X 箇所を維持
+- （例: store-food-list.tsx L43 bg-white/92 — Flag バッジのオーバーレイのため維持）
+- （例: food-card.tsx L77 hover:bg-white/70 — 状態クラスのため維持）
+
+### hover / active / badge / overlay として維持した箇所
+- （維持した状態クラス・オーバーレイを列挙）
+
+### npm run lint
+成功 / 失敗（失敗の場合は内容を記載）
+
+### npm run typecheck
+成功 / 失敗（失敗の場合は内容を記載）
+
+### npm run build
+成功 / 失敗（失敗の場合は内容を記載）
+
+### i18n / data/translations / generated JSON 無変更確認
+git diff --stat -- "lib/i18n/**" "data/translations/**" の出力: （貼り付け）
+
+### 下部ナビ確認
+bg-white/94 backdrop-blur-2xl → bg-white に変更済み: YES / NO
 
 ### git commit ハッシュ
 xxxxxxx
 
-### 確認コマンド実行結果（git diff --stat）
+### git diff --stat 出力
 （出力を貼る）
 ```
