@@ -134,7 +134,7 @@ export function HomeActiveFoodCollection({ foods }: { foods: FoodWithRelations[]
           <h2 className="text-xl font-black text-ink">{t("home.collectibleFoods")}</h2>
           <p className="mt-1 text-xs font-bold text-slate-500">{t("home.collectibleFoodsDescription")}</p>
         </div>
-        <Link href="/foods" className="hidden shrink-0 text-xs font-black text-park lg:inline">すべて見る</Link>
+        <Link href="/foods" className="hidden shrink-0 text-xs font-black text-park lg:inline">{t("common.viewAll")}</Link>
       </div>
 
       {activeFoods.length > 0 ? (
@@ -146,14 +146,14 @@ export function HomeActiveFoodCollection({ foods }: { foods: FoodWithRelations[]
             href="/foods"
             className="flex min-h-[300px] w-[74vw] max-w-[300px] shrink-0 snap-start flex-col justify-end rounded-[1.25rem] bg-[#fffaf5] p-5 text-sm font-black text-ink ring-1 ring-[#eadcc8] lg:hidden"
           >
-            <span>すべて見る</span>
-            <span className="mt-1 text-xs font-bold text-slate-500">登録済みコレクションへ</span>
+            <span>{t("common.viewAll")}</span>
+            <span className="mt-1 text-xs font-bold text-slate-500">{t("home.toRegisteredCollection")}</span>
           </Link>
         </div>
       ) : (
         <div className="rounded-2xl bg-[#fffaf5] px-5 py-6 text-sm font-bold leading-7 text-slate-500">
-          販売中の登録フードはすべて記録済みです。登録済みコレクションから写真を見返せます。
-          <Link href="/foods" className="ml-2 font-black text-park">探す</Link>
+          {t("home.allCollectedMessage")}
+          <Link href="/foods" className="ml-2 font-black text-park">{t("common.search")}</Link>
         </div>
       )}
     </section>
@@ -178,7 +178,7 @@ export function HomeLimitedCollection({ foods }: { foods: FoodWithRelations[] })
           <p className="mt-1 text-xs font-bold text-slate-500">{collection.title}</p>
         </div>
         <div className={`shrink-0 rounded-full px-3 py-1.5 text-xs font-black ${complete ? "bg-[#fdbb30] text-[#071b3a]" : "bg-[#fffaf5] text-[#8a5b16] ring-1 ring-[#eadcc8]"}`}>
-          {complete ? "コンプリート" : `あと ${remaining}品`}
+          {complete ? t("home.limitedComplete") : t("home.limitedRemaining", { count: remaining })}
         </div>
       </div>
       <div className="flex gap-3 overflow-x-auto pb-1 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
@@ -204,6 +204,7 @@ export function HomeLimitedCollection({ foods }: { foods: FoodWithRelations[] })
 }
 
 export function HomeRecentRecords({ foods }: { foods: FoodWithRelations[] }) {
+  const { t } = useLocale();
   const { logs } = useFoodLogs();
   const recentFoods = useMemo(() => pickRecentEatenFoods(foods, logs), [foods, logs]);
   if (recentFoods.length === 0) return null;
@@ -212,10 +213,10 @@ export function HomeRecentRecords({ foods }: { foods: FoodWithRelations[] }) {
     <section className="space-y-4">
       <div className="flex items-end justify-between gap-3">
         <div>
-          <h2 className="text-xl font-black text-ink">最近の記録</h2>
-          <p className="mt-1 text-xs font-bold text-slate-500">色づいたコレクションを見返す。</p>
+          <h2 className="text-xl font-black text-ink">{t("home.recentRecordsTitle")}</h2>
+          <p className="mt-1 text-xs font-bold text-slate-500">{t("home.recentRecordsDescription")}</p>
         </div>
-        <Link href="/eaten" className="shrink-0 text-xs font-black text-park">アルバムを見る</Link>
+        <Link href="/eaten" className="shrink-0 text-xs font-black text-park">{t("home.viewAlbum")}</Link>
       </div>
       <div className="flex gap-3 overflow-x-auto pb-1 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
         {recentFoods.map((food) => (
