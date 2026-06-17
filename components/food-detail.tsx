@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useEffect } from "react";
 import { Check, ChevronLeft, ChevronRight, ExternalLink, Flag, MapPin, Store } from "lucide-react";
-import { formatFoodPrice, formatPrice, getCanonicalFoodId, getCanonicalFoodKey, getDisplayLocationAreaName, getFoodAreaSummary, getFoodAreaNames, getPriceSource, getPriceSourceLabel, getSaleEndDate, getSalePeriodLabel, getSaleStartDate, getSaleStatus, getSaleStatusLabel, getSaleStatusTone, getSaleUrgencyLabel, getZukanCode, isCompletableFood, isEatenCanonical } from "@/lib/food-utils";
+import { getCanonicalFoodId, getCanonicalFoodKey, getDisplayLocationAreaName, getFoodAreaSummary, getFoodAreaNames, getPriceSource, getPriceSourceLabel, getSaleEndDate, getSaleStartDate, getSaleStatus, getSaleStatusTone, getZukanCode, isCompletableFood, isEatenCanonical } from "@/lib/food-utils";
 import { useFoodLogs } from "@/lib/use-food-logs";
 import { useNextWantFoods } from "@/lib/use-next-want-foods";
 import { filterDeletedFoodIds, isDeletedFoodId } from "@/lib/deleted-foods";
@@ -13,6 +13,9 @@ import { FoodCorrectionReportForm } from "@/components/food-correction-report-fo
 import { FoodReviews } from "@/components/food-reviews";
 import { UnofficialNotice } from "@/components/unofficial-notice";
 import type { TranslationKey } from "@/lib/i18n/dictionaries";
+import { formatDateI18n } from "@/lib/i18n/format-date";
+import { formatPriceI18n } from "@/lib/i18n/format-price";
+import { getSalePeriodLabelI18n, getSaleStatusLabelI18n, getUrgencyLabelI18n } from "@/lib/i18n/sale-label-utils";
 import { useLocale } from "@/lib/i18n/use-locale";
 
 type RelatedGroups = {
@@ -37,7 +40,7 @@ export function FoodDetail({
   nextFood?: FoodWithRelations;
   relatedGroups?: RelatedGroups;
 }) {
-  const { t } = useLocale();
+  const { locale, t } = useLocale();
   const { logs, toggleEaten } = useFoodLogs();
   const foodPool = allFoods ?? [food];
   const { isWanted, toggleWanted } = useNextWantFoods(foodPool);
@@ -47,11 +50,11 @@ export function FoodDetail({
   const eatToggleFoodId = eatenActionFoodId;
   const locations = getDisplayLocations(food);
   const primaryLocation = locations[0];
-  const period = getPeriodSummary(food);
+  const periodLabel = getSalePeriodLabelI18n(food, locale, t);
   const saleStatus = getSaleStatus(food);
   const saleStartDate = getSaleStartDate(food);
   const saleEndDate = getSaleEndDate(food);
-  const urgencyLabel = getSaleUrgencyLabel(food);
+  const urgencyLabel = getUrgencyLabelI18n(food, t);
   const priceSource = getPriceSource(food);
   const knownPrice = Boolean(food.price ?? food.priceMin);
   const diningType = food.diningType && food.diningType !== "unknown" ? food.diningType : inferDiningType(food);
@@ -119,8 +122,8 @@ export function FoodDetail({
               {food.name}
             </h1>
             <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
-              <p className="text-3xl font-black leading-none text-park">{formatFoodPrice(food)}</p>
-              <span className={`rounded-full px-3 py-1 text-xs font-black ${getSaleStatusTone(food)}`}>{getSaleStatusLabel(food)}</span>
+              <p className="text-3xl font-black leading-none text-park">{formatPriceI18n(food, locale, t)}</p>
+              <span className={`rounded-full px-3 py-1 text-xs font-black ${getSaleStatusTone(food)}`}>{getSaleStatusLabelI18n(food, t)}</span>
               {urgencyLabel ? <span className="rounded-full bg-berry px-3 py-1 text-xs font-black text-white">{urgencyLabel}</span> : null}
               {food.isLimited ? <span className="rounded-full bg-sun/30 px-3 py-1 text-xs font-black text-ink">{t("foods.badgeLimited")}</span> : null}
             </div>
@@ -193,7 +196,7 @@ export function FoodDetail({
                 <span className="shrink-0 text-[11px] font-black text-slate-400">{t(`shopType.${location.shopType}` as TranslationKey)}</span>
               </div>
               <p className="mt-2 text-xs font-bold text-slate-500">
-                {location.price ? formatPrice(location.price) : formatFoodPrice(food)} / {diningLabel}
+                {location.price ? formatPriceI18n({ price: location.price }, locale, t) : formatPriceI18n(food, locale, t)} / {diningLabel}
               </p>
             </div>
           ))}
@@ -219,7 +222,7 @@ export function FoodDetail({
           <p className="text-xs font-black text-park">{t("foodDetail.relatedKicker")}</p>
           <h2 className="mt-1 text-lg font-black text-ink">{t("foodDetail.relatedTitle")}</h2>
         </div>
-        <RelatedRail title={t("foodDetail.relatedRailTitle")} foods={relatedFoods} />
+        <RelatedRail title={t("foodDetail.relatedRailTitle")} foods={relatedFoods} locale={locale} t={t} />
       </section>
 
       <details className="border-b border-slate-200 pb-4 text-xs font-bold text-slate-500">
@@ -235,7 +238,7 @@ export function FoodDetail({
           </div>
           <div className="flex items-center justify-between gap-3">
             <dt className="text-slate-400">{t("foodDetail.period")}</dt>
-            <dd className="font-black text-slate-700">{period.label}</dd>
+            <dd className="font-black text-slate-700">{periodLabel}</dd>
           </div>
           <div className="flex items-center justify-between gap-3">
             <dt className="text-slate-400">{t("foodDetail.completable")}</dt>
@@ -243,11 +246,11 @@ export function FoodDetail({
           </div>
           <div className="flex items-center justify-between gap-3">
             <dt className="text-slate-400">{t("foodDetail.saleStart")}</dt>
-            <dd className="font-black text-slate-700">{formatDateLong(saleStartDate) ?? t("foodDetail.dateUnknown")}</dd>
+            <dd className="font-black text-slate-700">{formatDateI18n(saleStartDate, locale) ?? t("foodDetail.dateUnknown")}</dd>
           </div>
           <div className="flex items-center justify-between gap-3">
             <dt className="text-slate-400">{t("foodDetail.saleEnd")}</dt>
-            <dd className="font-black text-slate-700">{saleEndDate ? formatDateLong(saleEndDate) ?? t("foodDetail.dateUnknown") : saleStatus === "active" ? t("foodDetail.dateUndecided") : t("foodDetail.dateUnknown")}</dd>
+            <dd className="font-black text-slate-700">{saleEndDate ? formatDateI18n(saleEndDate, locale) ?? t("foodDetail.dateUnknown") : saleStatus === "active" ? t("foodDetail.dateUndecided") : t("foodDetail.dateUnknown")}</dd>
           </div>
           <div className="flex items-center justify-between gap-3">
             <dt className="text-slate-400">{t("foodDetail.priceCheck")}</dt>
@@ -261,7 +264,7 @@ export function FoodDetail({
           ) : null}
           <div className="flex items-center justify-between gap-3">
             <dt className="text-slate-400">{t("foodDetail.checkedDate")}</dt>
-            <dd className="font-black text-slate-700">{formatDateShort(food.priceLastCheckedAt, t("foodDetail.dateUnknown"))}</dd>
+            <dd className="font-black text-slate-700">{formatDateI18n(food.priceLastCheckedAt, locale, { month: "numeric", day: "numeric" }) ?? t("foodDetail.dateUnknown")}</dd>
           </div>
         </dl>
       </details>
@@ -359,7 +362,17 @@ function categoryAffinityScore(source: FoodCategory, target: FoodCategory) {
   return -8;
 }
 
-function RelatedRail({ title, foods }: { title: string; foods: FoodWithRelations[] }) {
+function RelatedRail({
+  title,
+  foods,
+  locale,
+  t
+}: {
+  title: string;
+  foods: FoodWithRelations[];
+  locale: ReturnType<typeof useLocale>["locale"];
+  t: ReturnType<typeof useLocale>["t"];
+}) {
   if (foods.length === 0) return null;
   return (
     <div className="space-y-2">
@@ -373,7 +386,7 @@ function RelatedRail({ title, foods }: { title: string; foods: FoodWithRelations
               </div>
               <div className="mt-2 space-y-1">
                 <p className="line-clamp-2 h-10 break-words text-xs font-black leading-5 text-ink [overflow-wrap:anywhere]">{food.name}</p>
-                <p className="truncate text-xs font-black text-park">{formatFoodPrice(food)}</p>
+                <p className="truncate text-xs font-black text-park">{formatPriceI18n(food, locale, t)}</p>
                 <p className="line-clamp-2 h-7 text-[10px] font-bold leading-[0.85rem] text-slate-600">{getFoodAreaSummary(food)}</p>
               </div>
             </Link>
@@ -406,32 +419,9 @@ function getDisplayLocations(food: FoodWithRelations): FoodLocation[] {
   ];
 }
 
-function getPeriodSummary(food: FoodWithRelations) {
-  return { label: getSalePeriodLabel(food) };
-}
-
 function inferDiningType(food: FoodWithRelations): DiningType {
   if (food.shop.type === "cart" || food.shop.type === "wagon") return "food_cart";
   if (food.category === "churro" || food.category === "popcorn" || food.category === "drink" || food.category === "snack") return "takeout";
   if (food.shop.type === "restaurant") return "eat_in";
   return "unknown";
-}
-
-function formatDateShort(value?: string | null, fallback = "未確認") {
-  if (!value) return fallback;
-  const date = new Date(value);
-  if (Number.isNaN(date.getTime())) return value;
-  return new Intl.DateTimeFormat("ja-JP", { month: "numeric", day: "numeric", timeZone: "Asia/Tokyo" }).format(date);
-}
-
-function formatDateLong(value?: string | null) {
-  if (!value) return null;
-  const date = new Date(value);
-  if (Number.isNaN(date.getTime())) return value;
-  return new Intl.DateTimeFormat("ja-JP", {
-    timeZone: "Asia/Tokyo",
-    year: "numeric",
-    month: "numeric",
-    day: "numeric"
-  }).format(date);
 }

@@ -1,7 +1,9 @@
 import Link from "next/link";
 import { MapPin } from "lucide-react";
-import { formatFoodPrice, formatPrice, getCanonicalFoodId, getCanonicalFoodKey, getDisplayLocationAreaName, getFoodAreaDisplay, getSaleStatus, getSaleUrgencyLabel, isEatenCanonical } from "@/lib/food-utils";
+import { getCanonicalFoodId, getCanonicalFoodKey, getDisplayLocationAreaName, getFoodAreaDisplay, getSaleStatus, isEatenCanonical } from "@/lib/food-utils";
 import { tAreaName } from "@/lib/i18n/area-name";
+import { formatPriceI18n } from "@/lib/i18n/format-price";
+import { getUrgencyLabelI18n } from "@/lib/i18n/sale-label-utils";
 import { useLocale } from "@/lib/i18n/use-locale";
 import type { FoodWithRelations, UserFoodLog } from "@/types/domain";
 import { FoodImage } from "@/components/food-image";
@@ -17,7 +19,7 @@ export function FoodCard({
   logs: UserFoodLog[];
   onToggleEaten: (foodId: string, spentAmount?: number) => void;
 }) {
-  const { t } = useLocale();
+  const { locale, t } = useLocale();
   const locations = getDisplayLocations(food);
   const primaryLocation = locations[0];
   const areaDisplay = getFoodAreaDisplay(food);
@@ -49,7 +51,7 @@ export function FoodCard({
               {food.name}
             </p>
             <p data-food-card-price className={`mt-2 h-7 truncate ${knownPrice ? "text-lg font-black leading-7 text-park" : "text-xs font-bold leading-7 text-slate-500"}`}>
-              {displayPrice(food, t)}
+              {displayPrice(food, locale, t)}
             </p>
           </div>
           <p data-food-card-area className="mt-auto flex h-8 min-w-0 items-start gap-1.5 text-xs font-bold leading-4 text-slate-500">
@@ -81,7 +83,7 @@ export function FoodCard({
 
 function getTranslatedAreaSummary(areaDisplay: ReturnType<typeof getFoodAreaDisplay>, t: ReturnType<typeof useLocale>["t"]) {
   const visibleAreas = areaDisplay.visibleAreas.map((areaName) => tAreaName(areaName, t));
-  return `${visibleAreas.join(" / ")}${areaDisplay.hiddenCount > 0 ? ` ほか${areaDisplay.hiddenCount}箇所` : ""}`;
+  return `${visibleAreas.join(" / ")}${areaDisplay.hiddenCount > 0 ? ` ${t("foodCard.moreAreas", { count: areaDisplay.hiddenCount })}` : ""}`;
 }
 
 const cardStates = {
@@ -114,10 +116,10 @@ function hasPrice(food: FoodWithRelations) {
   return Boolean(food.priceMin ?? food.price ?? food.locations?.find((location) => location.price)?.price);
 }
 
-function displayPrice(food: FoodWithRelations, t: ReturnType<typeof useLocale>["t"]) {
+function displayPrice(food: FoodWithRelations, locale: ReturnType<typeof useLocale>["locale"], t: ReturnType<typeof useLocale>["t"]) {
   const locationPrice = food.locations?.find((location) => location.price)?.price;
-  if (!food.price && !food.priceMin && locationPrice) return formatPrice(locationPrice);
-  return hasPrice(food) ? formatFoodPrice(food) : t("foods.priceUnknown");
+  if (!food.price && !food.priceMin && locationPrice) return formatPriceI18n({ price: locationPrice }, locale, t);
+  return hasPrice(food) ? formatPriceI18n(food, locale, t) : t("foods.priceUnknown");
 }
 
 function getStoredSpendAmount(food: FoodWithRelations) {
@@ -142,7 +144,7 @@ function getCardBadges({
   t: ReturnType<typeof useLocale>["t"];
 }) {
   const badges: Array<{ label: string; className: string }> = [];
-  const urgencyLabel = getSaleUrgencyLabel(food);
+  const urgencyLabel = getUrgencyLabelI18n(food, t);
   if (urgencyLabel && getSaleStatus(food) === "active") badges.push({ label: urgencyLabel, className: "bg-berry text-white" });
   if (food.isLimited) badges.push({ label: t("foods.badgeLimited"), className: "animate-soft-glow bg-berry text-white" });
   if (getSaleStatus(food) === "ended") badges.unshift({ label: t("common.ended"), className: "bg-slate-800/88 text-white" });

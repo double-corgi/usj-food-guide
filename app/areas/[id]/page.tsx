@@ -5,10 +5,11 @@ import { FoodImage } from "@/components/food-image";
 import { AreaCollectionSummary } from "@/components/area-collection-summary";
 import { AreaEatenFoods } from "@/components/area-eaten-foods";
 import { AreaFoodStatusLists } from "@/components/area-food-status-lists";
+import { AreaUrgencyLabel } from "@/components/area-urgency-label";
 import { AreaShopList, type AreaShopRow } from "@/components/area-shop-list";
 import { I18nText } from "@/components/i18n-text";
 import { getAreaImageByName } from "@/lib/area-images";
-import { dedupeFoodsByCanonical, foodMatchesArea, formatFoodPrice, getRemainingDays, getSaleUrgencyLabel, isEndingSoon } from "@/lib/food-utils";
+import { dedupeFoodsByCanonical, foodMatchesArea, formatFoodPrice, getRemainingDays, isEndingSoon } from "@/lib/food-utils";
 import { rankFoodsByStrategy } from "@/lib/food-value-score";
 import { listFoods } from "@/lib/repositories/foods";
 import { listAreas } from "@/lib/repositories/areas";
@@ -103,7 +104,17 @@ export default async function AreaDetailPage({ params }: { params: Promise<{ id:
                   </div>
                   <p className="mt-3 line-clamp-2 min-h-11 text-sm font-black leading-[1.55] text-ink">{food.name}</p>
                   <p className="mt-1 text-sm font-black text-park">{formatFoodPrice(food)}</p>
-                  <p className="mt-1 text-[11px] font-bold text-slate-500">{getSaleUrgencyLabel(food) ?? `残り${getRemainingDays(food) ?? "未確認"}日`}</p>
+                  <AreaUrgencyLabel
+                    food={{
+                      saleEndDate: food.saleEndDate,
+                      endDate: food.endDate,
+                      remainingDays: food.remainingDays,
+                      saleStatus: food.saleStatus,
+                      status: food.status,
+                      saleStartDate: food.saleStartDate,
+                      startDate: food.startDate
+                    }}
+                  />
                 </Link>
               ))}
             </div>
