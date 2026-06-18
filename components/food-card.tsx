@@ -33,10 +33,10 @@ export function FoodCard({
   const badges = getCardBadges({ food, t });
 
   return (
-    <article data-food-card data-food-name={food.name} className={`group relative h-[462px] min-w-0 overflow-hidden rounded-[1.25rem] bg-white ring-1 ring-slate-200/70 transition duration-200 active:scale-[0.99] md:hover:-translate-y-0.5 ${state.borderClass} ${getSaleStatus(food) === "ended" ? "opacity-75 grayscale" : ""}`}>
-      <Link href={`/foods/${food.id}`} className="flex h-full min-w-0 flex-col">
-        <div className="relative h-[252px] shrink-0 overflow-hidden bg-slate-100">
-          <FoodImage food={food} className="h-full w-full transition duration-300 group-hover:scale-105" />
+    <article data-food-card data-food-name={food.name} className={`group relative min-w-0 overflow-hidden rounded-[1.25rem] bg-white pb-[50px] ring-1 ring-slate-200/70 transition duration-200 active:scale-[0.99] md:hover:-translate-y-0.5 ${state.borderClass} ${getSaleStatus(food) === "ended" ? "opacity-75 grayscale" : ""}`}>
+      <Link href={`/foods/${food.id}`} className="flex min-w-0 flex-col">
+        <div className="relative aspect-[4/3] shrink-0 overflow-hidden bg-white">
+          <FoodImage food={food} className="h-full w-full transition duration-300 group-hover:scale-105" variant="contain" />
           <div className="absolute left-3 top-3 flex max-h-8 max-w-[68%] flex-wrap gap-2 overflow-hidden">
             {badges.map((badge) => (
               <span key={badge.label} className={`rounded-full px-2.5 py-1 text-[11px] font-black ${badge.className}`}>
@@ -45,7 +45,7 @@ export function FoodCard({
             ))}
           </div>
         </div>
-        <div className="flex h-[160px] min-w-0 flex-col px-3 py-3">
+        <div className="flex min-h-[160px] min-w-0 flex-col px-3 py-3">
           <div className="min-w-0">
             <p data-food-card-title className="line-clamp-3 h-[3.9rem] break-words text-[14px] font-black leading-[1.3rem] text-ink [overflow-wrap:anywhere] group-hover:text-park sm:text-[15px]">
               {food.name}

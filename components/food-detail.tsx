@@ -100,7 +100,7 @@ export function FoodDetail({
 
       <section className="space-y-5 text-ink">
         <div className="relative h-[370px] overflow-hidden rounded-[2rem] bg-slate-100 sm:h-[620px]">
-          <FoodImage food={food} alt={food.name} eager className="h-full w-full" />
+          <FoodImage food={food} alt={food.name} eager className="h-full w-full" variant="contain" />
           <div className="absolute left-3 top-3 flex flex-wrap gap-2">
             <span className="rounded-full bg-white/90 px-3 py-1.5 text-xs font-black text-park shadow-sm">{getZukanCode(food, allFoods)}</span>
             {saleStatus === "ended" ? (

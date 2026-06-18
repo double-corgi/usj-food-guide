@@ -1,20 +1,25 @@
 import { getCategoryPlaceholder, getFoodImage, normalizeImageUrl } from "@/lib/utils/image";
 import type { FoodWithRelations } from "@/types/domain";
 
+export type FoodImageVariant = "cover" | "contain" | "card";
+
 export function FoodImage({
   food,
   className,
   alt,
-  eager = false
+  eager = false,
+  variant = "card"
 }: {
   food: FoodWithRelations;
   className?: string;
   alt?: string;
   eager?: boolean;
+  variant?: FoodImageVariant;
 }) {
   const fallback = getCategoryPlaceholder(food.category);
   const src = normalizeImageUrl(getFoodImage(food)) ?? fallback;
   const real = src !== fallback;
+  const imageClass = getImageClass(variant, !real);
 
   return (
     // eslint-disable-next-line @next/next/no-img-element
@@ -27,7 +32,13 @@ export function FoodImage({
       referrerPolicy="no-referrer"
       width={640}
       height={480}
-      className={`${className ?? ""} bg-slate-100 ${real ? "object-cover" : "object-contain p-6"}`}
+      className={`${className ?? ""} ${imageClass}`}
     />
   );
+}
+
+function getImageClass(variant: FoodImageVariant, placeholder: boolean) {
+  if (variant === "cover") return "bg-slate-100 object-cover object-center";
+  if (variant === "contain") return placeholder ? "bg-white object-contain p-4" : "bg-white object-contain";
+  return placeholder ? "bg-slate-100 object-contain p-6" : "bg-slate-100 object-cover";
 }
