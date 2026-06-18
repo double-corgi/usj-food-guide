@@ -4,6 +4,7 @@ import { ChevronLeft, Clock, ExternalLink, MapPin, Store, type LucideIcon } from
 import type { ReactNode } from "react";
 import { I18nText } from "@/components/i18n-text";
 import { StoreFoodList } from "@/components/store-food-list";
+import { StoreNameClient } from "@/components/store-name-client";
 import { StoreVisual } from "@/components/store-visual";
 import { listFoods } from "@/lib/repositories/foods";
 import { buildStoresFromFoods, findStoreById, getStoreDisplayFoods, getStoreSummary, getStoreTypeLabel, pickRepresentativeFood } from "@/lib/store-utils";
@@ -45,7 +46,9 @@ export default async function StoreDetailPage({ params }: { params: Promise<{ id
           <p className="text-xs font-black text-park">
             <I18nText k="store.detailKicker" />
           </p>
-          <h1 className="text-3xl font-black leading-tight tracking-tight text-ink md:text-4xl">{store.name}</h1>
+          <h1 className="text-3xl font-black leading-tight tracking-tight text-ink md:text-4xl">
+            <StoreNameClient store={{ id: store.id, aliases: store.aliases, name: store.name }} />
+          </h1>
           <p className="inline-flex items-center gap-2 text-sm font-black text-slate-500">
             <MapPin size={16} className="text-park" aria-hidden />
             {store.areaName}

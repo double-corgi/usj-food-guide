@@ -3,12 +3,14 @@
 import Link from "next/link";
 import { ChevronRight, MapPin } from "lucide-react";
 import { FoodImage } from "@/components/food-image";
+import { getStoreNameI18n } from "@/components/store-name-client";
+import type { Locale } from "@/lib/i18n/locales";
 import { useLocale } from "@/lib/i18n/use-locale";
 import { getStoreBadge, getStoreSummary, pickRepresentativeFood, type StoreWithFoods } from "@/lib/store-utils";
 import type { FoodWithRelations } from "@/types/domain";
 
 export function StoresOverview({ stores }: { stores: StoreWithFoods[] }) {
-  const { t } = useLocale();
+  const { t, locale } = useLocale();
   const areaGroups = groupStoresByArea(stores);
 
   return (
@@ -33,7 +35,7 @@ export function StoresOverview({ stores }: { stores: StoreWithFoods[] }) {
 
             <div className="divide-y divide-slate-100 rounded-[1rem] border border-slate-100 bg-white">
               {areaStores.map((store) => (
-                <StoreRow key={store.id} store={store} representativeFood={pickRepresentativeFood(store)} />
+                <StoreRow key={store.id} store={store} representativeFood={pickRepresentativeFood(store)} locale={locale} />
               ))}
             </div>
           </div>
@@ -47,9 +49,10 @@ export function StoresOverview({ stores }: { stores: StoreWithFoods[] }) {
   );
 }
 
-function StoreRow({ store, representativeFood }: { store: StoreWithFoods; representativeFood?: FoodWithRelations }) {
+function StoreRow({ store, representativeFood, locale }: { store: StoreWithFoods; representativeFood?: FoodWithRelations; locale: Locale }) {
   const badge = getStoreBadge(store);
   const summary = getStoreSummary(store, representativeFood);
+  const storeName = getStoreNameI18n(store, locale);
 
   return (
     <Link
@@ -73,7 +76,7 @@ function StoreRow({ store, representativeFood }: { store: StoreWithFoods; repres
 
       <div className="min-w-0">
         <h3 className="line-clamp-2 text-[0.98rem] font-black leading-[1.35] text-ink [overflow-wrap:anywhere] sm:text-[1.05rem]">
-          {store.name}
+          {storeName}
         </h3>
         <p className="mt-1 line-clamp-1 text-[0.78rem] font-bold leading-tight text-slate-400 [overflow-wrap:anywhere] sm:text-[0.82rem]">
           {summary}
