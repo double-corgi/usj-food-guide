@@ -292,5 +292,103 @@
     "zh-TW": "叢林節奏奶昔",
     "_source": "provisional",
     "_status": "needs_review"
+  },
+  "shop-ホッグズ-ヘッド-パブ": {
+    "en": "Hog's Head Pub",
+    "ko": "호그즈 헤드 펍",
+    "zh-TW": "豬頭酒吧",
+    "_source": "official",
+    "_status": "verified"
+  },
+  "shop-フィネガンズ・バー＆グリル": {
+    "en": "Finnegan's Bar & Grill",
+    "ko": "피네간즈 바 & 그릴",
+    "zh-TW": "費尼根酒吧燒烤",
+    "_source": "official",
+    "_status": "verified"
+  },
+  "shop-アズーラ・ディ・カプリ": {
+    "en": "Azzurra di Capri",
+    "ko": "아즈라 디 카프리",
+    "zh-TW": "阿祖拉迪卡普里",
+    "_source": "official",
+    "_status": "verified"
+  },
+  "shop-三本の箒tm": {
+    "en": "Three Broomsticks",
+    "ko": "세 개의 빗자루",
+    "zh-TW": "三根掃帚",
+    "_source": "official",
+    "_status": "verified"
+  },
+  "shop-スヌーピー・バックロット・カフェ": {
+    "en": "Snoopy's Backlot Café",
+    "ko": "스누피 백로트 카페",
+    "zh-TW": "史努比製片廠後場咖啡廳",
+    "_source": "provisional",
+    "_status": "needs_review"
+  },
+  "shop-ピンクカフェ": {
+    "en": "Pink Café",
+    "ko": "핑크 카페",
+    "zh-TW": "粉紅咖啡廳",
+    "_source": "provisional",
+    "_status": "needs_review"
+  },
+  "shop-137zayl": {
+    "en": "Hello Kitty's Corner Café",
+    "ko": "헬로키티 코너 카페",
+    "zh-TW": "凱蒂貓轉角咖啡廳",
+    "_source": "provisional",
+    "_status": "needs_review"
+  },
+  "shop-1tt48e8-restaurant-122iqw": {
+    "en": "Hog's Head",
+    "ko": "호그즈 헤드",
+    "zh-TW": "豬頭酒吧",
+    "_source": "provisional",
+    "_status": "needs_review"
+  },
+  "shop-restaurant-7uhqb": {
+    "en": "Lost World Restaurant",
+    "ko": "로스트 월드 레스토랑",
+    "zh-TW": "失落世界餐廳",
+    "_source": "provisional",
+    "_status": "needs_review"
+  },
+  "shop-gxslj9": {
+    "en": "Corner Café",
+    "ko": "코너 카페",
+    "zh-TW": "街角咖啡廳",
+    "_source": "provisional",
+    "_status": "needs_review"
+  },
+  "shop-1ea4r5z": {
+    "en": "Hello Kitty's Corner Café",
+    "ko": "헬로키티 코너 카페",
+    "zh-TW": "凱蒂貓轉角咖啡廳",
+    "_source": "provisional",
+    "_status": "needs_review"
+  },
+  "shop-1bid242": {
+    "en": "Hello Kitty's Cupcake Dream Food Cart",
+    "ko": "헬로키티 컵케이크 드림 푸드 카트",
+    "zh-TW": "凱蒂貓杯子蛋糕夢境旁小食車",
+    "_source": "provisional",
+    "_status": "needs_review"
+  },
+  "shop-jbc9aa": {
+    "en": "Minion Happy Kitchen",
+    "ko": "미니언 해피 키친",
+    "zh-TW": "小小兵快樂廚房",
+    "_source": "provisional",
+    "_status": "needs_review"
+  },
+  "shop-znyimu": {
+    "en": "Jungle Beat Shakes",
+    "ko": "정글 비트 쉐이크",
+    "zh-TW": "叢林節奏奶昔",
+    "_source": "provisional",
+    "_status": "needs_review"
   }
 }
