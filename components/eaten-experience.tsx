@@ -256,7 +256,7 @@ function CollectionThumb({ record }: { record: EatenAlbumRecord }) {
       aria-label={food.name}
       className="group min-w-0 transition active:scale-95"
     >
-      <div className="relative aspect-square overflow-hidden rounded-[0.35rem] bg-transparent transition-opacity group-active:opacity-80">
+      <div className="relative aspect-square overflow-hidden rounded-[0.45rem] border border-slate-200/60 bg-white shadow-[0_1px_3px_rgba(15,23,42,0.05)] transition-opacity group-active:opacity-80">
         <FoodImage food={food} alt={food.name} className="h-full w-full transition duration-300 group-hover:scale-105" />
       </div>
     </Link>
