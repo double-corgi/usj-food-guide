@@ -376,7 +376,7 @@ function buildAlbumSections(records: EatenAlbumRecord[], mode: AlbumMode, t: (ke
       groups.set(areaName, [...(groups.get(areaName) ?? []), record]);
     }
     return Array.from(groups.entries())
-      .map(([areaName, items]) => ({ id: `area-${areaName}`, title: tAreaName(areaName, t), records: items.slice(0, 4), total: items.length }))
+      .map(([areaName, items]) => ({ id: `area-${areaName}`, title: tAreaName(areaName, t), records: items.slice(0, 20), total: items.length }))
       .sort((a, b) => b.total - a.total || a.title.localeCompare(b.title, "ja"))
       .slice(0, 8);
   }
@@ -387,7 +387,7 @@ function buildAlbumSections(records: EatenAlbumRecord[], mode: AlbumMode, t: (ke
       groups.set(category, [...(groups.get(category) ?? []), record]);
     }
     return Array.from(groups.entries())
-      .map(([category, items]) => ({ id: `genre-${category}`, title: t(`category.${category}` as TranslationKey), records: items.slice(0, 4), total: items.length }))
+      .map(([category, items]) => ({ id: `genre-${category}`, title: t(`category.${category}` as TranslationKey), records: items.slice(0, 20), total: items.length }))
       .sort((a, b) => b.total - a.total || a.title.localeCompare(b.title, "ja"))
       .slice(0, 8);
   }

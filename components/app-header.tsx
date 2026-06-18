@@ -83,7 +83,7 @@ export function AppHeader() {
               href={item.href}
               aria-current={active ? "page" : undefined}
               className={`flex min-h-12 touch-manipulation flex-col items-center justify-center gap-0.5 rounded-[1.15rem] text-[10.5px] font-black transition active:scale-95 ${
-                active ? "bg-mint text-park" : "text-slate-400 hover:bg-white/70 active:bg-mint"
+                active ? "bg-mint text-park" : "text-slate-500 hover:bg-white/70 active:bg-mint"
               }`}
             >
               <item.icon size={19} aria-hidden />
