@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import Link from "next/link";
 import { ChevronDown, Search, SlidersHorizontal } from "lucide-react";
 import { categoryLabels, diningTypeLabels, shopTypeLabels, statusLabels } from "@/lib/constants";
@@ -75,8 +75,11 @@ export function FoodGrid({
   const [priceFilter, setPriceFilter] = useState<PriceFilter>("all");
   const [visibleCount, setVisibleCount] = useState(60);
   const [recentSearches, setRecentSearches] = useState<string[]>(() => readRecentSearches());
+  const [pendingEatenState, setPendingEatenState] = useState<{ scopeKey: string; keys: Set<string> }>(() => ({ scopeKey: "", keys: new Set() }));
   const canonicalFoods = useMemo(() => dedupeFoodsByCanonical(foods), [foods]);
   const eatenCanonicalKeys = useMemo(() => getEatenCanonicalKeys(foods, logs), [foods, logs]);
+  const filterScopeKey = `${areaId}|${category}|${diningType}|${imageOnly}|${mode}|${priceFilter}|${query}|${saleFilter}|${shopId}|${shopType}|${sort}|${status}`;
+  const pendingEatenKeys = pendingEatenState.scopeKey === filterScopeKey ? pendingEatenState.keys : null;
 
   const areas = useMemo(() => Array.from(new Map(foods.flatMap((food) => [
     ...(normalizeDisplayAreaName(food.area.name) ? [[food.area.id, food.area] as const] : []),
@@ -104,10 +107,22 @@ export function FoodGrid({
       if (mode === "eaten" && !eatenCanonicalKeys.has(canonicalKey)) return false;
       return true;
     });
-    return result.sort((a, b) => sortFood(a, b, sort, foods, logs));
-  }, [areaId, areas, canonicalFoods, category, diningType, eatenCanonicalKeys, foods, imageOnly, logs, mode, priceFilter, query, saleFilter, shopId, shopType, sort, status, t]);
+    return result.sort((a, b) => sortFood(a, b, sort, foods, logs, pendingEatenKeys));
+  }, [areaId, areas, canonicalFoods, category, diningType, eatenCanonicalKeys, foods, imageOnly, logs, mode, pendingEatenKeys, priceFilter, query, saleFilter, shopId, shopType, sort, status, t]);
 
   const displayedFoods = filteredFoods.slice(0, visibleCount);
+  const handleToggleEaten = useCallback((foodId: string, spentAmount?: number) => {
+    const targetFood = foods.find((food) => food.id === foodId);
+    if (targetFood) {
+      const canonicalKey = getCanonicalFoodKey(targetFood);
+      setPendingEatenState((current) => {
+        const next = new Set(current.scopeKey === filterScopeKey ? current.keys : []);
+        isEatenCanonical(foods, logs, targetFood) ? next.delete(canonicalKey) : next.add(canonicalKey);
+        return { scopeKey: filterScopeKey, keys: next };
+      });
+    }
+    toggleEaten(foodId, spentAmount);
+  }, [filterScopeKey, foods, logs, toggleEaten]);
   const commitSearch = (value: string) => {
     const trimmed = value.trim();
     if (trimmed.length < 2) return;
@@ -306,7 +321,7 @@ export function FoodGrid({
         <>
           <div className="grid grid-cols-2 gap-3 md:grid-cols-3 xl:grid-cols-5">
             {displayedFoods.map((food) => (
-              <FoodCard key={food.id} food={food} allFoods={foods} logs={logs} onToggleEaten={toggleEaten} />
+              <FoodCard key={food.id} food={food} allFoods={foods} logs={logs} onToggleEaten={handleToggleEaten} />
             ))}
           </div>
           {visibleCount < filteredFoods.length ? (
@@ -342,10 +357,13 @@ export function FoodGrid({
   );
 }
 
-function sortFood(a: FoodWithRelations, b: FoodWithRelations, sort: SortMode, foods: FoodWithRelations[], logs: ReturnType<typeof useFoodLogs>["logs"]) {
+function sortFood(a: FoodWithRelations, b: FoodWithRelations, sort: SortMode, foods: FoodWithRelations[], logs: ReturnType<typeof useFoodLogs>["logs"], pendingEatenKeys: Set<string> | null) {
   if (sort === "image") return Number(getFoodImage(b) !== getCategoryPlaceholder(b.category)) - Number(getFoodImage(a) !== getCategoryPlaceholder(a.category));
   if (sort === "status") return statusRank(a.status) - statusRank(b.status);
-  if (sort === "uneaten") return Number(isEatenCanonical(foods, logs, a)) - Number(isEatenCanonical(foods, logs, b));
+  if (sort === "uneaten") {
+    const eatenRank = (food: FoodWithRelations) => Number(isEatenCanonical(foods, logs, food) && !pendingEatenKeys?.has(getCanonicalFoodKey(food)));
+    return eatenRank(a) - eatenRank(b);
+  }
   if (sort === "category") return a.category.localeCompare(b.category) || a.name.localeCompare(b.name, "ja");
   if (sort === "shop") return a.shop.name.localeCompare(b.shop.name, "ja") || a.name.localeCompare(b.name, "ja");
   if (sort === "priceAsc") return priceSortValue(a, "asc") - priceSortValue(b, "asc") || a.name.localeCompare(b.name, "ja");
