@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from "react";
 import Link from "next/link";
-import { CalendarDays, Check } from "lucide-react";
+import { CalendarDays } from "lucide-react";
 import { categoryLabels } from "@/lib/constants";
 import { calculateArchiveRecordRate, calculateCompletion, dedupeFoodsByCanonical, formatFoodPrice, getCanonicalFoodKey, getFoodAreaNames, getFoodAreaSummary, getSaleStatusLabel } from "@/lib/food-utils";
 import { tAreaName } from "@/lib/i18n/area-name";
@@ -62,31 +62,16 @@ export function EatenExperience({ foods }: { foods: FoodWithRelations[] }) {
 
   return (
     <div className="space-y-8">
-      <section className="rounded-[1.6rem] border border-slate-200 bg-white p-5 shadow-[0_14px_36px_rgba(15,23,42,0.06)] md:p-6">
-        <div className="flex flex-wrap items-end justify-between gap-4">
-          <div className="space-y-2">
-            <p className="text-xs font-black tracking-[0.16em] text-park/70">{t("eaten.kicker")}</p>
-            <h1 className="text-3xl font-black tracking-tight text-ink md:text-4xl">{t("eaten.title")}</h1>
-            <p className="max-w-2xl text-sm font-bold leading-6 text-slate-500">
-              {t("eaten.subtitle")}
-            </p>
-          </div>
-          <div className="grid grid-cols-3 gap-2 text-center">
-            <div className="rounded-2xl bg-slate-50 px-3 py-2">
-              <p className="text-lg font-black text-ink">{eatenRecords.length}</p>
-              <p className="text-[10px] font-black text-slate-400">{t("common.eaten")}</p>
-            </div>
-            <div className="rounded-2xl bg-slate-50 px-3 py-2">
-              <p className="text-lg font-black text-park">{completion.rate}%</p>
-              <p className="text-[10px] font-black text-slate-400">{t("eaten.activeCompletion", { rate: completion.rate })}</p>
-            </div>
-            <div className="rounded-2xl bg-slate-50 px-3 py-2">
-              <p className="text-lg font-black text-amber-500">{archiveRecord.rate}%</p>
-              <p className="text-[10px] font-black text-slate-400">{t("eaten.archiveRecord", { rate: archiveRecord.rate })}</p>
-            </div>
-          </div>
-        </div>
-        <p className="mt-4 flex flex-wrap gap-x-4 gap-y-1 text-[11px] font-bold leading-5 text-slate-400">
+      <section className="space-y-2 py-1">
+        <p className="text-xs font-black tracking-[0.16em] text-park/70">{t("eaten.kicker")}</p>
+        <h1 className="text-2xl font-black tracking-tight text-ink md:text-3xl">{t("eaten.title")}</h1>
+        <p className="max-w-2xl text-sm font-bold leading-6 text-slate-500">
+          {t("eaten.subtitle")}
+        </p>
+        <p className="flex flex-wrap gap-x-4 gap-y-1 text-[11px] font-bold leading-5 text-slate-400">
+          <span>{t("eaten.eatenCount", { count: eatenRecords.length })}</span>
+          <span>{t("eaten.activeCompletion", { rate: completion.rate })}</span>
+          <span>{t("eaten.archiveRecord", { rate: archiveRecord.rate })}</span>
           <span>{t("eaten.totalSpend")} {totalSpend ? `¥${totalSpend.toLocaleString("ja-JP")}` : t("eaten.noRecordValue")}</span>
         </p>
       </section>
@@ -271,14 +256,8 @@ function CollectionThumb({ record }: { record: EatenAlbumRecord }) {
       aria-label={food.name}
       className="group min-w-0 transition active:scale-95"
     >
-      <div className="relative aspect-square overflow-hidden rounded-[0.7rem] bg-slate-100 ring-1 ring-slate-200/40 transition-opacity group-active:opacity-80">
+      <div className="relative aspect-square overflow-hidden rounded-[0.35rem] bg-transparent transition-opacity group-active:opacity-80">
         <FoodImage food={food} alt={food.name} className="h-full w-full transition duration-300 group-hover:scale-105" />
-        <span
-          className="absolute right-0.5 top-0.5 grid h-4 w-4 place-items-center rounded-full bg-park/90 text-white shadow-sm"
-          aria-hidden
-        >
-          <Check size={9} />
-        </span>
       </div>
     </Link>
   );
