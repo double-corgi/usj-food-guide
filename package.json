@@ -8,6 +8,7 @@
     "build": "next build --webpack",
     "start": "next start --port 3000",
     "lint": "eslint .",
+    "coverage": "ts-node -r tsconfig-paths/register --transpile-only --compiler-options '{\"module\":\"CommonJS\",\"moduleResolution\":\"node\",\"target\":\"ES2022\"}' scripts/check-translation-coverage.ts",
     "format:check": "eslint .",
     "typecheck": "next typegen && tsc --noEmit --target es2022 --downlevelIteration",
     "crawl": "ts-node --transpile-only --compiler-options '{\"module\":\"CommonJS\",\"moduleResolution\":\"node\",\"target\":\"ES2022\"}' scripts/crawl-usj-foods.ts all",
