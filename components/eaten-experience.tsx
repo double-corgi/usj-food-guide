@@ -4,6 +4,7 @@ import { useMemo, useState } from "react";
 import Link from "next/link";
 import { CalendarDays } from "lucide-react";
 import { categoryLabels } from "@/lib/constants";
+import { calculateAreaProgressList } from "@/lib/area-progress";
 import { calculateArchiveRecordRate, calculateCompletion, dedupeFoodsByCanonical, formatFoodPrice, getCanonicalFoodKey, getFoodAreaNames, getFoodAreaSummary, getSaleStatusLabel } from "@/lib/food-utils";
 import { tAreaName } from "@/lib/i18n/area-name";
 import type { TranslationKey } from "@/lib/i18n/dictionaries";
@@ -11,7 +12,6 @@ import { useFoodLogs } from "@/lib/use-food-logs";
 import { useNextWantFoods } from "@/lib/use-next-want-foods";
 import type { FoodCategory, FoodWithRelations, UserFoodLog } from "@/types/domain";
 import { FoodImage } from "@/components/food-image";
-import { EatenAreaProgress } from "@/components/eaten-area-progress";
 import { EatenGenreProgress } from "@/components/eaten-genre-progress";
 import { useLocale } from "@/lib/i18n/use-locale";
 
@@ -33,6 +33,11 @@ export function EatenExperience({ foods }: { foods: FoodWithRelations[] }) {
   const [categoryFilter, setCategoryFilter] = useState<FoodCategory | "all">("all");
   const completion = calculateCompletion(foods, logs);
   const archiveRecord = calculateArchiveRecordRate(foods, logs);
+  const areaProgress = useMemo(() => {
+    return calculateAreaProgressList(foods, logs).sort(
+      (a, b) => b.active.rate - a.active.rate || b.active.total - a.active.total || a.area.name.localeCompare(b.area.name, "ja")
+    );
+  }, [foods, logs]);
   const canonicalFoods = dedupeFoodsByCanonical(foods);
   const eatenRecords = useMemo(() => buildEatenAlbumRecords(foods, canonicalFoods, logs), [canonicalFoods, foods, logs]);
   const areaOptions = useMemo(() => {
@@ -65,9 +70,6 @@ export function EatenExperience({ foods }: { foods: FoodWithRelations[] }) {
       <section className="space-y-2 py-1">
         <p className="text-xs font-black tracking-[0.16em] text-park/70">{t("eaten.kicker")}</p>
         <h1 className="text-2xl font-black tracking-tight text-ink md:text-3xl">{t("eaten.title")}</h1>
-        <p className="max-w-2xl text-sm font-bold leading-6 text-slate-500">
-          {t("eaten.subtitle")}
-        </p>
         <p className="flex flex-wrap gap-x-4 gap-y-1 text-[11px] font-bold leading-5 text-slate-400">
           <span>{t("eaten.eatenCount", { count: eatenRecords.length })}</span>
           <span>{t("eaten.activeCompletion", { rate: completion.rate })}</span>
@@ -113,13 +115,7 @@ export function EatenExperience({ foods }: { foods: FoodWithRelations[] }) {
       ) : (
         <>
       <section className="space-y-4">
-        <div className="flex flex-wrap items-end justify-between gap-3">
-          <div>
-            <p className="text-xs font-black text-park">{t("eaten.albumKicker")}</p>
-            <h2 className="mt-1 text-2xl font-black text-ink">{t("eaten.albumTitle")}</h2>
-          </div>
-          <p className="text-xs font-black text-slate-400">{t("eaten.albumCount", { shown: displayedRecordCount, total: filteredEatenRecords.length })}</p>
-        </div>
+        <p className="text-xs font-black text-slate-400">{t("eaten.albumCount", { shown: displayedRecordCount, total: filteredEatenRecords.length })}</p>
 
         <details className="group">
           <summary className="inline-flex min-h-10 cursor-pointer list-none items-center rounded-full border border-slate-200 bg-white px-4 text-xs font-black text-slate-500 marker:hidden">
@@ -166,7 +162,35 @@ export function EatenExperience({ foods }: { foods: FoodWithRelations[] }) {
         ) : null}
       </section>
 
-      <EatenAreaProgress foods={foods} />
+      <section className="space-y-3 border-t border-slate-200 pt-6">
+        <div className="flex flex-wrap items-end justify-between gap-3">
+          <div>
+            <p className="text-xs font-black text-park">{t("eaten.areaProgress.kicker")}</p>
+            <h2 className="mt-1 text-xl font-black text-ink">{t("eaten.areaProgress.title")}</h2>
+          </div>
+          <p className="text-xs font-black text-slate-400">{t("eaten.areaProgress.areaCount", { count: areaProgress.length })}</p>
+        </div>
+
+        <div className="grid grid-cols-2 gap-2.5 lg:grid-cols-3">
+          {areaProgress.map((progress) => (
+            <article key={progress.area.id} className="rounded-xl border border-slate-200 bg-white px-3 py-2.5">
+              <div className="flex items-start justify-between gap-2">
+                <h3 className="line-clamp-2 min-w-0 text-xs font-black leading-4 text-ink">{tAreaName(progress.area.name, t)}</h3>
+                <p className="shrink-0 text-base font-black leading-none text-park">{progress.active.rate}%</p>
+              </div>
+              <div className="mt-2 text-[11px] font-black text-slate-500">
+                <span>{progress.active.eaten} / {progress.active.total}</span>
+              </div>
+              <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-slate-100">
+                <div
+                  className="h-full rounded-full bg-[linear-gradient(90deg,#0057b8,#fdbb30)]"
+                  style={{ width: `${progress.active.rate}%` }}
+                />
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
 
       <EatenGenreProgress foods={foods} />
 
