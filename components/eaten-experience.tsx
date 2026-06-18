@@ -25,12 +25,10 @@ type EatenSort = "recent" | "priceDesc" | "priceAsc";
 type AlbumMode = "recent" | "month" | "area" | "genre" | "all";
 type EatenTab = "eaten" | "want";
 
-const albumModes: Array<{ id: AlbumMode; labelKey: "eaten.albumMode.recent" | "eaten.albumMode.month" | "eaten.albumMode.area" | "eaten.albumMode.genre" | "eaten.albumMode.all"; descriptionKey: "eaten.albumMode.recentDescription" | "eaten.albumMode.monthDescription" | "eaten.albumMode.areaDescription" | "eaten.albumMode.genreDescription" | "eaten.albumMode.allDescription" }> = [
-  { id: "recent", labelKey: "eaten.albumMode.recent", descriptionKey: "eaten.albumMode.recentDescription" },
-  { id: "month", labelKey: "eaten.albumMode.month", descriptionKey: "eaten.albumMode.monthDescription" },
+const albumModes: Array<{ id: AlbumMode; labelKey: "eaten.albumMode.area" | "eaten.albumMode.genre" | "eaten.albumMode.all"; descriptionKey: "eaten.albumMode.areaDescription" | "eaten.albumMode.genreDescription" | "eaten.albumMode.allDescription" }> = [
+  { id: "all", labelKey: "eaten.albumMode.all", descriptionKey: "eaten.albumMode.allDescription" },
   { id: "area", labelKey: "eaten.albumMode.area", descriptionKey: "eaten.albumMode.areaDescription" },
-  { id: "genre", labelKey: "eaten.albumMode.genre", descriptionKey: "eaten.albumMode.genreDescription" },
-  { id: "all", labelKey: "eaten.albumMode.all", descriptionKey: "eaten.albumMode.allDescription" }
+  { id: "genre", labelKey: "eaten.albumMode.genre", descriptionKey: "eaten.albumMode.genreDescription" }
 ];
 
 export function EatenExperience({ foods }: { foods: FoodWithRelations[] }) {
@@ -38,7 +36,7 @@ export function EatenExperience({ foods }: { foods: FoodWithRelations[] }) {
   const { logs } = useFoodLogs();
   const { wantedFoods } = useNextWantFoods(foods);
   const [activeTab, setActiveTab] = useState<EatenTab>("eaten");
-  const [albumMode, setAlbumMode] = useState<AlbumMode>("recent");
+  const [albumMode, setAlbumMode] = useState<AlbumMode>("all");
   const [areaFilter, setAreaFilter] = useState("all");
   const [categoryFilter, setCategoryFilter] = useState<FoodCategory | "all">("all");
   const [sort, setSort] = useState<EatenSort>("recent");
@@ -157,7 +155,7 @@ export function EatenExperience({ foods }: { foods: FoodWithRelations[] }) {
           })}
         </div>
         <p className="text-[11px] font-bold leading-5 text-slate-400">
-          {t(albumModes.find((mode) => mode.id === albumMode)?.descriptionKey ?? "eaten.albumMode.recentDescription")}
+          {t(albumModes.find((mode) => mode.id === albumMode)?.descriptionKey ?? "eaten.albumMode.allDescription")}
         </p>
 
         <details className="group">
