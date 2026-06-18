@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from "react";
 import Link from "next/link";
-import { CalendarDays } from "lucide-react";
+import { CalendarDays, Check } from "lucide-react";
 import { categoryLabels } from "@/lib/constants";
 import { calculateArchiveRecordRate, calculateCompletion, dedupeFoodsByCanonical, formatFoodPrice, getCanonicalFoodKey, getFoodAreaNames, getFoodAreaSummary, getSaleStatusLabel } from "@/lib/food-utils";
 import { tAreaName } from "@/lib/i18n/area-name";
@@ -65,6 +65,7 @@ export function EatenExperience({ foods }: { foods: FoodWithRelations[] }) {
       });
   }, [areaFilter, categoryFilter, eatenRecords, sort]);
   const albumSections = useMemo(() => buildAlbumSections(filteredEatenRecords, albumMode, t), [albumMode, filteredEatenRecords, t]);
+  const isCollectionAlbumMode = albumMode !== "recent";
   const displayedRecordCount = albumSections.reduce((sum, section) => sum + section.records.length, 0);
   const totalSpend = logs
     .filter((log) => log.status === "eaten")
@@ -237,9 +238,13 @@ export function EatenExperience({ foods }: { foods: FoodWithRelations[] }) {
                   <span className="shrink-0 text-[11px] font-black text-slate-400">{t("eaten.sectionCount", { total: section.total, count: section.records.length })}</span>
                 </div>
               ) : null}
-              <div className="grid grid-cols-2 gap-x-3 gap-y-5 md:grid-cols-3 xl:grid-cols-4">
+              <div className={isCollectionAlbumMode ? "grid grid-cols-5 gap-1" : "grid grid-cols-2 gap-x-3 gap-y-5 md:grid-cols-3 xl:grid-cols-4"}>
                 {section.records.map((record) => (
-                  <EatenAlbumCard key={`${section.id}-${record.key}-${record.log.eatenAt ?? "unknown"}`} record={record} />
+                  isCollectionAlbumMode ? (
+                    <CollectionThumb key={`${section.id}-${record.key}-${record.log.eatenAt ?? "unknown"}`} record={record} />
+                  ) : (
+                    <EatenAlbumCard key={`${section.id}-${record.key}-${record.log.eatenAt ?? "unknown"}`} record={record} />
+                  )
                 ))}
               </div>
             </div>
@@ -330,6 +335,27 @@ function EatenAlbumCard({ record }: { record: EatenAlbumRecord }) {
           <span>{t("eaten.timesCount", { count: log.eatenCount ?? 1 })}</span>
         </div>
         {log.memo ? <p className="mt-1 line-clamp-2 text-xs font-bold leading-5 text-slate-500">{log.memo}</p> : null}
+      </div>
+    </Link>
+  );
+}
+
+function CollectionThumb({ record }: { record: EatenAlbumRecord }) {
+  const { food } = record;
+  return (
+    <Link
+      href={`/foods/${food.id}`}
+      aria-label={food.name}
+      className="group min-w-0 transition active:scale-95"
+    >
+      <div className="relative aspect-square overflow-hidden rounded-[0.5rem] bg-white ring-1 ring-slate-200/60">
+        <FoodImage food={food} alt={food.name} className="h-full w-full transition duration-300 group-hover:scale-105" />
+        <span
+          className="absolute right-0.5 top-0.5 grid h-4 w-4 place-items-center rounded-full bg-park text-white"
+          aria-hidden
+        >
+          <Check size={9} />
+        </span>
       </div>
     </Link>
   );
