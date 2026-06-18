@@ -46,7 +46,6 @@ export function EatenExperience({ foods }: { foods: FoodWithRelations[] }) {
   const archiveRecord = calculateArchiveRecordRate(foods, logs);
   const canonicalFoods = dedupeFoodsByCanonical(foods);
   const eatenRecords = useMemo(() => buildEatenAlbumRecords(foods, canonicalFoods, logs), [canonicalFoods, foods, logs]);
-  const recentLogs = eatenRecords.slice(0, 5);
   const areaOptions = useMemo(() => {
     const names = new Set<string>();
     for (const record of eatenRecords) {
@@ -128,48 +127,6 @@ export function EatenExperience({ foods }: { foods: FoodWithRelations[] }) {
         </section>
       ) : (
         <>
-      <section className="space-y-4">
-        <div className="flex flex-wrap items-end justify-between gap-3">
-          <div>
-            <p className="text-xs font-black text-park">{t("eaten.recentKicker")}</p>
-            <h2 className="mt-1 text-2xl font-black text-ink">{t("eaten.recentTitle")}</h2>
-          </div>
-        </div>
-        <div className="-mx-4 flex gap-3 overflow-x-auto px-4 pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:mx-0 sm:grid sm:grid-cols-3 sm:px-0 lg:grid-cols-5">
-          {recentLogs.map(({ food, log }) => (
-            <Link key={`${food.id}-${log.eatenAt ?? "unknown"}`} href={`/foods/${food.id}`} className="group w-48 shrink-0 min-w-0 transition active:scale-[0.99] sm:w-auto">
-              <div className="aspect-[4/5] overflow-hidden rounded-[1.35rem] bg-slate-100">
-                {log.userPhotoUrl ? (
-                  // eslint-disable-next-line @next/next/no-img-element
-                  <img src={log.userPhotoUrl} alt={`${food.name}の食べた写真`} className="h-full w-full object-cover transition duration-300 group-hover:scale-105" />
-                ) : (
-                  <FoodImage food={food} alt={food.name} className="h-full w-full transition duration-300 group-hover:scale-105" />
-                )}
-              </div>
-              <div className="mt-2 min-w-0">
-                <div className="flex flex-wrap gap-2 text-[11px] font-black text-slate-500">
-                  <span className="inline-flex items-center gap-1">
-                    <CalendarDays size={12} aria-hidden />
-                    {formatDate(log.eatenAt, t("eaten.dateUnknown"))}
-                  </span>
-                  <span>{t("eaten.timesCount", { count: log.eatenCount ?? 1 })}</span>
-                </div>
-                <p className="mt-1 line-clamp-2 min-h-10 text-sm font-black leading-5 text-ink">{food.name}</p>
-                <p className="mt-1 text-xs font-black text-park">{formatFoodPrice(food)}</p>
-              </div>
-            </Link>
-          ))}
-          {recentLogs.length === 0 ? (
-            <div className="w-full rounded-[1.35rem] border border-dashed border-slate-200 bg-white/70 p-6 text-center sm:col-span-3 lg:col-span-5">
-              <p className="text-sm font-black text-slate-500">{t("eaten.emptyTitle")}</p>
-              <Link href="/foods" className="mt-3 inline-flex h-11 items-center justify-center rounded-full bg-park px-5 text-sm font-black text-white">
-                {t("eaten.emptyCta")}
-              </Link>
-            </div>
-          ) : null}
-        </div>
-      </section>
-
       <section className="space-y-4 border-t border-slate-200 pt-7">
         <div className="flex flex-wrap items-end justify-between gap-3">
           <div>
