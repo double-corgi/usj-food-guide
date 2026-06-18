@@ -21,25 +21,16 @@ type EatenAlbumRecord = {
   log: UserFoodLog;
 };
 
-type EatenSort = "recent" | "priceDesc" | "priceAsc";
 type AlbumMode = "recent" | "month" | "area" | "genre" | "all";
 type EatenTab = "eaten" | "want";
-
-const albumModes: Array<{ id: AlbumMode; labelKey: "eaten.albumMode.area" | "eaten.albumMode.genre" | "eaten.albumMode.all"; descriptionKey: "eaten.albumMode.areaDescription" | "eaten.albumMode.genreDescription" | "eaten.albumMode.allDescription" }> = [
-  { id: "all", labelKey: "eaten.albumMode.all", descriptionKey: "eaten.albumMode.allDescription" },
-  { id: "area", labelKey: "eaten.albumMode.area", descriptionKey: "eaten.albumMode.areaDescription" },
-  { id: "genre", labelKey: "eaten.albumMode.genre", descriptionKey: "eaten.albumMode.genreDescription" }
-];
 
 export function EatenExperience({ foods }: { foods: FoodWithRelations[] }) {
   const { t } = useLocale();
   const { logs } = useFoodLogs();
   const { wantedFoods } = useNextWantFoods(foods);
   const [activeTab, setActiveTab] = useState<EatenTab>("eaten");
-  const [albumMode, setAlbumMode] = useState<AlbumMode>("all");
   const [areaFilter, setAreaFilter] = useState("all");
   const [categoryFilter, setCategoryFilter] = useState<FoodCategory | "all">("all");
-  const [sort, setSort] = useState<EatenSort>("recent");
   const completion = calculateCompletion(foods, logs);
   const archiveRecord = calculateArchiveRecordRate(foods, logs);
   const canonicalFoods = dedupeFoodsByCanonical(foods);
@@ -55,13 +46,9 @@ export function EatenExperience({ foods }: { foods: FoodWithRelations[] }) {
     return eatenRecords
       .filter((record) => areaFilter === "all" || getFoodAreaNames(record.food).includes(areaFilter))
       .filter((record) => categoryFilter === "all" || record.food.category === categoryFilter)
-      .sort((a, b) => {
-        if (sort === "priceDesc") return getFoodPriceValue(b.food) - getFoodPriceValue(a.food) || compareByDate(b.log, a.log);
-        if (sort === "priceAsc") return getFoodPriceValue(a.food) - getFoodPriceValue(b.food) || compareByDate(b.log, a.log);
-        return compareByDate(b.log, a.log);
-      });
-  }, [areaFilter, categoryFilter, eatenRecords, sort]);
-  const albumSections = useMemo(() => buildAlbumSections(filteredEatenRecords, albumMode, t), [albumMode, filteredEatenRecords, t]);
+      .sort((a, b) => compareByDate(b.log, a.log));
+  }, [areaFilter, categoryFilter, eatenRecords]);
+  const albumSections = useMemo(() => buildAlbumSections(filteredEatenRecords, "all", t), [filteredEatenRecords, t]);
   const displayedRecordCount = albumSections.reduce((sum, section) => sum + section.records.length, 0);
   const totalSpend = logs
     .filter((log) => log.status === "eaten")
@@ -75,16 +62,31 @@ export function EatenExperience({ foods }: { foods: FoodWithRelations[] }) {
 
   return (
     <div className="space-y-8">
-      <section className="space-y-2 py-1">
-        <p className="text-xs font-black tracking-[0.16em] text-park/70">{t("eaten.kicker")}</p>
-        <h1 className="mt-1 text-3xl font-black tracking-tight text-ink md:text-4xl">{t("eaten.title")}</h1>
-        <p className="max-w-2xl text-sm font-bold leading-6 text-slate-500">
-          {t("eaten.subtitle")}
-        </p>
-        <p className="flex flex-wrap gap-x-4 gap-y-1 text-[11px] font-bold leading-5 text-slate-400">
-          <span>{t("eaten.eatenCount", { count: eatenRecords.length })}</span>
-          <span>{t("eaten.activeCompletion", { rate: completion.rate })}</span>
-          <span>{t("eaten.archiveRecord", { rate: archiveRecord.rate })}</span>
+      <section className="rounded-[1.6rem] border border-slate-200 bg-white p-5 shadow-[0_14px_36px_rgba(15,23,42,0.06)] md:p-6">
+        <div className="flex flex-wrap items-end justify-between gap-4">
+          <div className="space-y-2">
+            <p className="text-xs font-black tracking-[0.16em] text-park/70">{t("eaten.kicker")}</p>
+            <h1 className="text-3xl font-black tracking-tight text-ink md:text-4xl">{t("eaten.title")}</h1>
+            <p className="max-w-2xl text-sm font-bold leading-6 text-slate-500">
+              {t("eaten.subtitle")}
+            </p>
+          </div>
+          <div className="grid grid-cols-3 gap-2 text-center">
+            <div className="rounded-2xl bg-slate-50 px-3 py-2">
+              <p className="text-lg font-black text-ink">{eatenRecords.length}</p>
+              <p className="text-[10px] font-black text-slate-400">{t("common.eaten")}</p>
+            </div>
+            <div className="rounded-2xl bg-slate-50 px-3 py-2">
+              <p className="text-lg font-black text-park">{completion.rate}%</p>
+              <p className="text-[10px] font-black text-slate-400">{t("eaten.activeCompletion", { rate: completion.rate })}</p>
+            </div>
+            <div className="rounded-2xl bg-slate-50 px-3 py-2">
+              <p className="text-lg font-black text-amber-500">{archiveRecord.rate}%</p>
+              <p className="text-[10px] font-black text-slate-400">{t("eaten.archiveRecord", { rate: archiveRecord.rate })}</p>
+            </div>
+          </div>
+        </div>
+        <p className="mt-4 flex flex-wrap gap-x-4 gap-y-1 text-[11px] font-bold leading-5 text-slate-400">
           <span>{t("eaten.totalSpend")} {totalSpend ? `¥${totalSpend.toLocaleString("ja-JP")}` : t("eaten.noRecordValue")}</span>
         </p>
       </section>
@@ -125,7 +127,7 @@ export function EatenExperience({ foods }: { foods: FoodWithRelations[] }) {
         </section>
       ) : (
         <>
-      <section className="space-y-4 border-t border-slate-200 pt-7">
+      <section className="space-y-4">
         <div className="flex flex-wrap items-end justify-between gap-3">
           <div>
             <p className="text-xs font-black text-park">{t("eaten.albumKicker")}</p>
@@ -134,35 +136,11 @@ export function EatenExperience({ foods }: { foods: FoodWithRelations[] }) {
           <p className="text-xs font-black text-slate-400">{t("eaten.albumCount", { shown: displayedRecordCount, total: filteredEatenRecords.length })}</p>
         </div>
 
-        <div className="-mx-4 flex gap-2 overflow-x-auto px-4 pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:mx-0 sm:px-0">
-          {albumModes.map((mode) => {
-            const active = albumMode === mode.id;
-            return (
-              <button
-                key={mode.id}
-                type="button"
-                onClick={() => setAlbumMode(mode.id)}
-                className={[
-                  "min-h-10 shrink-0 rounded-full border px-4 text-xs font-black transition active:scale-[0.98]",
-                  active ? "border-park bg-park text-white shadow-[0_10px_24px_rgba(0,87,184,0.16)]" : "border-slate-200 bg-white text-slate-500 hover:border-park/40 hover:text-park"
-                ].join(" ")}
-                aria-pressed={active}
-                title={t(mode.descriptionKey)}
-              >
-                {t(mode.labelKey)}
-              </button>
-            );
-          })}
-        </div>
-        <p className="text-[11px] font-bold leading-5 text-slate-400">
-          {t(albumModes.find((mode) => mode.id === albumMode)?.descriptionKey ?? "eaten.albumMode.allDescription")}
-        </p>
-
         <details className="group">
           <summary className="inline-flex min-h-10 cursor-pointer list-none items-center rounded-full border border-slate-200 bg-white px-4 text-xs font-black text-slate-500 marker:hidden">
             {t("eaten.filterToggle")}
           </summary>
-          <div className="mt-3 grid gap-2 sm:grid-cols-3">
+          <div className="mt-3 grid gap-2 sm:grid-cols-2">
             <select value={areaFilter} onChange={(event) => setAreaFilter(event.target.value)} className="h-11 rounded-full border border-slate-200 bg-white px-3 text-xs font-black text-slate-600">
               <option value="all">{t("foods.areaFilterAll")}</option>
               {areaOptions.map((areaName) => (
@@ -174,11 +152,6 @@ export function EatenExperience({ foods }: { foods: FoodWithRelations[] }) {
               {(Object.keys(categoryLabels) as FoodCategory[]).map((category) => (
                 <option key={category} value={category}>{t(`category.${category}` as TranslationKey)}</option>
               ))}
-            </select>
-            <select value={sort} onChange={(event) => setSort(event.target.value as EatenSort)} className="h-11 rounded-full border border-slate-200 bg-white px-3 text-xs font-black text-slate-600">
-              <option value="recent">{t("eaten.sortRecent")}</option>
-              <option value="priceDesc">{t("eaten.sortPriceDesc")}</option>
-              <option value="priceAsc">{t("eaten.sortPriceAsc")}</option>
             </select>
           </div>
         </details>
@@ -353,10 +326,6 @@ function findLogFood(foods: FoodWithRelations[], canonicalFoods: FoodWithRelatio
 
 function compareByDate(a: UserFoodLog, b: UserFoodLog) {
   return (a.eatenAt ?? "").localeCompare(b.eatenAt ?? "");
-}
-
-function getFoodPriceValue(food: FoodWithRelations) {
-  return food.priceMin ?? food.price ?? food.locations?.find((location) => location.price)?.price ?? 0;
 }
 
 function isCurrentMonth(value?: string) {
