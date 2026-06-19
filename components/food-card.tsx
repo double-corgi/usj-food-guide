@@ -35,36 +35,36 @@ export function FoodCard({
   const displayName = getFoodNameI18n(food.id, locale, food.name);
 
   return (
-    <article data-food-card data-food-name={food.name} className={`group relative min-w-0 overflow-hidden rounded-[1.25rem] bg-white pb-[50px] ring-1 ring-slate-200/70 transition duration-200 active:scale-[0.99] md:hover:-translate-y-0.5 ${state.borderClass} ${getSaleStatus(food) === "ended" ? "opacity-75 grayscale" : ""}`}>
+    <article data-food-card data-food-name={food.name} className={`group relative min-w-0 overflow-hidden rounded-2xl bg-white pb-11 ring-1 ring-slate-200/70 transition duration-200 active:scale-[0.99] md:hover:-translate-y-0.5 ${state.borderClass} ${getSaleStatus(food) === "ended" ? "opacity-75 grayscale" : ""}`}>
       <Link href={`/foods/${food.id}`} className="flex min-w-0 flex-col">
-        <div className="relative aspect-square shrink-0 overflow-hidden bg-white">
+        <div className="relative aspect-[4/3] shrink-0 overflow-hidden bg-white">
           <FoodImage food={food} alt={displayName} className="h-full w-full transition duration-300 group-hover:scale-105" variant="contain" />
-          <div className="absolute left-3 top-3 flex max-h-8 max-w-[68%] flex-wrap gap-2 overflow-hidden">
+          <div className="absolute left-2 top-2 flex max-h-7 max-w-[72%] flex-wrap gap-1.5 overflow-hidden">
             {badges.map((badge) => (
-              <span key={badge.label} className={`rounded-full px-2.5 py-1 text-[11px] font-black ${badge.className}`}>
+              <span key={badge.label} className={`rounded-full px-2 py-0.5 text-[10px] font-black ${badge.className}`}>
                 {badge.label}
               </span>
             ))}
           </div>
         </div>
-        <div className="flex min-h-[160px] min-w-0 flex-col px-3 py-3">
+        <div className="flex min-h-[124px] min-w-0 flex-col px-2.5 py-2.5">
           <div className="min-w-0">
-            <p data-food-card-title className="line-clamp-3 h-[3.9rem] break-words text-[14px] font-black leading-[1.3rem] text-ink [overflow-wrap:anywhere] group-hover:text-park sm:text-[15px]">
+            <p data-food-card-title className="line-clamp-2 h-[2.45rem] break-words text-[13px] font-black leading-[1.2rem] text-ink [overflow-wrap:anywhere] group-hover:text-park sm:text-[14px]">
               {displayName}
             </p>
-            <p data-food-card-price className={`mt-2 h-7 truncate ${knownPrice ? "text-lg font-black leading-7 text-park" : "text-xs font-bold leading-7 text-slate-500"}`}>
+            <p data-food-card-price className={`mt-1 h-6 truncate ${knownPrice ? "text-base font-black leading-6 text-park" : "text-[11px] font-bold leading-6 text-slate-500"}`}>
               {displayPrice(food, locale, t)}
             </p>
           </div>
-          <p data-food-card-area className="mt-auto flex h-8 min-w-0 items-start gap-1.5 text-xs font-bold leading-4 text-slate-500">
-            <MapPin size={13} aria-hidden className="shrink-0" />
+          <p data-food-card-area className="mt-auto flex h-7 min-w-0 items-start gap-1 text-[11px] font-bold leading-[0.9rem] text-slate-500">
+            <MapPin size={12} aria-hidden className="shrink-0" />
             <span className="line-clamp-2 break-words [overflow-wrap:anywhere]" title={`${primaryLocation?.shopName ?? food.shop.name} / ${areaDisplay.areas.map((areaName) => tAreaName(areaName, t)).join(" / ")}`}>
               {areaSummary}
             </span>
           </p>
         </div>
       </Link>
-      <div data-food-card-actions className="absolute inset-x-0 bottom-0 z-10 grid h-[50px] border-t border-slate-100 bg-white px-3 py-2">
+      <div data-food-card-actions className="absolute inset-x-0 bottom-0 z-10 grid h-11 border-t border-slate-100 bg-white px-2.5 py-1.5">
         <button
           type="button"
           onClick={(event) => {
@@ -72,7 +72,7 @@ export function FoodCard({
             event.stopPropagation();
             onToggleEaten(eatToggleFoodId, getStoredSpendAmount(food));
           }}
-          className={`inline-flex h-9 items-center justify-center rounded-full text-xs font-black transition active:scale-95 ${
+          className={`inline-flex h-8 items-center justify-center rounded-full text-[11px] font-black transition active:scale-95 ${
             eaten ? "bg-park text-white" : "bg-ink text-white"
           }`}
         >

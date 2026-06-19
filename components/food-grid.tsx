@@ -148,9 +148,9 @@ export function FoodGrid({
         </div>
       </div>
 
-      <div className="space-y-4 border-y border-slate-200/70 py-4">
+      <div className="space-y-3 border-y border-slate-200/70 py-3">
         <div className="overflow-x-auto [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-          <div className="flex min-w-max gap-2">
+          <div className="flex min-w-max gap-1.5">
             {categoryChips.map((item) => (
               <button
                 key={item.value}
@@ -159,21 +159,21 @@ export function FoodGrid({
                   setCategory(item.value);
                   setVisibleCount(60);
                 }}
-                  className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-2 text-xs font-black transition ${
+                  className={`inline-flex items-center gap-1 rounded-full border px-2.5 py-1.5 text-[11px] font-black transition ${
                   category === item.value
                     ? "border-park bg-mint text-park shadow-sm"
                     : "border-slate-200 bg-white/78 text-slate-600 hover:border-slate-300"
                 }`}
               >
-                <span className="text-sm leading-none" aria-hidden>{item.icon}</span>
+                <span className="text-xs leading-none" aria-hidden>{item.icon}</span>
                 {item.value === "all" ? t("foods.categoryAll") : t(`category.${item.value}` as TranslationKey)}
               </button>
             ))}
           </div>
         </div>
-        <div className="grid gap-3 md:grid-cols-[1fr_auto] md:items-center">
+        <div className="grid gap-2 md:grid-cols-[1fr_auto] md:items-center">
           <div className="relative">
-          <Search className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={18} aria-hidden />
+          <Search className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={16} aria-hidden />
           <input
             value={query}
             onChange={(event) => {
@@ -184,18 +184,18 @@ export function FoodGrid({
             onKeyDown={(event) => {
               if (event.key === "Enter") commitSearch(event.currentTarget.value);
             }}
-            className="h-12 w-full rounded-full border border-slate-200 bg-white pl-10 pr-4 text-base font-bold outline-none focus:border-park focus:ring-4 focus:ring-mint"
+            className="h-10 w-full rounded-full border border-slate-200 bg-white pl-9 pr-4 text-sm font-bold outline-none focus:border-park focus:ring-4 focus:ring-mint"
             placeholder={t("foods.searchPlaceholder")}
           />
           </div>
           <button
             type="button"
             onClick={() => setFiltersOpen((current) => !current)}
-            className="inline-flex h-12 items-center justify-center gap-2 rounded-full border border-slate-200 bg-white/78 px-4 text-sm font-black text-slate-700"
+            className="inline-flex h-10 items-center justify-center gap-1.5 rounded-full border border-slate-200 bg-white/78 px-3.5 text-xs font-black text-slate-700"
           >
-            <SlidersHorizontal size={18} aria-hidden />
+            <SlidersHorizontal size={16} aria-hidden />
             {t("foods.filterToggle")}
-            <ChevronDown size={17} aria-hidden className={filtersOpen ? "rotate-180" : ""} />
+            <ChevronDown size={15} aria-hidden className={filtersOpen ? "rotate-180" : ""} />
           </button>
         </div>
         <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[11px] font-bold text-slate-400">
@@ -221,8 +221,8 @@ export function FoodGrid({
           </div>
         ) : null}
 
-        <div className={`${filtersOpen ? "grid" : "hidden"} gap-3 md:grid-cols-4 lg:grid-cols-6`}>
-        <select value={saleFilter} onChange={(event) => { setSaleFilter(event.target.value as SaleFilter); setVisibleCount(60); }} className="h-11 rounded-lg border border-slate-200 px-3 text-sm font-bold">
+        <div className={`${filtersOpen ? "grid" : "hidden"} gap-2 md:grid-cols-4 lg:grid-cols-6`}>
+        <select value={saleFilter} onChange={(event) => { setSaleFilter(event.target.value as SaleFilter); setVisibleCount(60); }} className="h-9 rounded-lg border border-slate-200 px-2.5 text-xs font-bold">
           <option value="active">{t("common.saleActive")}</option>
           <option value="endingSoon">{t("foods.saleFilterEndingSoon")}</option>
           <option value="ended">{t("common.ended")}</option>
@@ -232,7 +232,7 @@ export function FoodGrid({
           <option value="unknown">{t("foods.saleFilterUnknown")}</option>
           <option value="all">{t("foods.saleFilterAll")}</option>
         </select>
-        <select value={category} onChange={(event) => { setCategory(event.target.value as FoodCategory | "all"); setVisibleCount(60); }} className="h-11 rounded-lg border border-slate-200 px-3 text-sm font-bold">
+        <select value={category} onChange={(event) => { setCategory(event.target.value as FoodCategory | "all"); setVisibleCount(60); }} className="h-9 rounded-lg border border-slate-200 px-2.5 text-xs font-bold">
           <option value="all">{t("foods.categoryFilterAll")}</option>
           {(Object.keys(categoryLabels) as FoodCategory[]).map((value) => (
             <option key={value} value={value}>
@@ -240,7 +240,7 @@ export function FoodGrid({
             </option>
           ))}
         </select>
-        <select value={areaId} onChange={(event) => { setAreaId(event.target.value); setVisibleCount(60); }} className="h-11 rounded-lg border border-slate-200 px-3 text-sm font-bold">
+        <select value={areaId} onChange={(event) => { setAreaId(event.target.value); setVisibleCount(60); }} className="h-9 rounded-lg border border-slate-200 px-2.5 text-xs font-bold">
           <option value="all">{t("foods.areaFilterAll")}</option>
           {areas.map((area) => (
             <option key={area.id} value={area.id}>
@@ -248,7 +248,7 @@ export function FoodGrid({
             </option>
           ))}
         </select>
-        <select value={shopId} onChange={(event) => { setShopId(event.target.value); setVisibleCount(60); }} className="h-11 rounded-lg border border-slate-200 px-3 text-sm font-bold">
+        <select value={shopId} onChange={(event) => { setShopId(event.target.value); setVisibleCount(60); }} className="h-9 rounded-lg border border-slate-200 px-2.5 text-xs font-bold">
           <option value="all">{t("foods.shopFilterAll")}</option>
           {shops.map((shop) => (
             <option key={shop.id} value={shop.id}>
@@ -256,7 +256,7 @@ export function FoodGrid({
             </option>
           ))}
         </select>
-        <select value={shopType} onChange={(event) => { setShopType(event.target.value as ShopType | "all"); setVisibleCount(60); }} className="h-11 rounded-lg border border-slate-200 px-3 text-sm font-bold">
+        <select value={shopType} onChange={(event) => { setShopType(event.target.value as ShopType | "all"); setVisibleCount(60); }} className="h-9 rounded-lg border border-slate-200 px-2.5 text-xs font-bold">
           <option value="all">{t("foods.shopTypeFilterAll")}</option>
           {(Object.keys(shopTypeLabels) as ShopType[]).map((value) => (
             <option key={value} value={value}>
@@ -264,7 +264,7 @@ export function FoodGrid({
             </option>
           ))}
         </select>
-        <select value={diningType} onChange={(event) => { setDiningType(event.target.value as DiningType | "all"); setVisibleCount(60); }} className="h-11 rounded-lg border border-slate-200 px-3 text-sm font-bold">
+        <select value={diningType} onChange={(event) => { setDiningType(event.target.value as DiningType | "all"); setVisibleCount(60); }} className="h-9 rounded-lg border border-slate-200 px-2.5 text-xs font-bold">
           <option value="all">{t("foods.diningTypeFilterAll")}</option>
           {(Object.keys(diningTypeLabels) as DiningType[]).map((value) => (
             <option key={value} value={value}>
@@ -272,7 +272,7 @@ export function FoodGrid({
             </option>
           ))}
         </select>
-        <select value={status} onChange={(event) => { setStatus(event.target.value as FoodStatus | "all"); setVisibleCount(60); }} className="h-11 rounded-lg border border-slate-200 px-3 text-sm font-bold">
+        <select value={status} onChange={(event) => { setStatus(event.target.value as FoodStatus | "all"); setVisibleCount(60); }} className="h-9 rounded-lg border border-slate-200 px-2.5 text-xs font-bold">
           <option value="all">{t("foods.statusFilterAll")}</option>
           {Object.entries(statusLabels).map(([value, label]) => (
             <option key={value} value={value}>
@@ -280,12 +280,12 @@ export function FoodGrid({
             </option>
           ))}
         </select>
-        <select value={priceFilter} onChange={(event) => { setPriceFilter(event.target.value as PriceFilter); setVisibleCount(60); }} className="h-11 rounded-lg border border-slate-200 px-3 text-sm font-bold">
+        <select value={priceFilter} onChange={(event) => { setPriceFilter(event.target.value as PriceFilter); setVisibleCount(60); }} className="h-9 rounded-lg border border-slate-200 px-2.5 text-xs font-bold">
           <option value="all">{t("foods.priceFilterAll")}</option>
           <option value="known">{t("foods.priceFilterKnown")}</option>
           <option value="unknown">{t("foods.priceFilterUnknown")}</option>
         </select>
-        <select value={sort} onChange={(event) => setSort(event.target.value as SortMode)} className="h-11 rounded-lg border border-slate-200 px-3 text-sm font-bold">
+        <select value={sort} onChange={(event) => setSort(event.target.value as SortMode)} className="h-9 rounded-lg border border-slate-200 px-2.5 text-xs font-bold">
           <option value="recommended">{t("foods.sortRecommended")}</option>
           <option value="new">{t("foods.sortNew")}</option>
           <option value="image">{t("foods.sortImage")}</option>
@@ -298,7 +298,7 @@ export function FoodGrid({
           <option value="walk">{t("foods.sortWalk")}</option>
         </select>
         </div>
-        <div className={`${filtersOpen ? "flex" : "hidden"} flex-wrap gap-2`}>
+        <div className={`${filtersOpen ? "flex" : "hidden"} flex-wrap gap-1.5`}>
           <TogglePill active={imageOnly} label={t("foods.toggleImageOnly")} onClick={() => setImageOnly((current) => !current)} />
           <TogglePill active={priceFilter === "known"} label={t("foods.priceFilterKnown")} onClick={() => setPriceFilter((current) => current === "known" ? "all" : "known")} />
           <TogglePill active={priceFilter === "unknown"} label={t("foods.priceFilterUnknown")} onClick={() => setPriceFilter((current) => current === "unknown" ? "all" : "unknown")} />
@@ -482,7 +482,7 @@ function TogglePill({ active, label, onClick }: { active: boolean; label: string
     <button
       type="button"
       onClick={onClick}
-      className={`min-h-10 rounded-full border px-4 text-xs font-black ${active ? "border-park bg-mint text-park" : "border-slate-200 bg-white text-slate-500"}`}
+      className={`min-h-8 rounded-full border px-3 text-[11px] font-black ${active ? "border-park bg-mint text-park" : "border-slate-200 bg-white text-slate-500"}`}
     >
       {label}
     </button>

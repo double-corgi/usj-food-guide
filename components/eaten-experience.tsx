@@ -10,6 +10,7 @@ import { tAreaName } from "@/lib/i18n/area-name";
 import type { TranslationKey } from "@/lib/i18n/dictionaries";
 import { getFoodNameI18n } from "@/lib/i18n/name-translations";
 import { useFoodLogs } from "@/lib/use-food-logs";
+import { useNextWantFoods } from "@/lib/use-next-want-foods";
 import type { FoodCategory, FoodWithRelations, UserFoodLog } from "@/types/domain";
 import { FoodImage } from "@/components/food-image";
 import { EatenGenreProgress } from "@/components/eaten-genre-progress";
@@ -22,10 +23,13 @@ type EatenAlbumRecord = {
 };
 
 type AlbumMode = "recent" | "month" | "area" | "genre" | "all";
+type EatenTab = "eaten" | "want";
 
 export function EatenExperience({ foods }: { foods: FoodWithRelations[] }) {
   const { t } = useLocale();
   const { logs } = useFoodLogs();
+  const { wantedFoods } = useNextWantFoods(foods);
+  const [activeTab, setActiveTab] = useState<EatenTab>("eaten");
   const [areaFilter, setAreaFilter] = useState("all");
   const [categoryFilter, setCategoryFilter] = useState<FoodCategory | "all">("all");
   const completion = calculateCompletion(foods, logs);
@@ -72,6 +76,40 @@ export function EatenExperience({ foods }: { foods: FoodWithRelations[] }) {
         </p>
       </section>
 
+      <div className="inline-grid grid-cols-2 rounded-full bg-slate-100 p-1 text-xs font-black text-slate-500">
+        {[
+          { id: "eaten" as const, label: t("common.eaten") },
+          { id: "want" as const, label: t("foodDetail.wantNext") }
+        ].map((tab) => (
+          <button
+            key={tab.id}
+            type="button"
+            onClick={() => setActiveTab(tab.id)}
+            className={`min-h-9 rounded-full px-4 transition active:scale-[0.98] ${activeTab === tab.id ? "bg-white text-ink shadow-sm" : "hover:text-ink"}`}
+            aria-pressed={activeTab === tab.id}
+          >
+            {tab.label}
+          </button>
+        ))}
+      </div>
+
+      {activeTab === "want" ? (
+        <section className="space-y-4">
+          <p className="text-xs font-black text-slate-400">{t("eaten.albumCount", { shown: wantedFoods.length, total: wantedFoods.length })}</p>
+          {wantedFoods.length > 0 ? (
+            <div className="grid grid-cols-2 gap-2.5 md:grid-cols-3 xl:grid-cols-5">
+              {wantedFoods.map((food) => (
+                <NextWantCard key={food.id} food={food} />
+              ))}
+            </div>
+          ) : (
+            <div className="rounded-2xl border border-dashed border-slate-200 bg-white/70 p-6 text-center">
+              <p className="text-sm font-black text-slate-500">{t("foods.noResultsInline")}</p>
+            </div>
+          )}
+        </section>
+      ) : (
+        <>
       <section className="space-y-4">
         <p className="text-xs font-black text-slate-400">{t("eaten.albumCount", { shown: displayedRecordCount, total: filteredEatenRecords.length })}</p>
 
@@ -155,7 +193,28 @@ export function EatenExperience({ foods }: { foods: FoodWithRelations[] }) {
       <p className="border-t border-slate-200 pt-4 text-[11px] font-bold leading-5 text-slate-400">
         {t("eaten.calcNote")}
       </p>
+        </>
+      )}
     </div>
+  );
+}
+
+function NextWantCard({ food }: { food: FoodWithRelations }) {
+  const { locale } = useLocale();
+  const displayName = getFoodNameI18n(food.id, locale, food.name);
+  return (
+    <Link href={`/foods/${food.id}`} className="group min-w-0 transition active:scale-[0.99]">
+      <div className="aspect-square overflow-hidden rounded-xl border border-slate-200 bg-white shadow-[0_1px_3px_rgba(15,23,42,0.05)]">
+        <FoodImage food={food} alt={displayName} className="h-full w-full transition duration-300 group-hover:scale-105" variant="contain" />
+      </div>
+      <div className="mt-1.5 min-w-0">
+        <p className="line-clamp-2 min-h-8 text-xs font-black leading-4 text-ink">{displayName}</p>
+        <div className="mt-1 flex flex-wrap gap-x-2 gap-y-0.5 text-[11px] font-black">
+          <span className="text-park">{formatFoodPrice(food)}</span>
+          <span className="line-clamp-1 text-slate-500">{getFoodAreaSummary(food)}</span>
+        </div>
+      </div>
+    </Link>
   );
 }
 
