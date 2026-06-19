@@ -1,0 +1,27 @@
+# Git / local metadata
+.git
+.gitignore
+.vercel
+
+# Dependencies and build outputs
+node_modules
+.next
+out
+dist
+coverage
+
+# Project documentation not needed at runtime
+docs
+
+# Local/editor/system files
+.DS_Store
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Environment files must never be uploaded from local CLI deploys
+.env
+.env.*
+!.env.example
