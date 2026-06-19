@@ -41,8 +41,8 @@ export function FoodCard({
   return (
     <article data-food-card data-food-name={food.name} className={`group relative min-w-0 overflow-hidden rounded-2xl bg-white pb-11 ring-1 ring-slate-200/70 transition duration-200 active:scale-[0.99] md:hover:-translate-y-0.5 ${state.borderClass} ${getSaleStatus(food) === "ended" ? "opacity-75 grayscale" : ""}`}>
       <Link href={`/foods/${food.id}`} className="flex min-w-0 flex-col">
-        <div className="relative aspect-[4/3] shrink-0 overflow-hidden bg-white">
-          <FoodImage food={food} alt={displayName} className="h-full w-full transition duration-300 group-hover:scale-105" variant="contain" />
+        <div className="relative aspect-[5/4] shrink-0 overflow-hidden bg-slate-100">
+          <FoodImage food={food} alt={displayName} className="h-full w-full transition duration-300 group-hover:scale-[1.03]" variant="cover" />
           <div className="absolute left-2 top-2 flex max-h-7 max-w-[72%] flex-wrap gap-1.5 overflow-hidden">
             {badges.map((badge) => (
               <span key={badge.label} className={`rounded-full px-2 py-0.5 text-[10px] font-black ${badge.className}`}>
