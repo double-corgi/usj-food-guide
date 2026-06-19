@@ -8,6 +8,7 @@ import { calculateAreaProgressList } from "@/lib/area-progress";
 import { calculateArchiveRecordRate, calculateCompletion, dedupeFoodsByCanonical, formatFoodPrice, getCanonicalFoodKey, getFoodAreaNames, getFoodAreaSummary, getSaleStatusLabel } from "@/lib/food-utils";
 import { tAreaName } from "@/lib/i18n/area-name";
 import type { TranslationKey } from "@/lib/i18n/dictionaries";
+import { getFoodNameI18n } from "@/lib/i18n/name-translations";
 import { useFoodLogs } from "@/lib/use-food-logs";
 import { useNextWantFoods } from "@/lib/use-next-want-foods";
 import type { FoodCategory, FoodWithRelations, UserFoodLog } from "@/types/domain";
@@ -204,14 +205,15 @@ export function EatenExperience({ foods }: { foods: FoodWithRelations[] }) {
 }
 
 function NextWantCard({ food }: { food: FoodWithRelations }) {
-  const { t } = useLocale();
+  const { locale, t } = useLocale();
+  const displayName = getFoodNameI18n(food.id, locale, food.name);
   return (
     <Link href={`/foods/${food.id}`} className="group min-w-0 transition active:scale-[0.99]">
       <div className="aspect-[4/5] overflow-hidden rounded-[1.25rem] bg-slate-100">
-        <FoodImage food={food} alt={food.name} className="h-full w-full transition duration-300 group-hover:scale-105" />
+        <FoodImage food={food} alt={displayName} className="h-full w-full transition duration-300 group-hover:scale-105" />
       </div>
       <div className="mt-2 min-w-0">
-        <p className="line-clamp-2 min-h-10 text-sm font-black leading-5 text-ink">{food.name}</p>
+        <p className="line-clamp-2 min-h-10 text-sm font-black leading-5 text-ink">{displayName}</p>
         <div className="mt-1 flex flex-wrap gap-x-2 gap-y-1 text-[11px] font-black">
           <span className="text-park">{formatFoodPrice(food)}</span>
           <span className="line-clamp-1 text-slate-500">{getFoodAreaSummary(food)}</span>
@@ -238,8 +240,9 @@ function buildEatenAlbumRecords(foods: FoodWithRelations[], canonicalFoods: Food
 }
 
 function EatenAlbumCard({ record }: { record: EatenAlbumRecord }) {
-  const { t } = useLocale();
+  const { locale, t } = useLocale();
   const { food, log } = record;
+  const displayName = getFoodNameI18n(food.id, locale, food.name);
   return (
     <Link
       href={`/foods/${food.id}`}
@@ -248,13 +251,13 @@ function EatenAlbumCard({ record }: { record: EatenAlbumRecord }) {
       <div className="aspect-square overflow-hidden rounded-[1.2rem] bg-slate-100">
         {log.userPhotoUrl ? (
           // eslint-disable-next-line @next/next/no-img-element
-          <img src={log.userPhotoUrl} alt={`${food.name}の食べた写真`} className="h-full w-full object-cover transition duration-300 group-hover:scale-105" />
+          <img src={log.userPhotoUrl} alt={displayName} className="h-full w-full object-cover transition duration-300 group-hover:scale-105" />
         ) : (
-          <FoodImage food={food} alt={food.name} className="h-full w-full transition duration-300 group-hover:scale-105" />
+          <FoodImage food={food} alt={displayName} className="h-full w-full transition duration-300 group-hover:scale-105" />
         )}
       </div>
       <div className="mt-2 min-w-0">
-        <p className="line-clamp-2 min-h-10 text-sm font-black leading-5 text-ink">{food.name}</p>
+        <p className="line-clamp-2 min-h-10 text-sm font-black leading-5 text-ink">{displayName}</p>
         <div className="mt-1 flex flex-wrap gap-x-2 gap-y-1 text-[11px] font-black">
           <span className="text-park">{formatFoodPrice(food)}</span>
           <span className="line-clamp-1 text-slate-500">{getFoodAreaSummary(food)}</span>
@@ -273,15 +276,17 @@ function EatenAlbumCard({ record }: { record: EatenAlbumRecord }) {
 }
 
 function CollectionThumb({ record }: { record: EatenAlbumRecord }) {
+  const { locale } = useLocale();
   const { food } = record;
+  const displayName = getFoodNameI18n(food.id, locale, food.name);
   return (
     <Link
       href={`/foods/${food.id}`}
-      aria-label={food.name}
+      aria-label={displayName}
       className="group min-w-0 transition active:scale-95"
     >
       <div className="relative aspect-square overflow-hidden rounded-[0.45rem] border border-slate-200/60 bg-white shadow-[0_1px_3px_rgba(15,23,42,0.05)] transition-opacity group-active:opacity-80">
-        <FoodImage food={food} alt={food.name} className="h-full w-full transition duration-300 group-hover:scale-105" />
+        <FoodImage food={food} alt={displayName} className="h-full w-full transition duration-300 group-hover:scale-105" />
       </div>
     </Link>
   );

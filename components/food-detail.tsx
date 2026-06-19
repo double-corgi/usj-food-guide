@@ -15,6 +15,7 @@ import { UnofficialNotice } from "@/components/unofficial-notice";
 import type { TranslationKey } from "@/lib/i18n/dictionaries";
 import { formatDateI18n } from "@/lib/i18n/format-date";
 import { formatPriceI18n } from "@/lib/i18n/format-price";
+import { getFoodNameI18n } from "@/lib/i18n/name-translations";
 import { getSalePeriodLabelI18n, getSaleStatusLabelI18n, getUrgencyLabelI18n } from "@/lib/i18n/sale-label-utils";
 import { useLocale } from "@/lib/i18n/use-locale";
 
@@ -62,6 +63,7 @@ export function FoodDetail({
   const officialHref = food.officialUrl ?? food.sourceUrl;
   const salesSummary = getSalesSummary(food, t);
   const relatedFoods = buildRelatedFoods(food, foodPool, relatedGroups).slice(0, 12);
+  const displayName = getFoodNameI18n(food.id, locale, food.name);
 
   useEffect(() => {
     try {
@@ -100,7 +102,7 @@ export function FoodDetail({
 
       <section className="space-y-5 text-ink">
         <div className="relative h-[370px] overflow-hidden rounded-[2rem] bg-slate-100 sm:h-[620px]">
-          <FoodImage food={food} alt={food.name} eager className="h-full w-full" variant="contain" />
+          <FoodImage food={food} alt={displayName} eager className="h-full w-full" variant="contain" />
           <div className="absolute left-3 top-3 flex flex-wrap gap-2">
             <span className="rounded-full bg-white/90 px-3 py-1.5 text-xs font-black text-park shadow-sm">{getZukanCode(food, allFoods)}</span>
             {saleStatus === "ended" ? (
@@ -119,7 +121,7 @@ export function FoodDetail({
           <div className="min-w-0 space-y-3">
             <p className="text-xs font-black text-park">{t(`category.${food.category}` as TranslationKey)}</p>
             <h1 className="break-words text-3xl font-black leading-tight tracking-tight text-ink [overflow-wrap:anywhere] sm:text-5xl">
-              {food.name}
+              {displayName}
             </h1>
             <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
               <p className="text-3xl font-black leading-none text-park">{formatPriceI18n(food, locale, t)}</p>
@@ -379,18 +381,21 @@ function RelatedRail({
       <h3 className="text-sm font-black text-ink">{title}</h3>
       <div className="overflow-x-auto pb-1 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
         <div className="flex min-w-max gap-3">
-          {foods.map((food) => (
-            <Link key={`${title}-${food.id}`} href={`/foods/${food.id}`} className="w-[148px] shrink-0 transition active:scale-[0.99] hover:-translate-y-0.5">
-              <div className="h-[104px] overflow-hidden rounded-2xl bg-slate-100">
-                <FoodImage food={food} className="h-full w-full" />
-              </div>
-              <div className="mt-2 space-y-1">
-                <p className="line-clamp-2 h-10 break-words text-xs font-black leading-5 text-ink [overflow-wrap:anywhere]">{food.name}</p>
-                <p className="truncate text-xs font-black text-park">{formatPriceI18n(food, locale, t)}</p>
-                <p className="line-clamp-2 h-7 text-[10px] font-bold leading-[0.85rem] text-slate-600">{getFoodAreaSummary(food)}</p>
-              </div>
-            </Link>
-          ))}
+          {foods.map((food) => {
+            const displayName = getFoodNameI18n(food.id, locale, food.name);
+            return (
+              <Link key={`${title}-${food.id}`} href={`/foods/${food.id}`} className="w-[148px] shrink-0 transition active:scale-[0.99] hover:-translate-y-0.5">
+                <div className="h-[104px] overflow-hidden rounded-2xl bg-slate-100">
+                  <FoodImage food={food} alt={displayName} className="h-full w-full" />
+                </div>
+                <div className="mt-2 space-y-1">
+                  <p className="line-clamp-2 h-10 break-words text-xs font-black leading-5 text-ink [overflow-wrap:anywhere]">{displayName}</p>
+                  <p className="truncate text-xs font-black text-park">{formatPriceI18n(food, locale, t)}</p>
+                  <p className="line-clamp-2 h-7 text-[10px] font-bold leading-[0.85rem] text-slate-600">{getFoodAreaSummary(food)}</p>
+                </div>
+              </Link>
+            );
+          })}
         </div>
       </div>
     </div>

@@ -8,6 +8,7 @@ import { dedupeFoodsByCanonical, foodMatchesArea, getFoodAreaNames, getFoodAreaS
 import { REQUEST_FORM_URL } from "@/lib/request-form-url";
 import { tAreaName } from "@/lib/i18n/area-name";
 import type { TranslationKey } from "@/lib/i18n/dictionaries";
+import { getFoodNameI18n } from "@/lib/i18n/name-translations";
 import { useLocale } from "@/lib/i18n/use-locale";
 import { getCategoryPlaceholder, getFoodImage } from "@/lib/utils/image";
 import { useFoodLogs } from "@/lib/use-food-logs";
@@ -59,7 +60,7 @@ export function FoodGrid({
   generatedAt?: string;
   showRequestCta?: boolean;
 }) {
-  const { t } = useLocale();
+  const { locale, t } = useLocale();
   const { logs, ready, error, toggleEaten } = useFoodLogs();
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState<FoodCategory | "all">(initialCategory ?? "all");
@@ -204,15 +205,18 @@ export function FoodGrid({
 
         {query.trim() ? (
           <div className="grid gap-2">
-            {filteredFoods.slice(0, 5).map((food) => (
-              <Link key={`suggest-${food.id}`} href={`/foods/${food.id}`} className="flex items-center gap-2 border-b border-slate-100 py-2 active:scale-[0.99]">
-                <SafeThumb food={food} className="h-10 w-10 rounded-md" />
-                <span className="min-w-0">
-                  <span className="block truncate text-xs font-black text-ink">{food.name}</span>
-                  <span className="block line-clamp-2 text-[11px] font-bold leading-4 text-slate-400">{getFoodAreaSummary(food)} / {food.shop.name}</span>
-                </span>
-              </Link>
-            ))}
+            {filteredFoods.slice(0, 5).map((food) => {
+              const displayName = getFoodNameI18n(food.id, locale, food.name);
+              return (
+                <Link key={`suggest-${food.id}`} href={`/foods/${food.id}`} className="flex items-center gap-2 border-b border-slate-100 py-2 active:scale-[0.99]">
+                  <SafeThumb food={food} className="h-10 w-10 rounded-md" />
+                  <span className="min-w-0">
+                    <span className="block truncate text-xs font-black text-ink">{displayName}</span>
+                    <span className="block line-clamp-2 text-[11px] font-bold leading-4 text-slate-400">{getFoodAreaSummary(food)} / {food.shop.name}</span>
+                  </span>
+                </Link>
+              );
+            })}
             {filteredFoods.length === 0 ? <p className="px-2 py-1 text-xs font-black text-slate-500">{t("foods.noResultsInline")}</p> : null}
           </div>
         ) : null}

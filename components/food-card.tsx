@@ -3,6 +3,7 @@ import { MapPin } from "lucide-react";
 import { getCanonicalFoodId, getCanonicalFoodKey, getDisplayLocationAreaName, getFoodAreaDisplay, getSaleStatus, isEatenCanonical } from "@/lib/food-utils";
 import { tAreaName } from "@/lib/i18n/area-name";
 import { formatPriceI18n } from "@/lib/i18n/format-price";
+import { getFoodNameI18n } from "@/lib/i18n/name-translations";
 import { getUrgencyLabelI18n } from "@/lib/i18n/sale-label-utils";
 import { useLocale } from "@/lib/i18n/use-locale";
 import type { FoodWithRelations, UserFoodLog } from "@/types/domain";
@@ -31,12 +32,13 @@ export function FoodCard({
   const eatToggleFoodId = eatenActionFoodId;
   const state = eaten ? cardStates.eaten : cardStates.uneaten;
   const badges = getCardBadges({ food, t });
+  const displayName = getFoodNameI18n(food.id, locale, food.name);
 
   return (
     <article data-food-card data-food-name={food.name} className={`group relative min-w-0 overflow-hidden rounded-[1.25rem] bg-white pb-[50px] ring-1 ring-slate-200/70 transition duration-200 active:scale-[0.99] md:hover:-translate-y-0.5 ${state.borderClass} ${getSaleStatus(food) === "ended" ? "opacity-75 grayscale" : ""}`}>
       <Link href={`/foods/${food.id}`} className="flex min-w-0 flex-col">
         <div className="relative aspect-square shrink-0 overflow-hidden bg-white">
-          <FoodImage food={food} className="h-full w-full transition duration-300 group-hover:scale-105" variant="contain" />
+          <FoodImage food={food} alt={displayName} className="h-full w-full transition duration-300 group-hover:scale-105" variant="contain" />
           <div className="absolute left-3 top-3 flex max-h-8 max-w-[68%] flex-wrap gap-2 overflow-hidden">
             {badges.map((badge) => (
               <span key={badge.label} className={`rounded-full px-2.5 py-1 text-[11px] font-black ${badge.className}`}>
@@ -48,7 +50,7 @@ export function FoodCard({
         <div className="flex min-h-[160px] min-w-0 flex-col px-3 py-3">
           <div className="min-w-0">
             <p data-food-card-title className="line-clamp-3 h-[3.9rem] break-words text-[14px] font-black leading-[1.3rem] text-ink [overflow-wrap:anywhere] group-hover:text-park sm:text-[15px]">
-              {food.name}
+              {displayName}
             </p>
             <p data-food-card-price className={`mt-2 h-7 truncate ${knownPrice ? "text-lg font-black leading-7 text-park" : "text-xs font-bold leading-7 text-slate-500"}`}>
               {displayPrice(food, locale, t)}
