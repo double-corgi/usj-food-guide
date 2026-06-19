@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useMemo } from "react";
 import Link from "next/link";
 import {
   calculateCompletion,
@@ -21,9 +21,6 @@ import { FoodImage } from "@/components/food-image";
 import { appBrand, featuredLimitedCollection } from "@/lib/constants";
 import type { FoodWithRelations, UserFoodLog } from "@/types/domain";
 
-const SHELF_SLOTS = 18;
-const MOBILE_SHELF_SLOTS = 8;
-const TABLET_SHELF_SLOTS = 16;
 const LIMITED_COLLECTION_MAX = 24;
 const LIMITED_COLLECTION_MIN = 3;
 const LIMITED_GROUP_RATIO = 0.7;
@@ -34,13 +31,12 @@ type TFn = (key: TranslationKey, params?: Record<string, string | number>) => st
 
 export function HomeCollectionHero({ foods }: { foods: FoodWithRelations[] }) {
   const { locale, t } = useLocale();
-  const { logs, ready } = useFoodLogs();
+  const { logs } = useFoodLogs();
   const completion = calculateCompletion(foods, logs);
   const remaining = Math.max(completion.total - completion.eaten, 0);
-  const eatenKeys = getEatenCanonicalKeys(foods, logs);
-  const stampedKeys = useNewlyStampedKeys(eatenKeys, ready);
-  const shelfFoods = useMemo(() => pickShelfFoods(foods, logs, SHELF_SLOTS), [foods, logs]);
+  const heroFood = useMemo(() => pickHeroFood(foods, logs, completion.eaten), [completion.eaten, foods, logs]);
   const hasCollection = completion.eaten > 0;
+  const heroDisplayName = heroFood ? getFoodNameI18n(heroFood.id, locale, heroFood.name) : appBrand.name;
 
   return (
     <section className="home-collection-hero relative isolate -mx-4 bg-[#fffaf5] px-4 pb-4 sm:-mx-6 sm:px-6 lg:mx-0 lg:rounded-[2rem] lg:px-8 lg:pb-8">
@@ -91,35 +87,20 @@ export function HomeCollectionHero({ foods }: { foods: FoodWithRelations[] }) {
 
         <div className="order-2 space-y-2 lg:col-start-2 lg:row-span-2 lg:row-start-1">
           <p className="text-center text-[12px] font-black tracking-[0.02em] text-[#8a5b16] lg:text-left">{t("collection.tagline")}</p>
-          <div className="grid grid-cols-4 gap-1.5 md:grid-cols-8 lg:grid-cols-6">
-            {shelfFoods.map((food, index) => {
-              const canonicalKey = getCanonicalFoodKey(food);
-              const eaten = eatenKeys.has(canonicalKey);
-              const hiddenForViewport = index >= TABLET_SHELF_SLOTS ? "hidden lg:block" : index >= MOBILE_SHELF_SLOTS ? "hidden md:block" : "";
-              const displayName = getFoodNameI18n(food.id, locale, food.name);
-              return (
-                <Link
-                  key={`${food.id}-${index}`}
-                  href={`/foods/${food.id}`}
-                  className={`group relative aspect-square min-w-0 overflow-hidden rounded-[11px] bg-[#f1e4d2] ${eaten ? "ring-2 ring-[#fdbb30]/85 ring-offset-1 ring-offset-[#fffaf5]" : ""} ${hiddenForViewport}`}
-                  aria-label={displayName}
-                >
-                  <FoodImage
-                    food={food}
-                    alt={displayName}
-                    className={`h-full w-full transition duration-300 group-hover:scale-[1.03] ${eaten ? "saturate-100" : "saturate-[0.88] brightness-[1.03]"}`}
-                  />
-                  {eaten ? (
-                    <span
-                      className={`absolute bottom-1 right-1 grid h-6 w-6 place-items-center rounded-full bg-[#fdbb30] text-[13px] font-black leading-none text-[#071b3a] ring-1 ring-white/90 shadow-[inset_0_0_6px_rgba(255,255,255,0.42),0_1px_4px_rgba(7,27,58,0.18)] ${stampedKeys.has(canonicalKey) ? "animate-achievement-unlock" : ""}`}
-                      aria-hidden
-                    >
-                      ✓
-                    </span>
-                  ) : null}
-                </Link>
-              );
-            })}
+          <div className="relative aspect-video overflow-hidden rounded-[1.35rem] bg-[#f1e4d2] shadow-[0_18px_45px_rgba(7,27,58,0.12)] ring-1 ring-[#eadcc8]">
+            {heroFood ? (
+              <FoodImage food={heroFood} alt={heroDisplayName} className="h-full w-full scale-[1.02] saturate-[1.04]" variant="cover" />
+            ) : (
+              <div className="h-full w-full bg-[radial-gradient(circle_at_24%_20%,rgba(253,187,48,0.34),transparent_34%),linear-gradient(135deg,#fff7e8,#dfeeff)]" aria-label={heroDisplayName} />
+            )}
+            <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(7,27,58,0.42),rgba(7,27,58,0.05)_52%,rgba(255,250,245,0.06))]" aria-hidden />
+            <div className="absolute inset-x-0 bottom-0 h-1/2 bg-[linear-gradient(0deg,rgba(7,27,58,0.44),transparent)]" aria-hidden />
+            <span className="absolute left-4 top-4 h-16 w-16 rounded-full border border-[#fdbb30]/45 opacity-70" aria-hidden />
+            <span className="absolute right-5 top-5 h-2 w-2 rounded-full bg-[#fdbb30]/80 shadow-[0_0_20px_rgba(253,187,48,0.75)]" aria-hidden />
+            <div className="absolute bottom-4 left-4 max-w-[72%] text-white drop-shadow-[0_2px_12px_rgba(7,27,58,0.35)]">
+              <p className="text-[10px] font-black tracking-[0.18em] text-[#fdbb30]">TODAY&apos;S COLLECTION</p>
+              <p className="mt-1 line-clamp-2 text-base font-black leading-tight sm:text-lg">{heroDisplayName}</p>
+            </div>
           </div>
         </div>
       </div>
@@ -130,7 +111,10 @@ export function HomeCollectionHero({ foods }: { foods: FoodWithRelations[] }) {
 export function HomeActiveFoodCollection({ foods }: { foods: FoodWithRelations[] }) {
   const { t } = useLocale();
   const { logs } = useFoodLogs();
-  const shelfKeys = useMemo(() => new Set(pickShelfFoods(foods, logs, SHELF_SLOTS).map(getCanonicalFoodKey)), [foods, logs]);
+  const shelfKeys = useMemo(() => {
+    const heroFood = pickHeroFood(foods, logs, logs.filter((log) => log.status === "eaten").length);
+    return new Set(heroFood ? [getCanonicalFoodKey(heroFood)] : []);
+  }, [foods, logs]);
   const activeFoods = useMemo(() => pickActiveCollectionFoods(foods, logs, shelfKeys), [foods, logs, shelfKeys]);
 
   return (
@@ -265,49 +249,22 @@ function HomeFoodRailCard({ food, className = "" }: { food: FoodWithRelations; c
   );
 }
 
-function useNewlyStampedKeys(eatenKeys: Set<string>, ready: boolean) {
-  const [stampedKeys, setStampedKeys] = useState<Set<string>>(new Set());
-  const previousKeys = useRef<Set<string> | null>(null);
-  const signature = Array.from(eatenKeys).sort().join("|");
-  const keys = useMemo(() => (signature ? signature.split("|") : []), [signature]);
-
-  useEffect(() => {
-    if (!ready) return;
-    const currentKeys = new Set(keys);
-    if (!previousKeys.current) {
-      previousKeys.current = currentKeys;
-      return;
-    }
-    const nextStamped = new Set<string>();
-    currentKeys.forEach((key) => {
-      if (!previousKeys.current?.has(key)) nextStamped.add(key);
-    });
-    previousKeys.current = currentKeys;
-    if (nextStamped.size === 0) return;
-
-    setStampedKeys(nextStamped);
-    const timer = window.setTimeout(() => setStampedKeys(new Set()), 900);
-    return () => window.clearTimeout(timer);
-  }, [keys, ready]);
-
-  return stampedKeys;
-}
-
-function pickShelfFoods(foods: FoodWithRelations[], logs: UserFoodLog[], limit: number) {
+function pickHeroFood(foods: FoodWithRelations[], logs: UserFoodLog[], eatenCount: number) {
   const activeFoods = dedupeFoodsByCanonical(foods.filter((food) => isCompletableFood(food) && hasDisplayImage(food)));
+  if (activeFoods.length === 0) return null;
   const byCanonical = new Map(activeFoods.map((food) => [getCanonicalFoodKey(food), food]));
   const eatenKeys = getEatenCanonicalKeys(foods, logs);
   const eatenFoods = latestEatenCanonicalKeys(logs, foods)
     .map((key) => byCanonical.get(key))
     .filter((food): food is FoodWithRelations => Boolean(food))
-    .slice(0, Math.floor(limit / 2));
+    .slice(0, 8);
   const eatenSet = new Set(eatenFoods.map(getCanonicalFoodKey));
-  const seed = getDailySeedKey();
+  const seed = `${getDailySeedKey()}:${eatenCount}:${activeFoods.length}`;
   const uneatenFoods = activeFoods
     .filter((food) => !eatenSet.has(getCanonicalFoodKey(food)) && !eatenKeys.has(getCanonicalFoodKey(food)))
     .sort((a, b) => shelfScore(b, seed) - shelfScore(a, seed) || a.name.localeCompare(b.name, "ja"));
 
-  return [...eatenFoods, ...uneatenFoods].slice(0, limit);
+  return [...eatenFoods, ...uneatenFoods].sort((a, b) => shelfScore(b, seed) - shelfScore(a, seed) || a.name.localeCompare(b.name, "ja"))[0] ?? activeFoods[0];
 }
 
 function pickActiveCollectionFoods(foods: FoodWithRelations[], logs: UserFoodLog[], excludedShelfKeys: Set<string>) {
