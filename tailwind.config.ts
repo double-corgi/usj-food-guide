@@ -13,7 +13,9 @@ const config: Config = {
         park: "#0057b8",
         berry: "#c8102e",
         sun: "#fdbb30",
-        mint: "#e8f2ff"
+        mint: "#e8f2ff",
+        cream: "#fffaf5",
+        sand: "#e7dccb"
       },
       boxShadow: {
         soft: "0 18px 45px rgba(15, 23, 42, 0.08)"

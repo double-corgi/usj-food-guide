@@ -342,7 +342,7 @@ export function FoodGrid({
             <button
               type="button"
               onClick={() => setVisibleCount((current) => current + 60)}
-              className="mx-auto block min-h-12 rounded-lg bg-ink px-6 text-sm font-black text-white"
+              className="mx-auto block min-h-12 rounded-lg bg-park px-6 text-sm font-black text-white"
             >
               {t("foods.loadMore")}
             </button>

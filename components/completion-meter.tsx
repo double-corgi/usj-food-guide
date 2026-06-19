@@ -23,7 +23,7 @@ export function CompletionMeter({
         </p>
       </div>
       <div className="mt-3 h-3 overflow-hidden rounded-full bg-slate-100">
-        <div className="h-full rounded-full bg-berry" style={{ width: `${rate}%` }} />
+        <div className="h-full rounded-full bg-[linear-gradient(90deg,#0057b8,#fdbb30)]" style={{ width: `${rate}%` }} />
       </div>
     </div>
   );

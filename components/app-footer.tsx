@@ -21,7 +21,7 @@ export function AppFooter() {
           </Link>
           <p className="max-w-2xl text-xs font-semibold leading-5 text-slate-500">{t("footer.brandDescription")}</p>
           <div className="flex flex-wrap gap-2">
-            <Link href="/foods" className="rounded-full bg-ink px-4 py-2 text-xs font-black text-white active:scale-95">
+            <Link href="/foods" className="rounded-full bg-park px-4 py-2 text-xs font-black text-white active:scale-95">
               {t("footer.findFoods")}
             </Link>
             <Link href="/request" className="rounded-full border border-slate-200 bg-white px-4 py-2 text-xs font-black text-ink active:scale-95">

@@ -77,7 +77,7 @@ export function FoodCard({
             onToggleEaten(eatToggleFoodId, getStoredSpendAmount(food));
           }}
           className={`inline-flex h-8 items-center justify-center rounded-full text-[11px] font-black transition active:scale-95 ${
-            eaten ? "bg-park text-white" : "bg-ink text-white"
+            eaten ? "bg-park text-white" : "bg-park text-white"
           }`}
         >
           {eaten ? t("foodCard.eatenDone") : t("foodCard.markEaten")}

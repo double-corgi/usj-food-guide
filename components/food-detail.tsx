@@ -139,7 +139,7 @@ export function FoodDetail({
             <button
               type="button"
               onClick={() => toggleEaten(eatToggleFoodId, getStoredSpendAmount(food))}
-              className={`inline-flex h-14 w-full items-center justify-center gap-2 rounded-full text-base font-black shadow-sm active:scale-[0.98] ${eaten ? "bg-park text-white" : "bg-ink text-white"}`}
+              className={`inline-flex h-14 w-full items-center justify-center gap-2 rounded-full text-base font-black shadow-sm active:scale-[0.98] ${eaten ? "bg-park text-white" : "bg-park text-white"}`}
             >
               <Check size={20} aria-hidden />
               {eaten ? t("foodCard.eatenDone") : t("foodCard.markEaten")}
