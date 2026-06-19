@@ -69,7 +69,7 @@ export function EatenExperience({ foods }: { foods: FoodWithRelations[] }) {
     <div className="space-y-8">
       <section className="space-y-2 py-1">
         <p className="text-xs font-black tracking-[0.16em] text-park/70">{t("eaten.kicker")}</p>
-        <h1 className="text-2xl font-black tracking-tight text-ink md:text-3xl">{t("eaten.title")}</h1>
+        <h1 className="text-xl font-black tracking-tight text-ink md:text-2xl">{t("eaten.title")}</h1>
         <p className="flex flex-wrap gap-x-4 gap-y-1 text-[11px] font-bold leading-5 text-slate-400">
           <span>{t("eaten.eatenCount", { count: eatenRecords.length })}</span>
           <span>{t("eaten.activeCompletion", { rate: completion.rate })}</span>

@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { categoryLabels } from "@/lib/constants";
 import { dedupeFoodsByCanonical, getCanonicalFoodKey, getEatenCanonicalKeys, isCompletableFood } from "@/lib/food-utils";
 import type { TranslationKey } from "@/lib/i18n/dictionaries";
@@ -40,38 +39,23 @@ export function EatenGenreProgress({ foods }: { foods: FoodWithRelations[] }) {
         <p className="text-xs font-black text-slate-400">{t("eaten.genreProgress.genreCount", { count: progress.length })}</p>
       </div>
 
-      <div className="grid gap-2.5 md:grid-cols-2 xl:grid-cols-3">
+      <div className="grid grid-cols-2 gap-2.5 lg:grid-cols-3">
         {progress.map((item) => (
-          <article key={item.id} className="rounded-2xl bg-white/45 px-3 py-2.5 ring-1 ring-slate-200/45">
-            <div className="flex items-start justify-between gap-3">
-              <h3 className="line-clamp-2 min-w-0 text-sm font-black leading-5 text-ink">{item.label}</h3>
-              <p className="shrink-0 text-xl font-black leading-none text-park">{item.active.rate}%</p>
+          <article key={item.id} className="rounded-xl border border-slate-200 bg-white px-3 py-2.5">
+            <div className="flex items-start justify-between gap-2">
+              <h3 className="line-clamp-2 min-w-0 text-xs font-black leading-4 text-ink">{item.label}</h3>
+              <p className="shrink-0 text-base font-black leading-none text-park">{item.active.rate}%</p>
             </div>
 
-            <div className="mt-1.5 flex items-center justify-between gap-3 text-[11px] font-black text-slate-500">
+            <div className="mt-2 text-[11px] font-black text-slate-500">
               <span>{item.active.eaten} / {item.active.total}</span>
-              <span>{t("eaten.genreProgress.remaining", { count: item.active.uneaten })}</span>
             </div>
 
-            <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-slate-200">
+            <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-slate-100">
               <div
-                className="h-full rounded-full bg-[linear-gradient(90deg,#0057b8,#fdbb30)] shadow-[0_0_10px_rgba(0,87,184,0.2)]"
+                className="h-full rounded-full bg-[linear-gradient(90deg,#0057b8,#fdbb30)]"
                 style={{ width: `${item.active.rate}%` }}
               />
-            </div>
-
-            <div className="mt-1.5 flex items-center justify-between gap-3 text-[10px] font-bold text-slate-400">
-              <span>{t("eaten.genreProgress.archive", { eaten: item.archive.eaten, total: item.archive.total })}</span>
-              <span>{item.archive.rate}%</span>
-            </div>
-
-            <div className="mt-2 flex flex-wrap gap-2.5 text-[11px] font-black">
-              <Link href={`/foods?category=${item.id}&mode=eaten`} className="text-park underline-offset-4 hover:underline">
-                {t("eaten.genreProgress.viewEaten")}
-              </Link>
-              <Link href={`/foods?category=${item.id}&sort=uneaten`} className="text-slate-500 underline-offset-4 hover:underline">
-                {t("eaten.genreProgress.viewRemaining")}
-              </Link>
             </div>
           </article>
         ))}
