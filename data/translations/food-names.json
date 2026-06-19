@@ -243,5 +243,285 @@
     "zh-TW": "奶油啤酒™ ～附高級馬克杯～（無酒精）",
     "_source": "provisional",
     "_status": "needs_review"
+  },
+  "food-bsvsuj": {
+    "en": "Chinese Pork Ribs",
+    "ko": "차이니즈 폭립",
+    "zh-TW": "中式豬肋排",
+    "_source": "provisional",
+    "_status": "needs_review"
+  },
+  "food-84qjxm": {
+    "en": "Black Pepper Pork Ribs",
+    "ko": "블랙페퍼 폭립",
+    "zh-TW": "黑胡椒豬肋排",
+    "_source": "provisional",
+    "_status": "needs_review"
+  },
+  "food-it27lt": {
+    "en": "Mushroom Soup",
+    "ko": "머쉬룸 수프",
+    "zh-TW": "蘑菇湯",
+    "_source": "provisional",
+    "_status": "needs_review"
+  },
+  "food-1tt1au7": {
+    "en": "American Hot Dog",
+    "ko": "아메리칸 핫도그",
+    "zh-TW": "美式熱狗",
+    "_source": "provisional",
+    "_status": "needs_review"
+  },
+  "food-5blx24": {
+    "en": "Hot Dog & Drink Set",
+    "ko": "핫도그 & 드링크 세트",
+    "zh-TW": "熱狗＆飲料套餐",
+    "_source": "provisional",
+    "_status": "needs_review"
+  },
+  "food-26b5s0": {
+    "en": "Hot Dog & Drink Set",
+    "ko": "핫도그 & 드링크 세트",
+    "zh-TW": "熱狗＆飲料套餐",
+    "_source": "provisional",
+    "_status": "needs_review"
+  },
+  "food-4n0ipg": {
+    "en": "Kids Sandwich Set",
+    "ko": "키즈 샌드위치 세트",
+    "zh-TW": "兒童三明治套餐",
+    "_source": "provisional",
+    "_status": "needs_review"
+  },
+  "food-450hi7": {
+    "en": "Kids Sandwich Set",
+    "ko": "키즈 샌드위치 세트",
+    "zh-TW": "兒童三明治套餐",
+    "_source": "provisional",
+    "_status": "needs_review"
+  },
+  "food-14hntqo": {
+    "en": "American Apple Crumble Pie",
+    "ko": "아메리칸 애플 크럼블 파이",
+    "zh-TW": "美式蘋果酥粒派",
+    "_source": "provisional",
+    "_status": "needs_review"
+  },
+  "food-14ut653": {
+    "en": "Meat Spaghetti Set",
+    "ko": "미트 스파게티 세트",
+    "zh-TW": "肉醬義大利麵套餐",
+    "_source": "provisional",
+    "_status": "needs_review"
+  },
+  "food-o9svxw": {
+    "en": "Baby Food",
+    "ko": "베이비 푸드",
+    "zh-TW": "嬰兒食品",
+    "_source": "provisional",
+    "_status": "needs_review"
+  },
+  "food-uqw79q": {
+    "en": "Dessert & Drink Bar Set",
+    "ko": "디저트 & 드링크 바 세트",
+    "zh-TW": "甜點＆飲料吧套餐",
+    "_source": "provisional",
+    "_status": "needs_review"
+  },
+  "food-rbn0yu": {
+    "en": "Dessert & Drink Bar Set",
+    "ko": "디저트 & 드링크 바 세트",
+    "zh-TW": "甜點＆飲料吧套餐",
+    "_source": "provisional",
+    "_status": "needs_review"
+  },
+  "food-v999yl": {
+    "en": "Fruity Cocktail",
+    "ko": "프루티 칵테일",
+    "zh-TW": "果味雞尾酒",
+    "_source": "provisional",
+    "_status": "needs_review"
+  },
+  "food-488njs": {
+    "en": "Fried Chicken (Bone-In) Set",
+    "ko": "뼈있는 프라이드치킨 세트",
+    "zh-TW": "帶骨炸雞套餐",
+    "_source": "provisional",
+    "_status": "needs_review"
+  },
+  "food-112pvaq": {
+    "en": "Seafood Peperoncino",
+    "ko": "해산물 페페론치노",
+    "zh-TW": "義式辣椒海鮮麵",
+    "_source": "provisional",
+    "_status": "needs_review"
+  },
+  "food-1qt6g0q": {
+    "en": "Angus Aged Steak",
+    "ko": "앙거스 에이징 스테이크",
+    "zh-TW": "安格斯熟成牛排",
+    "_source": "provisional",
+    "_status": "needs_review"
+  },
+  "food-16q65hw": {
+    "en": "Butterbeer™ Pudding",
+    "ko": "버터맥주™ 푸딩",
+    "zh-TW": "奶油啤酒™布丁",
+    "_source": "provisional",
+    "_status": "needs_review"
+  },
+  "food-1m8i41b": {
+    "en": "Butterbeer™ Cream Puff",
+    "ko": "버터맥주™ 슈크림",
+    "zh-TW": "奶油啤酒™泡芙",
+    "_source": "provisional",
+    "_status": "needs_review"
+  },
+  "food-2qri4c": {
+    "en": "Rotisserie Smoked Chicken & Shepherd's Pie",
+    "ko": "로티사리 훈제 치킨 & 셰퍼드 파이",
+    "zh-TW": "烤轉爐煙熏雞＆牧羊人派",
+    "_source": "provisional",
+    "_status": "needs_review"
+  },
+  "food-1jjli1u": {
+    "en": "Harry Potter's Hogwarts Churro",
+    "ko": "해리 포터의 호그와트 추리토스",
+    "zh-TW": "哈利波特的霍格華茲吉拿棒",
+    "_source": "provisional",
+    "_status": "needs_review"
+  },
+  "food-116rf8q": {
+    "en": "T-Rex Burger Set",
+    "ko": "T-렉스 버거 세트",
+    "zh-TW": "T-Rex漢堡套餐",
+    "_source": "provisional",
+    "_status": "needs_review"
+  },
+  "food-e0few1": {
+    "en": "Raptor Burger Set",
+    "ko": "랩터 버거 세트",
+    "zh-TW": "迅猛龍漢堡套餐",
+    "_source": "provisional",
+    "_status": "needs_review"
+  },
+  "food-wn7ivo": {
+    "en": "Pteranodon Burger Set",
+    "ko": "프테라노돈 버거 세트",
+    "zh-TW": "翼龍漢堡套餐",
+    "_source": "provisional",
+    "_status": "needs_review"
+  },
+  "food-9un9k0": {
+    "en": "Mosasaurus Burger Set",
+    "ko": "모사사우루스 버거 세트",
+    "zh-TW": "滄龍漢堡套餐",
+    "_source": "provisional",
+    "_status": "needs_review"
+  },
+  "food-9s2577": {
+    "en": "Jurassic Park Cake ~Chocolate & Dark Cherry~",
+    "ko": "쥬라기 공원 케이크 ~초콜릿 & 다크체리~",
+    "zh-TW": "侏羅紀公園蛋糕 ～巧克力＆黑櫻桃～",
+    "_source": "provisional",
+    "_status": "needs_review"
+  },
+  "food-15hqyi6": {
+    "en": "Flying Dinosaur Cupcake ~Chocolate & Raspberry~",
+    "ko": "플라잉 다이나소어 컵케이크 ~초콜릿 & 라즈베리~",
+    "zh-TW": "飛翔恐龍紙杯蛋糕 ～巧克力＆覆盆莓～",
+    "_source": "provisional",
+    "_status": "needs_review"
+  },
+  "food-alnomv": {
+    "en": "Jurassic Park Drink Bottle",
+    "ko": "쥬라기 공원 드링크 보틀",
+    "zh-TW": "侏羅紀公園飲料瓶",
+    "_source": "provisional",
+    "_status": "needs_review"
+  },
+  "food-19z617n": {
+    "en": "Power Up! Mario's Strawberry Soda",
+    "ko": "파워 업! 마리오의 딸기 소다",
+    "zh-TW": "Power Up! 瑪利歐草莓汽水",
+    "_source": "provisional",
+    "_status": "needs_review"
+  },
+  "food-804x7o": {
+    "en": "Power Up! Luigi's Muscat Soda",
+    "ko": "파워 업! 루이지의 머스캣 소다",
+    "zh-TW": "Power Up! 路易吉麝香葡萄汽水",
+    "_source": "provisional",
+    "_status": "needs_review"
+  },
+  "food-1lvypnn": {
+    "en": "Power Up! Princess Peach's Peach Soda",
+    "ko": "파워 업! 피치 공주의 복숭아 소다",
+    "zh-TW": "Power Up! 碧姬公主水蜜桃汽水",
+    "_source": "provisional",
+    "_status": "needs_review"
+  },
+  "food-fcx2hy": {
+    "en": "Super Mushroom Drink Bottle",
+    "ko": "슈퍼 버섯 드링크 보틀",
+    "zh-TW": "超級蘑菇飲料瓶",
+    "_source": "provisional",
+    "_status": "needs_review"
+  },
+  "food-6dk3cs": {
+    "en": "Fire Flower × Question Block Drink Bottle",
+    "ko": "파이어 플라워 × 물음표 블록 드링크 보틀",
+    "zh-TW": "火焰花×問號磚塊飲料瓶",
+    "_source": "provisional",
+    "_status": "needs_review"
+  },
+  "food-1ojz6jw": {
+    "en": "Bob's Waffle Chicken Plate",
+    "ko": "밥의 와플 치킨 플레이트",
+    "zh-TW": "鮑伯鬆餅炸雞拼盤",
+    "_source": "provisional",
+    "_status": "needs_review"
+  },
+  "food-sfsu3d": {
+    "en": "Phil's Waffle Chicken Plate",
+    "ko": "필의 와플 치킨 플레이트",
+    "zh-TW": "菲爾鬆餅炸雞拼盤",
+    "_source": "provisional",
+    "_status": "needs_review"
+  },
+  "food-1435vjy": {
+    "en": "Stuart's Bacon Cheese Burger Plate",
+    "ko": "스튜어트의 베이컨 치즈 버거 플레이트",
+    "zh-TW": "史都華培根芝士漢堡拼盤",
+    "_source": "provisional",
+    "_status": "needs_review"
+  },
+  "food-bcbp5u": {
+    "en": "Stuart's Big Bacon Cheese Burger Plate",
+    "ko": "스튜어트의 빅 베이컨 치즈 버거 플레이트",
+    "zh-TW": "史都華大培根芝士漢堡拼盤",
+    "_source": "provisional",
+    "_status": "needs_review"
+  },
+  "food-1fcbolg": {
+    "en": "Dave's Keema Curry Plate",
+    "ko": "데이브의 키마 카레 플레이트",
+    "zh-TW": "大衛碎肉咖哩拼盤",
+    "_source": "provisional",
+    "_status": "needs_review"
+  },
+  "food-1rqbb9j": {
+    "en": "Minion Cookie Sandwich Banana Ice Cream & Fruits",
+    "ko": "미니언 쿠키 샌드 바나나 아이스크림 & 과일",
+    "zh-TW": "小小兵餅乾三明治 香蕉冰淇淋＆水果",
+    "_source": "provisional",
+    "_status": "needs_review"
+  },
+  "food-7nyguw": {
+    "en": "Minion Cookie Sandwich Strawberry Rare Cheesecake",
+    "ko": "미니언 쿠키 샌드 딸기 레어치즈",
+    "zh-TW": "小小兵餅乾三明治 草莓生乳酪",
+    "_source": "provisional",
+    "_status": "needs_review"
   }
 }
