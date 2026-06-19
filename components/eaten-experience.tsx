@@ -5,12 +5,11 @@ import Link from "next/link";
 import { CalendarDays } from "lucide-react";
 import { categoryLabels } from "@/lib/constants";
 import { calculateAreaProgressList } from "@/lib/area-progress";
-import { calculateArchiveRecordRate, calculateCompletion, dedupeFoodsByCanonical, formatFoodPrice, getCanonicalFoodKey, getFoodAreaNames, getFoodAreaSummary, getSaleStatusLabel } from "@/lib/food-utils";
+import { calculateArchiveRecordRate, calculateCompletion, dedupeFoodsByCanonical, formatFoodPrice, getCanonicalFoodKey, getFoodAreaNames, getFoodAreaSummary } from "@/lib/food-utils";
 import { tAreaName } from "@/lib/i18n/area-name";
 import type { TranslationKey } from "@/lib/i18n/dictionaries";
 import { getFoodNameI18n } from "@/lib/i18n/name-translations";
 import { useFoodLogs } from "@/lib/use-food-logs";
-import { useNextWantFoods } from "@/lib/use-next-want-foods";
 import type { FoodCategory, FoodWithRelations, UserFoodLog } from "@/types/domain";
 import { FoodImage } from "@/components/food-image";
 import { EatenGenreProgress } from "@/components/eaten-genre-progress";
@@ -23,13 +22,10 @@ type EatenAlbumRecord = {
 };
 
 type AlbumMode = "recent" | "month" | "area" | "genre" | "all";
-type EatenTab = "eaten" | "want";
 
 export function EatenExperience({ foods }: { foods: FoodWithRelations[] }) {
   const { t } = useLocale();
   const { logs } = useFoodLogs();
-  const { wantedFoods } = useNextWantFoods(foods);
-  const [activeTab, setActiveTab] = useState<EatenTab>("eaten");
   const [areaFilter, setAreaFilter] = useState("all");
   const [categoryFilter, setCategoryFilter] = useState<FoodCategory | "all">("all");
   const completion = calculateCompletion(foods, logs);
@@ -63,14 +59,11 @@ export function EatenExperience({ foods }: { foods: FoodWithRelations[] }) {
       const food = foods.find((item) => item.id === log.foodId);
       return sum + (food?.priceMin ?? food?.price ?? 0) * (log.eatenCount ?? 1);
     }, 0);
-  const hasWantedFoods = wantedFoods.length > 0;
-  const visibleTab: EatenTab = hasWantedFoods ? activeTab : "eaten";
-
   return (
     <div className="space-y-8">
       <section className="space-y-2 py-1">
         <p className="text-xs font-black tracking-[0.16em] text-park/70">{t("eaten.kicker")}</p>
-        <h1 className="text-2xl font-black tracking-tight text-ink md:text-3xl">{t("eaten.title")}</h1>
+        <h1 className="mt-2 text-3xl font-black tracking-tight text-ink md:text-4xl">{t("eaten.title")}</h1>
         <p className="flex flex-wrap gap-x-4 gap-y-1 text-[11px] font-bold leading-5 text-slate-400">
           <span>{t("eaten.eatenCount", { count: eatenRecords.length })}</span>
           <span>{t("eaten.activeCompletion", { rate: completion.rate })}</span>
@@ -79,42 +72,6 @@ export function EatenExperience({ foods }: { foods: FoodWithRelations[] }) {
         </p>
       </section>
 
-      {hasWantedFoods ? (
-        <div className="inline-grid grid-cols-2 rounded-full bg-slate-100 p-1 text-xs font-black text-slate-500">
-          {[
-            { id: "eaten" as const, label: t("common.eaten") },
-            { id: "want" as const, label: t("foodDetail.wantNext") }
-          ].map((tab) => (
-            <button
-              key={tab.id}
-              type="button"
-              onClick={() => setActiveTab(tab.id)}
-              className={`min-h-10 rounded-full px-5 transition active:scale-[0.98] ${visibleTab === tab.id ? "bg-white text-ink shadow-sm" : "hover:text-ink"}`}
-              aria-pressed={visibleTab === tab.id}
-            >
-              {tab.label}
-            </button>
-          ))}
-        </div>
-      ) : null}
-
-      {visibleTab === "want" ? (
-        <section className="space-y-5">
-          <div>
-            <p className="text-xs font-black text-park">{t("eaten.wantTabKicker")}</p>
-            <h2 className="mt-1 text-2xl font-black text-ink">{t("foodDetail.wantNext")}</h2>
-            <p className="mt-2 max-w-2xl text-sm font-bold leading-6 text-slate-500">
-              {t("eaten.wantDescription")}
-            </p>
-          </div>
-          <div className="grid grid-cols-2 gap-x-3 gap-y-6 md:grid-cols-3 xl:grid-cols-5">
-            {wantedFoods.map((food) => (
-              <NextWantCard key={food.id} food={food} />
-            ))}
-          </div>
-        </section>
-      ) : (
-        <>
       <section className="space-y-4">
         <p className="text-xs font-black text-slate-400">{t("eaten.albumCount", { shown: displayedRecordCount, total: filteredEatenRecords.length })}</p>
 
@@ -198,29 +155,7 @@ export function EatenExperience({ foods }: { foods: FoodWithRelations[] }) {
       <p className="border-t border-slate-200 pt-4 text-[11px] font-bold leading-5 text-slate-400">
         {t("eaten.calcNote")}
       </p>
-        </>
-      )}
     </div>
-  );
-}
-
-function NextWantCard({ food }: { food: FoodWithRelations }) {
-  const { locale, t } = useLocale();
-  const displayName = getFoodNameI18n(food.id, locale, food.name);
-  return (
-    <Link href={`/foods/${food.id}`} className="group min-w-0 transition active:scale-[0.99]">
-      <div className="aspect-[4/5] overflow-hidden rounded-[1.25rem] bg-slate-100">
-        <FoodImage food={food} alt={displayName} className="h-full w-full transition duration-300 group-hover:scale-105" />
-      </div>
-      <div className="mt-2 min-w-0">
-        <p className="line-clamp-2 min-h-10 text-sm font-black leading-5 text-ink">{displayName}</p>
-        <div className="mt-1 flex flex-wrap gap-x-2 gap-y-1 text-[11px] font-black">
-          <span className="text-park">{formatFoodPrice(food)}</span>
-          <span className="line-clamp-1 text-slate-500">{getFoodAreaSummary(food)}</span>
-        </div>
-        <p className="mt-1 text-[11px] font-bold text-slate-400">{food.isLimited ? `${t("foods.badgeLimited")} / ` : ""}{getSaleStatusLabel(food)}</p>
-      </div>
-    </Link>
   );
 }
 
