@@ -12,6 +12,7 @@ import { getFoodNameI18n } from "@/lib/i18n/name-translations";
 import { useLocale } from "@/lib/i18n/use-locale";
 import { getCategoryPlaceholder, getFoodImage } from "@/lib/utils/image";
 import { useFoodLogs } from "@/lib/use-food-logs";
+import { useNextWantFoods } from "@/lib/use-next-want-foods";
 import type { DiningType, FoodCategory, FoodStatus, FoodWithRelations, ShopType } from "@/types/domain";
 import { FoodCard } from "@/components/food-card";
 import { FoodImage } from "@/components/food-image";
@@ -62,6 +63,7 @@ export function FoodGrid({
 }) {
   const { locale, t } = useLocale();
   const { logs, ready, error, toggleEaten } = useFoodLogs();
+  const { isWanted, toggleWanted } = useNextWantFoods(foods);
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState<FoodCategory | "all">(initialCategory ?? "all");
   const [areaId, setAreaId] = useState(initialAreaId ?? "all");
@@ -325,7 +327,15 @@ export function FoodGrid({
         <>
           <div className="grid grid-cols-2 gap-3 md:grid-cols-3 xl:grid-cols-5">
             {displayedFoods.map((food) => (
-              <FoodCard key={food.id} food={food} allFoods={foods} logs={logs} onToggleEaten={handleToggleEaten} />
+              <FoodCard
+                key={food.id}
+                food={food}
+                allFoods={foods}
+                logs={logs}
+                onToggleEaten={handleToggleEaten}
+                isWanted={isWanted(food)}
+                onToggleWanted={() => toggleWanted(food)}
+              />
             ))}
           </div>
           {visibleCount < filteredFoods.length ? (

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { MapPin } from "lucide-react";
+import { Flag, MapPin } from "lucide-react";
 import { getCanonicalFoodId, getCanonicalFoodKey, getDisplayLocationAreaName, getFoodAreaDisplay, getSaleStatus, isEatenCanonical } from "@/lib/food-utils";
 import { tAreaName } from "@/lib/i18n/area-name";
 import { formatPriceI18n } from "@/lib/i18n/format-price";
@@ -13,12 +13,16 @@ export function FoodCard({
   food,
   allFoods,
   logs,
-  onToggleEaten
+  onToggleEaten,
+  isWanted = false,
+  onToggleWanted
 }: {
   food: FoodWithRelations;
   allFoods?: FoodWithRelations[];
   logs: UserFoodLog[];
   onToggleEaten: (foodId: string, spentAmount?: number) => void;
+  isWanted?: boolean;
+  onToggleWanted?: () => void;
 }) {
   const { locale, t } = useLocale();
   const locations = getDisplayLocations(food);
@@ -64,7 +68,7 @@ export function FoodCard({
           </p>
         </div>
       </Link>
-      <div data-food-card-actions className="absolute inset-x-0 bottom-0 z-10 grid h-11 border-t border-slate-100 bg-white px-2.5 py-1.5">
+      <div data-food-card-actions className={`absolute inset-x-0 bottom-0 z-10 grid h-11 border-t border-slate-100 bg-white px-2.5 py-1.5 ${onToggleWanted ? "grid-cols-[1fr_2.25rem] gap-1.5" : "grid-cols-1"}`}>
         <button
           type="button"
           onClick={(event) => {
@@ -78,6 +82,26 @@ export function FoodCard({
         >
           {eaten ? t("foodCard.eatenDone") : t("foodCard.markEaten")}
         </button>
+        {onToggleWanted ? (
+          <button
+            type="button"
+            aria-label={isWanted ? t("foodDetail.wantSaved") : t("foodDetail.wantNext")}
+            aria-pressed={isWanted}
+            title={isWanted ? t("foodDetail.wantSaved") : t("foodDetail.wantNext")}
+            onClick={(event) => {
+              event.preventDefault();
+              event.stopPropagation();
+              onToggleWanted();
+            }}
+            className={`inline-flex h-8 w-9 items-center justify-center rounded-full border text-[11px] font-black transition active:scale-95 ${
+              isWanted
+                ? "border-park bg-mint text-park"
+                : "border-slate-200 bg-white text-slate-500 hover:border-park/40 hover:text-park"
+            }`}
+          >
+            <Flag size={13} aria-hidden className={isWanted ? "fill-current" : ""} />
+          </button>
+        ) : null}
       </div>
     </article>
   );
