@@ -85,21 +85,26 @@ export function HomeCollectionHero({ foods }: { foods: FoodWithRelations[] }) {
           )}
         </div>
 
-        <div className="order-2 space-y-2 lg:col-start-2 lg:row-span-2 lg:row-start-1">
+        <div className="order-2 space-y-2.5 lg:col-start-2 lg:row-span-2 lg:row-start-1">
           <p className="text-center text-[12px] font-black tracking-[0.02em] text-[#8a5b16] lg:text-left">{t("collection.tagline")}</p>
-          <div className="relative aspect-video overflow-hidden rounded-[1.35rem] bg-[#f1e4d2] shadow-[0_18px_45px_rgba(7,27,58,0.12)] ring-1 ring-[#eadcc8]">
+          <div className="relative aspect-video overflow-hidden rounded-[1.5rem] bg-[#f1e4d2] shadow-[0_22px_54px_rgba(7,27,58,0.14)] ring-1 ring-[#eadcc8]">
             {heroFood ? (
-              <FoodImage food={heroFood} alt={heroDisplayName} className="h-full w-full scale-[1.02] saturate-[1.04]" variant="cover" />
+              <FoodImage food={heroFood} alt="" className="absolute inset-0 h-full w-full scale-110 opacity-45 blur-2xl saturate-[1.1]" variant="cover" />
+            ) : null}
+            {heroFood ? (
+              <FoodImage food={heroFood} alt={heroDisplayName} className="relative h-full w-full scale-[1.01] saturate-[1.03]" variant="cover" />
             ) : (
               <div className="h-full w-full bg-[radial-gradient(circle_at_24%_20%,rgba(253,187,48,0.34),transparent_34%),linear-gradient(135deg,#fff7e8,#dfeeff)]" aria-label={heroDisplayName} />
             )}
-            <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(7,27,58,0.42),rgba(7,27,58,0.05)_52%,rgba(255,250,245,0.06))]" aria-hidden />
-            <div className="absolute inset-x-0 bottom-0 h-1/2 bg-[linear-gradient(0deg,rgba(7,27,58,0.44),transparent)]" aria-hidden />
-            <span className="absolute left-4 top-4 h-16 w-16 rounded-full border border-[#fdbb30]/45 opacity-70" aria-hidden />
+            <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(7,27,58,0.36),rgba(7,27,58,0.06)_44%,rgba(255,250,245,0.1))]" aria-hidden />
+            <div className="absolute inset-x-0 bottom-0 h-2/3 bg-[linear-gradient(0deg,rgba(7,27,58,0.36),transparent_70%)]" aria-hidden />
+            <div className="absolute inset-3 rounded-[1.15rem] border border-white/28" aria-hidden />
+            <span className="absolute left-4 top-4 h-20 w-20 rounded-full border border-[#fdbb30]/38 opacity-70" aria-hidden />
+            <span className="absolute left-8 top-8 h-10 w-10 rounded-full border border-white/22" aria-hidden />
             <span className="absolute right-5 top-5 h-2 w-2 rounded-full bg-[#fdbb30]/80 shadow-[0_0_20px_rgba(253,187,48,0.75)]" aria-hidden />
-            <div className="absolute bottom-4 left-4 max-w-[72%] text-white drop-shadow-[0_2px_12px_rgba(7,27,58,0.35)]">
-              <p className="text-[10px] font-black tracking-[0.18em] text-[#fdbb30]">TODAY&apos;S COLLECTION</p>
-              <p className="mt-1 line-clamp-2 text-base font-black leading-tight sm:text-lg">{heroDisplayName}</p>
+            <span className="absolute right-10 bottom-8 h-px w-16 bg-gradient-to-r from-transparent via-white/60 to-transparent" aria-hidden />
+            <div className="absolute bottom-4 left-4 max-w-[76%] rounded-full border border-white/20 bg-[#071b3a]/28 px-3 py-1.5 text-white shadow-[0_8px_24px_rgba(7,27,58,0.16)] backdrop-blur-md">
+              <p className="line-clamp-1 text-[10px] font-black leading-4 tracking-[0.14em] text-[#fff4cf]">{heroDisplayName}</p>
             </div>
           </div>
         </div>
