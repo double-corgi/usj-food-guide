@@ -13,6 +13,7 @@ import {
 } from "@/lib/food-utils";
 import type { TranslationKey } from "@/lib/i18n/dictionaries";
 import { formatPriceI18n } from "@/lib/i18n/format-price";
+import { getFoodNameI18n } from "@/lib/i18n/name-translations";
 import { getUrgencyLabelI18n } from "@/lib/i18n/sale-label-utils";
 import { useLocale } from "@/lib/i18n/use-locale";
 import { useFoodLogs } from "@/lib/use-food-logs";
@@ -32,7 +33,7 @@ const LIMITED_WORDS = ["25th", "25周年", "期間限定", "限定", "イベン�
 type TFn = (key: TranslationKey, params?: Record<string, string | number>) => string;
 
 export function HomeCollectionHero({ foods }: { foods: FoodWithRelations[] }) {
-  const { t } = useLocale();
+  const { locale, t } = useLocale();
   const { logs, ready } = useFoodLogs();
   const completion = calculateCompletion(foods, logs);
   const remaining = Math.max(completion.total - completion.eaten, 0);
@@ -95,15 +96,17 @@ export function HomeCollectionHero({ foods }: { foods: FoodWithRelations[] }) {
               const canonicalKey = getCanonicalFoodKey(food);
               const eaten = eatenKeys.has(canonicalKey);
               const hiddenForViewport = index >= TABLET_SHELF_SLOTS ? "hidden lg:block" : index >= MOBILE_SHELF_SLOTS ? "hidden md:block" : "";
+              const displayName = getFoodNameI18n(food.id, locale, food.name);
               return (
                 <Link
                   key={`${food.id}-${index}`}
                   href={`/foods/${food.id}`}
                   className={`group relative aspect-square min-w-0 overflow-hidden rounded-[11px] bg-[#f1e4d2] ${eaten ? "ring-2 ring-[#fdbb30]/85 ring-offset-1 ring-offset-[#fffaf5]" : ""} ${hiddenForViewport}`}
-                  aria-label={`${food.name}の詳細を見る`}
+                  aria-label={displayName}
                 >
                   <FoodImage
                     food={food}
+                    alt={displayName}
                     className={`h-full w-full transition duration-300 group-hover:scale-[1.03] ${eaten ? "saturate-100" : "saturate-[0.88] brightness-[1.03]"}`}
                   />
                   {eaten ? (
@@ -164,7 +167,7 @@ export function HomeActiveFoodCollection({ foods }: { foods: FoodWithRelations[]
 }
 
 export function HomeLimitedCollection({ foods }: { foods: FoodWithRelations[] }) {
-  const { t } = useLocale();
+  const { locale, t } = useLocale();
   const { logs } = useFoodLogs();
   const eatenKeys = getEatenCanonicalKeys(foods, logs);
   const collection = useMemo(() => buildLimitedCollection(foods), [foods]);
@@ -187,17 +190,18 @@ export function HomeLimitedCollection({ foods }: { foods: FoodWithRelations[] })
       <div className="flex gap-3 overflow-x-auto pb-1 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
         {collection.foods.map((food) => {
           const eaten = eatenKeys.has(getCanonicalFoodKey(food));
+          const displayName = getFoodNameI18n(food.id, locale, food.name);
           return (
             <Link key={food.id} href={`/foods/${food.id}`} className="w-[136px] shrink-0 transition active:scale-[0.99] md:hover:-translate-y-0.5">
               <div className="relative aspect-square overflow-hidden rounded-[1rem] bg-[#efe1cd]">
-                <FoodImage food={food} className={`h-full w-full ${eaten ? "saturate-100" : "saturate-[0.88] brightness-[1.03]"}`} />
+                <FoodImage food={food} alt={displayName} className={`h-full w-full ${eaten ? "saturate-100" : "saturate-[0.88] brightness-[1.03]"}`} />
                 {eaten ? (
                   <span className="absolute bottom-1.5 right-1.5 grid h-6 w-6 place-items-center rounded-full bg-[#fdbb30] text-[13px] font-black leading-none text-[#071b3a] ring-1 ring-white/90 shadow-[inset_0_0_6px_rgba(255,255,255,0.42),0_1px_4px_rgba(7,27,58,0.18)]" aria-hidden>
                     ✓
                   </span>
                 ) : null}
               </div>
-              <p className="mt-2 line-clamp-2 min-h-9 text-xs font-black leading-[1.45] text-ink">{food.name}</p>
+              <p className="mt-2 line-clamp-2 min-h-9 text-xs font-black leading-[1.45] text-ink">{displayName}</p>
             </Link>
           );
         })}
@@ -207,7 +211,7 @@ export function HomeLimitedCollection({ foods }: { foods: FoodWithRelations[] })
 }
 
 export function HomeRecentRecords({ foods }: { foods: FoodWithRelations[] }) {
-  const { t } = useLocale();
+  const { locale, t } = useLocale();
   const { logs } = useFoodLogs();
   const recentFoods = useMemo(() => pickRecentEatenFoods(foods, logs), [foods, logs]);
   if (recentFoods.length === 0) return null;
@@ -222,14 +226,17 @@ export function HomeRecentRecords({ foods }: { foods: FoodWithRelations[] }) {
         <Link href="/eaten" className="shrink-0 text-xs font-black text-park">{t("home.viewAlbum")}</Link>
       </div>
       <div className="flex gap-3 overflow-x-auto pb-1 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-        {recentFoods.map((food) => (
-          <Link key={food.id} href={`/foods/${food.id}`} className="w-[148px] shrink-0">
-            <div className="aspect-square overflow-hidden rounded-[1rem] bg-slate-100">
-              <FoodImage food={food} className="h-full w-full transition duration-300 hover:scale-[1.03]" />
-            </div>
-            <p className="mt-2 line-clamp-2 min-h-9 text-xs font-black leading-[1.45] text-ink">{food.name}</p>
-          </Link>
-        ))}
+        {recentFoods.map((food) => {
+          const displayName = getFoodNameI18n(food.id, locale, food.name);
+          return (
+            <Link key={food.id} href={`/foods/${food.id}`} className="w-[148px] shrink-0">
+              <div className="aspect-square overflow-hidden rounded-[1rem] bg-slate-100">
+                <FoodImage food={food} alt={displayName} className="h-full w-full transition duration-300 hover:scale-[1.03]" />
+              </div>
+              <p className="mt-2 line-clamp-2 min-h-9 text-xs font-black leading-[1.45] text-ink">{displayName}</p>
+            </Link>
+          );
+        })}
       </div>
     </section>
   );
@@ -238,14 +245,15 @@ export function HomeRecentRecords({ foods }: { foods: FoodWithRelations[] }) {
 function HomeFoodRailCard({ food, className = "" }: { food: FoodWithRelations; className?: string }) {
   const { t, locale } = useLocale();
   const chip = getHomeFoodChip(food, t);
+  const displayName = getFoodNameI18n(food.id, locale, food.name);
 
   return (
     <Link href={`/foods/${food.id}`} className={`group w-[74vw] max-w-[300px] shrink-0 snap-start lg:w-auto lg:max-w-none ${className}`}>
       <div className="aspect-[4/3] overflow-hidden rounded-[1.25rem] bg-slate-100">
-        <FoodImage food={food} className="h-full w-full transition duration-300 group-hover:scale-[1.03]" />
+        <FoodImage food={food} alt={displayName} className="h-full w-full transition duration-300 group-hover:scale-[1.03]" />
       </div>
       <div className="mt-3 space-y-1">
-        <p className="line-clamp-2 min-h-[42px] text-[15px] font-black leading-[1.45] text-ink">{food.name}</p>
+        <p className="line-clamp-2 min-h-[42px] text-[15px] font-black leading-[1.45] text-ink">{displayName}</p>
         <p className="line-clamp-1 text-xs font-bold text-slate-500">
           <span className="font-black text-[#071b3a]">{formatPriceI18n(food, locale, t)}</span>
           <span className="px-1.5 text-slate-300">/</span>
