@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import {
   calculateCompletion,
@@ -24,6 +24,8 @@ import type { FoodWithRelations, UserFoodLog } from "@/types/domain";
 const LIMITED_COLLECTION_MAX = 24;
 const LIMITED_COLLECTION_MIN = 3;
 const LIMITED_GROUP_RATIO = 0.7;
+const HERO_VISUAL_COUNT = 5;
+const HERO_ROTATE_MS = 5200;
 const PURE_IP_GROUP_NAMES = ["ミニオン", "マリオ", "ハローキティ", "ジュラシック・パーク", "ハリー・ポッター", "スヌーピー", "セサミストリート"];
 const LIMITED_WORDS = ["25th", "25周年", "期間限定", "限定", "イベント", "コラボ", "ハロウィーン", "ハロウィン", "クリスマス", "イースター", "夏", "冬"];
 
@@ -34,22 +36,32 @@ export function HomeCollectionHero({ foods }: { foods: FoodWithRelations[] }) {
   const { logs } = useFoodLogs();
   const completion = calculateCompletion(foods, logs);
   const remaining = Math.max(completion.total - completion.eaten, 0);
-  const heroFood = useMemo(() => pickHeroFood(foods, logs, completion.eaten), [completion.eaten, foods, logs]);
+  const heroFoods = useMemo(() => pickHeroFoods(foods, logs, completion.eaten, HERO_VISUAL_COUNT), [completion.eaten, foods, logs]);
+  const [heroIndex, setHeroIndex] = useState(0);
+  useEffect(() => {
+    if (heroFoods.length <= 1) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const timer = window.setInterval(() => {
+      setHeroIndex((current) => (current + 1) % heroFoods.length);
+    }, HERO_ROTATE_MS);
+    return () => window.clearInterval(timer);
+  }, [heroFoods.length]);
+  const activeHeroIndex = heroFoods.length ? heroIndex % heroFoods.length : 0;
+  const heroFood = heroFoods[activeHeroIndex] ?? null;
   const hasCollection = completion.eaten > 0;
   const heroDisplayName = heroFood ? getFoodNameI18n(heroFood.id, locale, heroFood.name) : appBrand.name;
 
   return (
     <section className="home-collection-hero relative isolate -mx-4 bg-[#fffaf5] px-4 pb-4 sm:-mx-6 sm:px-6 lg:mx-0 lg:rounded-[2rem] lg:px-8 lg:pb-8">
       <div className="mx-auto grid max-w-[1080px] gap-4 lg:grid-cols-[0.36fr_0.64fr] lg:grid-rows-[auto_1fr] lg:items-start lg:gap-x-8 lg:gap-y-4">
-        <div className="order-1 space-y-2 text-center lg:col-start-1 lg:row-start-1 lg:text-left">
-          <div className="flex items-center justify-center gap-2.5 lg:justify-start">
-            <span className="h-px w-4 shrink-0 bg-[#fdbb30]" aria-hidden />
-            <p className="select-none text-[10.5px] font-black tracking-[0.14em] text-[#8a5b16] sm:text-[11px] lg:text-[11.5px]">
+        <div className="order-1 space-y-2.5 text-center lg:col-start-1 lg:row-start-1 lg:text-left">
+          <div className="flex flex-col items-center gap-1.5 lg:items-start">
+            <p className="select-none text-[10px] font-black tracking-[0.22em] text-[#8a5b16] sm:text-[10.5px]">
               USJ FOOD COLLECTION
             </p>
-            <span className="h-px w-4 shrink-0 bg-[#fdbb30]" aria-hidden />
+            <span className="h-0.5 w-16 rounded-full bg-[linear-gradient(90deg,#0057b8,#fdbb30)]" aria-hidden />
           </div>
-          <h1 className="select-none text-[1.4rem] font-black leading-[1.2] tracking-[0.02em] text-[#071b3a] sm:text-[1.6rem] lg:text-[1.45rem]">
+          <h1 className="select-none text-[1.55rem] font-black leading-[1.12] tracking-[-0.02em] text-[#071b3a] sm:text-[1.78rem] lg:text-[1.65rem]">
             {appBrand.name}
           </h1>
           <p className="text-[12px] font-bold leading-6 text-slate-500 sm:text-[13px]">{t("footer.tagline")}</p>
@@ -87,25 +99,36 @@ export function HomeCollectionHero({ foods }: { foods: FoodWithRelations[] }) {
 
         <div className="order-2 space-y-2.5 lg:col-start-2 lg:row-span-2 lg:row-start-1">
           <p className="text-center text-[12px] font-black tracking-[0.02em] text-[#8a5b16] lg:text-left">{t("collection.tagline")}</p>
-          <div className="relative aspect-video overflow-hidden rounded-[1.5rem] bg-[#f1e4d2] shadow-[0_22px_54px_rgba(7,27,58,0.14)] ring-1 ring-[#eadcc8]">
-            {heroFood ? (
-              <FoodImage food={heroFood} alt="" className="absolute inset-0 h-full w-full scale-110 opacity-45 blur-2xl saturate-[1.1]" variant="cover" />
-            ) : null}
-            {heroFood ? (
-              <FoodImage food={heroFood} alt={heroDisplayName} className="relative h-full w-full scale-[1.01] saturate-[1.03]" variant="cover" />
+          <div className="relative aspect-video overflow-hidden rounded-[1.45rem] bg-[#f1e4d2] shadow-[0_20px_48px_rgba(7,27,58,0.12)] ring-1 ring-[#eadcc8]">
+            {heroFoods.length > 0 ? (
+              heroFoods.map((food, index) => {
+                const displayName = getFoodNameI18n(food.id, locale, food.name);
+                const active = index === activeHeroIndex;
+                return (
+                  <FoodImage
+                    key={food.id}
+                    food={food}
+                    alt={active ? displayName : ""}
+                    className={`absolute inset-0 h-full w-full transition-opacity duration-1000 ease-out ${active ? "opacity-100" : "opacity-0"}`}
+                    variant="cover"
+                  />
+                );
+              })
             ) : (
               <div className="h-full w-full bg-[radial-gradient(circle_at_24%_20%,rgba(253,187,48,0.34),transparent_34%),linear-gradient(135deg,#fff7e8,#dfeeff)]" aria-label={heroDisplayName} />
             )}
-            <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(7,27,58,0.36),rgba(7,27,58,0.06)_44%,rgba(255,250,245,0.1))]" aria-hidden />
-            <div className="absolute inset-x-0 bottom-0 h-2/3 bg-[linear-gradient(0deg,rgba(7,27,58,0.36),transparent_70%)]" aria-hidden />
-            <div className="absolute inset-3 rounded-[1.15rem] border border-white/28" aria-hidden />
-            <span className="absolute left-4 top-4 h-20 w-20 rounded-full border border-[#fdbb30]/38 opacity-70" aria-hidden />
-            <span className="absolute left-8 top-8 h-10 w-10 rounded-full border border-white/22" aria-hidden />
-            <span className="absolute right-5 top-5 h-2 w-2 rounded-full bg-[#fdbb30]/80 shadow-[0_0_20px_rgba(253,187,48,0.75)]" aria-hidden />
-            <span className="absolute right-10 bottom-8 h-px w-16 bg-gradient-to-r from-transparent via-white/60 to-transparent" aria-hidden />
-            <div className="absolute bottom-4 left-4 max-w-[76%] rounded-full border border-white/20 bg-[#071b3a]/28 px-3 py-1.5 text-white shadow-[0_8px_24px_rgba(7,27,58,0.16)] backdrop-blur-md">
-              <p className="line-clamp-1 text-[10px] font-black leading-4 tracking-[0.14em] text-[#fff4cf]">{heroDisplayName}</p>
-            </div>
+            <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(7,27,58,0.28),rgba(7,27,58,0.02)_48%,rgba(255,250,245,0.08))]" aria-hidden />
+            <div className="absolute inset-x-0 bottom-0 h-1/2 bg-[linear-gradient(0deg,rgba(7,27,58,0.26),transparent_76%)]" aria-hidden />
+            {heroFoods.length > 1 ? (
+              <div className="absolute bottom-3 right-4 flex gap-1.5" aria-hidden>
+                {heroFoods.map((food, index) => (
+                  <span
+                    key={`${food.id}-dot`}
+                    className={`h-1.5 rounded-full transition-all duration-500 ${index === activeHeroIndex ? "w-5 bg-white" : "w-1.5 bg-white/45"}`}
+                  />
+                ))}
+              </div>
+            ) : null}
           </div>
         </div>
       </div>
@@ -117,8 +140,8 @@ export function HomeActiveFoodCollection({ foods }: { foods: FoodWithRelations[]
   const { t } = useLocale();
   const { logs } = useFoodLogs();
   const shelfKeys = useMemo(() => {
-    const heroFood = pickHeroFood(foods, logs, logs.filter((log) => log.status === "eaten").length);
-    return new Set(heroFood ? [getCanonicalFoodKey(heroFood)] : []);
+    const heroFoods = pickHeroFoods(foods, logs, logs.filter((log) => log.status === "eaten").length, HERO_VISUAL_COUNT);
+    return new Set(heroFoods.map(getCanonicalFoodKey));
   }, [foods, logs]);
   const activeFoods = useMemo(() => pickActiveCollectionFoods(foods, logs, shelfKeys), [foods, logs, shelfKeys]);
 
@@ -254,9 +277,9 @@ function HomeFoodRailCard({ food, className = "" }: { food: FoodWithRelations; c
   );
 }
 
-function pickHeroFood(foods: FoodWithRelations[], logs: UserFoodLog[], eatenCount: number) {
+function pickHeroFoods(foods: FoodWithRelations[], logs: UserFoodLog[], eatenCount: number, limit: number) {
   const activeFoods = dedupeFoodsByCanonical(foods.filter((food) => isCompletableFood(food) && hasDisplayImage(food)));
-  if (activeFoods.length === 0) return null;
+  if (activeFoods.length === 0) return [];
   const byCanonical = new Map(activeFoods.map((food) => [getCanonicalFoodKey(food), food]));
   const eatenKeys = getEatenCanonicalKeys(foods, logs);
   const eatenFoods = latestEatenCanonicalKeys(logs, foods)
@@ -269,7 +292,9 @@ function pickHeroFood(foods: FoodWithRelations[], logs: UserFoodLog[], eatenCoun
     .filter((food) => !eatenSet.has(getCanonicalFoodKey(food)) && !eatenKeys.has(getCanonicalFoodKey(food)))
     .sort((a, b) => shelfScore(b, seed) - shelfScore(a, seed) || a.name.localeCompare(b.name, "ja"));
 
-  return [...eatenFoods, ...uneatenFoods].sort((a, b) => shelfScore(b, seed) - shelfScore(a, seed) || a.name.localeCompare(b.name, "ja"))[0] ?? activeFoods[0];
+  return [...eatenFoods, ...uneatenFoods]
+    .sort((a, b) => shelfScore(b, seed) - shelfScore(a, seed) || a.name.localeCompare(b.name, "ja"))
+    .slice(0, limit);
 }
 
 function pickActiveCollectionFoods(foods: FoodWithRelations[], logs: UserFoodLog[], excludedShelfKeys: Set<string>) {
