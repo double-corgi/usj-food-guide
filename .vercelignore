@@ -12,6 +12,7 @@ coverage
 
 # Project documentation not needed at runtime
 docs
+/screenshots
 
 # Local/editor/system files
 .DS_Store

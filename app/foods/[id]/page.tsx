@@ -2,12 +2,8 @@ import { notFound } from "next/navigation";
 import { FoodDetail } from "@/components/food-detail";
 import { getFoodById, listFoods } from "@/lib/repositories/foods";
 
-export const revalidate = 3600;
-
-export async function generateStaticParams() {
-  const foods = await listFoods();
-  return foods.map((food) => ({ id: food.id }));
-}
+export const dynamic = "force-dynamic";
+export const dynamicParams = true;
 
 export default async function FoodDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const resolvedParams = await params;
