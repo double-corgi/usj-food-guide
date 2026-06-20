@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
+import { AdSlot } from "@/components/ad-slot";
 import { AnalyticsTracker } from "@/components/analytics-tracker";
 import { AppFooter } from "@/components/app-footer";
 import { AppHeader } from "@/components/app-header";
@@ -67,11 +68,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className="flex min-h-dvh flex-col">
         <LocaleProvider>
           <AppHeader />
-          <main className="mx-auto w-full max-w-7xl flex-1 px-4 pb-28 pt-6 sm:px-6 md:pb-8 md:pt-8 lg:px-8">
+          <main className="mx-auto w-full max-w-7xl flex-1 px-4 pb-44 pt-6 sm:px-6 md:pb-24 md:pt-8 lg:px-8">
             <MobileLanguageBadge />
             {children}
           </main>
-          <AppFooter />
+          <div className="pb-20">
+            <AppFooter />
+          </div>
+          <AdSlot slotId="global-bottom" variant="fixed" />
           <AnalyticsTracker />
           <PwaRegister />
         </LocaleProvider>

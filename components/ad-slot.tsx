@@ -3,15 +3,23 @@ import type { ReactNode } from "react";
 type AdSlotProps = {
   className?: string;
   slotId?: string;
+  variant?: "inline" | "fixed";
   children?: ReactNode;
 };
 
-export function AdSlot({ className = "", slotId = "placeholder", children }: AdSlotProps) {
+export function AdSlot({ className = "", slotId = "placeholder", variant = "inline", children }: AdSlotProps) {
+  const baseClass =
+    "flex flex-col justify-between rounded-2xl border border-slate-200 bg-white px-4 py-3 text-center shadow-[0_1px_0_rgba(15,23,42,0.03)]";
+  const variantClass =
+    variant === "fixed"
+      ? "fixed inset-x-4 bottom-[calc(env(safe-area-inset-bottom)+5.25rem)] z-40 mx-auto h-14 max-w-md backdrop-blur md:bottom-[calc(env(safe-area-inset-bottom)+1rem)] md:left-1/2 md:right-auto md:w-[min(28rem,calc(100vw-2rem))] md:-translate-x-1/2"
+      : "mx-auto my-6 h-24 w-full max-w-3xl";
+
   return (
     <aside
       aria-label="広告"
       data-ad-slot={slotId}
-      className={`mx-auto my-6 flex h-24 w-full max-w-3xl flex-col justify-between rounded-2xl border border-slate-200 bg-white px-4 py-3 text-center shadow-[0_1px_0_rgba(15,23,42,0.03)] ${className}`.trim()}
+      className={`${baseClass} ${variantClass} ${className}`.trim()}
     >
       <span className="self-start text-[10px] font-bold uppercase tracking-wide text-slate-400">広告</span>
       <div className="flex flex-1 items-center justify-center text-xs font-bold text-slate-300">{children ?? "広告スペース"}</div>
