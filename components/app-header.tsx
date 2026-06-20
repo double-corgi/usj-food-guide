@@ -73,7 +73,7 @@ export function AppHeader() {
       </header>
       <nav
         aria-label={t("nav.label")}
-        className="fixed inset-x-4 bottom-[calc(env(safe-area-inset-bottom)+0.75rem)] z-50 grid grid-cols-5 rounded-[1.55rem] border border-slate-200/60 bg-white p-1 shadow-[0_-1px_0_rgba(0,0,0,0.06),0_4px_16px_rgba(0,0,0,0.08)] md:hidden"
+        className="fixed inset-x-4 bottom-[calc(env(safe-area-inset-bottom)+2.75rem)] z-50 grid grid-cols-5 rounded-[1.55rem] border border-slate-200/60 bg-white p-1 shadow-[0_-1px_0_rgba(0,0,0,0.06),0_4px_16px_rgba(0,0,0,0.08)] md:hidden"
       >
         {navItems.map((item) => {
           const active = isNavActive(pathname, item.href);

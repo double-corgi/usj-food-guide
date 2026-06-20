@@ -14,7 +14,6 @@ import { getCategoryPlaceholder, getFoodImage } from "@/lib/utils/image";
 import { useFoodLogs } from "@/lib/use-food-logs";
 import { useNextWantFoods } from "@/lib/use-next-want-foods";
 import type { DiningType, FoodCategory, FoodStatus, FoodWithRelations, ShopType } from "@/types/domain";
-import { AdSlot } from "@/components/ad-slot";
 import { FoodCard } from "@/components/food-card";
 import { FoodImage } from "@/components/food-image";
 import { SkeletonCard } from "@/components/skeleton-card";
@@ -317,8 +316,6 @@ export function FoodGrid({
       </div>
 
       {error ? <p className="rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm font-bold text-red-700">{error}</p> : null}
-
-      <AdSlot slotId="foods-list-before" className="md:hidden" />
 
       {!ready ? (
         <div className="grid grid-cols-2 gap-3 md:grid-cols-3 xl:grid-cols-5">
