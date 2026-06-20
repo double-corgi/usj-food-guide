@@ -30464,10 +30464,10 @@
       "trusted_placeholder": false,
       "lastCheckedAt": "2026-05-31T12:23:38.387Z",
       "last_checked_at": "2026-05-31T12:23:38.387Z",
-      "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-minions-cup-dessert-offercard-h.jpg",
-      "image_url": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-minions-cup-dessert-offercard-h.jpg",
-      "representativeImageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-minions-cup-dessert-offercard-h.jpg",
-      "representative_image_url": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-minions-cup-dessert-offercard-h.jpg",
+      "imageUrl": "/manual-images/food-uqw79q/usj-gds-minion-dessert-and-drink-bar-set-gallery-b.jpg",
+      "image_url": "/manual-images/food-uqw79q/usj-gds-minion-dessert-and-drink-bar-set-gallery-b.jpg",
+      "representativeImageUrl": "/manual-images/food-uqw79q/usj-gds-minion-dessert-and-drink-bar-set-gallery-b.jpg",
+      "representative_image_url": "/manual-images/food-uqw79q/usj-gds-minion-dessert-and-drink-bar-set-gallery-b.jpg",
       "sourceNames": [
         "official-category-drinks",
         "official-category-kids-menus",
@@ -30513,7 +30513,7 @@
         {
           "id": "image-1j0eq32",
           "foodId": "food-uqw79q",
-          "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-minions-cup-dessert-offercard-h.jpg",
+          "imageUrl": "/manual-images/food-uqw79q/usj-gds-minion-dessert-and-drink-bar-set-gallery-b.jpg",
           "sourceType": "official",
           "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/happiness-cafe/index.html",
           "imageConfidenceScore": 100,
