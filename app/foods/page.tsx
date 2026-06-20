@@ -1,4 +1,3 @@
-import { AdSlot } from "@/components/ad-slot";
 import { FoodGrid } from "@/components/food-grid";
 import { readGeneratedSummary } from "@/lib/repositories/generated-data";
 import { listFoods } from "@/lib/repositories/foods";
@@ -89,19 +88,16 @@ export default async function FoodsPage({
   const foods = await listFoods();
   const generatedSummary = readGeneratedSummary();
   return (
-    <>
-      <FoodGrid
-        foods={foods}
-        mode={parseMode(resolvedSearchParams.mode)}
-        generatedAt={typeof generatedSummary.generatedAt === "string" ? generatedSummary.generatedAt : undefined}
-        initialCategory={parseCategory(resolvedSearchParams.category)}
-        initialAreaId={resolvedSearchParams.area}
-        initialShopId={resolvedSearchParams.shop}
-        initialDiningType={parseDiningType(resolvedSearchParams.diningType) as DiningType | undefined}
-        initialSaleFilter={parseSaleFilter(resolvedSearchParams.sale ?? resolvedSearchParams.status)}
-        initialSort={parseSort(resolvedSearchParams.sort)}
-      />
-      <AdSlot slotId="foods-bottom" className="md:hidden" />
-    </>
+    <FoodGrid
+      foods={foods}
+      mode={parseMode(resolvedSearchParams.mode)}
+      generatedAt={typeof generatedSummary.generatedAt === "string" ? generatedSummary.generatedAt : undefined}
+      initialCategory={parseCategory(resolvedSearchParams.category)}
+      initialAreaId={resolvedSearchParams.area}
+      initialShopId={resolvedSearchParams.shop}
+      initialDiningType={parseDiningType(resolvedSearchParams.diningType) as DiningType | undefined}
+      initialSaleFilter={parseSaleFilter(resolvedSearchParams.sale ?? resolvedSearchParams.status)}
+      initialSort={parseSort(resolvedSearchParams.sort)}
+    />
   );
 }
