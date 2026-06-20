@@ -1,3 +1,5 @@
+import * as fs from "node:fs";
+import * as path from "node:path";
 import type { Area, DisplayQuality, FoodCategory, FoodLocation, FoodStatus, ReviewStatus, Shop, ShopType } from "../../types/domain";
 import type { CrawledFood, CrawledImage, CrawlSourceResult } from "../types/crawler";
 import type { GeneratedArea, GeneratedDataset, GeneratedFood, GeneratedImage, GeneratedShop } from "../types/generated";
@@ -56,7 +58,8 @@ export function buildGeneratedDataset(sourceResults: CrawlSourceResult[], now = 
   const checkedAt = getCrawlCheckedAt(now);
   const candidates = mergeCandidates(sourceResults);
   const scored = candidates.map((candidate) => scoreCandidate(candidate, now));
-  const grouped = markSharedImages(backfillVerifiedOfficialImages(backfillVerifiedImagesFromRawSources(assignDuplicateGroups(scored), sourceResults)));
+  const deduped = applyDuplicateOverrides(assignDuplicateGroups(scored), buildDuplicateOverridesById());
+  const grouped = markSharedImages(backfillVerifiedOfficialImages(backfillVerifiedImagesFromRawSources(deduped, sourceResults)));
   const areas = buildAreas(grouped);
   const shops = buildShops(grouped, areas);
   const foods = grouped.map((item, index) => toGeneratedFood(item, shops, areas, index, checkedAt));
@@ -490,6 +493,73 @@ function assignDuplicateGroups<T extends ScoredCandidate>(items: T[]) {
   });
 
   return sorted;
+}
+
+type DuplicateOverride = {
+  canonicalId: string;
+  duplicateIds: string[];
+};
+
+function buildDuplicateOverridesById() {
+  const overrides = readDuplicateOverrides();
+  const map = new Map<string, { override: DuplicateOverride; role: "canonical" | "duplicate" }>();
+  for (const override of overrides) {
+    map.set(override.canonicalId, { override, role: "canonical" });
+    for (const duplicateId of override.duplicateIds) {
+      map.set(duplicateId, { override, role: "duplicate" });
+    }
+  }
+  return map;
+}
+
+function readDuplicateOverrides(): DuplicateOverride[] {
+  const filePath = path.resolve(process.cwd(), "data/duplicate-overrides.json");
+  if (!fs.existsSync(filePath)) return [];
+  const raw = JSON.parse(fs.readFileSync(filePath, "utf-8")) as unknown;
+  if (!Array.isArray(raw)) throw new Error("data/duplicate-overrides.json must contain an array");
+  return raw.map((entry) => {
+    if (!isRecord(entry)) throw new Error("duplicate override entries must be objects");
+    const canonicalId = typeof entry.canonicalId === "string" ? entry.canonicalId : "";
+    const duplicateIds = Array.isArray(entry.duplicateIds) ? entry.duplicateIds.filter((id): id is string => typeof id === "string") : [];
+    if (!canonicalId || duplicateIds.length === 0) throw new Error("duplicate override entries require canonicalId and duplicateIds");
+    return { canonicalId, duplicateIds };
+  });
+}
+
+function applyDuplicateOverrides<T extends ScoredCandidate>(
+  items: T[],
+  overridesById: Map<string, { override: DuplicateOverride; role: "canonical" | "duplicate" }>
+) {
+  if (overridesById.size === 0) return items;
+
+  const itemsById = new Map<string, T>();
+  for (const item of items) {
+    const id = generatedFoodIdForItem(item);
+    if (overridesById.has(id)) itemsById.set(id, item);
+  }
+
+  const overrides = new Set(Array.from(overridesById.values()).map((entry) => entry.override));
+  for (const override of overrides) {
+    const canonical = itemsById.get(override.canonicalId);
+    if (!canonical) throw new Error(`duplicate override canonicalId not found: ${override.canonicalId}`);
+    const groupId = `override-${override.canonicalId}`;
+    canonical.hidden = false;
+    canonical.duplicateGroupId = groupId;
+    for (const duplicateId of override.duplicateIds) {
+      const duplicate = itemsById.get(duplicateId);
+      if (!duplicate) throw new Error(`duplicate override duplicateId not found: ${duplicateId}`);
+      duplicate.hidden = true;
+      duplicate.duplicateGroupId = groupId;
+    }
+  }
+
+  return items;
+}
+
+function generatedFoodIdForItem(item: ScoredCandidate) {
+  const areaId = stableId("area", item.food.areaName || "その他");
+  const shopId = stableId("shop", `${areaId}:${normalizeShopName(item.food.shopName)}`);
+  return stableId("food", `${shopId}:${item.food.normalizedName}:${item.food.sourceUrl}`);
 }
 
 function markSharedImages<T extends ReturnType<typeof scoreCandidate>>(items: T[]) {
