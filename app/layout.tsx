@@ -68,7 +68,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className="flex min-h-dvh flex-col">
         <LocaleProvider>
           <AppHeader />
-          <main className="mx-auto w-full max-w-7xl flex-1 px-4 pb-44 pt-6 sm:px-6 md:pb-24 md:pt-8 lg:px-8">
+          <main className="mx-auto w-full max-w-7xl flex-1 px-4 pb-32 pt-6 sm:px-6 md:pb-24 md:pt-8 lg:px-8">
             <MobileLanguageBadge />
             {children}
           </main>

@@ -9,10 +9,12 @@ type AdSlotProps = {
 
 export function AdSlot({ className = "", slotId = "placeholder", variant = "inline", children }: AdSlotProps) {
   const baseClass =
-    "flex flex-col justify-between rounded-2xl border border-slate-200 bg-white px-4 py-3 text-center shadow-[0_1px_0_rgba(15,23,42,0.03)]";
+    variant === "fixed"
+      ? "pointer-events-none flex items-center justify-center rounded-full border border-slate-200/70 bg-cream/95 px-3 text-center shadow-[0_1px_0_rgba(15,23,42,0.04)] backdrop-blur"
+      : "flex flex-col justify-between rounded-2xl border border-slate-200 bg-white px-4 py-3 text-center shadow-[0_1px_0_rgba(15,23,42,0.03)]";
   const variantClass =
     variant === "fixed"
-      ? "fixed inset-x-4 bottom-[calc(env(safe-area-inset-bottom)+5.25rem)] z-40 mx-auto h-14 max-w-md backdrop-blur md:bottom-[calc(env(safe-area-inset-bottom)+1rem)] md:left-1/2 md:right-auto md:w-[min(28rem,calc(100vw-2rem))] md:-translate-x-1/2"
+      ? "fixed inset-x-10 bottom-[calc(env(safe-area-inset-bottom)+0.125rem)] z-40 mx-auto h-5 max-w-[10rem] md:bottom-[calc(env(safe-area-inset-bottom)+1rem)] md:left-1/2 md:right-auto md:h-9 md:w-[min(22rem,calc(100vw-2rem))] md:max-w-none md:-translate-x-1/2"
       : "mx-auto my-6 h-24 w-full max-w-3xl";
 
   return (
@@ -21,8 +23,16 @@ export function AdSlot({ className = "", slotId = "placeholder", variant = "inli
       data-ad-slot={slotId}
       className={`${baseClass} ${variantClass} ${className}`.trim()}
     >
-      <span className="self-start text-[10px] font-bold uppercase tracking-wide text-slate-400">広告</span>
-      <div className="flex flex-1 items-center justify-center text-xs font-bold text-slate-300">{children ?? "広告スペース"}</div>
+      {variant === "fixed" ? (
+        <span className="text-[9px] font-bold tracking-wide text-slate-400">広告</span>
+      ) : (
+        <>
+          <span className="self-start text-[10px] font-bold uppercase tracking-wide text-slate-400">広告</span>
+          <div className="flex flex-1 items-center justify-center text-xs font-bold text-slate-300">
+            {children ?? "広告スペース"}
+          </div>
+        </>
+      )}
     </aside>
   );
 }
