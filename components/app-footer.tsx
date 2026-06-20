@@ -57,12 +57,12 @@ const footerPrimaryLinks = [
   { href: "/eaten", labelKey: "footer.eatenRecord" },
   { href: "/request", labelKey: "footer.report" },
   { href: "/about", labelKey: "footer.about" },
-  { href: "/privacy", labelKey: "footer.privacy" },
-  { href: "/contact", labelKey: "footer.contact" },
-  { href: "/disclaimer", labelKey: "footer.disclaimer" }
+  { href: "/disclaimer", labelKey: "footer.disclaimer" },
+  { href: "/privacy", labelKey: "footer.privacy" }
 ] as const;
 
 const footerSupportLinks = [
+  { href: "/contact", labelKey: "footer.contact" },
   { href: "/settings", labelKey: "footer.settings" },
   { href: "/terms", labelKey: "footer.terms" },
   { href: "/security", labelKey: "footer.security" },
