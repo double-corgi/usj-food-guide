@@ -545,19 +545,29 @@ function applyDuplicateOverrides<T extends ScoredCandidate>(
   const overrides = new Set(Array.from(overridesById.values()).map((entry) => entry.override));
   for (const override of overrides) {
     const canonical = itemsById.get(override.canonicalId);
-    if (!canonical) throw new Error(`duplicate override canonicalId not found: ${override.canonicalId}`);
+    if (!canonical) {
+      warnMissingDuplicateOverride("canonicalId", override.canonicalId);
+      continue;
+    }
     const groupId = `override-${override.canonicalId}`;
     canonical.hidden = false;
     canonical.duplicateGroupId = groupId;
     for (const duplicateId of override.duplicateIds) {
       const duplicate = itemsById.get(duplicateId);
-      if (!duplicate) throw new Error(`duplicate override duplicateId not found: ${duplicateId}`);
+      if (!duplicate) {
+        warnMissingDuplicateOverride("duplicateId", duplicateId);
+        continue;
+      }
       duplicate.hidden = true;
       duplicate.duplicateGroupId = groupId;
     }
   }
 
   return items;
+}
+
+function warnMissingDuplicateOverride(role: "canonicalId" | "duplicateId", id: string) {
+  console.warn(`[duplicate-overrides] ${role} not found in current dataset; skipping: ${id}`);
 }
 
 function generatedFoodIdForItem(item: ScoredCandidate) {
