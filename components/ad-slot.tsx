@@ -14,8 +14,8 @@ export function AdSlot({ className = "", slotId = "placeholder", variant = "inli
       : "flex flex-col justify-between rounded-2xl border border-slate-200 bg-white px-4 py-3 text-center shadow-[0_1px_0_rgba(15,23,42,0.03)]";
   const variantClass =
     variant === "fixed"
-      ? "fixed inset-x-10 bottom-[calc(env(safe-area-inset-bottom)+0.125rem)] z-40 mx-auto h-5 max-w-[10rem] md:bottom-[calc(env(safe-area-inset-bottom)+1rem)] md:left-1/2 md:right-auto md:h-9 md:w-[min(22rem,calc(100vw-2rem))] md:max-w-none md:-translate-x-1/2"
-      : "mx-auto my-6 h-24 w-full max-w-3xl";
+      ? "fixed bottom-[calc(env(safe-area-inset-bottom)+1rem)] left-1/2 z-40 hidden h-9 w-[min(22rem,calc(100vw-2rem))] -translate-x-1/2 md:flex"
+      : "mx-auto my-6 h-20 w-full max-w-3xl";
 
   return (
     <aside
