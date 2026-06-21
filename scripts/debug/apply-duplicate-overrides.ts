@@ -20,6 +20,7 @@ function main() {
   if (!isRecord(dataset) || !Array.isArray(dataset.foods)) {
     throw new Error("scripts/output/foods.generated.json must contain { foods: [...] }");
   }
+  const beforeDataset = clone(dataset);
 
   const foods = dataset.foods.filter(isRecord);
   const foodsById = new Map<string, UnknownRecord>();
@@ -33,7 +34,7 @@ function main() {
     targetIds.add(override.canonicalId);
     for (const duplicateId of override.duplicateIds) targetIds.add(duplicateId);
   }
-  if (targetIds.size !== 6) throw new Error(`expected 6 target ids, got ${targetIds.size}`);
+  if (targetIds.size === 0) throw new Error("expected at least one duplicate override target id");
 
   const before = new Map<string, UnknownRecord>();
   for (const id of targetIds) {
@@ -69,7 +70,7 @@ function main() {
   const after = new Map<string, UnknownRecord>();
   for (const id of targetIds) after.set(id, clone(foodsById.get(id)!));
   assertOnlyAllowedTargetChanges(before, after);
-  assertNoUnexpectedDatasetChanges(dataset, foodsById, targetIds);
+  assertNoUnexpectedDatasetChanges(beforeDataset, dataset, foodsById, targetIds);
 
   console.log("After duplicate override:");
   printTargets(after);
@@ -101,11 +102,36 @@ function assertOnlyAllowedTargetChanges(before: Map<string, UnknownRecord>, afte
   }
 }
 
-function assertNoUnexpectedDatasetChanges(dataset: UnknownRecord, foodsById: Map<string, UnknownRecord>, targetIds: Set<string>) {
+function assertNoUnexpectedDatasetChanges(
+  beforeDataset: UnknownRecord,
+  dataset: UnknownRecord,
+  foodsById: Map<string, UnknownRecord>,
+  targetIds: Set<string>
+) {
+  const beforeFoods = beforeDataset.foods;
   const foods = dataset.foods;
+  if (!Array.isArray(beforeFoods)) throw new Error("before foods array disappeared");
   if (!Array.isArray(foods)) throw new Error("foods array disappeared");
-  const changedIds = foods.filter(isRecord).filter((food) => targetIds.has(getString(food.id))).length;
-  if (changedIds !== 6) throw new Error(`expected 6 changed target records, found ${changedIds}`);
+  if (beforeFoods.length !== foods.length) {
+    throw new Error(`foods array length changed from ${beforeFoods.length} to ${foods.length}`);
+  }
+
+  const changedIds = new Set<string>();
+  for (let index = 0; index < foods.length; index += 1) {
+    const beforeFood = beforeFoods[index];
+    const food = foods[index];
+    if (!isRecord(beforeFood) || !isRecord(food)) continue;
+    const beforeId = getString(beforeFood.id);
+    const id = getString(food.id);
+    if (beforeId !== id) throw new Error(`food order or id changed at index ${index}: ${beforeId} -> ${id}`);
+    if (JSON.stringify(beforeFood) === JSON.stringify(food)) continue;
+    changedIds.add(id);
+    if (!targetIds.has(id)) throw new Error(`unexpected changed food id: ${id}`);
+  }
+
+  const targetRecords = foods.filter(isRecord).filter((food) => targetIds.has(getString(food.id))).map((food) => getString(food.id));
+  const foundTargetIds = new Set(targetRecords);
+  assertSameSet(foundTargetIds, targetIds, "override target records");
   for (const food of foods.filter(isRecord)) {
     const id = getString(food.id);
     if (!id || !targetIds.has(id)) continue;
@@ -133,6 +159,18 @@ function readJson(filePath: string) {
 
 function clone<T>(value: T): T {
   return JSON.parse(JSON.stringify(value)) as T;
+}
+
+function assertSameSet(actual: Set<string>, expected: Set<string>, label: string) {
+  if (actual.size !== expected.size) {
+    throw new Error(`expected ${expected.size} ${label}, found ${actual.size}`);
+  }
+  for (const id of expected) {
+    if (!actual.has(id)) throw new Error(`missing ${label}: ${id}`);
+  }
+  for (const id of actual) {
+    if (!expected.has(id)) throw new Error(`unexpected ${label}: ${id}`);
+  }
 }
 
 function isRecord(value: unknown): value is UnknownRecord {

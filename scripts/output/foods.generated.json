@@ -12443,7 +12443,9 @@
       "sale_end_date": null,
       "sale_period_label": "2025/7/1〜販売終了日未定",
       "is_completable": true,
-      "area_id": "area-gb6hrj"
+      "area_id": "area-gb6hrj",
+      "duplicateGroupId": "override-food-1ksr7hg",
+      "duplicate_group_id": "override-food-1ksr7hg"
     },
     {
       "id": "food-p0tpmw",
@@ -35534,13 +35536,13 @@
       "extraction_source_count": 1,
       "reviewStatus": "approved",
       "review_status": "approved",
-      "hidden": false,
+      "hidden": true,
       "manualOverride": false,
       "manual_override": false,
       "compositeMenu": false,
       "composite_menu": false,
-      "canonicalFood": true,
-      "canonical_food": true,
+      "canonicalFood": false,
+      "canonical_food": false,
       "rarity": "limited",
       "zukanNumber": 257,
       "zukan_number": 257,
@@ -35628,7 +35630,9 @@
       "sale_end_date": null,
       "sale_period_label": "2025/6/30〜販売終了日未定",
       "is_completable": true,
-      "area_id": "area-gb6hrj"
+      "area_id": "area-gb6hrj",
+      "duplicateGroupId": "override-food-1ksr7hg",
+      "duplicate_group_id": "override-food-1ksr7hg"
     },
     {
       "id": "food-xagefj",
