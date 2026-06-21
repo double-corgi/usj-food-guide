@@ -3,7 +3,7 @@ import { listFoods } from "@/lib/repositories/foods";
 import { readGeneratedAreas } from "@/lib/repositories/generated-data";
 import { buildStoresFromFoods } from "@/lib/store-utils";
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://new-app-chi-rosy.vercel.app";
 
 const staticRoutes = [
   "/",

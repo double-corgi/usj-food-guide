@@ -52,6 +52,10 @@ export const metadata: Metadata = {
     capable: true,
     title: appBrand.shortName,
     statusBarStyle: "default"
+  },
+  robots: {
+    index: false,
+    follow: false
   }
 };
 
