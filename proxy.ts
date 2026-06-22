@@ -1,30 +1,49 @@
 import { NextResponse, type NextRequest } from "next/server";
 
-const LOCAL_HOSTS = new Set(["localhost", "127.0.0.1", "::1"]);
+const ADMIN_COOKIE_NAME = "admin_access_token";
+const ADMIN_COOKIE_MAX_AGE_SECONDS = 60 * 60 * 8;
 
 export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
-  if (!pathname.startsWith("/admin")) return NextResponse.next();
+  if (!isAdminPath(pathname)) return NextResponse.next();
 
-  const hostname = getRequestHostname(request);
-  if (LOCAL_HOSTS.has(hostname)) return NextResponse.next();
+  const configuredToken = process.env.ADMIN_ACCESS_TOKEN;
+  if (!configuredToken) return denyAdminAccess();
 
-  const configuredKey = process.env.ADMIN_ACCESS_KEY;
-  const providedKey = request.nextUrl.searchParams.get("admin_key") ?? request.cookies.get("admin_key")?.value;
-  if (configuredKey && providedKey === configuredKey) return NextResponse.next();
+  const cookieToken = request.cookies.get(ADMIN_COOKIE_NAME)?.value;
+  if (cookieToken === configuredToken) return NextResponse.next();
 
-  const lockedUrl = request.nextUrl.clone();
-  lockedUrl.pathname = "/admin-locked";
-  lockedUrl.search = "";
-  return NextResponse.rewrite(lockedUrl);
+  const queryToken = request.nextUrl.searchParams.get("adminToken");
+  if (queryToken === configuredToken) {
+    const redirectUrl = request.nextUrl.clone();
+    redirectUrl.searchParams.delete("adminToken");
+    const response = NextResponse.redirect(redirectUrl);
+    response.cookies.set(ADMIN_COOKIE_NAME, configuredToken, {
+      httpOnly: true,
+      maxAge: ADMIN_COOKIE_MAX_AGE_SECONDS,
+      path: "/",
+      sameSite: "lax",
+      secure: redirectUrl.protocol === "https:"
+    });
+    return response;
+  }
+
+  return denyAdminAccess();
 }
 
 export const config = {
-  matcher: ["/admin/:path*"]
+  matcher: ["/admin", "/admin/:path*", "/api/admin", "/api/admin/:path*"]
 };
 
-function getRequestHostname(request: NextRequest) {
-  const forwardedHost = request.headers.get("x-forwarded-host");
-  const host = forwardedHost || request.headers.get("host") || request.nextUrl.hostname;
-  return host.split(":")[0]?.toLowerCase() || request.nextUrl.hostname;
+function isAdminPath(pathname: string) {
+  return pathname === "/admin" || pathname.startsWith("/admin/") || pathname === "/api/admin" || pathname.startsWith("/api/admin/");
+}
+
+function denyAdminAccess() {
+  return new NextResponse("Not Found", {
+    headers: {
+      "Cache-Control": "no-store"
+    },
+    status: 404
+  });
 }
