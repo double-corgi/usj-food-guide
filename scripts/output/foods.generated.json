@@ -12100,7 +12100,9 @@
       "sale_end_date": null,
       "sale_period_label": "2026/2/17〜販売終了日未定",
       "is_completable": true,
-      "area_id": "area-gb6hrj"
+      "area_id": "area-gb6hrj",
+      "duplicateGroupId": "override-food-1kx2jev",
+      "duplicate_group_id": "override-food-1kx2jev"
     },
     {
       "id": "food-1it40z4",
@@ -17792,8 +17794,8 @@
       "reviewStatus": "approved",
       "review_status": "approved",
       "hidden": false,
-      "duplicateGroupId": "dup-00005",
-      "duplicate_group_id": "dup-00005",
+      "duplicateGroupId": "override-food-1u4bz3q",
+      "duplicate_group_id": "override-food-1u4bz3q",
       "manualOverride": false,
       "manual_override": false,
       "compositeMenu": false,
@@ -29362,13 +29364,13 @@
       "extraction_source_count": 2,
       "reviewStatus": "approved",
       "review_status": "approved",
-      "hidden": false,
+      "hidden": true,
       "manualOverride": false,
       "manual_override": false,
       "compositeMenu": false,
       "composite_menu": false,
-      "canonicalFood": true,
-      "canonical_food": true,
+      "canonicalFood": false,
+      "canonical_food": false,
       "canonicalGroupId": "group-vhkm24",
       "canonical_group_id": "group-vhkm24",
       "rarity": "standard",
@@ -29461,7 +29463,9 @@
       "sale_end_date": null,
       "sale_period_label": "2024/7/26〜販売終了日未定",
       "is_completable": true,
-      "area_id": "area-apf4z5"
+      "area_id": "area-apf4z5",
+      "duplicateGroupId": "override-food-1u4bz3q",
+      "duplicate_group_id": "override-food-1u4bz3q"
     },
     {
       "id": "food-5ib5k3",
@@ -35672,13 +35676,13 @@
       "extraction_source_count": 1,
       "reviewStatus": "approved",
       "review_status": "approved",
-      "hidden": false,
+      "hidden": true,
       "manualOverride": false,
       "manual_override": false,
       "compositeMenu": false,
       "composite_menu": false,
-      "canonicalFood": true,
-      "canonical_food": true,
+      "canonicalFood": false,
+      "canonical_food": false,
       "canonicalGroupId": "group-1imiecz",
       "canonical_group_id": "group-1imiecz",
       "rarity": "standard",
@@ -35786,7 +35790,9 @@
       "sale_end_date": null,
       "sale_period_label": "2026/2/17〜販売終了日未定",
       "is_completable": true,
-      "area_id": "area-gb6hrj"
+      "area_id": "area-gb6hrj",
+      "duplicateGroupId": "override-food-1kx2jev",
+      "duplicate_group_id": "override-food-1kx2jev"
     },
     {
       "id": "food-1rsazo8",
