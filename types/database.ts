@@ -23,6 +23,22 @@ export type Database = {
         Update: Partial<Database["public"]["Tables"]["areas"]["Insert"]>;
         Relationships: [];
       };
+      admin_users: {
+        Row: {
+          id: string;
+          email: string;
+          role: "owner" | "editor" | "viewer";
+          created_at: string;
+        };
+        Insert: {
+          id: string;
+          email: string;
+          role: "owner" | "editor" | "viewer";
+          created_at?: string;
+        };
+        Update: Partial<Database["public"]["Tables"]["admin_users"]["Insert"]>;
+        Relationships: [];
+      };
       shops: {
         Row: {
           id: string;
