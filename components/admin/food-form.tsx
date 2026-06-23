@@ -56,11 +56,11 @@ export function AdminFoodForm({ mode, food, shopOptions = [], action, adminNotes
         <div className="flex gap-3">
           <Lock className="mt-0.5 shrink-0 text-amber-700" size={20} aria-hidden />
           <div>
-            <h2 className="font-black text-amber-950">{title}はPhase 3Aの最小保存UIです</h2>
+            <h2 className="font-black text-amber-950">{title}はPhase 3Bの最小保存UIです</h2>
             <p className="mt-1 text-sm font-bold leading-6 text-amber-900">
               {mode === "new"
-                ? "新規商品だけSupabaseのmanual_foodsへ保存します。画像アップロード保存、画像リサイズ、削除、rollbackはまだ行いません。"
-                : "Phase 3Aでは既存商品の編集保存はまだ行いません。表示内容の確認UIとして使います。"}
+                ? "新規商品だけSupabaseのmanual_foodsへ保存します。画像は自動リサイズしてStorageへ保存します。削除、rollbackはまだ行いません。"
+                : "Phase 3Bでは既存商品の編集保存はまだ行いません。表示内容の確認UIとして使います。"}
             </p>
           </div>
         </div>
@@ -171,8 +171,8 @@ export function AdminFoodForm({ mode, food, shopOptions = [], action, adminNotes
               />
             </label>
             <p className="text-sm font-bold leading-6 text-slate-500">
-              Phase 3Aでは選択した画像をブラウザ内でプレビューするだけです。アップロード、保存、public画像追加は行いません。
-              Phase 3B以降、保存時に自動で商品画像サイズに調整予定です。
+              新規保存時に画像を960x720の商品カード向け比率へ調整し、WebPとしてSupabase Storageへ保存します。
+              画像なしでも商品は保存できます。
             </p>
           </div>
         </div>

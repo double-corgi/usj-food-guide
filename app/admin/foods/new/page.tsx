@@ -15,10 +15,10 @@ export default async function AdminNewFoodPage() {
     <div className="space-y-5">
       <div className="flex flex-col gap-3 lg:flex-row lg:items-end lg:justify-between">
         <div>
-          <p className="text-xs font-black uppercase tracking-[0.18em] text-park">Phase 3A save UI</p>
+          <p className="text-xs font-black uppercase tracking-[0.18em] text-park">Phase 3B save UI</p>
           <h1 className="mt-1 text-3xl font-black text-ink">商品追加</h1>
           <p className="mt-2 text-sm font-bold text-slate-500">
-            {admin.role} 権限でSupabaseのmanual_foodsへ新規商品を保存できます。画像保存はまだ接続していません。
+            {admin.role} 権限でSupabaseのmanual_foodsへ新規商品を保存できます。画像は自動リサイズしてStorageへ保存します。
           </p>
         </div>
         <Link href="/admin/foods" className="inline-flex h-10 items-center rounded-full border border-slate-200 bg-white px-4 text-xs font-black text-ink hover:border-park">

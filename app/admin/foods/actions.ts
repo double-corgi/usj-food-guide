@@ -2,6 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
+import sharp from "sharp";
 import { adminAreaOptions, adminCategoryTagOptions, adminPublicStateOptions, adminSaleStatusOptions } from "@/lib/admin-food-ui";
 import { requireAdmin } from "@/lib/admin-auth";
 import { normalizeFoodName } from "@/lib/food-utils";
@@ -17,6 +18,11 @@ export type AdminFoodSaveState = {
 };
 
 type ManualFoodInsert = Database["public"]["Tables"]["manual_foods"]["Insert"];
+type ServiceSupabaseClient = NonNullable<ReturnType<typeof createServiceSupabaseClient>>;
+type ImageUploadResult = {
+  publicUrl: string;
+  objectPath: string;
+};
 
 const emptyState: AdminFoodSaveState = { ok: false, message: "" };
 const allowedCategoryTags: Set<string> = new Set(adminCategoryTagOptions.map((option) => option.value));
@@ -24,6 +30,10 @@ const allowedFoodCategories: Set<string> = new Set(adminCategoryTagOptions.map((
 const allowedSaleStatuses: Set<string> = new Set(adminSaleStatusOptions.map((option) => option.value));
 const allowedPublicStates: Set<string> = new Set(adminPublicStateOptions.map((option) => option.value));
 const allowedHiddenStates = new Set(["visible", "hidden"]);
+const manualFoodImageBucket = "food-images";
+const manualFoodImageMaxInputBytes = 5 * 1024 * 1024;
+const manualFoodImageMaxOutputBytes = 5 * 1024 * 1024;
+const manualFoodImageMimeTypes = new Set(["image/jpeg", "image/png", "image/webp"]);
 
 export async function createAdminFood(_previousState: AdminFoodSaveState = emptyState, formData: FormData): Promise<AdminFoodSaveState> {
   const admin = await requireAdmin("editor");
@@ -42,6 +52,11 @@ export async function createAdminFood(_previousState: AdminFoodSaveState = empty
   if (existing.error) return { ok: false, message: `保存前確認に失敗しました: ${existing.error.message}` };
   if (existing.data) return { ok: false, message: "同じ商品がすでに手動追加されています。" };
 
+  const imageFile = readImageFile(formData);
+  if (!imageFile.ok) return { ok: false, message: imageFile.message };
+  const uploadedImage = imageFile.file ? await uploadManualFoodImage(supabase, id, parsed.value.name, imageFile.file) : null;
+  if (uploadedImage && !uploadedImage.ok) return { ok: false, message: uploadedImage.message };
+
   const now = new Date().toISOString();
   const adminEmail = admin.email ?? "unknown-admin";
   const payload: ManualFoodInsert = {
@@ -59,7 +74,7 @@ export async function createAdminFood(_previousState: AdminFoodSaveState = empty
     hidden: parsed.value.hidden,
     start_date: parsed.value.saleStart,
     end_date: parsed.value.saleEnd,
-    image_url: null,
+    image_url: uploadedImage?.value.publicUrl ?? null,
     source_url: "manual-admin",
     admin_notes: parsed.value.adminNotes,
     created_by: adminEmail,
@@ -69,7 +84,10 @@ export async function createAdminFood(_previousState: AdminFoodSaveState = empty
   };
 
   const { error } = await supabase.from("manual_foods").insert(payload);
-  if (error) return { ok: false, message: `保存に失敗しました: ${error.message}` };
+  if (error) {
+    if (uploadedImage) await removeUploadedManualFoodImage(supabase, uploadedImage.value.objectPath);
+    return { ok: false, message: `保存に失敗しました: ${error.message}` };
+  }
 
   revalidateAdminFoods();
   redirect("/admin/foods?saved=created");
@@ -180,6 +198,63 @@ function readOptionalDate(formData: FormData, key: string) {
 
 function hasUnsafeText(value: string) {
   return /[<>]/.test(value) || /script:/i.test(value);
+}
+
+function readImageFile(formData: FormData): { ok: true; file: File | null } | { ok: false; message: string } {
+  const value = formData.get("imageFile");
+  if (!value || typeof value === "string") return { ok: true, file: null };
+  if (value.size === 0) return { ok: true, file: null };
+  if (!manualFoodImageMimeTypes.has(value.type)) {
+    return { ok: false, message: "画像はJPEG、PNG、WebPのいずれかを選択してください。" };
+  }
+  if (value.size > manualFoodImageMaxInputBytes) {
+    return { ok: false, message: "画像ファイルは5MB以下にしてください。" };
+  }
+  return { ok: true, file: value };
+}
+
+async function uploadManualFoodImage(supabase: ServiceSupabaseClient, foodId: string, foodName: string, imageFile: File) {
+  const objectPath = `manual/${foodId}/main.webp`;
+  try {
+    const optimizedImage = await optimizeManualFoodImage(imageFile);
+    if (optimizedImage.byteLength > manualFoodImageMaxOutputBytes) {
+      return { ok: false as const, message: "変換後の画像が5MBを超えたため保存できません。" };
+    }
+
+    const { error } = await supabase.storage.from(manualFoodImageBucket).upload(objectPath, optimizedImage, {
+      cacheControl: "31536000",
+      contentType: "image/webp",
+      upsert: true
+    });
+    if (error) return { ok: false as const, message: `画像アップロードに失敗しました: ${error.message}` };
+
+    const { data } = supabase.storage.from(manualFoodImageBucket).getPublicUrl(objectPath);
+    if (!data.publicUrl) return { ok: false as const, message: "画像の公開URLを取得できませんでした。" };
+    return { ok: true as const, value: { publicUrl: data.publicUrl, objectPath, altText: foodName } satisfies ImageUploadResult & { altText: string } };
+  } catch (error) {
+    console.error("Failed to optimize manual food image", {
+      name: error instanceof Error ? error.name : "UnknownError",
+      message: error instanceof Error ? error.message : String(error),
+      foodId,
+      fileType: imageFile.type,
+      fileSize: imageFile.size
+    });
+    return { ok: false as const, message: "画像の変換に失敗しました。別のJPEG、PNG、WebP画像を選択してください。" };
+  }
+}
+
+async function optimizeManualFoodImage(imageFile: File) {
+  const input = Buffer.from(await imageFile.arrayBuffer());
+  return sharp(input, { failOn: "error" })
+    .rotate()
+    .resize({ width: 960, height: 720, fit: "cover", position: "centre", withoutEnlargement: false })
+    .webp({ quality: 82 })
+    .toBuffer();
+}
+
+async function removeUploadedManualFoodImage(supabase: ServiceSupabaseClient, objectPath: string) {
+  const { error } = await supabase.storage.from(manualFoodImageBucket).remove([objectPath]);
+  if (error) console.error("Failed to clean up uploaded manual food image", { objectPath, message: error.message });
 }
 
 function isFoodCategory(value: string): value is FoodCategory {
