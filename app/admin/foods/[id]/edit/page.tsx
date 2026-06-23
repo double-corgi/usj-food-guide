@@ -16,7 +16,7 @@ export default async function AdminEditFoodPage({ params }: { params: Promise<{ 
   if (!food) notFound();
 
   const { shops } = getFormOptions(foods);
-  const adminFields = await getAdminFoodFields(food.id);
+  const adminFields = await getAdminFoodFields(food);
   const canSave = adminFields.isManualFood;
 
   return (
@@ -61,13 +61,23 @@ function uniqueSorted(values: string[]) {
   return Array.from(new Set(values.filter(Boolean))).sort((a, b) => a.localeCompare(b, "ja"));
 }
 
-async function getAdminFoodFields(foodId: string) {
+async function getAdminFoodFields(food: FoodWithRelations) {
+  const manualSource = food.manualOverride === true || food.sourceNames?.includes("manual_foods") === true || food.id.startsWith("food-manual-");
   const supabase = createServiceSupabaseClient();
-  if (!supabase) return { isManualFood: false, adminNotes: null, categoryTags: null };
+  if (!supabase) return { isManualFood: manualSource, adminNotes: null, categoryTags: null };
 
-  const { data } = await supabase.from("manual_foods").select("id, admin_notes, category_tags").eq("id", foodId).maybeSingle();
+  const { data, error } = await supabase.from("manual_foods").select("id, admin_notes, category_tags").eq("id", food.id).maybeSingle();
+  if (error) {
+    console.error("Failed to confirm manual food edit status", {
+      foodId: food.id,
+      sourceNames: food.sourceNames,
+      manualOverride: food.manualOverride,
+      message: error.message
+    });
+  }
+
   return {
-    isManualFood: Boolean(data?.id),
+    isManualFood: Boolean(data?.id) || manualSource,
     adminNotes: data?.admin_notes ?? null,
     categoryTags: data?.category_tags ?? null
   };
