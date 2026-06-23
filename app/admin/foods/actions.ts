@@ -17,6 +17,7 @@ export type AdminFoodSaveState = {
 };
 
 type ManualFoodInsert = Database["public"]["Tables"]["manual_foods"]["Insert"];
+type ManualFoodUpdate = Database["public"]["Tables"]["manual_foods"]["Update"];
 type ServiceSupabaseClient = NonNullable<ReturnType<typeof createServiceSupabaseClient>>;
 type ImageUploadResult = {
   publicUrl: string;
@@ -90,6 +91,53 @@ export async function createAdminFood(_previousState: AdminFoodSaveState = empty
 
   revalidateAdminFoods();
   redirect("/admin/foods?saved=created");
+}
+
+export async function updateManualFood(_previousState: AdminFoodSaveState = emptyState, formData: FormData): Promise<AdminFoodSaveState> {
+  const admin = await requireAdmin("editor");
+  const supabase = createServiceSupabaseClient();
+  if (!supabase) return { ok: false, message: "Supabase service role が未設定のため保存できません。" };
+
+  const foodId = readCleanText(formData, "foodId", 120);
+  if (!foodId) return { ok: false, message: "対象商品IDが不正です。" };
+
+  const existing = await supabase.from("manual_foods").select("id,image_url").eq("id", foodId).maybeSingle();
+  if (existing.error) return { ok: false, message: `保存前確認に失敗しました: ${existing.error.message}` };
+  if (!existing.data) return { ok: false, message: "manual_foodsの商品だけ保存できます。generated商品はまだ編集保存できません。" };
+
+  const parsed = parseFoodForm(formData);
+  if (!parsed.ok) return { ok: false, message: parsed.message };
+
+  const imageFile = readImageFile(formData);
+  if (!imageFile.ok) return { ok: false, message: imageFile.message };
+  const uploadedImage = imageFile.file ? await uploadManualFoodImage(supabase, foodId, parsed.value.name, imageFile.file) : null;
+  if (uploadedImage && !uploadedImage.ok) return { ok: false, message: uploadedImage.message };
+
+  const payload: ManualFoodUpdate = {
+    name: parsed.value.name,
+    normalized_name: normalizeFoodName(parsed.value.name),
+    name_en: parsed.value.nameEn,
+    category: parsed.value.category,
+    category_tags: parsed.value.categoryTags,
+    price: parsed.value.price,
+    area_name: parsed.value.areaName,
+    shop_name: parsed.value.shopName,
+    sale_status: parsed.value.saleStatus,
+    public_state: parsed.value.publicState,
+    hidden: parsed.value.hidden,
+    start_date: parsed.value.saleStart,
+    end_date: parsed.value.saleEnd,
+    image_url: uploadedImage?.value.publicUrl ?? existing.data.image_url,
+    admin_notes: parsed.value.adminNotes,
+    updated_by: admin.email ?? "unknown-admin",
+    updated_at: new Date().toISOString()
+  };
+
+  const { error } = await supabase.from("manual_foods").update(payload).eq("id", foodId);
+  if (error) return { ok: false, message: `保存に失敗しました: ${error.message}` };
+
+  revalidateAdminFoods(foodId);
+  redirect(`/admin/foods/${foodId}?saved=updated`);
 }
 
 function parseFoodForm(formData: FormData) {
@@ -229,7 +277,7 @@ async function uploadManualFoodImage(supabase: ServiceSupabaseClient, foodId: st
 
     const { data } = supabase.storage.from(manualFoodImageBucket).getPublicUrl(objectPath);
     if (!data.publicUrl) return { ok: false as const, message: "画像の公開URLを取得できませんでした。" };
-    return { ok: true as const, value: { publicUrl: data.publicUrl, objectPath, altText: foodName } satisfies ImageUploadResult & { altText: string } };
+    return { ok: true as const, value: { publicUrl: appendImageVersion(data.publicUrl), objectPath, altText: foodName } satisfies ImageUploadResult & { altText: string } };
   } catch (error) {
     console.error("Failed to optimize manual food image", {
       name: error instanceof Error ? error.name : "UnknownError",
@@ -257,6 +305,18 @@ async function removeUploadedManualFoodImage(supabase: ServiceSupabaseClient, ob
   if (error) console.error("Failed to clean up uploaded manual food image", { objectPath, message: error.message });
 }
 
+function appendImageVersion(publicUrl: string) {
+  const version = Date.now().toString();
+  try {
+    const url = new URL(publicUrl);
+    url.searchParams.set("v", version);
+    return url.toString();
+  } catch {
+    const separator = publicUrl.includes("?") ? "&" : "?";
+    return `${publicUrl}${separator}v=${version}`;
+  }
+}
+
 function isFoodCategory(value: string): value is FoodCategory {
   return (
     value === "churro" ||
@@ -276,8 +336,9 @@ function isFoodCategory(value: string): value is FoodCategory {
   );
 }
 
-function revalidateAdminFoods() {
+function revalidateAdminFoods(foodId?: string) {
   revalidatePath("/admin/foods");
+  if (foodId) revalidatePath(`/admin/foods/${foodId}`);
   revalidatePath("/foods");
   revalidatePath("/areas");
   revalidatePath("/stores");

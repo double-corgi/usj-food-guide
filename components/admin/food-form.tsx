@@ -29,7 +29,7 @@ type AdminFoodFormProps = {
 
 const otherShopValue = "__other";
 const initialSaveState: AdminFoodSaveState = { ok: false, message: "" };
-const disabledSaveAction = async (): Promise<AdminFoodSaveState> => ({ ok: false, message: "Phase 3Aでは既存商品の保存は未実装です。" });
+const disabledSaveAction = async (): Promise<AdminFoodSaveState> => ({ ok: false, message: "generated商品の編集保存はまだ未実装です。" });
 
 export function AdminFoodForm({ mode, food, shopOptions = [], action, adminNotes, categoryTags }: AdminFoodFormProps) {
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
@@ -52,6 +52,7 @@ export function AdminFoodForm({ mode, food, shopOptions = [], action, adminNotes
 
   return (
     <form className="space-y-5" action={formAction}>
+      {food?.id ? <input type="hidden" name="foodId" value={food.id} /> : null}
       <div className="rounded-lg border border-amber-200 bg-amber-50 p-4">
         <div className="flex gap-3">
           <Lock className="mt-0.5 shrink-0 text-amber-700" size={20} aria-hidden />
@@ -60,7 +61,9 @@ export function AdminFoodForm({ mode, food, shopOptions = [], action, adminNotes
             <p className="mt-1 text-sm font-bold leading-6 text-amber-900">
               {mode === "new"
                 ? "新規商品だけSupabaseのmanual_foodsへ保存します。画像は自動リサイズしてStorageへ保存します。削除、rollbackはまだ行いません。"
-                : "Phase 3Bでは既存商品の編集保存はまだ行いません。表示内容の確認UIとして使います。"}
+                : saveEnabled
+                  ? "manual_foodsの商品だけ保存できます。画像は自動リサイズしてStorageへ保存し、画像未選択なら既存画像を維持します。"
+                  : "generated商品の編集保存はまだ行いません。表示内容の確認UIとして使います。"}
             </p>
           </div>
         </div>
@@ -171,8 +174,8 @@ export function AdminFoodForm({ mode, food, shopOptions = [], action, adminNotes
               />
             </label>
             <p className="text-sm font-bold leading-6 text-slate-500">
-              新規保存時に画像を960x720の商品カード向け比率へ調整し、WebPとしてSupabase Storageへ保存します。
-              画像なしでも商品は保存できます。
+              保存時に画像を960x720の商品カード向け比率へ調整し、WebPとしてSupabase Storageへ保存します。
+              画像なしでも商品は保存できます。編集時に画像を選ばなければ既存画像を維持します。
             </p>
           </div>
         </div>
@@ -180,7 +183,9 @@ export function AdminFoodForm({ mode, food, shopOptions = [], action, adminNotes
 
       <div className="flex flex-col gap-2 rounded-lg border border-slate-200 bg-white p-4 shadow-soft sm:flex-row sm:items-center sm:justify-between">
         <div className="space-y-1">
-          <p className="text-sm font-bold text-slate-500">保存後は商品一覧へ戻ります。editor/ownerのみ保存できます。</p>
+          <p className="text-sm font-bold text-slate-500">
+            {mode === "edit" && saveEnabled ? "保存後は商品詳細へ戻ります。" : "保存後は商品一覧へ戻ります。"}editor/ownerのみ保存できます。
+          </p>
           {saveState.message ? <p className={`text-sm font-black ${saveState.ok ? "text-emerald-700" : "text-rose-700"}`}>{saveState.message}</p> : null}
         </div>
         <div className="flex flex-col gap-2 sm:flex-row">
@@ -196,7 +201,7 @@ export function AdminFoodForm({ mode, food, shopOptions = [], action, adminNotes
             </button>
           ) : null}
           <button type="submit" disabled={pending || !saveEnabled} className="h-11 rounded-full bg-park px-6 text-sm font-black text-white disabled:cursor-wait disabled:bg-slate-300">
-            {pending ? "保存中..." : saveEnabled ? "保存する" : "保存はPhase 3B以降"}
+            {pending ? "保存中..." : saveEnabled ? "保存する" : "generated商品は保存不可"}
           </button>
         </div>
       </div>
