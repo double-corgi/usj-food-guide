@@ -1,19 +1,38 @@
 "use server";
 
+import { createClient } from "@supabase/supabase-js";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
-import { createServerSupabaseClient } from "@/lib/supabase-server";
+import { createServiceSupabaseClient, getSupabaseAuthStorageKey } from "@/lib/supabase-server";
+import type { Database } from "@/types/database";
+
+const adminAuthAttemptTtlMs = 10 * 60 * 1000;
 
 export async function sendAdminMagicLink(formData: FormData) {
   const email = String(formData.get("email") ?? "").trim().toLowerCase();
   const next = sanitizeNextPath(String(formData.get("next") ?? "/admin/foods"));
   if (!email) redirect(`/admin/login?error=${encodeURIComponent("メールアドレスを入力してください")}&next=${encodeURIComponent(next)}`);
 
-  const supabase = await createServerSupabaseClient();
-  if (!supabase) redirect(`/admin/login?error=${encodeURIComponent("Supabase Auth が未設定です")}&next=${encodeURIComponent(next)}`);
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+  const serviceSupabase = createServiceSupabaseClient();
+  if (!supabaseUrl || !supabaseAnonKey || !serviceSupabase) {
+    redirect(`/admin/login?error=${encodeURIComponent("Supabase Auth が未設定です")}&next=${encodeURIComponent(next)}`);
+  }
 
+  const attemptId = crypto.randomUUID();
   const origin = await getAdminAuthOrigin();
-  const emailRedirectTo = `${origin}/auth/callback?next=${encodeURIComponent(next)}`;
+  const emailRedirectTo = `${origin}/auth/callback?next=${encodeURIComponent(next)}&attempt=${encodeURIComponent(attemptId)}`;
+  const pkceStorage = createPkceCaptureStorage(getSupabaseAuthStorageKey(supabaseUrl));
+  const supabase = createClient<Database>(supabaseUrl, supabaseAnonKey, {
+    auth: {
+      flowType: "pkce",
+      autoRefreshToken: false,
+      detectSessionInUrl: false,
+      persistSession: true,
+      storage: pkceStorage.storage
+    }
+  });
   const { error } = await supabase.auth.signInWithOtp({
     email,
     options: {
@@ -25,6 +44,25 @@ export async function sendAdminMagicLink(formData: FormData) {
     logMagicLinkError(error, emailRedirectTo);
     redirect(`/admin/login?error=${encodeURIComponent("ログインリンクを送信できませんでした")}&next=${encodeURIComponent(next)}`);
   }
+
+  const codeVerifier = pkceStorage.getCodeVerifier();
+  if (!codeVerifier) {
+    logPkceAttemptError("missing-code-verifier", emailRedirectTo);
+    redirect(`/admin/login?error=${encodeURIComponent("ログインリンクを送信できませんでした")}&next=${encodeURIComponent(next)}`);
+  }
+
+  const expiresAt = new Date(Date.now() + adminAuthAttemptTtlMs).toISOString();
+  const { error: attemptError } = await serviceSupabase.from("admin_auth_pkce_attempts").insert({
+    id: attemptId,
+    code_verifier: codeVerifier,
+    next_path: next,
+    expires_at: expiresAt
+  });
+  if (attemptError) {
+    logPkceAttemptError("insert-failed", emailRedirectTo, attemptError);
+    redirect(`/admin/login?error=${encodeURIComponent("ログインリンクを送信できませんでした")}&next=${encodeURIComponent(next)}`);
+  }
+
   redirect(`/admin/login?sent=1&next=${encodeURIComponent(next)}`);
 }
 
@@ -66,6 +104,50 @@ function logMagicLinkError(error: unknown, emailRedirectTo: string) {
     redirectOrigin: redirectUrl.origin,
     redirectPath: `${redirectUrl.pathname}${redirectUrl.search}`
   });
+}
+
+function logPkceAttemptError(reason: string, emailRedirectTo: string, error?: unknown) {
+  const redirectUrl = new URL(emailRedirectTo);
+  const authError = error ? toAuthErrorLog(error) : null;
+  console.error("Admin magic link PKCE bridge setup failed", {
+    reason,
+    errorName: authError?.name,
+    errorCode: authError?.code,
+    errorStatus: authError?.status,
+    errorMessage: authError?.message,
+    redirectOrigin: redirectUrl.origin,
+    redirectPath: redirectUrl.pathname
+  });
+}
+
+function createPkceCaptureStorage(storageKey: string) {
+  const values = new Map<string, string>();
+  const codeVerifierKey = `${storageKey}-code-verifier`;
+  let codeVerifier: string | null = null;
+
+  return {
+    storage: {
+      getItem: async (key: string) => values.get(key) ?? null,
+      setItem: async (key: string, value: string) => {
+        values.set(key, value);
+        if (key === codeVerifierKey) codeVerifier = parseStoredString(value);
+      },
+      removeItem: async (key: string) => {
+        values.delete(key);
+        if (key === codeVerifierKey) codeVerifier = null;
+      }
+    },
+    getCodeVerifier: () => codeVerifier
+  };
+}
+
+function parseStoredString(value: string) {
+  try {
+    const parsed = JSON.parse(value);
+    return typeof parsed === "string" ? parsed : null;
+  } catch {
+    return value || null;
+  }
 }
 
 function toAuthErrorLog(error: unknown) {

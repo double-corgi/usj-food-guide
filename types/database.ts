@@ -39,6 +39,26 @@ export type Database = {
         Update: Partial<Database["public"]["Tables"]["admin_users"]["Insert"]>;
         Relationships: [];
       };
+      admin_auth_pkce_attempts: {
+        Row: {
+          id: string;
+          code_verifier: string;
+          next_path: string;
+          created_at: string;
+          expires_at: string;
+          used_at: string | null;
+        };
+        Insert: {
+          id: string;
+          code_verifier: string;
+          next_path?: string;
+          created_at?: string;
+          expires_at: string;
+          used_at?: string | null;
+        };
+        Update: Partial<Database["public"]["Tables"]["admin_auth_pkce_attempts"]["Insert"]>;
+        Relationships: [];
+      };
       shops: {
         Row: {
           id: string;
