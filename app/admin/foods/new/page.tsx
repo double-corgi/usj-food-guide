@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { AdminFoodForm } from "@/components/admin/food-form";
+import { AdminFoodForm, type DuplicateCandidate } from "@/components/admin/food-form";
 import { createAdminFood } from "@/app/admin/foods/actions";
 import { requireAdmin } from "@/lib/admin-auth";
 import { listAllFoodCandidates } from "@/lib/repositories/foods";
@@ -10,12 +10,13 @@ export const dynamic = "force-dynamic";
 export default async function AdminNewFoodPage() {
   const [admin, foods] = await Promise.all([requireAdmin("editor"), listAllFoodCandidates()]);
   const { shops } = getFormOptions(foods);
+  const duplicateCandidates = getDuplicateCandidates(foods);
 
   return (
     <div className="space-y-5">
       <div className="flex flex-col gap-3 lg:flex-row lg:items-end lg:justify-between">
         <div>
-          <p className="text-xs font-black uppercase tracking-[0.18em] text-park">Phase 3B save UI</p>
+          <p className="text-xs font-black uppercase tracking-[0.18em] text-park">商品管理</p>
           <h1 className="mt-1 text-3xl font-black text-ink">商品追加</h1>
           <p className="mt-2 text-sm font-bold text-slate-500">
             {admin.role} 権限でSupabaseのmanual_foodsへ新規商品を保存できます。画像は自動リサイズしてStorageへ保存します。
@@ -25,9 +26,19 @@ export default async function AdminNewFoodPage() {
           一覧へ戻る
         </Link>
       </div>
-      <AdminFoodForm mode="new" shopOptions={shops} action={createAdminFood} />
+      <AdminFoodForm mode="new" shopOptions={shops} action={createAdminFood} duplicateCandidates={duplicateCandidates} />
     </div>
   );
+}
+
+function getDuplicateCandidates(foods: FoodWithRelations[]): DuplicateCandidate[] {
+  return foods.map((food) => ({
+    id: food.id,
+    name: food.name,
+    areaName: food.area.name,
+    shopName: food.shop.name,
+    source: food.manualOverride || food.sourceNames?.includes("manual_foods") ? "manual_foods" : "generated"
+  }));
 }
 
 function getFormOptions(foods: FoodWithRelations[]) {

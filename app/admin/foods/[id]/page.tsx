@@ -15,18 +15,27 @@ import {
   getAdminSaleState
 } from "@/lib/admin-food-ui";
 import { listAllFoodCandidates } from "@/lib/repositories/foods";
+import { createServiceSupabaseClient } from "@/lib/supabase-server";
 import type { FoodWithRelations } from "@/types/domain";
 
 export const dynamic = "force-dynamic";
 
-export default async function AdminFoodDetailPage({ params }: { params: Promise<{ id: string }> }) {
+export default async function AdminFoodDetailPage({
+  params,
+  searchParams
+}: {
+  params: Promise<{ id: string }>;
+  searchParams?: Promise<{ saved?: string; image?: string; error?: string }>;
+}) {
   const { id } = await params;
+  const query = searchParams ? await searchParams : {};
   const [admin, foods] = await Promise.all([requireAdmin("viewer"), listAllFoodCandidates()]);
   const food = foods.find((candidate) => candidate.id === id);
   if (!food) notFound();
 
   const canManage = admin.role !== "viewer";
   const activeImage = food.images.find((image) => image.enabled) ?? food.images[0];
+  const adminFields = await getManualAdminFields(food.id);
 
   return (
     <div className="space-y-5">
@@ -48,6 +57,8 @@ export default async function AdminFoodDetailPage({ params }: { params: Promise<
           </Link>
         </div>
       </div>
+
+      <SaveMessage saved={query.saved} image={query.image} error={query.error} />
 
       <section className="grid gap-5 lg:grid-cols-[360px_1fr]">
         <div className="overflow-hidden rounded-lg border border-slate-200 bg-white shadow-soft">
@@ -87,6 +98,13 @@ export default async function AdminFoodDetailPage({ params }: { params: Promise<
             </div>
           </section>
 
+          {adminFields.adminNotes ? (
+            <section className="rounded-lg border border-slate-200 bg-white p-4 shadow-soft">
+              <h2 className="text-lg font-black text-ink">管理メモ（公開されません）</h2>
+              <p className="mt-3 whitespace-pre-wrap text-sm font-bold leading-6 text-slate-600">{adminFields.adminNotes}</p>
+            </section>
+          ) : null}
+
           <section className="rounded-lg border border-slate-200 bg-white p-4 shadow-soft">
             <h2 className="text-lg font-black text-ink">出典</h2>
             <div className="mt-3 space-y-3 text-sm font-bold text-slate-600">
@@ -114,6 +132,36 @@ export default async function AdminFoodDetailPage({ params }: { params: Promise<
           </section>
         </div>
       </section>
+    </div>
+  );
+}
+
+function SaveMessage({ saved, image, error }: { saved?: string; image?: string; error?: string }) {
+  if (error) {
+    return (
+      <div className="rounded-lg border border-rose-200 bg-rose-50 p-4 text-sm font-black text-rose-700">
+        操作に失敗しました。もう一度確認してください。（{error}）
+      </div>
+    );
+  }
+
+  const message =
+    saved === "created"
+      ? "商品を追加しました。"
+      : saved === "updated"
+        ? "商品を保存しました。"
+        : saved === "hidden"
+          ? "商品を非表示にしました。公開ページには表示されません。"
+          : saved === "shown"
+            ? "商品を再表示しました。"
+            : null;
+
+  if (!message && image !== "updated") return null;
+
+  return (
+    <div className="rounded-lg border border-emerald-200 bg-emerald-50 p-4 text-sm font-black text-emerald-800">
+      {message}
+      {image === "updated" ? <span className="ml-1">画像も更新しました。</span> : null}
     </div>
   );
 }
@@ -149,4 +197,17 @@ function getSaleState(food: FoodWithRelations) {
 
 function getPublicState(food: FoodWithRelations) {
   return getAdminPublicState(food);
+}
+
+async function getManualAdminFields(foodId: string) {
+  const supabase = createServiceSupabaseClient();
+  if (!supabase) return { adminNotes: null as string | null };
+  const { data, error } = await supabase.from("manual_foods").select("admin_notes").eq("id", foodId).maybeSingle();
+  if (error) {
+    console.error("Failed to load manual food admin notes", {
+      foodId,
+      message: error.message
+    });
+  }
+  return { adminNotes: data?.admin_notes ?? null };
 }

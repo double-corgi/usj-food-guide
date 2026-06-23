@@ -23,17 +23,30 @@ type AdminFoodFormProps = {
   food?: FoodWithRelations;
   shopOptions?: string[];
   action?: (state: AdminFoodSaveState, formData: FormData) => Promise<AdminFoodSaveState>;
+  visibilityAction?: (formData: FormData) => Promise<void>;
   adminNotes?: string | null;
   categoryTags?: string[] | null;
+  duplicateCandidates?: DuplicateCandidate[];
+};
+
+export type DuplicateCandidate = {
+  id: string;
+  name: string;
+  areaName: string;
+  shopName: string;
+  source: "generated" | "manual_foods";
 };
 
 const otherShopValue = "__other";
 const initialSaveState: AdminFoodSaveState = { ok: false, message: "" };
-const disabledSaveAction = async (): Promise<AdminFoodSaveState> => ({ ok: false, message: "generated商品の編集保存はまだ未実装です。" });
+const disabledSaveAction = async (): Promise<AdminFoodSaveState> => ({ ok: false, message: "generated商品の保存はできません。" });
 
-export function AdminFoodForm({ mode, food, shopOptions = [], action, adminNotes, categoryTags }: AdminFoodFormProps) {
+export function AdminFoodForm({ mode, food, shopOptions = [], action, visibilityAction, adminNotes, categoryTags, duplicateCandidates = [] }: AdminFoodFormProps) {
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [shopSelection, setShopSelection] = useState(() => getInitialShopSelection(food, shopOptions));
+  const [shopOther, setShopOther] = useState(() => (food && !shopOptions.includes(food.shop.name) ? food.shop.name : ""));
+  const [nameInput, setNameInput] = useState(food?.name ?? "");
+  const [areaSelection, setAreaSelection] = useState(() => getInitialArea(food));
   const saveEnabled = Boolean(action);
   const [saveState, formAction, pending] = useActionState(action ?? disabledSaveAction, initialSaveState);
   const selectedCategories = new Set<string>(categoryTags && categoryTags.length > 0 ? categoryTags : food?.category ? [food.category] : []);
@@ -41,8 +54,16 @@ export function AdminFoodForm({ mode, food, shopOptions = [], action, adminNotes
   const title = mode === "new" ? "商品追加フォーム" : "商品編集フォーム";
   const saleStatus = getFormSaleStatus(food);
   const publicState = getPublicState(food);
-  const selectedArea = getInitialArea(food);
   const hiddenState = food?.hidden ? "hidden" : "visible";
+  const duplicateWarnings =
+    mode === "new"
+      ? findDuplicateWarnings({
+          name: nameInput,
+          areaName: areaSelection,
+          shopName: shopSelection === otherShopValue ? shopOther : shopSelection,
+          candidates: duplicateCandidates
+        })
+      : [];
 
   useEffect(() => {
     return () => {
@@ -60,20 +81,39 @@ export function AdminFoodForm({ mode, food, shopOptions = [], action, adminNotes
             <h2 className="font-black text-amber-950">{title}はPhase 3Bの最小保存UIです</h2>
             <p className="mt-1 text-sm font-bold leading-6 text-amber-900">
               {mode === "new"
-                ? "新規商品だけSupabaseのmanual_foodsへ保存します。画像は自動リサイズしてStorageへ保存します。削除、rollbackはまだ行いません。"
+                ? "新規商品だけSupabaseのmanual_foodsへ保存します。画像は自動リサイズしてStorageへ保存します。重複候補があれば保存前に警告します。"
                 : saveEnabled
-                  ? "manual_foodsの商品だけ保存できます。画像は自動リサイズしてStorageへ保存し、画像未選択なら既存画像を維持します。"
+                  ? "manual_foodsの商品だけ保存できます。画像未選択なら既存画像を維持します。非表示にしても管理画面には残ります。"
                   : "generated商品の編集保存はまだ行いません。表示内容の確認UIとして使います。"}
             </p>
           </div>
         </div>
       </div>
 
+      {duplicateWarnings.length > 0 ? (
+        <section className="rounded-lg border border-amber-300 bg-amber-50 p-4">
+          <h2 className="font-black text-amber-950">重複候補があります</h2>
+          <p className="mt-1 text-sm font-bold leading-6 text-amber-900">
+            保存はできますが、同じ商品ではないか確認してください。商品名・エリア・店舗が近い既存データです。
+          </p>
+          <ul className="mt-3 space-y-2">
+            {duplicateWarnings.map((candidate) => (
+              <li key={candidate.id} className="rounded-md bg-white px-3 py-2 text-sm font-bold text-slate-700">
+                <span className="text-ink">{candidate.name}</span>
+                <span className="ml-2 text-xs text-slate-500">
+                  {candidate.areaName} / {candidate.shopName} / {candidate.source === "manual_foods" ? "手動追加" : "generated"} / {candidate.id}
+                </span>
+              </li>
+            ))}
+          </ul>
+        </section>
+      ) : null}
+
       <section className="grid gap-4 rounded-lg border border-slate-200 bg-white p-4 shadow-soft lg:grid-cols-2">
-        <TextField label="商品名 日本語" name="nameJa" defaultValue={food?.name ?? ""} required />
+        <TextField label="商品名 日本語" name="nameJa" defaultValue={food?.name ?? ""} required onChange={(event) => setNameInput(event.currentTarget.value)} />
         <TextField label="商品名 英語" name="nameEn" defaultValue="" placeholder="Phase 3で翻訳seed連携予定" />
-        <TextField label="価格" name="price" defaultValue={formatPriceValue(food)} inputMode="numeric" placeholder="例: 800" />
-        <SelectField label="エリア" name="area" defaultValue={selectedArea}>
+        <TextField label="価格" name="price" defaultValue={formatPriceValue(food)} inputMode="numeric" placeholder="例: 800" required />
+        <SelectField label="エリア" name="area" defaultValue={areaSelection} onChange={(event) => setAreaSelection(event.currentTarget.value)}>
           {adminAreaOptions.map((area) => (
             <option key={area} value={area}>
               {area}
@@ -96,7 +136,7 @@ export function AdminFoodForm({ mode, food, shopOptions = [], action, adminNotes
             <option value={otherShopValue}>その他（直接入力）</option>
           </SelectField>
           {shopSelection === otherShopValue ? (
-            <TextField label="店舗名（その他）" name="shopOther" defaultValue={food?.shop.name ?? ""} placeholder="例: ユニバーサル・マーケット内ハピネス・ワゴン" />
+            <TextField label="店舗名（その他）" name="shopOther" defaultValue={shopOther} placeholder="例: ユニバーサル・マーケット内ハピネス・ワゴン" required onChange={(event) => setShopOther(event.currentTarget.value)} />
           ) : null}
         </div>
         <SelectField label="販売状態" name="saleStatus" defaultValue={saleStatus}>
@@ -158,7 +198,7 @@ export function AdminFoodForm({ mode, food, shopOptions = [], action, adminNotes
           </div>
           <div className="space-y-3">
             <label className="block">
-              <span className="text-xs font-black text-slate-500">画像ファイル</span>
+              <span className="text-xs font-black text-slate-500">画像ファイル（保存時にWebP化）</span>
               <input
                 name="imageFile"
                 type="file"
@@ -184,7 +224,7 @@ export function AdminFoodForm({ mode, food, shopOptions = [], action, adminNotes
       <div className="flex flex-col gap-2 rounded-lg border border-slate-200 bg-white p-4 shadow-soft sm:flex-row sm:items-center sm:justify-between">
         <div className="space-y-1">
           <p className="text-sm font-bold text-slate-500">
-            {mode === "edit" && saveEnabled ? "保存後は商品詳細へ戻ります。" : "保存後は商品一覧へ戻ります。"}editor/ownerのみ保存できます。
+            保存後は商品詳細へ戻ります。編集者・オーナーのみ保存できます。
           </p>
           {saveState.message ? <p className={`text-sm font-black ${saveState.ok ? "text-emerald-700" : "text-rose-700"}`}>{saveState.message}</p> : null}
         </div>
@@ -194,13 +234,15 @@ export function AdminFoodForm({ mode, food, shopOptions = [], action, adminNotes
               type="submit"
               name="intent"
               value={food?.hidden ? "show" : "hide"}
-              disabled
-              className="h-11 rounded-full border border-slate-200 bg-white px-6 text-sm font-black text-slate-700 disabled:cursor-wait disabled:bg-slate-100"
+              formAction={visibilityAction}
+              formNoValidate
+              disabled={pending || !saveEnabled || !visibilityAction}
+              className="h-12 rounded-full border border-slate-200 bg-white px-6 text-sm font-black text-slate-700 disabled:cursor-not-allowed disabled:bg-slate-100 sm:h-11"
             >
-              {food?.hidden ? "再表示する（未実装）" : "非表示にする（未実装）"}
+              {saveEnabled ? (food?.hidden ? "再表示する" : "非表示にする") : "generated商品は非表示保存不可"}
             </button>
           ) : null}
-          <button type="submit" disabled={pending || !saveEnabled} className="h-11 rounded-full bg-park px-6 text-sm font-black text-white disabled:cursor-wait disabled:bg-slate-300">
+          <button type="submit" disabled={pending || !saveEnabled} className="h-12 rounded-full bg-park px-6 text-sm font-black text-white disabled:cursor-wait disabled:bg-slate-300 sm:h-11">
             {pending ? "保存中..." : saveEnabled ? "保存する" : "generated商品は保存不可"}
           </button>
         </div>
@@ -217,7 +259,8 @@ function TextField({
   inputMode,
   placeholder,
   required = false,
-  list
+  list,
+  onChange
 }: {
   label: string;
   name: string;
@@ -227,6 +270,7 @@ function TextField({
   placeholder?: string;
   required?: boolean;
   list?: string;
+  onChange?: ChangeEventHandler<HTMLInputElement>;
 }) {
   return (
     <label className="block">
@@ -239,6 +283,7 @@ function TextField({
         placeholder={placeholder}
         required={required}
         list={list}
+        onChange={onChange}
         className="mt-1 h-11 w-full rounded-lg border border-slate-200 bg-white px-3 text-sm font-bold text-ink outline-none focus:border-park"
       />
     </label>
@@ -300,4 +345,58 @@ function getInitialArea(food?: FoodWithRelations) {
 function getInitialShopSelection(food: FoodWithRelations | undefined, shopOptions: string[]) {
   if (!food) return "";
   return shopOptions.includes(food.shop.name) ? food.shop.name : otherShopValue;
+}
+
+function findDuplicateWarnings({
+  name,
+  areaName,
+  shopName,
+  candidates
+}: {
+  name: string;
+  areaName: string;
+  shopName: string;
+  candidates: DuplicateCandidate[];
+}) {
+  const normalizedName = normalizeComparableText(name);
+  if (normalizedName.length < 3) return [];
+  const normalizedArea = normalizeComparableText(areaName);
+  const normalizedShop = normalizeComparableText(shopName);
+
+  return candidates
+    .filter((candidate) => {
+      const candidateName = normalizeComparableText(candidate.name);
+      if (!candidateName) return false;
+      const nameIsClose =
+        candidateName === normalizedName ||
+        candidateName.includes(normalizedName) ||
+        normalizedName.includes(candidateName) ||
+        getSharedPrefixLength(candidateName, normalizedName) >= 6;
+      if (!nameIsClose) return false;
+
+      const candidateArea = normalizeComparableText(candidate.areaName);
+      const candidateShop = normalizeComparableText(candidate.shopName);
+      const areaIsClose = normalizedArea && candidateArea ? normalizedArea === candidateArea : true;
+      const shopIsClose =
+        normalizedShop && candidateShop
+          ? candidateShop === normalizedShop || candidateShop.includes(normalizedShop) || normalizedShop.includes(candidateShop)
+          : true;
+      return areaIsClose || shopIsClose;
+    })
+    .slice(0, 5);
+}
+
+function normalizeComparableText(value: string) {
+  return value
+    .toLowerCase()
+    .replace(/[ \s　・･〜~ー\-—＿_「」『』（）()【】[\]]/g, "")
+    .trim();
+}
+
+function getSharedPrefixLength(left: string, right: string) {
+  let length = 0;
+  while (length < left.length && length < right.length && left[length] === right[length]) {
+    length += 1;
+  }
+  return length;
 }

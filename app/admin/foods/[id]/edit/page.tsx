@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { updateManualFood } from "@/app/admin/foods/actions";
+import { setManualFoodVisibility, updateManualFood } from "@/app/admin/foods/actions";
 import { AdminFoodForm } from "@/components/admin/food-form";
 import { requireAdmin } from "@/lib/admin-auth";
 import { listAllFoodCandidates } from "@/lib/repositories/foods";
@@ -23,7 +23,7 @@ export default async function AdminEditFoodPage({ params }: { params: Promise<{ 
     <div className="space-y-5">
       <div className="flex flex-col gap-3 lg:flex-row lg:items-end lg:justify-between">
         <div>
-          <p className="text-xs font-black uppercase tracking-[0.18em] text-park">Manual food edit</p>
+          <p className="text-xs font-black uppercase tracking-[0.18em] text-park">商品管理</p>
           <h1 className="mt-1 text-3xl font-black text-ink">商品編集</h1>
           <p className="mt-2 text-sm font-bold text-slate-500">
             {admin.role} 権限で閲覧できます。
@@ -44,6 +44,7 @@ export default async function AdminEditFoodPage({ params }: { params: Promise<{ 
         food={food}
         shopOptions={shops}
         action={canSave ? updateManualFood : undefined}
+        visibilityAction={canSave ? setManualFoodVisibility : undefined}
         adminNotes={adminFields.adminNotes}
         categoryTags={adminFields.categoryTags}
       />

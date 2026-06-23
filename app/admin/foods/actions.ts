@@ -90,7 +90,7 @@ export async function createAdminFood(_previousState: AdminFoodSaveState = empty
   }
 
   revalidateAdminFoods();
-  redirect("/admin/foods?saved=created");
+  redirect(`/admin/foods/${id}?saved=created${uploadedImage ? "&image=updated" : ""}`);
 }
 
 export async function updateManualFood(_previousState: AdminFoodSaveState = emptyState, formData: FormData): Promise<AdminFoodSaveState> {
@@ -137,7 +137,44 @@ export async function updateManualFood(_previousState: AdminFoodSaveState = empt
   if (error) return { ok: false, message: `保存に失敗しました: ${error.message}` };
 
   revalidateAdminFoods(foodId);
-  redirect(`/admin/foods/${foodId}?saved=updated`);
+  redirect(`/admin/foods/${foodId}?saved=updated${uploadedImage ? "&image=updated" : ""}`);
+}
+
+export async function setManualFoodVisibility(formData: FormData): Promise<void> {
+  const admin = await requireAdmin("editor");
+  const supabase = createServiceSupabaseClient();
+  if (!supabase) redirect("/admin/foods?error=supabase");
+
+  const foodId = readCleanText(formData, "foodId", 120);
+  const intent = readCleanText(formData, "intent", 20);
+  if (!foodId) redirect("/admin/foods?error=missing-food");
+  if (intent !== "hide" && intent !== "show") redirect(`/admin/foods/${foodId}?error=invalid-intent`);
+
+  const existing = await supabase.from("manual_foods").select("id").eq("id", foodId).maybeSingle();
+  if (existing.error || !existing.data) redirect(`/admin/foods/${foodId}?error=manual-only`);
+
+  const hidden = intent === "hide";
+  const { error } = await supabase
+    .from("manual_foods")
+    .update({
+      hidden,
+      updated_by: admin.email ?? "unknown-admin",
+      updated_at: new Date().toISOString()
+    })
+    .eq("id", foodId);
+
+  if (error) {
+    console.error("manual food visibility update failed", {
+      name: error.name,
+      code: error.code,
+      message: error.message,
+      foodId
+    });
+    redirect(`/admin/foods/${foodId}?error=visibility-failed`);
+  }
+
+  revalidateAdminFoods(foodId);
+  redirect(`/admin/foods/${foodId}?saved=${hidden ? "hidden" : "shown"}`);
 }
 
 function parseFoodForm(formData: FormData) {
@@ -149,6 +186,7 @@ function parseFoodForm(formData: FormData) {
 
   const price = parsePrice(formData.get("price"));
   if (price === false) return failure("価格は数字で入力してください。");
+  if (price === null) return failure("価格を入力してください。");
 
   const areaName = readCleanText(formData, "area", 80);
   if (!areaName || !adminAreaOptions.some((area) => area === areaName)) return failure("エリアを選択してください。");
@@ -222,7 +260,10 @@ function readCategoryTags(formData: FormData) {
   if (uniqueValues.some((value) => hasUnsafeText(value) || !allowedCategoryTags.has(value))) {
     return { ok: false as const, message: "カテゴリタグが不正です。" };
   }
-  return { ok: true as const, values: uniqueValues.length > 0 ? uniqueValues : ["unknown"] };
+  if (uniqueValues.length === 0) {
+    return { ok: false as const, message: "カテゴリを1つ以上選択してください。" };
+  }
+  return { ok: true as const, values: uniqueValues };
 }
 
 function primaryFoodCategory(categoryTags: string[]): FoodCategory {
