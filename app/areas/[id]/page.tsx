@@ -13,12 +13,13 @@ import { dedupeFoodsByCanonical, foodMatchesArea, formatFoodPrice, getRemainingD
 import { rankFoodsByStrategy } from "@/lib/food-value-score";
 import { listFoods } from "@/lib/repositories/foods";
 import { listAreas } from "@/lib/repositories/areas";
+import { readGeneratedAreas } from "@/lib/repositories/generated-data";
 import type { FoodLocation, FoodWithRelations, ShopType } from "@/types/domain";
 
 export const revalidate = 3600;
 
 export async function generateStaticParams() {
-  const areas = await listAreas();
+  const areas = readGeneratedAreas();
   return areas.map((area) => ({ id: area.id }));
 }
 

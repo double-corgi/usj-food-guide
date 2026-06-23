@@ -7,10 +7,11 @@ import { StoreFoodList } from "@/components/store-food-list";
 import { StoreNameClient } from "@/components/store-name-client";
 import { StoreVisual } from "@/components/store-visual";
 import { listFoods } from "@/lib/repositories/foods";
+import { readGeneratedFoods } from "@/lib/repositories/generated-data";
 import { buildStoresFromFoods, findStoreById, getStoreDisplayFoods, getStoreSummary, getStoreTypeLabel, pickRepresentativeFood } from "@/lib/store-utils";
 
 export async function generateStaticParams() {
-  const foods = await listFoods();
+  const foods = readGeneratedFoods({ reviewStatuses: ["approved"] });
   const ids = new Set<string>();
   for (const store of buildStoresFromFoods(foods)) {
     ids.add(store.id);
