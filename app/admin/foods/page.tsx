@@ -1,11 +1,23 @@
 import Link from "next/link";
-import { Plus, Search } from "lucide-react";
+import { PencilLine, Plus, Search } from "lucide-react";
 import { FoodImage } from "@/components/food-image";
-import { categoryLabels } from "@/lib/constants";
 import { requireAdmin } from "@/lib/admin-auth";
+import {
+  adminFoodCategoryOptions,
+  adminSaleStatusOptions,
+  formatAdminCanonicalState,
+  formatAdminCategory,
+  formatAdminPrice,
+  formatAdminPublicState,
+  formatAdminReviewStatus,
+  formatAdminSaleStatus,
+  formatAdminVisibility,
+  getAdminPublicState,
+  getAdminSaleState
+} from "@/lib/admin-food-ui";
 import { listAllFoodCandidates } from "@/lib/repositories/foods";
 import type { ReactNode } from "react";
-import type { FoodCategory, FoodWithRelations } from "@/types/domain";
+import type { FoodWithRelations } from "@/types/domain";
 
 export const dynamic = "force-dynamic";
 
@@ -16,15 +28,6 @@ type AdminFoodsSearchParams = {
   publicState?: string;
   hidden?: string;
 };
-
-const categoryOptions = Object.entries(categoryLabels) as Array<[FoodCategory, string]>;
-const saleStatusOptions = [
-  { value: "all", label: "すべて" },
-  { value: "active", label: "active" },
-  { value: "paused", label: "paused" },
-  { value: "ended", label: "ended" },
-  { value: "unknown", label: "unknown" }
-] as const;
 
 export default async function AdminFoodsPage({ searchParams }: { searchParams?: Promise<AdminFoodsSearchParams> }) {
   const params = (await searchParams) ?? {};
@@ -49,9 +52,9 @@ export default async function AdminFoodsPage({ searchParams }: { searchParams?: 
             {admin.mode === "supabase" ? `${admin.role} / ${admin.email}` : "ADMIN_ACCESS_TOKEN fallback"}
           </span>
           {canManage ? (
-            <Link href="/admin/foods/new" className="inline-flex h-10 items-center gap-2 rounded-full bg-park px-4 text-xs font-black text-white shadow-soft">
-              <Plus size={15} aria-hidden />
-              追加
+            <Link href="/admin/foods/new" className="inline-flex h-12 items-center gap-2 rounded-full bg-park px-5 text-sm font-black text-white shadow-soft transition hover:-translate-y-0.5">
+              <Plus size={18} aria-hidden />
+              商品を追加
             </Link>
           ) : null}
           <Link href="/admin" className="inline-flex h-10 items-center rounded-full border border-slate-200 bg-white px-4 text-xs font-black text-ink hover:border-park">
@@ -59,6 +62,13 @@ export default async function AdminFoodsPage({ searchParams }: { searchParams?: 
           </Link>
         </div>
       </div>
+
+      {canManage ? (
+        <Link href="/admin/foods/new" className="fixed bottom-4 right-4 z-30 inline-flex h-14 items-center gap-2 rounded-full bg-park px-5 text-sm font-black text-white shadow-soft lg:hidden">
+          <Plus size={19} aria-hidden />
+          商品を追加
+        </Link>
+      ) : null}
 
       <div className="grid gap-4 sm:grid-cols-4">
         <Metric label="全候補" value={foods.length} />
@@ -68,6 +78,13 @@ export default async function AdminFoodsPage({ searchParams }: { searchParams?: 
       </div>
 
       <form className="rounded-lg border border-slate-200 bg-white p-4 shadow-soft" method="get">
+        <div className="mb-3 flex flex-col gap-1 sm:flex-row sm:items-end sm:justify-between">
+          <div>
+            <h2 className="text-lg font-black text-ink">検索・フィルタ</h2>
+            <p className="mt-1 text-xs font-bold text-slate-500">商品名、店舗、状態で絞り込めます。</p>
+          </div>
+          <p className="text-sm font-black text-park">{filteredFoods.length.toLocaleString("ja-JP")}件</p>
+        </div>
         <div className="grid gap-3 lg:grid-cols-[minmax(220px,1.7fr)_repeat(4,minmax(130px,1fr))_auto] lg:items-end">
           <label className="block">
             <span className="text-xs font-black text-slate-500">検索</span>
@@ -78,14 +95,15 @@ export default async function AdminFoodsPage({ searchParams }: { searchParams?: 
           </label>
           <Select label="カテゴリ" name="category" defaultValue={filters.category}>
             <option value="all">すべて</option>
-            {categoryOptions.map(([value, label]) => (
+            {adminFoodCategoryOptions.map(({ value, label }) => (
               <option key={value} value={value}>
                 {label}
               </option>
             ))}
           </Select>
           <Select label="販売状態" name="saleStatus" defaultValue={filters.saleStatus}>
-            {saleStatusOptions.map((option) => (
+            <option value="all">すべて</option>
+            {adminSaleStatusOptions.map((option) => (
               <option key={option.value} value={option.value}>
                 {option.label}
               </option>
@@ -93,13 +111,13 @@ export default async function AdminFoodsPage({ searchParams }: { searchParams?: 
           </Select>
           <Select label="公開状態" name="publicState" defaultValue={filters.publicState}>
             <option value="all">すべて</option>
-            <option value="published">published</option>
-            <option value="draft">draft</option>
+            <option value="published">公開</option>
+            <option value="draft">下書き</option>
           </Select>
-          <Select label="hidden" name="hidden" defaultValue={filters.hidden}>
+          <Select label="表示" name="hidden" defaultValue={filters.hidden}>
             <option value="all">すべて</option>
-            <option value="visible">visible</option>
-            <option value="hidden">hidden</option>
+            <option value="visible">表示中</option>
+            <option value="hidden">非表示</option>
           </Select>
           <button type="submit" className="inline-flex h-11 items-center justify-center rounded-full bg-ink px-5 text-sm font-black text-white">
             絞り込み
@@ -109,14 +127,14 @@ export default async function AdminFoodsPage({ searchParams }: { searchParams?: 
 
       <section className="space-y-3 lg:hidden">
         {filteredFoods.slice(0, 300).map((food) => (
-          <FoodCard key={food.id} food={food} />
+          <FoodCard key={food.id} food={food} canManage={canManage} />
         ))}
       </section>
 
       <section className="hidden overflow-hidden rounded-lg border border-slate-200 bg-white shadow-soft lg:block">
         <div className="border-b border-slate-100 p-4">
           <h2 className="text-xl font-black text-ink">読み取り専用カタログ</h2>
-          <p className="mt-1 text-sm font-bold text-slate-500">最大300件を表示します。変更操作は配置していません。</p>
+          <p className="mt-1 text-sm font-bold text-slate-500">最大300件を表示します。Phase 2.1では保存処理は未接続です。</p>
         </div>
         <div className="overflow-x-auto">
           <table className="w-full min-w-[1180px] text-left text-sm">
@@ -146,8 +164,8 @@ export default async function AdminFoodsPage({ searchParams }: { searchParams?: 
                       </div>
                     </div>
                   </td>
-                  <td className="px-4 py-3 font-bold text-slate-700">{formatPrice(food)}</td>
-                  <td className="px-4 py-3 font-bold text-slate-700">{categoryLabels[food.category] ?? food.category}</td>
+                  <td className="px-4 py-3 font-bold text-slate-700">{formatAdminPrice(food)}</td>
+                  <td className="px-4 py-3 font-bold text-slate-700">{formatAdminCategory(food.category)}</td>
                   <td className="px-4 py-3">
                     <p className="font-bold text-slate-700">{food.area.name}</p>
                     <p className="mt-1 text-xs font-bold text-slate-500">{food.shop.name}</p>
@@ -156,9 +174,17 @@ export default async function AdminFoodsPage({ searchParams }: { searchParams?: 
                     <StatusBadges food={food} />
                   </td>
                   <td className="px-4 py-3">
-                    <Link href={`/admin/foods/${food.id}`} className="font-black text-park underline underline-offset-4">
+                    <div className="flex flex-wrap gap-2">
+                      <Link href={`/admin/foods/${food.id}`} className="inline-flex h-9 items-center justify-center rounded-full border border-park/30 bg-white px-3 text-xs font-black text-park hover:border-park">
                       詳細
-                    </Link>
+                      </Link>
+                      {canManage ? (
+                        <Link href={`/admin/foods/${food.id}/edit`} className="inline-flex h-9 items-center justify-center gap-1 rounded-full bg-mint px-3 text-xs font-black text-park">
+                          <PencilLine size={13} aria-hidden />
+                          編集
+                        </Link>
+                      ) : null}
+                    </div>
                   </td>
                 </tr>
               ))}
@@ -202,7 +228,7 @@ function matchesFilters(food: FoodWithRelations, filters: NormalizedFilters) {
   return true;
 }
 
-function FoodCard({ food }: { food: FoodWithRelations }) {
+function FoodCard({ food, canManage }: { food: FoodWithRelations; canManage: boolean }) {
   return (
     <article className="rounded-lg border border-slate-200 bg-white p-3 shadow-soft">
       <div className="flex gap-3">
@@ -214,14 +240,25 @@ function FoodCard({ food }: { food: FoodWithRelations }) {
             {food.name}
           </Link>
           <p className="mt-1 text-xs font-bold text-slate-400">{food.id}</p>
-          <p className="mt-2 text-sm font-black text-park">{formatPrice(food)}</p>
+          <p className="mt-2 text-sm font-black text-park">{formatAdminPrice(food)}</p>
         </div>
       </div>
       <div className="mt-3 space-y-2">
         <p className="text-sm font-bold text-slate-600">
           {food.area.name} / {food.shop.name}
         </p>
+        <p className="text-sm font-bold text-slate-600">{formatAdminCategory(food.category)}</p>
         <StatusBadges food={food} />
+        <div className={canManage ? "grid grid-cols-2 gap-2 pt-1" : "grid grid-cols-1 gap-2 pt-1"}>
+          <Link href={`/admin/foods/${food.id}`} className="inline-flex h-11 items-center justify-center rounded-full border border-park/30 bg-white text-sm font-black text-park">
+            詳細
+          </Link>
+          {canManage ? (
+            <Link href={`/admin/foods/${food.id}/edit`} className="inline-flex h-11 items-center justify-center rounded-full bg-mint text-sm font-black text-park">
+              編集
+            </Link>
+          ) : null}
+        </div>
       </div>
     </article>
   );
@@ -230,11 +267,12 @@ function FoodCard({ food }: { food: FoodWithRelations }) {
 function StatusBadges({ food }: { food: FoodWithRelations }) {
   return (
     <div className="flex flex-wrap gap-1.5">
-      <Badge label={getPublicState(food)} tone={getPublicState(food) === "published" ? "ok" : "muted"} />
-      <Badge label={food.hidden ? "hidden" : "visible"} tone={food.hidden ? "muted" : "ok"} />
-      <Badge label={food.canonicalFood === false ? "duplicate" : "canonical"} tone={food.canonicalFood === false ? "muted" : "ok"} />
-      <Badge label={getSaleState(food)} />
-      <Badge label={categoryLabels[food.category] ?? food.category} />
+      <Badge label={formatAdminPublicState(getPublicState(food))} tone={getPublicState(food) === "published" ? "ok" : "muted"} />
+      <Badge label={formatAdminVisibility(food.hidden)} tone={food.hidden ? "muted" : "ok"} />
+      <Badge label={formatAdminCanonicalState(food.canonicalFood)} tone={food.canonicalFood === false ? "muted" : "ok"} />
+      <Badge label={formatAdminSaleStatus(getSaleState(food))} />
+      <Badge label={formatAdminReviewStatus(food.reviewStatus)} tone={food.reviewStatus === "approved" ? "ok" : "muted"} />
+      <Badge label={formatAdminCategory(food.category)} />
     </div>
   );
 }
@@ -269,17 +307,10 @@ function Badge({ label, tone = "default" }: { label: string; tone?: "default" | 
   return <span className={`rounded-full px-2 py-1 text-xs font-black ${className}`}>{label}</span>;
 }
 
-function formatPrice(food: FoodWithRelations) {
-  if (typeof food.price === "number") return `¥${food.price.toLocaleString("ja-JP")}`;
-  if (typeof food.priceMin === "number" && typeof food.priceMax === "number") return `¥${food.priceMin.toLocaleString("ja-JP")}〜¥${food.priceMax.toLocaleString("ja-JP")}`;
-  if (typeof food.priceMin === "number") return `¥${food.priceMin.toLocaleString("ja-JP")}〜`;
-  return "未確認";
-}
-
 function getSaleState(food: FoodWithRelations) {
-  return food.saleStatus ?? (food.status === "ended" ? "ended" : food.status === "active" ? "active" : "unknown");
+  return getAdminSaleState(food);
 }
 
-function getPublicState(food: FoodWithRelations): "published" | "draft" {
-  return food.reviewStatus === "approved" && food.canonicalFood !== false && !food.hidden ? "published" : "draft";
+function getPublicState(food: FoodWithRelations) {
+  return getAdminPublicState(food);
 }

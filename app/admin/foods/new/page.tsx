@@ -8,13 +8,13 @@ export const dynamic = "force-dynamic";
 
 export default async function AdminNewFoodPage() {
   const [admin, foods] = await Promise.all([requireAdmin("editor"), listAllFoodCandidates()]);
-  const { areas, shops } = getFormOptions(foods);
+  const { shops } = getFormOptions(foods);
 
   return (
     <div className="space-y-5">
       <div className="flex flex-col gap-3 lg:flex-row lg:items-end lg:justify-between">
         <div>
-          <p className="text-xs font-black uppercase tracking-[0.18em] text-park">Phase 2 form UI</p>
+          <p className="text-xs font-black uppercase tracking-[0.18em] text-park">Phase 2.1 form UI</p>
           <h1 className="mt-1 text-3xl font-black text-ink">商品追加</h1>
           <p className="mt-2 text-sm font-bold text-slate-500">
             {admin.role} 権限でフォームUIを確認できます。保存処理はまだ接続していません。
@@ -24,14 +24,13 @@ export default async function AdminNewFoodPage() {
           一覧へ戻る
         </Link>
       </div>
-      <AdminFoodForm mode="new" areaOptions={areas} shopOptions={shops} />
+      <AdminFoodForm mode="new" shopOptions={shops} />
     </div>
   );
 }
 
 function getFormOptions(foods: FoodWithRelations[]) {
   return {
-    areas: uniqueSorted(foods.map((food) => food.area.name)),
     shops: uniqueSorted(foods.map((food) => food.shop.name))
   };
 }

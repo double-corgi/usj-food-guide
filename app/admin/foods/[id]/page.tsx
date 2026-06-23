@@ -2,8 +2,18 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ExternalLink, PencilLine } from "lucide-react";
 import { FoodImage } from "@/components/food-image";
-import { categoryLabels } from "@/lib/constants";
 import { requireAdmin } from "@/lib/admin-auth";
+import {
+  formatAdminCanonicalState,
+  formatAdminCategory,
+  formatAdminPrice,
+  formatAdminPublicState,
+  formatAdminReviewStatus,
+  formatAdminSaleStatus,
+  formatAdminVisibility,
+  getAdminPublicState,
+  getAdminSaleState
+} from "@/lib/admin-food-ui";
 import { listAllFoodCandidates } from "@/lib/repositories/foods";
 import type { FoodWithRelations } from "@/types/domain";
 
@@ -61,16 +71,16 @@ export default async function AdminFoodDetailPage({ params }: { params: Promise<
             <h2 className="text-lg font-black text-ink">基本情報</h2>
             <div className="mt-4 grid gap-3 sm:grid-cols-2">
               <Field label="商品名" value={food.name} />
-              <Field label="価格" value={formatPrice(food)} />
-              <Field label="カテゴリ" value={categoryLabels[food.category] ?? food.category} />
+              <Field label="価格" value={formatAdminPrice(food)} />
+              <Field label="カテゴリ" value={formatAdminCategory(food.category)} />
               <Field label="エリア" value={food.area.name} />
               <Field label="店舗" value={food.shop.name} />
-              <Field label="販売状態" value={getSaleState(food)} />
-              <Field label="公開状態" value={getPublicState(food)} />
-              <Field label="hidden" value={food.hidden ? "true" : "false"} />
-              <Field label="reviewStatus" value={food.reviewStatus} />
+              <Field label="販売状態" value={formatAdminSaleStatus(getSaleState(food))} />
+              <Field label="公開状態" value={formatAdminPublicState(getPublicState(food))} />
+              <Field label="表示状態" value={formatAdminVisibility(food.hidden)} />
+              <Field label="レビュー状態" value={formatAdminReviewStatus(food.reviewStatus)} />
               <Field label="displayQuality" value={food.displayQuality} />
-              <Field label="canonicalFood" value={food.canonicalFood === false ? "false" : "true"} />
+              <Field label="正規/重複" value={formatAdminCanonicalState(food.canonicalFood)} />
               <Field label="duplicateGroupId" value={food.duplicateGroupId ?? "なし"} />
               <Field label="販売期間 start" value={food.saleStartDate ?? food.startDate ?? "未設定"} />
               <Field label="販売期間 end" value={food.saleEndDate ?? food.endDate ?? "未設定"} />
@@ -133,17 +143,10 @@ function SourceLink({ label, url }: { label: string; url?: string }) {
   );
 }
 
-function formatPrice(food: FoodWithRelations) {
-  if (typeof food.price === "number") return `¥${food.price.toLocaleString("ja-JP")}`;
-  if (typeof food.priceMin === "number" && typeof food.priceMax === "number") return `¥${food.priceMin.toLocaleString("ja-JP")}〜¥${food.priceMax.toLocaleString("ja-JP")}`;
-  if (typeof food.priceMin === "number") return `¥${food.priceMin.toLocaleString("ja-JP")}〜`;
-  return "未確認";
-}
-
 function getSaleState(food: FoodWithRelations) {
-  return food.saleStatus ?? (food.status === "ended" ? "ended" : food.status === "active" ? "active" : "unknown");
+  return getAdminSaleState(food);
 }
 
-function getPublicState(food: FoodWithRelations): "published" | "draft" {
-  return food.reviewStatus === "approved" && food.canonicalFood !== false && !food.hidden ? "published" : "draft";
+function getPublicState(food: FoodWithRelations) {
+  return getAdminPublicState(food);
 }
