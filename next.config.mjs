@@ -10,6 +10,12 @@ const nextConfig = {
     : {}),
   typedRoutes: false,
   serverExternalPackages: ["sharp"],
+  outputFileTracingIncludes: {
+    "/*": [
+      "./node_modules/@img/sharp-linux-arm64/**/*",
+      "./node_modules/@img/sharp-libvips-linux-arm64/**/*"
+    ]
+  },
   allowedDevOrigins: ["*.trycloudflare.com", "127.0.0.1"],
   ...(isCapacitorStaticExport
     ? {}
