@@ -9,6 +9,7 @@ const nextConfig = {
       }
     : {}),
   typedRoutes: false,
+  serverExternalPackages: ["sharp"],
   allowedDevOrigins: ["*.trycloudflare.com", "127.0.0.1"],
   ...(isCapacitorStaticExport
     ? {}

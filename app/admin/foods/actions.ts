@@ -2,7 +2,6 @@
 
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-import sharp from "sharp";
 import { adminAreaOptions, adminCategoryTagOptions, adminPublicStateOptions, adminSaleStatusOptions } from "@/lib/admin-food-ui";
 import { requireAdmin } from "@/lib/admin-auth";
 import { normalizeFoodName } from "@/lib/food-utils";
@@ -244,6 +243,7 @@ async function uploadManualFoodImage(supabase: ServiceSupabaseClient, foodId: st
 }
 
 async function optimizeManualFoodImage(imageFile: File) {
+  const sharp = (await import("sharp")).default;
   const input = Buffer.from(await imageFile.arrayBuffer());
   return sharp(input, { failOn: "error" })
     .rotate()
