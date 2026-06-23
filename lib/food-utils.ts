@@ -175,12 +175,14 @@ export function getSalePeriodLabel(food: Pick<FoodWithRelations, "saleStatus" | 
   if (saleStatus === "upcoming") {
     return start ? `${formatDateJa(start)}開始予定` : "近日販売";
   }
+  if (saleStatus === "paused") return "一時停止";
   return "販売期間確認中";
 }
 
 export function getSaleStatusLabel(food: Pick<FoodWithRelations, "saleStatus" | "status" | "saleStartDate" | "saleEndDate" | "startDate" | "endDate">) {
   const labels: Record<SaleStatus, string> = {
     active: "販売中",
+    paused: "一時停止",
     ended: "販売終了",
     upcoming: "近日販売",
     unknown: "販売期間確認中"
@@ -191,6 +193,7 @@ export function getSaleStatusLabel(food: Pick<FoodWithRelations, "saleStatus" | 
 export function getSaleStatusTone(food: Pick<FoodWithRelations, "saleStatus" | "status" | "saleStartDate" | "saleEndDate" | "startDate" | "endDate">) {
   const tones: Record<SaleStatus, string> = {
     active: "bg-mint text-park",
+    paused: "bg-slate-100 text-slate-600",
     ended: "bg-slate-100 text-slate-600",
     upcoming: "bg-sun/25 text-ink",
     unknown: "bg-slate-100 text-slate-600"

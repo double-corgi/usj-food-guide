@@ -1,13 +1,11 @@
-import { createServerSupabaseClient } from "@/lib/supabase-server";
-import { mapCrawlLog } from "@/lib/mappers";
-import { readGeneratedAreas, readGeneratedCrawlLogs, readGeneratedFoods, readGeneratedShops, readGeneratedSummary } from "@/lib/repositories/generated-data";
+import { readGeneratedCrawlLogs, readGeneratedSummary } from "@/lib/repositories/generated-data";
+import { listAllFoodCandidates } from "@/lib/repositories/foods";
+import type { FoodWithRelations } from "@/types/domain";
 
 export async function getAdminOverview() {
-  const supabase = await createServerSupabaseClient();
-  if (!supabase) {
-    const foods = readGeneratedFoods({ includeHidden: true });
-    const shops = readGeneratedShops();
-    const areas = readGeneratedAreas();
+    const foods = await listAllFoodCandidates();
+    const shops = Array.from(new Map(foods.map((food) => [food.shop.id, food.shop])).values());
+    const areas = Array.from(new Map(foods.map((food) => [food.area.id, food.area])).values());
     const summary = readGeneratedSummary();
     const duplicateImageRows = buildDuplicateImageRows(foods);
     const storefrontRows = buildImageIssueRows(foods, "storefront");
@@ -147,91 +145,9 @@ export async function getAdminOverview() {
         })),
       summary
     };
-  }
-
-  const [foodCount, shopCount, areaCount, imageCount, approvedCount, pendingCount, rejectedCount, hiddenCount, missingImageCount, duplicateCount, crawlLogs, candidates] = await Promise.all([
-    supabase.from("foods").select("id", { count: "exact", head: true }),
-    supabase.from("shops").select("id", { count: "exact", head: true }),
-    supabase.from("areas").select("id", { count: "exact", head: true }),
-    supabase.from("food_images").select("id", { count: "exact", head: true }),
-    supabase.from("foods").select("id", { count: "exact", head: true }).eq("review_status", "approved").eq("hidden", false),
-    supabase.from("foods").select("id", { count: "exact", head: true }).eq("review_status", "pending"),
-    supabase.from("foods").select("id", { count: "exact", head: true }).eq("review_status", "rejected"),
-    supabase.from("foods").select("id", { count: "exact", head: true }).eq("hidden", true),
-    supabase.from("foods").select("id", { count: "exact", head: true }).is("image_url", null),
-    supabase.from("foods").select("id", { count: "exact", head: true }).not("duplicate_group_id", "is", null),
-    supabase.from("crawl_logs").select("*").order("created_at", { ascending: false }).limit(20),
-    supabase
-      .from("foods")
-      .select("*, areas (*), shops (*), food_images (*)")
-      .order("confidence_score", { ascending: false })
-      .limit(200)
-  ]);
-
-  return {
-    counts: {
-      foods: foodCount.count ?? 0,
-      shops: shopCount.count ?? 0,
-      areas: areaCount.count ?? 0,
-      images: imageCount.count ?? 0,
-      approved: approvedCount.count ?? 0,
-      pending: pendingCount.count ?? 0,
-      rejected: rejectedCount.count ?? 0,
-      hidden: hiddenCount.count ?? 0,
-      imageMissing: missingImageCount.count ?? 0,
-      duplicates: duplicateCount.count ?? 0,
-      crawlLogs: crawlLogs.data?.length ?? 0,
-      highQuality: 0,
-      mediumQuality: 0,
-      lowQuality: 0,
-      brokenNames: 0,
-      composite: 0,
-      sharedImages: 0,
-      watermarkImages: 0,
-      officialImages: 0,
-      verifiedImages: 0,
-      imageMismatchExcluded: 0,
-      lowQualityImages: 0,
-      storefrontImages: 0,
-      shelfImages: 0,
-      replacementNeeded: 0,
-      canonicalFoods: 0
-    },
-    crawlLogs: crawlLogs.data?.map(mapCrawlLog) ?? [],
-    candidates: (candidates.data as Array<Record<string, any>> | null | undefined)?.map((row) => ({
-      id: row.id,
-      name: row.name,
-      category: row.category,
-      status: row.status,
-      confidenceScore: row.confidence_score,
-      nameQualityScore: row.name_quality_score ?? 0,
-      displayQuality: row.display_quality ?? "medium",
-      reviewStatus: row.review_status,
-      hidden: row.hidden,
-      duplicateGroupId: row.duplicate_group_id,
-      sourceUrl: row.source_url,
-      area: row.areas?.name ?? "未確認",
-      shop: row.shops?.name ?? "未確認",
-      compositeMenu: row.composite_menu ?? false,
-      rejectionReasons: [],
-      imageUrl: row.food_images?.[0]?.image_url,
-      imageConfidenceScore: row.food_images?.[0]?.image_confidence_score ?? 0,
-      imageMatchScore: row.food_images?.[0]?.image_match_score ?? 0,
-      categoryImageMatchScore: row.food_images?.[0]?.category_image_match_score ?? 0,
-      imageVerified: row.food_images?.[0]?.image_verified ?? false,
-      imageMatchReason: row.food_images?.[0]?.image_match_reason,
-      imageMismatchReason: row.food_images?.[0]?.image_mismatch_reason,
-      imageSourceContext: row.food_images?.[0]?.image_source_context,
-      isSharedImage: Boolean(row.food_images?.[0]?.is_shared_too_much),
-      hasWatermark: Boolean(row.food_images?.[0]?.has_watermark),
-      watermarkReason: row.food_images?.[0]?.watermark_reason
-    })) ?? [],
-    imageQueues: { missing: [], verified: [], mismatch: [], watermark: [], duplicate: [], lowQuality: [], storefront: [], shelf: [], replacementNeeded: [] },
-    summary: {}
-  };
 }
 
-type AdminFood = ReturnType<typeof readGeneratedFoods>[number];
+type AdminFood = FoodWithRelations;
 
 function buildDuplicateImageRows(foods: AdminFood[]) {
   const byImage = new Map<string, AdminFood[]>();

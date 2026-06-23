@@ -1,78 +1,26 @@
-import { createServerSupabaseClient } from "@/lib/supabase-server";
-import { mapFood } from "@/lib/mappers";
 import { readGeneratedFoods } from "@/lib/repositories/generated-data";
+import { getManualFoodById, listManualFoods } from "@/lib/repositories/manual-foods";
 import type { FoodWithRelations } from "@/types/domain";
 
-const foodSelect = `
-  *,
-  areas (*),
-  shops (*),
-  food_images (*),
-  food_locations (*)
-`;
-
 export async function listFoods(): Promise<FoodWithRelations[]> {
-  const supabase = await createServerSupabaseClient();
-  if (!supabase) return filterVisibleFoods(readGeneratedFoods({ reviewStatuses: ["approved"] }));
-
-  const { data, error } = await supabase
-    .from("foods")
-    .select(foodSelect)
-    .eq("review_status", "approved")
-    .eq("canonical_food", true)
-    .eq("hidden", false)
-    .neq("status", "inactive")
-    .neq("display_quality", "low")
-    .gte("name_quality_score", 60)
-    .gte("confidence_score", 45)
-    .order("status", { ascending: true })
-    .order("confidence_score", { ascending: false })
-    .order("updated_at", { ascending: false });
-
-  if (error || !data) {
-    console.error("Failed to fetch foods", error);
-    return filterVisibleFoods(readGeneratedFoods({ reviewStatuses: ["approved"] }));
-  }
-
-  return filterVisibleFoods(data.map((row) => mapFood(row)));
+  const generatedFoods = filterVisibleFoods(readGeneratedFoods({ reviewStatuses: ["approved"] }));
+  const manualFoods = filterVisibleFoods(await listManualFoods({ publicOnly: true }));
+  return mergeFoods(generatedFoods, manualFoods);
 }
 
 export async function getFoodById(id: string): Promise<FoodWithRelations | null> {
-  const supabase = await createServerSupabaseClient();
-  if (!supabase) {
-    const food = readGeneratedFoods({ includeHidden: true }).find((candidate) => candidate.id === id) ?? null;
-    return food && isVisibleFood(food) ? sanitizePublicFood(food) : null;
-  }
+  const generatedFood = readGeneratedFoods({ includeHidden: true }).find((candidate) => candidate.id === id) ?? null;
+  if (generatedFood) return isVisibleFood(generatedFood) ? sanitizePublicFood(generatedFood) : null;
 
-  const { data, error } = await supabase.from("foods").select(foodSelect).eq("id", id).maybeSingle();
-
-  if (error) {
-    console.error("Failed to fetch food", error);
-    return readGeneratedFoods({ includeHidden: true }).find((food) => food.id === id && food.reviewStatus === "approved" && !food.hidden) ?? null;
-  }
-
-  const food = data ? mapFood(data) : null;
-  if (!food || !isVisibleFood(food)) return null;
-  return sanitizePublicFood(food);
+  const manualFood = await getManualFoodById(id, { publicOnly: true });
+  if (!manualFood || !isVisibleFood(manualFood)) return null;
+  return sanitizePublicFood(manualFood);
 }
 
 export async function listAllFoodCandidates(): Promise<FoodWithRelations[]> {
-  const supabase = await createServerSupabaseClient();
-  if (!supabase) return readGeneratedFoods({ includeHidden: true });
-
-  const { data, error } = await supabase
-    .from("foods")
-    .select(foodSelect)
-    .order("review_status", { ascending: true })
-    .order("confidence_score", { ascending: false })
-    .limit(1000);
-
-  if (error || !data) {
-    console.error("Failed to fetch food candidates", error);
-    return readGeneratedFoods({ includeHidden: true });
-  }
-
-  return data.map((row) => mapFood(row));
+  const generatedFoods = readGeneratedFoods({ includeHidden: true });
+  const manualFoods = await listManualFoods();
+  return mergeFoods(generatedFoods, manualFoods);
 }
 
 function filterVisibleFoods(foods: FoodWithRelations[]) {
@@ -131,4 +79,9 @@ function sanitizePublicFood(food: FoodWithRelations): FoodWithRelations {
         enabled: image.enabled
       }))
   };
+}
+
+function mergeFoods(generatedFoods: FoodWithRelations[], manualFoods: FoodWithRelations[]) {
+  const generatedIds = new Set(generatedFoods.map((food) => food.id));
+  return [...generatedFoods, ...manualFoods.filter((food) => !generatedIds.has(food.id))];
 }

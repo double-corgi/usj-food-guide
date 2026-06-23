@@ -1,7 +1,7 @@
 "use client";
 
 import { ImagePlus, Lock } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useActionState, useEffect, useState } from "react";
 import {
   adminAreaOptions,
   adminCategoryTagOptions,
@@ -12,6 +12,7 @@ import {
 } from "@/lib/admin-food-ui";
 import type { ChangeEventHandler, ReactNode } from "react";
 import type { FoodWithRelations } from "@/types/domain";
+import type { AdminFoodSaveState } from "@/app/admin/foods/actions";
 
 type AdminFoodFormMode = "new" | "edit";
 type AdminSaleStatus = "active" | "paused" | "ended" | "unknown";
@@ -21,19 +22,27 @@ type AdminFoodFormProps = {
   mode: AdminFoodFormMode;
   food?: FoodWithRelations;
   shopOptions?: string[];
+  action?: (state: AdminFoodSaveState, formData: FormData) => Promise<AdminFoodSaveState>;
+  adminNotes?: string | null;
+  categoryTags?: string[] | null;
 };
 
 const otherShopValue = "__other";
+const initialSaveState: AdminFoodSaveState = { ok: false, message: "" };
+const disabledSaveAction = async (): Promise<AdminFoodSaveState> => ({ ok: false, message: "Phase 3Aでは既存商品の保存は未実装です。" });
 
-export function AdminFoodForm({ mode, food, shopOptions = [] }: AdminFoodFormProps) {
+export function AdminFoodForm({ mode, food, shopOptions = [], action, adminNotes, categoryTags }: AdminFoodFormProps) {
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [shopSelection, setShopSelection] = useState(() => getInitialShopSelection(food, shopOptions));
-  const selectedCategories = new Set<string>(food?.category ? [food.category] : []);
+  const saveEnabled = Boolean(action);
+  const [saveState, formAction, pending] = useActionState(action ?? disabledSaveAction, initialSaveState);
+  const selectedCategories = new Set<string>(categoryTags && categoryTags.length > 0 ? categoryTags : food?.category ? [food.category] : []);
   const activeImage = getActiveImage(food);
   const title = mode === "new" ? "商品追加フォーム" : "商品編集フォーム";
   const saleStatus = getFormSaleStatus(food);
   const publicState = getPublicState(food);
   const selectedArea = getInitialArea(food);
+  const hiddenState = food?.hidden ? "hidden" : "visible";
 
   useEffect(() => {
     return () => {
@@ -42,19 +51,16 @@ export function AdminFoodForm({ mode, food, shopOptions = [] }: AdminFoodFormPro
   }, [previewUrl]);
 
   return (
-    <form
-      className="space-y-5"
-      onSubmit={(event) => {
-        event.preventDefault();
-      }}
-    >
+    <form className="space-y-5" action={formAction}>
       <div className="rounded-lg border border-amber-200 bg-amber-50 p-4">
         <div className="flex gap-3">
           <Lock className="mt-0.5 shrink-0 text-amber-700" size={20} aria-hidden />
           <div>
-            <h2 className="font-black text-amber-950">{title}はPhase 2.1のUI確認用です</h2>
+            <h2 className="font-black text-amber-950">{title}はPhase 3Aの最小保存UIです</h2>
             <p className="mt-1 text-sm font-bold leading-6 text-amber-900">
-              Phase 3で保存機能を実装予定です。現在はDB保存、画像保存、公開反映、hidden/paused/endedの永続変更を行いません。
+              {mode === "new"
+                ? "新規商品だけSupabaseのmanual_foodsへ保存します。画像アップロード保存、画像リサイズ、削除、rollbackはまだ行いません。"
+                : "Phase 3Aでは既存商品の編集保存はまだ行いません。表示内容の確認UIとして使います。"}
             </p>
           </div>
         </div>
@@ -104,6 +110,10 @@ export function AdminFoodForm({ mode, food, shopOptions = [] }: AdminFoodFormPro
             </option>
           ))}
         </SelectField>
+        <SelectField label="表示状態" name="hiddenState" defaultValue={hiddenState}>
+          <option value="visible">表示中</option>
+          <option value="hidden">非表示</option>
+        </SelectField>
         <TextField label="販売期間 start" name="saleStart" defaultValue={food?.saleStartDate ?? food?.startDate ?? ""} type="date" />
         <TextField label="販売期間 end" name="saleEnd" defaultValue={food?.saleEndDate ?? food?.endDate ?? ""} type="date" />
         <label className="block lg:col-span-2">
@@ -113,7 +123,7 @@ export function AdminFoodForm({ mode, food, shopOptions = [] }: AdminFoodFormPro
             rows={4}
             className="mt-1 w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm font-bold text-ink outline-none focus:border-park"
             placeholder="調査メモ、未確認事項、Phase 3での保存時注意点"
-            defaultValue=""
+            defaultValue={adminNotes ?? ""}
           />
         </label>
       </section>
@@ -161,18 +171,34 @@ export function AdminFoodForm({ mode, food, shopOptions = [] }: AdminFoodFormPro
               />
             </label>
             <p className="text-sm font-bold leading-6 text-slate-500">
-              Phase 2.1では選択した画像をブラウザ内でプレビューするだけです。アップロード、保存、public画像追加は行いません。
-              保存時に自動で商品画像サイズに調整予定です。
+              Phase 3Aでは選択した画像をブラウザ内でプレビューするだけです。アップロード、保存、public画像追加は行いません。
+              Phase 3B以降、保存時に自動で商品画像サイズに調整予定です。
             </p>
           </div>
         </div>
       </section>
 
       <div className="flex flex-col gap-2 rounded-lg border border-slate-200 bg-white p-4 shadow-soft sm:flex-row sm:items-center sm:justify-between">
-        <p className="text-sm font-bold text-slate-500">保存ボタンはPhase 2.1では意図的に無効です。</p>
-        <button type="submit" disabled className="h-11 cursor-not-allowed rounded-full bg-slate-200 px-6 text-sm font-black text-slate-500">
-          保存はPhase 3で実装予定
-        </button>
+        <div className="space-y-1">
+          <p className="text-sm font-bold text-slate-500">保存後は商品一覧へ戻ります。editor/ownerのみ保存できます。</p>
+          {saveState.message ? <p className={`text-sm font-black ${saveState.ok ? "text-emerald-700" : "text-rose-700"}`}>{saveState.message}</p> : null}
+        </div>
+        <div className="flex flex-col gap-2 sm:flex-row">
+          {mode === "edit" ? (
+            <button
+              type="submit"
+              name="intent"
+              value={food?.hidden ? "show" : "hide"}
+              disabled
+              className="h-11 rounded-full border border-slate-200 bg-white px-6 text-sm font-black text-slate-700 disabled:cursor-wait disabled:bg-slate-100"
+            >
+              {food?.hidden ? "再表示する（未実装）" : "非表示にする（未実装）"}
+            </button>
+          ) : null}
+          <button type="submit" disabled={pending || !saveEnabled} className="h-11 rounded-full bg-park px-6 text-sm font-black text-white disabled:cursor-wait disabled:bg-slate-300">
+            {pending ? "保存中..." : saveEnabled ? "保存する" : "保存はPhase 3B以降"}
+          </button>
+        </div>
       </div>
     </form>
   );

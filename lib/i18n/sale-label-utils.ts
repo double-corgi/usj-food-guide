@@ -35,6 +35,7 @@ export function getSaleStatusLabelI18n(food: Parameters<typeof getSaleStatus>[0]
   const status = getSaleStatus(food);
   const keyMap: Record<SaleStatus, TranslationKey> = {
     active: "common.saleActive",
+    paused: "foods.saleFilterUnknown",
     ended: "common.ended",
     upcoming: "foods.saleFilterUpcoming",
     unknown: "foods.saleFilterUnknown"

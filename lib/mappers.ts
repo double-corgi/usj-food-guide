@@ -209,6 +209,7 @@ function buildSalePeriodLabel(status: NonNullable<FoodWithRelations["saleStatus"
     return "販売終了";
   }
   if (status === "upcoming") return startDate ? `${formatDateJa(startDate)}開始予定` : "近日販売";
+  if (status === "paused") return "一時停止";
   return "販売期間確認中";
 }
 

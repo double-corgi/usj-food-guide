@@ -1,6 +1,6 @@
 export type ShopType = "restaurant" | "cart" | "wagon" | "unknown";
 export type FoodStatus = "active" | "scheduled" | "ended" | "inactive" | "unknown";
-export type SaleStatus = "active" | "ended" | "upcoming" | "unknown";
+export type SaleStatus = "active" | "paused" | "ended" | "upcoming" | "unknown";
 export type SaleType = "permanent" | "limited" | "event" | "unknown";
 export type FoodCategory =
   | "churro"

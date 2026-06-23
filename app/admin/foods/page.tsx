@@ -27,6 +27,7 @@ type AdminFoodsSearchParams = {
   saleStatus?: string;
   publicState?: string;
   hidden?: string;
+  saved?: string;
 };
 
 export default async function AdminFoodsPage({ searchParams }: { searchParams?: Promise<AdminFoodsSearchParams> }) {
@@ -41,10 +42,10 @@ export default async function AdminFoodsPage({ searchParams }: { searchParams?: 
     <div className="space-y-5">
       <div className="flex flex-col gap-3 lg:flex-row lg:items-end lg:justify-between">
         <div>
-          <p className="text-xs font-black uppercase tracking-[0.18em] text-park">Read-only admin</p>
+          <p className="text-xs font-black uppercase tracking-[0.18em] text-park">Generated + manual foods</p>
           <h1 className="mt-1 text-3xl font-black text-ink">商品一覧</h1>
           <p className="mt-2 max-w-3xl text-sm font-bold leading-6 text-slate-500">
-            Phase 2 はUIのみです。追加・編集フォームは表示できますが、保存、公開、画像アップロード保存、削除はまだできません。
+            generated JSONを正本として維持し、新規追加分だけSupabaseのmanual_foodsから結合表示します。Phase 3Aでは既存generated商品の編集保存はまだ行いません。
           </p>
         </div>
         <div className="flex flex-wrap gap-2">
@@ -69,6 +70,8 @@ export default async function AdminFoodsPage({ searchParams }: { searchParams?: 
           商品を追加
         </Link>
       ) : null}
+
+      {params.saved ? <SaveMessage value={params.saved} /> : null}
 
       <div className="grid gap-4 sm:grid-cols-4">
         <Metric label="全候補" value={foods.length} />
@@ -134,7 +137,7 @@ export default async function AdminFoodsPage({ searchParams }: { searchParams?: 
       <section className="hidden overflow-hidden rounded-lg border border-slate-200 bg-white shadow-soft lg:block">
         <div className="border-b border-slate-100 p-4">
           <h2 className="text-xl font-black text-ink">読み取り専用カタログ</h2>
-          <p className="mt-1 text-sm font-bold text-slate-500">最大300件を表示します。Phase 2.1では保存処理は未接続です。</p>
+          <p className="mt-1 text-sm font-bold text-slate-500">最大300件を表示します。新規追加商品はmanual_foodsから結合されます。</p>
         </div>
         <div className="overflow-x-auto">
           <table className="w-full min-w-[1180px] text-left text-sm">
@@ -295,6 +298,12 @@ function Select({ label, name, defaultValue, children }: { label: string; name: 
       </select>
     </label>
   );
+}
+
+function SaveMessage({ value }: { value: string }) {
+  const message = value === "created" ? "商品を追加しました。" : value === "updated" ? "商品を保存しました。" : null;
+  if (!message) return null;
+  return <div className="rounded-lg border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm font-black text-emerald-800 shadow-soft">{message}</div>;
 }
 
 function Badge({ label, tone = "default" }: { label: string; tone?: "default" | "ok" | "muted" }) {

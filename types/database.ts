@@ -173,6 +173,56 @@ export type Database = {
         Update: Partial<Database["public"]["Tables"]["foods"]["Insert"]>;
         Relationships: [];
       };
+      manual_foods: {
+        Row: {
+          id: string;
+          name: string;
+          normalized_name: string;
+          name_en: string | null;
+          category: FoodCategory;
+          category_tags: string[];
+          price: number | null;
+          area_name: string;
+          shop_name: string;
+          sale_status: "active" | "paused" | "ended" | "unknown";
+          public_state: "published" | "draft";
+          hidden: boolean;
+          start_date: string | null;
+          end_date: string | null;
+          image_url: string | null;
+          source_url: string;
+          admin_notes: string | null;
+          created_by: string;
+          updated_by: string;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id: string;
+          name: string;
+          normalized_name: string;
+          name_en?: string | null;
+          category?: FoodCategory;
+          category_tags?: string[];
+          price?: number | null;
+          area_name: string;
+          shop_name: string;
+          sale_status?: "active" | "paused" | "ended" | "unknown";
+          public_state?: "published" | "draft";
+          hidden?: boolean;
+          start_date?: string | null;
+          end_date?: string | null;
+          image_url?: string | null;
+          source_url: string;
+          admin_notes?: string | null;
+          created_by: string;
+          updated_by: string;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: Partial<Database["public"]["Tables"]["manual_foods"]["Insert"]>;
+        Relationships: [];
+      };
       food_images: {
         Row: {
           id: string;

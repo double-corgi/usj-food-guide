@@ -59,7 +59,7 @@ export type AdminSaleStatusValue = (typeof adminSaleStatusOptions)[number]["valu
 export type AdminPublicStateValue = (typeof adminPublicStateOptions)[number]["value"];
 
 export function getAdminSaleState(food: FoodWithRelations): AdminSaleStatusValue {
-  if (food.saleStatus === "active" || food.saleStatus === "ended" || food.saleStatus === "unknown" || food.saleStatus === "upcoming") {
+  if (food.saleStatus === "active" || food.saleStatus === "paused" || food.saleStatus === "ended" || food.saleStatus === "unknown" || food.saleStatus === "upcoming") {
     return food.saleStatus;
   }
   if (food.status === "active") return "active";
