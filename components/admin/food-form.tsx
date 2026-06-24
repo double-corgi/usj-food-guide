@@ -88,6 +88,7 @@ export function AdminFoodForm({ mode, food, shopOptions = [], action, visibility
   const visibleShopOptions = filteredShopOptions.slice(0, 10);
   const selectedShop = hasAreaSelection ? shopOptions.find((shop) => shop.name === shopSelection && shop.areaName === areaSelection) : undefined;
   const submittedShopName = hasAreaSelection ? (shopSelection === otherShopValue ? shopOther : shopSelection) : "";
+  const selectedShopLabel = selectedShop?.name ?? (shopSelection === otherShopValue && shopOther ? shopOther : null);
   const duplicateWarnings =
     mode === "new"
       ? findDuplicateWarnings({
@@ -182,81 +183,101 @@ export function AdminFoodForm({ mode, food, shopOptions = [], action, visibility
               先にエリアを選択してください
             </div>
           ) : null}
-          <div className="grid gap-3 rounded-lg border border-slate-200 bg-white p-3 sm:grid-cols-[1fr_auto] sm:items-end">
+
+          <div className="flex flex-col gap-3 rounded-lg border border-slate-200 bg-white p-4 sm:flex-row sm:items-center sm:justify-between">
+            <div>
+              <p className="text-xs font-black text-slate-500">選択済み店舗</p>
+              <p className="mt-1 text-base font-black text-ink">{selectedShopLabel ? `選択中: ${selectedShopLabel}` : "店舗未選択"}</p>
+              {selectedShop ? (
+                <p className="mt-1 text-xs font-bold text-slate-500">
+                  {selectedShop.areaName} / {formatShopType(selectedShop.type)}
+                </p>
+              ) : null}
+            </div>
+            <button
+              type="button"
+              onClick={() => {
+                setShopSelection("");
+                setShopOther("");
+              }}
+              disabled={!selectedShopLabel}
+              className="h-10 rounded-full border border-slate-200 bg-white px-4 text-xs font-black text-slate-700 disabled:cursor-not-allowed disabled:bg-slate-100 disabled:text-slate-400"
+            >
+              解除
+            </button>
+          </div>
+
+          <div className="rounded-lg border border-slate-200 bg-white p-3">
             <label className="block">
               <span className="text-sm font-black text-ink">店舗検索</span>
               <input
                 type="search"
                 value={shopQuery}
                 onChange={(event) => setShopQuery(event.currentTarget.value)}
-                placeholder="店舗名で検索（例: ハピネス）"
+                placeholder={hasAreaSelection ? "店舗名で検索（例: ハピネス）" : "先にエリアを選択してください"}
                 disabled={!hasAreaSelection}
                 className="mt-1 h-12 w-full rounded-lg border border-slate-200 bg-white px-3 text-sm font-bold text-ink outline-none focus:border-park disabled:cursor-not-allowed disabled:bg-slate-100 disabled:text-slate-400"
               />
             </label>
-            <div>
-              <p className="mb-1 text-sm font-black text-ink">店舗種別</p>
+
+            {hasAreaSelection ? (
+              <div className="mt-3">
+                <p className="mb-1 text-sm font-black text-ink">店舗種別</p>
               <div className="flex flex-wrap gap-1.5">
-              {shopTypeOptions.map((option) => (
-                <button
-                  key={option.value}
-                  type="button"
-                  onClick={() => setShopTypeFilter(option.value)}
-                  disabled={!hasAreaSelection}
-                  className={`h-9 rounded-full border px-3 text-xs font-black ${
-                    shopTypeFilter === option.value ? "border-park bg-mint text-park" : "border-slate-200 bg-white text-slate-600"
-                  } disabled:cursor-not-allowed disabled:border-slate-200 disabled:bg-slate-100 disabled:text-slate-400`}
-                >
-                  {option.label}
-                </button>
-              ))}
+                {shopTypeOptions.map((option) => (
+                  <button
+                    key={option.value}
+                    type="button"
+                    onClick={() => setShopTypeFilter(option.value)}
+                    className={`h-10 rounded-full border px-4 text-xs font-black ${
+                      shopTypeFilter === option.value ? "border-park bg-mint text-park" : "border-slate-200 bg-white text-slate-600"
+                    }`}
+                  >
+                    {option.label}
+                  </button>
+                ))}
               </div>
-            </div>
+              </div>
+            ) : null}
           </div>
-          <div className="rounded-lg border border-slate-200 bg-slate-50 p-2">
-            <div className="max-h-56 space-y-1 overflow-y-auto pr-1">
-              {!hasAreaSelection ? (
-                <p className="px-3 py-3 text-sm font-black text-slate-500">先にエリアを選択してください。</p>
-              ) : filteredShopOptions.length > 0 ? (
-                visibleShopOptions.map((shop) => (
+
+          {hasAreaSelection ? (
+            <div className="rounded-lg border border-slate-200 bg-slate-50 p-3">
+              <p className="mb-2 text-sm font-black text-ink">店舗候補</p>
+              <div className="space-y-2">
+                {filteredShopOptions.length > 0 ? (
+                  visibleShopOptions.map((shop) => (
                   <button
                     key={`${shop.areaName}:${shop.type}:${shop.name}`}
                     type="button"
                     onClick={() => setShopSelection(shop.name)}
-                    className={`flex w-full items-center justify-between gap-3 rounded-md px-3 py-2 text-left text-sm font-bold ${
-                      shopSelection === shop.name ? "bg-mint text-park" : "bg-white text-slate-700 hover:bg-slate-100"
+                    className={`flex min-h-14 w-full items-center justify-between gap-3 rounded-lg border px-4 py-3 text-left text-sm font-bold ${
+                      shopSelection === shop.name ? "border-park bg-mint text-park" : "border-slate-200 bg-white text-slate-700 hover:border-park"
                     }`}
                   >
                     <span>{shop.name}</span>
                     <span className="shrink-0 text-xs text-slate-500">{formatShopType(shop.type)}</span>
                   </button>
-                ))
-              ) : (
-                <p className="px-3 py-2 text-sm font-bold text-slate-500">該当する店舗候補がありません。</p>
-              )}
-              {hasAreaSelection && filteredShopOptions.length > visibleShopOptions.length ? (
-                <p className="px-3 py-2 text-xs font-bold text-slate-500">
+                  ))
+                ) : (
+                  <p className="rounded-lg bg-white px-4 py-3 text-sm font-bold text-slate-500">該当する店舗候補がありません。</p>
+                )}
+                {filteredShopOptions.length > visibleShopOptions.length ? (
+                  <p className="px-2 py-1 text-xs font-bold text-slate-500">
                   さらに {filteredShopOptions.length - visibleShopOptions.length} 件あります。店舗名で検索すると絞り込めます。
                 </p>
-              ) : null}
-            </div>
-          </div>
-          <button
-            type="button"
-            onClick={() => setShopSelection(otherShopValue)}
-            disabled={!hasAreaSelection}
-            className={`h-10 rounded-full border px-4 text-xs font-black ${
-              shopSelection === otherShopValue ? "border-park bg-mint text-park" : "border-slate-200 bg-white text-slate-700"
-            } disabled:cursor-not-allowed disabled:bg-slate-100 disabled:text-slate-400`}
-          >
-            その他（直接入力）
-          </button>
-          {selectedShop ? (
-            <div className="rounded-lg border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm font-black text-emerald-900">
-              選択中: {selectedShop.name}
-              <span className="ml-2 text-xs text-emerald-700">
-                {selectedShop.areaName} / {formatShopType(selectedShop.type)}
-              </span>
+                ) : null}
+              </div>
+
+              <button
+                type="button"
+                onClick={() => setShopSelection(otherShopValue)}
+                className={`mt-3 min-h-12 w-full rounded-lg border px-4 py-3 text-left text-sm font-black ${
+                  shopSelection === otherShopValue ? "border-park bg-mint text-park" : "border-slate-200 bg-white text-slate-700"
+                }`}
+              >
+                その他（直接入力）
+              </button>
             </div>
           ) : null}
           {shopSelection === otherShopValue ? (
