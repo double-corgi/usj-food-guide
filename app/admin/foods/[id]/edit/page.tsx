@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { setManualFoodVisibility, updateManualFood } from "@/app/admin/foods/actions";
-import { AdminFoodForm } from "@/components/admin/food-form";
+import { AdminFoodForm, type AdminShopOption } from "@/components/admin/food-form";
 import { requireAdmin } from "@/lib/admin-auth";
 import { listAllFoodCandidates } from "@/lib/repositories/foods";
 import { createServiceSupabaseClient } from "@/lib/supabase-server";
@@ -54,12 +54,23 @@ export default async function AdminEditFoodPage({ params }: { params: Promise<{ 
 
 function getFormOptions(foods: FoodWithRelations[]) {
   return {
-    shops: uniqueSorted(foods.map((food) => food.shop.name))
+    shops: uniqueSortedShops(
+      foods.map((food) => ({
+        name: food.shop.name,
+        areaName: food.area.name,
+        type: food.shop.type
+      }))
+    )
   };
 }
 
-function uniqueSorted(values: string[]) {
-  return Array.from(new Set(values.filter(Boolean))).sort((a, b) => a.localeCompare(b, "ja"));
+function uniqueSortedShops(values: AdminShopOption[]) {
+  const map = new Map<string, AdminShopOption>();
+  for (const shop of values) {
+    if (!shop.name) continue;
+    map.set(`${shop.areaName}:${shop.type}:${shop.name}`, shop);
+  }
+  return Array.from(map.values()).sort((a, b) => a.name.localeCompare(b.name, "ja") || a.areaName.localeCompare(b.areaName, "ja"));
 }
 
 async function getAdminFoodFields(food: FoodWithRelations) {

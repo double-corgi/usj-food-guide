@@ -1,7 +1,7 @@
 "use client";
 
 import { ImagePlus, Lock } from "lucide-react";
-import { useActionState, useEffect, useState } from "react";
+import { useActionState, useEffect, useMemo, useState } from "react";
 import {
   adminAreaOptions,
   adminCategoryTagOptions,
@@ -11,7 +11,7 @@ import {
   getAdminSaleState
 } from "@/lib/admin-food-ui";
 import type { ChangeEventHandler, ReactNode } from "react";
-import type { FoodWithRelations } from "@/types/domain";
+import type { FoodWithRelations, ShopType } from "@/types/domain";
 import type { AdminFoodSaveState } from "@/app/admin/foods/actions";
 
 type AdminFoodFormMode = "new" | "edit";
@@ -21,7 +21,7 @@ type AdminPublicState = "draft" | "published";
 type AdminFoodFormProps = {
   mode: AdminFoodFormMode;
   food?: FoodWithRelations;
-  shopOptions?: string[];
+  shopOptions?: AdminShopOption[];
   action?: (state: AdminFoodSaveState, formData: FormData) => Promise<AdminFoodSaveState>;
   visibilityAction?: (formData: FormData) => Promise<void>;
   adminNotes?: string | null;
@@ -37,15 +37,29 @@ export type DuplicateCandidate = {
   source: "generated" | "manual_foods";
 };
 
+export type AdminShopOption = {
+  name: string;
+  areaName: string;
+  type: ShopType;
+};
+
 const otherShopValue = "__other";
 const initialSaveState: AdminFoodSaveState = { ok: false, message: "" };
 const disabledSaveAction = async (): Promise<AdminFoodSaveState> => ({ ok: false, message: "generated商品の保存はできません。" });
 const visibleCategoryValues = new Set<string>(adminCategoryTagOptions.map((option) => option.value));
+const shopTypeOptions: Array<{ value: ShopType | "all"; label: string }> = [
+  { value: "all", label: "すべて" },
+  { value: "restaurant", label: "レストラン" },
+  { value: "cart", label: "フードカート" },
+  { value: "wagon", label: "ワゴン" }
+];
 
 export function AdminFoodForm({ mode, food, shopOptions = [], action, visibilityAction, adminNotes, categoryTags, duplicateCandidates = [] }: AdminFoodFormProps) {
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [shopSelection, setShopSelection] = useState(() => getInitialShopSelection(food, shopOptions));
-  const [shopOther, setShopOther] = useState(() => (food && !shopOptions.includes(food.shop.name) ? food.shop.name : ""));
+  const [shopOther, setShopOther] = useState(() => (food && !hasShopOption(shopOptions, food.shop.name) ? food.shop.name : ""));
+  const [shopTypeFilter, setShopTypeFilter] = useState<ShopType | "all">("all");
+  const [shopQuery, setShopQuery] = useState("");
   const [nameInput, setNameInput] = useState(food?.name ?? "");
   const [areaSelection, setAreaSelection] = useState(() => getInitialArea(food));
   const saveEnabled = Boolean(action);
@@ -57,6 +71,17 @@ export function AdminFoodForm({ mode, food, shopOptions = [], action, visibility
   const publicState = getPublicState(food);
   const hiddenState = food?.hidden ? "hidden" : "visible";
   const preservedHiddenCategories = Array.from(selectedCategories).filter((value) => !visibleCategoryValues.has(value));
+  const filteredShopOptions = useMemo(
+    () =>
+      shopOptions.filter((shop) => {
+        if (areaSelection && areaSelection !== "不明" && shop.areaName !== areaSelection) return false;
+        if (shopTypeFilter !== "all" && shop.type !== shopTypeFilter) return false;
+        if (shopQuery.trim() && !normalizeSearchText(shop.name).includes(normalizeSearchText(shopQuery))) return false;
+        return true;
+      }),
+    [areaSelection, shopOptions, shopQuery, shopTypeFilter]
+  );
+  const selectedShop = shopOptions.find((shop) => shop.name === shopSelection && (areaSelection === "不明" || shop.areaName === areaSelection));
   const duplicateWarnings =
     mode === "new"
       ? findDuplicateWarnings({
@@ -115,28 +140,93 @@ export function AdminFoodForm({ mode, food, shopOptions = [], action, visibility
         <TextField label="商品名 日本語" name="nameJa" defaultValue={food?.name ?? ""} required onChange={(event) => setNameInput(event.currentTarget.value)} />
         <TextField label="商品名 英語（任意）" name="nameEn" defaultValue="" placeholder="未入力でOK" />
         <TextField label="価格" name="price" defaultValue={formatPriceValue(food)} inputMode="numeric" placeholder="例: 800" required />
-        <SelectField label="エリア" name="area" defaultValue={areaSelection} onChange={(event) => setAreaSelection(event.currentTarget.value)}>
+        <SelectField
+          label="エリア"
+          name="area"
+          defaultValue={areaSelection}
+          onChange={(event) => {
+            const nextArea = event.currentTarget.value;
+            setAreaSelection(nextArea);
+            if (shopSelection && shopSelection !== otherShopValue && !shopOptions.some((shop) => shop.name === shopSelection && (nextArea === "不明" || shop.areaName === nextArea))) {
+              setShopSelection("");
+            }
+          }}
+        >
           {adminAreaOptions.map((area) => (
             <option key={area} value={area}>
               {area}
             </option>
           ))}
         </SelectField>
-        <div className="space-y-2">
-          <SelectField
-            label="店舗"
-            name="shopSelection"
-            defaultValue={shopSelection}
-            onChange={(event) => setShopSelection(event.currentTarget.value)}
+        <div className="space-y-3 lg:col-span-2">
+          <input type="hidden" name="shopSelection" value={shopSelection} />
+          <div>
+            <p className="text-xs font-black text-slate-500">店舗</p>
+            <p className="mt-1 text-xs font-bold text-slate-500">
+              エリア、店舗種別、検索で候補を絞れます。見つからない場合は「その他」を選んで入力してください。
+            </p>
+          </div>
+          <div className="grid gap-2 sm:grid-cols-[1fr_auto] sm:items-end">
+            <label className="block">
+              <span className="text-xs font-black text-slate-500">店舗検索</span>
+              <input
+                type="search"
+                value={shopQuery}
+                onChange={(event) => setShopQuery(event.currentTarget.value)}
+                placeholder="例: ハピ"
+                className="mt-1 h-11 w-full rounded-lg border border-slate-200 bg-white px-3 text-sm font-bold text-ink outline-none focus:border-park"
+              />
+            </label>
+            <div className="flex flex-wrap gap-1.5">
+              {shopTypeOptions.map((option) => (
+                <button
+                  key={option.value}
+                  type="button"
+                  onClick={() => setShopTypeFilter(option.value)}
+                  className={`h-9 rounded-full border px-3 text-xs font-black ${
+                    shopTypeFilter === option.value ? "border-park bg-mint text-park" : "border-slate-200 bg-white text-slate-600"
+                  }`}
+                >
+                  {option.label}
+                </button>
+              ))}
+            </div>
+          </div>
+          <div className="rounded-lg border border-slate-200 bg-slate-50 p-2">
+            <div className="max-h-56 space-y-1 overflow-y-auto pr-1">
+              {filteredShopOptions.length > 0 ? (
+                filteredShopOptions.map((shop) => (
+                  <button
+                    key={`${shop.areaName}:${shop.type}:${shop.name}`}
+                    type="button"
+                    onClick={() => setShopSelection(shop.name)}
+                    className={`flex w-full items-center justify-between gap-3 rounded-md px-3 py-2 text-left text-sm font-bold ${
+                      shopSelection === shop.name ? "bg-mint text-park" : "bg-white text-slate-700 hover:bg-slate-100"
+                    }`}
+                  >
+                    <span>{shop.name}</span>
+                    <span className="shrink-0 text-xs text-slate-500">{formatShopType(shop.type)}</span>
+                  </button>
+                ))
+              ) : (
+                <p className="px-3 py-2 text-sm font-bold text-slate-500">該当する店舗候補がありません。</p>
+              )}
+            </div>
+          </div>
+          <button
+            type="button"
+            onClick={() => setShopSelection(otherShopValue)}
+            className={`h-10 rounded-full border px-4 text-xs font-black ${
+              shopSelection === otherShopValue ? "border-park bg-mint text-park" : "border-slate-200 bg-white text-slate-700"
+            }`}
           >
-            <option value="">店舗を選択</option>
-            {shopOptions.map((shop) => (
-              <option key={shop} value={shop}>
-                {shop}
-              </option>
-            ))}
-            <option value={otherShopValue}>その他（直接入力）</option>
-          </SelectField>
+            その他（直接入力）
+          </button>
+          {selectedShop ? (
+            <p className="text-xs font-bold text-slate-500">
+              選択中: {selectedShop.name} / {selectedShop.areaName} / {formatShopType(selectedShop.type)}
+            </p>
+          ) : null}
           {shopSelection === otherShopValue ? (
             <TextField label="店舗名（その他）" name="shopOther" defaultValue={shopOther} placeholder="例: ユニバーサル・マーケット内ハピネス・ワゴン" required onChange={(event) => setShopOther(event.currentTarget.value)} />
           ) : null}
@@ -347,9 +437,27 @@ function getInitialArea(food?: FoodWithRelations) {
   return area && adminAreaOptions.some((option) => option === area) ? area : "不明";
 }
 
-function getInitialShopSelection(food: FoodWithRelations | undefined, shopOptions: string[]) {
+function getInitialShopSelection(food: FoodWithRelations | undefined, shopOptions: AdminShopOption[]) {
   if (!food) return "";
-  return shopOptions.includes(food.shop.name) ? food.shop.name : otherShopValue;
+  return hasShopOption(shopOptions, food.shop.name) ? food.shop.name : otherShopValue;
+}
+
+function hasShopOption(shopOptions: AdminShopOption[], shopName: string) {
+  return shopOptions.some((shop) => shop.name === shopName);
+}
+
+function formatShopType(type: ShopType) {
+  if (type === "restaurant") return "レストラン";
+  if (type === "cart") return "フードカート";
+  if (type === "wagon") return "ワゴン";
+  return "種別不明";
+}
+
+function normalizeSearchText(value: string) {
+  return value
+    .toLowerCase()
+    .replace(/[ \s　・･〜~ー\-—＿_「」『』（）()【】[\]]/g, "")
+    .trim();
 }
 
 function findDuplicateWarnings({
