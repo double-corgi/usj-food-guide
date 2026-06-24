@@ -1,4 +1,5 @@
 import { FoodGrid } from "@/components/food-grid";
+import { getCurrentAdmin } from "@/lib/admin-auth";
 import { readGeneratedSummary } from "@/lib/repositories/generated-data";
 import { listFoods } from "@/lib/repositories/foods";
 import type { DiningType, FoodCategory } from "@/types/domain";
@@ -85,11 +86,13 @@ export default async function FoodsPage({
   searchParams: Promise<{ category?: string; area?: string; shop?: string; diningType?: string; status?: string; sale?: string; mode?: string; sort?: string }>;
 }) {
   const resolvedSearchParams = await searchParams;
-  const foods = await listFoods();
+  const [foods, admin] = await Promise.all([listFoods(), getCurrentAdmin()]);
   const generatedSummary = readGeneratedSummary();
+  const adminCanEdit = admin?.mode === "supabase" && (admin.role === "owner" || admin.role === "editor");
   return (
     <FoodGrid
       foods={foods}
+      adminCanEdit={adminCanEdit}
       mode={parseMode(resolvedSearchParams.mode)}
       generatedAt={typeof generatedSummary.generatedAt === "string" ? generatedSummary.generatedAt : undefined}
       initialCategory={parseCategory(resolvedSearchParams.category)}

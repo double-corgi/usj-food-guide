@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { ListChecks, Plus, ShieldCheck } from "lucide-react";
+import { ExternalLink, PencilLine, Plus, ShieldCheck } from "lucide-react";
 import { usePathname } from "next/navigation";
 import type { AdminRole } from "@/lib/admin-auth";
 
@@ -16,6 +16,8 @@ export function AdminSessionBar({
   if (pathname.startsWith("/admin")) return null;
 
   const canEdit = role === "owner" || role === "editor";
+  const currentFoodId = getCurrentFoodId(pathname);
+  const canEditCurrentFood = canEdit && currentFoodId?.startsWith("food-manual-");
 
   return (
     <aside className="fixed inset-x-3 bottom-[calc(env(safe-area-inset-bottom)+8.2rem)] z-[60] rounded-2xl border border-park/20 bg-white/95 p-2 shadow-[0_10px_32px_rgba(0,0,0,0.18)] backdrop-blur md:bottom-5 md:left-auto md:right-5 md:w-auto md:min-w-[360px]">
@@ -27,20 +29,31 @@ export function AdminSessionBar({
         <Link href="/admin" className="inline-flex min-h-9 flex-1 items-center justify-center rounded-full bg-ink px-3 text-xs font-black text-white md:flex-none">
           管理画面へ
         </Link>
-        <Link href="/admin/foods" className="inline-flex min-h-9 flex-1 items-center justify-center gap-1 rounded-full border border-slate-200 bg-white px-3 text-xs font-black text-ink md:flex-none">
-          <ListChecks size={14} aria-hidden />
-          商品一覧
-        </Link>
         {canEdit ? (
           <Link href="/admin/foods/new" className="inline-flex min-h-9 flex-1 items-center justify-center gap-1 rounded-full bg-park px-3 text-xs font-black text-white md:flex-none">
             <Plus size={14} aria-hidden />
             商品を追加
           </Link>
         ) : null}
+        {canEditCurrentFood ? (
+          <Link href={`/admin/foods/${currentFoodId}/edit`} className="inline-flex min-h-9 flex-1 items-center justify-center gap-1 rounded-full border border-park/30 bg-mint px-3 text-xs font-black text-park md:flex-none">
+            <PencilLine size={14} aria-hidden />
+            この商品を編集
+          </Link>
+        ) : null}
+        <Link href="/foods" className="inline-flex min-h-9 flex-1 items-center justify-center gap-1 rounded-full border border-slate-200 bg-white px-3 text-xs font-black text-ink md:flex-none">
+          <ExternalLink size={14} aria-hidden />
+          公開ページを見る
+        </Link>
       </div>
       <p className="mt-1 truncate px-2 text-[10px] font-bold text-slate-500">
         {role} / {email}
       </p>
     </aside>
   );
+}
+
+function getCurrentFoodId(pathname: string) {
+  const match = pathname.match(/^\/foods\/([^/]+)$/);
+  return match?.[1] ? decodeURIComponent(match[1]) : null;
 }

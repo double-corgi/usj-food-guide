@@ -15,7 +15,8 @@ export function FoodCard({
   logs,
   onToggleEaten,
   isWanted = false,
-  onToggleWanted
+  onToggleWanted,
+  adminCanEdit = false
 }: {
   food: FoodWithRelations;
   allFoods?: FoodWithRelations[];
@@ -23,6 +24,7 @@ export function FoodCard({
   onToggleEaten: (foodId: string, spentAmount?: number) => void;
   isWanted?: boolean;
   onToggleWanted?: () => void;
+  adminCanEdit?: boolean;
 }) {
   const { locale, t } = useLocale();
   const locations = getDisplayLocations(food);
@@ -37,9 +39,19 @@ export function FoodCard({
   const state = eaten ? cardStates.eaten : cardStates.uneaten;
   const badges = getCardBadges({ food, t });
   const displayName = getFoodNameI18n(food.id, locale, food.name);
+  const canEditThisFood = adminCanEdit && isManualFood(food);
 
   return (
     <article data-food-card data-food-name={food.name} className={`group relative min-w-0 overflow-hidden rounded-2xl bg-white pb-11 ring-1 ring-slate-200/70 transition duration-200 active:scale-[0.99] md:hover:-translate-y-0.5 ${state.borderClass} ${getSaleStatus(food) === "ended" ? "opacity-75 grayscale" : ""}`}>
+      {canEditThisFood ? (
+        <Link
+          href={`/admin/foods/${food.id}/edit`}
+          onClick={(event) => event.stopPropagation()}
+          className="absolute right-2 top-2 z-20 inline-flex h-8 items-center justify-center rounded-full bg-park/95 px-3 text-[11px] font-black text-white shadow-soft"
+        >
+          編集
+        </Link>
+      ) : null}
       <Link href={`/foods/${food.id}`} className="flex min-w-0 flex-col">
         <div className="relative aspect-[5/4] shrink-0 overflow-hidden bg-slate-100">
           <FoodImage food={food} alt={displayName} className="h-full w-full transition duration-300 group-hover:scale-[1.03]" variant="cover" />
@@ -160,6 +172,10 @@ function getCanonicalActionFoodId(foods: FoodWithRelations[], logs: UserFoodLog[
     return loggedFood ? getCanonicalFoodKey(loggedFood) === canonicalKey : log.foodId === food.id;
   });
   return existing?.foodId ?? getCanonicalFoodId(foods, food);
+}
+
+function isManualFood(food: FoodWithRelations) {
+  return food.manualOverride === true || food.sourceNames?.includes("manual_foods") === true || food.id.startsWith("food-manual-");
 }
 
 function getCardBadges({

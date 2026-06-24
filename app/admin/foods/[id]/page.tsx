@@ -36,6 +36,7 @@ export default async function AdminFoodDetailPage({
   const canManage = admin.role !== "viewer";
   const activeImage = food.images.find((image) => image.enabled) ?? food.images[0];
   const adminFields = await getManualAdminFields(food.id);
+  const manualFood = adminFields.isManualFood || isManualFood(food);
 
   return (
     <div className="space-y-5">
@@ -46,10 +47,10 @@ export default async function AdminFoodDetailPage({
           <p className="mt-2 text-sm font-bold text-slate-500">{food.id}</p>
         </div>
         <div className="flex flex-wrap gap-2">
-          {canManage ? (
-            <Link href={`/admin/foods/${food.id}/edit`} className="inline-flex h-10 items-center gap-2 rounded-full bg-park px-4 text-xs font-black text-white shadow-soft">
+          {canManage && manualFood ? (
+            <Link href={`/admin/foods/${food.id}/edit`} className="inline-flex h-12 items-center gap-2 rounded-full bg-park px-5 text-sm font-black text-white shadow-soft">
               <PencilLine size={15} aria-hidden />
-              編集UIを開く
+              編集する
             </Link>
           ) : null}
           <Link href="/admin/foods" className="inline-flex h-10 items-center rounded-full border border-slate-200 bg-white px-4 text-xs font-black text-ink hover:border-park">
@@ -59,6 +60,25 @@ export default async function AdminFoodDetailPage({
       </div>
 
       <SaveMessage saved={query.saved} image={query.image} error={query.error} />
+
+      <section className={`rounded-lg border p-4 shadow-soft ${manualFood ? "border-park/20 bg-mint" : "border-slate-200 bg-slate-50"}`}>
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+          <div>
+            <span className={`inline-flex rounded-full px-3 py-1 text-xs font-black ${manualFood ? "bg-white text-park" : "bg-white text-slate-600"}`}>
+              {manualFood ? "手動追加商品" : "自動取得データ"}
+            </span>
+            <p className="mt-2 text-sm font-bold leading-6 text-slate-600">
+              {manualFood ? "この商品は管理画面から編集・画像差し替え・非表示運用ができます。" : "自動取得データのため直接編集できません。修正が必要な場合は管理画面で内容を確認してください。"}
+            </p>
+          </div>
+          {canManage && manualFood ? (
+            <Link href={`/admin/foods/${food.id}/edit`} className="inline-flex h-12 items-center justify-center gap-2 rounded-full bg-park px-5 text-sm font-black text-white shadow-soft">
+              <PencilLine size={16} aria-hidden />
+              編集する
+            </Link>
+          ) : null}
+        </div>
+      </section>
 
       <section className="grid gap-5 lg:grid-cols-[360px_1fr]">
         <div className="overflow-hidden rounded-lg border border-slate-200 bg-white shadow-soft">
@@ -201,13 +221,17 @@ function getPublicState(food: FoodWithRelations) {
 
 async function getManualAdminFields(foodId: string) {
   const supabase = createServiceSupabaseClient();
-  if (!supabase) return { adminNotes: null as string | null };
-  const { data, error } = await supabase.from("manual_foods").select("admin_notes").eq("id", foodId).maybeSingle();
+  if (!supabase) return { adminNotes: null as string | null, isManualFood: false };
+  const { data, error } = await supabase.from("manual_foods").select("id, admin_notes").eq("id", foodId).maybeSingle();
   if (error) {
     console.error("Failed to load manual food admin notes", {
       foodId,
       message: error.message
     });
   }
-  return { adminNotes: data?.admin_notes ?? null };
+  return { adminNotes: data?.admin_notes ?? null, isManualFood: Boolean(data?.id) };
+}
+
+function isManualFood(food: FoodWithRelations) {
+  return food.manualOverride === true || food.sourceNames?.includes("manual_foods") === true || food.id.startsWith("food-manual-");
 }

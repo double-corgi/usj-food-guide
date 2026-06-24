@@ -47,7 +47,8 @@ export function FoodGrid({
   initialSaleFilter,
   initialSort,
   title,
-  showRequestCta = true
+  showRequestCta = true,
+  adminCanEdit = false
 }: {
   foods: FoodWithRelations[];
   mode?: ListMode;
@@ -60,6 +61,7 @@ export function FoodGrid({
   title?: string;
   generatedAt?: string;
   showRequestCta?: boolean;
+  adminCanEdit?: boolean;
 }) {
   const { locale, t } = useLocale();
   const { logs, ready, error, toggleEaten } = useFoodLogs();
@@ -335,6 +337,7 @@ export function FoodGrid({
                 onToggleEaten={handleToggleEaten}
                 isWanted={isWanted(food)}
                 onToggleWanted={() => toggleWanted(food)}
+                adminCanEdit={adminCanEdit}
               />
             ))}
           </div>
