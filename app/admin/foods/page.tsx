@@ -1,6 +1,8 @@
 import Link from "next/link";
 import { PencilLine, Plus, Search } from "lucide-react";
+import { setManualFoodVisibility } from "@/app/admin/foods/actions";
 import { FoodImage } from "@/components/food-image";
+import { ManualFoodVisibilityButton } from "@/components/admin/manual-food-visibility-button";
 import { requireAdmin } from "@/lib/admin-auth";
 import {
   adminFoodCategoryOptions,
@@ -190,6 +192,9 @@ export default async function AdminFoodsPage({ searchParams }: { searchParams?: 
                           編集
                         </Link>
                       ) : null}
+                      {canManage && isManualFood(food) ? (
+                        <ManualFoodVisibilityButton foodId={food.id} hidden={food.hidden} action={setManualFoodVisibility} />
+                      ) : null}
                     </div>
                   </td>
                 </tr>
@@ -265,6 +270,11 @@ function FoodCard({ food, canManage }: { food: FoodWithRelations; canManage: boo
             </Link>
           ) : null}
         </div>
+        {canManage && isManualFood(food) ? (
+          <div className="pt-1">
+            <ManualFoodVisibilityButton foodId={food.id} hidden={food.hidden} action={setManualFoodVisibility} />
+          </div>
+        ) : null}
       </div>
     </article>
   );
@@ -304,7 +314,16 @@ function Select({ label, name, defaultValue, children }: { label: string; name: 
 }
 
 function SaveMessage({ value }: { value: string }) {
-  const message = value === "created" ? "商品を追加しました。" : value === "updated" ? "商品を保存しました。" : null;
+  const message =
+    value === "created"
+      ? "商品を追加しました。"
+      : value === "updated"
+        ? "商品を保存しました。"
+        : value === "hidden"
+          ? "商品を公開ページから非表示にしました。管理画面には残っています。"
+          : value === "shown"
+            ? "商品を公開ページに再表示しました。"
+            : null;
   if (!message) return null;
   return <div className="rounded-lg border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm font-black text-emerald-800 shadow-soft">{message}</div>;
 }
@@ -325,4 +344,8 @@ function getSaleState(food: FoodWithRelations) {
 
 function getPublicState(food: FoodWithRelations) {
   return getAdminPublicState(food);
+}
+
+function isManualFood(food: FoodWithRelations) {
+  return food.manualOverride === true || food.sourceNames?.includes("manual_foods") === true || food.id.startsWith("food-manual-");
 }

@@ -174,7 +174,7 @@ export async function setManualFoodVisibility(formData: FormData): Promise<void>
   }
 
   revalidateAdminFoods(foodId);
-  redirect(`/admin/foods/${foodId}?saved=${hidden ? "hidden" : "shown"}`);
+  redirect(`/admin/foods?saved=${hidden ? "hidden" : "shown"}`);
 }
 
 function parseFoodForm(formData: FormData) {
