@@ -72,17 +72,20 @@ export function AdminFoodForm({ mode, food, shopOptions = [], action, visibility
   const publicState = getPublicState(food);
   const hiddenState = food?.hidden ? "hidden" : "visible";
   const preservedHiddenCategories = Array.from(selectedCategories).filter((value) => !visibleCategoryValues.has(value));
+  const hasAreaSelection = areaSelection !== "不明";
   const filteredShopOptions = useMemo(
-    () =>
-      shopOptions.filter((shop) => {
-        if (areaSelection && areaSelection !== "不明" && shop.areaName !== areaSelection) return false;
+    () => {
+      if (!hasAreaSelection) return [];
+      return shopOptions.filter((shop) => {
+        if (shop.areaName !== areaSelection) return false;
         if (shopTypeFilter !== "all" && shop.type !== shopTypeFilter) return false;
         if (shopQuery.trim() && !normalizeSearchText(shop.name).includes(normalizeSearchText(shopQuery))) return false;
         return true;
-      }),
-    [areaSelection, shopOptions, shopQuery, shopTypeFilter]
+      });
+    },
+    [areaSelection, hasAreaSelection, shopOptions, shopQuery, shopTypeFilter]
   );
-  const selectedShop = shopOptions.find((shop) => shop.name === shopSelection && (areaSelection === "不明" || shop.areaName === areaSelection));
+  const selectedShop = hasAreaSelection ? shopOptions.find((shop) => shop.name === shopSelection && shop.areaName === areaSelection) : undefined;
   const duplicateWarnings =
     mode === "new"
       ? findDuplicateWarnings({
@@ -148,6 +151,11 @@ export function AdminFoodForm({ mode, food, shopOptions = [], action, visibility
           onChange={(event) => {
             const nextArea = event.currentTarget.value;
             setAreaSelection(nextArea);
+            if (nextArea === "不明") {
+              setShopSelection("");
+              setShopQuery("");
+              return;
+            }
             if (shopSelection && shopSelection !== otherShopValue && !hasShopOption(shopOptions, shopSelection, nextArea)) {
               setShopSelection("");
             }
@@ -160,42 +168,54 @@ export function AdminFoodForm({ mode, food, shopOptions = [], action, visibility
           ))}
         </SelectField>
         <div className="space-y-3 lg:col-span-2">
-          <input type="hidden" name="shopSelection" value={shopSelection} />
-          <div>
-            <p className="text-xs font-black text-slate-500">店舗</p>
-            <p className="mt-1 text-xs font-bold text-slate-500">
-              エリア、店舗種別、検索で候補を絞れます。見つからない場合は「その他」を選んで入力してください。
+          <input type="hidden" name="shopSelection" value={hasAreaSelection ? shopSelection : ""} />
+          <div className="rounded-lg border border-slate-200 bg-slate-50 p-3">
+            <p className="text-sm font-black text-ink">店舗</p>
+            <p className="mt-1 text-xs font-bold leading-5 text-slate-500">
+              1. エリアを選ぶ → 2. 店舗種別で絞る → 3. 店舗名で検索 → 4. 店舗を選ぶ、の順で入力してください。
             </p>
           </div>
-          <div className="grid gap-2 sm:grid-cols-[1fr_auto] sm:items-end">
+          {!hasAreaSelection ? (
+            <div className="rounded-lg border border-amber-200 bg-amber-50 px-4 py-3 text-sm font-black text-amber-900">
+              先にエリアを選択してください
+            </div>
+          ) : null}
+          <div className="grid gap-3 sm:grid-cols-[1fr_auto] sm:items-end">
             <label className="block">
-              <span className="text-xs font-black text-slate-500">店舗検索</span>
+              <span className="text-sm font-black text-ink">店舗検索</span>
               <input
                 type="search"
                 value={shopQuery}
                 onChange={(event) => setShopQuery(event.currentTarget.value)}
-                placeholder="例: ハピ"
-                className="mt-1 h-11 w-full rounded-lg border border-slate-200 bg-white px-3 text-sm font-bold text-ink outline-none focus:border-park"
+                placeholder="店舗名で検索（例: ハピネス）"
+                disabled={!hasAreaSelection}
+                className="mt-1 h-12 w-full rounded-lg border border-slate-200 bg-white px-3 text-sm font-bold text-ink outline-none focus:border-park disabled:cursor-not-allowed disabled:bg-slate-100 disabled:text-slate-400"
               />
             </label>
-            <div className="flex flex-wrap gap-1.5">
+            <div>
+              <p className="mb-1 text-sm font-black text-ink">店舗種別</p>
+              <div className="flex flex-wrap gap-1.5">
               {shopTypeOptions.map((option) => (
                 <button
                   key={option.value}
                   type="button"
                   onClick={() => setShopTypeFilter(option.value)}
+                  disabled={!hasAreaSelection}
                   className={`h-9 rounded-full border px-3 text-xs font-black ${
                     shopTypeFilter === option.value ? "border-park bg-mint text-park" : "border-slate-200 bg-white text-slate-600"
-                  }`}
+                  } disabled:cursor-not-allowed disabled:border-slate-200 disabled:bg-slate-100 disabled:text-slate-400`}
                 >
                   {option.label}
                 </button>
               ))}
+              </div>
             </div>
           </div>
           <div className="rounded-lg border border-slate-200 bg-slate-50 p-2">
             <div className="max-h-56 space-y-1 overflow-y-auto pr-1">
-              {filteredShopOptions.length > 0 ? (
+              {!hasAreaSelection ? (
+                <p className="px-3 py-3 text-sm font-black text-slate-500">先にエリアを選択してください。</p>
+              ) : filteredShopOptions.length > 0 ? (
                 filteredShopOptions.map((shop) => (
                   <button
                     key={`${shop.areaName}:${shop.type}:${shop.name}`}
@@ -217,9 +237,10 @@ export function AdminFoodForm({ mode, food, shopOptions = [], action, visibility
           <button
             type="button"
             onClick={() => setShopSelection(otherShopValue)}
+            disabled={!hasAreaSelection}
             className={`h-10 rounded-full border px-4 text-xs font-black ${
               shopSelection === otherShopValue ? "border-park bg-mint text-park" : "border-slate-200 bg-white text-slate-700"
-            }`}
+            } disabled:cursor-not-allowed disabled:bg-slate-100 disabled:text-slate-400`}
           >
             その他（直接入力）
           </button>
