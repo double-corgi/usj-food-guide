@@ -57,8 +57,8 @@ const shopTypeOptions: Array<{ value: ShopType | "all"; label: string }> = [
 export function AdminFoodForm({ mode, food, shopOptions = [], action, visibilityAction, adminNotes, categoryTags, duplicateCandidates = [] }: AdminFoodFormProps) {
   const initialArea = getInitialArea(food);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
-  const [shopSelection, setShopSelection] = useState(() => getInitialShopSelection(food, shopOptions, initialArea));
-  const [shopOther, setShopOther] = useState(() => (food && !hasShopOption(shopOptions, food.shop.name, initialArea) ? food.shop.name : ""));
+  const [selectedShopName, setSelectedShopName] = useState(() => getInitialSelectedShopName(food, shopOptions, initialArea));
+  const [customShopName, setCustomShopName] = useState(() => (food && !hasShopOption(shopOptions, food.shop.name, initialArea) ? food.shop.name : ""));
   const [shopTypeFilter, setShopTypeFilter] = useState<ShopType | "all">("all");
   const [shopQuery, setShopQuery] = useState("");
   const [nameInput, setNameInput] = useState(food?.name ?? "");
@@ -86,15 +86,15 @@ export function AdminFoodForm({ mode, food, shopOptions = [], action, visibility
     [areaSelection, hasAreaSelection, shopOptions, shopQuery, shopTypeFilter]
   );
   const visibleShopOptions = filteredShopOptions.slice(0, 10);
-  const selectedShop = hasAreaSelection ? shopOptions.find((shop) => shop.name === shopSelection && shop.areaName === areaSelection) : undefined;
-  const submittedShopName = hasAreaSelection ? (shopSelection === otherShopValue ? shopOther : shopSelection) : "";
-  const selectedShopLabel = selectedShop?.name ?? (shopSelection === otherShopValue && shopOther ? shopOther : null);
+  const selectedShop = hasAreaSelection ? shopOptions.find((shop) => shop.name === selectedShopName && shop.areaName === areaSelection) : undefined;
+  const submittedShopName = hasAreaSelection ? (selectedShopName === otherShopValue ? customShopName : selectedShopName) : "";
+  const selectedShopLabel = selectedShop?.name ?? (selectedShopName === otherShopValue && customShopName ? customShopName : null);
   const duplicateWarnings =
     mode === "new"
       ? findDuplicateWarnings({
           name: nameInput,
           areaName: areaSelection,
-          shopName: shopSelection === otherShopValue ? shopOther : shopSelection,
+          shopName: selectedShopName === otherShopValue ? customShopName : selectedShopName,
           candidates: duplicateCandidates
         })
       : [];
@@ -155,12 +155,12 @@ export function AdminFoodForm({ mode, food, shopOptions = [], action, visibility
             const nextArea = event.currentTarget.value;
             setAreaSelection(nextArea);
             if (nextArea === "不明") {
-              setShopSelection("");
+              setSelectedShopName("");
               setShopQuery("");
               return;
             }
-            if (shopSelection && shopSelection !== otherShopValue && !hasShopOption(shopOptions, shopSelection, nextArea)) {
-              setShopSelection("");
+            if (selectedShopName && selectedShopName !== otherShopValue && !hasShopOption(shopOptions, selectedShopName, nextArea)) {
+              setSelectedShopName("");
             }
           }}
         >
@@ -197,8 +197,8 @@ export function AdminFoodForm({ mode, food, shopOptions = [], action, visibility
             <button
               type="button"
               onClick={() => {
-                setShopSelection("");
-                setShopOther("");
+                setSelectedShopName("");
+                setCustomShopName("");
               }}
               disabled={!selectedShopLabel}
               className="h-10 rounded-full border border-slate-200 bg-white px-4 text-xs font-black text-slate-700 disabled:cursor-not-allowed disabled:bg-slate-100 disabled:text-slate-400"
@@ -216,6 +216,7 @@ export function AdminFoodForm({ mode, food, shopOptions = [], action, visibility
                 onChange={(event) => setShopQuery(event.currentTarget.value)}
                 placeholder={hasAreaSelection ? "店舗名で検索（例: ハピネス）" : "先にエリアを選択してください"}
                 disabled={!hasAreaSelection}
+                autoComplete="off"
                 className="mt-1 h-12 w-full rounded-lg border border-slate-200 bg-white px-3 text-sm font-bold text-ink outline-none focus:border-park disabled:cursor-not-allowed disabled:bg-slate-100 disabled:text-slate-400"
               />
             </label>
@@ -250,9 +251,9 @@ export function AdminFoodForm({ mode, food, shopOptions = [], action, visibility
                   <button
                     key={`${shop.areaName}:${shop.type}:${shop.name}`}
                     type="button"
-                    onClick={() => setShopSelection(shop.name)}
+                    onClick={() => setSelectedShopName(shop.name)}
                     className={`flex min-h-14 w-full items-center justify-between gap-3 rounded-lg border px-4 py-3 text-left text-sm font-bold ${
-                      shopSelection === shop.name ? "border-park bg-mint text-park" : "border-slate-200 bg-white text-slate-700 hover:border-park"
+                      selectedShopName === shop.name ? "border-park bg-mint text-park" : "border-slate-200 bg-white text-slate-700 hover:border-park"
                     }`}
                   >
                     <span>{shop.name}</span>
@@ -271,17 +272,17 @@ export function AdminFoodForm({ mode, food, shopOptions = [], action, visibility
 
               <button
                 type="button"
-                onClick={() => setShopSelection(otherShopValue)}
+                onClick={() => setSelectedShopName(otherShopValue)}
                 className={`mt-3 min-h-12 w-full rounded-lg border px-4 py-3 text-left text-sm font-black ${
-                  shopSelection === otherShopValue ? "border-park bg-mint text-park" : "border-slate-200 bg-white text-slate-700"
+                  selectedShopName === otherShopValue ? "border-park bg-mint text-park" : "border-slate-200 bg-white text-slate-700"
                 }`}
               >
                 その他（直接入力）
               </button>
             </div>
           ) : null}
-          {shopSelection === otherShopValue ? (
-            <TextField label="店舗名（その他）" name="shopOther" defaultValue={shopOther} placeholder="例: ユニバーサル・マーケット内ハピネス・ワゴン" required onChange={(event) => setShopOther(event.currentTarget.value)} />
+          {selectedShopName === otherShopValue ? (
+            <TextField label="店舗名（その他）" name="customShopName" defaultValue={customShopName} placeholder="例: ユニバーサル・マーケット内ハピネス・ワゴン" required autoComplete="off" onChange={(event) => setCustomShopName(event.currentTarget.value)} />
           ) : null}
         </div>
         <SelectField label="販売状態" name="saleStatus" defaultValue={saleStatus}>
@@ -407,7 +408,7 @@ function TextField({
   inputMode,
   placeholder,
   required = false,
-  list,
+  autoComplete,
   onChange
 }: {
   label: string;
@@ -417,7 +418,7 @@ function TextField({
   inputMode?: "numeric";
   placeholder?: string;
   required?: boolean;
-  list?: string;
+  autoComplete?: string;
   onChange?: ChangeEventHandler<HTMLInputElement>;
 }) {
   return (
@@ -430,7 +431,7 @@ function TextField({
         defaultValue={defaultValue}
         placeholder={placeholder}
         required={required}
-        list={list}
+        autoComplete={autoComplete}
         onChange={onChange}
         className="mt-1 h-11 w-full rounded-lg border border-slate-200 bg-white px-3 text-sm font-bold text-ink outline-none focus:border-park"
       />
@@ -490,7 +491,7 @@ function getInitialArea(food?: FoodWithRelations) {
   return area && adminAreaOptions.some((option) => option === area) ? area : "不明";
 }
 
-function getInitialShopSelection(food: FoodWithRelations | undefined, shopOptions: AdminShopOption[], areaName: string) {
+function getInitialSelectedShopName(food: FoodWithRelations | undefined, shopOptions: AdminShopOption[], areaName: string) {
   if (!food) return "";
   return hasShopOption(shopOptions, food.shop.name, areaName) ? food.shop.name : otherShopValue;
 }

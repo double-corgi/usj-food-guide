@@ -250,11 +250,7 @@ function readOptionalCleanText(formData: FormData, key: string, maxLength: numbe
 function readShopName(formData: FormData) {
   const shopName = readCleanText(formData, "shopName", 120);
   if (shopName) return shopName;
-
-  const selection = readCleanText(formData, "shopSelection", 120);
-  if (!selection) return null;
-  if (selection === "__other") return readCleanText(formData, "shopOther", 120);
-  return selection;
+  return null;
 }
 
 function readCategoryTags(formData: FormData) {
