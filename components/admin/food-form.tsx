@@ -40,6 +40,7 @@ export type DuplicateCandidate = {
 const otherShopValue = "__other";
 const initialSaveState: AdminFoodSaveState = { ok: false, message: "" };
 const disabledSaveAction = async (): Promise<AdminFoodSaveState> => ({ ok: false, message: "generated商品の保存はできません。" });
+const visibleCategoryValues = new Set<string>(adminCategoryTagOptions.map((option) => option.value));
 
 export function AdminFoodForm({ mode, food, shopOptions = [], action, visibilityAction, adminNotes, categoryTags, duplicateCandidates = [] }: AdminFoodFormProps) {
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
@@ -55,6 +56,7 @@ export function AdminFoodForm({ mode, food, shopOptions = [], action, visibility
   const saleStatus = getFormSaleStatus(food);
   const publicState = getPublicState(food);
   const hiddenState = food?.hidden ? "hidden" : "visible";
+  const preservedHiddenCategories = Array.from(selectedCategories).filter((value) => !visibleCategoryValues.has(value));
   const duplicateWarnings =
     mode === "new"
       ? findDuplicateWarnings({
@@ -78,12 +80,12 @@ export function AdminFoodForm({ mode, food, shopOptions = [], action, visibility
         <div className="flex gap-3">
           <Lock className="mt-0.5 shrink-0 text-amber-700" size={20} aria-hidden />
           <div>
-            <h2 className="font-black text-amber-950">{title}はPhase 3Bの最小保存UIです</h2>
+            <h2 className="font-black text-amber-950">{title}</h2>
             <p className="mt-1 text-sm font-bold leading-6 text-amber-900">
               {mode === "new"
-                ? "新規商品だけSupabaseのmanual_foodsへ保存します。画像は自動リサイズしてStorageへ保存します。重複候補があれば保存前に警告します。"
+                ? "必要項目を入力して保存すると公開ページに反映されます。画像は自動でサイズ調整されます。重複候補があれば保存前に警告します。"
                 : saveEnabled
-                  ? "manual_foodsの商品だけ保存できます。画像未選択なら既存画像を維持します。非表示にしても管理画面には残ります。"
+                  ? "手動追加した商品だけ保存できます。画像未選択なら既存画像を維持します。非表示にしても管理画面には残ります。"
                   : "generated商品の編集保存はまだ行いません。表示内容の確認UIとして使います。"}
             </p>
           </div>
@@ -111,7 +113,7 @@ export function AdminFoodForm({ mode, food, shopOptions = [], action, visibility
 
       <section className="grid gap-4 rounded-lg border border-slate-200 bg-white p-4 shadow-soft lg:grid-cols-2">
         <TextField label="商品名 日本語" name="nameJa" defaultValue={food?.name ?? ""} required onChange={(event) => setNameInput(event.currentTarget.value)} />
-        <TextField label="商品名 英語" name="nameEn" defaultValue="" placeholder="Phase 3で翻訳seed連携予定" />
+        <TextField label="商品名 英語（任意）" name="nameEn" defaultValue="" placeholder="未入力でOK" />
         <TextField label="価格" name="price" defaultValue={formatPriceValue(food)} inputMode="numeric" placeholder="例: 800" required />
         <SelectField label="エリア" name="area" defaultValue={areaSelection} onChange={(event) => setAreaSelection(event.currentTarget.value)}>
           {adminAreaOptions.map((area) => (
@@ -173,6 +175,9 @@ export function AdminFoodForm({ mode, food, shopOptions = [], action, visibility
 
       <section className="rounded-lg border border-slate-200 bg-white p-4 shadow-soft">
         <h2 className="text-lg font-black text-ink">カテゴリタグ</h2>
+        {preservedHiddenCategories.map((value) => (
+          <input key={value} type="hidden" name="categoryTags" value={value} />
+        ))}
         <div className="mt-3 grid gap-2 sm:grid-cols-2 lg:grid-cols-4">
           {adminCategoryTagOptions.map(({ value, label }) => (
             <label key={value} className="flex items-center gap-2 rounded-lg border border-slate-200 px-3 py-2 text-sm font-bold text-slate-700">
@@ -214,7 +219,7 @@ export function AdminFoodForm({ mode, food, shopOptions = [], action, visibility
               />
             </label>
             <p className="text-sm font-bold leading-6 text-slate-500">
-              保存時に画像を960x720の商品カード向け比率へ調整し、WebPとしてSupabase Storageへ保存します。
+              保存時に画像を商品カード向け比率へ自動調整し、WebPとして保存します。
               画像なしでも商品は保存できます。編集時に画像を選ばなければ既存画像を維持します。
             </p>
           </div>
@@ -318,14 +323,14 @@ function getActiveImage(food?: FoodWithRelations) {
 }
 
 function getFormSaleStatus(food?: FoodWithRelations): AdminSaleStatus {
-  if (!food) return "unknown";
+  if (!food) return "active";
   const status = getAdminSaleState(food);
   if (status === "upcoming") return "unknown";
   return status;
 }
 
 function getPublicState(food?: FoodWithRelations): AdminPublicState {
-  if (!food) return "draft";
+  if (!food) return "published";
   return getAdminPublicState(food);
 }
 

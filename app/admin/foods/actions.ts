@@ -2,7 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-import { adminAreaOptions, adminCategoryTagOptions, adminPublicStateOptions, adminSaleStatusOptions } from "@/lib/admin-food-ui";
+import { adminAreaOptions, adminCategoryTagOptions, adminLegacyCategoryTagOptions, adminPublicStateOptions, adminSaleStatusOptions } from "@/lib/admin-food-ui";
 import { requireAdmin } from "@/lib/admin-auth";
 import { normalizeFoodName } from "@/lib/food-utils";
 import { buildManualFoodId } from "@/lib/repositories/manual-foods";
@@ -25,7 +25,7 @@ type ImageUploadResult = {
 };
 
 const emptyState: AdminFoodSaveState = { ok: false, message: "" };
-const allowedCategoryTags: Set<string> = new Set(adminCategoryTagOptions.map((option) => option.value));
+const allowedCategoryTags: Set<string> = new Set([...adminCategoryTagOptions.map((option) => option.value), ...adminLegacyCategoryTagOptions.map((option) => option.value)]);
 const allowedFoodCategories: Set<string> = new Set(adminCategoryTagOptions.map((option) => option.value).filter(isFoodCategory));
 const allowedSaleStatuses: Set<string> = new Set(adminSaleStatusOptions.map((option) => option.value));
 const allowedPublicStates: Set<string> = new Set(adminPublicStateOptions.map((option) => option.value));

@@ -28,31 +28,32 @@ export const adminPublicStateOptions = [
 ] as const;
 
 export const adminFoodCategoryOptions = [
-  { value: "churro", label: "🍩 チュリトス" },
+  { value: "churro", label: "🌯 チュリトス" },
   { value: "popcorn", label: "🍿 ポップコーン" },
   { value: "drink", label: "🥤 ドリンク" },
-  { value: "dessert", label: "🍰 スイーツ" },
   { value: "burger", label: "🍔 バーガー" },
   { value: "pizza", label: "🍕 ピザ" },
   { value: "chicken", label: "🍗 チキン・肉系" },
   { value: "rice", label: "🍛 ライス・カレー" },
   { value: "noodle", label: "🍜 麺・パスタ" },
   { value: "snack", label: "🍟 スナック" },
-  { value: "kids", label: "👶 キッズ" },
-  { value: "seasonal", label: "🌸 季節限定" },
+  { value: "dessert", label: "🍰 スイーツ" },
+  { value: "kids", label: "👦 キッズ" },
   { value: "set", label: "🍱 セットメニュー" },
-  { value: "unknown", label: "🔎 カテゴリ確認中" }
+  { value: "seasonal", label: "🌸 季節限定" },
 ] as const satisfies ReadonlyArray<{ value: FoodCategory; label: string }>;
 
-export const adminCategoryTagOptions = [
-  ...adminFoodCategoryOptions,
-  { value: "walk-around", label: "🚶 食べ歩き" },
-  { value: "cart", label: "🛒 フードカート" },
-  { value: "nintendo", label: "🎮 ニンテンドー" },
-  { value: "harry-potter", label: "🧙 ハリーポッター" },
-  { value: "minion", label: "💛 ミニオン" },
-  { value: "jurassic", label: "🦖 ジュラシック" },
-  { value: "sanrio", label: "🎀 サンリオ" }
+export const adminCategoryTagOptions = adminFoodCategoryOptions;
+
+export const adminLegacyCategoryTagOptions = [
+  { value: "unknown", label: "カテゴリ確認中" },
+  { value: "walk-around", label: "食べ歩き" },
+  { value: "cart", label: "フードカート" },
+  { value: "nintendo", label: "ニンテンドー" },
+  { value: "harry-potter", label: "ハリーポッター" },
+  { value: "minion", label: "ミニオン" },
+  { value: "jurassic", label: "ジュラシック" },
+  { value: "sanrio", label: "サンリオ" }
 ] as const;
 
 export type AdminSaleStatusValue = (typeof adminSaleStatusOptions)[number]["value"] | "upcoming";
@@ -102,7 +103,12 @@ export function formatAdminCanonicalState(canonicalFood?: boolean) {
 }
 
 export function formatAdminCategory(category: string) {
-  return adminCategoryTagOptions.find((option) => option.value === category)?.label ?? categoryLabels[category as FoodCategory] ?? category;
+  return (
+    adminCategoryTagOptions.find((option) => option.value === category)?.label ??
+    adminLegacyCategoryTagOptions.find((option) => option.value === category)?.label ??
+    categoryLabels[category as FoodCategory] ??
+    category
+  );
 }
 
 export function formatAdminPrice(food: FoodWithRelations) {
