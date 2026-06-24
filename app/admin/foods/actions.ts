@@ -26,7 +26,7 @@ type ImageUploadResult = {
 
 const emptyState: AdminFoodSaveState = { ok: false, message: "" };
 const allowedCategoryTags: Set<string> = new Set([...adminCategoryTagOptions.map((option) => option.value), ...adminLegacyCategoryTagOptions.map((option) => option.value)]);
-const allowedFoodCategories: Set<string> = new Set(adminCategoryTagOptions.map((option) => option.value).filter(isFoodCategory));
+const allowedFoodCategories: Set<string> = new Set(Array.from(allowedCategoryTags).filter(isFoodCategory));
 const allowedSaleStatuses: Set<string> = new Set(adminSaleStatusOptions.map((option) => option.value));
 const allowedPublicStates: Set<string> = new Set(adminPublicStateOptions.map((option) => option.value));
 const allowedHiddenStates = new Set(["visible", "hidden"]);

@@ -3,7 +3,7 @@
 import { useCallback, useMemo, useState } from "react";
 import Link from "next/link";
 import { ChevronDown, Search, SlidersHorizontal } from "lucide-react";
-import { categoryLabels, diningTypeLabels, shopTypeLabels, statusLabels } from "@/lib/constants";
+import { diningTypeLabels, shopTypeLabels, statusLabels } from "@/lib/constants";
 import { dedupeFoodsByCanonical, foodMatchesArea, getFoodAreaNames, getFoodAreaSummary, getSaleStatus, getSaleType, isEndingSoon, getCanonicalFoodKey, getEatenCanonicalKeys, isEatenCanonical, normalizeDisplayAreaName, normalizeFoodName } from "@/lib/food-utils";
 import { REQUEST_FORM_URL } from "@/lib/request-form-url";
 import { tAreaName } from "@/lib/i18n/area-name";
@@ -30,10 +30,10 @@ const categoryChips: Array<{ value: FoodCategory | "all"; label: string; icon: s
   { value: "drink", label: "ドリンク", icon: "🥤" },
   { value: "pizza", label: "ピザ", icon: "🍕" },
   { value: "burger", label: "バーガー", icon: "🍔" },
-  { value: "noodle", label: "パスタ", icon: "🍝" },
-  { value: "set", label: "プレート", icon: "🍖" },
-  { value: "rice", label: "ライス", icon: "🍛" },
-  { value: "kids", label: "キッズ", icon: "🧒" },
+  { value: "noodle", label: "麺・パスタ", icon: "🍜" },
+  { value: "set", label: "セットメニュー", icon: "🍱" },
+  { value: "rice", label: "ライス・カレー", icon: "🍛" },
+  { value: "kids", label: "キッズ", icon: "👦" },
   { value: "dessert", label: "スイーツ", icon: "🍰" }
 ];
 
@@ -236,7 +236,7 @@ export function FoodGrid({
         </select>
         <select value={category} onChange={(event) => { setCategory(event.target.value as FoodCategory | "all"); setVisibleCount(60); }} className="h-9 rounded-lg border border-slate-200 px-2.5 text-xs font-bold">
           <option value="all">{t("foods.categoryFilterAll")}</option>
-          {(Object.keys(categoryLabels) as FoodCategory[]).map((value) => (
+          {categoryChips.filter((item): item is { value: FoodCategory; label: string; icon: string } => item.value !== "all").map(({ value }) => (
             <option key={value} value={value}>
               {t(`category.${value}` as TranslationKey)}
             </option>

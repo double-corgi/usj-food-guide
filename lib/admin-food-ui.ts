@@ -31,21 +31,21 @@ export const adminFoodCategoryOptions = [
   { value: "churro", label: "🌯 チュリトス" },
   { value: "popcorn", label: "🍿 ポップコーン" },
   { value: "drink", label: "🥤 ドリンク" },
-  { value: "burger", label: "🍔 バーガー" },
   { value: "pizza", label: "🍕 ピザ" },
-  { value: "chicken", label: "🍗 チキン・肉系" },
-  { value: "rice", label: "🍛 ライス・カレー" },
+  { value: "burger", label: "🍔 バーガー" },
   { value: "noodle", label: "🍜 麺・パスタ" },
-  { value: "snack", label: "🍟 スナック" },
-  { value: "dessert", label: "🍰 スイーツ" },
-  { value: "kids", label: "👦 キッズ" },
   { value: "set", label: "🍱 セットメニュー" },
-  { value: "seasonal", label: "🌸 季節限定" },
+  { value: "rice", label: "🍛 ライス・カレー" },
+  { value: "kids", label: "👦 キッズ" },
+  { value: "dessert", label: "🍰 スイーツ" }
 ] as const satisfies ReadonlyArray<{ value: FoodCategory; label: string }>;
 
 export const adminCategoryTagOptions = adminFoodCategoryOptions;
 
 export const adminLegacyCategoryTagOptions = [
+  { value: "chicken", label: "チキン・肉系" },
+  { value: "snack", label: "スナック" },
+  { value: "seasonal", label: "季節限定" },
   { value: "unknown", label: "カテゴリ確認中" },
   { value: "walk-around", label: "食べ歩き" },
   { value: "cart", label: "フードカート" },
