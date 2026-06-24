@@ -72,7 +72,7 @@ export function AdminFoodForm({ mode, food, shopOptions = [], action, visibility
   const publicState = getPublicState(food);
   const hiddenState = food?.hidden ? "hidden" : "visible";
   const preservedHiddenCategories = Array.from(selectedCategories).filter((value) => !visibleCategoryValues.has(value));
-  const hasAreaSelection = areaSelection !== "不明";
+  const hasAreaSelection = Boolean(areaSelection) && areaSelection !== "不明";
   const filteredShopOptions = useMemo(
     () => {
       if (!hasAreaSelection) return [];
@@ -154,8 +154,9 @@ export function AdminFoodForm({ mode, food, shopOptions = [], action, visibility
           onChange={(event) => {
             const nextArea = event.currentTarget.value;
             setAreaSelection(nextArea);
-            if (nextArea === "不明") {
+            if (!nextArea || nextArea === "不明") {
               setSelectedShopName("");
+              setCustomShopName("");
               setShopQuery("");
               return;
             }
@@ -164,6 +165,9 @@ export function AdminFoodForm({ mode, food, shopOptions = [], action, visibility
             }
           }}
         >
+          <option value="" disabled>
+            エリアを選択
+          </option>
           {adminAreaOptions.map((area) => (
             <option key={area} value={area}>
               {area}
@@ -207,7 +211,7 @@ export function AdminFoodForm({ mode, food, shopOptions = [], action, visibility
             </button>
           </div>
 
-          <div className="rounded-lg border border-slate-200 bg-white p-3">
+          <div className={`rounded-lg border border-slate-200 p-3 ${hasAreaSelection ? "bg-white" : "bg-slate-50 opacity-75"}`}>
             <label className="block">
               <span className="text-sm font-black text-ink">店舗検索</span>
               <input
@@ -487,6 +491,7 @@ function formatPriceValue(food?: FoodWithRelations) {
 }
 
 function getInitialArea(food?: FoodWithRelations) {
+  if (!food) return "";
   const area = food?.area.name;
   return area && adminAreaOptions.some((option) => option === area) ? area : "不明";
 }
