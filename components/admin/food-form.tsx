@@ -5,7 +5,6 @@ import { useActionState, useEffect, useMemo, useState } from "react";
 import {
   adminAreaOptions,
   adminCategoryTagOptions,
-  adminPublicStateOptions,
   adminSaleStatusOptions,
   getAdminPublicState,
   getAdminSaleState
@@ -62,16 +61,21 @@ export function AdminFoodForm({ mode, food, shopOptions = [], action, visibility
   const [shopTypeFilter, setShopTypeFilter] = useState<ShopType | "all">("all");
   const [shopQuery, setShopQuery] = useState("");
   const [nameInput, setNameInput] = useState(food?.name ?? "");
+  const [priceInput, setPriceInput] = useState(formatPriceValue(food));
   const [areaSelection, setAreaSelection] = useState(initialArea);
   const saveEnabled = Boolean(action);
   const [saveState, formAction, pending] = useActionState(action ?? disabledSaveAction, initialSaveState);
-  const selectedCategories = new Set<string>(categoryTags && categoryTags.length > 0 ? categoryTags : food?.category ? [food.category] : []);
+  const initialCategoryValues = categoryTags && categoryTags.length > 0 ? categoryTags : food?.category ? [food.category] : [];
+  const [selectedCategoryValues, setSelectedCategoryValues] = useState<Set<string>>(
+    () => new Set(initialCategoryValues.filter((value) => visibleCategoryValues.has(value)))
+  );
   const activeImage = getActiveImage(food);
   const title = mode === "new" ? "商品追加フォーム" : "商品編集フォーム";
   const saleStatus = getFormSaleStatus(food);
   const publicState = getPublicState(food);
+  const [publicStateSelection, setPublicStateSelection] = useState<AdminPublicState>(publicState);
   const hiddenState = food?.hidden ? "hidden" : "visible";
-  const preservedHiddenCategories = Array.from(selectedCategories).filter((value) => !visibleCategoryValues.has(value));
+  const preservedHiddenCategories = initialCategoryValues.filter((value) => !visibleCategoryValues.has(value));
   const hasAreaSelection = Boolean(areaSelection) && areaSelection !== "不明";
   const filteredShopOptions = useMemo(
     () => {
@@ -89,6 +93,15 @@ export function AdminFoodForm({ mode, food, shopOptions = [], action, visibility
   const selectedShop = hasAreaSelection ? shopOptions.find((shop) => shop.name === selectedShopName && shop.areaName === areaSelection) : undefined;
   const submittedShopName = hasAreaSelection ? (selectedShopName === otherShopValue ? customShopName : selectedShopName) : "";
   const selectedShopLabel = selectedShop?.name ?? (selectedShopName === otherShopValue && customShopName ? customShopName : null);
+  const hasImageForPublish = Boolean(previewUrl || activeImage?.imageUrl || food?.imageUrl);
+  const publishChecklist = [
+    { label: "商品名", done: Boolean(nameInput.trim()) },
+    { label: "価格", done: Boolean(priceInput.trim()) },
+    { label: "エリア", done: hasAreaSelection },
+    { label: "店舗", done: Boolean(submittedShopName.trim()) },
+    { label: "カテゴリ", done: selectedCategoryValues.size > 0 },
+    { label: "画像", done: hasImageForPublish }
+  ];
   const duplicateWarnings =
     mode === "new"
       ? findDuplicateWarnings({
@@ -104,6 +117,18 @@ export function AdminFoodForm({ mode, food, shopOptions = [], action, visibility
       if (previewUrl) URL.revokeObjectURL(previewUrl);
     };
   }, [previewUrl]);
+
+  function toggleCategory(value: string, checked: boolean) {
+    setSelectedCategoryValues((current) => {
+      const next = new Set(current);
+      if (checked) {
+        next.add(value);
+      } else {
+        next.delete(value);
+      }
+      return next;
+    });
+  }
 
   return (
     <form className="space-y-5" action={formAction}>
@@ -143,41 +168,59 @@ export function AdminFoodForm({ mode, food, shopOptions = [], action, visibility
         </section>
       ) : null}
 
-      <section className="grid gap-4 rounded-lg border border-slate-200 bg-white p-4 shadow-soft lg:grid-cols-2">
-        <TextField label="商品名 日本語" name="nameJa" defaultValue={food?.name ?? ""} required onChange={(event) => setNameInput(event.currentTarget.value)} />
-        <TextField label="商品名 英語（任意）" name="nameEn" defaultValue="" placeholder="未入力でOK" />
-        <TextField label="価格" name="price" defaultValue={formatPriceValue(food)} inputMode="numeric" placeholder="例: 800" required />
-        <SelectField
-          label="エリア"
-          name="area"
-          defaultValue={areaSelection}
-          onChange={(event) => {
-            const nextArea = event.currentTarget.value;
-            setAreaSelection(nextArea);
-            if (!nextArea || nextArea === "不明") {
-              setSelectedShopName("");
-              setCustomShopName("");
-              setShopQuery("");
-              return;
-            }
-            if (selectedShopName && selectedShopName !== otherShopValue && !hasShopOption(shopOptions, selectedShopName, nextArea)) {
-              setSelectedShopName("");
-            }
-          }}
-        >
-          <option value="" disabled>
-            エリアを選択
-          </option>
-          {adminAreaOptions.map((area) => (
-            <option key={area} value={area}>
-              {area}
+      <section className="rounded-lg border border-slate-200 bg-white p-4 shadow-soft">
+        <SectionHeading step="①" title="基本情報" description="まず商品名、価格、エリア、店舗を入力します。" />
+        <div className="mt-4 grid gap-4 lg:grid-cols-2">
+          <TextField
+            label="商品名 日本語"
+            name="nameJa"
+            defaultValue={food?.name ?? ""}
+            required
+            requirement="required"
+            onChange={(event) => setNameInput(event.currentTarget.value)}
+          />
+          <TextField
+            label="価格"
+            name="price"
+            defaultValue={priceInput}
+            inputMode="numeric"
+            placeholder="例: 800"
+            required
+            requirement="required"
+            onChange={(event) => setPriceInput(event.currentTarget.value)}
+          />
+          <SelectField
+            label="エリア"
+            name="area"
+            defaultValue={areaSelection}
+            requirement="required"
+            onChange={(event) => {
+              const nextArea = event.currentTarget.value;
+              setAreaSelection(nextArea);
+              if (!nextArea || nextArea === "不明") {
+                setSelectedShopName("");
+                setCustomShopName("");
+                setShopQuery("");
+                return;
+              }
+              if (selectedShopName && selectedShopName !== otherShopValue && !hasShopOption(shopOptions, selectedShopName, nextArea)) {
+                setSelectedShopName("");
+              }
+            }}
+          >
+            <option value="" disabled>
+              エリアを選択
             </option>
-          ))}
-        </SelectField>
-        <div className="space-y-3 lg:col-span-2">
+            {adminAreaOptions.map((area) => (
+              <option key={area} value={area}>
+                {area}
+              </option>
+            ))}
+          </SelectField>
+          <div className="space-y-3 lg:col-span-2">
           <input type="hidden" name="shopName" value={submittedShopName} />
           <div className="rounded-lg border border-slate-200 bg-slate-50 p-4">
-            <p className="text-sm font-black text-ink">店舗</p>
+            <p className="text-sm font-black text-ink">店舗 <RequiredBadge /></p>
             <p className="mt-1 text-xs font-bold leading-5 text-slate-500">
               1. エリアを選ぶ → 2. 店舗種別で絞る → 3. 店舗名で検索 → 4. 店舗を選ぶ、の順で入力してください。
             </p>
@@ -228,20 +271,20 @@ export function AdminFoodForm({ mode, food, shopOptions = [], action, visibility
             {hasAreaSelection ? (
               <div className="mt-3">
                 <p className="mb-1 text-sm font-black text-ink">店舗種別</p>
-              <div className="flex flex-wrap gap-1.5">
-                {shopTypeOptions.map((option) => (
-                  <button
-                    key={option.value}
-                    type="button"
-                    onClick={() => setShopTypeFilter(option.value)}
-                    className={`h-10 rounded-full border px-4 text-xs font-black ${
-                      shopTypeFilter === option.value ? "border-park bg-mint text-park" : "border-slate-200 bg-white text-slate-600"
-                    }`}
-                  >
-                    {option.label}
-                  </button>
-                ))}
-              </div>
+                <div className="flex flex-wrap gap-1.5">
+                  {shopTypeOptions.map((option) => (
+                    <button
+                      key={option.value}
+                      type="button"
+                      onClick={() => setShopTypeFilter(option.value)}
+                      className={`h-10 rounded-full border px-4 text-xs font-black ${
+                        shopTypeFilter === option.value ? "border-park bg-mint text-park" : "border-slate-200 bg-white text-slate-600"
+                      }`}
+                    >
+                      {option.label}
+                    </button>
+                  ))}
+                </div>
               </div>
             ) : null}
           </div>
@@ -252,25 +295,25 @@ export function AdminFoodForm({ mode, food, shopOptions = [], action, visibility
               <div className="space-y-2">
                 {filteredShopOptions.length > 0 ? (
                   visibleShopOptions.map((shop) => (
-                  <button
-                    key={`${shop.areaName}:${shop.type}:${shop.name}`}
-                    type="button"
-                    onClick={() => setSelectedShopName(shop.name)}
-                    className={`flex min-h-14 w-full items-center justify-between gap-3 rounded-lg border px-4 py-3 text-left text-sm font-bold ${
-                      selectedShopName === shop.name ? "border-park bg-mint text-park" : "border-slate-200 bg-white text-slate-700 hover:border-park"
-                    }`}
-                  >
-                    <span>{shop.name}</span>
-                    <span className="shrink-0 text-xs text-slate-500">{formatShopType(shop.type)}</span>
-                  </button>
+                    <button
+                      key={`${shop.areaName}:${shop.type}:${shop.name}`}
+                      type="button"
+                      onClick={() => setSelectedShopName(shop.name)}
+                      className={`flex min-h-14 w-full items-center justify-between gap-3 rounded-lg border px-4 py-3 text-left text-sm font-bold ${
+                        selectedShopName === shop.name ? "border-park bg-mint text-park" : "border-slate-200 bg-white text-slate-700 hover:border-park"
+                      }`}
+                    >
+                      <span>{shop.name}</span>
+                      <span className="shrink-0 text-xs text-slate-500">{formatShopType(shop.type)}</span>
+                    </button>
                   ))
                 ) : (
                   <p className="rounded-lg bg-white px-4 py-3 text-sm font-bold text-slate-500">該当する店舗候補がありません。</p>
                 )}
                 {filteredShopOptions.length > visibleShopOptions.length ? (
                   <p className="px-2 py-1 text-xs font-bold text-slate-500">
-                  さらに {filteredShopOptions.length - visibleShopOptions.length} 件あります。店舗名で検索すると絞り込めます。
-                </p>
+                    さらに {filteredShopOptions.length - visibleShopOptions.length} 件あります。店舗名で検索すると絞り込めます。
+                  </p>
                 ) : null}
               </div>
 
@@ -286,50 +329,37 @@ export function AdminFoodForm({ mode, food, shopOptions = [], action, visibility
             </div>
           ) : null}
           {selectedShopName === otherShopValue ? (
-            <TextField label="店舗名（その他）" name="customShopName" defaultValue={customShopName} placeholder="例: ユニバーサル・マーケット内ハピネス・ワゴン" required autoComplete="off" onChange={(event) => setCustomShopName(event.currentTarget.value)} />
+            <TextField
+              label="店舗名（その他）"
+              name="customShopName"
+              defaultValue={customShopName}
+              placeholder="例: ユニバーサル・マーケット内ハピネス・ワゴン"
+              required
+              requirement="required"
+              autoComplete="off"
+              onChange={(event) => setCustomShopName(event.currentTarget.value)}
+            />
           ) : null}
         </div>
-        <SelectField label="販売状態" name="saleStatus" defaultValue={saleStatus}>
-          {adminSaleStatusOptions.map((option) => (
-            <option key={option.value} value={option.value}>
-              {option.label}
-            </option>
-          ))}
-        </SelectField>
-        <SelectField label="公開状態" name="publicState" defaultValue={publicState}>
-          {adminPublicStateOptions.map((option) => (
-            <option key={option.value} value={option.value}>
-              {option.label}
-            </option>
-          ))}
-        </SelectField>
-        <SelectField label="表示状態" name="hiddenState" defaultValue={hiddenState}>
-          <option value="visible">表示中</option>
-          <option value="hidden">非表示</option>
-        </SelectField>
-        <TextField label="販売期間 start" name="saleStart" defaultValue={food?.saleStartDate ?? food?.startDate ?? ""} type="date" />
-        <TextField label="販売期間 end" name="saleEnd" defaultValue={food?.saleEndDate ?? food?.endDate ?? ""} type="date" />
-        <label className="block lg:col-span-2">
-          <span className="text-xs font-black text-slate-500">管理メモ（公開されません）</span>
-          <textarea
-            name="memo"
-            rows={4}
-            className="mt-1 w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm font-bold text-ink outline-none focus:border-park"
-            placeholder="調査メモ、未確認事項、Phase 3での保存時注意点"
-            defaultValue={adminNotes ?? ""}
-          />
-        </label>
+        </div>
       </section>
 
       <section className="rounded-lg border border-slate-200 bg-white p-4 shadow-soft">
-        <h2 className="text-lg font-black text-ink">カテゴリタグ</h2>
+        <SectionHeading step="②" title="カテゴリ" description="公開ページの分類と同じカテゴリを1つ以上選びます。" />
         {preservedHiddenCategories.map((value) => (
           <input key={value} type="hidden" name="categoryTags" value={value} />
         ))}
         <div className="mt-3 grid gap-2 sm:grid-cols-2 lg:grid-cols-4">
           {adminCategoryTagOptions.map(({ value, label }) => (
             <label key={value} className="flex items-center gap-2 rounded-lg border border-slate-200 px-3 py-2 text-sm font-bold text-slate-700">
-              <input type="checkbox" name="categoryTags" value={value} defaultChecked={selectedCategories.has(value)} className="h-4 w-4 accent-park" />
+              <input
+                type="checkbox"
+                name="categoryTags"
+                value={value}
+                checked={selectedCategoryValues.has(value)}
+                onChange={(event) => toggleCategory(value, event.currentTarget.checked)}
+                className="h-4 w-4 accent-park"
+              />
               {label}
             </label>
           ))}
@@ -337,7 +367,7 @@ export function AdminFoodForm({ mode, food, shopOptions = [], action, visibility
       </section>
 
       <section className="rounded-lg border border-slate-200 bg-white p-4 shadow-soft">
-        <h2 className="text-lg font-black text-ink">画像UI</h2>
+        <SectionHeading step="③" title="画像" description="公開する商品には画像が必要です。画像なしでも下書き保存はできます。" />
         <div className="mt-3 grid gap-4 lg:grid-cols-[220px_1fr]">
           <div className="overflow-hidden rounded-lg border border-slate-200 bg-slate-50">
             {previewUrl || activeImage?.imageUrl || food?.imageUrl ? (
@@ -351,7 +381,7 @@ export function AdminFoodForm({ mode, food, shopOptions = [], action, visibility
           </div>
           <div className="space-y-3">
             <label className="block">
-              <span className="text-xs font-black text-slate-500">画像ファイル（保存時にWebP化）</span>
+              <span className="text-xs font-black text-slate-500">画像ファイル <RequiredBadge /> <span className="ml-1 text-slate-400">公開時</span></span>
               <input
                 name="imageFile"
                 type="file"
@@ -367,18 +397,97 @@ export function AdminFoodForm({ mode, food, shopOptions = [], action, visibility
               />
             </label>
             <p className="text-sm font-bold leading-6 text-slate-500">
-              保存時に画像を商品カード向け比率へ自動調整し、WebPとして保存します。
-              画像なしでも商品は保存できます。編集時に画像を選ばなければ既存画像を維持します。
+              画像は自動で商品カード向けサイズに調整されます。画像なしでも下書き保存は可能です。
+              今すぐ公開する場合は画像を登録してください。編集時に画像を選ばなければ既存画像を維持します。
             </p>
           </div>
         </div>
       </section>
 
+      <section className="rounded-lg border border-slate-200 bg-white p-4 shadow-soft">
+        <SectionHeading step="④" title="公開設定" description="通常は「今すぐ公開」をON、販売状態は「販売中」で登録します。" />
+        <div className="mt-4 grid gap-4 lg:grid-cols-3">
+          <div className="rounded-lg border border-slate-200 bg-slate-50 p-4 lg:col-span-3">
+            <input type="hidden" name="publicState" value={publicStateSelection} />
+            <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+              <div>
+                <p className="text-sm font-black text-ink">今すぐ公開</p>
+                <p className="mt-1 text-xs font-bold leading-5 text-slate-500">
+                  ONにすると保存後に公開ページへ反映されます。OFFなら下書きとして保存します。
+                </p>
+              </div>
+              <button
+                type="button"
+                aria-pressed={publicStateSelection === "published"}
+                onClick={() => setPublicStateSelection((current) => (current === "published" ? "draft" : "published"))}
+                className={`flex h-12 w-full items-center justify-between rounded-full border px-2 text-sm font-black sm:w-44 ${
+                  publicStateSelection === "published" ? "border-park bg-mint text-park" : "border-slate-200 bg-white text-slate-500"
+                }`}
+              >
+                <span className={`grid h-8 w-8 place-items-center rounded-full ${publicStateSelection === "published" ? "bg-park text-white" : "bg-slate-200 text-slate-500"}`}>
+                  {publicStateSelection === "published" ? "ON" : "OFF"}
+                </span>
+                <span className="pr-3">{publicStateSelection === "published" ? "公開" : "下書き"}</span>
+              </button>
+            </div>
+          </div>
+          <SelectField label="販売状態" name="saleStatus" defaultValue={saleStatus} requirement="required">
+            {adminSaleStatusOptions.map((option) => (
+              <option key={option.value} value={option.value}>
+                {option.label}
+              </option>
+            ))}
+          </SelectField>
+          <SelectField label="表示状態" name="hiddenState" defaultValue={hiddenState}>
+            <option value="visible">表示中</option>
+            <option value="hidden">非表示</option>
+          </SelectField>
+        </div>
+      </section>
+
+      <section className="rounded-lg border border-slate-200 bg-white p-4 shadow-soft">
+        <SectionHeading step="⑤" title="詳細（任意）" description="英語名、販売期間、管理メモは必要なときだけ入力します。" />
+        <div className="mt-4 grid gap-4 lg:grid-cols-2">
+          <TextField label="商品名 英語" name="nameEn" defaultValue="" placeholder="未入力でOK" requirement="optional" helpText="英語名は未入力でも保存できます。" />
+          <TextField label="販売期間 start" name="saleStart" defaultValue={food?.saleStartDate ?? food?.startDate ?? ""} type="date" requirement="optional" />
+          <TextField label="販売期間 end" name="saleEnd" defaultValue={food?.saleEndDate ?? food?.endDate ?? ""} type="date" requirement="optional" />
+          <label className="block rounded-lg border border-slate-200 bg-slate-50 p-3 lg:col-span-2">
+            <span className="flex items-center gap-2 text-xs font-black text-slate-600">
+              <Lock size={14} aria-hidden />
+              管理メモ <OptionalBadge /> <span className="text-amber-700">公開されません</span>
+            </span>
+            <textarea
+              name="memo"
+              rows={4}
+              className="mt-2 w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm font-bold text-ink outline-none focus:border-park"
+              placeholder="家族向けの確認メモ、未確認事項、あとで直したい内容"
+              defaultValue={adminNotes ?? ""}
+            />
+          </label>
+        </div>
+      </section>
+
       <div className="flex flex-col gap-2 rounded-lg border border-slate-200 bg-white p-4 shadow-soft sm:flex-row sm:items-center sm:justify-between">
-        <div className="space-y-1">
+        <div className="space-y-3">
           <p className="text-sm font-bold text-slate-500">
             保存後は商品詳細へ戻ります。編集者・オーナーのみ保存できます。
           </p>
+          <div className="rounded-lg border border-slate-200 bg-slate-50 p-3">
+            <p className="text-sm font-black text-ink">公開前チェック</p>
+            <p className="mt-1 text-xs font-bold leading-5 text-slate-500">
+              公開には商品名・価格・エリア・店舗・カテゴリ・画像が必要です。下書き保存なら画像なしでも保存できます。
+            </p>
+            <div className="mt-2 flex flex-wrap gap-1.5">
+              {publishChecklist.map((item) => (
+                <span
+                  key={item.label}
+                  className={`rounded-full px-2.5 py-1 text-xs font-black ${item.done ? "bg-emerald-50 text-emerald-700" : "bg-amber-50 text-amber-800"}`}
+                >
+                  {item.done ? "OK" : "未入力"} {item.label}
+                </span>
+              ))}
+            </div>
+          </div>
           {saveState.message ? <p className={`text-sm font-black ${saveState.ok ? "text-emerald-700" : "text-rose-700"}`}>{saveState.message}</p> : null}
         </div>
         <div className="flex flex-col gap-2 sm:flex-row">
@@ -413,6 +522,8 @@ function TextField({
   placeholder,
   required = false,
   autoComplete,
+  requirement,
+  helpText,
   onChange
 }: {
   label: string;
@@ -423,11 +534,17 @@ function TextField({
   placeholder?: string;
   required?: boolean;
   autoComplete?: string;
+  requirement?: "required" | "optional";
+  helpText?: string;
   onChange?: ChangeEventHandler<HTMLInputElement>;
 }) {
   return (
     <label className="block">
-      <span className="text-xs font-black text-slate-500">{label}</span>
+      <span className="flex items-center gap-1.5 text-xs font-black text-slate-500">
+        {label}
+        {requirement === "required" ? <RequiredBadge /> : null}
+        {requirement === "optional" ? <OptionalBadge /> : null}
+      </span>
       <input
         name={name}
         type={type}
@@ -439,6 +556,7 @@ function TextField({
         onChange={onChange}
         className="mt-1 h-11 w-full rounded-lg border border-slate-200 bg-white px-3 text-sm font-bold text-ink outline-none focus:border-park"
       />
+      {helpText ? <span className="mt-1 block text-xs font-bold leading-5 text-slate-500">{helpText}</span> : null}
     </label>
   );
 }
@@ -448,22 +566,46 @@ function SelectField({
   name,
   defaultValue,
   children,
+  requirement,
   onChange
 }: {
   label: string;
   name: string;
   defaultValue: string;
   children: ReactNode;
+  requirement?: "required" | "optional";
   onChange?: ChangeEventHandler<HTMLSelectElement>;
 }) {
   return (
     <label className="block">
-      <span className="text-xs font-black text-slate-500">{label}</span>
+      <span className="flex items-center gap-1.5 text-xs font-black text-slate-500">
+        {label}
+        {requirement === "required" ? <RequiredBadge /> : null}
+        {requirement === "optional" ? <OptionalBadge /> : null}
+      </span>
       <select name={name} defaultValue={defaultValue} onChange={onChange} className="mt-1 h-11 w-full rounded-lg border border-slate-200 bg-white px-3 text-sm font-bold text-ink outline-none focus:border-park">
         {children}
       </select>
     </label>
   );
+}
+
+function SectionHeading({ step, title, description }: { step: string; title: string; description: string }) {
+  return (
+    <div>
+      <p className="text-xs font-black text-park">{step}</p>
+      <h2 className="mt-1 text-lg font-black text-ink">{title}</h2>
+      <p className="mt-1 text-sm font-bold leading-6 text-slate-500">{description}</p>
+    </div>
+  );
+}
+
+function RequiredBadge() {
+  return <span className="rounded-full bg-rose-50 px-2 py-0.5 text-[10px] font-black text-rose-700">必須</span>;
+}
+
+function OptionalBadge() {
+  return <span className="rounded-full bg-slate-100 px-2 py-0.5 text-[10px] font-black text-slate-500">任意</span>;
 }
 
 function getActiveImage(food?: FoodWithRelations) {
