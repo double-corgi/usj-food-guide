@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { hasSupabaseAdminEnv } from "@/lib/admin-auth";
+import { redirect } from "next/navigation";
+import { getCurrentAdmin, hasSupabaseAdminEnv } from "@/lib/admin-auth";
 import { sendAdminMagicLink } from "./actions";
 
 type AdminLoginPageProps = {
@@ -12,7 +13,10 @@ type AdminLoginPageProps = {
 
 export default async function AdminLoginPage({ searchParams }: AdminLoginPageProps) {
   const params = (await searchParams) ?? {};
-  const next = sanitizeNextPath(params.next ?? "/admin/foods");
+  const next = sanitizeNextPath(params.next ?? "/admin");
+  const currentAdmin = await getCurrentAdmin();
+  if (currentAdmin?.mode === "supabase") redirect(next);
+
   const supabaseConfigured = hasSupabaseAdminEnv();
 
   return (
@@ -21,7 +25,7 @@ export default async function AdminLoginPage({ searchParams }: AdminLoginPagePro
         <p className="text-xs font-black uppercase tracking-[0.18em] text-park">Admin login</p>
         <h1 className="mt-2 text-3xl font-black text-ink">管理者ログイン</h1>
         <p className="mt-2 text-sm font-bold leading-6 text-slate-500">
-          登録済みの管理者メールアドレスへログインリンクを送信します。商品追加・編集・画像アップロードはこの Phase では提供しません。
+          登録済みの管理者メールアドレスへログインリンクを送信します。ログイン済みの場合は管理トップへ自動で戻ります。
         </p>
       </div>
 
@@ -62,5 +66,5 @@ export default async function AdminLoginPage({ searchParams }: AdminLoginPagePro
 }
 
 function sanitizeNextPath(value: string) {
-  return value.startsWith("/admin") && !value.startsWith("/admin/login") ? value : "/admin/foods";
+  return value.startsWith("/admin") && !value.startsWith("/admin/login") ? value : "/admin";
 }

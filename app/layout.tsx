@@ -1,12 +1,14 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import { AdSlot } from "@/components/ad-slot";
+import { AdminSessionBar } from "@/components/admin-session-bar";
 import { AnalyticsTracker } from "@/components/analytics-tracker";
 import { AppFooter } from "@/components/app-footer";
 import { AppHeader } from "@/components/app-header";
 import { MobileLanguageBadge } from "@/components/mobile-language-badge";
 import { PwaRegister } from "@/components/pwa-register";
 import { appBrand } from "@/lib/constants";
+import { getCurrentAdmin } from "@/lib/admin-auth";
 import { LocaleProvider } from "@/lib/i18n/use-locale";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://new-app-chi-rosy.vercel.app";
@@ -66,7 +68,10 @@ export const viewport: Viewport = {
   themeColor: "#071b3a"
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
+  const currentAdmin = await getCurrentAdmin();
+  const adminForPublicBar = currentAdmin?.mode === "supabase" ? currentAdmin : null;
+
   return (
     <html lang="ja">
       <body className="flex min-h-dvh flex-col">
@@ -80,6 +85,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <AppFooter />
           </div>
           <AdSlot slotId="global-bottom" variant="fixed" />
+          {adminForPublicBar ? <AdminSessionBar role={adminForPublicBar.role} email={adminForPublicBar.email} /> : null}
           <AnalyticsTracker />
           <PwaRegister />
         </LocaleProvider>

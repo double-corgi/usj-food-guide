@@ -23,9 +23,14 @@ export default async function AdminNewFoodPage() {
             {admin.role} 権限で新規商品を保存できます。画像は自動でサイズ調整され、保存すると公開ページに反映されます。
           </p>
         </div>
-        <Link href="/admin/foods" className="inline-flex h-10 items-center rounded-full border border-slate-200 bg-white px-4 text-xs font-black text-ink hover:border-park">
-          一覧へ戻る
-        </Link>
+        <div className="flex flex-wrap gap-2">
+          <Link href="/admin" className="inline-flex h-10 items-center rounded-full border border-slate-200 bg-white px-4 text-xs font-black text-ink hover:border-park">
+            管理トップ
+          </Link>
+          <Link href="/admin/foods" className="inline-flex h-10 items-center rounded-full border border-slate-200 bg-white px-4 text-xs font-black text-ink hover:border-park">
+            一覧へ戻る
+          </Link>
+        </div>
       </div>
       <AdminFoodForm mode="new" shopOptions={shops} action={createAdminFood} duplicateCandidates={duplicateCandidates} />
     </div>

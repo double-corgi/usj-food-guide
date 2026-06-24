@@ -61,6 +61,9 @@ export default async function AdminFoodsPage({ searchParams }: { searchParams?: 
           <Link href="/admin" className="inline-flex h-10 items-center rounded-full border border-slate-200 bg-white px-4 text-xs font-black text-ink hover:border-park">
             管理トップ
           </Link>
+          <Link href="/foods" className="inline-flex h-10 items-center rounded-full border border-slate-200 bg-white px-4 text-xs font-black text-park hover:border-park">
+            公開ページを見る
+          </Link>
         </div>
       </div>
 

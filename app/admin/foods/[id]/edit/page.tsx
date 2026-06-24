@@ -32,6 +32,9 @@ export default async function AdminEditFoodPage({ params }: { params: Promise<{ 
           </p>
         </div>
         <div className="flex flex-wrap gap-2">
+          <Link href="/admin" className="inline-flex h-10 items-center rounded-full border border-slate-200 bg-white px-4 text-xs font-black text-ink hover:border-park">
+            管理トップ
+          </Link>
           <Link href={`/admin/foods/${food.id}`} className="inline-flex h-10 items-center rounded-full border border-slate-200 bg-white px-4 text-xs font-black text-ink hover:border-park">
             詳細へ戻る
           </Link>

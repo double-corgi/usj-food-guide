@@ -1,5 +1,7 @@
 import { notFound } from "next/navigation";
+import Link from "next/link";
 import { FoodDetail } from "@/components/food-detail";
+import { getCurrentAdmin } from "@/lib/admin-auth";
 import { getFoodById, listFoods } from "@/lib/repositories/foods";
 
 export const dynamic = "force-dynamic";
@@ -20,21 +22,44 @@ export default async function FoodDetailPage({ params }: { params: Promise<{ id:
   const sameEvent = foods.filter((candidate) => candidate.id !== food.id && food.eventName && candidate.eventName === food.eventName);
   const sameSeries = foods.filter((candidate) => candidate.id !== food.id && (candidate.category === food.category || (food.flavor && candidate.flavor === food.flavor)));
   const together = uniqueFoods([...sameShop, ...sameArea, ...sameCategory]).slice(0, 12);
+  const admin = await getCurrentAdmin();
+  const canEdit = admin?.mode === "supabase" && (admin.role === "owner" || admin.role === "editor");
+  const isManualFood = food.manualOverride === true || food.sourceNames?.includes("manual_foods") === true || food.id.startsWith("food-manual-");
+
   return (
-    <FoodDetail
-      food={food}
-      allFoods={foods}
-      previousFood={previousFood}
-      nextFood={nextFood}
-      relatedGroups={{
-        sameCategory,
-        sameArea,
-        sameShop,
-        sameEvent,
-        sameSeries,
-        together
-      }}
-    />
+    <>
+      {canEdit ? (
+        <div className="mb-4 rounded-2xl border border-park/20 bg-mint p-3 shadow-soft">
+          <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+            <p className="text-sm font-black text-park">管理者として表示中</p>
+            <div className="flex flex-wrap gap-2">
+              <Link href={`/admin/foods/${food.id}`} className="inline-flex h-10 items-center justify-center rounded-full border border-park/30 bg-white px-4 text-xs font-black text-park">
+                管理画面で確認
+              </Link>
+              {isManualFood ? (
+                <Link href={`/admin/foods/${food.id}/edit`} className="inline-flex h-10 items-center justify-center rounded-full bg-park px-4 text-xs font-black text-white">
+                  この商品を編集
+                </Link>
+              ) : null}
+            </div>
+          </div>
+        </div>
+      ) : null}
+      <FoodDetail
+        food={food}
+        allFoods={foods}
+        previousFood={previousFood}
+        nextFood={nextFood}
+        relatedGroups={{
+          sameCategory,
+          sameArea,
+          sameShop,
+          sameEvent,
+          sameSeries,
+          together
+        }}
+      />
+    </>
   );
 }
 

@@ -29,23 +29,33 @@ function isNavActive(pathname: string, href: string): boolean {
 export function AppHeader() {
   const { t, locale, setLocale } = useLocale();
   const pathname = usePathname();
+  const isAdminPath = pathname.startsWith("/admin");
+  const effectiveNavItems = isAdminPath
+    ? [{ href: "/admin", label: "管理", icon: House }, ...navItems.slice(1)]
+    : navItems;
 
   return (
     <>
       <header className="sticky top-0 z-30 hidden border-b border-slate-200/60 bg-white/78 pt-[env(safe-area-inset-top)] backdrop-blur-xl md:block">
         <div className="mx-auto flex w-full max-w-7xl items-center justify-end gap-3 px-6 py-2.5 lg:px-8">
           <nav className="flex items-center gap-1">
-            {navItems.map((item) => (
+            {effectiveNavItems.map((item) => (
               <Link
                 key={item.href}
                 href={item.href}
                 className="inline-flex items-center gap-2 rounded-full px-3 py-2 text-sm font-bold text-slate-600 transition hover:bg-mint hover:text-park"
               >
                 <item.icon size={17} aria-hidden />
-                {t(item.labelKey)}
+                {"label" in item ? item.label : t(item.labelKey)}
               </Link>
             ))}
           </nav>
+
+          {isAdminPath ? (
+            <Link href="/" className="inline-flex items-center rounded-full border border-slate-200 bg-white px-3 py-2 text-sm font-black text-park transition hover:border-park">
+              公開ページを見る
+            </Link>
+          ) : null}
 
           <div className="relative">
             <select
@@ -75,7 +85,7 @@ export function AppHeader() {
         aria-label={t("nav.label")}
         className="fixed inset-x-4 bottom-[calc(env(safe-area-inset-bottom)+4.25rem)] z-50 grid grid-cols-5 rounded-[1.55rem] border border-slate-200/60 bg-white p-1 shadow-[0_-1px_0_rgba(0,0,0,0.06),0_4px_16px_rgba(0,0,0,0.08)] md:hidden"
       >
-        {navItems.map((item) => {
+        {effectiveNavItems.map((item) => {
           const active = isNavActive(pathname, item.href);
           return (
             <Link
@@ -87,7 +97,7 @@ export function AppHeader() {
               }`}
             >
               <item.icon size={19} aria-hidden />
-              {t(item.labelKey)}
+              {"label" in item ? item.label : t(item.labelKey)}
             </Link>
           );
         })}
