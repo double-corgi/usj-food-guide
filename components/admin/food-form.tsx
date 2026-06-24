@@ -85,7 +85,9 @@ export function AdminFoodForm({ mode, food, shopOptions = [], action, visibility
     },
     [areaSelection, hasAreaSelection, shopOptions, shopQuery, shopTypeFilter]
   );
+  const visibleShopOptions = filteredShopOptions.slice(0, 10);
   const selectedShop = hasAreaSelection ? shopOptions.find((shop) => shop.name === shopSelection && shop.areaName === areaSelection) : undefined;
+  const submittedShopName = hasAreaSelection ? (shopSelection === otherShopValue ? shopOther : shopSelection) : "";
   const duplicateWarnings =
     mode === "new"
       ? findDuplicateWarnings({
@@ -168,8 +170,8 @@ export function AdminFoodForm({ mode, food, shopOptions = [], action, visibility
           ))}
         </SelectField>
         <div className="space-y-3 lg:col-span-2">
-          <input type="hidden" name="shopSelection" value={hasAreaSelection ? shopSelection : ""} />
-          <div className="rounded-lg border border-slate-200 bg-slate-50 p-3">
+          <input type="hidden" name="shopName" value={submittedShopName} />
+          <div className="rounded-lg border border-slate-200 bg-slate-50 p-4">
             <p className="text-sm font-black text-ink">店舗</p>
             <p className="mt-1 text-xs font-bold leading-5 text-slate-500">
               1. エリアを選ぶ → 2. 店舗種別で絞る → 3. 店舗名で検索 → 4. 店舗を選ぶ、の順で入力してください。
@@ -180,7 +182,7 @@ export function AdminFoodForm({ mode, food, shopOptions = [], action, visibility
               先にエリアを選択してください
             </div>
           ) : null}
-          <div className="grid gap-3 sm:grid-cols-[1fr_auto] sm:items-end">
+          <div className="grid gap-3 rounded-lg border border-slate-200 bg-white p-3 sm:grid-cols-[1fr_auto] sm:items-end">
             <label className="block">
               <span className="text-sm font-black text-ink">店舗検索</span>
               <input
@@ -216,7 +218,7 @@ export function AdminFoodForm({ mode, food, shopOptions = [], action, visibility
               {!hasAreaSelection ? (
                 <p className="px-3 py-3 text-sm font-black text-slate-500">先にエリアを選択してください。</p>
               ) : filteredShopOptions.length > 0 ? (
-                filteredShopOptions.map((shop) => (
+                visibleShopOptions.map((shop) => (
                   <button
                     key={`${shop.areaName}:${shop.type}:${shop.name}`}
                     type="button"
@@ -232,6 +234,11 @@ export function AdminFoodForm({ mode, food, shopOptions = [], action, visibility
               ) : (
                 <p className="px-3 py-2 text-sm font-bold text-slate-500">該当する店舗候補がありません。</p>
               )}
+              {hasAreaSelection && filteredShopOptions.length > visibleShopOptions.length ? (
+                <p className="px-3 py-2 text-xs font-bold text-slate-500">
+                  さらに {filteredShopOptions.length - visibleShopOptions.length} 件あります。店舗名で検索すると絞り込めます。
+                </p>
+              ) : null}
             </div>
           </div>
           <button
@@ -245,9 +252,12 @@ export function AdminFoodForm({ mode, food, shopOptions = [], action, visibility
             その他（直接入力）
           </button>
           {selectedShop ? (
-            <p className="text-xs font-bold text-slate-500">
-              選択中: {selectedShop.name} / {selectedShop.areaName} / {formatShopType(selectedShop.type)}
-            </p>
+            <div className="rounded-lg border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm font-black text-emerald-900">
+              選択中: {selectedShop.name}
+              <span className="ml-2 text-xs text-emerald-700">
+                {selectedShop.areaName} / {formatShopType(selectedShop.type)}
+              </span>
+            </div>
           ) : null}
           {shopSelection === otherShopValue ? (
             <TextField label="店舗名（その他）" name="shopOther" defaultValue={shopOther} placeholder="例: ユニバーサル・マーケット内ハピネス・ワゴン" required onChange={(event) => setShopOther(event.currentTarget.value)} />
