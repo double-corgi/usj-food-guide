@@ -1,7 +1,8 @@
 import Link from "next/link";
-import { AdminFoodForm, type AdminShopOption, type DuplicateCandidate } from "@/components/admin/food-form";
+import { AdminFoodForm, type DuplicateCandidate } from "@/components/admin/food-form";
 import { createAdminFood } from "@/app/admin/foods/actions";
 import { requireAdmin } from "@/lib/admin-auth";
+import { buildAdminShopOptions } from "@/lib/admin-shop-options";
 import { listAllFoodCandidates } from "@/lib/repositories/foods";
 import type { FoodWithRelations } from "@/types/domain";
 
@@ -43,21 +44,6 @@ function getDuplicateCandidates(foods: FoodWithRelations[]): DuplicateCandidate[
 
 function getFormOptions(foods: FoodWithRelations[]) {
   return {
-    shops: uniqueSortedShops(
-      foods.map((food) => ({
-        name: food.shop.name,
-        areaName: food.area.name,
-        type: food.shop.type
-      }))
-    )
+    shops: buildAdminShopOptions(foods)
   };
-}
-
-function uniqueSortedShops(values: AdminShopOption[]) {
-  const map = new Map<string, AdminShopOption>();
-  for (const shop of values) {
-    if (!shop.name) continue;
-    map.set(`${shop.areaName}:${shop.type}:${shop.name}`, shop);
-  }
-  return Array.from(map.values()).sort((a, b) => a.name.localeCompare(b.name, "ja") || a.areaName.localeCompare(b.areaName, "ja"));
 }

@@ -55,13 +55,14 @@ const shopTypeOptions: Array<{ value: ShopType | "all"; label: string }> = [
 ];
 
 export function AdminFoodForm({ mode, food, shopOptions = [], action, visibilityAction, adminNotes, categoryTags, duplicateCandidates = [] }: AdminFoodFormProps) {
+  const initialArea = getInitialArea(food);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
-  const [shopSelection, setShopSelection] = useState(() => getInitialShopSelection(food, shopOptions));
-  const [shopOther, setShopOther] = useState(() => (food && !hasShopOption(shopOptions, food.shop.name) ? food.shop.name : ""));
+  const [shopSelection, setShopSelection] = useState(() => getInitialShopSelection(food, shopOptions, initialArea));
+  const [shopOther, setShopOther] = useState(() => (food && !hasShopOption(shopOptions, food.shop.name, initialArea) ? food.shop.name : ""));
   const [shopTypeFilter, setShopTypeFilter] = useState<ShopType | "all">("all");
   const [shopQuery, setShopQuery] = useState("");
   const [nameInput, setNameInput] = useState(food?.name ?? "");
-  const [areaSelection, setAreaSelection] = useState(() => getInitialArea(food));
+  const [areaSelection, setAreaSelection] = useState(initialArea);
   const saveEnabled = Boolean(action);
   const [saveState, formAction, pending] = useActionState(action ?? disabledSaveAction, initialSaveState);
   const selectedCategories = new Set<string>(categoryTags && categoryTags.length > 0 ? categoryTags : food?.category ? [food.category] : []);
@@ -147,7 +148,7 @@ export function AdminFoodForm({ mode, food, shopOptions = [], action, visibility
           onChange={(event) => {
             const nextArea = event.currentTarget.value;
             setAreaSelection(nextArea);
-            if (shopSelection && shopSelection !== otherShopValue && !shopOptions.some((shop) => shop.name === shopSelection && (nextArea === "不明" || shop.areaName === nextArea))) {
+            if (shopSelection && shopSelection !== otherShopValue && !hasShopOption(shopOptions, shopSelection, nextArea)) {
               setShopSelection("");
             }
           }}
@@ -437,13 +438,13 @@ function getInitialArea(food?: FoodWithRelations) {
   return area && adminAreaOptions.some((option) => option === area) ? area : "不明";
 }
 
-function getInitialShopSelection(food: FoodWithRelations | undefined, shopOptions: AdminShopOption[]) {
+function getInitialShopSelection(food: FoodWithRelations | undefined, shopOptions: AdminShopOption[], areaName: string) {
   if (!food) return "";
-  return hasShopOption(shopOptions, food.shop.name) ? food.shop.name : otherShopValue;
+  return hasShopOption(shopOptions, food.shop.name, areaName) ? food.shop.name : otherShopValue;
 }
 
-function hasShopOption(shopOptions: AdminShopOption[], shopName: string) {
-  return shopOptions.some((shop) => shop.name === shopName);
+function hasShopOption(shopOptions: AdminShopOption[], shopName: string, areaName?: string) {
+  return shopOptions.some((shop) => shop.name === shopName && (!areaName || areaName === "不明" || shop.areaName === areaName));
 }
 
 function formatShopType(type: ShopType) {
