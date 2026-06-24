@@ -60,7 +60,7 @@ export function EatenExperience({ foods }: { foods: FoodWithRelations[] }) {
     .filter((log) => log.status === "eaten")
     .reduce((sum, log) => {
       if (typeof log.spentAmount === "number") return sum + log.spentAmount;
-      const food = foods.find((item) => item.id === log.foodId);
+      const food = findLogFood(foods, canonicalFoods, log.foodId);
       return sum + (food?.priceMin ?? food?.price ?? 0) * (log.eatenCount ?? 1);
     }, 0);
   return (
@@ -321,7 +321,14 @@ function buildAlbumSections(records: EatenAlbumRecord[], mode: AlbumMode, t: (ke
 
 function findLogFood(foods: FoodWithRelations[], canonicalFoods: FoodWithRelations[], foodId: string) {
   const exactFood = foods.find((food) => food.id === foodId);
-  if (!exactFood) return undefined;
+  if (!exactFood) {
+    const canonicalMatch = canonicalFoods.find((food) => getCanonicalFoodKey(food) === foodId);
+    if (canonicalMatch) return canonicalMatch;
+    const foodByCanonicalKey = foods.find((food) => getCanonicalFoodKey(food) === foodId);
+    if (!foodByCanonicalKey) return undefined;
+    const canonicalKey = getCanonicalFoodKey(foodByCanonicalKey);
+    return canonicalFoods.find((food) => getCanonicalFoodKey(food) === canonicalKey) ?? foodByCanonicalKey;
+  }
   const canonicalKey = getCanonicalFoodKey(exactFood);
   return canonicalFoods.find((food) => getCanonicalFoodKey(food) === canonicalKey) ?? exactFood;
 }
