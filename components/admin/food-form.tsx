@@ -60,6 +60,7 @@ export function AdminFoodForm({ mode, food, shopOptions = [], action, visibility
   const [customShopName, setCustomShopName] = useState(() => (food && !hasShopOption(shopOptions, food.shop.name, initialArea) ? food.shop.name : ""));
   const [shopTypeFilter, setShopTypeFilter] = useState<ShopType | "all">("all");
   const [shopQuery, setShopQuery] = useState("");
+  const [shopResultLimit, setShopResultLimit] = useState(5);
   const [nameInput, setNameInput] = useState(food?.name ?? "");
   const [priceInput, setPriceInput] = useState(formatPriceValue(food));
   const [areaSelection, setAreaSelection] = useState(initialArea);
@@ -80,16 +81,23 @@ export function AdminFoodForm({ mode, food, shopOptions = [], action, visibility
   const filteredShopOptions = useMemo(
     () => {
       if (!hasAreaSelection) return [];
-      return shopOptions.filter((shop) => {
+      const matchedShops = shopOptions.filter((shop) => {
         if (shop.areaName !== areaSelection) return false;
         if (shopTypeFilter !== "all" && shop.type !== shopTypeFilter) return false;
         if (shopQuery.trim() && !normalizeSearchText(shop.name).includes(normalizeSearchText(shopQuery))) return false;
         return true;
       });
+      const seenShopKeys = new Set<string>();
+      return matchedShops.filter((shop) => {
+        const key = `${shop.name}:${shop.type}`;
+        if (seenShopKeys.has(key)) return false;
+        seenShopKeys.add(key);
+        return true;
+      });
     },
     [areaSelection, hasAreaSelection, shopOptions, shopQuery, shopTypeFilter]
   );
-  const visibleShopOptions = filteredShopOptions.slice(0, 10);
+  const visibleShopOptions = filteredShopOptions.slice(0, shopResultLimit);
   const selectedShop = hasAreaSelection ? shopOptions.find((shop) => shop.name === selectedShopName && shop.areaName === areaSelection) : undefined;
   const submittedShopName = hasAreaSelection ? (selectedShopName === otherShopValue ? customShopName : selectedShopName) : "";
   const selectedShopLabel = selectedShop?.name ?? (selectedShopName === otherShopValue && customShopName ? customShopName : null);
@@ -169,7 +177,7 @@ export function AdminFoodForm({ mode, food, shopOptions = [], action, visibility
       ) : null}
 
       <section className="rounded-lg border border-slate-200 bg-white p-4 shadow-soft">
-        <SectionHeading step="①" title="基本情報" description="まず商品名、価格、エリア、店舗を入力します。" />
+        <SectionHeading step="①" title="基本情報" description="商品名と価格を入力します。英語名は未入力でも保存できます。" />
         <div className="mt-4 grid gap-4 lg:grid-cols-2">
           <TextField
             label="商品名 日本語"
@@ -179,6 +187,7 @@ export function AdminFoodForm({ mode, food, shopOptions = [], action, visibility
             requirement="required"
             onChange={(event) => setNameInput(event.currentTarget.value)}
           />
+          <TextField label="商品名 英語" name="nameEn" defaultValue="" placeholder="未入力でOK" requirement="optional" helpText="英語名は未入力でも保存できます。" />
           <TextField
             label="価格"
             name="price"
@@ -189,6 +198,12 @@ export function AdminFoodForm({ mode, food, shopOptions = [], action, visibility
             requirement="required"
             onChange={(event) => setPriceInput(event.currentTarget.value)}
           />
+        </div>
+      </section>
+
+      <section className="rounded-lg border border-slate-200 bg-white p-4 shadow-soft">
+        <SectionHeading step="②" title="エリア・店舗" description="エリアを先に選ぶと、そのエリアの店舗候補だけを検索できます。" />
+        <div className="mt-4 grid gap-4 lg:grid-cols-2">
           <SelectField
             label="エリア"
             name="area"
@@ -197,6 +212,7 @@ export function AdminFoodForm({ mode, food, shopOptions = [], action, visibility
             onChange={(event) => {
               const nextArea = event.currentTarget.value;
               setAreaSelection(nextArea);
+              setShopResultLimit(5);
               if (!nextArea || nextArea === "不明") {
                 setSelectedShopName("");
                 setCustomShopName("");
@@ -260,7 +276,10 @@ export function AdminFoodForm({ mode, food, shopOptions = [], action, visibility
               <input
                 type="search"
                 value={shopQuery}
-                onChange={(event) => setShopQuery(event.currentTarget.value)}
+                onChange={(event) => {
+                  setShopQuery(event.currentTarget.value);
+                  setShopResultLimit(5);
+                }}
                 placeholder={hasAreaSelection ? "店舗名で検索（例: ハピネス）" : "先にエリアを選択してください"}
                 disabled={!hasAreaSelection}
                 autoComplete="off"
@@ -276,7 +295,10 @@ export function AdminFoodForm({ mode, food, shopOptions = [], action, visibility
                     <button
                       key={option.value}
                       type="button"
-                      onClick={() => setShopTypeFilter(option.value)}
+                      onClick={() => {
+                        setShopTypeFilter(option.value);
+                        setShopResultLimit(5);
+                      }}
                       className={`h-10 rounded-full border px-4 text-xs font-black ${
                         shopTypeFilter === option.value ? "border-park bg-mint text-park" : "border-slate-200 bg-white text-slate-600"
                       }`}
@@ -311,9 +333,13 @@ export function AdminFoodForm({ mode, food, shopOptions = [], action, visibility
                   <p className="rounded-lg bg-white px-4 py-3 text-sm font-bold text-slate-500">該当する店舗候補がありません。</p>
                 )}
                 {filteredShopOptions.length > visibleShopOptions.length ? (
-                  <p className="px-2 py-1 text-xs font-bold text-slate-500">
-                    さらに {filteredShopOptions.length - visibleShopOptions.length} 件あります。店舗名で検索すると絞り込めます。
-                  </p>
+                  <button
+                    type="button"
+                    onClick={() => setShopResultLimit((current) => current + 5)}
+                    className="min-h-11 w-full rounded-lg border border-slate-200 bg-white px-4 py-2 text-sm font-black text-slate-700 hover:border-park"
+                  >
+                    さらに表示（残り {filteredShopOptions.length - visibleShopOptions.length} 件）
+                  </button>
                 ) : null}
               </div>
 
@@ -345,7 +371,7 @@ export function AdminFoodForm({ mode, food, shopOptions = [], action, visibility
       </section>
 
       <section className="rounded-lg border border-slate-200 bg-white p-4 shadow-soft">
-        <SectionHeading step="②" title="カテゴリ" description="公開ページの分類と同じカテゴリを1つ以上選びます。" />
+        <SectionHeading step="③" title="カテゴリ" description="公開ページの分類と同じカテゴリを1つ以上選びます。" required />
         {preservedHiddenCategories.map((value) => (
           <input key={value} type="hidden" name="categoryTags" value={value} />
         ))}
@@ -367,7 +393,7 @@ export function AdminFoodForm({ mode, food, shopOptions = [], action, visibility
       </section>
 
       <section className="rounded-lg border border-slate-200 bg-white p-4 shadow-soft">
-        <SectionHeading step="③" title="画像" description="公開する商品には画像が必要です。画像なしでも下書き保存はできます。" />
+        <SectionHeading step="④" title="画像" description="公開する商品には画像が必要です。画像なしでも下書き保存できます。" required />
         <div className="mt-3 grid gap-4 lg:grid-cols-[220px_1fr]">
           <div className="overflow-hidden rounded-lg border border-slate-200 bg-slate-50">
             {previewUrl || activeImage?.imageUrl || food?.imageUrl ? (
@@ -397,18 +423,24 @@ export function AdminFoodForm({ mode, food, shopOptions = [], action, visibility
               />
             </label>
             <p className="text-sm font-bold leading-6 text-slate-500">
-              画像は自動で商品カード向けサイズに調整されます。画像なしでも下書き保存は可能です。
-              今すぐ公開する場合は画像を登録してください。編集時に画像を選ばなければ既存画像を維持します。
+              画像なしでも下書き保存できます。公開する場合は画像が必要です。
+              画像は自動で商品カード向けサイズに調整されます。編集時に画像を選ばなければ既存画像を維持します。
             </p>
           </div>
         </div>
       </section>
 
       <section className="rounded-lg border border-slate-200 bg-white p-4 shadow-soft">
-        <SectionHeading step="④" title="公開設定" description="通常は「今すぐ公開」をON、販売状態は「販売中」で登録します。" />
-        <div className="mt-4 grid gap-4 lg:grid-cols-3">
-          <div className="rounded-lg border border-slate-200 bg-slate-50 p-4 lg:col-span-3">
+        <SectionHeading step="⑤" title="公開設定" description="追加画面では「今すぐ公開」だけを選べば十分です。" />
+        <div className="mt-4 grid gap-4">
+          <div className="rounded-lg border border-slate-200 bg-slate-50 p-4">
             <input type="hidden" name="publicState" value={publicStateSelection} />
+            {mode === "new" ? (
+              <>
+                <input type="hidden" name="saleStatus" value={saleStatus} />
+                <input type="hidden" name="hiddenState" value={hiddenState} />
+              </>
+            ) : null}
             <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
               <div>
                 <p className="text-sm font-black text-ink">今すぐ公開</p>
@@ -431,24 +463,27 @@ export function AdminFoodForm({ mode, food, shopOptions = [], action, visibility
               </button>
             </div>
           </div>
-          <SelectField label="販売状態" name="saleStatus" defaultValue={saleStatus} requirement="required">
-            {adminSaleStatusOptions.map((option) => (
-              <option key={option.value} value={option.value}>
-                {option.label}
-              </option>
-            ))}
-          </SelectField>
-          <SelectField label="表示状態" name="hiddenState" defaultValue={hiddenState}>
-            <option value="visible">表示中</option>
-            <option value="hidden">非表示</option>
-          </SelectField>
         </div>
       </section>
 
       <section className="rounded-lg border border-slate-200 bg-white p-4 shadow-soft">
-        <SectionHeading step="⑤" title="詳細（任意）" description="英語名、販売期間、管理メモは必要なときだけ入力します。" />
+        <SectionHeading step="⑥" title="詳細（任意）" description="販売期間や管理メモは必要なときだけ入力します。" />
         <div className="mt-4 grid gap-4 lg:grid-cols-2">
-          <TextField label="商品名 英語" name="nameEn" defaultValue="" placeholder="未入力でOK" requirement="optional" helpText="英語名は未入力でも保存できます。" />
+          {mode === "edit" ? (
+            <>
+              <SelectField label="販売状態" name="saleStatus" defaultValue={saleStatus} requirement="required">
+                {adminSaleStatusOptions.map((option) => (
+                  <option key={option.value} value={option.value}>
+                    {option.label}
+                  </option>
+                ))}
+              </SelectField>
+              <SelectField label="表示状態" name="hiddenState" defaultValue={hiddenState}>
+                <option value="visible">表示中</option>
+                <option value="hidden">非表示</option>
+              </SelectField>
+            </>
+          ) : null}
           <TextField label="販売期間 start" name="saleStart" defaultValue={food?.saleStartDate ?? food?.startDate ?? ""} type="date" requirement="optional" />
           <TextField label="販売期間 end" name="saleEnd" defaultValue={food?.saleEndDate ?? food?.endDate ?? ""} type="date" requirement="optional" />
           <label className="block rounded-lg border border-slate-200 bg-slate-50 p-3 lg:col-span-2">
@@ -473,7 +508,7 @@ export function AdminFoodForm({ mode, food, shopOptions = [], action, visibility
             保存後は商品詳細へ戻ります。編集者・オーナーのみ保存できます。
           </p>
           <div className="rounded-lg border border-slate-200 bg-slate-50 p-3">
-            <p className="text-sm font-black text-ink">公開前チェック</p>
+            <p className="text-sm font-black text-ink">公開準備チェック</p>
             <p className="mt-1 text-xs font-bold leading-5 text-slate-500">
               公開には商品名・価格・エリア・店舗・カテゴリ・画像が必要です。下書き保存なら画像なしでも保存できます。
             </p>
@@ -483,7 +518,7 @@ export function AdminFoodForm({ mode, food, shopOptions = [], action, visibility
                   key={item.label}
                   className={`rounded-full px-2.5 py-1 text-xs font-black ${item.done ? "bg-emerald-50 text-emerald-700" : "bg-amber-50 text-amber-800"}`}
                 >
-                  {item.done ? "OK" : "未入力"} {item.label}
+                  {item.done ? "☑" : "☐"} {item.label}
                 </span>
               ))}
             </div>
@@ -590,11 +625,14 @@ function SelectField({
   );
 }
 
-function SectionHeading({ step, title, description }: { step: string; title: string; description: string }) {
+function SectionHeading({ step, title, description, required = false }: { step: string; title: string; description: string; required?: boolean }) {
   return (
     <div>
       <p className="text-xs font-black text-park">{step}</p>
-      <h2 className="mt-1 text-lg font-black text-ink">{title}</h2>
+      <h2 className="mt-1 flex items-center gap-2 text-lg font-black text-ink">
+        {title}
+        {required ? <RequiredBadge /> : null}
+      </h2>
       <p className="mt-1 text-sm font-bold leading-6 text-slate-500">{description}</p>
     </div>
   );
