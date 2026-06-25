@@ -3,7 +3,8 @@ import { notFound } from "next/navigation";
 import { ExternalLink, PencilLine } from "lucide-react";
 import { FoodImage } from "@/components/food-image";
 import { ManualFoodVisibilityButton } from "@/components/admin/manual-food-visibility-button";
-import { setGeneratedFoodVisibility, setManualFoodVisibility } from "@/app/admin/foods/actions";
+import { ResetGeneratedFoodButton } from "@/components/admin/reset-generated-food-button";
+import { resetGeneratedFoodOverride, setGeneratedFoodVisibility, setManualFoodVisibility } from "@/app/admin/foods/actions";
 import { requireAdmin } from "@/lib/admin-auth";
 import {
   formatAdminCanonicalState,
@@ -65,6 +66,9 @@ export default async function AdminFoodDetailPage({
           {canManage ? (
             <ManualFoodVisibilityButton foodId={food.id} hidden={food.hidden} action={manualFood ? setManualFoodVisibility : setGeneratedFoodVisibility} />
           ) : null}
+          {canManage && !manualFood && hasFoodOverride(food) ? (
+            <ResetGeneratedFoodButton foodId={food.id} action={resetGeneratedFoodOverride} />
+          ) : null}
           <Link href="/admin/foods" className="inline-flex h-10 items-center rounded-full border border-slate-200 bg-white px-4 text-xs font-black text-ink hover:border-park">
             一覧へ戻る
           </Link>
@@ -99,6 +103,9 @@ export default async function AdminFoodDetailPage({
           ) : null}
           {canManage ? (
             <ManualFoodVisibilityButton foodId={food.id} hidden={food.hidden} action={manualFood ? setManualFoodVisibility : setGeneratedFoodVisibility} />
+          ) : null}
+          {canManage && !manualFood && hasFoodOverride(food) ? (
+            <ResetGeneratedFoodButton foodId={food.id} action={resetGeneratedFoodOverride} />
           ) : null}
         </div>
       </section>
@@ -197,8 +204,10 @@ function SaveMessage({ saved, image, error, foodId, manualFood }: { saved?: stri
           ? "自動取得商品の修正内容を保存しました。"
         : saved === "hidden"
           ? "公開ページから非表示にしました。管理画面には残っています。"
-          : saved === "shown"
-            ? "公開ページに再表示しました。"
+        : saved === "shown"
+          ? "公開ページに再表示しました。"
+          : saved === "reset"
+            ? "元データに戻しました。"
             : null;
 
   if (!message && image !== "updated") return null;

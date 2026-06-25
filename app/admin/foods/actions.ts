@@ -293,6 +293,36 @@ export async function setGeneratedFoodVisibility(formData: FormData): Promise<vo
   redirect(`/admin/foods?saved=${hidden ? "hidden" : "shown"}`);
 }
 
+export async function resetGeneratedFoodOverride(formData: FormData): Promise<void> {
+  await requireAdmin("editor");
+  const supabase = createServiceSupabaseClient();
+  if (!supabase) redirect("/admin/foods?error=supabase");
+
+  const foodId = readCleanText(formData, "foodId", 120);
+  if (!foodId) redirect("/admin/foods?error=missing-food");
+
+  const generatedFood = readGeneratedFoods({ includeHidden: true }).find((food) => food.id === foodId);
+  if (!generatedFood) redirect(`/admin/foods/${foodId}?error=generated-only`);
+
+  const manualFood = await supabase.from("manual_foods").select("id").eq("id", foodId).maybeSingle();
+  if (manualFood.error) redirect(`/admin/foods/${foodId}?error=reset-failed`);
+  if (manualFood.data) redirect(`/admin/foods/${foodId}?error=generated-only`);
+
+  const { error } = await supabase.from("food_overrides").delete().eq("food_id", foodId);
+  if (error) {
+    console.error("generated food override reset failed", {
+      name: error.name,
+      code: error.code,
+      message: error.message,
+      foodId
+    });
+    redirect(`/admin/foods/${foodId}?error=reset-failed`);
+  }
+
+  revalidateAdminFoods(foodId);
+  redirect(`/admin/foods/${foodId}?saved=reset`);
+}
+
 function parseFoodForm(formData: FormData) {
   const name = readCleanText(formData, "nameJa", 120);
   if (!name) return failure("商品名を入力してください。");

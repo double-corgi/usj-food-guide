@@ -1,8 +1,9 @@
 import Link from "next/link";
 import { PencilLine, Plus, Search } from "lucide-react";
-import { setGeneratedFoodVisibility, setManualFoodVisibility } from "@/app/admin/foods/actions";
+import { resetGeneratedFoodOverride, setGeneratedFoodVisibility, setManualFoodVisibility } from "@/app/admin/foods/actions";
 import { FoodImage } from "@/components/food-image";
 import { ManualFoodVisibilityButton } from "@/components/admin/manual-food-visibility-button";
+import { ResetGeneratedFoodButton } from "@/components/admin/reset-generated-food-button";
 import { requireAdmin } from "@/lib/admin-auth";
 import {
   adminFoodCategoryOptions,
@@ -204,6 +205,9 @@ export default async function AdminFoodsPage({ searchParams }: { searchParams?: 
                       {canManage && !isManualFood(food) ? (
                         <ManualFoodVisibilityButton foodId={food.id} hidden={food.hidden} action={setGeneratedFoodVisibility} />
                       ) : null}
+                      {canManage && !isManualFood(food) && hasFoodOverride(food) ? (
+                        <ResetGeneratedFoodButton foodId={food.id} action={resetGeneratedFoodOverride} />
+                      ) : null}
                     </div>
                   </td>
                 </tr>
@@ -290,6 +294,11 @@ function FoodCard({ food, canManage }: { food: FoodWithRelations; canManage: boo
             <ManualFoodVisibilityButton foodId={food.id} hidden={food.hidden} action={setGeneratedFoodVisibility} />
           </div>
         ) : null}
+        {canManage && !isManualFood(food) && hasFoodOverride(food) ? (
+          <div className="pt-1">
+            <ResetGeneratedFoodButton foodId={food.id} action={resetGeneratedFoodOverride} />
+          </div>
+        ) : null}
       </div>
     </article>
   );
@@ -338,8 +347,10 @@ function SaveMessage({ value }: { value: string }) {
         ? "商品を保存しました。"
         : value === "hidden"
           ? "商品を公開ページから非表示にしました。管理画面には残っています。"
-          : value === "shown"
-            ? "商品を公開ページに再表示しました。"
+        : value === "shown"
+          ? "商品を公開ページに再表示しました。"
+          : value === "reset"
+            ? "元データに戻しました。"
             : null;
   if (!message) return null;
   return (
