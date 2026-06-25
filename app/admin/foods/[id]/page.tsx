@@ -2,9 +2,10 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ExternalLink, PencilLine } from "lucide-react";
 import { FoodImage } from "@/components/food-image";
+import { ManualFoodDeleteButton } from "@/components/admin/manual-food-delete-button";
 import { ManualFoodVisibilityButton } from "@/components/admin/manual-food-visibility-button";
 import { ResetGeneratedFoodButton } from "@/components/admin/reset-generated-food-button";
-import { resetGeneratedFoodOverride, setGeneratedFoodVisibility, setManualFoodVisibility } from "@/app/admin/foods/actions";
+import { resetGeneratedFoodOverride, setGeneratedFoodVisibility, setManualFoodDeleted, setManualFoodVisibility } from "@/app/admin/foods/actions";
 import { requireAdmin } from "@/lib/admin-auth";
 import {
   formatAdminCanonicalState,
@@ -32,7 +33,7 @@ export default async function AdminFoodDetailPage({
 }) {
   const { id } = await params;
   const query = searchParams ? await searchParams : {};
-  const [admin, foods] = await Promise.all([requireAdmin("viewer"), listAllFoodCandidates()]);
+  const [admin, foods] = await Promise.all([requireAdmin("viewer"), listAllFoodCandidates({ includeDeletedManualFoods: true })]);
   const food = foods.find((candidate) => candidate.id === id);
   if (!food) notFound();
 
@@ -51,7 +52,7 @@ export default async function AdminFoodDetailPage({
           <p className="mt-2 text-sm font-bold text-slate-500">{food.id}</p>
         </div>
         <div className="flex flex-wrap gap-2">
-          {canManage && manualFood ? (
+          {canManage && manualFood && !isDeletedFood(food) ? (
             <Link href={`/admin/foods/${food.id}/edit`} className="inline-flex h-12 items-center gap-2 rounded-full bg-park px-5 text-sm font-black text-white shadow-soft">
               <PencilLine size={15} aria-hidden />
               編集する
@@ -63,8 +64,11 @@ export default async function AdminFoodDetailPage({
               修正する
             </Link>
           ) : null}
-          {canManage ? (
+          {canManage && !isDeletedFood(food) ? (
             <ManualFoodVisibilityButton foodId={food.id} hidden={food.hidden} action={manualFood ? setManualFoodVisibility : setGeneratedFoodVisibility} />
+          ) : null}
+          {canManage && manualFood ? (
+            <ManualFoodDeleteButton foodId={food.id} deleted={isDeletedFood(food)} action={setManualFoodDeleted} />
           ) : null}
           {canManage && !manualFood && hasFoodOverride(food) ? (
             <ResetGeneratedFoodButton foodId={food.id} action={resetGeneratedFoodOverride} />
@@ -85,11 +89,16 @@ export default async function AdminFoodDetailPage({
             </span>
             {hasFoodOverride(food) ? <span className="ml-2 inline-flex rounded-full bg-white px-3 py-1 text-xs font-black text-park">修正あり</span> : null}
             {hasOverrideImage ? <span className="ml-2 inline-flex rounded-full bg-white px-3 py-1 text-xs font-black text-park">画像修正あり</span> : null}
+            {isDeletedFood(food) ? <span className="ml-2 inline-flex rounded-full bg-white px-3 py-1 text-xs font-black text-slate-600">削除済み</span> : null}
             <p className="mt-2 text-sm font-bold leading-6 text-slate-600">
-              {manualFood ? "この商品は管理画面から編集・画像差し替え・非表示運用ができます。" : "自動取得の商品です。元データを変えずに基本情報と画像だけ修正できます。"}
+              {isDeletedFood(food)
+                ? "この商品は削除済みです。復元すると通常の管理一覧と公開対象に戻せます。"
+                : manualFood
+                  ? "この商品は管理画面から編集・画像差し替え・非表示運用ができます。"
+                  : "自動取得の商品です。元データを変えずに基本情報と画像だけ修正できます。"}
             </p>
           </div>
-          {canManage && manualFood ? (
+          {canManage && manualFood && !isDeletedFood(food) ? (
             <Link href={`/admin/foods/${food.id}/edit`} className="inline-flex h-12 items-center justify-center gap-2 rounded-full bg-park px-5 text-sm font-black text-white shadow-soft">
               <PencilLine size={16} aria-hidden />
               編集する
@@ -101,8 +110,11 @@ export default async function AdminFoodDetailPage({
               修正する
             </Link>
           ) : null}
-          {canManage ? (
+          {canManage && !isDeletedFood(food) ? (
             <ManualFoodVisibilityButton foodId={food.id} hidden={food.hidden} action={manualFood ? setManualFoodVisibility : setGeneratedFoodVisibility} />
+          ) : null}
+          {canManage && manualFood ? (
+            <ManualFoodDeleteButton foodId={food.id} deleted={isDeletedFood(food)} action={setManualFoodDeleted} />
           ) : null}
           {canManage && !manualFood && hasFoodOverride(food) ? (
             <ResetGeneratedFoodButton foodId={food.id} action={resetGeneratedFoodOverride} />
@@ -139,6 +151,7 @@ export default async function AdminFoodDetailPage({
               <Field label="販売状態" value={formatAdminSaleStatus(getSaleState(food))} />
               <Field label="公開状態" value={formatAdminPublicState(getPublicState(food))} />
               <Field label="表示状態" value={formatAdminVisibility(food.hidden)} />
+              <Field label="削除状態" value={isDeletedFood(food) ? "削除済み" : "通常"} />
               <Field label="レビュー状態" value={formatAdminReviewStatus(food.reviewStatus)} />
               <Field label="表示品質" value={food.displayQuality} />
               <Field label="重複状態" value={formatAdminCanonicalState(food.canonicalFood)} />
@@ -206,9 +219,13 @@ function SaveMessage({ saved, image, error, foodId, manualFood }: { saved?: stri
           ? "公開ページから非表示にしました。管理画面には残っています。"
         : saved === "shown"
           ? "公開ページに再表示しました。"
-          : saved === "reset"
-            ? "元データに戻しました。"
-            : null;
+          : saved === "deleted"
+            ? "削除済みにしました。公開ページと通常の管理一覧から消えました。あとで復元できます。"
+            : saved === "restored"
+              ? "復元しました。"
+              : saved === "reset"
+                ? "元データに戻しました。"
+                : null;
 
   if (!message && image !== "updated") return null;
 
@@ -298,6 +315,10 @@ async function getManualAdminFields(foodId: string) {
 
 function isManualFood(food: FoodWithRelations) {
   return food.manualOverride === true || food.sourceNames?.includes("manual_foods") === true || food.id.startsWith("food-manual-");
+}
+
+function isDeletedFood(food: FoodWithRelations) {
+  return Boolean(food.deletedAt);
 }
 
 function hasFoodOverride(food: FoodWithRelations) {

@@ -237,6 +237,43 @@ export async function setManualFoodVisibility(formData: FormData): Promise<void>
   redirect(`/admin/foods?saved=${hidden ? "hidden" : "shown"}`);
 }
 
+export async function setManualFoodDeleted(formData: FormData): Promise<void> {
+  const admin = await requireAdmin("editor");
+  const supabase = createServiceSupabaseClient();
+  if (!supabase) redirect("/admin/foods?error=supabase");
+
+  const foodId = readCleanText(formData, "foodId", 120);
+  const intent = readCleanText(formData, "intent", 20);
+  if (!foodId) redirect("/admin/foods?error=missing-food");
+  if (intent !== "delete" && intent !== "restore") redirect(`/admin/foods/${foodId}?error=invalid-intent`);
+
+  const existing = await supabase.from("manual_foods").select("id").eq("id", foodId).maybeSingle();
+  if (existing.error || !existing.data) redirect(`/admin/foods/${foodId}?error=manual-only`);
+
+  const deletedAt = intent === "delete" ? new Date().toISOString() : null;
+  const { error } = await supabase
+    .from("manual_foods")
+    .update({
+      deleted_at: deletedAt,
+      updated_by: admin.email ?? "unknown-admin",
+      updated_at: new Date().toISOString()
+    })
+    .eq("id", foodId);
+
+  if (error) {
+    console.error("manual food soft delete update failed", {
+      name: error.name,
+      code: error.code,
+      message: error.message,
+      foodId
+    });
+    redirect(`/admin/foods/${foodId}?error=delete-failed`);
+  }
+
+  revalidateAdminFoods(foodId);
+  redirect(`/admin/foods?saved=${intent === "delete" ? "deleted" : "restored"}${intent === "delete" ? "&deleted=deleted" : ""}`);
+}
+
 export async function setGeneratedFoodVisibility(formData: FormData): Promise<void> {
   const admin = await requireAdmin("editor");
   const supabase = createServiceSupabaseClient();

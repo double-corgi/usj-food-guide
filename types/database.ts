@@ -216,6 +216,7 @@ export type Database = {
           updated_by: string;
           created_at: string;
           updated_at: string;
+          deleted_at: string | null;
         };
         Insert: {
           id: string;
@@ -239,6 +240,7 @@ export type Database = {
           updated_by: string;
           created_at?: string;
           updated_at?: string;
+          deleted_at?: string | null;
         };
         Update: Partial<Database["public"]["Tables"]["manual_foods"]["Insert"]>;
         Relationships: [];

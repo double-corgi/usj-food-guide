@@ -93,6 +93,7 @@ export type Food = {
   trustedPlaceholder?: boolean;
   createdAt?: string;
   updatedAt?: string;
+  deletedAt?: string | null;
   lastCheckedAt: string;
   sourceNames?: string[];
   rejectionReasons?: string[];

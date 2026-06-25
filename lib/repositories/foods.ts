@@ -4,6 +4,11 @@ import { readGeneratedFoods } from "@/lib/repositories/generated-data";
 import { getManualFoodById, listManualFoods } from "@/lib/repositories/manual-foods";
 import type { FoodWithRelations } from "@/types/domain";
 
+type ListAllFoodCandidatesOptions = {
+  includeDeletedManualFoods?: boolean;
+  deletedManualFoodsOnly?: boolean;
+};
+
 export async function listFoods(): Promise<FoodWithRelations[]> {
   const overrides = await listFoodOverrides();
   const generatedFoods = filterVisibleFoods(applyFoodOverrides(readGeneratedFoods({ reviewStatuses: ["approved"] }), overrides));
@@ -28,10 +33,13 @@ export async function getFoodById(id: string): Promise<FoodWithRelations | null>
   return sanitizePublicFood(manualFood);
 }
 
-export async function listAllFoodCandidates(): Promise<FoodWithRelations[]> {
+export async function listAllFoodCandidates(options: ListAllFoodCandidatesOptions = {}): Promise<FoodWithRelations[]> {
   const overrides = await listFoodOverrides();
   const generatedFoods = applyFoodOverrides(readGeneratedFoods({ includeHidden: true }), overrides);
-  const manualFoods = await listManualFoods();
+  const manualFoods = await listManualFoods({
+    includeDeleted: options.includeDeletedManualFoods,
+    deletedOnly: options.deletedManualFoodsOnly
+  });
   return mergeFoods(generatedFoods, manualFoods);
 }
 
@@ -48,6 +56,7 @@ function isVisibleFood(food: FoodWithRelations) {
     food.reviewStatus === "approved" &&
     food.canonicalFood !== false &&
     !food.hidden &&
+    !food.deletedAt &&
     food.displayQuality !== "low" &&
     food.status !== "inactive" &&
     food.nameQualityScore >= 60 &&
@@ -68,6 +77,7 @@ function isHomeVisibleFood(food: FoodWithRelations) {
     food.reviewStatus === "approved" &&
     food.canonicalFood !== false &&
     !food.hidden &&
+    !food.deletedAt &&
     food.displayQuality !== "low" &&
     food.nameQualityScore >= 60 &&
     food.confidenceScore >= 45 &&

@@ -7,6 +7,8 @@ export type ManualFoodRow = Database["public"]["Tables"]["manual_foods"]["Row"];
 
 type ListManualFoodsOptions = {
   publicOnly?: boolean;
+  includeDeleted?: boolean;
+  deletedOnly?: boolean;
 };
 
 export async function listManualFoods(options: ListManualFoodsOptions = {}): Promise<FoodWithRelations[]> {
@@ -15,7 +17,11 @@ export async function listManualFoods(options: ListManualFoodsOptions = {}): Pro
 
   let query = supabase.from("manual_foods").select("*").order("updated_at", { ascending: false });
   if (options.publicOnly) {
-    query = query.eq("public_state", "published").eq("hidden", false).eq("sale_status", "active");
+    query = query.eq("public_state", "published").eq("hidden", false).eq("sale_status", "active").is("deleted_at", null);
+  } else if (options.deletedOnly) {
+    query = query.not("deleted_at", "is", null);
+  } else if (!options.includeDeleted) {
+    query = query.is("deleted_at", null);
   }
 
   const { data, error } = await query;
@@ -33,7 +39,9 @@ export async function getManualFoodById(id: string, options: ListManualFoodsOpti
 
   let query = supabase.from("manual_foods").select("*").eq("id", id);
   if (options.publicOnly) {
-    query = query.eq("public_state", "published").eq("hidden", false).eq("sale_status", "active");
+    query = query.eq("public_state", "published").eq("hidden", false).eq("sale_status", "active").is("deleted_at", null);
+  } else if (!options.includeDeleted) {
+    query = query.is("deleted_at", null);
   }
 
   const { data, error } = await query.maybeSingle();
@@ -90,7 +98,7 @@ function mapManualFood(row: ManualFoodRow): FoodWithRelations {
     saleStartDate: row.start_date,
     saleEndDate: row.end_date,
     salePeriodLabel: buildSalePeriodLabel(saleStatus, row.start_date, row.end_date),
-    isCompletable: row.public_state === "published" && !row.hidden && saleStatus === "active",
+    isCompletable: row.public_state === "published" && !row.hidden && !row.deleted_at && saleStatus === "active",
     startDate: row.start_date ?? undefined,
     endDate: row.end_date ?? undefined,
     status,
@@ -107,6 +115,7 @@ function mapManualFood(row: ManualFoodRow): FoodWithRelations {
     trustedPlaceholder: false,
     createdAt: row.created_at,
     updatedAt: row.updated_at,
+    deletedAt: row.deleted_at,
     lastCheckedAt: row.updated_at,
     sourceNames: ["manual_foods"],
     rejectionReasons: [],
