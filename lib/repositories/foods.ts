@@ -1,15 +1,19 @@
+import { applyFoodOverrides } from "@/lib/food-overrides";
+import { listFoodOverrides } from "@/lib/repositories/food-overrides";
 import { readGeneratedFoods } from "@/lib/repositories/generated-data";
 import { getManualFoodById, listManualFoods } from "@/lib/repositories/manual-foods";
 import type { FoodWithRelations } from "@/types/domain";
 
 export async function listFoods(): Promise<FoodWithRelations[]> {
-  const generatedFoods = filterVisibleFoods(readGeneratedFoods({ reviewStatuses: ["approved"] }));
+  const overrides = await listFoodOverrides();
+  const generatedFoods = filterVisibleFoods(applyFoodOverrides(readGeneratedFoods({ reviewStatuses: ["approved"] }), overrides));
   const manualFoods = filterVisibleFoods(await listManualFoods({ publicOnly: true }));
   return mergeFoods(generatedFoods, manualFoods);
 }
 
 export async function getFoodById(id: string): Promise<FoodWithRelations | null> {
-  const generatedFood = readGeneratedFoods({ includeHidden: true }).find((candidate) => candidate.id === id) ?? null;
+  const overrides = await listFoodOverrides();
+  const generatedFood = applyFoodOverrides(readGeneratedFoods({ includeHidden: true }), overrides).find((candidate) => candidate.id === id) ?? null;
   if (generatedFood) return isVisibleFood(generatedFood) ? sanitizePublicFood(generatedFood) : null;
 
   const manualFood = await getManualFoodById(id, { publicOnly: true });
@@ -18,7 +22,8 @@ export async function getFoodById(id: string): Promise<FoodWithRelations | null>
 }
 
 export async function listAllFoodCandidates(): Promise<FoodWithRelations[]> {
-  const generatedFoods = readGeneratedFoods({ includeHidden: true });
+  const overrides = await listFoodOverrides();
+  const generatedFoods = applyFoodOverrides(readGeneratedFoods({ includeHidden: true }), overrides);
   const manualFoods = await listManualFoods();
   return mergeFoods(generatedFoods, manualFoods);
 }

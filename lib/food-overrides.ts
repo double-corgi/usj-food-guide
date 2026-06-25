@@ -1,0 +1,101 @@
+import type { FoodOverrideRow } from "@/lib/repositories/food-overrides";
+import type { FoodCategory, FoodStatus, FoodWithRelations, SaleStatus } from "@/types/domain";
+
+const FOOD_CATEGORIES = new Set<FoodCategory>([
+  "churro",
+  "popcorn",
+  "drink",
+  "dessert",
+  "burger",
+  "pizza",
+  "chicken",
+  "rice",
+  "noodle",
+  "snack",
+  "kids",
+  "seasonal",
+  "set",
+  "unknown"
+]);
+
+const FOOD_STATUSES = new Set<FoodStatus>(["active", "scheduled", "ended", "inactive", "unknown"]);
+const SALE_STATUSES = new Set<SaleStatus>(["active", "paused", "ended", "unknown"]);
+
+export function applyFoodOverrides(generatedFoods: FoodWithRelations[], overrides: FoodOverrideRow[]): FoodWithRelations[] {
+  if (overrides.length === 0) return generatedFoods;
+
+  const overrideByFoodId = new Map(overrides.map((override) => [override.food_id, override]));
+  return generatedFoods.map((food) => {
+    const override = overrideByFoodId.get(food.id);
+    if (!override) return food;
+    return applyFoodOverride(food, override);
+  });
+}
+
+function applyFoodOverride(food: FoodWithRelations, override: FoodOverrideRow): FoodWithRelations {
+  const next: FoodWithRelations = {
+    ...food,
+    name: override.name ?? food.name,
+    price: override.price ?? food.price,
+    priceMin: override.price_min ?? food.priceMin,
+    priceMax: override.price_max ?? food.priceMax,
+    priceNote: override.price_note ?? food.priceNote,
+    sourceUrl: override.info_source_url ?? food.sourceUrl,
+    lastCheckedAt: override.updated_at ?? food.lastCheckedAt
+  };
+
+  if (override.category && isFoodCategory(override.category)) {
+    next.category = override.category;
+  }
+
+  if (override.sale_status && isSaleStatus(override.sale_status)) {
+    next.saleStatus = override.sale_status;
+  }
+
+  if (override.status && isFoodStatus(override.status)) {
+    next.status = override.status;
+  }
+
+  const areaId = override.area_id ?? food.areaId;
+  const areaName = override.area_name ?? food.area.name;
+  const shopId = override.shop_id ?? food.shopId;
+  const shopName = override.shop_name ?? food.shop.name;
+
+  next.areaId = areaId;
+  next.shopId = shopId;
+  next.area = {
+    ...food.area,
+    id: areaId,
+    name: areaName
+  };
+  next.shop = {
+    ...food.shop,
+    id: shopId,
+    areaId,
+    name: shopName
+  };
+
+  if (food.locations) {
+    next.locations = food.locations.map((location) => ({
+      ...location,
+      areaId: override.area_id ?? location.areaId,
+      areaName: override.area_name ?? location.areaName,
+      shopId: override.shop_id ?? location.shopId,
+      shopName: override.shop_name ?? location.shopName
+    }));
+  }
+
+  return next;
+}
+
+function isFoodCategory(value: string): value is FoodCategory {
+  return FOOD_CATEGORIES.has(value as FoodCategory);
+}
+
+function isFoodStatus(value: string): value is FoodStatus {
+  return FOOD_STATUSES.has(value as FoodStatus);
+}
+
+function isSaleStatus(value: string): value is SaleStatus {
+  return SALE_STATUSES.has(value as SaleStatus);
+}

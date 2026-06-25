@@ -243,6 +243,90 @@ export type Database = {
         Update: Partial<Database["public"]["Tables"]["manual_foods"]["Insert"]>;
         Relationships: [];
       };
+      food_overrides: {
+        Row: {
+          food_id: string;
+          name: string | null;
+          name_en: string | null;
+          price: number | null;
+          price_min: number | null;
+          price_max: number | null;
+          price_note: string | null;
+          area_name: string | null;
+          area_id: string | null;
+          shop_name: string | null;
+          shop_id: string | null;
+          category: FoodCategory | null;
+          category_tags: string[] | null;
+          image_path: string | null;
+          image_source_url: string | null;
+          info_source_url: string | null;
+          sale_status: "active" | "paused" | "ended" | "unknown" | null;
+          status: FoodStatus | null;
+          hidden: boolean | null;
+          admin_source_type: string | null;
+          admin_confidence: string | null;
+          admin_notes: string | null;
+          is_deleted: boolean;
+          created_by: string | null;
+          updated_by: string | null;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          food_id: string;
+          name?: string | null;
+          name_en?: string | null;
+          price?: number | null;
+          price_min?: number | null;
+          price_max?: number | null;
+          price_note?: string | null;
+          area_name?: string | null;
+          area_id?: string | null;
+          shop_name?: string | null;
+          shop_id?: string | null;
+          category?: FoodCategory | null;
+          category_tags?: string[] | null;
+          image_path?: string | null;
+          image_source_url?: string | null;
+          info_source_url?: string | null;
+          sale_status?: "active" | "paused" | "ended" | "unknown" | null;
+          status?: FoodStatus | null;
+          hidden?: boolean | null;
+          admin_source_type?: string | null;
+          admin_confidence?: string | null;
+          admin_notes?: string | null;
+          is_deleted?: boolean;
+          created_by?: string | null;
+          updated_by?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: Partial<Database["public"]["Tables"]["food_overrides"]["Insert"]>;
+        Relationships: [];
+      };
+      food_override_revisions: {
+        Row: {
+          id: string;
+          food_id: string;
+          version: number;
+          snapshot: Json;
+          action: string;
+          actor_email: string | null;
+          created_at: string;
+        };
+        Insert: {
+          id?: string;
+          food_id: string;
+          version: number;
+          snapshot: Json;
+          action: string;
+          actor_email?: string | null;
+          created_at?: string;
+        };
+        Update: Partial<Database["public"]["Tables"]["food_override_revisions"]["Insert"]>;
+        Relationships: [];
+      };
       food_images: {
         Row: {
           id: string;
