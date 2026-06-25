@@ -91,6 +91,7 @@ export type Food = {
   rarity?: "standard" | "limited" | "event" | "rare";
   zukanNumber?: number;
   trustedPlaceholder?: boolean;
+  createdAt?: string;
   lastCheckedAt: string;
   sourceNames?: string[];
   rejectionReasons?: string[];

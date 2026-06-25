@@ -105,6 +105,7 @@ function mapManualFood(row: ManualFoodRow): FoodWithRelations {
     compositeMenu: false,
     canonicalFood: true,
     trustedPlaceholder: false,
+    createdAt: row.created_at,
     lastCheckedAt: row.updated_at,
     sourceNames: ["manual_foods"],
     rejectionReasons: [],

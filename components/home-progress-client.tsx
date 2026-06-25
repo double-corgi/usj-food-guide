@@ -303,17 +303,35 @@ function pickActiveCollectionFoods(foods: FoodWithRelations[], logs: UserFoodLog
   const candidates = dedupeFoodsByCanonical(foods.filter((food) => isCompletableFood(food) && hasDisplayImage(food) && hasKnownPrice(food)))
     .filter((food) => !eatenKeys.has(getCanonicalFoodKey(food)))
     .sort((a, b) => activeFoodScore(b, seed) - activeFoodScore(a, seed) || a.name.localeCompare(b.name, "ja"));
-  const nonShelfFoods = candidates.filter((food) => !excludedShelfKeys.has(getCanonicalFoodKey(food)));
+  const nonShelfFoods = prioritizeRecentManualFoods(candidates.filter((food) => !excludedShelfKeys.has(getCanonicalFoodKey(food))));
   if (nonShelfFoods.length >= 8) return nonShelfFoods.slice(0, 8);
 
   const selected = [...nonShelfFoods];
-  candidates.forEach((food) => {
+  prioritizeRecentManualFoods(candidates).forEach((food) => {
     if (selected.length >= 8) return;
     const key = getCanonicalFoodKey(food);
     if (selected.some((item) => getCanonicalFoodKey(item) === key)) return;
     selected.push(food);
   });
   return selected;
+}
+
+function prioritizeRecentManualFoods(foods: FoodWithRelations[]) {
+  const manualFoods = foods
+    .filter(isManualFood)
+    .sort((a, b) => getCreatedAtTime(b) - getCreatedAtTime(a) || a.name.localeCompare(b.name, "ja"));
+  const generatedFoods = foods.filter((food) => !isManualFood(food));
+  return [...manualFoods, ...generatedFoods];
+}
+
+function isManualFood(food: FoodWithRelations) {
+  return food.manualOverride === true || food.sourceNames?.includes("manual_foods") === true || food.id.startsWith("food-manual-");
+}
+
+function getCreatedAtTime(food: FoodWithRelations) {
+  if (!food.createdAt) return 0;
+  const time = Date.parse(food.createdAt);
+  return Number.isFinite(time) ? time : 0;
 }
 
 function buildLimitedCollection(foods: FoodWithRelations[]) {
