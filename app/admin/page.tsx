@@ -1,6 +1,6 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
-import { Eye, ListChecks, Plus, ShieldCheck, SquareArrowOutUpRight } from "lucide-react";
+import { Eye, EyeOff, ListChecks, Plus, ShieldCheck, SquareArrowOutUpRight } from "lucide-react";
 import { requireAdmin } from "@/lib/admin-auth";
 import { listAllFoodCandidates } from "@/lib/repositories/foods";
 
@@ -9,7 +9,13 @@ export const dynamic = "force-dynamic";
 export default async function AdminPage() {
   const [admin, foods] = await Promise.all([requireAdmin("viewer"), listAllFoodCandidates()]);
   const canEdit = admin.role === "owner" || admin.role === "editor";
-  const manualCount = foods.filter((food) => food.manualOverride || food.sourceNames?.includes("manual_foods") || food.id.startsWith("food-manual-")).length;
+  const manualFoods = foods.filter(isManualFood);
+  const manualCount = manualFoods.length;
+  const recentManualFoods = manualFoods
+    .slice()
+    .sort((left, right) => new Date(right.lastCheckedAt).getTime() - new Date(left.lastCheckedAt).getTime())
+    .slice(0, 5);
+  const hiddenManualFoods = manualFoods.filter((food) => food.hidden).slice(0, 5);
 
   return (
     <div className="space-y-6">
@@ -37,8 +43,8 @@ export default async function AdminPage() {
         <AdminActionCard
           href="/admin/foods"
           icon={<ListChecks size={24} aria-hidden />}
-          title="商品一覧へ"
-          description={`全${foods.length}件、手動追加${manualCount}件を確認します。`}
+          title="商品一覧を管理"
+          description={`全${foods.length}件、自分で追加した商品${manualCount}件を確認します。`}
           primary
         />
         {canEdit ? (
@@ -63,6 +69,43 @@ export default async function AdminPage() {
         />
       </section>
 
+      <section className="grid gap-4 lg:grid-cols-2">
+        <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-soft">
+          <div className="flex items-center justify-between gap-3">
+            <h2 className="text-lg font-black text-ink">最近追加した商品</h2>
+            <Link href="/admin/foods?publicState=all" className="text-xs font-black text-park underline underline-offset-4">
+              一覧へ
+            </Link>
+          </div>
+          <div className="mt-4 space-y-2">
+            {recentManualFoods.length > 0 ? (
+              recentManualFoods.map((food) => <AdminFoodMiniLink key={food.id} href={`/admin/foods/${food.id}`} name={food.name} caption={`${food.area.name} / ${food.shop.name}`} />)
+            ) : (
+              <p className="rounded-xl bg-slate-50 px-4 py-3 text-sm font-bold text-slate-500">まだ自分で追加した商品はありません。</p>
+            )}
+          </div>
+        </div>
+
+        <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-soft">
+          <div className="flex items-center justify-between gap-3">
+            <h2 className="flex items-center gap-2 text-lg font-black text-ink">
+              <EyeOff size={18} aria-hidden />
+              非表示中の商品
+            </h2>
+            <Link href="/admin/foods?hidden=hidden" className="text-xs font-black text-park underline underline-offset-4">
+              非表示一覧へ
+            </Link>
+          </div>
+          <div className="mt-4 space-y-2">
+            {hiddenManualFoods.length > 0 ? (
+              hiddenManualFoods.map((food) => <AdminFoodMiniLink key={food.id} href={`/admin/foods/${food.id}`} name={food.name} caption="公開ページには表示されていません" />)
+            ) : (
+              <p className="rounded-xl bg-mint px-4 py-3 text-sm font-bold text-park">非表示中の商品はありません。</p>
+            )}
+          </div>
+        </div>
+      </section>
+
       <section className="rounded-2xl border border-slate-200 bg-white p-5 shadow-soft">
         <div className="flex items-start gap-3">
           <span className="grid h-10 w-10 shrink-0 place-items-center rounded-2xl bg-mint text-park">
@@ -78,6 +121,16 @@ export default async function AdminPage() {
       </section>
 
       <section className="rounded-2xl border border-slate-200 bg-white p-5 shadow-soft">
+        <h2 className="text-lg font-black text-ink">かんたん操作ガイド</h2>
+        <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+          <GuideStep title="1. 商品を追加" description="商品名、価格、エリア、店舗、カテゴリ、画像を入れて保存します。" />
+          <GuideStep title="2. 画像を登録" description="写真を選ぶだけで、保存時に自動で商品カード向けに調整されます。" />
+          <GuideStep title="3. 間違えたら非表示" description="削除せず「非表示にする」を使います。管理画面には残ります。" />
+          <GuideStep title="4. 公開ページで確認" description="保存後は公開ページを開いて、家族以外から見える表示を確認します。" />
+        </div>
+      </section>
+
+      <section className="rounded-2xl border border-slate-200 bg-white p-5 shadow-soft">
         <h2 className="text-lg font-black text-ink">管理ツール</h2>
         <div className="mt-4 flex flex-wrap gap-2">
           <AdminSmallLink href="/admin/images" label="画像候補" />
@@ -87,6 +140,28 @@ export default async function AdminPage() {
           <AdminSmallLink href="/admin/dashboard" label="ダッシュボード" />
         </div>
       </section>
+    </div>
+  );
+}
+
+function isManualFood(food: Awaited<ReturnType<typeof listAllFoodCandidates>>[number]) {
+  return food.manualOverride || food.sourceNames?.includes("manual_foods") || food.id.startsWith("food-manual-");
+}
+
+function AdminFoodMiniLink({ href, name, caption }: { href: string; name: string; caption: string }) {
+  return (
+    <Link href={href} className="block rounded-xl border border-slate-100 bg-slate-50 px-4 py-3 hover:border-park/30 hover:bg-white">
+      <p className="line-clamp-1 text-sm font-black text-ink">{name}</p>
+      <p className="mt-1 line-clamp-1 text-xs font-bold text-slate-500">{caption}</p>
+    </Link>
+  );
+}
+
+function GuideStep({ title, description }: { title: string; description: string }) {
+  return (
+    <div className="rounded-xl bg-slate-50 p-4">
+      <p className="text-sm font-black text-ink">{title}</p>
+      <p className="mt-2 text-xs font-bold leading-5 text-slate-600">{description}</p>
     </div>
   );
 }

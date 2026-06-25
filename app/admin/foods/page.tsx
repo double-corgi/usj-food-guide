@@ -44,10 +44,10 @@ export default async function AdminFoodsPage({ searchParams }: { searchParams?: 
     <div className="space-y-5">
       <div className="flex flex-col gap-3 lg:flex-row lg:items-end lg:justify-between">
         <div>
-          <p className="text-xs font-black uppercase tracking-[0.18em] text-park">Generated + manual foods</p>
+          <p className="text-xs font-black uppercase tracking-[0.18em] text-park">Food management</p>
           <h1 className="mt-1 text-3xl font-black text-ink">商品一覧</h1>
           <p className="mt-2 max-w-3xl text-sm font-bold leading-6 text-slate-500">
-            generated JSONを正本として維持し、新規追加分だけSupabaseのmanual_foodsから結合表示します。Phase 3Aでは既存generated商品の編集保存はまだ行いません。
+            自分で追加した商品は編集・画像変更・非表示にできます。自動取得の商品は内容確認のみで、直接編集はできません。
           </p>
         </div>
         <div className="flex flex-wrap gap-2">
@@ -142,7 +142,7 @@ export default async function AdminFoodsPage({ searchParams }: { searchParams?: 
       <section className="hidden overflow-hidden rounded-lg border border-slate-200 bg-white shadow-soft lg:block">
         <div className="border-b border-slate-100 p-4">
           <h2 className="text-xl font-black text-ink">読み取り専用カタログ</h2>
-          <p className="mt-1 text-sm font-bold text-slate-500">最大300件を表示します。新規追加商品はmanual_foodsから結合されます。</p>
+          <p className="mt-1 text-sm font-bold text-slate-500">最大300件を表示します。自分で追加した商品もここで確認できます。</p>
         </div>
         <div className="overflow-x-auto">
           <table className="w-full min-w-[1180px] text-left text-sm">
@@ -327,7 +327,21 @@ function SaveMessage({ value }: { value: string }) {
             ? "商品を公開ページに再表示しました。"
             : null;
   if (!message) return null;
-  return <div className="rounded-lg border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm font-black text-emerald-800 shadow-soft">{message}</div>;
+  return (
+    <div className="rounded-lg border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm font-black text-emerald-800 shadow-soft">
+      <p>{message}</p>
+      {(value === "hidden" || value === "shown") ? (
+        <div className="mt-3 flex flex-wrap gap-2">
+          <Link href="/admin/foods?hidden=hidden" className="inline-flex h-9 items-center justify-center rounded-full border border-emerald-200 bg-white px-4 text-xs font-black text-emerald-800">
+            非表示中の商品を見る
+          </Link>
+          <Link href="/foods" className="inline-flex h-9 items-center justify-center rounded-full bg-park px-4 text-xs font-black text-white">
+            公開ページで確認
+          </Link>
+        </div>
+      ) : null}
+    </div>
+  );
 }
 
 function Badge({ label, tone = "default" }: { label: string; tone?: "default" | "ok" | "muted" }) {

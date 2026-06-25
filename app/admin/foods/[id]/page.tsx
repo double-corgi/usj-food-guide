@@ -59,13 +59,13 @@ export default async function AdminFoodDetailPage({
         </div>
       </div>
 
-      <SaveMessage saved={query.saved} image={query.image} error={query.error} />
+      <SaveMessage saved={query.saved} image={query.image} error={query.error} foodId={food.id} manualFood={manualFood} />
 
       <section className={`rounded-lg border p-4 shadow-soft ${manualFood ? "border-park/20 bg-mint" : "border-slate-200 bg-slate-50"}`}>
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <div>
             <span className={`inline-flex rounded-full px-3 py-1 text-xs font-black ${manualFood ? "bg-white text-park" : "bg-white text-slate-600"}`}>
-              {manualFood ? "手動追加商品" : "自動取得データ"}
+              {manualFood ? "自分で追加した商品" : "自動取得の商品"}
             </span>
             <p className="mt-2 text-sm font-bold leading-6 text-slate-600">
               {manualFood ? "この商品は管理画面から編集・画像差し替え・非表示運用ができます。" : "自動取得データのため直接編集できません。修正が必要な場合は管理画面で内容を確認してください。"}
@@ -156,7 +156,7 @@ export default async function AdminFoodDetailPage({
   );
 }
 
-function SaveMessage({ saved, image, error }: { saved?: string; image?: string; error?: string }) {
+function SaveMessage({ saved, image, error, foodId, manualFood }: { saved?: string; image?: string; error?: string; foodId: string; manualFood: boolean }) {
   if (error) {
     return (
       <div className="rounded-lg border border-rose-200 bg-rose-50 p-4 text-sm font-black text-rose-700">
@@ -169,19 +169,44 @@ function SaveMessage({ saved, image, error }: { saved?: string; image?: string; 
     saved === "created"
       ? "商品を追加しました。"
       : saved === "updated"
-        ? "商品を保存しました。"
+        ? "商品を更新しました。"
         : saved === "hidden"
-          ? "商品を非表示にしました。公開ページには表示されません。"
+          ? "公開ページから非表示にしました。管理画面には残っています。"
           : saved === "shown"
-            ? "商品を再表示しました。"
+            ? "公開ページに再表示しました。"
             : null;
 
   if (!message && image !== "updated") return null;
 
   return (
     <div className="rounded-lg border border-emerald-200 bg-emerald-50 p-4 text-sm font-black text-emerald-800">
-      {message}
-      {image === "updated" ? <span className="ml-1">画像も更新しました。</span> : null}
+      <p>
+        {message}
+        {image === "updated" ? <span className="ml-1">画像も更新しました。</span> : null}
+      </p>
+      <div className="mt-3 flex flex-wrap gap-2">
+        <Link href={`/foods/${foodId}`} className="inline-flex h-10 items-center justify-center rounded-full bg-park px-4 text-xs font-black text-white">
+          公開ページで確認
+        </Link>
+        {saved === "created" ? (
+          <Link href="/admin/foods/new" className="inline-flex h-10 items-center justify-center rounded-full border border-park/30 bg-white px-4 text-xs font-black text-park">
+            続けて商品を追加
+          </Link>
+        ) : null}
+        <Link href="/admin/foods" className="inline-flex h-10 items-center justify-center rounded-full border border-slate-200 bg-white px-4 text-xs font-black text-ink">
+          商品一覧へ戻る
+        </Link>
+        {manualFood && saved !== "created" ? (
+          <Link href={`/admin/foods/${foodId}/edit`} className="inline-flex h-10 items-center justify-center rounded-full border border-slate-200 bg-white px-4 text-xs font-black text-ink">
+            もう一度編集
+          </Link>
+        ) : null}
+        {manualFood && saved === "created" ? (
+          <Link href={`/admin/foods/${foodId}/edit`} className="inline-flex h-10 items-center justify-center rounded-full border border-slate-200 bg-white px-4 text-xs font-black text-ink">
+            この商品を編集
+          </Link>
+        ) : null}
+      </div>
     </div>
   );
 }

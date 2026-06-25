@@ -28,7 +28,7 @@ export default async function AdminEditFoodPage({ params }: { params: Promise<{ 
           <h1 className="mt-1 text-3xl font-black text-ink">商品編集</h1>
           <p className="mt-2 text-sm font-bold text-slate-500">
             {admin.role} 権限で閲覧できます。
-            {canSave ? "手動追加した商品だけ保存できます。画像未選択時は既存画像を維持します。" : "generated商品の編集保存はまだ実装していません。"}
+            {canSave ? "自分で追加した商品だけ保存できます。画像未選択時は既存画像を維持します。" : "自動取得の商品はこの画面では保存できません。"}
           </p>
         </div>
         <div className="flex flex-wrap gap-2">

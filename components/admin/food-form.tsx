@@ -44,7 +44,7 @@ export type AdminShopOption = {
 
 const otherShopValue = "__other";
 const initialSaveState: AdminFoodSaveState = { ok: false, message: "" };
-const disabledSaveAction = async (): Promise<AdminFoodSaveState> => ({ ok: false, message: "generated商品の保存はできません。" });
+const disabledSaveAction = async (): Promise<AdminFoodSaveState> => ({ ok: false, message: "自動取得の商品はこの画面では保存できません。" });
 const visibleCategoryValues = new Set<string>(adminCategoryTagOptions.map((option) => option.value));
 const shopTypeOptions: Array<{ value: ShopType | "all"; label: string }> = [
   { value: "all", label: "すべて" },
@@ -150,8 +150,8 @@ export function AdminFoodForm({ mode, food, shopOptions = [], action, visibility
               {mode === "new"
                 ? "必要項目を入力して保存すると公開ページに反映されます。画像は自動でサイズ調整されます。重複候補があれば保存前に警告します。"
                 : saveEnabled
-                  ? "手動追加した商品だけ保存できます。画像未選択なら既存画像を維持します。非表示にしても管理画面には残ります。"
-                  : "generated商品の編集保存はまだ行いません。表示内容の確認UIとして使います。"}
+                  ? "自分で追加した商品だけ保存できます。画像を選ばずに保存した場合、今の画像をそのまま残します。非表示にしても管理画面には残ります。"
+                  : "自動取得の商品はこの画面では保存できません。内容の確認だけできます。"}
             </p>
           </div>
         </div>
@@ -168,7 +168,7 @@ export function AdminFoodForm({ mode, food, shopOptions = [], action, visibility
               <li key={candidate.id} className="rounded-md bg-white px-3 py-2 text-sm font-bold text-slate-700">
                 <span className="text-ink">{candidate.name}</span>
                 <span className="ml-2 text-xs text-slate-500">
-                  {candidate.areaName} / {candidate.shopName} / {candidate.source === "manual_foods" ? "手動追加" : "generated"} / {candidate.id}
+                  {candidate.areaName} / {candidate.shopName} / {candidate.source === "manual_foods" ? "自分で追加" : "自動取得"} / {candidate.id}
                 </span>
               </li>
             ))}
@@ -536,11 +536,11 @@ export function AdminFoodForm({ mode, food, shopOptions = [], action, visibility
               disabled={pending || !saveEnabled || !visibilityAction}
               className="h-12 rounded-full border border-slate-200 bg-white px-6 text-sm font-black text-slate-700 disabled:cursor-not-allowed disabled:bg-slate-100 sm:h-11"
             >
-              {saveEnabled ? (food?.hidden ? "再表示する" : "非表示にする") : "generated商品は非表示保存不可"}
+              {saveEnabled ? (food?.hidden ? "再表示する" : "非表示にする") : "自動取得の商品は非表示にできません"}
             </button>
           ) : null}
           <button type="submit" disabled={pending || !saveEnabled} className="h-12 rounded-full bg-park px-6 text-sm font-black text-white disabled:cursor-wait disabled:bg-slate-300 sm:h-11">
-            {pending ? "保存中..." : saveEnabled ? "保存する" : "generated商品は保存不可"}
+            {pending ? "保存中..." : saveEnabled ? "保存する" : "自動取得の商品は保存できません"}
           </button>
         </div>
       </div>

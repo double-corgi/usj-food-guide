@@ -45,7 +45,7 @@ export async function createAdminFood(_previousState: AdminFoodSaveState = empty
 
   const id = buildManualFoodId(parsed.value.areaName, parsed.value.shopName, parsed.value.name);
   if (readGeneratedFoods({ includeHidden: true }).some((food) => food.id === id)) {
-    return { ok: false, message: "既存generated商品IDと衝突したため保存を停止しました。" };
+    return { ok: false, message: "既存商品のIDと重なったため保存を停止しました。" };
   }
 
   const existing = await supabase.from("manual_foods").select("id").eq("id", id).maybeSingle();
@@ -103,7 +103,7 @@ export async function updateManualFood(_previousState: AdminFoodSaveState = empt
 
   const existing = await supabase.from("manual_foods").select("id,image_url").eq("id", foodId).maybeSingle();
   if (existing.error) return { ok: false, message: `保存前確認に失敗しました: ${existing.error.message}` };
-  if (!existing.data) return { ok: false, message: "manual_foodsの商品だけ保存できます。generated商品はまだ編集保存できません。" };
+  if (!existing.data) return { ok: false, message: "自分で追加した商品だけ保存できます。自動取得の商品はまだ編集保存できません。" };
 
   const parsed = parseFoodForm(formData);
   if (!parsed.ok) return { ok: false, message: parsed.message };
