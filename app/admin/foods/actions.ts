@@ -172,7 +172,7 @@ export async function updateGeneratedFoodOverride(_previousState: AdminFoodSaveS
   const parsed = parseGeneratedOverrideForm(formData);
   if (!parsed.ok) return { ok: false, message: parsed.message };
 
-  const existingOverride = await supabase.from("food_overrides").select("food_id,image_path").eq("food_id", foodId).maybeSingle();
+  const existingOverride = await supabase.from("food_overrides").select("food_id,image_path,hidden").eq("food_id", foodId).maybeSingle();
   if (existingOverride.error) return { ok: false, message: `修正内容の保存前確認に失敗しました: ${existingOverride.error.message}` };
 
   const imageFile = readImageFile(formData);
@@ -186,7 +186,8 @@ export async function updateGeneratedFoodOverride(_previousState: AdminFoodSaveS
     values: parsed.value,
     resolvedIds,
     adminEmail: admin.email ?? "unknown-admin",
-    imagePath: uploadedImage?.value.objectPath ?? existingOverride.data?.image_path ?? null
+    imagePath: uploadedImage?.value.objectPath ?? existingOverride.data?.image_path ?? null,
+    hidden: existingOverride.data?.hidden ?? null
   });
 
   const { error } = await supabase.from("food_overrides").upsert(payload, { onConflict: "food_id" });
@@ -227,6 +228,62 @@ export async function setManualFoodVisibility(formData: FormData): Promise<void>
       name: error.name,
       code: error.code,
       message: error.message,
+      foodId
+    });
+    redirect(`/admin/foods/${foodId}?error=visibility-failed`);
+  }
+
+  revalidateAdminFoods(foodId);
+  redirect(`/admin/foods?saved=${hidden ? "hidden" : "shown"}`);
+}
+
+export async function setGeneratedFoodVisibility(formData: FormData): Promise<void> {
+  const admin = await requireAdmin("editor");
+  const supabase = createServiceSupabaseClient();
+  if (!supabase) redirect("/admin/foods?error=supabase");
+
+  const foodId = readCleanText(formData, "foodId", 120);
+  const intent = readCleanText(formData, "intent", 20);
+  if (!foodId) redirect("/admin/foods?error=missing-food");
+  if (intent !== "hide" && intent !== "show") redirect(`/admin/foods/${foodId}?error=invalid-intent`);
+
+  const generatedFood = readGeneratedFoods({ includeHidden: true }).find((food) => food.id === foodId);
+  if (!generatedFood) redirect(`/admin/foods/${foodId}?error=generated-only`);
+
+  const manualFood = await supabase.from("manual_foods").select("id").eq("id", foodId).maybeSingle();
+  if (manualFood.error) redirect(`/admin/foods/${foodId}?error=visibility-failed`);
+  if (manualFood.data) redirect(`/admin/foods/${foodId}?error=generated-only`);
+
+  const hidden = intent === "hide";
+  const now = new Date().toISOString();
+  const adminEmail = admin.email ?? "unknown-admin";
+  const existingOverride = await supabase.from("food_overrides").select("food_id").eq("food_id", foodId).maybeSingle();
+  if (existingOverride.error) redirect(`/admin/foods/${foodId}?error=visibility-failed`);
+
+  const result = existingOverride.data
+    ? await supabase
+        .from("food_overrides")
+        .update({
+          hidden: hidden ? true : null,
+          updated_by: adminEmail,
+          updated_at: now
+        })
+        .eq("food_id", foodId)
+    : await supabase.from("food_overrides").insert({
+        food_id: foodId,
+        hidden: hidden ? true : null,
+        is_deleted: false,
+        created_by: adminEmail,
+        updated_by: adminEmail,
+        created_at: now,
+        updated_at: now
+      });
+
+  if (result.error) {
+    console.error("generated food visibility update failed", {
+      name: result.error.name,
+      code: result.error.code,
+      message: result.error.message,
       foodId
     });
     redirect(`/admin/foods/${foodId}?error=visibility-failed`);
@@ -488,13 +545,15 @@ function buildGeneratedOverridePayload({
   values,
   resolvedIds,
   adminEmail,
-  imagePath
+  imagePath,
+  hidden
 }: {
   food: FoodWithRelations;
   values: GeneratedOverrideFormValue;
   resolvedIds: { areaId: string | null; shopId: string | null };
   adminEmail: string;
   imagePath: string | null;
+  hidden: boolean | null;
 }): FoodOverrideUpsert {
   const now = new Date().toISOString();
   const categoryTags = values.categoryTags && !sameStringArray(values.categoryTags, [food.category]) ? values.categoryTags : null;
@@ -522,7 +581,7 @@ function buildGeneratedOverridePayload({
     info_source_url: null,
     sale_status: saleStatus,
     status: null,
-    hidden: null,
+    hidden,
     admin_source_type: "manual-confirmed",
     admin_confidence: "medium",
     admin_notes: values.adminNotes,
@@ -583,6 +642,7 @@ function revalidateAdminFoods(foodId?: string) {
   revalidatePath("/admin/foods");
   if (foodId) revalidatePath(`/admin/foods/${foodId}`);
   revalidatePath("/foods");
+  if (foodId) revalidatePath(`/foods/${foodId}`);
   revalidatePath("/areas");
   revalidatePath("/stores");
 }

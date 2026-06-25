@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { PencilLine, Plus, Search } from "lucide-react";
-import { setManualFoodVisibility } from "@/app/admin/foods/actions";
+import { setGeneratedFoodVisibility, setManualFoodVisibility } from "@/app/admin/foods/actions";
 import { FoodImage } from "@/components/food-image";
 import { ManualFoodVisibilityButton } from "@/components/admin/manual-food-visibility-button";
 import { requireAdmin } from "@/lib/admin-auth";
@@ -201,6 +201,9 @@ export default async function AdminFoodsPage({ searchParams }: { searchParams?: 
                       {canManage && isManualFood(food) ? (
                         <ManualFoodVisibilityButton foodId={food.id} hidden={food.hidden} action={setManualFoodVisibility} />
                       ) : null}
+                      {canManage && !isManualFood(food) ? (
+                        <ManualFoodVisibilityButton foodId={food.id} hidden={food.hidden} action={setGeneratedFoodVisibility} />
+                      ) : null}
                     </div>
                   </td>
                 </tr>
@@ -280,6 +283,11 @@ function FoodCard({ food, canManage }: { food: FoodWithRelations; canManage: boo
         {canManage && isManualFood(food) ? (
           <div className="pt-1">
             <ManualFoodVisibilityButton foodId={food.id} hidden={food.hidden} action={setManualFoodVisibility} />
+          </div>
+        ) : null}
+        {canManage && !isManualFood(food) ? (
+          <div className="pt-1">
+            <ManualFoodVisibilityButton foodId={food.id} hidden={food.hidden} action={setGeneratedFoodVisibility} />
           </div>
         ) : null}
       </div>

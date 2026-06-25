@@ -2,6 +2,8 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ExternalLink, PencilLine } from "lucide-react";
 import { FoodImage } from "@/components/food-image";
+import { ManualFoodVisibilityButton } from "@/components/admin/manual-food-visibility-button";
+import { setGeneratedFoodVisibility, setManualFoodVisibility } from "@/app/admin/foods/actions";
 import { requireAdmin } from "@/lib/admin-auth";
 import {
   formatAdminCanonicalState,
@@ -60,6 +62,9 @@ export default async function AdminFoodDetailPage({
               修正する
             </Link>
           ) : null}
+          {canManage ? (
+            <ManualFoodVisibilityButton foodId={food.id} hidden={food.hidden} action={manualFood ? setManualFoodVisibility : setGeneratedFoodVisibility} />
+          ) : null}
           <Link href="/admin/foods" className="inline-flex h-10 items-center rounded-full border border-slate-200 bg-white px-4 text-xs font-black text-ink hover:border-park">
             一覧へ戻る
           </Link>
@@ -91,6 +96,9 @@ export default async function AdminFoodDetailPage({
               <PencilLine size={16} aria-hidden />
               修正する
             </Link>
+          ) : null}
+          {canManage ? (
+            <ManualFoodVisibilityButton foodId={food.id} hidden={food.hidden} action={manualFood ? setManualFoodVisibility : setGeneratedFoodVisibility} />
           ) : null}
         </div>
       </section>
