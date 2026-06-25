@@ -1,7 +1,8 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { setManualFoodVisibility, updateGeneratedFoodOverride, updateManualFood } from "@/app/admin/foods/actions";
+import { setManualFoodDeleted, setManualFoodVisibility, updateGeneratedFoodOverride, updateManualFood } from "@/app/admin/foods/actions";
 import { AdminFoodForm } from "@/components/admin/food-form";
+import { ManualFoodDeleteButton } from "@/components/admin/manual-food-delete-button";
 import { requireAdmin } from "@/lib/admin-auth";
 import { buildAdminShopOptions } from "@/lib/admin-shop-options";
 import { listAllFoodCandidates } from "@/lib/repositories/foods";
@@ -59,6 +60,21 @@ export default async function AdminEditFoodPage({ params }: { params: Promise<{ 
         categoryTags={adminFields.categoryTags}
         nameEn={adminFields.nameEn}
       />
+      {isManual ? (
+        <section className="rounded-lg border border-rose-200 bg-rose-50 p-4 shadow-soft">
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+            <div>
+              <h2 className="text-lg font-black text-rose-800">危険な操作</h2>
+              <p className="mt-2 text-sm font-bold leading-6 text-rose-700">
+                この商品を削除済みにすると、公開ページと通常の管理一覧から消えます。完全削除ではないため、削除済み一覧からあとで復元できます。
+              </p>
+            </div>
+            <div className="w-full sm:w-40">
+              <ManualFoodDeleteButton foodId={food.id} deleted={false} action={setManualFoodDeleted} tone="danger" />
+            </div>
+          </div>
+        </section>
+      ) : null}
     </div>
   );
 }
