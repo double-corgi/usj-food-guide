@@ -9,7 +9,7 @@ import { buildManualFoodId } from "@/lib/repositories/manual-foods";
 import { readGeneratedFoods } from "@/lib/repositories/generated-data";
 import { createServiceSupabaseClient } from "@/lib/supabase-server";
 import type { Database } from "@/types/database";
-import type { FoodCategory } from "@/types/domain";
+import type { FoodCategory, FoodWithRelations } from "@/types/domain";
 
 export type AdminFoodSaveState = {
   ok: boolean;
@@ -18,10 +18,24 @@ export type AdminFoodSaveState = {
 
 type ManualFoodInsert = Database["public"]["Tables"]["manual_foods"]["Insert"];
 type ManualFoodUpdate = Database["public"]["Tables"]["manual_foods"]["Update"];
+type FoodOverrideUpsert = Database["public"]["Tables"]["food_overrides"]["Insert"];
 type ServiceSupabaseClient = NonNullable<ReturnType<typeof createServiceSupabaseClient>>;
 type ImageUploadResult = {
   publicUrl: string;
   objectPath: string;
+};
+type GeneratedOverrideFormValue = {
+  name: string | null;
+  nameEn: string | null;
+  price: number | null;
+  areaName: string | null;
+  shopName: string | null;
+  saleStatus: "active" | "paused" | "ended" | "unknown" | null;
+  saleStart: string | null;
+  saleEnd: string | null;
+  category: FoodCategory | null;
+  categoryTags: string[] | null;
+  adminNotes: string | null;
 };
 
 const emptyState: AdminFoodSaveState = { ok: false, message: "" };
@@ -140,6 +154,39 @@ export async function updateManualFood(_previousState: AdminFoodSaveState = empt
   redirect(`/admin/foods/${foodId}?saved=updated${uploadedImage ? "&image=updated" : ""}`);
 }
 
+export async function updateGeneratedFoodOverride(_previousState: AdminFoodSaveState = emptyState, formData: FormData): Promise<AdminFoodSaveState> {
+  const admin = await requireAdmin("editor");
+  const supabase = createServiceSupabaseClient();
+  if (!supabase) return { ok: false, message: "Supabase service role が未設定のため保存できません。" };
+
+  const foodId = readCleanText(formData, "foodId", 120);
+  if (!foodId) return { ok: false, message: "対象商品IDが不正です。" };
+
+  const generatedFood = readGeneratedFoods({ includeHidden: true }).find((food) => food.id === foodId);
+  if (!generatedFood) return { ok: false, message: "自動取得の商品が見つかりません。" };
+
+  const manualFood = await supabase.from("manual_foods").select("id").eq("id", foodId).maybeSingle();
+  if (manualFood.error) return { ok: false, message: `保存前確認に失敗しました: ${manualFood.error.message}` };
+  if (manualFood.data) return { ok: false, message: "自分で追加した商品は通常の編集保存を使ってください。" };
+
+  const parsed = parseGeneratedOverrideForm(formData);
+  if (!parsed.ok) return { ok: false, message: parsed.message };
+
+  const resolvedIds = resolveGeneratedAreaShopIds(generatedFood, parsed.value.areaName, parsed.value.shopName);
+  const payload = buildGeneratedOverridePayload({
+    food: generatedFood,
+    values: parsed.value,
+    resolvedIds,
+    adminEmail: admin.email ?? "unknown-admin"
+  });
+
+  const { error } = await supabase.from("food_overrides").upsert(payload, { onConflict: "food_id" });
+  if (error) return { ok: false, message: `上書き保存に失敗しました: ${error.message}` };
+
+  revalidateAdminFoods(foodId);
+  redirect(`/admin/foods/${foodId}?saved=override`);
+}
+
 export async function setManualFoodVisibility(formData: FormData): Promise<void> {
   const admin = await requireAdmin("editor");
   const supabase = createServiceSupabaseClient();
@@ -184,7 +231,7 @@ function parseFoodForm(formData: FormData) {
   const nameEn = readOptionalCleanText(formData, "nameEn", 160);
   if (nameEn === false) return failure("英語名に使用できない文字が含まれています。");
 
-  const price = parsePrice(formData.get("price"));
+  const price = parseGeneratedPrice(formData.get("price"));
   if (price === false) return failure("価格は数字で入力してください。");
   if (price === null) return failure("価格を入力してください。");
 
@@ -234,6 +281,57 @@ function parseFoodForm(formData: FormData) {
   };
 }
 
+function parseGeneratedOverrideForm(formData: FormData) {
+  const name = readOptionalCleanText(formData, "nameJa", 120);
+  if (name === false) return failure("商品名に使用できない文字が含まれています。");
+
+  const nameEn = readOptionalCleanText(formData, "nameEn", 160);
+  if (nameEn === false) return failure("英語名に使用できない文字が含まれています。");
+
+  const price = parsePrice(formData.get("price"));
+  if (price === false) return failure("価格は数字で入力してください。");
+
+  const areaNameValue = readOptionalCleanText(formData, "area", 80);
+  if (areaNameValue === false) return failure("エリアに使用できない文字が含まれています。");
+  const areaName = areaNameValue && areaNameValue !== "不明" ? areaNameValue : null;
+
+  const shopNameValue = readOptionalCleanText(formData, "shopName", 120);
+  if (shopNameValue === false) return failure("店舗名に使用できない文字が含まれています。");
+
+  const saleStatusValue = readOptionalCleanText(formData, "saleStatus", 20);
+  if (saleStatusValue === false || (saleStatusValue && !allowedSaleStatuses.has(saleStatusValue))) {
+    return failure("販売状態が不正です。");
+  }
+
+  const saleStart = readOptionalDate(formData, "saleStart");
+  if (saleStart === false) return failure("販売開始日の形式が不正です。");
+  const saleEnd = readOptionalDate(formData, "saleEnd");
+  if (saleEnd === false) return failure("販売終了日の形式が不正です。");
+
+  const categoryTags = readOptionalCategoryTags(formData);
+  if (!categoryTags.ok) return failure(categoryTags.message);
+
+  const adminNotes = readOptionalCleanText(formData, "memo", 2000);
+  if (adminNotes === false) return failure("管理メモに使用できない文字が含まれています。");
+
+  return {
+    ok: true as const,
+    value: {
+      name,
+      nameEn,
+      price,
+      areaName,
+      shopName: shopNameValue,
+      saleStatus: saleStatusValue as "active" | "paused" | "ended" | "unknown" | null,
+      saleStart,
+      saleEnd,
+      category: categoryTags.values.length > 0 ? primaryFoodCategory(categoryTags.values) : null,
+      categoryTags: categoryTags.values.length > 0 ? categoryTags.values : null,
+      adminNotes
+    }
+  };
+}
+
 function readCleanText(formData: FormData, key: string, maxLength: number) {
   const value = String(formData.get(key) ?? "").trim();
   if (!value || value.length > maxLength || hasUnsafeText(value)) return null;
@@ -261,6 +359,15 @@ function readCategoryTags(formData: FormData) {
   }
   if (uniqueValues.length === 0) {
     return { ok: false as const, message: "カテゴリを1つ以上選択してください。" };
+  }
+  return { ok: true as const, values: uniqueValues };
+}
+
+function readOptionalCategoryTags(formData: FormData) {
+  const values = formData.getAll("categoryTags").map((value) => String(value).trim()).filter(Boolean);
+  const uniqueValues = Array.from(new Set(values));
+  if (uniqueValues.some((value) => hasUnsafeText(value) || !allowedCategoryTags.has(value))) {
+    return { ok: false as const, message: "カテゴリタグが不正です。" };
   }
   return { ok: true as const, values: uniqueValues };
 }
@@ -355,6 +462,81 @@ function appendImageVersion(publicUrl: string) {
     const separator = publicUrl.includes("?") ? "&" : "?";
     return `${publicUrl}${separator}v=${version}`;
   }
+}
+
+function buildGeneratedOverridePayload({
+  food,
+  values,
+  resolvedIds,
+  adminEmail
+}: {
+  food: FoodWithRelations;
+  values: GeneratedOverrideFormValue;
+  resolvedIds: { areaId: string | null; shopId: string | null };
+  adminEmail: string;
+}): FoodOverrideUpsert {
+  const now = new Date().toISOString();
+  const categoryTags = values.categoryTags && !sameStringArray(values.categoryTags, [food.category]) ? values.categoryTags : null;
+  const category = values.category && values.category !== food.category ? values.category : null;
+  const saleStatus = values.saleStatus && values.saleStatus !== normalizeGeneratedSaleStatus(food) ? values.saleStatus : null;
+  const areaName = values.areaName && values.areaName !== food.area.name ? values.areaName : null;
+  const shopName = values.shopName && values.shopName !== food.shop.name ? values.shopName : null;
+
+  return {
+    food_id: food.id,
+    name: values.name && values.name !== food.name ? values.name : null,
+    name_en: values.nameEn,
+    price: values.price !== null && values.price !== (food.price ?? null) ? values.price : null,
+    price_min: null,
+    price_max: null,
+    price_note: null,
+    area_name: areaName,
+    area_id: areaName ? resolvedIds.areaId : null,
+    shop_name: shopName,
+    shop_id: shopName ? resolvedIds.shopId : null,
+    category,
+    category_tags: categoryTags,
+    image_path: null,
+    image_source_url: null,
+    info_source_url: null,
+    sale_status: saleStatus,
+    status: null,
+    hidden: null,
+    admin_source_type: "manual-confirmed",
+    admin_confidence: "medium",
+    admin_notes: values.adminNotes,
+    is_deleted: false,
+    updated_by: adminEmail,
+    updated_at: now
+  };
+}
+
+function resolveGeneratedAreaShopIds(food: FoodWithRelations, areaName: string | null, shopName: string | null) {
+  const generatedFoods = readGeneratedFoods({ includeHidden: true });
+  const areaId = areaName
+    ? generatedFoods.find((candidate) => candidate.area.name === areaName)?.area.id ?? null
+    : food.areaId;
+  const shopId = shopName
+    ? generatedFoods.find((candidate) => candidate.shop.name === shopName && (!areaName || candidate.area.name === areaName))?.shop.id ?? null
+    : food.shopId;
+  return { areaId, shopId };
+}
+
+function normalizeGeneratedSaleStatus(food: FoodWithRelations) {
+  return food.saleStatus === "upcoming" ? "unknown" : (food.saleStatus ?? "unknown");
+}
+
+function parseGeneratedPrice(value: FormDataEntryValue | null) {
+  const text = String(value ?? "").trim();
+  if (!text) return null;
+  if (/^\d{1,6}$/.test(text)) return Number(text);
+  if (/^\d{1,6}-\d{1,6}$/.test(text)) return null;
+  return false;
+}
+
+function sameStringArray(left: string[], right: string[]) {
+  if (left.length !== right.length) return false;
+  return left.every((value, index) => value === right[index]);
 }
 
 function isFoodCategory(value: string): value is FoodCategory {

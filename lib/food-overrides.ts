@@ -33,6 +33,8 @@ export function applyFoodOverrides(generatedFoods: FoodWithRelations[], override
 }
 
 function applyFoodOverride(food: FoodWithRelations, override: FoodOverrideRow): FoodWithRelations {
+  if (!hasEffectiveFoodOverride(override)) return food;
+
   const next: FoodWithRelations = {
     ...food,
     name: override.name ?? food.name,
@@ -41,7 +43,8 @@ function applyFoodOverride(food: FoodWithRelations, override: FoodOverrideRow): 
     priceMax: override.price_max ?? food.priceMax,
     priceNote: override.price_note ?? food.priceNote,
     sourceUrl: override.info_source_url ?? food.sourceUrl,
-    lastCheckedAt: override.updated_at ?? food.lastCheckedAt
+    lastCheckedAt: override.updated_at ?? food.lastCheckedAt,
+    sourceNames: Array.from(new Set([...(food.sourceNames ?? []), "food_overrides"]))
   };
 
   if (override.category && isFoodCategory(override.category)) {
@@ -86,6 +89,30 @@ function applyFoodOverride(food: FoodWithRelations, override: FoodOverrideRow): 
   }
 
   return next;
+}
+
+export function hasEffectiveFoodOverride(override: FoodOverrideRow) {
+  return Boolean(
+    override.name ||
+      override.name_en ||
+      typeof override.price === "number" ||
+      typeof override.price_min === "number" ||
+      typeof override.price_max === "number" ||
+      override.price_note ||
+      override.area_name ||
+      override.area_id ||
+      override.shop_name ||
+      override.shop_id ||
+      override.category ||
+      (override.category_tags && override.category_tags.length > 0) ||
+      override.image_path ||
+      override.image_source_url ||
+      override.info_source_url ||
+      override.sale_status ||
+      override.status ||
+      typeof override.hidden === "boolean" ||
+      override.is_deleted
+  );
 }
 
 function isFoodCategory(value: string): value is FoodCategory {

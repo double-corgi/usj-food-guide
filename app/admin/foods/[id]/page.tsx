@@ -73,6 +73,7 @@ export default async function AdminFoodDetailPage({
             <span className={`inline-flex rounded-full px-3 py-1 text-xs font-black ${manualFood ? "bg-white text-park" : "bg-white text-slate-600"}`}>
               {manualFood ? "自分で追加した商品" : "自動取得の商品"}
             </span>
+            {hasFoodOverride(food) ? <span className="ml-2 inline-flex rounded-full bg-white px-3 py-1 text-xs font-black text-park">上書きあり</span> : null}
             <p className="mt-2 text-sm font-bold leading-6 text-slate-600">
               {manualFood ? "この商品は管理画面から編集・画像差し替え・非表示運用ができます。" : "自動取得データです。編集準備画面で内容を確認できますが、保存は次のPhaseで対応します。"}
             </p>
@@ -182,6 +183,8 @@ function SaveMessage({ saved, image, error, foodId, manualFood }: { saved?: stri
       ? "商品を追加しました。"
       : saved === "updated"
         ? "商品を更新しました。"
+        : saved === "override"
+          ? "自動取得商品の上書きを保存しました。"
         : saved === "hidden"
           ? "公開ページから非表示にしました。管理画面には残っています。"
           : saved === "shown"
@@ -271,4 +274,8 @@ async function getManualAdminFields(foodId: string) {
 
 function isManualFood(food: FoodWithRelations) {
   return food.manualOverride === true || food.sourceNames?.includes("manual_foods") === true || food.id.startsWith("food-manual-");
+}
+
+function hasFoodOverride(food: FoodWithRelations) {
+  return food.sourceNames?.includes("food_overrides") === true;
 }

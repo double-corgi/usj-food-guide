@@ -290,6 +290,7 @@ function FoodCard({ food, canManage }: { food: FoodWithRelations; canManage: boo
 function StatusBadges({ food }: { food: FoodWithRelations }) {
   return (
     <div className="flex flex-wrap gap-1.5">
+      {hasFoodOverride(food) ? <Badge label="上書きあり" tone="ok" /> : null}
       <Badge label={formatAdminPublicState(getPublicState(food))} tone={getPublicState(food) === "published" ? "ok" : "muted"} />
       <Badge label={formatAdminVisibility(food.hidden)} tone={food.hidden ? "muted" : "ok"} />
       <Badge label={formatAdminCanonicalState(food.canonicalFood)} tone={food.canonicalFood === false ? "muted" : "ok"} />
@@ -369,4 +370,8 @@ function getPublicState(food: FoodWithRelations) {
 
 function isManualFood(food: FoodWithRelations) {
   return food.manualOverride === true || food.sourceNames?.includes("manual_foods") === true || food.id.startsWith("food-manual-");
+}
+
+function hasFoodOverride(food: FoodWithRelations) {
+  return food.sourceNames?.includes("food_overrides") === true;
 }

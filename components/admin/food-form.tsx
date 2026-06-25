@@ -23,8 +23,10 @@ type AdminFoodFormProps = {
   shopOptions?: AdminShopOption[];
   action?: (state: AdminFoodSaveState, formData: FormData) => Promise<AdminFoodSaveState>;
   visibilityAction?: (formData: FormData) => Promise<void>;
+  sourceKind?: "manual" | "generated";
   adminNotes?: string | null;
   categoryTags?: string[] | null;
+  nameEn?: string | null;
   duplicateCandidates?: DuplicateCandidate[];
 };
 
@@ -53,7 +55,7 @@ const shopTypeOptions: Array<{ value: ShopType | "all"; label: string }> = [
   { value: "wagon", label: "ワゴン" }
 ];
 
-export function AdminFoodForm({ mode, food, shopOptions = [], action, visibilityAction, adminNotes, categoryTags, duplicateCandidates = [] }: AdminFoodFormProps) {
+export function AdminFoodForm({ mode, food, shopOptions = [], action, visibilityAction, sourceKind: sourceKindProp, adminNotes, categoryTags, nameEn, duplicateCandidates = [] }: AdminFoodFormProps) {
   const initialArea = getInitialArea(food);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [selectedShopName, setSelectedShopName] = useState(() => getInitialSelectedShopName(food, shopOptions, initialArea));
@@ -72,7 +74,10 @@ export function AdminFoodForm({ mode, food, shopOptions = [], action, visibility
   );
   const activeImage = getActiveImage(food);
   const title = mode === "new" ? "商品追加フォーム" : "商品編集フォーム";
-  const sourceKind = mode === "new" || saveEnabled ? "manual" : "generated";
+  const sourceKind = sourceKindProp ?? "manual";
+  const isGeneratedOverride = sourceKind === "generated";
+  const coreFieldsRequired = !isGeneratedOverride;
+  const imageUploadEnabled = !isGeneratedOverride;
   const saleStatus = getFormSaleStatus(food);
   const publicState = getPublicState(food);
   const [publicStateSelection, setPublicStateSelection] = useState<AdminPublicState>(publicState);
@@ -156,7 +161,9 @@ export function AdminFoodForm({ mode, food, shopOptions = [], action, visibility
               {mode === "new"
                 ? "必要項目を入力して保存すると公開ページに反映されます。画像は自動でサイズ調整されます。重複候補があれば保存前に警告します。"
                 : saveEnabled
-                  ? "自分で追加した商品だけ保存できます。画像を選ばずに保存した場合、今の画像をそのまま残します。非表示にしても管理画面には残ります。"
+                  ? isGeneratedOverride
+                    ? "自動取得の商品です。変更したい基本情報だけ上書き保存します。空欄にした項目は自動取得値を使います。画像差し替えと非表示は次のPhaseで対応します。"
+                    : "自分で追加した商品だけ保存できます。画像を選ばずに保存した場合、今の画像をそのまま残します。非表示にしても管理画面には残ります。"
                   : "自動取得の商品です。保存は次のPhaseで対応します。今は既存値の確認だけできます。"}
             </p>
           </div>
@@ -189,19 +196,19 @@ export function AdminFoodForm({ mode, food, shopOptions = [], action, visibility
             label="商品名 日本語"
             name="nameJa"
             defaultValue={food?.name ?? ""}
-            required
-            requirement="required"
+            required={coreFieldsRequired}
+            requirement={coreFieldsRequired ? "required" : "optional"}
             onChange={(event) => setNameInput(event.currentTarget.value)}
           />
-          <TextField label="商品名 英語" name="nameEn" defaultValue="" placeholder="未入力でOK" requirement="optional" helpText="英語名は未入力でも保存できます。" />
+          <TextField label="商品名 英語" name="nameEn" defaultValue={nameEn ?? ""} placeholder="未入力でOK" requirement="optional" helpText="英語名は未入力でも保存できます。" />
           <TextField
             label="価格"
             name="price"
             defaultValue={priceInput}
             inputMode="numeric"
             placeholder="例: 800"
-            required
-            requirement="required"
+            required={coreFieldsRequired}
+            requirement={coreFieldsRequired ? "required" : "optional"}
             onChange={(event) => setPriceInput(event.currentTarget.value)}
           />
         </div>
@@ -214,7 +221,7 @@ export function AdminFoodForm({ mode, food, shopOptions = [], action, visibility
             label="エリア"
             name="area"
             defaultValue={areaSelection}
-            requirement="required"
+            requirement={coreFieldsRequired ? "required" : "optional"}
             onChange={(event) => {
               const nextArea = event.currentTarget.value;
               setAreaSelection(nextArea);
@@ -242,7 +249,7 @@ export function AdminFoodForm({ mode, food, shopOptions = [], action, visibility
           <div className="space-y-3 lg:col-span-2">
           <input type="hidden" name="shopName" value={submittedShopName} />
           <div className="rounded-lg border border-slate-200 bg-slate-50 p-4">
-            <p className="text-sm font-black text-ink">店舗 <RequiredBadge /></p>
+            <p className="text-sm font-black text-ink">店舗 {coreFieldsRequired ? <RequiredBadge /> : <OptionalBadge />}</p>
             <p className="mt-1 text-xs font-bold leading-5 text-slate-500">
               1. エリアを選ぶ → 2. 店舗種別で絞る → 3. 店舗名で検索 → 4. 店舗を選ぶ、の順で入力してください。
             </p>
@@ -366,8 +373,8 @@ export function AdminFoodForm({ mode, food, shopOptions = [], action, visibility
               name="customShopName"
               defaultValue={customShopName}
               placeholder="例: ユニバーサル・マーケット内ハピネス・ワゴン"
-              required
-              requirement="required"
+              required={coreFieldsRequired}
+              requirement={coreFieldsRequired ? "required" : "optional"}
               autoComplete="off"
               onChange={(event) => setCustomShopName(event.currentTarget.value)}
             />
@@ -377,7 +384,7 @@ export function AdminFoodForm({ mode, food, shopOptions = [], action, visibility
       </section>
 
       <section className="rounded-lg border border-slate-200 bg-white p-4 shadow-soft">
-        <SectionHeading step="③" title="カテゴリ" description="公開ページの分類と同じカテゴリを1つ以上選びます。" required />
+        <SectionHeading step="③" title="カテゴリ" description="公開ページの分類と同じカテゴリを選びます。自動取得の商品では未選択にすると元のカテゴリを使います。" required={coreFieldsRequired} />
         {preservedHiddenCategories.map((value) => (
           <input key={value} type="hidden" name="categoryTags" value={value} />
         ))}
@@ -399,7 +406,7 @@ export function AdminFoodForm({ mode, food, shopOptions = [], action, visibility
       </section>
 
       <section className="rounded-lg border border-slate-200 bg-white p-4 shadow-soft">
-        <SectionHeading step="④" title="画像" description="公開する商品には画像が必要です。画像なしでも下書き保存できます。" required />
+        <SectionHeading step="④" title="画像" description={isGeneratedOverride ? "自動取得商品の画像差し替えは次のPhaseで対応します。今は現在の画像だけ確認できます。" : "公開する商品には画像が必要です。画像なしでも下書き保存できます。"} required={!isGeneratedOverride} />
         <div className="mt-3 grid gap-4 lg:grid-cols-[220px_1fr]">
           <div className="overflow-hidden rounded-lg border border-slate-200 bg-slate-50">
             {previewUrl || activeImage?.imageUrl || food?.imageUrl ? (
@@ -413,11 +420,14 @@ export function AdminFoodForm({ mode, food, shopOptions = [], action, visibility
           </div>
           <div className="space-y-3">
             <label className="block">
-              <span className="text-xs font-black text-slate-500">画像ファイル <RequiredBadge /> <span className="ml-1 text-slate-400">公開時</span></span>
+              <span className="text-xs font-black text-slate-500">
+                画像ファイル {isGeneratedOverride ? <OptionalBadge /> : <RequiredBadge />} <span className="ml-1 text-slate-400">{isGeneratedOverride ? "確認のみ" : "公開時"}</span>
+              </span>
               <input
                 name="imageFile"
                 type="file"
                 accept="image/*"
+                disabled={!imageUploadEnabled}
                 className="mt-1 block w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm font-bold text-ink file:mr-3 file:rounded-full file:border-0 file:bg-mint file:px-3 file:py-1.5 file:text-xs file:font-black file:text-park"
                 onChange={(event) => {
                   const file = event.currentTarget.files?.[0];
@@ -429,8 +439,9 @@ export function AdminFoodForm({ mode, food, shopOptions = [], action, visibility
               />
             </label>
             <p className="text-sm font-bold leading-6 text-slate-500">
-              画像なしでも下書き保存できます。公開する場合は画像が必要です。
-              画像は自動で商品カード向けサイズに調整されます。編集時に画像を選ばなければ既存画像を維持します。
+              {isGeneratedOverride
+                ? "画像差し替えはまだ保存されません。画像を直す場合は次のPhaseで対応します。"
+                : "画像なしでも下書き保存できます。公開する場合は画像が必要です。画像は自動で商品カード向けサイズに調整されます。編集時に画像を選ばなければ既存画像を維持します。"}
             </p>
           </div>
         </div>
@@ -510,8 +521,8 @@ export function AdminFoodForm({ mode, food, shopOptions = [], action, visibility
 
       <div className="flex flex-col gap-2 rounded-lg border border-slate-200 bg-white p-4 shadow-soft sm:flex-row sm:items-center sm:justify-between">
         <div className="space-y-3">
-          <p className="text-sm font-bold text-slate-500">
-            保存後は商品詳細へ戻ります。編集者・オーナーのみ保存できます。
+            <p className="text-sm font-bold text-slate-500">
+            {isGeneratedOverride ? "保存後は商品詳細へ戻ります。自動取得値は直接変更せず、上書き値だけを保存します。" : "保存後は商品詳細へ戻ります。編集者・オーナーのみ保存できます。"}
           </p>
           <div className="rounded-lg border border-slate-200 bg-slate-50 p-3">
             <p className="text-sm font-black text-ink">公開準備チェック</p>
@@ -546,7 +557,7 @@ export function AdminFoodForm({ mode, food, shopOptions = [], action, visibility
             </button>
           ) : null}
           <button type="submit" disabled={pending || !saveEnabled} className="h-12 rounded-full bg-park px-6 text-sm font-black text-white disabled:cursor-wait disabled:bg-slate-300 sm:h-11">
-            {pending ? "保存中..." : saveEnabled ? "保存する" : "自動取得の商品は保存できません"}
+            {pending ? "保存中..." : saveEnabled ? (isGeneratedOverride ? "上書きを保存する" : "保存する") : "自動取得の商品は保存できません"}
           </button>
         </div>
       </div>
