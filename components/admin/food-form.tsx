@@ -77,7 +77,7 @@ export function AdminFoodForm({ mode, food, shopOptions = [], action, visibility
   const sourceKind = sourceKindProp ?? "manual";
   const isGeneratedOverride = sourceKind === "generated";
   const coreFieldsRequired = !isGeneratedOverride;
-  const imageUploadEnabled = !isGeneratedOverride;
+  const imageUploadEnabled = Boolean(action);
   const saleStatus = getFormSaleStatus(food);
   const publicState = getPublicState(food);
   const [publicStateSelection, setPublicStateSelection] = useState<AdminPublicState>(publicState);
@@ -162,7 +162,7 @@ export function AdminFoodForm({ mode, food, shopOptions = [], action, visibility
                 ? "必要項目を入力して保存すると公開ページに反映されます。画像は自動でサイズ調整されます。重複候補があれば保存前に警告します。"
                 : saveEnabled
                   ? isGeneratedOverride
-                    ? "自動取得の商品です。変更したい基本情報だけ上書き保存します。空欄にした項目は自動取得値を使います。画像差し替えと非表示は次のPhaseで対応します。"
+                    ? "自動取得の商品です。変更したい基本情報と画像だけ上書き保存します。空欄にした項目は自動取得値を使います。"
                     : "自分で追加した商品だけ保存できます。画像を選ばずに保存した場合、今の画像をそのまま残します。非表示にしても管理画面には残ります。"
                   : "自動取得の商品です。保存は次のPhaseで対応します。今は既存値の確認だけできます。"}
             </p>
@@ -406,7 +406,7 @@ export function AdminFoodForm({ mode, food, shopOptions = [], action, visibility
       </section>
 
       <section className="rounded-lg border border-slate-200 bg-white p-4 shadow-soft">
-        <SectionHeading step="④" title="画像" description={isGeneratedOverride ? "自動取得商品の画像差し替えは次のPhaseで対応します。今は現在の画像だけ確認できます。" : "公開する商品には画像が必要です。画像なしでも下書き保存できます。"} required={!isGeneratedOverride} />
+        <SectionHeading step="④" title="画像" description={isGeneratedOverride ? "画像を選ぶと、自動取得元は残したまま上書き画像として保存します。未選択なら現在の画像を維持します。" : "公開する商品には画像が必要です。画像なしでも下書き保存できます。"} required={!isGeneratedOverride} />
         <div className="mt-3 grid gap-4 lg:grid-cols-[220px_1fr]">
           <div className="overflow-hidden rounded-lg border border-slate-200 bg-slate-50">
             {previewUrl || activeImage?.imageUrl || food?.imageUrl ? (
@@ -440,7 +440,7 @@ export function AdminFoodForm({ mode, food, shopOptions = [], action, visibility
             </label>
             <p className="text-sm font-bold leading-6 text-slate-500">
               {isGeneratedOverride
-                ? "画像差し替えはまだ保存されません。画像を直す場合は次のPhaseで対応します。"
+                ? "画像を選んで保存すると、上書き画像として商品カード向けサイズに自動調整されます。画像を選ばなければ現在の画像を維持します。"
                 : "画像なしでも下書き保存できます。公開する場合は画像が必要です。画像は自動で商品カード向けサイズに調整されます。編集時に画像を選ばなければ既存画像を維持します。"}
             </p>
           </div>

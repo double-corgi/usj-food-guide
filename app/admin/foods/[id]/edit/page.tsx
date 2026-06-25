@@ -18,9 +18,9 @@ export default async function AdminEditFoodPage({ params }: { params: Promise<{ 
 
   const { shops } = getFormOptions(foods);
   const adminFields = await getAdminFoodFields(food);
-  const canSave = adminFields.isManualFood;
-  const sourceKind = canSave ? "manual" : "generated";
-  const sourceLabel = canSave ? "自分で追加した商品" : "自動取得の商品";
+  const isManual = adminFields.isManualFood;
+  const sourceKind = isManual ? "manual" : "generated";
+  const sourceLabel = isManual ? "自分で追加した商品" : "自動取得の商品";
 
   return (
     <div className="space-y-5">
@@ -30,9 +30,9 @@ export default async function AdminEditFoodPage({ params }: { params: Promise<{ 
           <h1 className="mt-1 text-3xl font-black text-ink">商品編集</h1>
           <p className="mt-2 text-sm font-bold text-slate-500">
             {admin.role} 権限で閲覧できます。
-            {canSave ? "自分で追加した商品だけ保存できます。画像未選択時は既存画像を維持します。" : "自動取得の商品は保存できません。次のPhaseで上書き保存に対応します。"}
+            {isManual ? "自分で追加した商品を保存できます。画像未選択時は既存画像を維持します。" : "自動取得の商品は、元データを変えずに基本情報と画像だけ上書き保存できます。"}
           </p>
-          <span className={`mt-3 inline-flex rounded-full px-3 py-1 text-xs font-black ${canSave ? "bg-mint text-park" : "bg-slate-100 text-slate-600"}`}>
+          <span className={`mt-3 inline-flex rounded-full px-3 py-1 text-xs font-black ${isManual ? "bg-mint text-park" : "bg-slate-100 text-slate-600"}`}>
             {sourceLabel}
           </span>
         </div>
@@ -52,8 +52,8 @@ export default async function AdminEditFoodPage({ params }: { params: Promise<{ 
         mode="edit"
         food={food}
         shopOptions={shops}
-        action={canSave ? updateManualFood : updateGeneratedFoodOverride}
-        visibilityAction={canSave ? setManualFoodVisibility : undefined}
+        action={isManual ? updateManualFood : updateGeneratedFoodOverride}
+        visibilityAction={isManual ? setManualFoodVisibility : undefined}
         sourceKind={sourceKind}
         adminNotes={adminFields.adminNotes}
         categoryTags={adminFields.categoryTags}

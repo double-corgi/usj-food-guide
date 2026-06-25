@@ -47,6 +47,34 @@ function applyFoodOverride(food: FoodWithRelations, override: FoodOverrideRow): 
     sourceNames: Array.from(new Set([...(food.sourceNames ?? []), "food_overrides"]))
   };
 
+  if (override.image_path) {
+    const imageUrl = buildFoodImagePublicUrl(override.image_path);
+    if (imageUrl) {
+      const overrideImage = {
+        id: `${food.id}-override-image-main`,
+        foodId: food.id,
+        imageUrl,
+        sourceType: "own" as const,
+        sourceUrl: override.image_source_url ?? food.sourceUrl,
+        priority: 0,
+        altText: next.name,
+        alt: next.name,
+        width: 960,
+        height: 720,
+        imageConfidenceScore: 100,
+        imageMatchScore: 100,
+        categoryImageMatchScore: 100,
+        imageVerified: true,
+        isSharedTooMuch: false,
+        hasWatermark: false,
+        manuallyAdded: true,
+        enabled: true
+      };
+      next.imageUrl = imageUrl;
+      next.images = [overrideImage, ...food.images.filter((image) => image.id !== overrideImage.id)];
+    }
+  }
+
   if (override.category && isFoodCategory(override.category)) {
     next.category = override.category;
   }
@@ -125,4 +153,21 @@ function isFoodStatus(value: string): value is FoodStatus {
 
 function isSaleStatus(value: string): value is SaleStatus {
   return SALE_STATUSES.has(value as SaleStatus);
+}
+
+function buildFoodImagePublicUrl(imagePath: string) {
+  const trimmedPath = imagePath.trim().replace(/^\/+/, "");
+  if (!trimmedPath || /[<>]/.test(trimmedPath)) return null;
+
+  if (/^https?:\/\//.test(trimmedPath)) return trimmedPath;
+
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  if (!supabaseUrl) return null;
+
+  try {
+    const url = new URL(`/storage/v1/object/public/food-images/${trimmedPath}`, supabaseUrl);
+    return url.toString();
+  } catch {
+    return null;
+  }
 }

@@ -272,11 +272,11 @@ function FoodCard({ food, canManage }: { food: FoodWithRelations; canManage: boo
           </Link>
           {canManage ? (
             <Link href={`/admin/foods/${food.id}/edit`} className="inline-flex h-11 items-center justify-center rounded-full bg-mint text-sm font-black text-park">
-              {isManualFood(food) ? "編集" : "編集準備"}
+              {isManualFood(food) ? "編集" : "上書き編集"}
             </Link>
           ) : null}
         </div>
-        {!isManualFood(food) ? <p className="rounded-lg bg-slate-50 px-3 py-2 text-xs font-black text-slate-500">自動取得データです。編集画面で内容確認できますが、保存は次のPhaseで対応します。</p> : null}
+        {!isManualFood(food) ? <p className="rounded-lg bg-slate-50 px-3 py-2 text-xs font-black text-slate-500">自動取得データです。元データを変えずに基本情報と画像だけ上書き保存できます。</p> : null}
         {canManage && isManualFood(food) ? (
           <div className="pt-1">
             <ManualFoodVisibilityButton foodId={food.id} hidden={food.hidden} action={setManualFoodVisibility} />
@@ -291,6 +291,7 @@ function StatusBadges({ food }: { food: FoodWithRelations }) {
   return (
     <div className="flex flex-wrap gap-1.5">
       {hasFoodOverride(food) ? <Badge label="上書きあり" tone="ok" /> : null}
+      {hasOverrideImage(food) ? <Badge label="画像上書きあり" tone="ok" /> : null}
       <Badge label={formatAdminPublicState(getPublicState(food))} tone={getPublicState(food) === "published" ? "ok" : "muted"} />
       <Badge label={formatAdminVisibility(food.hidden)} tone={food.hidden ? "muted" : "ok"} />
       <Badge label={formatAdminCanonicalState(food.canonicalFood)} tone={food.canonicalFood === false ? "muted" : "ok"} />
@@ -374,4 +375,8 @@ function isManualFood(food: FoodWithRelations) {
 
 function hasFoodOverride(food: FoodWithRelations) {
   return food.sourceNames?.includes("food_overrides") === true;
+}
+
+function hasOverrideImage(food: FoodWithRelations) {
+  return food.images.some((image) => image.id === `${food.id}-override-image-main` && image.enabled);
 }

@@ -172,19 +172,31 @@ export async function updateGeneratedFoodOverride(_previousState: AdminFoodSaveS
   const parsed = parseGeneratedOverrideForm(formData);
   if (!parsed.ok) return { ok: false, message: parsed.message };
 
+  const existingOverride = await supabase.from("food_overrides").select("food_id,image_path").eq("food_id", foodId).maybeSingle();
+  if (existingOverride.error) return { ok: false, message: `上書き保存前確認に失敗しました: ${existingOverride.error.message}` };
+
+  const imageFile = readImageFile(formData);
+  if (!imageFile.ok) return { ok: false, message: imageFile.message };
+  const uploadedImage = imageFile.file ? await uploadGeneratedFoodOverrideImage(supabase, foodId, generatedFood.name, imageFile.file) : null;
+  if (uploadedImage && !uploadedImage.ok) return { ok: false, message: uploadedImage.message };
+
   const resolvedIds = resolveGeneratedAreaShopIds(generatedFood, parsed.value.areaName, parsed.value.shopName);
   const payload = buildGeneratedOverridePayload({
     food: generatedFood,
     values: parsed.value,
     resolvedIds,
-    adminEmail: admin.email ?? "unknown-admin"
+    adminEmail: admin.email ?? "unknown-admin",
+    imagePath: uploadedImage?.value.objectPath ?? existingOverride.data?.image_path ?? null
   });
 
   const { error } = await supabase.from("food_overrides").upsert(payload, { onConflict: "food_id" });
-  if (error) return { ok: false, message: `上書き保存に失敗しました: ${error.message}` };
+  if (error) {
+    if (uploadedImage) await removeUploadedManualFoodImage(supabase, uploadedImage.value.objectPath);
+    return { ok: false, message: `上書き保存に失敗しました: ${error.message}` };
+  }
 
   revalidateAdminFoods(foodId);
-  redirect(`/admin/foods/${foodId}?saved=override`);
+  redirect(`/admin/foods/${foodId}?saved=override${uploadedImage ? "&image=updated" : ""}`);
 }
 
 export async function setManualFoodVisibility(formData: FormData): Promise<void> {
@@ -408,7 +420,14 @@ function readImageFile(formData: FormData): { ok: true; file: File | null } | { 
 }
 
 async function uploadManualFoodImage(supabase: ServiceSupabaseClient, foodId: string, foodName: string, imageFile: File) {
-  const objectPath = `manual/${foodId}/main.webp`;
+  return uploadFoodImage(supabase, `manual/${foodId}/main.webp`, foodId, foodName, imageFile);
+}
+
+async function uploadGeneratedFoodOverrideImage(supabase: ServiceSupabaseClient, foodId: string, foodName: string, imageFile: File) {
+  return uploadFoodImage(supabase, `overrides/${foodId}/main.webp`, foodId, foodName, imageFile);
+}
+
+async function uploadFoodImage(supabase: ServiceSupabaseClient, objectPath: string, foodId: string, foodName: string, imageFile: File) {
   try {
     const optimizedImage = await optimizeManualFoodImage(imageFile);
     if (optimizedImage.byteLength > manualFoodImageMaxOutputBytes) {
@@ -426,7 +445,7 @@ async function uploadManualFoodImage(supabase: ServiceSupabaseClient, foodId: st
     if (!data.publicUrl) return { ok: false as const, message: "画像の公開URLを取得できませんでした。" };
     return { ok: true as const, value: { publicUrl: appendImageVersion(data.publicUrl), objectPath, altText: foodName } satisfies ImageUploadResult & { altText: string } };
   } catch (error) {
-    console.error("Failed to optimize manual food image", {
+    console.error("Failed to optimize admin food image", {
       name: error instanceof Error ? error.name : "UnknownError",
       message: error instanceof Error ? error.message : String(error),
       foodId,
@@ -468,12 +487,14 @@ function buildGeneratedOverridePayload({
   food,
   values,
   resolvedIds,
-  adminEmail
+  adminEmail,
+  imagePath
 }: {
   food: FoodWithRelations;
   values: GeneratedOverrideFormValue;
   resolvedIds: { areaId: string | null; shopId: string | null };
   adminEmail: string;
+  imagePath: string | null;
 }): FoodOverrideUpsert {
   const now = new Date().toISOString();
   const categoryTags = values.categoryTags && !sameStringArray(values.categoryTags, [food.category]) ? values.categoryTags : null;
@@ -496,7 +517,7 @@ function buildGeneratedOverridePayload({
     shop_id: shopName ? resolvedIds.shopId : null,
     category,
     category_tags: categoryTags,
-    image_path: null,
+    image_path: imagePath,
     image_source_url: null,
     info_source_url: null,
     sale_status: saleStatus,
