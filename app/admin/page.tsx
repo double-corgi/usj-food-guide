@@ -33,8 +33,8 @@ export default async function AdminPage() {
           </div>
           <div className="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm font-bold text-slate-600">
             <p className="text-xs font-black text-slate-400">ログイン中</p>
-            <p className="mt-1 break-all text-ink">{admin.email ?? "ADMIN_ACCESS_TOKEN fallback"}</p>
-            <p className="mt-1 text-park">role: {admin.role}</p>
+            <p className="mt-1 break-all text-ink">{admin.email ?? "管理者確認済み"}</p>
+            <p className="mt-1 text-park">権限: {formatAdminRole(admin.role)}</p>
           </div>
         </div>
       </section>
@@ -146,6 +146,13 @@ export default async function AdminPage() {
 
 function isManualFood(food: Awaited<ReturnType<typeof listAllFoodCandidates>>[number]) {
   return food.manualOverride || food.sourceNames?.includes("manual_foods") || food.id.startsWith("food-manual-");
+}
+
+function formatAdminRole(role: string) {
+  if (role === "owner") return "管理者";
+  if (role === "editor") return "編集できる人";
+  if (role === "viewer") return "見るだけ";
+  return role;
 }
 
 function AdminFoodMiniLink({ href, name, caption }: { href: string; name: string; caption: string }) {

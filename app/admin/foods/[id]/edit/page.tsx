@@ -30,7 +30,7 @@ export default async function AdminEditFoodPage({ params }: { params: Promise<{ 
           <h1 className="mt-1 text-3xl font-black text-ink">商品編集</h1>
           <p className="mt-2 text-sm font-bold text-slate-500">
             {admin.role} 権限で閲覧できます。
-            {isManual ? "自分で追加した商品を保存できます。画像未選択時は既存画像を維持します。" : "自動取得の商品は、元データを変えずに基本情報と画像だけ上書き保存できます。"}
+            {isManual ? "自分で追加した商品を保存できます。画像未選択時は既存画像を維持します。" : "自動取得の商品は、元データを変えずに基本情報と画像だけ修正できます。"}
           </p>
           <span className={`mt-3 inline-flex rounded-full px-3 py-1 text-xs font-black ${isManual ? "bg-mint text-park" : "bg-slate-100 text-slate-600"}`}>
             {sourceLabel}

@@ -28,11 +28,11 @@ export default function AdminDashboardPage() {
         <MetricCard icon={Database} label="商品数" value={metrics.total} note="公開対象" />
         <MetricCard icon={Image} label="画像率" value={`${metrics.imageRate}%`} note={`${metrics.imageCount}/${metrics.total}`} />
         <MetricCard icon={WalletCards} label="価格取得率" value={`${metrics.priceRate}%`} note={`未確認 ${metrics.priceMissing}件`} />
-        <MetricCard icon={Link2} label="source率" value={`${metrics.sourceRate}%`} note={`URL未確認 ${metrics.sourceMissing}件`} />
+        <MetricCard icon={Link2} label="出典URL設定率" value={`${metrics.sourceRate}%`} note={`URL未確認 ${metrics.sourceMissing}件`} />
         <MetricCard icon={Store} label="店舗設定率" value={`${metrics.shopRate}%`} note={`未確認 ${metrics.shopMissing}件`} />
         <MetricCard icon={MapPin} label="エリア設定率" value={`${metrics.areaRate}%`} note={`未確認 ${metrics.areaMissing}件`} />
         <MetricCard icon={Tag} label="カテゴリ設定率" value={`${metrics.categoryRate}%`} note={`確認待ち ${metrics.categoryPending}件`} />
-        <MetricCard icon={Database} label="placeholder" value={metrics.placeholderCount} note="0維持対象" />
+        <MetricCard icon={Database} label="画像未設定" value={metrics.placeholderCount} note="0維持対象" />
       </section>
 
       <section className="rounded-2xl border border-slate-200 bg-white p-5 shadow-soft">
@@ -65,7 +65,7 @@ export default function AdminDashboardPage() {
 
       <section className="rounded-2xl border border-amber-200 bg-amber-50 p-5">
         <h2 className="text-xl font-black text-ink">高優先度の未対応</h2>
-        <p className="mt-1 text-sm font-bold text-amber-950">source_urlあり、画像あり、価格未確認の商品を優先して確認します。</p>
+        <p className="mt-1 text-sm font-bold text-amber-950">出典URLあり、画像あり、価格未確認の商品を優先して確認します。</p>
         <div className="mt-4 grid gap-3 md:grid-cols-2 xl:grid-cols-3">
           {metrics.priorityItems.slice(0, 12).map((food) => (
             <Link key={food.id} href={`/admin/prices?status=missing&category=${food.category}`} className="grid grid-cols-[72px_1fr] gap-3 rounded-2xl bg-white p-2 shadow-sm">

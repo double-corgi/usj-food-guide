@@ -37,7 +37,7 @@ export default async function FoodDetailPage({ params }: { params: Promise<{ id:
                 管理画面で確認
               </Link>
               <Link href={`/admin/foods/${food.id}/edit`} className="inline-flex h-10 items-center justify-center rounded-full bg-park px-4 text-xs font-black text-white">
-                {isManualFood ? "この商品を編集" : "編集準備画面"}
+                {isManualFood ? "この商品を編集" : "この商品を修正"}
               </Link>
             </div>
           </div>

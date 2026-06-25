@@ -44,15 +44,15 @@ export default async function AdminFoodsPage({ searchParams }: { searchParams?: 
     <div className="space-y-5">
       <div className="flex flex-col gap-3 lg:flex-row lg:items-end lg:justify-between">
         <div>
-          <p className="text-xs font-black uppercase tracking-[0.18em] text-park">Food management</p>
+          <p className="text-xs font-black uppercase tracking-[0.18em] text-park">商品管理</p>
           <h1 className="mt-1 text-3xl font-black text-ink">商品一覧</h1>
           <p className="mt-2 max-w-3xl text-sm font-bold leading-6 text-slate-500">
-            自分で追加した商品は編集・画像変更・非表示にできます。自動取得の商品は内容確認のみで、直接編集はできません。
+            自分で追加した商品は編集・画像変更・非表示にできます。自動取得の商品は元データを残したまま修正できます。
           </p>
         </div>
         <div className="flex flex-wrap gap-2">
           <span className="inline-flex h-10 items-center rounded-full bg-mint px-4 text-xs font-black text-park">
-            {admin.mode === "supabase" ? `${admin.role} / ${admin.email}` : "ADMIN_ACCESS_TOKEN fallback"}
+            {admin.mode === "supabase" ? `${formatAdminRole(admin.role)} / ${admin.email}` : "管理者確認済み"}
           </span>
           {canManage ? (
             <Link href="/admin/foods/new" className="inline-flex h-12 items-center gap-2 rounded-full bg-park px-5 text-sm font-black text-white shadow-soft transition hover:-translate-y-0.5">
@@ -81,7 +81,7 @@ export default async function AdminFoodsPage({ searchParams }: { searchParams?: 
       <div className="grid gap-4 sm:grid-cols-4">
         <Metric label="全候補" value={foods.length} />
         <Metric label="表示対象" value={visibleFoods.length} />
-        <Metric label="hidden" value={foods.filter((food) => food.hidden).length} />
+        <Metric label="非表示" value={foods.filter((food) => food.hidden).length} />
         <Metric label="絞り込み" value={filteredFoods.length} />
       </div>
 
@@ -141,7 +141,7 @@ export default async function AdminFoodsPage({ searchParams }: { searchParams?: 
 
       <section className="hidden overflow-hidden rounded-lg border border-slate-200 bg-white shadow-soft lg:block">
         <div className="border-b border-slate-100 p-4">
-          <h2 className="text-xl font-black text-ink">読み取り専用カタログ</h2>
+          <h2 className="text-xl font-black text-ink">商品カタログ</h2>
           <p className="mt-1 text-sm font-bold text-slate-500">最大300件を表示します。自分で追加した商品もここで確認できます。</p>
         </div>
         <div className="overflow-x-auto">
@@ -194,10 +194,10 @@ export default async function AdminFoodsPage({ searchParams }: { searchParams?: 
                       ) : null}
                       {canManage && !isManualFood(food) ? (
                         <Link href={`/admin/foods/${food.id}/edit`} className="inline-flex h-9 items-center justify-center rounded-full bg-slate-100 px-3 text-xs font-black text-slate-600 hover:bg-slate-200">
-                          編集準備中
+                          修正する
                         </Link>
                       ) : null}
-                      {!canManage && !isManualFood(food) ? <span className="inline-flex h-9 items-center justify-center rounded-full bg-slate-100 px-3 text-xs font-black text-slate-500">自動取得データ・編集不可</span> : null}
+                      {!canManage && !isManualFood(food) ? <span className="inline-flex h-9 items-center justify-center rounded-full bg-slate-100 px-3 text-xs font-black text-slate-500">自動取得の商品・確認のみ</span> : null}
                       {canManage && isManualFood(food) ? (
                         <ManualFoodVisibilityButton foodId={food.id} hidden={food.hidden} action={setManualFoodVisibility} />
                       ) : null}
@@ -272,11 +272,11 @@ function FoodCard({ food, canManage }: { food: FoodWithRelations; canManage: boo
           </Link>
           {canManage ? (
             <Link href={`/admin/foods/${food.id}/edit`} className="inline-flex h-11 items-center justify-center rounded-full bg-mint text-sm font-black text-park">
-              {isManualFood(food) ? "編集" : "上書き編集"}
+              {isManualFood(food) ? "編集" : "修正する"}
             </Link>
           ) : null}
         </div>
-        {!isManualFood(food) ? <p className="rounded-lg bg-slate-50 px-3 py-2 text-xs font-black text-slate-500">自動取得データです。元データを変えずに基本情報と画像だけ上書き保存できます。</p> : null}
+        {!isManualFood(food) ? <p className="rounded-lg bg-slate-50 px-3 py-2 text-xs font-black text-slate-500">自動取得の商品です。元データを変えずに基本情報と画像だけ修正できます。</p> : null}
         {canManage && isManualFood(food) ? (
           <div className="pt-1">
             <ManualFoodVisibilityButton foodId={food.id} hidden={food.hidden} action={setManualFoodVisibility} />
@@ -290,8 +290,8 @@ function FoodCard({ food, canManage }: { food: FoodWithRelations; canManage: boo
 function StatusBadges({ food }: { food: FoodWithRelations }) {
   return (
     <div className="flex flex-wrap gap-1.5">
-      {hasFoodOverride(food) ? <Badge label="上書きあり" tone="ok" /> : null}
-      {hasOverrideImage(food) ? <Badge label="画像上書きあり" tone="ok" /> : null}
+      {hasFoodOverride(food) ? <Badge label="修正あり" tone="ok" /> : null}
+      {hasOverrideImage(food) ? <Badge label="画像修正あり" tone="ok" /> : null}
       <Badge label={formatAdminPublicState(getPublicState(food))} tone={getPublicState(food) === "published" ? "ok" : "muted"} />
       <Badge label={formatAdminVisibility(food.hidden)} tone={food.hidden ? "muted" : "ok"} />
       <Badge label={formatAdminCanonicalState(food.canonicalFood)} tone={food.canonicalFood === false ? "muted" : "ok"} />
@@ -379,4 +379,11 @@ function hasFoodOverride(food: FoodWithRelations) {
 
 function hasOverrideImage(food: FoodWithRelations) {
   return food.images.some((image) => image.id === `${food.id}-override-image-main` && image.enabled);
+}
+
+function formatAdminRole(role: string) {
+  if (role === "owner") return "管理者";
+  if (role === "editor") return "編集できる人";
+  if (role === "viewer") return "見るだけ";
+  return role;
 }

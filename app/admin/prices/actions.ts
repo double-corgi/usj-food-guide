@@ -215,7 +215,7 @@ function confidenceForPriceSource(source: PriceSource) {
 
 function labelForHoldReason(reasonCode: string) {
   const labels: Record<string, string> = {
-    source_url_missing: "source_url未設定",
+    source_url_missing: "出典URL未設定",
     official_exact_price_not_found: "公式ページで同一商品価格なし",
     product_name_mismatch: "商品名一致なし",
     only_similar_product_found: "類似商品のみ",

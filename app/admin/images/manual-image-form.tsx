@@ -21,7 +21,7 @@ export function ManualImageForm({ food }: { food: FoodWithRelations }) {
             // eslint-disable-next-line @next/next/no-img-element
             <img src={imageUrl} alt="" className="aspect-[4/3] w-full object-cover" />
           ) : (
-            <div className="flex aspect-[4/3] items-center justify-center px-4 text-center text-xs font-black text-slate-400">現在placeholder</div>
+            <div className="flex aspect-[4/3] items-center justify-center px-4 text-center text-xs font-black text-slate-400">現在は画像未設定</div>
           )}
         </div>
         <div className="min-w-0 space-y-3">
@@ -55,7 +55,7 @@ export function ManualImageForm({ food }: { food: FoodWithRelations }) {
               </label>
               <label className="block">
                 <span className="text-xs font-black text-slate-500">source name</span>
-                <input name="imageSourceName" placeholder="official / manual" className="mt-1 h-10 w-full rounded-lg border border-slate-200 px-3 text-sm font-bold outline-none focus:border-park" />
+                <input name="imageSourceName" placeholder="例: USJ公式 / 手動確認" className="mt-1 h-10 w-full rounded-lg border border-slate-200 px-3 text-sm font-bold outline-none focus:border-park" />
               </label>
             </div>
             <div className="flex flex-wrap gap-2">
@@ -71,7 +71,7 @@ export function ManualImageForm({ food }: { food: FoodWithRelations }) {
 
           <form action={keepPlaceholderImage}>
             <input type="hidden" name="foodId" value={food.id} />
-            <button type="submit" className="text-xs font-black text-slate-500 underline underline-offset-4 hover:text-ink">placeholder維持として記録</button>
+            <button type="submit" className="text-xs font-black text-slate-500 underline underline-offset-4 hover:text-ink">画像未設定のまま記録</button>
           </form>
 
           <div className="flex flex-wrap gap-2">

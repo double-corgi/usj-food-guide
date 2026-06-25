@@ -24,7 +24,7 @@ export default async function AdminImagesPage() {
           <p className="text-xs font-black uppercase tracking-[0.18em] text-park">Image candidate review</p>
           <h1 className="mt-1 text-3xl font-black text-ink">画像手動登録</h1>
           <p className="mt-2 max-w-3xl text-sm font-bold leading-6 text-slate-500">
-            placeholder商品の画像URLを手動で登録します。URLは保存時に画像として開けるか確認し、保存後は通常画面へ即反映します。
+            画像未設定商品の画像URLを手動で登録します。URLは保存時に画像として開けるか確認し、保存後は通常画面へ即反映します。
           </p>
         </div>
         <div className="flex flex-wrap gap-2">
@@ -40,10 +40,10 @@ export default async function AdminImagesPage() {
 
       <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-6">
         {[
-          { label: "placeholder商品", value: overview.counts.placeholders, icon: ImageOff },
+          { label: "画像未設定の商品", value: overview.counts.placeholders, icon: ImageOff },
           { label: "画像あり", value: imageCount, icon: CheckCircle2 },
           { label: "画像完成率", value: `${imageCompletionRate}%`, icon: CheckCircle2 },
-          { label: "チュリトスplaceholder", value: churroPlaceholders, icon: ImageOff },
+          { label: "チュリトス画像未設定", value: churroPlaceholders, icon: ImageOff },
           { label: "候補画像", value: overview.counts.candidates, icon: Sparkles },
           { label: "承認済み", value: overview.counts.approved, icon: CheckCircle2 },
           { label: "却下済み", value: overview.counts.rejected, icon: XCircle }
@@ -59,7 +59,7 @@ export default async function AdminImagesPage() {
       <section className="rounded-lg border border-slate-200 bg-white p-5 shadow-soft">
         <div className="flex flex-col gap-1 sm:flex-row sm:items-end sm:justify-between">
           <div>
-            <h2 className="text-xl font-black text-ink">placeholder商品一覧</h2>
+          <h2 className="text-xl font-black text-ink">画像未設定の商品一覧</h2>
             <p className="text-sm font-bold text-slate-500">商品ごとに画像URLを入力し、プレビュー確認後に保存します。</p>
           </div>
           <p className="text-sm font-black text-berry">{overview.placeholderFoods.length}件</p>
@@ -68,7 +68,7 @@ export default async function AdminImagesPage() {
           {overview.placeholderFoods.map((food) => (
             <ManualImageForm key={food.id} food={food} />
           ))}
-          {overview.placeholderFoods.length === 0 ? <p className="rounded-lg bg-slate-50 p-5 text-sm font-bold text-slate-500">placeholder商品はありません。</p> : null}
+          {overview.placeholderFoods.length === 0 ? <p className="rounded-lg bg-slate-50 p-5 text-sm font-bold text-slate-500">画像未設定の商品はありません。</p> : null}
         </div>
       </section>
 
@@ -143,13 +143,13 @@ export default async function AdminImagesPage() {
               </article>
             );
           })}
-          {sortedCandidates.length === 0 ? <p className="rounded-lg bg-slate-50 p-5 text-sm font-bold text-slate-500">候補画像はまだありません。上のplaceholder商品一覧から画像URLを手動登録してください。</p> : null}
+          {sortedCandidates.length === 0 ? <p className="rounded-lg bg-slate-50 p-5 text-sm font-bold text-slate-500">候補画像はまだありません。上の画像未設定の商品一覧から画像URLを手動登録してください。</p> : null}
         </div>
       </section>
 
       <section className="grid gap-4 lg:grid-cols-2">
         <div className="rounded-lg border border-slate-200 bg-white p-5 shadow-soft">
-          <h2 className="text-xl font-black text-ink">候補がないplaceholder商品</h2>
+          <h2 className="text-xl font-black text-ink">候補がない画像未設定の商品</h2>
           <div className="mt-4 max-h-[520px] divide-y divide-slate-100 overflow-y-auto">
             {noCandidateFoods.slice(0, 120).map((food) => (
               <div key={food.id} className="py-3">

@@ -52,7 +52,7 @@ const manualFoodImageMimeTypes = new Set(["image/jpeg", "image/png", "image/webp
 export async function createAdminFood(_previousState: AdminFoodSaveState = emptyState, formData: FormData): Promise<AdminFoodSaveState> {
   const admin = await requireAdmin("editor");
   const supabase = createServiceSupabaseClient();
-  if (!supabase) return { ok: false, message: "Supabase service role が未設定のため保存できません。" };
+  if (!supabase) return { ok: false, message: "保存設定がまだ完了していないため保存できません。" };
 
   const parsed = parseFoodForm(formData);
   if (!parsed.ok) return { ok: false, message: parsed.message };
@@ -110,7 +110,7 @@ export async function createAdminFood(_previousState: AdminFoodSaveState = empty
 export async function updateManualFood(_previousState: AdminFoodSaveState = emptyState, formData: FormData): Promise<AdminFoodSaveState> {
   const admin = await requireAdmin("editor");
   const supabase = createServiceSupabaseClient();
-  if (!supabase) return { ok: false, message: "Supabase service role が未設定のため保存できません。" };
+  if (!supabase) return { ok: false, message: "保存設定がまだ完了していないため保存できません。" };
 
   const foodId = readCleanText(formData, "foodId", 120);
   if (!foodId) return { ok: false, message: "対象商品IDが不正です。" };
@@ -157,7 +157,7 @@ export async function updateManualFood(_previousState: AdminFoodSaveState = empt
 export async function updateGeneratedFoodOverride(_previousState: AdminFoodSaveState = emptyState, formData: FormData): Promise<AdminFoodSaveState> {
   const admin = await requireAdmin("editor");
   const supabase = createServiceSupabaseClient();
-  if (!supabase) return { ok: false, message: "Supabase service role が未設定のため保存できません。" };
+  if (!supabase) return { ok: false, message: "保存設定がまだ完了していないため保存できません。" };
 
   const foodId = readCleanText(formData, "foodId", 120);
   if (!foodId) return { ok: false, message: "対象商品IDが不正です。" };
@@ -173,7 +173,7 @@ export async function updateGeneratedFoodOverride(_previousState: AdminFoodSaveS
   if (!parsed.ok) return { ok: false, message: parsed.message };
 
   const existingOverride = await supabase.from("food_overrides").select("food_id,image_path").eq("food_id", foodId).maybeSingle();
-  if (existingOverride.error) return { ok: false, message: `上書き保存前確認に失敗しました: ${existingOverride.error.message}` };
+  if (existingOverride.error) return { ok: false, message: `修正内容の保存前確認に失敗しました: ${existingOverride.error.message}` };
 
   const imageFile = readImageFile(formData);
   if (!imageFile.ok) return { ok: false, message: imageFile.message };
@@ -192,7 +192,7 @@ export async function updateGeneratedFoodOverride(_previousState: AdminFoodSaveS
   const { error } = await supabase.from("food_overrides").upsert(payload, { onConflict: "food_id" });
   if (error) {
     if (uploadedImage) await removeUploadedManualFoodImage(supabase, uploadedImage.value.objectPath);
-    return { ok: false, message: `上書き保存に失敗しました: ${error.message}` };
+    return { ok: false, message: `修正内容の保存に失敗しました: ${error.message}` };
   }
 
   revalidateAdminFoods(foodId);

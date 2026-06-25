@@ -31,7 +31,7 @@ export default async function AdminLoginPage({ searchParams }: AdminLoginPagePro
 
       {!supabaseConfigured ? (
         <div className="rounded-lg border border-amber-200 bg-amber-50 p-4 text-sm font-bold leading-6 text-amber-950">
-          Supabase Auth は未設定です。現在は既存の ADMIN_ACCESS_TOKEN 方式で /admin を保護しています。
+          管理者ログインの設定がまだ完了していません。現在は一時的な保護設定で管理画面を守っています。
         </div>
       ) : (
         <form action={sendAdminMagicLink} className="space-y-4">

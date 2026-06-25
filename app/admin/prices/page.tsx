@@ -106,9 +106,9 @@ export default async function AdminPricesPage({ searchParams }: { searchParams?:
       </div>
 
       <section className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-        <Stat label="総food" value={foods.length} />
+        <Stat label="総商品" value={foods.length} />
         <Stat label="画像あり" value={foods.filter(hasPublicImage).length} />
-        <Stat label="placeholder" value={foods.filter((food) => primaryImage(food).startsWith("/placeholders/")).length} />
+        <Stat label="画像未設定" value={foods.filter((food) => primaryImage(food).startsWith("/placeholders/")).length} />
         <Stat label="高優先度未対応" value={highPriorityOpen} tone="warn" />
       </section>
 
@@ -119,7 +119,7 @@ export default async function AdminPricesPage({ searchParams }: { searchParams?:
         <Stat label="情報不足" value={informationShortage} tone={informationShortage > 0 ? "warn" : "default"} />
         <Stat label="店舗未確認" value={shopUnknown} tone={shopUnknown > 0 ? "warn" : "default"} />
         <Stat label="エリア未確認" value={areaUnknown} tone={areaUnknown > 0 ? "warn" : "default"} />
-        <Stat label="source未確認" value={sourceMissing} tone={sourceMissing > 0 ? "warn" : "default"} />
+        <Stat label="出典URL未確認" value={sourceMissing} tone={sourceMissing > 0 ? "warn" : "default"} />
         <Stat label="販売期間未設定" value={salePeriodMissing} tone={salePeriodMissing > 0 ? "warn" : "default"} />
         <Stat label="販売終了日未設定" value={saleEndMissing} tone={saleEndMissing > 0 ? "warn" : "default"} />
         <Stat label="重複候補" value={duplicateCandidates.length} tone={duplicateCandidates.length > 0 ? "warn" : "default"} />
@@ -154,8 +154,8 @@ export default async function AdminPricesPage({ searchParams }: { searchParams?:
                     <div className="flex gap-2"><dt className="w-20 shrink-0 text-slate-400">エリア</dt><dd>{getFoodAreaSummary(food)}</dd></div>
                     <div className="flex gap-2"><dt className="w-20 shrink-0 text-slate-400">店舗</dt><dd>{food.shop.name}</dd></div>
                     <div className="flex gap-2"><dt className="w-20 shrink-0 text-slate-400">未確認理由</dt><dd>{manual?.reason ?? reasonCodeLabel(manual?.reasonCode)}</dd></div>
-                    <div className="flex gap-2"><dt className="w-20 shrink-0 text-slate-400">確認済ソース</dt><dd>{manual?.checkedSourceUrl ? "手動確認メモあり" : food.sourceUrl ? "公式URL確認待ち" : "source_url未設定"}</dd></div>
-                    <div className="flex gap-2"><dt className="w-20 shrink-0 text-slate-400">候補ソース</dt><dd>{nextSourceCandidates(food, manual?.reasonCode).join(" / ")}</dd></div>
+                    <div className="flex gap-2"><dt className="w-20 shrink-0 text-slate-400">確認済出典</dt><dd>{manual?.checkedSourceUrl ? "手動確認メモあり" : food.sourceUrl ? "公式URL確認待ち" : "出典URL未設定"}</dd></div>
+                    <div className="flex gap-2"><dt className="w-20 shrink-0 text-slate-400">候補出典</dt><dd>{nextSourceCandidates(food, manual?.reasonCode).join(" / ")}</dd></div>
                     <div className="flex gap-2"><dt className="w-20 shrink-0 text-slate-400">最終確認日</dt><dd>{formatReviewDate(manual?.updatedAt ?? food.priceLastCheckedAt ?? food.lastCheckedAt)}</dd></div>
                     <div className="flex gap-2"><dt className="w-20 shrink-0 text-slate-400">確認担当</dt><dd>{manual?.status === "unconfirmable" ? "手動監査済み" : "管理者確認待ち"}</dd></div>
                     <div className="flex gap-2"><dt className="w-20 shrink-0 text-slate-400">次確認場所</dt><dd>{nextCheckPlace(food, manual?.reasonCode)}</dd></div>
@@ -199,7 +199,7 @@ export default async function AdminPricesPage({ searchParams }: { searchParams?:
         <section className="rounded-2xl border border-slate-200 bg-white p-5 shadow-soft">
           <h2 className="text-xl font-black text-ink">品質ダッシュボード</h2>
           <div className="mt-4 grid gap-3 sm:grid-cols-3">
-            <QualityMetric label="source_url率" value={sourceUrlRate} />
+            <QualityMetric label="出典URL設定率" value={sourceUrlRate} />
             <QualityMetric label="店舗設定率" value={shopRate} />
             <QualityMetric label="エリア設定率" value={areaRate} />
           </div>
@@ -209,16 +209,16 @@ export default async function AdminPricesPage({ searchParams }: { searchParams?:
             <p>価格レビュー完了率: <span className="font-black text-ink">{priceReviewRate}</span></p>
             <p>未確認内訳: <span className="font-black text-ink">価格要確認{priceUnconfirmed}件 / 情報不足{informationShortage}件</span></p>
             <p>確認不能理由保存済み: <span className="font-black text-ink">{unconfirmableCount}件</span></p>
-            <p>source_urlあり未確認: <span className="font-black text-ink">{missingWithSource}件</span></p>
-            <p>source_urlなし未確認: <span className="font-black text-ink">{missingWithoutSource}件</span></p>
+            <p>出典URLあり未確認: <span className="font-black text-ink">{missingWithSource}件</span></p>
+            <p>出典URLなし未確認: <span className="font-black text-ink">{missingWithoutSource}件</span></p>
           </div>
         </section>
         <section className="rounded-2xl border border-slate-200 bg-white p-5 shadow-soft">
           <h2 className="text-xl font-black text-ink">優先度ルール</h2>
           <div className="mt-4 grid gap-2 text-sm font-bold text-slate-600">
-            <p>source_urlあり、画像あり、価格未確認、重点カテゴリ、重複疑惑ありを高く評価します。</p>
-            <p>品質スコアは画像、価格、店舗、エリア、source_url、説明文の有無で算出します。</p>
-            <p>source_urlなし商品は後回しにし、公式確認しやすい商品から処理します。</p>
+            <p>出典URLあり、画像あり、価格未確認、重点カテゴリ、重複疑惑ありを高く評価します。</p>
+            <p>品質スコアは画像、価格、店舗、エリア、出典URL、説明文の有無で算出します。</p>
+            <p>出典URLなし商品は後回しにし、公式確認しやすい商品から処理します。</p>
           </div>
         </section>
       </section>
@@ -259,7 +259,7 @@ export default async function AdminPricesPage({ searchParams }: { searchParams?:
         <div className="flex flex-col gap-1 sm:flex-row sm:items-end sm:justify-between">
           <div>
             <h2 className="text-xl font-black text-ink">重複候補</h2>
-            <p className="text-sm font-bold text-slate-500">同名・同カテゴリ・同店舗・同画像・同source_urlの候補です。ここでは判定ログのみ保存し、food削除や統合は行いません。</p>
+            <p className="text-sm font-bold text-slate-500">同名・同カテゴリ・同店舗・同画像・同じ出典URLの候補です。ここでは判定ログのみ保存し、商品削除や統合は行いません。</p>
           </div>
           <p className="text-sm font-black text-berry">{duplicateCandidates.length}件</p>
         </div>
@@ -318,8 +318,8 @@ export default async function AdminPricesPage({ searchParams }: { searchParams?:
             <FilterSelect label="店舗" name="shop" value={shopFilter} options={["すべて", ...shopStats.names]} params={currentParams} />
             <FilterSelect label="エリア" name="area" value={areaFilter} options={["すべて", ...areaStats.names]} params={currentParams} />
             <div className="flex flex-wrap items-end gap-2">
-              <FilterLink href={hrefFor({ ...currentParams, source: "withSource" })} active={sourceFilter === "withSource"}>sourceあり</FilterLink>
-              <FilterLink href={hrefFor({ ...currentParams, source: "withoutSource" })} active={sourceFilter === "withoutSource"}>sourceなし</FilterLink>
+              <FilterLink href={hrefFor({ ...currentParams, source: "withSource" })} active={sourceFilter === "withSource"}>出典URLあり</FilterLink>
+              <FilterLink href={hrefFor({ ...currentParams, source: "withoutSource" })} active={sourceFilter === "withoutSource"}>出典URLなし</FilterLink>
               <FilterLink href={hrefFor({ ...currentParams, image: "withImage" })} active={imageFilter === "withImage"}>画像あり</FilterLink>
             </div>
           </div>
@@ -353,7 +353,7 @@ export default async function AdminPricesPage({ searchParams }: { searchParams?:
           <div>
             <h2 className="text-xl font-black text-ink">{displayLabel}</h2>
             <p className="text-sm font-bold text-slate-500">
-              表示{displayFoods.length}件。source_urlあり未確認{missingWithSource}件 / source_urlなし未確認{missingWithoutSource}件。
+              表示{displayFoods.length}件。出典URLあり未確認{missingWithSource}件 / 出典URLなし未確認{missingWithoutSource}件。
             </p>
           </div>
           <p className="text-sm font-black text-berry">推測価格0件</p>
@@ -471,7 +471,7 @@ function MiniStats({ title, rows }: { title: string; rows: Array<{ label: string
 
 function reasonCodeLabel(reasonCode?: string) {
   const labels: Record<string, string> = {
-    source_url_missing: "source_url未設定",
+    source_url_missing: "出典URL未設定",
     official_exact_price_not_found: "公式ページで同一商品価格なし",
     product_name_mismatch: "商品名一致なし",
     only_similar_product_found: "類似商品のみ",
@@ -651,7 +651,7 @@ function buildDuplicateCandidates(foods: FoodWithRelations[]) {
             nameSimilarity ? "商品名類似" : undefined,
             sameImage ? "同画像" : undefined,
             sameShop ? "同店舗" : undefined,
-            sameSource ? "同source_url" : undefined
+            sameSource ? "同じ出典URL" : undefined
           ].filter(Boolean).join(" / ")
         });
       }

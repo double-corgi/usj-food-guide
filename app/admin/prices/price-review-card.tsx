@@ -118,7 +118,7 @@ export function PriceReviewCard({
             </div>
           ) : null}
           <details className="mt-3 rounded-xl bg-slate-50 p-3 text-xs font-bold text-slate-500">
-            <summary className="cursor-pointer font-black text-slate-700">source_urlを確認</summary>
+            <summary className="cursor-pointer font-black text-slate-700">出典URLを確認</summary>
             <p className="mt-2 break-all leading-5">{sourceUrl}</p>
           </details>
           <div className="mt-3 flex flex-wrap gap-2">
@@ -167,7 +167,7 @@ export function PriceReviewCard({
               <input name="priceSourceUrl" type="url" defaultValue={defaultSourceUrl} className="mt-1 h-10 w-full rounded-xl border border-slate-200 px-3 text-xs font-bold outline-none focus:border-park" />
             </label>
             <label className="block">
-              <span className="text-xs font-black text-slate-500">source name</span>
+              <span className="text-xs font-black text-slate-500">出典名</span>
               <input name="priceSourceName" defaultValue="USJ公式 手動確認" className="mt-1 h-10 w-full rounded-xl border border-slate-200 px-3 text-xs font-bold outline-none focus:border-park" />
             </label>
             <label className="block">
@@ -192,7 +192,7 @@ export function PriceReviewCard({
             <label className="block">
               <span className="text-xs font-black text-slate-500">確認不能理由</span>
               <select name="holdReasonCode" defaultValue={manualDecision?.reasonCode ?? defaultReasonCode(food, sourceUrl)} className="mt-1 h-10 w-full rounded-xl border border-slate-200 bg-white px-3 text-xs font-bold text-ink outline-none focus:border-park">
-                <option value="source_url_missing">source_url未設定</option>
+                <option value="source_url_missing">出典URL未設定</option>
                 <option value="official_exact_price_not_found">公式ページで同一商品価格なし</option>
                 <option value="product_name_mismatch">商品名一致なし</option>
                 <option value="only_similar_product_found">類似商品のみ</option>

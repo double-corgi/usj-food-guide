@@ -57,7 +57,7 @@ export default async function AdminFoodDetailPage({
           {canManage && !manualFood ? (
             <Link href={`/admin/foods/${food.id}/edit`} className="inline-flex h-12 items-center gap-2 rounded-full bg-slate-100 px-5 text-sm font-black text-slate-700 shadow-soft hover:bg-slate-200">
               <PencilLine size={15} aria-hidden />
-              上書き編集する
+              修正する
             </Link>
           ) : null}
           <Link href="/admin/foods" className="inline-flex h-10 items-center rounded-full border border-slate-200 bg-white px-4 text-xs font-black text-ink hover:border-park">
@@ -74,10 +74,10 @@ export default async function AdminFoodDetailPage({
             <span className={`inline-flex rounded-full px-3 py-1 text-xs font-black ${manualFood ? "bg-white text-park" : "bg-white text-slate-600"}`}>
               {manualFood ? "自分で追加した商品" : "自動取得の商品"}
             </span>
-            {hasFoodOverride(food) ? <span className="ml-2 inline-flex rounded-full bg-white px-3 py-1 text-xs font-black text-park">上書きあり</span> : null}
-            {hasOverrideImage ? <span className="ml-2 inline-flex rounded-full bg-white px-3 py-1 text-xs font-black text-park">画像上書きあり</span> : null}
+            {hasFoodOverride(food) ? <span className="ml-2 inline-flex rounded-full bg-white px-3 py-1 text-xs font-black text-park">修正あり</span> : null}
+            {hasOverrideImage ? <span className="ml-2 inline-flex rounded-full bg-white px-3 py-1 text-xs font-black text-park">画像修正あり</span> : null}
             <p className="mt-2 text-sm font-bold leading-6 text-slate-600">
-              {manualFood ? "この商品は管理画面から編集・画像差し替え・非表示運用ができます。" : "自動取得データです。元データを変えずに基本情報と画像だけ上書き保存できます。"}
+              {manualFood ? "この商品は管理画面から編集・画像差し替え・非表示運用ができます。" : "自動取得の商品です。元データを変えずに基本情報と画像だけ修正できます。"}
             </p>
           </div>
           {canManage && manualFood ? (
@@ -89,7 +89,7 @@ export default async function AdminFoodDetailPage({
           {canManage && !manualFood ? (
             <Link href={`/admin/foods/${food.id}/edit`} className="inline-flex h-12 items-center justify-center gap-2 rounded-full bg-white px-5 text-sm font-black text-slate-700 shadow-soft">
               <PencilLine size={16} aria-hidden />
-              上書き編集する
+              修正する
             </Link>
           ) : null}
         </div>
@@ -125,9 +125,9 @@ export default async function AdminFoodDetailPage({
               <Field label="公開状態" value={formatAdminPublicState(getPublicState(food))} />
               <Field label="表示状態" value={formatAdminVisibility(food.hidden)} />
               <Field label="レビュー状態" value={formatAdminReviewStatus(food.reviewStatus)} />
-              <Field label="displayQuality" value={food.displayQuality} />
-              <Field label="正規/重複" value={formatAdminCanonicalState(food.canonicalFood)} />
-              <Field label="duplicateGroupId" value={food.duplicateGroupId ?? "なし"} />
+              <Field label="表示品質" value={food.displayQuality} />
+              <Field label="重複状態" value={formatAdminCanonicalState(food.canonicalFood)} />
+              <Field label="重複グループID" value={food.duplicateGroupId ?? "なし"} />
               <Field label="販売期間 start" value={food.saleStartDate ?? food.startDate ?? "未設定"} />
               <Field label="販売期間 end" value={food.saleEndDate ?? food.endDate ?? "未設定"} />
             </div>
@@ -186,7 +186,7 @@ function SaveMessage({ saved, image, error, foodId, manualFood }: { saved?: stri
       : saved === "updated"
         ? "商品を更新しました。"
         : saved === "override"
-          ? "自動取得商品の上書きを保存しました。"
+          ? "自動取得商品の修正内容を保存しました。"
         : saved === "hidden"
           ? "公開ページから非表示にしました。管理画面には残っています。"
           : saved === "shown"
@@ -220,7 +220,7 @@ function SaveMessage({ saved, image, error, foodId, manualFood }: { saved?: stri
         ) : null}
         {!manualFood && saved === "override" ? (
           <Link href={`/admin/foods/${foodId}/edit`} className="inline-flex h-10 items-center justify-center rounded-full border border-slate-200 bg-white px-4 text-xs font-black text-ink">
-            もう一度上書き編集
+            もう一度修正
           </Link>
         ) : null}
         {manualFood && saved === "created" ? (

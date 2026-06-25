@@ -17,7 +17,7 @@ export async function sendAdminMagicLink(formData: FormData) {
   const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
   const serviceSupabase = createServiceSupabaseClient();
   if (!supabaseUrl || !supabaseAnonKey || !serviceSupabase) {
-    redirect(`/admin/login?error=${encodeURIComponent("Supabase Auth が未設定です")}&next=${encodeURIComponent(next)}`);
+    redirect(`/admin/login?error=${encodeURIComponent("管理者ログインの設定がまだ完了していません。")}&next=${encodeURIComponent(next)}`);
   }
 
   const attemptId = crypto.randomUUID();

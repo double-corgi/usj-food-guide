@@ -58,7 +58,7 @@ export default function DataQualityPage() {
           </Link>
           <h1 className="mt-2 text-3xl font-black text-ink">データ品質監査</h1>
           <p className="mt-2 text-sm font-bold text-slate-500">
-            200商品を維持したまま、価格・画像・店舗・エリア・カテゴリ・source_urlの未設定を確認します。推測価格は登録しません。
+            200商品を維持したまま、価格・画像・店舗・エリア・カテゴリ・出典URLの未設定を確認します。推測価格は登録しません。
           </p>
         </div>
         <Link href="/admin/prices" className="inline-flex h-11 items-center justify-center rounded-full bg-ink px-5 text-sm font-black text-white shadow-soft">
@@ -69,7 +69,7 @@ export default function DataQualityPage() {
       <section className="grid gap-3 sm:grid-cols-2 xl:grid-cols-6">
         <Metric icon={Database} label="商品数" value={foods.length} />
         <Metric icon={ImageIcon} label="画像あり" value={imageFoods.length} />
-        <Metric icon={AlertTriangle} label="placeholder" value={placeholderFoods.length} tone={placeholderFoods.length > 0 ? "warn" : "default"} />
+        <Metric icon={AlertTriangle} label="画像未設定" value={placeholderFoods.length} tone={placeholderFoods.length > 0 ? "warn" : "default"} />
         <Metric icon={ReceiptText} label="価格確認率" value={percent(priceKnown.length, foods.length)} tone={priceUnknown.length > 0 ? "warn" : "default"} />
         <Metric icon={ReceiptText} label="価格レビュー完了" value={percent(priceReviewed, foods.length)} tone={priceReviewOpen > 0 ? "warn" : "default"} />
         <Metric icon={MapPin} label="エリア設定率" value={percent(foods.length - areaMissing.length, foods.length)} tone={areaMissing.length > 0 ? "warn" : "default"} />
@@ -79,19 +79,19 @@ export default function DataQualityPage() {
 
       <section className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
         <Metric icon={Tags} label="カテゴリ設定率" value={percent(foods.length - categoryMissing.length, foods.length)} tone={categoryMissing.length > 0 ? "warn" : "default"} />
-        <Metric icon={Link2} label="source_url率" value={percent(foods.length - sourceMissing.length, foods.length)} tone={sourceMissing.length > 0 ? "warn" : "default"} />
+        <Metric icon={Link2} label="出典URL設定率" value={percent(foods.length - sourceMissing.length, foods.length)} tone={sourceMissing.length > 0 ? "warn" : "default"} />
         <Metric icon={ReceiptText} label="価格確認済" value={priceKnown.length} />
         <Metric icon={AlertTriangle} label="価格未確認" value={priceUnknown.length} tone="warn" />
         <Metric icon={ReceiptText} label="確認不能理由保存済" value={priceUnconfirmable} />
         <Metric icon={AlertTriangle} label="価格未レビュー" value={priceReviewOpen} tone={priceReviewOpen > 0 ? "warn" : "default"} />
         <Metric icon={CalendarDays} label="コンプ対象" value={completableFoods.length} />
-        <Metric icon={Database} label="canonical商品" value={canonicalFoods.length} />
+        <Metric icon={Database} label="正規商品" value={canonicalFoods.length} />
         <Metric icon={AlertTriangle} label="重複候補" value={duplicateCandidates.length} tone={duplicateCandidates.length > 0 ? "warn" : "default"} />
-        <Metric icon={Database} label="canonical重複グループ" value={explicitDuplicateGroups.length} />
+        <Metric icon={Database} label="重複グループ" value={explicitDuplicateGroups.length} />
         <Metric icon={AlertTriangle} label="販売期間確認中" value={saleUnknown.length} tone={saleUnknown.length > 0 ? "warn" : "default"} />
-        <Metric icon={MapPin} label="area=その他" value={rawOtherAreaFoods.length} tone={rawOtherAreaFoods.length > 0 ? "warn" : "default"} />
+        <Metric icon={MapPin} label="エリアがその他" value={rawOtherAreaFoods.length} tone={rawOtherAreaFoods.length > 0 ? "warn" : "default"} />
         <Metric icon={MapPin} label="表示上その他" value={displayOtherAreaFoods.length} tone={displayOtherAreaFoods.length > 0 ? "warn" : "default"} />
-        <Metric icon={MapPin} label="raw未分類エリア" value={rawUnclassifiedAreaFoods.length} tone={rawUnclassifiedAreaFoods.length > 0 ? "warn" : "default"} />
+        <Metric icon={MapPin} label="未分類エリア" value={rawUnclassifiedAreaFoods.length} tone={rawUnclassifiedAreaFoods.length > 0 ? "warn" : "default"} />
         <Metric icon={AlertTriangle} label="エリア確認中" value={areaReviewNeeded.length} tone={areaReviewNeeded.length > 0 ? "warn" : "default"} />
         <Metric icon={Store} label="2箇所以上販売" value={multiLocationFoods.length} />
       </section>
@@ -127,15 +127,15 @@ export default function DataQualityPage() {
       <section className="grid gap-4 xl:grid-cols-2">
         <MissingList title="価格未確認" foods={priceUnknown} field="price" />
         <MissingList title="エリア未設定" foods={areaMissing} field="area" />
-        <MissingList title="area=その他" foods={rawOtherAreaFoods} field="area" />
+        <MissingList title="エリアがその他" foods={rawOtherAreaFoods} field="area" />
         <MissingList title="表示上その他" foods={displayOtherAreaFoods} field="area" />
-        <MissingList title="raw未分類エリア" foods={rawUnclassifiedAreaFoods} field="area" />
+        <MissingList title="未分類エリア" foods={rawUnclassifiedAreaFoods} field="area" />
         <MissingList title="エリア確認中" foods={areaReviewNeeded} field="area" />
         <MissingList title="2箇所以上販売" foods={multiLocationFoods} field="area" />
         <MissingList title="重複候補" foods={duplicateCandidates.flatMap((group) => group.foods).slice(0, 80)} field="source" />
         <MissingList title="店舗未設定" foods={shopMissing} field="shop" />
         <MissingList title="カテゴリ未設定" foods={categoryMissing} field="category" />
-        <MissingList title="source_url未設定" foods={sourceMissing} field="source" />
+        <MissingList title="出典URL未設定" foods={sourceMissing} field="source" />
         <MissingList title="販売期間確認中" foods={saleUnknown} field="sale" />
         <MissingList title="販売開始日未設定(active)" foods={activeStartMissing} field="sale" />
         <MissingList title="販売終了日未設定(ended)" foods={endedEndMissing} field="sale" />

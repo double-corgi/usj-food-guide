@@ -162,7 +162,7 @@ export function AdminFoodForm({ mode, food, shopOptions = [], action, visibility
                 ? "必要項目を入力して保存すると公開ページに反映されます。画像は自動でサイズ調整されます。重複候補があれば保存前に警告します。"
                 : saveEnabled
                   ? isGeneratedOverride
-                    ? "自動取得の商品です。変更したい基本情報と画像だけ上書き保存します。空欄にした項目は自動取得値を使います。"
+                    ? "自動取得の商品です。変更したい基本情報と画像だけ修正内容として保存します。空欄にした項目は元データを使います。"
                     : "自分で追加した商品だけ保存できます。画像を選ばずに保存した場合、今の画像をそのまま残します。非表示にしても管理画面には残ります。"
                   : "自動取得の商品です。保存は次のPhaseで対応します。今は既存値の確認だけできます。"}
             </p>
@@ -406,7 +406,7 @@ export function AdminFoodForm({ mode, food, shopOptions = [], action, visibility
       </section>
 
       <section className="rounded-lg border border-slate-200 bg-white p-4 shadow-soft">
-        <SectionHeading step="④" title="画像" description={isGeneratedOverride ? "画像を選ぶと、自動取得元は残したまま上書き画像として保存します。未選択なら現在の画像を維持します。" : "公開する商品には画像が必要です。画像なしでも下書き保存できます。"} required={!isGeneratedOverride} />
+        <SectionHeading step="④" title="画像" description={isGeneratedOverride ? "画像を選ぶと、元画像は残したまま修正画像として保存します。未選択なら現在の画像を維持します。" : "公開する商品には画像が必要です。画像なしでも下書き保存できます。"} required={!isGeneratedOverride} />
         <div className="mt-3 grid gap-4 lg:grid-cols-[220px_1fr]">
           <div className="overflow-hidden rounded-lg border border-slate-200 bg-slate-50">
             {previewUrl || activeImage?.imageUrl || food?.imageUrl ? (
@@ -440,7 +440,7 @@ export function AdminFoodForm({ mode, food, shopOptions = [], action, visibility
             </label>
             <p className="text-sm font-bold leading-6 text-slate-500">
               {isGeneratedOverride
-                ? "画像を選んで保存すると、上書き画像として商品カード向けサイズに自動調整されます。画像を選ばなければ現在の画像を維持します。"
+                ? "画像を選んで保存すると、修正画像として商品カード向けサイズに自動調整されます。画像を選ばなければ現在の画像を維持します。"
                 : "画像なしでも下書き保存できます。公開する場合は画像が必要です。画像は自動で商品カード向けサイズに調整されます。編集時に画像を選ばなければ既存画像を維持します。"}
             </p>
           </div>
@@ -522,7 +522,7 @@ export function AdminFoodForm({ mode, food, shopOptions = [], action, visibility
       <div className="flex flex-col gap-2 rounded-lg border border-slate-200 bg-white p-4 shadow-soft sm:flex-row sm:items-center sm:justify-between">
         <div className="space-y-3">
             <p className="text-sm font-bold text-slate-500">
-            {isGeneratedOverride ? "保存後は商品詳細へ戻ります。自動取得値は直接変更せず、上書き値だけを保存します。" : "保存後は商品詳細へ戻ります。編集者・オーナーのみ保存できます。"}
+            {isGeneratedOverride ? "保存後は商品詳細へ戻ります。元データは直接変更せず、修正内容だけを保存します。" : "保存後は商品詳細へ戻ります。編集者・オーナーのみ保存できます。"}
           </p>
           <div className="rounded-lg border border-slate-200 bg-slate-50 p-3">
             <p className="text-sm font-black text-ink">公開準備チェック</p>
@@ -557,7 +557,7 @@ export function AdminFoodForm({ mode, food, shopOptions = [], action, visibility
             </button>
           ) : null}
           <button type="submit" disabled={pending || !saveEnabled} className="h-12 rounded-full bg-park px-6 text-sm font-black text-white disabled:cursor-wait disabled:bg-slate-300 sm:h-11">
-            {pending ? "保存中..." : saveEnabled ? (isGeneratedOverride ? "上書きを保存する" : "保存する") : "自動取得の商品は保存できません"}
+            {pending ? "保存中..." : saveEnabled ? (isGeneratedOverride ? "修正内容を保存する" : "保存する") : "自動取得の商品は保存できません"}
           </button>
         </div>
       </div>
