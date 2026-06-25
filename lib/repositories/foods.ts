@@ -11,6 +11,13 @@ export async function listFoods(): Promise<FoodWithRelations[]> {
   return mergeFoods(generatedFoods, manualFoods);
 }
 
+export async function listHomeActiveCollectionFoods(): Promise<FoodWithRelations[]> {
+  const overrides = await listFoodOverrides();
+  const generatedFoods = filterHomeVisibleFoods(applyFoodOverrides(readGeneratedFoods({ reviewStatuses: ["approved"] }), overrides));
+  const manualFoods = filterHomeVisibleFoods(await listManualFoods());
+  return mergeFoods(generatedFoods, manualFoods);
+}
+
 export async function getFoodById(id: string): Promise<FoodWithRelations | null> {
   const overrides = await listFoodOverrides();
   const generatedFood = applyFoodOverrides(readGeneratedFoods({ includeHidden: true }), overrides).find((candidate) => candidate.id === id) ?? null;
@@ -32,6 +39,10 @@ function filterVisibleFoods(foods: FoodWithRelations[]) {
   return foods.filter(isVisibleFood).map(sanitizePublicFood);
 }
 
+function filterHomeVisibleFoods(foods: FoodWithRelations[]) {
+  return foods.filter(isHomeVisibleFood).map(sanitizePublicFood);
+}
+
 function isVisibleFood(food: FoodWithRelations) {
   return (
     food.reviewStatus === "approved" &&
@@ -39,6 +50,25 @@ function isVisibleFood(food: FoodWithRelations) {
     !food.hidden &&
     food.displayQuality !== "low" &&
     food.status !== "inactive" &&
+    food.nameQualityScore >= 60 &&
+    food.confidenceScore >= 45 &&
+    !food.compositeMenu &&
+    Boolean(food.sourceUrl) &&
+    (
+      food.shop.name !== "店舗未確認" ||
+      food.locations?.some((location) => location.shopName !== "店舗未確認") ||
+      food.images.some((image) => image.enabled && image.sourceType === "official" && !image.isSharedTooMuch) ||
+      /castel\.jp/i.test(food.sourceUrl)
+    )
+  );
+}
+
+function isHomeVisibleFood(food: FoodWithRelations) {
+  return (
+    food.reviewStatus === "approved" &&
+    food.canonicalFood !== false &&
+    !food.hidden &&
+    food.displayQuality !== "low" &&
     food.nameQualityScore >= 60 &&
     food.confidenceScore >= 45 &&
     !food.compositeMenu &&

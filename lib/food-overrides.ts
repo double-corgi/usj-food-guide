@@ -44,7 +44,8 @@ function applyFoodOverride(food: FoodWithRelations, override: FoodOverrideRow): 
     priceNote: override.price_note ?? food.priceNote,
     sourceUrl: override.info_source_url ?? food.sourceUrl,
     lastCheckedAt: override.updated_at ?? food.lastCheckedAt,
-    hidden: typeof override.hidden === "boolean" ? override.hidden : food.hidden,
+    updatedAt: override.updated_at ?? food.updatedAt,
+    hidden: override.is_deleted ? true : typeof override.hidden === "boolean" ? override.hidden : food.hidden,
     sourceNames: Array.from(new Set([...(food.sourceNames ?? []), "food_overrides"]))
   };
 

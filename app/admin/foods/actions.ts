@@ -669,6 +669,7 @@ function isFoodCategory(value: string): value is FoodCategory {
 }
 
 function revalidateAdminFoods(foodId?: string) {
+  revalidatePath("/");
   revalidatePath("/admin/foods");
   if (foodId) revalidatePath(`/admin/foods/${foodId}`);
   revalidatePath("/foods");

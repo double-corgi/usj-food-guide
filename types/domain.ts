@@ -92,6 +92,7 @@ export type Food = {
   zukanNumber?: number;
   trustedPlaceholder?: boolean;
   createdAt?: string;
+  updatedAt?: string;
   lastCheckedAt: string;
   sourceNames?: string[];
   rejectionReasons?: string[];

@@ -136,14 +136,14 @@ export function HomeCollectionHero({ foods }: { foods: FoodWithRelations[] }) {
   );
 }
 
-export function HomeActiveFoodCollection({ foods }: { foods: FoodWithRelations[] }) {
+export function HomeActiveFoodCollection({ foods, collectionFoods = foods }: { foods: FoodWithRelations[]; collectionFoods?: FoodWithRelations[] }) {
   const { t } = useLocale();
   const { logs } = useFoodLogs();
   const shelfKeys = useMemo(() => {
     const heroFoods = pickHeroFoods(foods, logs, logs.filter((log) => log.status === "eaten").length, HERO_VISUAL_COUNT);
     return new Set(heroFoods.map(getCanonicalFoodKey));
   }, [foods, logs]);
-  const activeFoods = useMemo(() => pickActiveCollectionFoods(foods, logs, shelfKeys), [foods, logs, shelfKeys]);
+  const activeFoods = useMemo(() => pickActiveCollectionFoods(collectionFoods, logs, shelfKeys), [collectionFoods, logs, shelfKeys]);
 
   return (
     <section className="space-y-4">
@@ -300,14 +300,19 @@ function pickHeroFoods(foods: FoodWithRelations[], logs: UserFoodLog[], eatenCou
 function pickActiveCollectionFoods(foods: FoodWithRelations[], logs: UserFoodLog[], excludedShelfKeys: Set<string>) {
   const eatenKeys = getEatenCanonicalKeys(foods, logs);
   const seed = getDailySeedKey();
-  const candidates = dedupeFoodsByCanonical(foods.filter((food) => isCompletableFood(food) && hasDisplayImage(food) && hasKnownPrice(food)))
+  const candidates = dedupeFoodsByCanonical(foods);
+  const recentFoods = prioritizeRecentAdminFoods(candidates);
+  if (recentFoods.length >= 8) return recentFoods.slice(0, 8);
+
+  const fallbackFoods = candidates
+    .filter((food) => isCompletableFood(food) && hasDisplayImage(food) && hasKnownPrice(food))
     .filter((food) => !eatenKeys.has(getCanonicalFoodKey(food)))
     .sort((a, b) => activeFoodScore(b, seed) - activeFoodScore(a, seed) || a.name.localeCompare(b.name, "ja"));
-  const nonShelfFoods = prioritizeRecentManualFoods(candidates.filter((food) => !excludedShelfKeys.has(getCanonicalFoodKey(food))));
-  if (nonShelfFoods.length >= 8) return nonShelfFoods.slice(0, 8);
+  const nonShelfFoods = fallbackFoods.filter((food) => !excludedShelfKeys.has(getCanonicalFoodKey(food)));
+  const selected = [...recentFoods, ...nonShelfFoods.filter((food) => !recentFoods.some((item) => getCanonicalFoodKey(item) === getCanonicalFoodKey(food)))];
+  if (selected.length >= 8) return selected.slice(0, 8);
 
-  const selected = [...nonShelfFoods];
-  prioritizeRecentManualFoods(candidates).forEach((food) => {
+  fallbackFoods.forEach((food) => {
     if (selected.length >= 8) return;
     const key = getCanonicalFoodKey(food);
     if (selected.some((item) => getCanonicalFoodKey(item) === key)) return;
@@ -316,22 +321,38 @@ function pickActiveCollectionFoods(foods: FoodWithRelations[], logs: UserFoodLog
   return selected;
 }
 
-function prioritizeRecentManualFoods(foods: FoodWithRelations[]) {
+function prioritizeRecentAdminFoods(foods: FoodWithRelations[]) {
   const manualFoods = foods
     .filter(isManualFood)
-    .sort((a, b) => getCreatedAtTime(b) - getCreatedAtTime(a) || a.name.localeCompare(b.name, "ja"));
-  const generatedFoods = foods.filter((food) => !isManualFood(food));
-  return [...manualFoods, ...generatedFoods];
+    .sort((a, b) => getAdminRecencyTime(b) - getAdminRecencyTime(a) || a.name.localeCompare(b.name, "ja"));
+  const overriddenFoods = foods
+    .filter((food) => !isManualFood(food) && isOverriddenFood(food))
+    .sort((a, b) => getAdminRecencyTime(b) - getAdminRecencyTime(a) || a.name.localeCompare(b.name, "ja"));
+  return [...manualFoods, ...overriddenFoods];
 }
 
 function isManualFood(food: FoodWithRelations) {
   return food.manualOverride === true || food.sourceNames?.includes("manual_foods") === true || food.id.startsWith("food-manual-");
 }
 
-function getCreatedAtTime(food: FoodWithRelations) {
-  if (!food.createdAt) return 0;
-  const time = Date.parse(food.createdAt);
+function isOverriddenFood(food: FoodWithRelations) {
+  return food.sourceNames?.includes("food_overrides") === true;
+}
+
+function getAdminRecencyTime(food: FoodWithRelations) {
+  const value = isManualFood(food) ? maxDateString(food.createdAt, food.updatedAt) : food.updatedAt;
+  if (!value) return 0;
+  const time = Date.parse(value);
   return Number.isFinite(time) ? time : 0;
+}
+
+function maxDateString(left?: string, right?: string) {
+  const leftTime = left ? Date.parse(left) : 0;
+  const rightTime = right ? Date.parse(right) : 0;
+  const validLeftTime = Number.isFinite(leftTime) ? leftTime : 0;
+  const validRightTime = Number.isFinite(rightTime) ? rightTime : 0;
+  if (!validLeftTime && !validRightTime) return undefined;
+  return validLeftTime >= validRightTime ? left : right;
 }
 
 function buildLimitedCollection(foods: FoodWithRelations[]) {

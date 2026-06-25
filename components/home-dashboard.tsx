@@ -8,18 +8,19 @@ import type { Area, FoodWithRelations } from "@/types/domain";
 
 type HomeDashboardProps = {
   foods: FoodWithRelations[];
+  activeCollectionFoods?: FoodWithRelations[];
   areas?: Area[];
   generatedAt?: string | null;
 };
 
-export function HomeDashboard({ foods, areas = [] }: HomeDashboardProps) {
+export function HomeDashboard({ foods, activeCollectionFoods = foods, areas = [] }: HomeDashboardProps) {
   return (
     <div className="min-h-screen overflow-x-hidden bg-[#fffdf9] pb-32 text-ink">
       <div className="mx-auto flex w-full min-w-0 max-w-[1080px] flex-col gap-10 px-4 pb-4 pt-0 sm:px-6 sm:py-6 lg:px-8">
         <HomeCollectionHero foods={foods} />
 
         <div className="space-y-12">
-          <HomeActiveFoodCollection foods={foods} />
+          <HomeActiveFoodCollection foods={foods} collectionFoods={activeCollectionFoods} />
           <HomeLimitedCollection foods={foods} />
           <section className="space-y-4">
             <div className="flex items-end justify-between gap-3">

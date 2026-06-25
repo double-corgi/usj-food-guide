@@ -106,6 +106,7 @@ function mapManualFood(row: ManualFoodRow): FoodWithRelations {
     canonicalFood: true,
     trustedPlaceholder: false,
     createdAt: row.created_at,
+    updatedAt: row.updated_at,
     lastCheckedAt: row.updated_at,
     sourceNames: ["manual_foods"],
     rejectionReasons: [],
