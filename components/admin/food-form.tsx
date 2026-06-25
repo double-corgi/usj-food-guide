@@ -72,6 +72,7 @@ export function AdminFoodForm({ mode, food, shopOptions = [], action, visibility
   );
   const activeImage = getActiveImage(food);
   const title = mode === "new" ? "商品追加フォーム" : "商品編集フォーム";
+  const sourceKind = mode === "new" || saveEnabled ? "manual" : "generated";
   const saleStatus = getFormSaleStatus(food);
   const publicState = getPublicState(food);
   const [publicStateSelection, setPublicStateSelection] = useState<AdminPublicState>(publicState);
@@ -146,12 +147,17 @@ export function AdminFoodForm({ mode, food, shopOptions = [], action, visibility
           <Lock className="mt-0.5 shrink-0 text-amber-700" size={20} aria-hidden />
           <div>
             <h2 className="font-black text-amber-950">{title}</h2>
+            {mode === "edit" ? (
+              <span className={`mt-2 inline-flex rounded-full px-3 py-1 text-xs font-black ${sourceKind === "manual" ? "bg-white text-park" : "bg-white text-slate-600"}`}>
+                {sourceKind === "manual" ? "自分で追加した商品" : "自動取得の商品"}
+              </span>
+            ) : null}
             <p className="mt-1 text-sm font-bold leading-6 text-amber-900">
               {mode === "new"
                 ? "必要項目を入力して保存すると公開ページに反映されます。画像は自動でサイズ調整されます。重複候補があれば保存前に警告します。"
                 : saveEnabled
                   ? "自分で追加した商品だけ保存できます。画像を選ばずに保存した場合、今の画像をそのまま残します。非表示にしても管理画面には残ります。"
-                  : "自動取得の商品はこの画面では保存できません。内容の確認だけできます。"}
+                  : "自動取得の商品です。保存は次のPhaseで対応します。今は既存値の確認だけできます。"}
             </p>
           </div>
         </div>

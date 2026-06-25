@@ -17,7 +17,7 @@ export function AdminSessionBar({
 
   const canEdit = role === "owner" || role === "editor";
   const currentFoodId = getCurrentFoodId(pathname);
-  const canEditCurrentFood = canEdit && currentFoodId?.startsWith("food-manual-");
+  const canOpenFoodEditPreview = canEdit && Boolean(currentFoodId);
 
   return (
     <aside className="fixed inset-x-3 bottom-[calc(env(safe-area-inset-bottom)+8.2rem)] z-[60] rounded-2xl border border-park/20 bg-white/95 p-2 shadow-[0_10px_32px_rgba(0,0,0,0.18)] backdrop-blur md:bottom-5 md:left-auto md:right-5 md:w-auto md:min-w-[360px]">
@@ -35,10 +35,10 @@ export function AdminSessionBar({
             商品を追加
           </Link>
         ) : null}
-        {canEditCurrentFood ? (
+        {canOpenFoodEditPreview ? (
           <Link href={`/admin/foods/${currentFoodId}/edit`} className="inline-flex min-h-9 flex-1 items-center justify-center gap-1 rounded-full border border-park/30 bg-mint px-3 text-xs font-black text-park md:flex-none">
             <PencilLine size={14} aria-hidden />
-            この商品を編集
+            {currentFoodId?.startsWith("food-manual-") ? "この商品を編集" : "この商品を確認"}
           </Link>
         ) : null}
         <Link href="/foods" className="inline-flex min-h-9 flex-1 items-center justify-center gap-1 rounded-full border border-slate-200 bg-white px-3 text-xs font-black text-ink md:flex-none">

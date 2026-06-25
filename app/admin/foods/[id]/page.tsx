@@ -53,6 +53,12 @@ export default async function AdminFoodDetailPage({
               編集する
             </Link>
           ) : null}
+          {canManage && !manualFood ? (
+            <Link href={`/admin/foods/${food.id}/edit`} className="inline-flex h-12 items-center gap-2 rounded-full bg-slate-100 px-5 text-sm font-black text-slate-700 shadow-soft hover:bg-slate-200">
+              <PencilLine size={15} aria-hidden />
+              編集準備画面を開く
+            </Link>
+          ) : null}
           <Link href="/admin/foods" className="inline-flex h-10 items-center rounded-full border border-slate-200 bg-white px-4 text-xs font-black text-ink hover:border-park">
             一覧へ戻る
           </Link>
@@ -68,13 +74,19 @@ export default async function AdminFoodDetailPage({
               {manualFood ? "自分で追加した商品" : "自動取得の商品"}
             </span>
             <p className="mt-2 text-sm font-bold leading-6 text-slate-600">
-              {manualFood ? "この商品は管理画面から編集・画像差し替え・非表示運用ができます。" : "自動取得データのため直接編集できません。修正が必要な場合は管理画面で内容を確認してください。"}
+              {manualFood ? "この商品は管理画面から編集・画像差し替え・非表示運用ができます。" : "自動取得データです。編集準備画面で内容を確認できますが、保存は次のPhaseで対応します。"}
             </p>
           </div>
           {canManage && manualFood ? (
             <Link href={`/admin/foods/${food.id}/edit`} className="inline-flex h-12 items-center justify-center gap-2 rounded-full bg-park px-5 text-sm font-black text-white shadow-soft">
               <PencilLine size={16} aria-hidden />
               編集する
+            </Link>
+          ) : null}
+          {canManage && !manualFood ? (
+            <Link href={`/admin/foods/${food.id}/edit`} className="inline-flex h-12 items-center justify-center gap-2 rounded-full bg-white px-5 text-sm font-black text-slate-700 shadow-soft">
+              <PencilLine size={16} aria-hidden />
+              編集準備画面を開く
             </Link>
           ) : null}
         </div>

@@ -192,7 +192,12 @@ export default async function AdminFoodsPage({ searchParams }: { searchParams?: 
                           編集
                         </Link>
                       ) : null}
-                      {!isManualFood(food) ? <span className="inline-flex h-9 items-center justify-center rounded-full bg-slate-100 px-3 text-xs font-black text-slate-500">自動取得データ・編集不可</span> : null}
+                      {canManage && !isManualFood(food) ? (
+                        <Link href={`/admin/foods/${food.id}/edit`} className="inline-flex h-9 items-center justify-center rounded-full bg-slate-100 px-3 text-xs font-black text-slate-600 hover:bg-slate-200">
+                          編集準備中
+                        </Link>
+                      ) : null}
+                      {!canManage && !isManualFood(food) ? <span className="inline-flex h-9 items-center justify-center rounded-full bg-slate-100 px-3 text-xs font-black text-slate-500">自動取得データ・編集不可</span> : null}
                       {canManage && isManualFood(food) ? (
                         <ManualFoodVisibilityButton foodId={food.id} hidden={food.hidden} action={setManualFoodVisibility} />
                       ) : null}
@@ -261,17 +266,17 @@ function FoodCard({ food, canManage }: { food: FoodWithRelations; canManage: boo
         </p>
         <p className="text-sm font-bold text-slate-600">{formatAdminCategory(food.category)}</p>
         <StatusBadges food={food} />
-        <div className={canManage && isManualFood(food) ? "grid grid-cols-2 gap-2 pt-1" : "grid grid-cols-1 gap-2 pt-1"}>
+        <div className={canManage ? "grid grid-cols-2 gap-2 pt-1" : "grid grid-cols-1 gap-2 pt-1"}>
           <Link href={`/admin/foods/${food.id}`} className="inline-flex h-11 items-center justify-center rounded-full border border-park/30 bg-white px-3 text-center text-sm font-black text-park">
             {isManualFood(food) ? "詳細" : "管理画面で確認"}
           </Link>
-          {canManage && isManualFood(food) ? (
+          {canManage ? (
             <Link href={`/admin/foods/${food.id}/edit`} className="inline-flex h-11 items-center justify-center rounded-full bg-mint text-sm font-black text-park">
-              編集
+              {isManualFood(food) ? "編集" : "編集準備"}
             </Link>
           ) : null}
         </div>
-        {!isManualFood(food) ? <p className="rounded-lg bg-slate-50 px-3 py-2 text-xs font-black text-slate-500">自動取得データのため直接編集できません。</p> : null}
+        {!isManualFood(food) ? <p className="rounded-lg bg-slate-50 px-3 py-2 text-xs font-black text-slate-500">自動取得データです。編集画面で内容確認できますが、保存は次のPhaseで対応します。</p> : null}
         {canManage && isManualFood(food) ? (
           <div className="pt-1">
             <ManualFoodVisibilityButton foodId={food.id} hidden={food.hidden} action={setManualFoodVisibility} />

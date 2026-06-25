@@ -39,17 +39,17 @@ export function FoodCard({
   const state = eaten ? cardStates.eaten : cardStates.uneaten;
   const badges = getCardBadges({ food, t });
   const displayName = getFoodNameI18n(food.id, locale, food.name);
-  const canEditThisFood = adminCanEdit && isManualFood(food);
+  const canUseAdminFoodLink = adminCanEdit;
 
   return (
     <article data-food-card data-food-name={food.name} className={`group relative min-w-0 overflow-hidden rounded-2xl bg-white pb-11 ring-1 ring-slate-200/70 transition duration-200 active:scale-[0.99] md:hover:-translate-y-0.5 ${state.borderClass} ${getSaleStatus(food) === "ended" ? "opacity-75 grayscale" : ""}`}>
-      {canEditThisFood ? (
+      {canUseAdminFoodLink ? (
         <Link
           href={`/admin/foods/${food.id}/edit`}
           onClick={(event) => event.stopPropagation()}
           className="absolute right-2 top-2 z-20 inline-flex h-8 items-center justify-center rounded-full bg-park/95 px-3 text-[11px] font-black text-white shadow-soft"
         >
-          編集
+          {isManualFood(food) ? "編集" : "確認"}
         </Link>
       ) : null}
       <Link href={`/foods/${food.id}`} className="flex min-w-0 flex-col">
