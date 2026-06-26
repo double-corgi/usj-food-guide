@@ -86,9 +86,22 @@ export function PwaRegister() {
 }
 
 function shouldEnablePwa() {
+  if (isCapacitorWebView()) return false;
   if (process.env.NODE_ENV !== "production") return false;
   const hostname = window.location.hostname;
   if (hostname === "localhost" || hostname === "127.0.0.1" || hostname === "::1") return false;
   if (hostname.endsWith(".trycloudflare.com")) return false;
   return true;
+}
+
+function isCapacitorWebView() {
+  const maybeWindow = window as Window & {
+    Capacitor?: {
+      isNativePlatform?: () => boolean;
+      getPlatform?: () => string;
+    };
+  };
+  if (maybeWindow.Capacitor?.isNativePlatform?.()) return true;
+  const platform = maybeWindow.Capacitor?.getPlatform?.();
+  return platform === "ios" || platform === "android";
 }
