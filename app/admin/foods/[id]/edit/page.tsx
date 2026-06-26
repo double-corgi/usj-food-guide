@@ -61,19 +61,30 @@ export default async function AdminEditFoodPage({ params }: { params: Promise<{ 
         nameEn={adminFields.nameEn}
       />
       {isManual ? (
-        <section className="rounded-lg border border-rose-200 bg-rose-50 p-4 shadow-soft">
-          <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+        <details className="group rounded-2xl border border-rose-100 bg-white p-4 shadow-soft sm:p-5">
+          <summary className="flex cursor-pointer list-none items-center justify-between gap-3 rounded-xl outline-none transition focus-visible:ring-4 focus-visible:ring-rose-100 [&::-webkit-details-marker]:hidden">
             <div>
               <h2 className="text-lg font-black text-rose-800">危険な操作</h2>
-              <p className="mt-2 text-sm font-bold leading-6 text-rose-700">
-                この商品を削除済みにすると、公開ページと通常の管理一覧から消えます。完全削除ではないため、削除済み一覧からあとで復元できます。
+              <p className="mt-1 text-sm font-bold leading-6 text-rose-700">
+                削除済みにすると公開ページと通常一覧から消えます。あとで復元できます。
               </p>
             </div>
-            <div className="w-full sm:w-40">
+            <span className="shrink-0 rounded-full bg-rose-50 px-3 py-1 text-xs font-black text-rose-700 group-open:hidden">
+              開く
+            </span>
+            <span className="hidden shrink-0 rounded-full bg-rose-100 px-3 py-1 text-xs font-black text-rose-800 group-open:inline-flex">
+              閉じる
+            </span>
+          </summary>
+          <div className="mt-4 rounded-2xl border border-rose-100 bg-rose-50 p-4">
+            <p className="text-sm font-bold leading-6 text-rose-800">
+              この商品を削除済みにしますか？公開ページと通常の管理一覧から消えますが、あとで復元できます。
+            </p>
+            <div className="mt-3 w-full sm:w-44">
               <ManualFoodDeleteButton foodId={food.id} deleted={false} action={setManualFoodDeleted} tone="danger" />
             </div>
           </div>
-        </section>
+        </details>
       ) : null}
     </div>
   );

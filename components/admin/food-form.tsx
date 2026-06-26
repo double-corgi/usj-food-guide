@@ -454,12 +454,6 @@ export function AdminFoodForm({ mode, food, shopOptions = [], action, visibility
         <div className="mt-4 grid gap-4">
           <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4">
             <input type="hidden" name="publicState" value={publicStateSelection} />
-            {mode === "new" ? (
-              <>
-                <input type="hidden" name="saleStatus" value={saleStatus} />
-                <input type="hidden" name="hiddenState" value={hiddenState} />
-              </>
-            ) : null}
             <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
               <div>
                 <p className="text-sm font-black text-ink">今すぐ公開</p>
@@ -485,24 +479,19 @@ export function AdminFoodForm({ mode, food, shopOptions = [], action, visibility
         </div>
       </section>
 
-      <section className="rounded-2xl border border-slate-200 bg-white p-4 shadow-soft sm:p-5">
-        <SectionHeading step="⑥" title="詳細（任意）" description="販売期間や管理メモは必要なときだけ入力します。" />
-        <div className="mt-4 grid gap-4 lg:grid-cols-2">
-          {mode === "edit" ? (
-            <>
-              <SelectField label="販売状態" name="saleStatus" defaultValue={saleStatus} requirement="required">
-                {adminSaleStatusOptions.map((option) => (
-                  <option key={option.value} value={option.value}>
-                    {option.label}
-                  </option>
-                ))}
-              </SelectField>
-              <SelectField label="表示状態" name="hiddenState" defaultValue={hiddenState}>
-                <option value="visible">表示中</option>
-                <option value="hidden">非表示</option>
-              </SelectField>
-            </>
-          ) : null}
+      <CollapsibleSection step="⑥" title="詳細（任意）" description="販売期間や管理メモを入力できます。必要なときだけ開いてください。">
+        <div className="grid gap-4 lg:grid-cols-2">
+          <SelectField label="販売状態" name="saleStatus" defaultValue={saleStatus} requirement="required">
+            {adminSaleStatusOptions.map((option) => (
+              <option key={option.value} value={option.value}>
+                {option.label}
+              </option>
+            ))}
+          </SelectField>
+          <SelectField label="表示状態" name="hiddenState" defaultValue={hiddenState}>
+            <option value="visible">表示中</option>
+            <option value="hidden">非表示</option>
+          </SelectField>
           <TextField label="販売期間 start" name="saleStart" defaultValue={food?.saleStartDate ?? food?.startDate ?? ""} type="date" requirement="optional" />
           <TextField label="販売期間 end" name="saleEnd" defaultValue={food?.saleEndDate ?? food?.endDate ?? ""} type="date" requirement="optional" />
           <label className="block rounded-2xl border border-amber-100 bg-amber-50 p-4 lg:col-span-2">
@@ -519,7 +508,7 @@ export function AdminFoodForm({ mode, food, shopOptions = [], action, visibility
             />
           </label>
         </div>
-      </section>
+      </CollapsibleSection>
 
       <div className="flex flex-col gap-4 rounded-2xl border border-park/20 bg-white p-4 shadow-soft sm:p-5 lg:flex-row lg:items-center lg:justify-between">
         <div className="space-y-3">
@@ -658,6 +647,31 @@ function SectionHeading({ step, title, description, required = false }: { step: 
         <p className="mt-1 text-sm font-bold leading-6 text-slate-500">{description}</p>
       </div>
     </div>
+  );
+}
+
+function CollapsibleSection({ step, title, description, children }: { step: string; title: string; description: string; children: ReactNode }) {
+  return (
+    <details className="group rounded-2xl border border-slate-200 bg-white p-4 shadow-soft sm:p-5">
+      <summary className="flex cursor-pointer list-none items-center justify-between gap-3 rounded-xl outline-none transition focus-visible:ring-4 focus-visible:ring-mint [&::-webkit-details-marker]:hidden">
+        <div className="flex gap-3">
+          <span className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-mint text-sm font-black text-park">
+            {step}
+          </span>
+          <div>
+            <h2 className="text-lg font-black text-ink">{title}</h2>
+            <p className="mt-1 text-sm font-bold leading-6 text-slate-500">{description}</p>
+          </div>
+        </div>
+        <span className="shrink-0 rounded-full bg-slate-100 px-3 py-1 text-xs font-black text-slate-600 group-open:hidden">
+          開く
+        </span>
+        <span className="hidden shrink-0 rounded-full bg-mint px-3 py-1 text-xs font-black text-park group-open:inline-flex">
+          閉じる
+        </span>
+      </summary>
+      <div className="mt-4 border-t border-slate-100 pt-4">{children}</div>
+    </details>
   );
 }
 
