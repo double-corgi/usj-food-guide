@@ -5,6 +5,8 @@ import { usePathname } from "next/navigation";
 
 const IOS_TEST_BANNER_AD_ID = "ca-app-pub-3940256099942544/2934735716";
 const ADMOB_BANNER_ATTRIBUTE = "data-mobile-admob-banner";
+const IOS_ADMOB_MODE = process.env.NEXT_PUBLIC_IOS_ADMOB_MODE;
+const IOS_RELEASE_BANNER_AD_ID = process.env.NEXT_PUBLIC_IOS_ADMOB_BANNER_AD_ID?.trim();
 
 type CapacitorBridge = {
   getPlatform?: () => string;
@@ -63,6 +65,15 @@ function setAdMobBannerSpacing(isVisible: boolean) {
   document.documentElement.removeAttribute(ADMOB_BANNER_ATTRIBUTE);
 }
 
+function getIosBannerConfig() {
+  const useReleaseAd = IOS_ADMOB_MODE === "production" && Boolean(IOS_RELEASE_BANNER_AD_ID);
+
+  return {
+    adId: useReleaseAd ? IOS_RELEASE_BANNER_AD_ID! : IOS_TEST_BANNER_AD_ID,
+    isTesting: !useReleaseAd
+  };
+}
+
 export function MobileAdMobBanner() {
   const pathname = usePathname();
 
@@ -89,8 +100,10 @@ export function MobileAdMobBanner() {
       }
 
       try {
+        const bannerConfig = getIosBannerConfig();
+
         await AdMob.initialize({
-          initializeForTesting: true
+          initializeForTesting: bannerConfig.isTesting
         });
 
         if (cancelled) {
@@ -98,11 +111,11 @@ export function MobileAdMobBanner() {
         }
 
         await AdMob.showBanner({
-          adId: IOS_TEST_BANNER_AD_ID,
+          adId: bannerConfig.adId,
           adSize: BannerAdSize.BANNER,
           position: BannerAdPosition.BOTTOM_CENTER,
           margin: 0,
-          isTesting: true,
+          isTesting: bannerConfig.isTesting,
           npa: true
         });
         setAdMobBannerSpacing(true);
