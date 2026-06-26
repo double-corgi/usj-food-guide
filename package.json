@@ -64,6 +64,7 @@
     "seed": "ts-node --transpile-only --compiler-options '{\"module\":\"CommonJS\",\"moduleResolution\":\"node\",\"target\":\"ES2022\"}' scripts/seed-supabase.ts"
   },
   "dependencies": {
+    "@capacitor-community/admob": "^8.0.0",
     "@supabase/ssr": "^0.10.3",
     "@supabase/supabase-js": "^2.45.4",
     "cheerio": "^1.2.0",

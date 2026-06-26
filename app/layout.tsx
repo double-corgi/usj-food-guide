@@ -5,6 +5,7 @@ import { AnalyticsTracker } from "@/components/analytics-tracker";
 import { AppFooter } from "@/components/app-footer";
 import { AppHeader } from "@/components/app-header";
 import { MobileLanguageBadge } from "@/components/mobile-language-badge";
+import { MobileAdMobBanner } from "@/components/mobile-admob-banner";
 import { PwaRegister } from "@/components/pwa-register";
 import { appBrand } from "@/lib/constants";
 import { getCurrentAdmin } from "@/lib/admin-auth";
@@ -85,6 +86,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           </div>
           {adminForPublicBar ? <AdminSessionBar role={adminForPublicBar.role} email={adminForPublicBar.email} /> : null}
           <AnalyticsTracker />
+          <MobileAdMobBanner />
           <PwaRegister />
         </LocaleProvider>
       </body>
