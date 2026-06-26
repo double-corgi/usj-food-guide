@@ -145,21 +145,23 @@ export function AdminFoodForm({ mode, food, shopOptions = [], action, visibility
   }
 
   return (
-    <form className="space-y-5" action={formAction}>
+    <form className="space-y-6" action={formAction}>
       {food?.id ? <input type="hidden" name="foodId" value={food.id} /> : null}
-      <div className="rounded-lg border border-amber-200 bg-amber-50 p-4">
+      <div className="rounded-2xl border border-sky-100 bg-white p-4 shadow-soft sm:p-5">
         <div className="flex gap-3">
-          <Lock className="mt-0.5 shrink-0 text-amber-700" size={20} aria-hidden />
+          <div className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-blue-50 text-blue-700">
+            <Lock size={18} aria-hidden />
+          </div>
           <div>
-            <h2 className="font-black text-amber-950">{title}</h2>
+            <h2 className="text-lg font-black text-ink">{title}</h2>
             {mode === "edit" ? (
               <span className={`mt-2 inline-flex rounded-full px-3 py-1 text-xs font-black ${sourceKind === "manual" ? "bg-white text-park" : "bg-white text-slate-600"}`}>
                 {sourceKind === "manual" ? "自分で追加した商品" : "自動取得の商品"}
               </span>
             ) : null}
-            <p className="mt-1 text-sm font-bold leading-6 text-amber-900">
+            <p className="mt-2 text-sm font-bold leading-6 text-slate-600">
               {mode === "new"
-                ? "必要項目を入力して保存すると公開ページに反映されます。画像は自動でサイズ調整されます。重複候補があれば保存前に警告します。"
+                ? "必須項目を上から入力してください。画像は保存時に自動で商品カード向けに整えます。"
                 : saveEnabled
                   ? isGeneratedOverride
                     ? "自動取得の商品です。変更したい基本情報と画像だけ修正内容として保存します。空欄にした項目は元データを使います。"
@@ -171,8 +173,8 @@ export function AdminFoodForm({ mode, food, shopOptions = [], action, visibility
       </div>
 
       {duplicateWarnings.length > 0 ? (
-        <section className="rounded-lg border border-amber-300 bg-amber-50 p-4">
-          <h2 className="font-black text-amber-950">重複候補があります</h2>
+        <section className="rounded-2xl border border-amber-200 bg-amber-50 p-4 shadow-soft sm:p-5">
+          <h2 className="font-black text-amber-950">似ている商品があります</h2>
           <p className="mt-1 text-sm font-bold leading-6 text-amber-900">
             保存はできますが、同じ商品ではないか確認してください。商品名・エリア・店舗が近い既存データです。
           </p>
@@ -189,7 +191,7 @@ export function AdminFoodForm({ mode, food, shopOptions = [], action, visibility
         </section>
       ) : null}
 
-      <section className="rounded-lg border border-slate-200 bg-white p-4 shadow-soft">
+      <section className="rounded-2xl border border-slate-200 bg-white p-4 shadow-soft sm:p-5">
         <SectionHeading step="①" title="基本情報" description="商品名と価格を入力します。英語名は未入力でも保存できます。" />
         <div className="mt-4 grid gap-4 lg:grid-cols-2">
           <TextField
@@ -214,7 +216,7 @@ export function AdminFoodForm({ mode, food, shopOptions = [], action, visibility
         </div>
       </section>
 
-      <section className="rounded-lg border border-slate-200 bg-white p-4 shadow-soft">
+      <section className="rounded-2xl border border-slate-200 bg-white p-4 shadow-soft sm:p-5">
         <SectionHeading step="②" title="エリア・店舗" description="エリアを先に選ぶと、そのエリアの店舗候補だけを検索できます。" />
         <div className="mt-4 grid gap-4 lg:grid-cols-2">
           <SelectField
@@ -248,19 +250,19 @@ export function AdminFoodForm({ mode, food, shopOptions = [], action, visibility
           </SelectField>
           <div className="space-y-3 lg:col-span-2">
           <input type="hidden" name="shopName" value={submittedShopName} />
-          <div className="rounded-lg border border-slate-200 bg-slate-50 p-4">
+          <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4">
             <p className="text-sm font-black text-ink">店舗 {coreFieldsRequired ? <RequiredBadge /> : <OptionalBadge />}</p>
             <p className="mt-1 text-xs font-bold leading-5 text-slate-500">
               1. エリアを選ぶ → 2. 店舗種別で絞る → 3. 店舗名で検索 → 4. 店舗を選ぶ、の順で入力してください。
             </p>
           </div>
           {!hasAreaSelection ? (
-            <div className="rounded-lg border border-amber-200 bg-amber-50 px-4 py-3 text-sm font-black text-amber-900">
+            <div className="rounded-2xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm font-black text-amber-900">
               先にエリアを選択してください
             </div>
           ) : null}
 
-          <div className="flex flex-col gap-3 rounded-lg border border-slate-200 bg-white p-4 sm:flex-row sm:items-center sm:justify-between">
+          <div className="flex flex-col gap-3 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:flex-row sm:items-center sm:justify-between">
             <div>
               <p className="text-xs font-black text-slate-500">選択済み店舗</p>
               <p className="mt-1 text-base font-black text-ink">{selectedShopLabel ? `選択中: ${selectedShopLabel}` : "店舗未選択"}</p>
@@ -283,7 +285,7 @@ export function AdminFoodForm({ mode, food, shopOptions = [], action, visibility
             </button>
           </div>
 
-          <div className={`rounded-lg border border-slate-200 p-3 ${hasAreaSelection ? "bg-white" : "bg-slate-50 opacity-75"}`}>
+          <div className={`rounded-2xl border border-slate-200 p-4 ${hasAreaSelection ? "bg-white shadow-sm" : "bg-slate-50 opacity-75"}`}>
             <label className="block">
               <span className="text-sm font-black text-ink">店舗検索</span>
               <input
@@ -296,7 +298,7 @@ export function AdminFoodForm({ mode, food, shopOptions = [], action, visibility
                 placeholder={hasAreaSelection ? "店舗名で検索（例: ハピネス）" : "先にエリアを選択してください"}
                 disabled={!hasAreaSelection}
                 autoComplete="off"
-                className="mt-1 h-12 w-full rounded-lg border border-slate-200 bg-white px-3 text-sm font-bold text-ink outline-none focus:border-park disabled:cursor-not-allowed disabled:bg-slate-100 disabled:text-slate-400"
+                className="mt-2 h-12 w-full rounded-xl border border-slate-200 bg-white px-4 text-sm font-bold text-ink outline-none transition focus:border-park focus:ring-4 focus:ring-mint disabled:cursor-not-allowed disabled:bg-slate-100 disabled:text-slate-400"
               />
             </label>
 
@@ -325,7 +327,7 @@ export function AdminFoodForm({ mode, food, shopOptions = [], action, visibility
           </div>
 
           {hasAreaSelection ? (
-            <div className="rounded-lg border border-slate-200 bg-slate-50 p-3">
+            <div className="rounded-2xl border border-slate-200 bg-slate-50 p-3">
               <p className="mb-2 text-sm font-black text-ink">店舗候補</p>
               <div className="space-y-2">
                 {filteredShopOptions.length > 0 ? (
@@ -334,8 +336,8 @@ export function AdminFoodForm({ mode, food, shopOptions = [], action, visibility
                       key={`${shop.areaName}:${shop.type}:${shop.name}`}
                       type="button"
                       onClick={() => setSelectedShopName(shop.name)}
-                      className={`flex min-h-14 w-full items-center justify-between gap-3 rounded-lg border px-4 py-3 text-left text-sm font-bold ${
-                        selectedShopName === shop.name ? "border-park bg-mint text-park" : "border-slate-200 bg-white text-slate-700 hover:border-park"
+                      className={`flex min-h-16 w-full items-center justify-between gap-3 rounded-xl border px-4 py-3 text-left text-sm font-bold shadow-sm transition ${
+                        selectedShopName === shop.name ? "border-park bg-mint text-park" : "border-slate-200 bg-white text-slate-700 hover:-translate-y-0.5 hover:border-park"
                       }`}
                     >
                       <span>{shop.name}</span>
@@ -383,14 +385,14 @@ export function AdminFoodForm({ mode, food, shopOptions = [], action, visibility
         </div>
       </section>
 
-      <section className="rounded-lg border border-slate-200 bg-white p-4 shadow-soft">
+      <section className="rounded-2xl border border-slate-200 bg-white p-4 shadow-soft sm:p-5">
         <SectionHeading step="③" title="カテゴリ" description="公開ページの分類と同じカテゴリを選びます。自動取得の商品では未選択にすると元のカテゴリを使います。" required={coreFieldsRequired} />
         {preservedHiddenCategories.map((value) => (
           <input key={value} type="hidden" name="categoryTags" value={value} />
         ))}
         <div className="mt-3 grid gap-2 sm:grid-cols-2 lg:grid-cols-4">
           {adminCategoryTagOptions.map(({ value, label }) => (
-            <label key={value} className="flex items-center gap-2 rounded-lg border border-slate-200 px-3 py-2 text-sm font-bold text-slate-700">
+            <label key={value} className="flex min-h-12 items-center gap-2 rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm font-bold text-slate-700 shadow-sm transition has-[:checked]:border-park has-[:checked]:bg-mint">
               <input
                 type="checkbox"
                 name="categoryTags"
@@ -405,10 +407,10 @@ export function AdminFoodForm({ mode, food, shopOptions = [], action, visibility
         </div>
       </section>
 
-      <section className="rounded-lg border border-slate-200 bg-white p-4 shadow-soft">
+      <section className="rounded-2xl border border-slate-200 bg-white p-4 shadow-soft sm:p-5">
         <SectionHeading step="④" title="画像" description={isGeneratedOverride ? "画像を選ぶと、元画像は残したまま修正画像として保存します。未選択なら現在の画像を維持します。" : "公開する商品には画像が必要です。画像なしでも下書き保存できます。"} required={!isGeneratedOverride} />
-        <div className="mt-3 grid gap-4 lg:grid-cols-[220px_1fr]">
-          <div className="overflow-hidden rounded-lg border border-slate-200 bg-slate-50">
+        <div className="mt-4 grid gap-4 lg:grid-cols-[280px_1fr]">
+          <div className="overflow-hidden rounded-2xl border border-slate-200 bg-slate-50 shadow-sm">
             {previewUrl || activeImage?.imageUrl || food?.imageUrl ? (
               // eslint-disable-next-line @next/next/no-img-element
               <img src={previewUrl ?? activeImage?.imageUrl ?? food?.imageUrl} alt="" className="aspect-[4/3] w-full object-cover" />
@@ -428,7 +430,7 @@ export function AdminFoodForm({ mode, food, shopOptions = [], action, visibility
                 type="file"
                 accept="image/*"
                 disabled={!imageUploadEnabled}
-                className="mt-1 block w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm font-bold text-ink file:mr-3 file:rounded-full file:border-0 file:bg-mint file:px-3 file:py-1.5 file:text-xs file:font-black file:text-park"
+                className="mt-2 block w-full rounded-xl border border-slate-200 bg-white px-3 py-3 text-sm font-bold text-ink shadow-sm file:mr-3 file:rounded-full file:border-0 file:bg-park file:px-4 file:py-2 file:text-xs file:font-black file:text-white"
                 onChange={(event) => {
                   const file = event.currentTarget.files?.[0];
                   setPreviewUrl((current) => {
@@ -438,7 +440,7 @@ export function AdminFoodForm({ mode, food, shopOptions = [], action, visibility
                 }}
               />
             </label>
-            <p className="text-sm font-bold leading-6 text-slate-500">
+            <p className="rounded-2xl border border-blue-100 bg-blue-50 px-4 py-3 text-sm font-bold leading-6 text-blue-900">
               {isGeneratedOverride
                 ? "画像を選んで保存すると、修正画像として商品カード向けサイズに自動調整されます。画像を選ばなければ現在の画像を維持します。"
                 : "画像なしでも下書き保存できます。公開する場合は画像が必要です。画像は自動で商品カード向けサイズに調整されます。編集時に画像を選ばなければ既存画像を維持します。"}
@@ -447,10 +449,10 @@ export function AdminFoodForm({ mode, food, shopOptions = [], action, visibility
         </div>
       </section>
 
-      <section className="rounded-lg border border-slate-200 bg-white p-4 shadow-soft">
+      <section className="rounded-2xl border border-slate-200 bg-white p-4 shadow-soft sm:p-5">
         <SectionHeading step="⑤" title="公開設定" description="追加画面では「今すぐ公開」だけを選べば十分です。" />
         <div className="mt-4 grid gap-4">
-          <div className="rounded-lg border border-slate-200 bg-slate-50 p-4">
+          <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4">
             <input type="hidden" name="publicState" value={publicStateSelection} />
             {mode === "new" ? (
               <>
@@ -483,7 +485,7 @@ export function AdminFoodForm({ mode, food, shopOptions = [], action, visibility
         </div>
       </section>
 
-      <section className="rounded-lg border border-slate-200 bg-white p-4 shadow-soft">
+      <section className="rounded-2xl border border-slate-200 bg-white p-4 shadow-soft sm:p-5">
         <SectionHeading step="⑥" title="詳細（任意）" description="販売期間や管理メモは必要なときだけ入力します。" />
         <div className="mt-4 grid gap-4 lg:grid-cols-2">
           {mode === "edit" ? (
@@ -503,7 +505,7 @@ export function AdminFoodForm({ mode, food, shopOptions = [], action, visibility
           ) : null}
           <TextField label="販売期間 start" name="saleStart" defaultValue={food?.saleStartDate ?? food?.startDate ?? ""} type="date" requirement="optional" />
           <TextField label="販売期間 end" name="saleEnd" defaultValue={food?.saleEndDate ?? food?.endDate ?? ""} type="date" requirement="optional" />
-          <label className="block rounded-lg border border-slate-200 bg-slate-50 p-3 lg:col-span-2">
+          <label className="block rounded-2xl border border-amber-100 bg-amber-50 p-4 lg:col-span-2">
             <span className="flex items-center gap-2 text-xs font-black text-slate-600">
               <Lock size={14} aria-hidden />
               管理メモ <OptionalBadge /> <span className="text-amber-700">公開されません</span>
@@ -511,7 +513,7 @@ export function AdminFoodForm({ mode, food, shopOptions = [], action, visibility
             <textarea
               name="memo"
               rows={4}
-              className="mt-2 w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm font-bold text-ink outline-none focus:border-park"
+              className="mt-2 w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm font-bold text-ink outline-none transition focus:border-park focus:ring-4 focus:ring-mint"
               placeholder="家族向けの確認メモ、未確認事項、あとで直したい内容"
               defaultValue={adminNotes ?? ""}
             />
@@ -519,12 +521,12 @@ export function AdminFoodForm({ mode, food, shopOptions = [], action, visibility
         </div>
       </section>
 
-      <div className="flex flex-col gap-2 rounded-lg border border-slate-200 bg-white p-4 shadow-soft sm:flex-row sm:items-center sm:justify-between">
+      <div className="flex flex-col gap-4 rounded-2xl border border-park/20 bg-white p-4 shadow-soft sm:p-5 lg:flex-row lg:items-center lg:justify-between">
         <div className="space-y-3">
             <p className="text-sm font-bold text-slate-500">
             {isGeneratedOverride ? "保存後は商品詳細へ戻ります。元データは直接変更せず、修正内容だけを保存します。" : "保存後は商品詳細へ戻ります。編集者・オーナーのみ保存できます。"}
           </p>
-          <div className="rounded-lg border border-slate-200 bg-slate-50 p-3">
+          <div className="rounded-2xl border border-slate-200 bg-slate-50 p-3">
             <p className="text-sm font-black text-ink">公開準備チェック</p>
             <p className="mt-1 text-xs font-bold leading-5 text-slate-500">
               公開には商品名・価格・エリア・店舗・カテゴリ・画像が必要です。下書き保存なら画像なしでも保存できます。
@@ -542,7 +544,7 @@ export function AdminFoodForm({ mode, food, shopOptions = [], action, visibility
           </div>
           {saveState.message ? <p className={`text-sm font-black ${saveState.ok ? "text-emerald-700" : "text-rose-700"}`}>{saveState.message}</p> : null}
         </div>
-        <div className="flex flex-col gap-2 sm:flex-row">
+        <div className="flex flex-col gap-2 sm:flex-row lg:shrink-0">
           {mode === "edit" ? (
             <button
               type="submit"
@@ -551,12 +553,12 @@ export function AdminFoodForm({ mode, food, shopOptions = [], action, visibility
               formAction={visibilityAction}
               formNoValidate
               disabled={pending || !saveEnabled || !visibilityAction}
-              className="h-12 rounded-full border border-slate-200 bg-white px-6 text-sm font-black text-slate-700 disabled:cursor-not-allowed disabled:bg-slate-100 sm:h-11"
+              className="h-12 rounded-full border border-slate-200 bg-white px-6 text-sm font-black text-slate-700 shadow-sm disabled:cursor-not-allowed disabled:bg-slate-100 sm:h-11"
             >
               {saveEnabled ? (food?.hidden ? "再表示する" : "非表示にする") : "自動取得の商品は非表示にできません"}
             </button>
           ) : null}
-          <button type="submit" disabled={pending || !saveEnabled} className="h-12 rounded-full bg-park px-6 text-sm font-black text-white disabled:cursor-wait disabled:bg-slate-300 sm:h-11">
+          <button type="submit" disabled={pending || !saveEnabled} className="h-12 rounded-full bg-park px-7 text-sm font-black text-white shadow-soft transition hover:-translate-y-0.5 disabled:cursor-wait disabled:bg-slate-300 disabled:shadow-none disabled:hover:translate-y-0 sm:h-11">
             {pending ? "保存中..." : saveEnabled ? (isGeneratedOverride ? "修正内容を保存する" : "保存する") : "自動取得の商品は保存できません"}
           </button>
         </div>
@@ -606,7 +608,7 @@ function TextField({
         required={required}
         autoComplete={autoComplete}
         onChange={onChange}
-        className="mt-1 h-11 w-full rounded-lg border border-slate-200 bg-white px-3 text-sm font-bold text-ink outline-none focus:border-park"
+        className="mt-2 h-12 w-full rounded-xl border border-slate-200 bg-white px-4 text-sm font-bold text-ink outline-none transition focus:border-park focus:ring-4 focus:ring-mint"
       />
       {helpText ? <span className="mt-1 block text-xs font-bold leading-5 text-slate-500">{helpText}</span> : null}
     </label>
@@ -635,7 +637,7 @@ function SelectField({
         {requirement === "required" ? <RequiredBadge /> : null}
         {requirement === "optional" ? <OptionalBadge /> : null}
       </span>
-      <select name={name} defaultValue={defaultValue} onChange={onChange} className="mt-1 h-11 w-full rounded-lg border border-slate-200 bg-white px-3 text-sm font-bold text-ink outline-none focus:border-park">
+      <select name={name} defaultValue={defaultValue} onChange={onChange} className="mt-2 h-12 w-full rounded-xl border border-slate-200 bg-white px-4 text-sm font-bold text-ink outline-none transition focus:border-park focus:ring-4 focus:ring-mint">
         {children}
       </select>
     </label>
@@ -644,13 +646,17 @@ function SelectField({
 
 function SectionHeading({ step, title, description, required = false }: { step: string; title: string; description: string; required?: boolean }) {
   return (
-    <div>
-      <p className="text-xs font-black text-park">{step}</p>
-      <h2 className="mt-1 flex items-center gap-2 text-lg font-black text-ink">
-        {title}
-        {required ? <RequiredBadge /> : null}
-      </h2>
-      <p className="mt-1 text-sm font-bold leading-6 text-slate-500">{description}</p>
+    <div className="flex gap-3">
+      <span className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-mint text-sm font-black text-park">
+        {step}
+      </span>
+      <div>
+        <h2 className="flex items-center gap-2 text-lg font-black text-ink">
+          {title}
+          {required ? <RequiredBadge /> : null}
+        </h2>
+        <p className="mt-1 text-sm font-bold leading-6 text-slate-500">{description}</p>
+      </div>
     </div>
   );
 }

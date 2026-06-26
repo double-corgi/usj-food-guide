@@ -14,20 +14,25 @@ export default async function AdminNewFoodPage() {
   const duplicateCandidates = getDuplicateCandidates(foods);
 
   return (
-    <div className="space-y-5">
-      <div className="flex flex-col gap-3 lg:flex-row lg:items-end lg:justify-between">
-        <div>
-          <p className="text-xs font-black uppercase tracking-[0.18em] text-park">商品管理</p>
-          <h1 className="mt-1 text-3xl font-black text-ink">商品追加</h1>
-          <p className="mt-2 text-sm font-bold text-slate-500">
-            {admin.role} 権限で新規商品を保存できます。画像は自動でサイズ調整され、保存すると公開ページに反映されます。
-          </p>
+    <div className="mx-auto max-w-5xl space-y-6">
+      <div className="overflow-hidden rounded-2xl border border-park/15 bg-white shadow-soft">
+        <div className="grid gap-4 border-b border-slate-100 bg-mint/55 p-5 sm:p-6 lg:grid-cols-[1fr_auto] lg:items-end">
+          <div>
+            <p className="text-xs font-black uppercase tracking-[0.18em] text-park">商品管理</p>
+            <h1 className="mt-2 text-3xl font-black leading-tight text-ink sm:text-4xl">新しいフードを登録</h1>
+            <p className="mt-3 max-w-2xl text-sm font-bold leading-6 text-slate-600">
+              写真と基本情報を入れるだけで、公開ページに追加できます。迷ったら必須項目から順番に入力してください。
+            </p>
+          </div>
+          <div className="rounded-2xl border border-white/70 bg-white/80 p-3 text-sm font-black text-park shadow-sm">
+            {admin.role} 権限で保存できます
+          </div>
         </div>
-        <div className="flex flex-wrap gap-2">
-          <Link href="/admin" className="inline-flex h-10 items-center rounded-full border border-slate-200 bg-white px-4 text-xs font-black text-ink hover:border-park">
+        <div className="flex flex-wrap gap-2 p-4 sm:p-5">
+          <Link href="/admin" className="inline-flex h-10 items-center rounded-full border border-slate-200 bg-white px-4 text-xs font-black text-ink shadow-sm hover:border-park">
             管理トップ
           </Link>
-          <Link href="/admin/foods" className="inline-flex h-10 items-center rounded-full border border-slate-200 bg-white px-4 text-xs font-black text-ink hover:border-park">
+          <Link href="/admin/foods" className="inline-flex h-10 items-center rounded-full border border-slate-200 bg-white px-4 text-xs font-black text-ink shadow-sm hover:border-park">
             一覧へ戻る
           </Link>
         </div>
