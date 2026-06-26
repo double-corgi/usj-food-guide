@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { usePathname } from "next/navigation";
 
 const IOS_TEST_BANNER_AD_ID = "ca-app-pub-3940256099942544/2934735716";
+const ADMOB_BANNER_ATTRIBUTE = "data-mobile-admob-banner";
 
 type CapacitorBridge = {
   getPlatform?: () => string;
@@ -49,6 +50,19 @@ function describeError(error: unknown): { name?: string; message?: string } {
   return { message: String(error) };
 }
 
+function setAdMobBannerSpacing(isVisible: boolean) {
+  if (typeof document === "undefined") {
+    return;
+  }
+
+  if (isVisible) {
+    document.documentElement.setAttribute(ADMOB_BANNER_ATTRIBUTE, "visible");
+    return;
+  }
+
+  document.documentElement.removeAttribute(ADMOB_BANNER_ATTRIBUTE);
+}
+
 export function MobileAdMobBanner() {
   const pathname = usePathname();
 
@@ -57,6 +71,7 @@ export function MobileAdMobBanner() {
 
     async function syncBanner() {
       if (!isNativeCapacitorApp()) {
+        setAdMobBannerSpacing(false);
         return;
       }
 
@@ -67,6 +82,7 @@ export function MobileAdMobBanner() {
       }
 
       if (isAdminPath(pathname)) {
+        setAdMobBannerSpacing(false);
         await AdMob.hideBanner().catch(() => undefined);
         await AdMob.removeBanner().catch(() => undefined);
         return;
@@ -89,7 +105,9 @@ export function MobileAdMobBanner() {
           isTesting: true,
           npa: true
         });
+        setAdMobBannerSpacing(true);
       } catch (error) {
+        setAdMobBannerSpacing(false);
         console.error("AdMob test banner failed", {
           placement: "ios-bottom-banner",
           ...describeError(error)
@@ -106,6 +124,8 @@ export function MobileAdMobBanner() {
 
   useEffect(() => {
     return () => {
+      setAdMobBannerSpacing(false);
+
       if (!isNativeCapacitorApp()) {
         return;
       }

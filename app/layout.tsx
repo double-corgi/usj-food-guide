@@ -77,11 +77,11 @@ export default async function RootLayout({ children }: { children: React.ReactNo
       <body className="flex min-h-dvh flex-col">
         <LocaleProvider>
           <AppHeader />
-          <main className="mx-auto w-full max-w-7xl flex-1 px-4 pb-52 pt-6 sm:px-6 md:pb-24 md:pt-8 lg:px-8">
+          <main className="app-shell-main mx-auto w-full max-w-7xl flex-1 px-4 pt-6 sm:px-6 md:pt-8 lg:px-8">
             <MobileLanguageBadge />
             {children}
           </main>
-          <div className="pb-44 md:pb-20">
+          <div className="app-shell-footer">
             <AppFooter />
           </div>
           {adminForPublicBar ? <AdminSessionBar role={adminForPublicBar.role} email={adminForPublicBar.email} /> : null}
