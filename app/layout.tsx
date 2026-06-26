@@ -1,6 +1,5 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
-import { AdSlot } from "@/components/ad-slot";
 import { AdminSessionBar } from "@/components/admin-session-bar";
 import { AnalyticsTracker } from "@/components/analytics-tracker";
 import { AppFooter } from "@/components/app-footer";
@@ -84,7 +83,6 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           <div className="pb-44 md:pb-20">
             <AppFooter />
           </div>
-          <AdSlot slotId="global-bottom" variant="fixed" />
           {adminForPublicBar ? <AdminSessionBar role={adminForPublicBar.role} email={adminForPublicBar.email} /> : null}
           <AnalyticsTracker />
           <PwaRegister />

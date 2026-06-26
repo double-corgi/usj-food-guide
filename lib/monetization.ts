@@ -1,5 +1,5 @@
 export const monetizationConfig = {
-  adsEnabled: false,
+  adsEnabled: process.env.NEXT_PUBLIC_ADS_ENABLED === "true",
   affiliateEnabled: false,
   sponsoredEnabled: false,
   labels: {

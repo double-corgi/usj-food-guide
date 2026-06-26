@@ -13,6 +13,7 @@ import { useFoodLogs } from "@/lib/use-food-logs";
 import { useNextWantFoods } from "@/lib/use-next-want-foods";
 import type { FoodCategory, FoodWithRelations, UserFoodLog } from "@/types/domain";
 import { FoodImage } from "@/components/food-image";
+import { AdSlot } from "@/components/ads/ad-slot";
 import { EatenGenreProgress } from "@/components/eaten-genre-progress";
 import { useLocale } from "@/lib/i18n/use-locale";
 
@@ -75,6 +76,8 @@ export function EatenExperience({ foods }: { foods: FoodWithRelations[] }) {
           <span>{t("eaten.totalSpend")} {totalSpend ? `¥${totalSpend.toLocaleString("ja-JP")}` : t("eaten.noRecordValue")}</span>
         </p>
       </section>
+
+      <AdSlot placement="eaten-summary" />
 
       <div className="inline-grid grid-cols-2 rounded-full bg-slate-100 p-1 text-xs font-black text-slate-500">
         {[

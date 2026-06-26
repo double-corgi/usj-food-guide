@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { AreaOverview } from "@/components/area-overview";
+import { AdSlot } from "@/components/ads/ad-slot";
 import { HomeActiveFoodCollection, HomeCollectionHero, HomeLimitedCollection, HomeRecentRecords } from "@/components/home-progress-client";
 import { I18nText } from "@/components/i18n-text";
 import { dedupeFoodsByCanonical } from "@/lib/food-utils";
@@ -21,6 +22,7 @@ export function HomeDashboard({ foods, activeCollectionFoods = foods, areas = []
 
         <div className="space-y-12">
           <HomeActiveFoodCollection foods={foods} collectionFoods={activeCollectionFoods} />
+          <AdSlot placement="home-after-recent" />
           <HomeLimitedCollection foods={foods} />
           <section className="space-y-4">
             <div className="flex items-end justify-between gap-3">

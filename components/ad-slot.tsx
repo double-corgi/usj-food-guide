@@ -1,12 +1,2 @@
-import type { ReactNode } from "react";
-
-type AdSlotProps = {
-  className?: string;
-  slotId?: string;
-  variant?: "inline" | "fixed";
-  children?: ReactNode;
-};
-
-export function AdSlot(_props: AdSlotProps) {
-  return null;
-}
+export { AdSlot } from "@/components/ads/ad-slot";
+export type { AdPlacement } from "@/components/ads/ad-slot";

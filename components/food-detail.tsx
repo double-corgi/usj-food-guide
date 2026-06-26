@@ -9,6 +9,7 @@ import { useNextWantFoods } from "@/lib/use-next-want-foods";
 import { filterDeletedFoodIds, isDeletedFoodId } from "@/lib/deleted-foods";
 import type { DiningType, FoodCategory, FoodLocation, FoodWithRelations } from "@/types/domain";
 import { FoodImage } from "@/components/food-image";
+import { AdSlot } from "@/components/ads/ad-slot";
 import { FoodCorrectionReportForm } from "@/components/food-correction-report-form";
 import { FoodReviews } from "@/components/food-reviews";
 import { UnofficialNotice } from "@/components/unofficial-notice";
@@ -218,6 +219,8 @@ export function FoodDetail({
           <ExternalLink size={17} aria-hidden />
         </a>
       ) : null}
+
+      <AdSlot placement="food-detail-middle" />
 
       <section className="space-y-4 border-b border-slate-200 pb-6">
         <div>

@@ -16,6 +16,7 @@ import { useNextWantFoods } from "@/lib/use-next-want-foods";
 import type { DiningType, FoodCategory, FoodStatus, FoodWithRelations, ShopType } from "@/types/domain";
 import { FoodCard } from "@/components/food-card";
 import { FoodImage } from "@/components/food-image";
+import { AdSlot } from "@/components/ads/ad-slot";
 import { SkeletonCard } from "@/components/skeleton-card";
 
 export type ListMode = "all" | "eaten";
@@ -317,6 +318,8 @@ export function FoodGrid({
         </div>
       </div>
 
+      <AdSlot placement="foods-after-filters" />
+
       {error ? <p className="rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm font-bold text-red-700">{error}</p> : null}
 
       {!ready ? (
@@ -328,16 +331,17 @@ export function FoodGrid({
       ) : filteredFoods.length > 0 ? (
         <>
           <div className="grid grid-cols-2 gap-3 md:grid-cols-3 xl:grid-cols-5">
-            {displayedFoods.map((food) => (
-              <FoodCard
+            {displayedFoods.map((food, index) => (
+              <FoodGridItem
                 key={food.id}
                 food={food}
-                allFoods={foods}
+                foods={foods}
                 logs={logs}
                 onToggleEaten={handleToggleEaten}
                 isWanted={isWanted(food)}
                 onToggleWanted={() => toggleWanted(food)}
                 adminCanEdit={adminCanEdit}
+                showInlineAd={(index + 1) % 12 === 0 && index < displayedFoods.length - 1}
               />
             ))}
           </div>
@@ -371,6 +375,45 @@ export function FoodGrid({
         </section>
       ) : null}
     </section>
+  );
+}
+
+function FoodGridItem({
+  food,
+  foods,
+  logs,
+  onToggleEaten,
+  isWanted,
+  onToggleWanted,
+  adminCanEdit,
+  showInlineAd
+}: {
+  food: FoodWithRelations;
+  foods: FoodWithRelations[];
+  logs: ReturnType<typeof useFoodLogs>["logs"];
+  onToggleEaten: (foodId: string, spentAmount?: number) => void;
+  isWanted: boolean;
+  onToggleWanted: () => void;
+  adminCanEdit: boolean;
+  showInlineAd: boolean;
+}) {
+  return (
+    <>
+      <FoodCard
+        food={food}
+        allFoods={foods}
+        logs={logs}
+        onToggleEaten={onToggleEaten}
+        isWanted={isWanted}
+        onToggleWanted={onToggleWanted}
+        adminCanEdit={adminCanEdit}
+      />
+      {showInlineAd ? (
+        <div className="col-span-2 md:col-span-3 xl:col-span-5">
+          <AdSlot placement="foods-inline" />
+        </div>
+      ) : null}
+    </>
   );
 }
 
