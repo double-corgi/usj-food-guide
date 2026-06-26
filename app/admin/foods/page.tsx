@@ -9,13 +9,10 @@ import { requireAdmin } from "@/lib/admin-auth";
 import {
   adminFoodCategoryOptions,
   adminSaleStatusOptions,
-  formatAdminCanonicalState,
   formatAdminCategory,
   formatAdminPrice,
   formatAdminPublicState,
-  formatAdminReviewStatus,
   formatAdminSaleStatus,
-  formatAdminVisibility,
   getAdminPublicState,
   getAdminSaleState
 } from "@/lib/admin-food-ui";
@@ -26,6 +23,7 @@ import type { FoodWithRelations } from "@/types/domain";
 export const dynamic = "force-dynamic";
 
 type AdminFoodsSearchParams = {
+  view?: string;
   q?: string;
   category?: string;
   saleStatus?: string;
@@ -40,11 +38,13 @@ export default async function AdminFoodsPage({ searchParams }: { searchParams?: 
   const filters = normalizeFilters(params);
   const [admin, foods] = await Promise.all([
     requireAdmin("viewer"),
-    listAllFoodCandidates({ deletedManualFoodsOnly: filters.deleted === "deleted" })
+    listAllFoodCandidates({ includeDeletedManualFoods: true })
   ]);
   const filteredFoods = foods.filter((food) => matchesFilters(food, filters));
   const visibleFoods = foods.filter((food) => getPublicState(food) === "published" && !isDeletedFood(food));
   const canManage = admin.role !== "viewer";
+  const listTabs = buildListTabs(foods, filters);
+  const currentTab = listTabs.find((tab) => tab.value === filters.view) ?? listTabs[0];
 
   return (
     <div className="space-y-5">
@@ -92,15 +92,42 @@ export default async function AdminFoodsPage({ searchParams }: { searchParams?: 
         <Metric label="絞り込み" value={filteredFoods.length} />
       </div>
 
+      <section className="rounded-2xl border border-slate-200 bg-white p-3 shadow-soft sm:p-4">
+        <div className="grid gap-2 sm:grid-cols-2 xl:grid-cols-4">
+          {listTabs.map((tab) => (
+            <Link
+              key={tab.value}
+              href={buildAdminFoodsHref(filters, tab.value)}
+              className={`rounded-2xl border p-4 transition hover:-translate-y-0.5 ${
+                filters.view === tab.value
+                  ? "border-park bg-mint text-park shadow-soft"
+                  : "border-slate-200 bg-white text-slate-600 hover:border-park"
+              }`}
+            >
+              <span className="flex items-center justify-between gap-3">
+                <span className="text-sm font-black">{tab.label}</span>
+                <span className={`rounded-full px-2.5 py-1 text-xs font-black ${filters.view === tab.value ? "bg-white text-park" : "bg-slate-100 text-slate-600"}`}>
+                  {tab.count.toLocaleString("ja-JP")}件
+                </span>
+              </span>
+              <span className="mt-2 block text-xs font-bold leading-5">{tab.description}</span>
+            </Link>
+          ))}
+        </div>
+      </section>
+
       <form className="rounded-lg border border-slate-200 bg-white p-4 shadow-soft" method="get">
+        <input type="hidden" name="view" value={filters.view} />
         <div className="mb-3 flex flex-col gap-1 sm:flex-row sm:items-end sm:justify-between">
           <div>
             <h2 className="text-lg font-black text-ink">検索・フィルタ</h2>
-            <p className="mt-1 text-xs font-bold text-slate-500">商品名、店舗、状態で絞り込めます。</p>
+            <p className="mt-1 text-xs font-bold text-slate-500">
+              {currentTab.label}: {currentTab.description} 商品名、店舗、状態で絞り込めます。
+            </p>
           </div>
           <p className="text-sm font-black text-park">{filteredFoods.length.toLocaleString("ja-JP")}件</p>
         </div>
-        <div className="grid gap-3 lg:grid-cols-[minmax(220px,1.7fr)_repeat(5,minmax(130px,1fr))_auto] lg:items-end">
+        <div className="grid gap-3 lg:grid-cols-[minmax(220px,1.7fr)_repeat(3,minmax(130px,1fr))_auto] lg:items-end">
           <label className="block">
             <span className="text-xs font-black text-slate-500">検索</span>
             <span className="mt-1 flex h-11 items-center gap-2 rounded-lg border border-slate-200 bg-white px-3">
@@ -128,15 +155,6 @@ export default async function AdminFoodsPage({ searchParams }: { searchParams?: 
             <option value="all">すべて</option>
             <option value="published">公開</option>
             <option value="draft">下書き</option>
-          </Select>
-          <Select label="表示" name="hidden" defaultValue={filters.hidden}>
-            <option value="all">すべて</option>
-            <option value="visible">表示中</option>
-            <option value="hidden">非表示</option>
-          </Select>
-          <Select label="削除状態" name="deleted" defaultValue={filters.deleted}>
-            <option value="active">通常</option>
-            <option value="deleted">削除済み</option>
           </Select>
           <button type="submit" className="inline-flex h-11 items-center justify-center rounded-full bg-ink px-5 text-sm font-black text-white">
             絞り込み
@@ -234,22 +252,25 @@ export default async function AdminFoodsPage({ searchParams }: { searchParams?: 
 }
 
 type NormalizedFilters = {
+  view: "normal" | "hidden" | "deleted" | "all";
   q: string;
   category: string;
   saleStatus: string;
   publicState: string;
-  hidden: string;
-  deleted: string;
 };
 
 function normalizeFilters(params: AdminFoodsSearchParams): NormalizedFilters {
+  const legacyView = params.deleted === "deleted" ? "deleted" : params.hidden === "hidden" ? "hidden" : undefined;
+  const view = params.view === "hidden" || params.view === "deleted" || params.view === "all" || params.view === "normal"
+    ? params.view
+    : legacyView ?? "normal";
+
   return {
+    view,
     q: (params.q ?? "").trim(),
     category: params.category ?? "all",
     saleStatus: params.saleStatus ?? "all",
-    publicState: params.publicState ?? "all",
-    hidden: params.hidden ?? "all",
-    deleted: params.deleted === "deleted" ? "deleted" : "active"
+    publicState: params.publicState ?? "all"
   };
 }
 
@@ -262,10 +283,9 @@ function matchesFilters(food: FoodWithRelations, filters: NormalizedFilters) {
   if (filters.category !== "all" && food.category !== filters.category) return false;
   if (filters.saleStatus !== "all" && getSaleState(food) !== filters.saleStatus) return false;
   if (filters.publicState !== "all" && getPublicState(food) !== filters.publicState) return false;
-  if (filters.hidden === "visible" && food.hidden) return false;
-  if (filters.hidden === "hidden" && !food.hidden) return false;
-  if (filters.deleted === "deleted" && !isDeletedFood(food)) return false;
-  if (filters.deleted === "active" && isDeletedFood(food)) return false;
+  if (filters.view === "normal" && (food.hidden || isDeletedFood(food))) return false;
+  if (filters.view === "hidden" && (!food.hidden || isDeletedFood(food))) return false;
+  if (filters.view === "deleted" && !isDeletedFood(food)) return false;
   return true;
 }
 
@@ -329,17 +349,56 @@ function FoodCard({ food, canManage }: { food: FoodWithRelations; canManage: boo
 function StatusBadges({ food }: { food: FoodWithRelations }) {
   return (
     <div className="flex flex-wrap gap-1.5">
+      <Badge label={isManualFood(food) ? "自分で追加した商品" : "自動取得の商品"} tone={isManualFood(food) ? "ok" : "default"} />
       {hasFoodOverride(food) ? <Badge label="修正あり" tone="ok" /> : null}
       {hasOverrideImage(food) ? <Badge label="画像修正あり" tone="ok" /> : null}
       {isDeletedFood(food) ? <Badge label="削除済み" tone="muted" /> : null}
-      <Badge label={formatAdminPublicState(getPublicState(food))} tone={getPublicState(food) === "published" ? "ok" : "muted"} />
-      <Badge label={formatAdminVisibility(food.hidden)} tone={food.hidden ? "muted" : "ok"} />
-      <Badge label={formatAdminCanonicalState(food.canonicalFood)} tone={food.canonicalFood === false ? "muted" : "ok"} />
+      {!isDeletedFood(food) && food.hidden ? <Badge label="非表示中" tone="muted" /> : null}
+      {!isDeletedFood(food) && !food.hidden && getPublicState(food) === "published" ? <Badge label="公開中" tone="ok" /> : null}
+      {!isDeletedFood(food) && !food.hidden && getPublicState(food) !== "published" ? <Badge label={formatAdminPublicState(getPublicState(food))} tone="muted" /> : null}
       <Badge label={formatAdminSaleStatus(getSaleState(food))} />
-      <Badge label={formatAdminReviewStatus(food.reviewStatus)} tone={food.reviewStatus === "approved" ? "ok" : "muted"} />
       <Badge label={formatAdminCategory(food.category)} />
     </div>
   );
+}
+
+function buildListTabs(foods: FoodWithRelations[], filters: NormalizedFilters) {
+  return [
+    {
+      value: "normal" as const,
+      label: "通常一覧",
+      description: "今管理している商品です。",
+      count: foods.filter((food) => !food.hidden && !isDeletedFood(food) && matchesFilters(food, { ...filters, view: "all" })).length
+    },
+    {
+      value: "hidden" as const,
+      label: "非表示中",
+      description: "公開ページには出ていません。あとで再表示できます。",
+      count: foods.filter((food) => food.hidden && !isDeletedFood(food) && matchesFilters(food, { ...filters, view: "all" })).length
+    },
+    {
+      value: "deleted" as const,
+      label: "削除済み",
+      description: "通常一覧から片付けた商品です。あとで復元できます。",
+      count: foods.filter((food) => isDeletedFood(food) && matchesFilters(food, { ...filters, view: "all" })).length
+    },
+    {
+      value: "all" as const,
+      label: "すべて",
+      description: "通常・非表示・削除済みをまとめて確認できます。",
+      count: foods.filter((food) => matchesFilters(food, { ...filters, view: "all" })).length
+    }
+  ];
+}
+
+function buildAdminFoodsHref(filters: NormalizedFilters, view: NormalizedFilters["view"]) {
+  const params = new URLSearchParams();
+  params.set("view", view);
+  if (filters.q) params.set("q", filters.q);
+  if (filters.category !== "all") params.set("category", filters.category);
+  if (filters.saleStatus !== "all") params.set("saleStatus", filters.saleStatus);
+  if (filters.publicState !== "all") params.set("publicState", filters.publicState);
+  return `/admin/foods?${params.toString()}`;
 }
 
 function Metric({ label, value }: { label: string; value: number }) {
@@ -388,7 +447,7 @@ function SaveMessage({ value }: { value: string }) {
           <Link href="/admin/foods?hidden=hidden" className="inline-flex h-9 items-center justify-center rounded-full border border-emerald-200 bg-white px-4 text-xs font-black text-emerald-800">
             非表示中の商品を見る
           </Link>
-          <Link href="/admin/foods?deleted=deleted" className="inline-flex h-9 items-center justify-center rounded-full border border-emerald-200 bg-white px-4 text-xs font-black text-emerald-800">
+          <Link href="/admin/foods?view=deleted" className="inline-flex h-9 items-center justify-center rounded-full border border-emerald-200 bg-white px-4 text-xs font-black text-emerald-800">
             削除済みの商品を見る
           </Link>
           <Link href="/foods" className="inline-flex h-9 items-center justify-center rounded-full bg-park px-4 text-xs font-black text-white">
