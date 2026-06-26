@@ -56,6 +56,8 @@
     "build:capacitor": "CAPACITOR_STATIC_EXPORT=1 next build --webpack",
     "cap:sync": "cap sync",
     "cap:sync:ios": "cap sync ios",
+    "cap:sync:ios:debug": "CAPACITOR_SERVER_URL=http://localhost:3000 cap sync ios",
+    "cap:sync:ios:release": "CAPACITOR_SERVER_URL=https://unicolle.vercel.app cap sync ios",
     "cap:ios": "cap add ios",
     "cap:android": "cap add android",
     "cap:open:ios": "cap open ios",
