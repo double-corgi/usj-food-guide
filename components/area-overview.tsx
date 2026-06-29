@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { MapPin } from "lucide-react";
+import { PublicStateCard } from "@/components/public-state";
 import { areaImageDefinitions, normalizeAreaImageName } from "@/lib/area-images";
 import { calculateAreaProgress } from "@/lib/area-progress";
 import { tAreaName } from "@/lib/i18n/area-name";
@@ -19,6 +20,16 @@ export function AreaOverview({ areas, foods }: { areas: Area[]; foods: FoodWithR
       id: matched?.id ?? definition.name,
     };
   });
+  if (areas.length === 0) {
+    return (
+      <PublicStateCard
+        eyebrow="AREA"
+        title="エリア情報を表示できません"
+        description="通信が不安定な可能性があります。時間を置いてからもう一度お試しください。"
+        action={{ href: "/", label: "ホームへ戻る" }}
+      />
+    );
+  }
 
   return (
     <div className="space-y-6">

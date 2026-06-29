@@ -89,6 +89,18 @@ export default async function AreaDetailPage({ params }: { params: Promise<{ id:
           </section>
         ) : null}
 
+        {canonicalAreaFoods.length === 0 ? (
+          <section className="rounded-[1.35rem] border border-dashed border-slate-200 bg-white p-6 text-center shadow-[0_10px_28px_rgba(15,23,42,0.04)]">
+            <h2 className="text-lg font-black text-ink">このエリアのフードはまだありません</h2>
+            <p className="mx-auto mt-2 max-w-sm text-sm font-bold leading-6 text-slate-500">
+              ほかのエリアやフード一覧から、販売中の商品を探してみてください。
+            </p>
+            <Link href="/foods" className="mt-4 inline-flex min-h-11 items-center justify-center rounded-full bg-park px-5 text-sm font-black text-white">
+              フード一覧へ戻る
+            </Link>
+          </section>
+        ) : null}
+
         {endingSoonFoods.length > 0 ? (
           <section className="space-y-4">
             <h2 className="text-xl font-black text-ink">

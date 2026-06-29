@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { ChevronRight, MapPin } from "lucide-react";
 import { FoodImage } from "@/components/food-image";
+import { PublicStateCard } from "@/components/public-state";
 import { getStoreNameI18n } from "@/components/store-name-client";
 import type { Locale } from "@/lib/i18n/locales";
 import { useLocale } from "@/lib/i18n/use-locale";
@@ -12,6 +13,16 @@ import type { FoodWithRelations } from "@/types/domain";
 export function StoresOverview({ stores }: { stores: StoreWithFoods[] }) {
   const { t, locale } = useLocale();
   const areaGroups = groupStoresByArea(stores);
+  if (stores.length === 0) {
+    return (
+      <PublicStateCard
+        eyebrow="STORE"
+        title="店舗情報を表示できません"
+        description="通信が不安定な可能性があります。時間を置いてからもう一度お試しください。"
+        action={{ href: "/", label: "ホームへ戻る" }}
+      />
+    );
+  }
 
   return (
     <div className="mx-auto max-w-3xl space-y-6">

@@ -320,7 +320,11 @@ export function FoodGrid({
 
       <AdSlot placement="foods-after-filters" />
 
-      {error ? <p className="rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm font-bold text-red-700">{error}</p> : null}
+      {error ? (
+        <div className="rounded-2xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm font-bold leading-6 text-amber-800">
+          端末内の記録を読み込めませんでした。フード一覧はそのまま使えます。時間を置いて再度お試しください。
+        </div>
+      ) : null}
 
       {!ready ? (
         <div className="grid grid-cols-2 gap-2.5 sm:gap-3 md:grid-cols-3 xl:grid-cols-5">
@@ -356,12 +360,14 @@ export function FoodGrid({
           ) : null}
         </>
       ) : (
-        <div className="rounded-lg border border-slate-200 bg-white p-8 text-center">
+        <div className="rounded-[1.35rem] border border-dashed border-slate-200 bg-white p-6 text-center shadow-[0_10px_28px_rgba(15,23,42,0.04)]">
           <p className="text-lg font-black text-ink">{t("foods.noMatchTitle")}</p>
-          <p className="mt-2 text-sm text-slate-500">{t("foods.noMatchDescription")}</p>
-          <a href={REQUEST_FORM_URL} target="_blank" rel="noopener noreferrer" className="mt-4 inline-flex min-h-11 items-center justify-center rounded-full bg-park px-5 text-sm font-black text-white">
-            {t("foods.requestCta")}
-          </a>
+          <p className="mx-auto mt-2 max-w-sm text-sm font-bold leading-6 text-slate-500">{t("foods.noMatchDescription")}</p>
+          {showRequestCta ? (
+            <a href={REQUEST_FORM_URL} target="_blank" rel="noopener noreferrer" className="mt-4 inline-flex min-h-11 items-center justify-center rounded-full bg-park px-5 text-sm font-black text-white">
+              {t("foods.requestCta")}
+            </a>
+          ) : null}
         </div>
       )}
 

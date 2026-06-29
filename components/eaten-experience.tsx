@@ -28,7 +28,7 @@ type EatenTab = "eaten" | "want";
 
 export function EatenExperience({ foods }: { foods: FoodWithRelations[] }) {
   const { t } = useLocale();
-  const { logs } = useFoodLogs();
+  const { logs, ready, error } = useFoodLogs();
   const { wantedFoods } = useNextWantFoods(foods);
   const [activeTab, setActiveTab] = useState<EatenTab>("eaten");
   const [areaFilter, setAreaFilter] = useState("all");
@@ -79,6 +79,12 @@ export function EatenExperience({ foods }: { foods: FoodWithRelations[] }) {
 
       <AdSlot placement="eaten-summary" />
 
+      {error ? (
+        <div className="rounded-2xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm font-bold leading-6 text-amber-800">
+          端末内の食べた記録を読み込めませんでした。保存済みの記録は消さずに、時間を置いて再度お試しください。
+        </div>
+      ) : null}
+
       <div className="inline-grid grid-cols-2 rounded-full bg-slate-100 p-1 text-xs font-black text-slate-500">
         {[
           { id: "eaten" as const, label: t("common.eaten") },
@@ -106,8 +112,12 @@ export function EatenExperience({ foods }: { foods: FoodWithRelations[] }) {
               ))}
             </div>
           ) : (
-            <div className="rounded-2xl border border-dashed border-slate-200 bg-white/70 p-6 text-center">
-              <p className="text-sm font-black text-slate-500">{t("foods.noResultsInline")}</p>
+            <div className="rounded-[1.35rem] border border-dashed border-slate-200 bg-white p-6 text-center">
+              <p className="text-base font-black text-ink">次に食べたいフードはまだありません</p>
+              <p className="mt-2 text-sm font-bold leading-6 text-slate-500">フード一覧で気になる商品に旗を付けると、ここに表示されます。</p>
+              <Link href="/foods" className="mt-4 inline-flex min-h-11 items-center justify-center rounded-full bg-park px-5 text-sm font-black text-white">
+                フードを探す
+              </Link>
             </div>
           )}
         </section>
@@ -136,6 +146,13 @@ export function EatenExperience({ foods }: { foods: FoodWithRelations[] }) {
           </div>
         </details>
 
+        {!ready ? (
+          <div className="grid grid-cols-5 gap-0.5 md:grid-cols-8 lg:grid-cols-10">
+            {Array.from({ length: 20 }).map((_, index) => (
+              <div key={index} className="aspect-square animate-pulse rounded-[0.45rem] bg-slate-100" />
+            ))}
+          </div>
+        ) : (
         <div className="space-y-7">
           {albumSections.map((section) => (
             <div key={section.id} className="space-y-3">
@@ -153,10 +170,19 @@ export function EatenExperience({ foods }: { foods: FoodWithRelations[] }) {
             </div>
           ))}
         </div>
+        )}
 
-        {filteredEatenRecords.length === 0 ? (
-          <div className="rounded-2xl border border-dashed border-slate-200 bg-white/70 p-6 text-center">
-            <p className="text-sm font-black text-slate-500">{t("eaten.noFilterResults")}</p>
+        {ready && filteredEatenRecords.length === 0 ? (
+          <div className="rounded-[1.35rem] border border-dashed border-slate-200 bg-white p-6 text-center">
+            <p className="text-base font-black text-ink">{eatenRecords.length === 0 ? t("eaten.emptyTitle") : t("eaten.noFilterResults")}</p>
+            <p className="mt-2 text-sm font-bold leading-6 text-slate-500">
+              {eatenRecords.length === 0 ? "食べたフードを記録すると、ここにアルバムのように並びます。" : "条件を変更すると、ほかの記録を確認できます。"}
+            </p>
+            {eatenRecords.length === 0 ? (
+              <Link href="/foods" className="mt-4 inline-flex min-h-11 items-center justify-center rounded-full bg-park px-5 text-sm font-black text-white">
+                {t("eaten.emptyCta")}
+              </Link>
+            ) : null}
           </div>
         ) : null}
       </section>
