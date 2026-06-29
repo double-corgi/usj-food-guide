@@ -19,6 +19,7 @@ import { useLocale } from "@/lib/i18n/use-locale";
 import { useFoodLogs } from "@/lib/use-food-logs";
 import { FoodImage } from "@/components/food-image";
 import { appBrand, featuredLimitedCollection } from "@/lib/constants";
+import { pickRecentAdminFoodsForHome } from "@/lib/home-recent-foods";
 import type { FoodWithRelations, UserFoodLog } from "@/types/domain";
 
 const LIMITED_COLLECTION_MAX = 24;
@@ -301,7 +302,7 @@ function pickActiveCollectionFoods(foods: FoodWithRelations[], logs: UserFoodLog
   const eatenKeys = getEatenCanonicalKeys(foods, logs);
   const seed = getDailySeedKey();
   const candidates = dedupeFoodsByCanonical(foods);
-  const recentFoods = prioritizeRecentAdminFoods(candidates);
+  const recentFoods = pickRecentAdminFoodsForHome(candidates);
   if (recentFoods.length >= 8) return recentFoods.slice(0, 8);
 
   const fallbackFoods = candidates
@@ -319,39 +320,6 @@ function pickActiveCollectionFoods(foods: FoodWithRelations[], logs: UserFoodLog
     selected.push(food);
   });
   return selected;
-}
-
-function prioritizeRecentAdminFoods(foods: FoodWithRelations[]) {
-  return foods
-    .filter((food) => isManualFood(food) || isOverriddenFood(food))
-    .map((food) => ({ food, recencyTime: getAdminRecencyTime(food) }))
-    .filter(({ recencyTime }) => recencyTime > 0)
-    .sort((a, b) => b.recencyTime - a.recencyTime || a.food.name.localeCompare(b.food.name, "ja"))
-    .map(({ food }) => food);
-}
-
-function isManualFood(food: FoodWithRelations) {
-  return food.manualOverride === true || food.sourceNames?.includes("manual_foods") === true || food.id.startsWith("food-manual-");
-}
-
-function isOverriddenFood(food: FoodWithRelations) {
-  return food.sourceNames?.includes("food_overrides") === true;
-}
-
-function getAdminRecencyTime(food: FoodWithRelations) {
-  const value = isManualFood(food) ? maxDateString(food.createdAt, food.updatedAt) : food.updatedAt;
-  if (!value) return 0;
-  const time = Date.parse(value);
-  return Number.isFinite(time) ? time : 0;
-}
-
-function maxDateString(left?: string, right?: string) {
-  const leftTime = left ? Date.parse(left) : 0;
-  const rightTime = right ? Date.parse(right) : 0;
-  const validLeftTime = Number.isFinite(leftTime) ? leftTime : 0;
-  const validRightTime = Number.isFinite(rightTime) ? rightTime : 0;
-  if (!validLeftTime && !validRightTime) return undefined;
-  return validLeftTime >= validRightTime ? left : right;
 }
 
 function buildLimitedCollection(foods: FoodWithRelations[]) {

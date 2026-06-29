@@ -10,6 +10,8 @@
     "lint": "eslint .",
     "coverage": "ts-node -r tsconfig-paths/register --transpile-only --compiler-options '{\"module\":\"CommonJS\",\"moduleResolution\":\"node\",\"target\":\"ES2022\"}' scripts/check-translation-coverage.ts",
     "audit:duplicates": "ts-node -r tsconfig-paths/register --transpile-only --compiler-options '{\"module\":\"CommonJS\",\"moduleResolution\":\"node\",\"target\":\"ES2022\"}' scripts/audit-food-duplicates.ts",
+    "test:recent-foods": "ts-node -r tsconfig-paths/register --transpile-only --compiler-options '{\"module\":\"CommonJS\",\"moduleResolution\":\"node\",\"target\":\"ES2022\"}' scripts/test-recent-home-foods.ts",
+    "verify:ios-admob-build": "ts-node --transpile-only --compiler-options '{\"module\":\"CommonJS\",\"moduleResolution\":\"node\",\"target\":\"ES2022\"}' scripts/verify-ios-admob-build.ts",
     "format:check": "eslint .",
     "typecheck": "next typegen && tsc --noEmit --target es2022 --downlevelIteration",
     "crawl": "ts-node --transpile-only --compiler-options '{\"module\":\"CommonJS\",\"moduleResolution\":\"node\",\"target\":\"ES2022\"}' scripts/crawl-usj-foods.ts all",
