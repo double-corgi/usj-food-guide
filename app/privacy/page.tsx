@@ -1,3 +1,5 @@
+import { AdMobPrivacyOptionsButton } from "@/components/admob-privacy-options-button";
+
 const sections = [
   {
     title: "アプリの位置づけ",
@@ -96,6 +98,7 @@ export default function PrivacyPage() {
           </section>
         ))}
       </div>
+      <AdMobPrivacyOptionsButton />
     </article>
   );
 }

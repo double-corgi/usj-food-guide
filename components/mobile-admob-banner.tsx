@@ -7,6 +7,10 @@ const IOS_TEST_BANNER_AD_ID = "ca-app-pub-3940256099942544/2934735716";
 const ADMOB_BANNER_ATTRIBUTE = "data-mobile-admob-banner";
 const IOS_ADMOB_MODE = process.env.NEXT_PUBLIC_IOS_ADMOB_MODE;
 const IOS_RELEASE_BANNER_AD_ID = process.env.NEXT_PUBLIC_IOS_ADMOB_BANNER_AD_ID?.trim();
+const IOS_ADMOB_CONSENT_DEBUG_GEOGRAPHY = process.env.NEXT_PUBLIC_IOS_ADMOB_CONSENT_DEBUG_GEOGRAPHY
+  ?.trim()
+  .toLowerCase();
+const IOS_ADMOB_CONSENT_TEST_DEVICE_IDS = process.env.NEXT_PUBLIC_IOS_ADMOB_CONSENT_TEST_DEVICE_IDS?.trim();
 
 type CapacitorBridge = {
   getPlatform?: () => string;
@@ -74,6 +78,55 @@ function getIosBannerConfig() {
   };
 }
 
+type AdMobModule = typeof import("@capacitor-community/admob");
+
+function getDebugGeography(module: AdMobModule) {
+  if (IOS_ADMOB_MODE === "production") {
+    return undefined;
+  }
+
+  switch (IOS_ADMOB_CONSENT_DEBUG_GEOGRAPHY) {
+    case "eea":
+      return module.AdmobConsentDebugGeography.EEA;
+    case "us":
+      return module.AdmobConsentDebugGeography.US;
+    case "other":
+      return module.AdmobConsentDebugGeography.OTHER;
+    default:
+      return undefined;
+  }
+}
+
+function getDebugTestDeviceIds() {
+  if (IOS_ADMOB_MODE === "production" || !IOS_ADMOB_CONSENT_TEST_DEVICE_IDS) {
+    return undefined;
+  }
+
+  const ids = IOS_ADMOB_CONSENT_TEST_DEVICE_IDS.split(",")
+    .map((id) => id.trim())
+    .filter(Boolean);
+
+  return ids.length > 0 ? ids : undefined;
+}
+
+async function requestConsentBeforeAds(module: AdMobModule, isTesting: boolean) {
+  const { AdMob } = module;
+  const debugGeography = isTesting ? getDebugGeography(module) : undefined;
+  const testDeviceIdentifiers = isTesting ? getDebugTestDeviceIds() : undefined;
+
+  let consentInfo = await AdMob.requestConsentInfo({
+    ...(debugGeography === undefined ? {} : { debugGeography }),
+    ...(testDeviceIdentifiers ? { testDeviceIdentifiers } : {}),
+    tagForUnderAgeOfConsent: false
+  });
+
+  if (!consentInfo.canRequestAds && consentInfo.isConsentFormAvailable) {
+    consentInfo = await AdMob.showConsentForm();
+  }
+
+  return consentInfo.canRequestAds;
+}
+
 export function MobileAdMobBanner() {
   const pathname = usePathname();
 
@@ -86,7 +139,8 @@ export function MobileAdMobBanner() {
         return;
       }
 
-      const { AdMob, BannerAdPosition, BannerAdSize } = await import("@capacitor-community/admob");
+      const admobModule = await import("@capacitor-community/admob");
+      const { AdMob, BannerAdPosition, BannerAdSize } = admobModule;
 
       if (cancelled) {
         return;
@@ -110,6 +164,19 @@ export function MobileAdMobBanner() {
           return;
         }
 
+        const canRequestAds = await requestConsentBeforeAds(admobModule, bannerConfig.isTesting);
+
+        if (cancelled) {
+          return;
+        }
+
+        if (!canRequestAds) {
+          setAdMobBannerSpacing(false);
+          await AdMob.hideBanner().catch(() => undefined);
+          await AdMob.removeBanner().catch(() => undefined);
+          return;
+        }
+
         await AdMob.showBanner({
           adId: bannerConfig.adId,
           adSize: BannerAdSize.BANNER,
@@ -121,7 +188,7 @@ export function MobileAdMobBanner() {
         setAdMobBannerSpacing(true);
       } catch (error) {
         setAdMobBannerSpacing(false);
-        console.error("AdMob test banner failed", {
+        console.error("AdMob banner setup failed", {
           placement: "ios-bottom-banner",
           ...describeError(error)
         });
