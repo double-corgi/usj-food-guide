@@ -65,16 +65,16 @@ export function EatenExperience({ foods }: { foods: FoodWithRelations[] }) {
       return sum + (food?.priceMin ?? food?.price ?? 0) * (log.eatenCount ?? 1);
     }, 0);
   return (
-    <div className="space-y-8">
-      <section className="space-y-2 py-1">
+    <div className="space-y-7">
+      <section className="mobile-page-section space-y-3 px-4 py-4 sm:px-5">
         <p className="text-xs font-black tracking-[0.16em] text-park/70">{t("eaten.kicker")}</p>
-        <h1 className="mt-2 text-3xl font-black tracking-tight text-ink md:text-4xl">{t("eaten.title")}</h1>
-        <p className="flex flex-wrap gap-x-4 gap-y-1 text-[11px] font-bold leading-5 text-slate-400">
-          <span>{t("eaten.eatenCount", { count: eatenRecords.length })}</span>
-          <span>{t("eaten.activeCompletion", { rate: completion.rate })}</span>
-          <span>{t("eaten.archiveRecord", { rate: archiveRecord.rate })}</span>
-          <span>{t("eaten.totalSpend")} {totalSpend ? `¥${totalSpend.toLocaleString("ja-JP")}` : t("eaten.noRecordValue")}</span>
-        </p>
+        <h1 className="text-[1.85rem] font-black tracking-tight text-ink md:text-4xl">{t("eaten.title")}</h1>
+        <div className="grid grid-cols-2 gap-2 text-[11px] font-black leading-5 text-slate-500 sm:grid-cols-4">
+          <span className="rounded-2xl bg-white px-3 py-2 ring-1 ring-slate-200/70">{t("eaten.eatenCount", { count: eatenRecords.length })}</span>
+          <span className="rounded-2xl bg-white px-3 py-2 ring-1 ring-slate-200/70">{t("eaten.activeCompletion", { rate: completion.rate })}</span>
+          <span className="rounded-2xl bg-white px-3 py-2 ring-1 ring-slate-200/70">{t("eaten.archiveRecord", { rate: archiveRecord.rate })}</span>
+          <span className="rounded-2xl bg-white px-3 py-2 ring-1 ring-slate-200/70">{t("eaten.totalSpend")} {totalSpend ? `¥${totalSpend.toLocaleString("ja-JP")}` : t("eaten.noRecordValue")}</span>
+        </div>
       </section>
 
       <AdSlot placement="eaten-summary" />
@@ -88,7 +88,7 @@ export function EatenExperience({ foods }: { foods: FoodWithRelations[] }) {
             key={tab.id}
             type="button"
             onClick={() => setActiveTab(tab.id)}
-            className={`min-h-9 rounded-full px-4 transition active:scale-[0.98] ${activeTab === tab.id ? "bg-white text-ink shadow-sm" : "hover:text-ink"}`}
+            className={`min-h-10 rounded-full px-4 transition active:scale-[0.98] ${activeTab === tab.id ? "bg-white text-ink shadow-sm" : "hover:text-ink"}`}
             aria-pressed={activeTab === tab.id}
           >
             {tab.label}
@@ -100,7 +100,7 @@ export function EatenExperience({ foods }: { foods: FoodWithRelations[] }) {
         <section className="space-y-4">
           <p className="text-xs font-black text-slate-400">{t("eaten.albumCount", { shown: wantedFoods.length, total: wantedFoods.length })}</p>
           {wantedFoods.length > 0 ? (
-            <div className="grid grid-cols-2 gap-2.5 md:grid-cols-3 xl:grid-cols-5">
+            <div className="grid grid-cols-2 gap-2.5 sm:gap-3 md:grid-cols-3 xl:grid-cols-5">
               {wantedFoods.map((food) => (
                 <NextWantCard key={food.id} food={food} />
               ))}
@@ -161,7 +161,7 @@ export function EatenExperience({ foods }: { foods: FoodWithRelations[] }) {
         ) : null}
       </section>
 
-      <section className="space-y-3 border-t border-slate-200 pt-6">
+      <section className="mobile-page-section space-y-3 px-4 py-5 sm:px-5">
         <div className="flex flex-wrap items-end justify-between gap-3">
           <div>
             <p className="text-xs font-black text-park">{t("eaten.areaProgress.kicker")}</p>

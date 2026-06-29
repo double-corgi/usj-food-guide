@@ -14,13 +14,13 @@ export function StoresOverview({ stores }: { stores: StoreWithFoods[] }) {
   const areaGroups = groupStoresByArea(stores);
 
   return (
-    <div className="mx-auto max-w-3xl space-y-7">
+    <div className="mx-auto max-w-3xl space-y-6">
       <section className="space-y-2">
         <p className="text-xs font-black text-park">{t("stores.kicker")}</p>
-        <h1 className="text-3xl font-black tracking-tight text-ink md:text-4xl">{t("stores.title")}</h1>
+        <h1 className="text-[1.85rem] font-black tracking-tight text-ink md:text-4xl">{t("stores.title")}</h1>
       </section>
 
-      <section className="space-y-7">
+      <section className="space-y-6">
         {areaGroups.map(({ areaName, stores: areaStores }) => (
           <div key={areaName} className="space-y-2.5">
             <div className="flex items-center justify-between gap-4 border-b border-slate-200 pb-2">
@@ -33,7 +33,7 @@ export function StoresOverview({ stores }: { stores: StoreWithFoods[] }) {
               <p className="shrink-0 text-xs font-bold text-slate-400">{t("stores.areaStoreCount", { count: areaStores.length })}</p>
             </div>
 
-            <div className="divide-y divide-slate-100 rounded-[1rem] border border-slate-100 bg-white">
+            <div className="mobile-card-surface divide-y divide-slate-100 overflow-hidden rounded-[1.15rem]">
               {areaStores.map((store) => (
                 <StoreRow key={store.id} store={store} representativeFood={pickRepresentativeFood(store)} locale={locale} />
               ))}
@@ -57,7 +57,7 @@ function StoreRow({ store, representativeFood, locale }: { store: StoreWithFoods
   return (
     <Link
       href={`/stores/${store.id}`}
-      className="grid min-h-[82px] min-w-0 grid-cols-[58px_1fr_30px] items-center gap-3 px-3 py-2.5 transition hover:bg-slate-50 active:bg-slate-100 sm:min-h-[88px] sm:grid-cols-[64px_1fr_32px] sm:px-3.5"
+      className="grid min-h-[86px] min-w-0 grid-cols-[58px_1fr_30px] items-center gap-3 px-3 py-3 transition hover:bg-slate-50 active:bg-slate-100 sm:min-h-[88px] sm:grid-cols-[64px_1fr_32px] sm:px-3.5"
     >
       <div className="relative h-14 w-14 overflow-hidden rounded-2xl bg-slate-100 sm:h-16 sm:w-16">
         {representativeFood ? (

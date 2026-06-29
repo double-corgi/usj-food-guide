@@ -52,9 +52,9 @@ export function HomeCollectionHero({ foods }: { foods: FoodWithRelations[] }) {
   const heroDisplayName = heroFood ? getFoodNameI18n(heroFood.id, locale, heroFood.name) : appBrand.name;
 
   return (
-    <section className="home-collection-hero relative isolate -mx-4 bg-[#fffaf5] px-4 pb-4 sm:-mx-6 sm:px-6 lg:mx-0 lg:rounded-[2rem] lg:px-8 lg:pb-8">
-      <div className="mx-auto grid max-w-[1080px] gap-4 lg:grid-cols-[0.36fr_0.64fr] lg:grid-rows-[auto_1fr] lg:items-start lg:gap-x-8 lg:gap-y-4">
-        <div className="order-1 space-y-2.5 text-center lg:col-start-1 lg:row-start-1 lg:text-left">
+    <section className="home-collection-hero relative isolate -mx-4 bg-[#fffaf5] px-4 pb-5 sm:-mx-6 sm:px-6 lg:mx-0 lg:rounded-[2rem] lg:px-8 lg:pb-8">
+      <div className="mx-auto grid max-w-[1080px] gap-3.5 lg:grid-cols-[0.36fr_0.64fr] lg:grid-rows-[auto_1fr] lg:items-start lg:gap-x-8 lg:gap-y-4">
+        <div className="order-1 space-y-2 text-center lg:col-start-1 lg:row-start-1 lg:text-left">
           <div className="flex flex-col items-center gap-1.5 lg:items-start">
             <p className="select-none text-[10px] font-black tracking-[0.22em] text-[#8a5b16] sm:text-[10.5px]">
               USJ FOOD COLLECTION
@@ -64,10 +64,10 @@ export function HomeCollectionHero({ foods }: { foods: FoodWithRelations[] }) {
           <h1 className="select-none text-[1.55rem] font-black leading-[1.12] tracking-[-0.02em] text-[#071b3a] sm:text-[1.78rem] lg:text-[1.65rem]">
             {appBrand.name}
           </h1>
-          <p className="text-[12px] font-bold leading-6 text-slate-500 sm:text-[13px]">{t("footer.tagline")}</p>
+          <p className="mx-auto max-w-[19rem] text-[12px] font-bold leading-6 text-slate-500 sm:text-[13px] lg:mx-0">{t("footer.tagline")}</p>
         </div>
 
-        <div className="order-3 space-y-2.5 lg:col-start-1 lg:row-start-2 lg:self-start">
+        <div className="order-3 space-y-2 rounded-[1.25rem] bg-white/72 px-4 py-3 ring-1 ring-[#eadcc8]/80 lg:col-start-1 lg:row-start-2 lg:self-start">
           {hasCollection ? (
             <>
               <div className="flex flex-wrap items-end justify-center gap-x-2 gap-y-1 lg:justify-start">
@@ -99,7 +99,7 @@ export function HomeCollectionHero({ foods }: { foods: FoodWithRelations[] }) {
 
         <div className="order-2 space-y-2.5 lg:col-start-2 lg:row-span-2 lg:row-start-1">
           <p className="text-center text-[12px] font-black tracking-[0.02em] text-[#8a5b16] lg:text-left">{t("collection.tagline")}</p>
-          <div className="relative aspect-video overflow-hidden rounded-[1.45rem] bg-[#f1e4d2] shadow-[0_20px_48px_rgba(7,27,58,0.12)] ring-1 ring-[#eadcc8]">
+          <div className="relative aspect-[16/10] overflow-hidden rounded-[1.35rem] bg-[#f1e4d2] shadow-[0_16px_38px_rgba(7,27,58,0.12)] ring-1 ring-[#eadcc8] sm:aspect-video">
             {heroFoods.length > 0 ? (
               heroFoods.map((food, index) => {
                 const displayName = getFoodNameI18n(food.id, locale, food.name);
@@ -146,7 +146,7 @@ export function HomeActiveFoodCollection({ foods, collectionFoods = foods }: { f
   const activeFoods = useMemo(() => pickActiveCollectionFoods(collectionFoods, logs, shelfKeys), [collectionFoods, logs, shelfKeys]);
 
   return (
-    <section className="space-y-4">
+    <section className="space-y-3.5">
       <div className="flex items-end justify-between gap-3">
         <div>
           <h2 className="text-xl font-black text-ink">{t("home.collectibleFoods")}</h2>
@@ -156,13 +156,13 @@ export function HomeActiveFoodCollection({ foods, collectionFoods = foods }: { f
       </div>
 
       {activeFoods.length > 0 ? (
-        <div className="flex snap-x gap-4 overflow-x-auto pb-2 [-ms-overflow-style:none] [scrollbar-width:none] lg:grid lg:grid-cols-6 lg:overflow-visible lg:pb-0 [&::-webkit-scrollbar]:hidden">
+        <div className="flex snap-x gap-3.5 overflow-x-auto pb-2 [-ms-overflow-style:none] [scrollbar-width:none] lg:grid lg:grid-cols-6 lg:overflow-visible lg:pb-0 [&::-webkit-scrollbar]:hidden">
           {activeFoods.map((food, index) => (
             <HomeFoodRailCard key={food.id} food={food} className={index >= 6 ? "lg:hidden" : ""} />
           ))}
           <Link
             href="/foods"
-            className="flex min-h-[300px] w-[74vw] max-w-[300px] shrink-0 snap-start flex-col justify-end rounded-[1.25rem] bg-[#fffaf5] p-5 text-sm font-black text-ink ring-1 ring-[#eadcc8] lg:hidden"
+            className="flex min-h-[250px] w-[68vw] max-w-[260px] shrink-0 snap-start flex-col justify-end rounded-[1.25rem] bg-[#fffaf5] p-5 text-sm font-black text-ink ring-1 ring-[#eadcc8] lg:hidden"
           >
             <span>{t("common.viewAll")}</span>
             <span className="mt-1 text-xs font-bold text-slate-500">{t("home.toRegisteredCollection")}</span>
@@ -260,12 +260,12 @@ function HomeFoodRailCard({ food, className = "" }: { food: FoodWithRelations; c
   const displayName = getFoodNameI18n(food.id, locale, food.name);
 
   return (
-    <Link href={`/foods/${food.id}`} className={`group w-[74vw] max-w-[300px] shrink-0 snap-start lg:w-auto lg:max-w-none ${className}`}>
-      <div className="aspect-[4/3] overflow-hidden rounded-[1.25rem] bg-slate-100">
+    <Link href={`/foods/${food.id}`} className={`group w-[68vw] max-w-[260px] shrink-0 snap-start lg:w-auto lg:max-w-none ${className}`}>
+      <div className="aspect-[4/3] overflow-hidden rounded-[1.2rem] bg-slate-100 shadow-[0_8px_22px_rgba(15,23,42,0.08)]">
         <FoodImage food={food} alt={displayName} className="h-full w-full transition duration-300 group-hover:scale-[1.03]" />
       </div>
       <div className="mt-3 space-y-1">
-        <p className="line-clamp-2 min-h-[42px] text-[15px] font-black leading-[1.45] text-ink">{displayName}</p>
+        <p className="line-clamp-2 min-h-[40px] text-[14px] font-black leading-[1.45] text-ink sm:text-[15px]">{displayName}</p>
         <p className="line-clamp-1 text-xs font-bold text-slate-500">
           <span className="font-black text-[#071b3a]">{formatPriceI18n(food, locale, t)}</span>
           <span className="px-1.5 text-slate-300">/</span>

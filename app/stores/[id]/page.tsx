@@ -32,14 +32,14 @@ export default async function StoreDetailPage({ params }: { params: Promise<{ id
   const displayFoods = getStoreDisplayFoods(store.foods, store);
 
   return (
-    <div className="mx-auto max-w-4xl space-y-8">
+    <div className="mx-auto max-w-4xl space-y-7">
       <Link href="/stores" className="inline-flex min-h-10 items-center gap-2 rounded-full border border-slate-200 bg-white/70 px-3 text-sm font-black text-slate-700">
         <ChevronLeft size={17} aria-hidden />
         <I18nText k="store.backToList" />
       </Link>
 
       <section className="space-y-5 border-b border-slate-200 pb-7">
-        <div className="relative h-[210px] overflow-hidden rounded-[1.5rem] bg-slate-100 sm:h-[230px] md:h-[300px]">
+        <div className="relative h-[190px] overflow-hidden rounded-[1.35rem] bg-slate-100 shadow-[0_10px_26px_rgba(15,23,42,0.08)] sm:h-[230px] md:h-[300px]">
           <StoreVisual store={store} eager iconSize={34} className="h-full w-full" />
         </div>
 
@@ -47,7 +47,7 @@ export default async function StoreDetailPage({ params }: { params: Promise<{ id
           <p className="text-xs font-black text-park">
             <I18nText k="store.detailKicker" />
           </p>
-          <h1 className="text-3xl font-black leading-tight tracking-tight text-ink md:text-4xl">
+          <h1 className="text-[1.8rem] font-black leading-tight tracking-tight text-ink md:text-4xl">
             <StoreNameClient store={{ id: store.id, aliases: store.aliases, name: store.name }} />
           </h1>
           <p className="inline-flex items-center gap-2 text-sm font-black text-slate-500">
@@ -84,7 +84,7 @@ export default async function StoreDetailPage({ params }: { params: Promise<{ id
             <I18nText k="store.infoSectionTitle" />
           </h2>
         </div>
-        <div className="grid gap-4 sm:grid-cols-2">
+        <div className="grid gap-3.5 sm:grid-cols-2">
           <StoreInfoItem icon={MapPin} title={<I18nText k="store.infoAreaLabel" />} body={store.areaName} />
           <StoreInfoItem icon={Store} title={<I18nText k="store.infoTypeLabel" />} body={getStoreTypeLabel(store)} />
         </div>
@@ -123,7 +123,7 @@ function StoreInfoItem({
   linkLabel?: ReactNode;
 }) {
   return (
-    <div className="flex gap-3">
+    <div className="mobile-card-surface flex gap-3 rounded-[1.15rem] px-4 py-4">
       <span className="mt-0.5 grid h-9 w-9 shrink-0 place-items-center rounded-full bg-mint text-park">
         <Icon size={18} aria-hidden />
       </span>

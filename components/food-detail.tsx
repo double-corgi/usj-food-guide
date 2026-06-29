@@ -79,7 +79,7 @@ export function FoodDetail({
   }, [food.id]);
 
   return (
-    <div className="min-w-0 space-y-6 overflow-x-hidden pb-24">
+    <div className="min-w-0 space-y-5 overflow-x-hidden pb-20">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <Link href="/foods" className="inline-flex min-h-10 items-center gap-2 rounded-full border border-slate-200 bg-white/70 px-3 text-sm font-black text-slate-700">
           <ChevronLeft size={17} aria-hidden />
@@ -102,7 +102,7 @@ export function FoodDetail({
       </div>
 
       <section className="space-y-5 text-ink">
-        <div className="relative h-[370px] overflow-hidden rounded-[2rem] bg-slate-100 sm:h-[620px]">
+        <div className="relative h-[300px] overflow-hidden rounded-[1.45rem] bg-slate-100 shadow-[0_12px_30px_rgba(15,23,42,0.08)] sm:h-[540px] sm:rounded-[2rem]">
           <FoodImage food={food} alt={displayName} eager className="h-full w-full" variant="contain" />
           <div className="absolute left-3 top-3 flex flex-wrap gap-2">
             <span className="rounded-full bg-white/90 px-3 py-1.5 text-xs font-black text-park shadow-sm">{getZukanCode(food, allFoods)}</span>
@@ -118,14 +118,14 @@ export function FoodDetail({
           </div>
         </div>
 
-        <div className="grid gap-5 px-1 sm:px-0 lg:grid-cols-[1fr_auto] lg:items-end">
+        <div className="mobile-page-section grid gap-5 px-4 py-4 sm:px-5 lg:grid-cols-[1fr_auto] lg:items-end">
           <div className="min-w-0 space-y-3">
             <p className="text-xs font-black text-park">{t(`category.${food.category}` as TranslationKey)}</p>
-            <h1 className="break-words text-3xl font-black leading-tight tracking-tight text-ink [overflow-wrap:anywhere] sm:text-5xl">
+            <h1 className="break-words text-[1.75rem] font-black leading-tight tracking-tight text-ink [overflow-wrap:anywhere] sm:text-5xl">
               {displayName}
             </h1>
             <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
-              <p className="text-3xl font-black leading-none text-park">{formatPriceI18n(food, locale, t)}</p>
+              <p className="text-[1.65rem] font-black leading-none text-park sm:text-3xl">{formatPriceI18n(food, locale, t)}</p>
               <span className={`rounded-full px-3 py-1 text-xs font-black ${getSaleStatusTone(food)}`}>{getSaleStatusLabelI18n(food, t)}</span>
               {urgencyLabel ? <span className="rounded-full bg-berry px-3 py-1 text-xs font-black text-white">{urgencyLabel}</span> : null}
               {food.isLimited ? <span className="rounded-full bg-sun/30 px-3 py-1 text-xs font-black text-ink">{t("foods.badgeLimited")}</span> : null}
@@ -140,7 +140,7 @@ export function FoodDetail({
             <button
               type="button"
               onClick={() => toggleEaten(eatToggleFoodId, getStoredSpendAmount(food))}
-              className={`inline-flex h-14 w-full items-center justify-center gap-2 rounded-full text-base font-black shadow-sm active:scale-[0.98] ${eaten ? "bg-park text-white" : "bg-park text-white"}`}
+              className={`inline-flex min-h-14 w-full items-center justify-center gap-2 rounded-full text-base font-black shadow-sm active:scale-[0.98] ${eaten ? "bg-park text-white" : "bg-park text-white"}`}
             >
               <Check size={20} aria-hidden />
               {eaten ? t("foodCard.eatenDone") : t("foodCard.markEaten")}
@@ -148,7 +148,7 @@ export function FoodDetail({
             <button
               type="button"
               onClick={() => toggleWanted(food)}
-              className={`inline-flex h-14 w-full items-center justify-center gap-2 rounded-full border text-sm font-black active:scale-[0.98] ${
+              className={`inline-flex min-h-14 w-full items-center justify-center gap-2 rounded-full border text-sm font-black active:scale-[0.98] ${
                 wanted ? "border-park bg-mint text-park" : "border-slate-200 bg-white/75 text-slate-700"
               }`}
               aria-pressed={wanted}
@@ -160,7 +160,7 @@ export function FoodDetail({
         </div>
       </section>
 
-      <section className="space-y-4 border-y border-slate-200 py-6">
+      <section className="mobile-page-section space-y-4 px-4 py-5 sm:px-5">
         <div className="flex flex-wrap items-end justify-between gap-3">
           <div>
             <p className="text-xs font-black text-park">{t("foodDetail.howToBuy")}</p>

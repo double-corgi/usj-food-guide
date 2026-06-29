@@ -21,20 +21,20 @@ export function AreaOverview({ areas, foods }: { areas: Area[]; foods: FoodWithR
   });
 
   return (
-    <div className="space-y-7">
+    <div className="space-y-6">
       <div>
         <p className="text-xs font-black tracking-[0.16em] text-park/70">{t("areas.kicker")}</p>
-        <h1 className="mt-2 text-3xl font-black tracking-tight text-ink md:text-4xl">{t("areas.title")}</h1>
+        <h1 className="mt-2 text-[1.85rem] font-black tracking-tight text-ink md:text-4xl">{t("areas.title")}</h1>
         <p className="mt-2 max-w-2xl text-sm font-semibold leading-6 text-slate-500">{t("areas.subtitle")}</p>
       </div>
-      <div className="grid gap-4 md:grid-cols-2">
+      <div className="grid gap-3.5 md:grid-cols-2">
         {visibleAreas.map((area) => {
           const completion = calculateAreaProgress(foods, logs, { id: area.id, name: area.name, sortOrder: 0 }).active;
           const href = areas.some((sourceArea) => sourceArea.id === area.id) ? `/areas/${area.id}` : "/areas";
 
           return (
-            <Link key={area.name} href={href} className="group block overflow-hidden rounded-[1.55rem] bg-white transition active:scale-[0.99] md:hover:-translate-y-0.5">
-              <div className="relative h-[230px] overflow-hidden bg-slate-100">
+            <Link key={area.name} href={href} className="group mobile-card-surface block overflow-hidden rounded-[1.35rem] transition active:scale-[0.99] md:hover:-translate-y-0.5">
+              <div className="relative h-[190px] overflow-hidden bg-slate-100 sm:h-[230px]">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={area.image}

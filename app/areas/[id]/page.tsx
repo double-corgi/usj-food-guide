@@ -39,8 +39,8 @@ export default async function AreaDetailPage({ params }: { params: Promise<{ id:
     .sort((a, b) => (getRemainingDays(a) ?? Number.MAX_SAFE_INTEGER) - (getRemainingDays(b) ?? Number.MAX_SAFE_INTEGER) || a.name.localeCompare(b.name, "ja"))
     .slice(0, 3);
   return (
-    <div className="area-detail-page -mx-4 bg-[#fffaf5] px-4 pb-28 sm:-mx-6 sm:px-6 lg:mx-0 lg:px-0">
-      <div className="mx-auto max-w-[1080px] space-y-10">
+    <div className="area-detail-page -mx-4 bg-[#fffaf5] px-4 pb-24 sm:-mx-6 sm:px-6 lg:mx-0 lg:px-0">
+      <div className="mx-auto max-w-[1080px] space-y-8">
         <Link href="/areas" className="inline-flex items-center gap-2 text-sm font-black text-[#071b3a]">
           <ChevronLeft size={17} aria-hidden />
           <I18nText k="area.backToList" />
@@ -48,12 +48,12 @@ export default async function AreaDetailPage({ params }: { params: Promise<{ id:
 
         <section className="space-y-5">
           {areaImage ? (
-            <div className="relative -mx-4 h-[240px] overflow-hidden bg-[#efe1cd] sm:-mx-6 lg:mx-0 lg:h-[320px] lg:rounded-[2rem]">
+            <div className="relative -mx-4 h-[220px] overflow-hidden bg-[#efe1cd] sm:-mx-6 lg:mx-0 lg:h-[320px] lg:rounded-[2rem]">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src={areaImage.image} alt="" className="h-full w-full object-cover" />
               <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(2,8,23,0.02)_0%,rgba(2,8,23,0.24)_42%,rgba(2,8,23,0.86)_100%)]" />
               <div className="absolute inset-x-0 bottom-0 p-5 text-white drop-shadow-[0_2px_10px_rgba(0,0,0,0.55)] sm:p-6">
-                <h1 className="max-w-[820px] text-3xl font-black leading-tight md:text-4xl">{area.name}</h1>
+                <h1 className="max-w-[820px] text-[1.8rem] font-black leading-tight md:text-4xl">{area.name}</h1>
               </div>
             </div>
           ) : (
@@ -75,9 +75,9 @@ export default async function AreaDetailPage({ params }: { params: Promise<{ id:
                 <I18nText k="area.firstPicksDescription" />
               </p>
             </div>
-            <div className="flex snap-x gap-4 overflow-x-auto pb-2 [-ms-overflow-style:none] [scrollbar-width:none] lg:grid lg:grid-cols-3 lg:overflow-visible lg:pb-0 [&::-webkit-scrollbar]:hidden">
+            <div className="flex snap-x gap-3.5 overflow-x-auto pb-2 [-ms-overflow-style:none] [scrollbar-width:none] lg:grid lg:grid-cols-3 lg:overflow-visible lg:pb-0 [&::-webkit-scrollbar]:hidden">
               {firstBites.map((food) => (
-                <Link key={food.id} href={`/foods/${food.id}`} className="w-[74vw] max-w-[300px] shrink-0 snap-start transition active:scale-[0.99] lg:w-auto lg:max-w-none">
+                <Link key={food.id} href={`/foods/${food.id}`} className="w-[68vw] max-w-[260px] shrink-0 snap-start transition active:scale-[0.99] lg:w-auto lg:max-w-none">
                   <div className="aspect-[4/3] overflow-hidden rounded-[1.15rem] bg-[#f1e4d2]">
                     <FoodImage food={food} className="h-full w-full" />
                   </div>
@@ -97,9 +97,9 @@ export default async function AreaDetailPage({ params }: { params: Promise<{ id:
             <p className="mt-1 text-sm font-bold text-slate-500">
               <I18nText k="area.endingSoonDescription" />
             </p>
-            <div className="flex snap-x gap-4 overflow-x-auto pb-2 [-ms-overflow-style:none] [scrollbar-width:none] lg:grid lg:grid-cols-3 lg:overflow-visible lg:pb-0 [&::-webkit-scrollbar]:hidden">
+            <div className="flex snap-x gap-3.5 overflow-x-auto pb-2 [-ms-overflow-style:none] [scrollbar-width:none] lg:grid lg:grid-cols-3 lg:overflow-visible lg:pb-0 [&::-webkit-scrollbar]:hidden">
               {endingSoonFoods.map((food) => (
-                <Link key={food.id} href={`/foods/${food.id}`} className="w-[74vw] max-w-[300px] shrink-0 snap-start transition active:scale-[0.99] lg:w-auto lg:max-w-none">
+                <Link key={food.id} href={`/foods/${food.id}`} className="w-[68vw] max-w-[260px] shrink-0 snap-start transition active:scale-[0.99] lg:w-auto lg:max-w-none">
                   <div className="aspect-[4/3] overflow-hidden rounded-[1.15rem] bg-[#f1e4d2]">
                     <FoodImage food={food} className="h-full w-full" />
                   </div>

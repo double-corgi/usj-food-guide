@@ -16,11 +16,11 @@ type HomeDashboardProps = {
 
 export function HomeDashboard({ foods, activeCollectionFoods = foods, areas = [] }: HomeDashboardProps) {
   return (
-    <div className="min-h-screen overflow-x-hidden bg-[#fffdf9] pb-32 text-ink">
-      <div className="mx-auto flex w-full min-w-0 max-w-[1080px] flex-col gap-10 px-4 pb-4 pt-0 sm:px-6 sm:py-6 lg:px-8">
+    <div className="min-h-screen overflow-x-hidden bg-[#fffdf9] pb-24 text-ink">
+      <div className="mx-auto flex w-full min-w-0 max-w-[1080px] flex-col gap-8 px-4 pb-4 pt-0 sm:px-6 sm:py-6 lg:px-8">
         <HomeCollectionHero foods={foods} />
 
-        <div className="space-y-12">
+        <div className="space-y-10">
           <HomeActiveFoodCollection foods={foods} collectionFoods={activeCollectionFoods} />
           <AdSlot placement="home-after-recent" />
           <HomeLimitedCollection foods={foods} />
