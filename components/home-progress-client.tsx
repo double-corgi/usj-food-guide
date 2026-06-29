@@ -322,13 +322,12 @@ function pickActiveCollectionFoods(foods: FoodWithRelations[], logs: UserFoodLog
 }
 
 function prioritizeRecentAdminFoods(foods: FoodWithRelations[]) {
-  const manualFoods = foods
-    .filter(isManualFood)
-    .sort((a, b) => getAdminRecencyTime(b) - getAdminRecencyTime(a) || a.name.localeCompare(b.name, "ja"));
-  const overriddenFoods = foods
-    .filter((food) => !isManualFood(food) && isOverriddenFood(food))
-    .sort((a, b) => getAdminRecencyTime(b) - getAdminRecencyTime(a) || a.name.localeCompare(b.name, "ja"));
-  return [...manualFoods, ...overriddenFoods];
+  return foods
+    .filter((food) => isManualFood(food) || isOverriddenFood(food))
+    .map((food) => ({ food, recencyTime: getAdminRecencyTime(food) }))
+    .filter(({ recencyTime }) => recencyTime > 0)
+    .sort((a, b) => b.recencyTime - a.recencyTime || a.food.name.localeCompare(b.food.name, "ja"))
+    .map(({ food }) => food);
 }
 
 function isManualFood(food: FoodWithRelations) {
