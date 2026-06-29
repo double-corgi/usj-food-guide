@@ -57,8 +57,8 @@ export function HomeCollectionHero({ foods }: { foods: FoodWithRelations[] }) {
       <div className="mx-auto grid max-w-[1080px] gap-3.5 lg:grid-cols-[0.36fr_0.64fr] lg:grid-rows-[auto_1fr] lg:items-start lg:gap-x-8 lg:gap-y-4">
         <div className="order-1 space-y-2 text-center lg:col-start-1 lg:row-start-1 lg:text-left">
           <div className="flex flex-col items-center gap-1.5 lg:items-start">
-            <p className="select-none text-[10px] font-black tracking-[0.22em] text-[#8a5b16] sm:text-[10.5px]">
-              USJ FOOD COLLECTION
+            <p className="select-none text-[10px] font-black tracking-[0.18em] text-[#8a5b16] sm:text-[10.5px]">
+              非公式フード図鑑
             </p>
             <span className="h-0.5 w-16 rounded-full bg-[linear-gradient(90deg,#0057b8,#fdbb30)]" aria-hidden />
           </div>

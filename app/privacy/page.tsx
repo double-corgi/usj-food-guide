@@ -21,8 +21,7 @@ const sections = [
     items: [
       "Googleログイン、Appleログイン、メール登録、Supabase認証などのログイン機能は使用しません。",
       "食べた記録、レビュー、星評価をクラウド同期する機能は使用しません。",
-      "位置情報、連絡先、写真ライブラリ、カメラ、マイク、決済情報は、現時点ではアプリから取得しません。",
-      "広告IDや第三者広告SDKによるトラッキングは、現時点では導入していません。"
+      "位置情報、連絡先、写真ライブラリ、カメラ、マイク、決済情報は、現時点ではアプリから取得しません。"
     ]
   },
   {
@@ -47,7 +46,27 @@ const sections = [
       "管理画面保護のため、管理者用アクセスキーをCookieで扱う場合があります。",
       "アクセス解析は、NEXT_PUBLIC_ANALYTICS_ENDPOINTを設定した場合のみページ表示イベントなど最小限の利用状況を送信します。未設定時は外部送信しません。",
       "エラー監視は、NEXT_PUBLIC_SENTRY_DSNを設定した場合のみエラー内容、発生ページ、発生時刻などを送信します。氏名や連絡先の送信を目的としません。",
-      "現時点で広告配信、広告SDK、広告IDを利用したトラッキングは導入していません。導入する場合は、配信事業者、取得情報、パーソナライズの有無を本ページに追記します。"
+      "iOSアプリではGoogle AdMobを利用して広告を表示します。Web/PWA版および管理画面では、現在の実装ではAdMob広告を表示しません。",
+      "広告の配信、不正防止、品質改善などのため、Googleが端末情報、広告の表示・操作情報、利用状況、診断情報などを処理する場合があります。",
+      "広告識別子などの取扱いは、Googleの最新のプライバシーポリシーおよびGoogle Mobile Ads SDKの仕様に従います。",
+      "現在のアプリは非パーソナライズ広告を基本方針としています。将来パーソナライズ広告やアプリ・サイトをまたいだ追跡を導入する場合は、必要な同意取得と本ポリシーの更新を行います。"
+    ]
+  },
+  {
+    title: "利用している外部サービス",
+    items: [
+      "Google AdMob: iOSアプリ内の広告表示に利用します。広告配信や不正防止などのため、Googleが広告関連情報を処理する場合があります。",
+      "Supabase: 管理者向けの認証、管理画面で追加・修正したフード情報、問い合わせ・報告内容の管理に利用します。通常利用者の食べた記録を自動でクラウド保存する目的では利用していません。",
+      "Vercel: Web/PWA版の配信、アプリ内Webコンテンツの配信、ページ表示に必要なサーバー処理に利用します。",
+      "Sentryは、NEXT_PUBLIC_SENTRY_DSNを設定した場合のみエラー監視に利用します。未設定の場合はSentryへ送信しません。"
+    ]
+  },
+  {
+    title: "利用者の選択肢",
+    items: [
+      "端末やGoogleの広告設定により、広告に関する設定を変更できる場合があります。",
+      "アプリ内に保存された食べた記録、評価、メモ、金額などは、アプリ内の全データ削除機能、ブラウザ設定、またはアプリ削除により消える場合があります。",
+      "問い合わせ・報告内容やデータの取扱いについて確認・削除を希望する場合は、お問い合わせページから連絡してください。"
     ]
   },
   {
@@ -64,7 +83,7 @@ export default function PrivacyPage() {
     <article className="mx-auto max-w-4xl rounded-[1.6rem] border border-white/80 bg-white p-6 shadow-soft">
       <p className="text-xs font-black uppercase tracking-[0.18em] text-park">Privacy</p>
       <h1 className="mt-2 text-3xl font-black text-ink">プライバシーポリシー</h1>
-      <p className="mt-4 text-sm font-bold leading-7 text-slate-600">最終更新日: 2026年6月6日</p>
+      <p className="mt-4 text-sm font-bold leading-7 text-slate-600">最終更新日: 2026年6月29日</p>
       <div className="mt-6 grid gap-5">
         {sections.map((section) => (
           <section key={section.title} className="rounded-2xl bg-slate-50 p-4">
