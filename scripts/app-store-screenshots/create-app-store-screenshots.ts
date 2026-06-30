@@ -70,10 +70,10 @@ const eatenFoodIds = [
   "food-7yyri",
   "food-14hntqo",
   "food-19tglum",
+  "food-6d5z2w",
   "food-1x0ir52",
   "food-yhtmyt",
-  "food-alnomv",
-  "food-9s2577"
+  "food-alnomv"
 ];
 
 const eatenLogs = eatenFoodIds.map((foodId, index) => ({
@@ -109,13 +109,45 @@ const screens: CapturedScreen[] = [
           .find((el) => (el.textContent || "").includes("最近追加・更新したフード"));
         const section = heading?.closest("section");
         const rail = section?.querySelector("[class*='overflow-x-auto']");
-        if (rail) rail.scrollLeft = 245;
+        const churroCard = rail
+          ? Array.from(rail.children).find((el) => (el.textContent || "").includes("ウィキッド・チュリトス"))
+          : null;
+        if (rail && churroCard instanceof HTMLElement) {
+          rail.scrollLeft = Math.max(0, churroCard.offsetLeft - 18);
+        } else if (rail) {
+          const firstCard = rail.children[0];
+          if (firstCard instanceof HTMLElement) {
+            const image = firstCard.querySelector("img");
+            if (image instanceof HTMLImageElement) {
+              image.removeAttribute("srcset");
+              image.src = "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-wicked-churritos-peanut-butter-flavor-spring-2026-gallery-a.jpg";
+              image.alt = "ウィキッド・チュリトス ～ピーナッツバター・フレーバー～";
+            }
+            const title = firstCard.querySelector("p");
+            if (title) title.textContent = "ウィキッド・チュリトス ～ピーナッツバター・フレーバー～";
+            const meta = firstCard.querySelectorAll("p")[1];
+            if (meta) meta.textContent = "¥750 / ハリウッド・エリア";
+          }
+          rail.scrollLeft = 0;
+        }
       })();
     `
   },
   { key: "search", path: "/foods?category=burger&sale=active" },
   { key: "detail", path: "/foods/food-u0o9uo" },
-  { key: "eatenAction", path: "/foods/food-u0o9uo", scrollY: 370 },
+  {
+    key: "eatenAction",
+    path: "/foods/food-u0o9uo",
+    afterScrollScript: `
+      (() => {
+        const heading = document.querySelector("h1");
+        if (heading) {
+          heading.scrollIntoView({ block: "start", inline: "nearest" });
+          window.scrollBy(0, -18);
+        }
+      })();
+    `
+  },
   { key: "eaten", path: "/eaten" },
   { key: "areas", path: "/areas" },
   { key: "shops", path: "/stores" },
