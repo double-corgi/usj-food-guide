@@ -18,6 +18,7 @@ type CapturedScreen = {
   path: string;
   scrollText?: string;
   scrollY?: number;
+  afterScrollScript?: string;
 };
 
 type Slide = {
@@ -98,7 +99,20 @@ const localStorageSeed: Record<string, unknown> = {
 
 const screens: CapturedScreen[] = [
   { key: "home", path: "/" },
-  { key: "recent", path: "/", scrollText: "最近追加・更新したフード" },
+  {
+    key: "recent",
+    path: "/",
+    scrollText: "最近追加・更新したフード",
+    afterScrollScript: `
+      (() => {
+        const heading = Array.from(document.querySelectorAll("h1,h2,h3"))
+          .find((el) => (el.textContent || "").includes("最近追加・更新したフード"));
+        const section = heading?.closest("section");
+        const rail = section?.querySelector("[class*='overflow-x-auto']");
+        if (rail) rail.scrollLeft = 245;
+      })();
+    `
+  },
   { key: "search", path: "/foods?category=burger&sale=active" },
   { key: "detail", path: "/foods/food-u0o9uo" },
   { key: "eatenAction", path: "/foods/food-u0o9uo", scrollY: 370 },
@@ -194,7 +208,7 @@ const slides: Slide[] = [
   {
     filename: "10_summary.png",
     title: "フードめぐりを、\nもっと楽しく。",
-    subtitle: "UNICOLEは、パークフードを探して\n記録できる非公式アプリです。",
+    subtitle: "UNICOLLEは、パークフードを探して\n記録できる非公式アプリです。",
     footnote: "このアプリはユニバーサル・スタジオ・ジャパンの\n公式アプリではありません。",
     screenKeys: ["home", "search", "eaten"],
     accent: "#10233f",
@@ -387,6 +401,10 @@ async function captureAppScreen(port: number, screen: CapturedScreen, tempDir: s
       await cdp.send("Runtime.evaluate", {
         expression: `window.scrollTo({ top: ${screen.scrollY}, behavior: "instant" });`
       });
+      await delay(700);
+    }
+    if (screen.afterScrollScript) {
+      await cdp.send("Runtime.evaluate", { expression: screen.afterScrollScript });
       await delay(700);
     }
     await cdp.send("Runtime.evaluate", {
@@ -604,7 +622,7 @@ function slideHtml(slide: Slide, screenImages: Record<string, string>) {
         <div class="motif"></div>
         ${pinMarkup(slide.motif)}
         <header class="header">
-          <div class="kicker">UNICOLE / 非公式フード図鑑</div>
+          <div class="kicker">UNICOLLE / 非公式フード図鑑</div>
           ${iconMarkup}
           <h1 class="title">${escapeHtml(slide.title)}</h1>
           <p class="subtitle">${escapeHtml(slide.subtitle)}</p>

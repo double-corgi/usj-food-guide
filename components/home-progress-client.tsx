@@ -9,7 +9,8 @@ import {
   getEatenCanonicalKeys,
   getFoodAreaSummary,
   getRemainingDays,
-  isCompletableFood
+  isCompletableFood,
+  normalizeFoodName
 } from "@/lib/food-utils";
 import type { TranslationKey } from "@/lib/i18n/dictionaries";
 import { formatPriceI18n } from "@/lib/i18n/format-price";
@@ -323,20 +324,20 @@ function pickActiveCollectionFoods(foods: FoodWithRelations[], logs: UserFoodLog
 }
 
 function buildLimitedCollection(foods: FoodWithRelations[]) {
-  const activeFoods = dedupeFoodsByCanonical(foods.filter((food) => isCompletableFood(food) && hasDisplayImage(food)));
+  const activeFoods = dedupeHomeSectionFoods(foods.filter((food) => isCompletableFood(food) && hasDisplayImage(food)));
   const grouped = new Map<string, FoodWithRelations[]>();
 
   activeFoods.forEach((food) => {
     [food.eventName, food.collaborationName].forEach((value) => {
       const key = value?.trim();
       if (!key) return;
-      grouped.set(key, [...(grouped.get(key) ?? []), food]);
+      grouped.set(key, addHomeSectionFood(grouped.get(key) ?? [], food));
     });
   });
 
   const eventGroup = Array.from(grouped.entries())
     .map(([title, groupFoods]) => {
-      const candidateFoods = groupFoods.filter(isLimitedCollectionCandidate);
+      const candidateFoods = dedupeHomeSectionFoods(groupFoods.filter(isLimitedCollectionCandidate));
       return {
         title,
         foods: candidateFoods,
@@ -350,14 +351,30 @@ function buildLimitedCollection(foods: FoodWithRelations[]) {
     .sort((a, b) => b.foods.length - a.foods.length || a.title.localeCompare(b.title, "ja"))[0];
   if (eventGroup) return { title: eventGroup.title, foods: eventGroup.foods, stage: "event" as const };
 
-  const keywordFoods = activeFoods.filter(matchesFeaturedLimitedCollection).slice(0, LIMITED_COLLECTION_MAX);
+  const keywordFoods = dedupeHomeSectionFoods(activeFoods.filter(matchesFeaturedLimitedCollection)).slice(0, LIMITED_COLLECTION_MAX);
   if (keywordFoods.length > 0) {
     return { title: featuredLimitedCollection.title, foods: keywordFoods, stage: "featured" as const };
   }
 
-  const limitedFoods = activeFoods.filter((food) => food.isLimited);
+  const limitedFoods = dedupeHomeSectionFoods(activeFoods.filter((food) => food.isLimited));
   if (limitedFoods.length > 0 && limitedFoods.length <= LIMITED_COLLECTION_MAX) return { title: "期間限定", foods: limitedFoods, stage: "limited" as const };
   return null;
+}
+
+function dedupeHomeSectionFoods(foods: FoodWithRelations[]) {
+  return dedupeFoodsByCanonical(foods).reduce<FoodWithRelations[]>((selected, food) => addHomeSectionFood(selected, food), []);
+}
+
+function addHomeSectionFood(selected: FoodWithRelations[], food: FoodWithRelations) {
+  const canonicalKey = getCanonicalFoodKey(food);
+  const visualKey = getHomeSectionVisualKey(food);
+  if (selected.some((item) => getCanonicalFoodKey(item) === canonicalKey || getHomeSectionVisualKey(item) === visualKey)) return selected;
+  return [...selected, food];
+}
+
+function getHomeSectionVisualKey(food: FoodWithRelations) {
+  const imageKey = food.imageUrl ?? food.images?.find((image) => image.enabled && image.imageUrl)?.imageUrl ?? "";
+  return [normalizeFoodName(food.name), imageKey, food.category].join("|");
 }
 
 function pickRecentEatenFoods(foods: FoodWithRelations[], logs: UserFoodLog[]) {
