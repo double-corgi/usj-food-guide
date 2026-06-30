@@ -17,6 +17,7 @@ type CapturedScreen = {
   key: string;
   path: string;
   scrollText?: string;
+  scrollY?: number;
 };
 
 type Slide = {
@@ -41,13 +42,48 @@ const chromePath = process.env.CHROME_PATH ?? "/Applications/Google Chrome.app/C
 const phoneViewport = { width: 430, height: 932, deviceScaleFactor: 3 };
 const slideViewport = { width: 1290, height: 2796, deviceScaleFactor: 1 };
 
-const eatenLogs = [
-  { foodId: "food-u0o9uo", status: "eaten", eatenAt: "2026-06-28T10:30:00.000Z", eatenCount: 1, spentAmount: 2600, rating: 5, memo: "家族で食べたお気に入り" },
-  { foodId: "food-1k9ohlg", status: "eaten", eatenAt: "2026-06-27T08:30:00.000Z", eatenCount: 1, spentAmount: 900, rating: 4 },
-  { foodId: "food-ehewed", status: "eaten", eatenAt: "2026-06-25T11:00:00.000Z", eatenCount: 1, spentAmount: 2500, rating: 4 },
-  { foodId: "food-15srg5l", status: "eaten", eatenAt: "2026-06-22T13:20:00.000Z", eatenCount: 1, spentAmount: 600, rating: 5 },
-  { foodId: "food-hyfchi", status: "eaten", eatenAt: "2026-06-19T12:40:00.000Z", eatenCount: 1, spentAmount: 2000, rating: 4 }
+const eatenFoodIds = [
+  "food-62sv4l",
+  "food-u0o9uo",
+  "food-cygfys",
+  "food-15srg5l",
+  "food-up3lba",
+  "food-1reufss",
+  "food-2qri4c",
+  "food-1dm0ouy",
+  "food-1m8i41b",
+  "food-1k9ohlg",
+  "food-c4k9tn",
+  "food-17k66nk",
+  "food-16q65hw",
+  "food-1efoz95",
+  "food-1hhn874",
+  "food-ehewed",
+  "food-1f1v45i",
+  "food-ajq9zg",
+  "food-dn0p3s",
+  "food-rvos7a",
+  "food-hyfchi",
+  "food-1ulknep",
+  "food-1qzo3v2",
+  "food-7yyri",
+  "food-14hntqo",
+  "food-19tglum",
+  "food-1x0ir52",
+  "food-yhtmyt",
+  "food-alnomv",
+  "food-9s2577"
 ];
+
+const eatenLogs = eatenFoodIds.map((foodId, index) => ({
+  foodId,
+  status: "eaten",
+  eatenAt: new Date(Date.UTC(2026, 5, 28 - Math.floor(index / 3), 10 + (index % 7), (index * 7) % 60)).toISOString(),
+  eatenCount: 1,
+  spentAmount: [2600, 3500, 900, 600, 2500, 1800][index % 6],
+  rating: 3 + (index % 3),
+  ...(index === 1 ? { memo: "家族で食べたお気に入り" } : {})
+}));
 
 const localStorageSeed: Record<string, unknown> = {
   "uniba-food-logs-v1": eatenLogs,
@@ -65,7 +101,7 @@ const screens: CapturedScreen[] = [
   { key: "recent", path: "/", scrollText: "最近追加・更新したフード" },
   { key: "search", path: "/foods?category=burger&sale=active" },
   { key: "detail", path: "/foods/food-u0o9uo" },
-  { key: "eatenAction", path: "/foods/food-u0o9uo" },
+  { key: "eatenAction", path: "/foods/food-u0o9uo", scrollY: 370 },
   { key: "eaten", path: "/eaten" },
   { key: "areas", path: "/areas" },
   { key: "shops", path: "/stores" },
@@ -346,6 +382,12 @@ async function captureAppScreen(port: number, screen: CapturedScreen, tempDir: s
         `
       });
       await delay(900);
+    }
+    if (screen.scrollY) {
+      await cdp.send("Runtime.evaluate", {
+        expression: `window.scrollTo({ top: ${screen.scrollY}, behavior: "instant" });`
+      });
+      await delay(700);
     }
     await cdp.send("Runtime.evaluate", {
       expression: `
