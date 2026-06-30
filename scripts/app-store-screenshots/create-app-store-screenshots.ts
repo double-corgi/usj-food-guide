@@ -50,30 +50,30 @@ const eatenFoodIds = [
   "food-15srg5l",
   "food-up3lba",
   "food-1reufss",
-  "food-2qri4c",
-  "food-1dm0ouy",
   "food-1m8i41b",
   "food-1k9ohlg",
   "food-c4k9tn",
-  "food-17k66nk",
   "food-16q65hw",
   "food-1efoz95",
-  "food-1hhn874",
-  "food-ehewed",
-  "food-1f1v45i",
-  "food-ajq9zg",
-  "food-dn0p3s",
   "food-rvos7a",
-  "food-hyfchi",
-  "food-1ulknep",
-  "food-1qzo3v2",
-  "food-7yyri",
   "food-14hntqo",
-  "food-19tglum",
-  "food-6d5z2w",
-  "food-1x0ir52",
-  "food-yhtmyt",
-  "food-alnomv"
+  "food-2jv220",
+  "food-gmrx8l",
+  "food-exqw6q",
+  "food-p0tpmw",
+  "food-vxhvlr",
+  "food-1b9zmlg",
+  "food-11urhsj",
+  "food-y388y7",
+  "food-1f1v45i",
+  "food-1fcbolg",
+  "food-it27lt",
+  "food-1tt1au7",
+  "food-13uu2tv",
+  "food-1n8s9rw",
+  "food-15hqyi6",
+  "food-alnomv",
+  "food-1rqbb9j"
 ];
 
 const eatenLogs = eatenFoodIds.map((foodId, index) => ({
@@ -143,7 +143,7 @@ const screens: CapturedScreen[] = [
         const heading = document.querySelector("h1");
         if (heading) {
           heading.scrollIntoView({ block: "start", inline: "nearest" });
-          window.scrollBy(0, -18);
+          window.scrollBy(0, -72);
         }
       })();
     `
