@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "batchId": "summer-2026-batch-1",
+  "batchId": "summer-2026-batches-1-2",
   "collectionId": "summer-2026",
   "researchDocument": "docs/unicolle-summer-2026-food-research.md",
   "checkedAt": "2026-07-06",
@@ -10,12 +10,27 @@
     "https://www.usj.co.jp/web/ja/jp/restaurants/food-cart",
     "https://www.usj.co.jp/company/news/2026/0422/",
     "https://www.usj.co.jp/contentdata/usj/ja/jp/events/summer-2026/universal-summer/matsuri-nights/index.html",
-    "https://www.usj.co.jp/contentdata/usj/ja/jp/restaurants/food-cart/index.html"
+    "https://www.usj.co.jp/contentdata/usj/ja/jp/restaurants/food-cart/index.html",
+    "https://www.usj.co.jp/web/ja/jp/restaurants/seasonal-food",
+    "https://www.usj.co.jp/web/ja/jp/restaurants/park-side-grille",
+    "https://www.usj.co.jp/web/ja/jp/restaurants/saido",
+    "https://www.usj.co.jp/web/ja/jp/restaurants/louies-ny-pizza-parlor",
+    "https://www.usj.co.jp/web/ja/jp/restaurants/beverly-hills-boulangerie",
+    "https://www.usj.co.jp/web/ja/jp/restaurants/mels-drive-in",
+    "https://www.usj.co.jp/contentdata/usj/ja/jp/restaurants/seasonal-food/index.html",
+    "https://www.usj.co.jp/contentdata/usj/ja/jp/restaurants/park-side-grille/index.html",
+    "https://www.usj.co.jp/contentdata/usj/ja/jp/restaurants/saido/index.html",
+    "https://www.usj.co.jp/contentdata/usj/ja/jp/restaurants/louies-ny-pizza-parlor/index.html",
+    "https://www.usj.co.jp/contentdata/usj/ja/jp/restaurants/beverly-hills-boulangerie/index.html",
+    "https://www.usj.co.jp/contentdata/usj/ja/jp/restaurants/mels-drive-in/index.html"
   ],
   "notes": [
     "All records remain draft because official single-item prices were not found in the checked official pages.",
     "Product sale start/end dates are not set from event dates. Event dates are saved separately as contextual evidence.",
-    "Normal and neon-cup versions are represented as priceVariants, not separate foods."
+    "Normal and neon-cup versions are represented as priceVariants, not separate foods.",
+    "Batch 2 adds restaurant and dessert items from official seasonal and restaurant pages.",
+    "Batch 2 prices are official only when confirmed on official restaurant pages.",
+    "Multi-product official images are saved as imageCandidates only when a single-product primary image could not be confirmed."
   ],
   "items": [
     {
@@ -274,17 +289,17 @@
       "category": "drink",
       "collectionId": "summer-2026",
       "isLimited": true,
-      "price": null,
-      "priceSource": "unknown",
+      "price": 900,
+      "priceSource": "official",
       "priceVariants": [
         {
           "label": "フローズン・ジントニック ～シトラス～",
-          "price": null,
+          "price": 900,
           "isDefault": true
         },
         {
           "label": "フローズン・ジントニック ～シトラス～ ネオン・カップ付き",
-          "price": null,
+          "price": 1750,
           "isDefault": false
         }
       ],
@@ -292,16 +307,17 @@
       "shopOfficialUrl": "https://www.usj.co.jp/web/ja/jp/restaurants/park-side-grille",
       "areaName": "ニューヨーク・エリア",
       "diningType": "unknown",
-      "takeoutAvailable": null,
-      "description": null,
+      "takeoutAvailable": true,
+      "description": "ジャパニーズクラフトジン 翠使用。ネオン・カップ付きの価格バリエーションあり。",
       "saleStartDate": null,
       "saleEndDate": null,
       "eventStartDate": "2026-07-01",
       "eventEndDate": "2026-08-26",
-      "saleTimeCondition": "未確認",
+      "saleTimeCondition": "商品単位の販売期間は未確認。ネオン・カップ＆ドリンクを18:00までに購入でソフトドリンク（L）引換券をレジで配布。",
       "sourceUrl": "https://www.usj.co.jp/web/ja/jp/restaurants/food-cart",
       "officialReferenceUrls": [
-        "https://www.usj.co.jp/web/ja/jp/restaurants/food-cart"
+        "https://www.usj.co.jp/web/ja/jp/restaurants/food-cart",
+        "https://www.usj.co.jp/web/ja/jp/restaurants/park-side-grille"
       ],
       "lastCheckedAt": "2026-07-06",
       "imageUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/files/images/gds-images/usj-gds-food-frozen-gin-and-tonic-citrus-with-neon-cup-summer-2026-gallery-a.jpg",
@@ -314,13 +330,9 @@
         }
       ],
       "unconfirmedFields": [
-        "price",
-        "priceVariants.price",
-        "description",
-        "takeoutAvailable",
         "saleStartDate",
         "saleEndDate",
-        "saleTimeCondition"
+        "saleTimeCondition.productSpecificPeriod"
       ],
       "duplicateCandidates": [],
       "dedupeNotes": "No same-name generated/manual/override item found."
@@ -333,13 +345,18 @@
       "category": "drink",
       "collectionId": "summer-2026",
       "isLimited": true,
-      "price": null,
-      "priceSource": "unknown",
+      "price": 900,
+      "priceSource": "official",
       "priceVariants": [
         {
-          "label": "単品",
-          "price": null,
+          "label": "テイクアウト",
+          "price": 900,
           "isDefault": true
+        },
+        {
+          "label": "店内",
+          "price": 950,
+          "isDefault": false
         }
       ],
       "shopName": "パークサイド・グリル",
@@ -352,10 +369,11 @@
       "saleEndDate": null,
       "eventStartDate": "2026-07-01",
       "eventEndDate": "2026-08-26",
-      "saleTimeCondition": "未確認",
+      "saleTimeCondition": "商品単位の販売期間・販売時間は未確認。",
       "sourceUrl": "https://www.usj.co.jp/web/ja/jp/restaurants/food-cart",
       "officialReferenceUrls": [
-        "https://www.usj.co.jp/web/ja/jp/restaurants/food-cart"
+        "https://www.usj.co.jp/web/ja/jp/restaurants/food-cart",
+        "https://www.usj.co.jp/web/ja/jp/restaurants/park-side-grille"
       ],
       "lastCheckedAt": "2026-07-06",
       "imageUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/files/images/gds-images/usj-gds-food-25th-anniversary-cocktail-popcorn-flavor-spring-2026-gallery-a.jpg",
@@ -368,7 +386,6 @@
         }
       ],
       "unconfirmedFields": [
-        "price",
         "saleStartDate",
         "saleEndDate",
         "saleTimeCondition"
@@ -456,6 +473,712 @@
         }
       ],
       "dedupeNotes": "Existing generated food; do not add as a new production food."
+    },
+    {
+      "reviewStatus": "draft",
+      "collectionId": "summer-2026",
+      "isLimited": true,
+      "priceSource": "official",
+      "saleStartDate": null,
+      "saleEndDate": null,
+      "eventStartDate": null,
+      "eventEndDate": null,
+      "lastCheckedAt": "2026-07-06",
+      "duplicateCandidates": [],
+      "id": "draft-summer-2026-dessert-candy-apple-apple-mousse",
+      "name": "りんご飴 ～りんごのムース～",
+      "normalizedName": "りんご飴りんごのムース",
+      "category": "dessert",
+      "price": 950,
+      "priceVariants": [
+        {
+          "label": "単品",
+          "price": 950,
+          "isDefault": true
+        }
+      ],
+      "shopName": "ビバリーヒルズ・ブランジェリー",
+      "shopOfficialUrl": "https://www.usj.co.jp/web/ja/jp/restaurants/beverly-hills-boulangerie",
+      "areaName": "ハリウッド・エリア",
+      "diningType": "quick_service",
+      "takeoutAvailable": null,
+      "description": "りんご飴がキュートなケーキになった商品。角切り果肉と、カリっとした飴の歯ざわりをザラメで表現。",
+      "saleTimeCondition": "商品単位の販売時間は未確認。店舗営業時間は確認日周辺で9:00-21:00中心。",
+      "sourceUrl": "https://www.usj.co.jp/web/ja/jp/restaurants/seasonal-food",
+      "officialReferenceUrls": [
+        "https://www.usj.co.jp/web/ja/jp/restaurants/seasonal-food",
+        "https://www.usj.co.jp/web/ja/jp/restaurants/beverly-hills-boulangerie"
+      ],
+      "imageUrl": "",
+      "imageSourceUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/restaurants/beverly-hills-boulangerie/index.html",
+      "imageCandidates": [
+        {
+          "url": "https://www.usj.co.jp/contentdata/usj/ja/jp/files/images/gds-images/usj-gds-food-candy-apple-apple-mousse-and-water-balloon-peach-jelly-and-cheese-mousse-summer-2026-offercard-h.jpg",
+          "sourceUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/restaurants/beverly-hills-boulangerie/index.html",
+          "note": "Official combined offer-card image showing candy apple mousse and water balloon dessert."
+        },
+        {
+          "url": "https://www.usj.co.jp/contentdata/usj/ja/jp/files/images/gds-images/usj-gds-food-candy-apple-apple-mousse-and-water-balloon-peach-jelly-cheese-mousse-summer-2026-gallery-a.jpg",
+          "sourceUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/restaurants/seasonal-food/index.html",
+          "note": "Official combined gallery image showing candy apple mousse and water balloon dessert."
+        }
+      ],
+      "unconfirmedFields": [
+        "saleStartDate",
+        "saleEndDate",
+        "saleTimeCondition.productSpecific",
+        "takeoutAvailable",
+        "imageUrl.singleProduct"
+      ],
+      "dedupeNotes": "No same-name generated/manual/override item found. Primary image is empty because only a combined official image was confirmed."
+    },
+    {
+      "reviewStatus": "draft",
+      "collectionId": "summer-2026",
+      "isLimited": true,
+      "priceSource": "official",
+      "saleStartDate": null,
+      "saleEndDate": null,
+      "eventStartDate": null,
+      "eventEndDate": null,
+      "lastCheckedAt": "2026-07-06",
+      "duplicateCandidates": [],
+      "id": "draft-summer-2026-dessert-water-balloon-peach-jelly-rare-cheese-mousse",
+      "name": "水風船 ～ピーチゼリー＆レアチーズムース～",
+      "normalizedName": "水風船ピーチゼリーアンドレアチーズムース",
+      "category": "dessert",
+      "price": 950,
+      "priceVariants": [
+        {
+          "label": "単品",
+          "price": 950,
+          "isDefault": true
+        }
+      ],
+      "shopName": "ビバリーヒルズ・ブランジェリー",
+      "shopOfficialUrl": "https://www.usj.co.jp/web/ja/jp/restaurants/beverly-hills-boulangerie",
+      "areaName": "ハリウッド・エリア",
+      "diningType": "quick_service",
+      "takeoutAvailable": null,
+      "description": "夏祭りの情景が広がる水風船のフォルムが印象的なカップデザート。桃とレアチーズムースの爽やかな味わい。",
+      "saleTimeCondition": "商品単位の販売時間は未確認。店舗営業時間は確認日周辺で9:00-21:00中心。",
+      "sourceUrl": "https://www.usj.co.jp/web/ja/jp/restaurants/seasonal-food",
+      "officialReferenceUrls": [
+        "https://www.usj.co.jp/web/ja/jp/restaurants/seasonal-food",
+        "https://www.usj.co.jp/web/ja/jp/restaurants/beverly-hills-boulangerie"
+      ],
+      "imageUrl": "",
+      "imageSourceUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/restaurants/beverly-hills-boulangerie/index.html",
+      "imageCandidates": [
+        {
+          "url": "https://www.usj.co.jp/contentdata/usj/ja/jp/files/images/gds-images/usj-gds-food-candy-apple-apple-mousse-and-water-balloon-peach-jelly-and-cheese-mousse-summer-2026-offercard-h.jpg",
+          "sourceUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/restaurants/beverly-hills-boulangerie/index.html",
+          "note": "Official combined offer-card image showing candy apple mousse and water balloon dessert."
+        },
+        {
+          "url": "https://www.usj.co.jp/contentdata/usj/ja/jp/files/images/gds-images/usj-gds-food-candy-apple-apple-mousse-and-water-balloon-peach-jelly-cheese-mousse-summer-2026-gallery-b.jpg",
+          "sourceUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/restaurants/seasonal-food/index.html",
+          "note": "Official combined gallery image showing candy apple mousse and water balloon dessert."
+        }
+      ],
+      "unconfirmedFields": [
+        "saleStartDate",
+        "saleEndDate",
+        "saleTimeCondition.productSpecific",
+        "takeoutAvailable",
+        "imageUrl.singleProduct"
+      ],
+      "dedupeNotes": "No same-name generated/manual/override item found. Primary image is empty because only a combined official image was confirmed."
+    },
+    {
+      "reviewStatus": "draft",
+      "collectionId": "summer-2026",
+      "isLimited": true,
+      "priceSource": "official",
+      "saleStartDate": null,
+      "saleEndDate": null,
+      "eventStartDate": null,
+      "eventEndDate": null,
+      "lastCheckedAt": "2026-07-06",
+      "duplicateCandidates": [],
+      "id": "draft-summer-2026-dessert-hydrangea-grape-yuzu-shaved-ice-cake",
+      "name": "紫陽花 ～葡萄と柚子の和氷菓 焼き菓子添え～",
+      "normalizedName": "紫陽花葡萄と柚子の和氷菓焼き菓子添え",
+      "category": "dessert",
+      "price": 1800,
+      "priceVariants": [
+        {
+          "label": "単品",
+          "price": 1800,
+          "isDefault": true
+        }
+      ],
+      "shopName": "SAIDO",
+      "shopOfficialUrl": "https://www.usj.co.jp/web/ja/jp/restaurants/saido",
+      "areaName": "ニューヨーク・エリア",
+      "diningType": "full_service",
+      "takeoutAvailable": null,
+      "description": "葡萄シロップをかけて移ろう色味と雨の庭園の静寂を感じさせる氷菓。紫陽花の庭園を模した多彩な食感を楽しむ和風の一皿。",
+      "saleTimeCondition": "商品単位の販売時間は未確認。店舗営業時間は確認日周辺で10:30-20:00。",
+      "sourceUrl": "https://www.usj.co.jp/web/ja/jp/restaurants/seasonal-food",
+      "officialReferenceUrls": [
+        "https://www.usj.co.jp/web/ja/jp/restaurants/seasonal-food",
+        "https://www.usj.co.jp/web/ja/jp/restaurants/saido"
+      ],
+      "imageUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/files/images/gds-images/usj-gds-food-hydrangea-grape-and-yuzu-japanese-shaved-ice-with-cake-summer-2026-gallery-a.jpg",
+      "imageSourceUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/restaurants/seasonal-food/index.html",
+      "imageCandidates": [
+        {
+          "url": "https://www.usj.co.jp/contentdata/usj/ja/jp/files/images/gds-images/usj-gds-food-hydrangea-grape-and-yuzu-japanese-shaved-ice-with-cake-summer-2026-gallery-a.jpg",
+          "sourceUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/restaurants/seasonal-food/index.html",
+          "note": "Official seasonal gallery image matching the item."
+        },
+        {
+          "url": "https://www.usj.co.jp/contentdata/usj/ja/jp/files/images/gds-images/usj-gds-food-hydrangea-grape-and-with-yuzu-japanese-japanese--shaved-ice-with-cake-summer-2026-offercard-h.jpg",
+          "sourceUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/restaurants/saido/index.html",
+          "note": "Official SAIDO offer-card image matching the item."
+        }
+      ],
+      "unconfirmedFields": [
+        "saleStartDate",
+        "saleEndDate",
+        "saleTimeCondition.productSpecific",
+        "takeoutAvailable"
+      ],
+      "dedupeNotes": "No same-name generated/manual/override item found."
+    },
+    {
+      "reviewStatus": "draft",
+      "collectionId": "summer-2026",
+      "isLimited": true,
+      "priceSource": "official",
+      "saleStartDate": null,
+      "saleEndDate": null,
+      "eventStartDate": null,
+      "eventEndDate": null,
+      "lastCheckedAt": "2026-07-06",
+      "duplicateCandidates": [],
+      "id": "draft-summer-2026-meal-citrus-grated-radish-white-miso-cold-udon-set",
+      "name": "柑橘おろしと白みその冷やしうどん御膳",
+      "normalizedName": "柑橘おろしと白みその冷やしうどん御膳",
+      "category": "meal",
+      "price": 2600,
+      "priceVariants": [
+        {
+          "label": "単品",
+          "price": 2600,
+          "isDefault": true
+        }
+      ],
+      "shopName": "SAIDO",
+      "shopOfficialUrl": "https://www.usj.co.jp/web/ja/jp/restaurants/saido",
+      "areaName": "ニューヨーク・エリア",
+      "diningType": "full_service",
+      "takeoutAvailable": null,
+      "description": "夏にぴったりの冷製うどんと天ぷらの盛合わせ。柑橘おろしと胡麻味噌だれで味の変化を楽しめる。天ぷら3種、白胡麻豆腐、季節のジュレ、紅白なます、香の物付き。",
+      "saleTimeCondition": "商品単位の販売時間は未確認。店舗営業時間は確認日周辺で10:30-20:00。",
+      "sourceUrl": "https://www.usj.co.jp/web/ja/jp/restaurants/seasonal-food",
+      "officialReferenceUrls": [
+        "https://www.usj.co.jp/web/ja/jp/restaurants/seasonal-food",
+        "https://www.usj.co.jp/web/ja/jp/restaurants/saido"
+      ],
+      "imageUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/files/images/gds-images/usj-gds-food-cold-udon-set-meal-with-citrus-grated-radish-and-white-miso-summer-2026-gallery-a.jpg",
+      "imageSourceUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/restaurants/seasonal-food/index.html",
+      "imageCandidates": [
+        {
+          "url": "https://www.usj.co.jp/contentdata/usj/ja/jp/files/images/gds-images/usj-gds-food-cold-udon-set-meal-with-citrus-grated-radish-and-white-miso-summer-2026-gallery-a.jpg",
+          "sourceUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/restaurants/seasonal-food/index.html",
+          "note": "Official seasonal gallery image matching the item."
+        },
+        {
+          "url": "https://www.usj.co.jp/contentdata/usj/ja/jp/files/images/gds-images/usj-gds-cold-udon-set-meal-with-citrus-grated-radish-and-white-miso-summer-2025-v2-offercard-h.jpg",
+          "sourceUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/restaurants/saido/index.html",
+          "note": "Official SAIDO offer-card image matching the item; filename includes 2025 but is currently published on the 2026-07-06 official page."
+        }
+      ],
+      "unconfirmedFields": [
+        "saleStartDate",
+        "saleEndDate",
+        "saleTimeCondition.productSpecific",
+        "takeoutAvailable"
+      ],
+      "dedupeNotes": "No same-name generated/manual/override item found."
+    },
+    {
+      "reviewStatus": "draft",
+      "collectionId": "summer-2026",
+      "isLimited": true,
+      "priceSource": "official",
+      "saleStartDate": null,
+      "saleEndDate": null,
+      "eventStartDate": null,
+      "eventEndDate": null,
+      "lastCheckedAt": "2026-07-06",
+      "duplicateCandidates": [],
+      "id": "draft-summer-2026-parkside-chilled-lobster-pasta-americaine-granita",
+      "name": "オマール海老の冷製パスタ アメリケーヌのグラニテ添え",
+      "normalizedName": "オマール海老の冷製パスタアメリケーヌのグラニテ添え",
+      "category": "pasta",
+      "price": 3300,
+      "priceVariants": [
+        {
+          "label": "ソフトドリンク付き",
+          "price": 3300,
+          "isDefault": true
+        }
+      ],
+      "shopName": "パークサイド・グリル",
+      "shopOfficialUrl": "https://www.usj.co.jp/web/ja/jp/restaurants/park-side-grille",
+      "areaName": "ニューヨーク・エリア",
+      "diningType": "full_service",
+      "takeoutAvailable": null,
+      "description": "ひんやり冷たいグラニテ仕立てのソースが特徴の冷製パスタ。海鮮と野菜のさまざまな食感を楽しめる。ソフトドリンク付き。",
+      "saleTimeCondition": "オープン-15:00まで販売。商品単位の販売期間は未確認。",
+      "sourceUrl": "https://www.usj.co.jp/web/ja/jp/restaurants/seasonal-food",
+      "officialReferenceUrls": [
+        "https://www.usj.co.jp/web/ja/jp/restaurants/seasonal-food",
+        "https://www.usj.co.jp/web/ja/jp/restaurants/park-side-grille"
+      ],
+      "imageUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/files/images/gds-images/usj-gds-food-chilled-lobster-pasta-with-americaine-granita-summer-2026-gallery-a.jpg",
+      "imageSourceUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/restaurants/seasonal-food/index.html",
+      "imageCandidates": [
+        {
+          "url": "https://www.usj.co.jp/contentdata/usj/ja/jp/files/images/gds-images/usj-gds-food-chilled-lobster-pasta-with-americaine-granita-summer-2026-gallery-a.jpg",
+          "sourceUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/restaurants/seasonal-food/index.html",
+          "note": "Official seasonal gallery image matching the item."
+        },
+        {
+          "url": "https://www.usj.co.jp/contentdata/usj/ja/jp/files/images/gds-images/usj-gds-food-chilled-lobster-pasta-with-americaine-granita-summer-2026-offercard-h.jpg",
+          "sourceUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/restaurants/park-side-grille/index.html",
+          "note": "Official Park Side Grille offer-card image matching the item."
+        }
+      ],
+      "unconfirmedFields": [
+        "saleStartDate",
+        "saleEndDate",
+        "takeoutAvailable"
+      ],
+      "dedupeNotes": "No same-name generated/manual/override item found."
+    },
+    {
+      "reviewStatus": "draft",
+      "collectionId": "summer-2026",
+      "isLimited": true,
+      "priceSource": "official",
+      "saleStartDate": null,
+      "saleEndDate": null,
+      "eventStartDate": null,
+      "eventEndDate": null,
+      "lastCheckedAt": "2026-07-06",
+      "duplicateCandidates": [],
+      "id": "draft-summer-2026-louies-pulled-pork-chicken-spicy-bbq-pizza-set",
+      "name": "プルドポーク＆チキン・スパイシー BBQ ピッツアセット",
+      "normalizedName": "プルドポークチキンスパイシーBBQピッツアセット",
+      "category": "pizza",
+      "price": 1950,
+      "priceVariants": [
+        {
+          "label": "ピッツァセット（フライドポテト、ソフトドリンク付き）",
+          "price": 1950,
+          "isDefault": true
+        },
+        {
+          "label": "ホールピッツァ",
+          "price": 6900,
+          "isDefault": false
+        }
+      ],
+      "shopName": "ルイズ N.Y. ピザパーラー",
+      "shopOfficialUrl": "https://www.usj.co.jp/web/ja/jp/restaurants/louies-ny-pizza-parlor",
+      "areaName": "ニューヨーク・エリア",
+      "diningType": "quick_service",
+      "takeoutAvailable": null,
+      "description": "プルドポークとチキンの食べ応え抜群のBBQピッツァ。野菜の彩りとハラペーニョがアクセント。セットはフライドポテト、ソフトドリンク付き。",
+      "saleTimeCondition": "商品単位の販売時間は未確認。店舗営業時間は確認日周辺で9:30-20:30。",
+      "sourceUrl": "https://www.usj.co.jp/web/ja/jp/restaurants/seasonal-food",
+      "officialReferenceUrls": [
+        "https://www.usj.co.jp/web/ja/jp/restaurants/seasonal-food",
+        "https://www.usj.co.jp/web/ja/jp/restaurants/louies-ny-pizza-parlor"
+      ],
+      "imageUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/files/images/gds-images/usj-gds-food-pulled-pork-and-chicken-spicy-bbq-pizza-meal-summer-2026-gallery-a.jpg",
+      "imageSourceUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/restaurants/seasonal-food/index.html",
+      "imageCandidates": [
+        {
+          "url": "https://www.usj.co.jp/contentdata/usj/ja/jp/files/images/gds-images/usj-gds-food-pulled-pork-and-chicken-spicy-bbq-pizza-meal-summer-2026-gallery-a.jpg",
+          "sourceUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/restaurants/seasonal-food/index.html",
+          "note": "Official seasonal gallery image matching the item."
+        },
+        {
+          "url": "https://www.usj.co.jp/contentdata/usj/ja/jp/files/images/gds-images/usj-gds-food-pizza-pulled-pork-and-chicken-spicy-bbq-summer-2026-offercard-h.jpg",
+          "sourceUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/restaurants/louies-ny-pizza-parlor/index.html",
+          "note": "Official Louies offer-card image matching the item."
+        }
+      ],
+      "unconfirmedFields": [
+        "saleStartDate",
+        "saleEndDate",
+        "saleTimeCondition.productSpecific",
+        "takeoutAvailable"
+      ],
+      "dedupeNotes": "No same-name generated/manual/override item found. Whole pizza is stored as a price variant, not a separate draft."
+    },
+    {
+      "reviewStatus": "draft",
+      "collectionId": "summer-2026",
+      "isLimited": true,
+      "priceSource": "official",
+      "saleStartDate": null,
+      "saleEndDate": null,
+      "eventStartDate": null,
+      "eventEndDate": null,
+      "lastCheckedAt": "2026-07-06",
+      "duplicateCandidates": [],
+      "id": "draft-summer-2026-louies-garlic-shrimp-pizza-set",
+      "name": "ガーリック・シュリンプ・ピッツァセット",
+      "normalizedName": "ガーリックシュリンプピッツァセット",
+      "category": "pizza",
+      "price": 1950,
+      "priceVariants": [
+        {
+          "label": "ピッツァセット（フライドポテト、ソフトドリンク付き）",
+          "price": 1950,
+          "isDefault": true
+        },
+        {
+          "label": "ホールピッツァ",
+          "price": 6900,
+          "isDefault": false
+        }
+      ],
+      "shopName": "ルイズ N.Y. ピザパーラー",
+      "shopOfficialUrl": "https://www.usj.co.jp/web/ja/jp/restaurants/louies-ny-pizza-parlor",
+      "areaName": "ニューヨーク・エリア",
+      "diningType": "quick_service",
+      "takeoutAvailable": null,
+      "description": "ガーリックたっぷりのピッツァ。焼いたレモンの爽やかさで味の変化も楽しめる。セットはフライドポテト、ソフトドリンク付き。",
+      "saleTimeCondition": "商品単位の販売時間は未確認。店舗営業時間は確認日周辺で9:30-20:30。",
+      "sourceUrl": "https://www.usj.co.jp/web/ja/jp/restaurants/seasonal-food",
+      "officialReferenceUrls": [
+        "https://www.usj.co.jp/web/ja/jp/restaurants/seasonal-food",
+        "https://www.usj.co.jp/web/ja/jp/restaurants/louies-ny-pizza-parlor"
+      ],
+      "imageUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/files/images/gds-images/usj-gds-food-louies-pizza-meal-garlic-shrimp-summer-2026-gallery-a.jpg",
+      "imageSourceUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/restaurants/seasonal-food/index.html",
+      "imageCandidates": [
+        {
+          "url": "https://www.usj.co.jp/contentdata/usj/ja/jp/files/images/gds-images/usj-gds-food-louies-pizza-meal-garlic-shrimp-summer-2026-gallery-a.jpg",
+          "sourceUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/restaurants/seasonal-food/index.html",
+          "note": "Official seasonal gallery image matching the item."
+        },
+        {
+          "url": "https://www.usj.co.jp/contentdata/usj/ja/jp/files/images/gds-images/usj-gds-louies-pizza-set-garlic-shrimp-offercard-h.jpg",
+          "sourceUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/restaurants/louies-ny-pizza-parlor/index.html",
+          "note": "Official Louies offer-card image for garlic shrimp pizza."
+        }
+      ],
+      "unconfirmedFields": [
+        "saleStartDate",
+        "saleEndDate",
+        "saleTimeCondition.productSpecific",
+        "takeoutAvailable"
+      ],
+      "dedupeNotes": "No same-name generated/manual/override item found. Whole pizza is stored as a price variant, not a separate draft."
+    },
+    {
+      "reviewStatus": "draft",
+      "collectionId": "summer-2026",
+      "isLimited": true,
+      "priceSource": "official",
+      "saleStartDate": null,
+      "saleEndDate": null,
+      "eventStartDate": null,
+      "eventEndDate": null,
+      "lastCheckedAt": "2026-07-06",
+      "duplicateCandidates": [],
+      "id": "draft-summer-2026-mels-crunchy-taco-burger-set",
+      "name": "クランチ・タコスバーガーセット",
+      "normalizedName": "クランチタコスバーガーセット",
+      "category": "burger",
+      "price": 2100,
+      "priceVariants": [
+        {
+          "label": "フライドポテト、ソフトドリンク付き",
+          "price": 2100,
+          "isDefault": true
+        }
+      ],
+      "shopName": "メルズ・ドライブイン",
+      "shopOfficialUrl": "https://www.usj.co.jp/web/ja/jp/restaurants/mels-drive-in",
+      "areaName": "ハリウッド・エリア",
+      "diningType": "quick_service",
+      "takeoutAvailable": null,
+      "description": "サクサク食感がポイントのタコスバーガー。フライドポテト、ソフトドリンク付き。",
+      "saleTimeCondition": "商品単位の販売時間は未確認。店舗営業時間は確認日周辺で9:30-20:30中心。",
+      "sourceUrl": "https://www.usj.co.jp/web/ja/jp/restaurants/seasonal-food",
+      "officialReferenceUrls": [
+        "https://www.usj.co.jp/web/ja/jp/restaurants/seasonal-food",
+        "https://www.usj.co.jp/web/ja/jp/restaurants/mels-drive-in"
+      ],
+      "imageUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/files/images/gds-images/usj-gds-food-crunchy-taco-burger-meal-summer-2026-gallery-a.jpg",
+      "imageSourceUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/restaurants/seasonal-food/index.html",
+      "imageCandidates": [
+        {
+          "url": "https://www.usj.co.jp/contentdata/usj/ja/jp/files/images/gds-images/usj-gds-food-crunchy-taco-burger-meal-summer-2026-gallery-a.jpg",
+          "sourceUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/restaurants/seasonal-food/index.html",
+          "note": "Official seasonal gallery image matching the item."
+        },
+        {
+          "url": "https://www.usj.co.jp/contentdata/usj/ja/jp/files/images/gds-images/usj-gds-crunchy-taco-burger-meal-summer-2025-v2-offercard-h.jpg",
+          "sourceUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/restaurants/mels-drive-in/index.html",
+          "note": "Official Mels offer-card image matching the item; filename includes 2025 but is currently published on the 2026-07-06 official page."
+        }
+      ],
+      "unconfirmedFields": [
+        "saleStartDate",
+        "saleEndDate",
+        "saleTimeCondition.productSpecific",
+        "takeoutAvailable"
+      ],
+      "dedupeNotes": "No same-name generated/manual/override item found."
+    },
+    {
+      "reviewStatus": "draft",
+      "collectionId": "summer-2026",
+      "isLimited": true,
+      "priceSource": "official",
+      "saleStartDate": null,
+      "saleEndDate": null,
+      "eventStartDate": null,
+      "eventEndDate": null,
+      "lastCheckedAt": "2026-07-06",
+      "duplicateCandidates": [],
+      "id": "draft-summer-2026-saido-special-drinks-yuzu-matcha-watermelon",
+      "name": "SAIDO スペシャルドリンク ～柚子～/ ～抹茶～/ ～西瓜～",
+      "normalizedName": "SAIDOスペシャルドリンク柚子抹茶西瓜",
+      "category": "drink",
+      "price": 700,
+      "priceVariants": [
+        {
+          "label": "柚子",
+          "price": 700,
+          "isDefault": true
+        },
+        {
+          "label": "抹茶",
+          "price": 700,
+          "isDefault": false
+        },
+        {
+          "label": "西瓜",
+          "price": 700,
+          "isDefault": false
+        }
+      ],
+      "shopName": "SAIDO",
+      "shopOfficialUrl": "https://www.usj.co.jp/web/ja/jp/restaurants/saido",
+      "areaName": "ニューヨーク・エリア",
+      "diningType": "full_service",
+      "takeoutAvailable": null,
+      "description": "SAIDO公式店舗ページのおすすめメニューに掲載されているスペシャルドリンク3種。",
+      "saleTimeCondition": "商品単位の販売時間は未確認。店舗営業時間は確認日周辺で10:30-20:00。",
+      "sourceUrl": "https://www.usj.co.jp/web/ja/jp/restaurants/saido",
+      "officialReferenceUrls": [
+        "https://www.usj.co.jp/web/ja/jp/restaurants/saido"
+      ],
+      "imageUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/files/images/gds-images/usj-gds-food-saido-special-drink-yuzu-green-tea-watermelon-summer-2026-offercard-h.jpg",
+      "imageSourceUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/restaurants/saido/index.html",
+      "imageCandidates": [
+        {
+          "url": "https://www.usj.co.jp/contentdata/usj/ja/jp/files/images/gds-images/usj-gds-food-saido-special-drink-yuzu-green-tea-watermelon-summer-2026-offercard-h.jpg",
+          "sourceUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/restaurants/saido/index.html",
+          "note": "Official SAIDO offer-card image for the three special drink variants."
+        }
+      ],
+      "unconfirmedFields": [
+        "saleStartDate",
+        "saleEndDate",
+        "saleTimeCondition.productSpecific",
+        "takeoutAvailable",
+        "description.variantSpecific"
+      ],
+      "dedupeNotes": "No same-name generated/manual/override item found. Three flavors are stored as price variants."
+    },
+    {
+      "reviewStatus": "draft",
+      "collectionId": "summer-2026",
+      "isLimited": true,
+      "priceSource": "official",
+      "saleStartDate": null,
+      "saleEndDate": null,
+      "eventStartDate": null,
+      "eventEndDate": null,
+      "lastCheckedAt": "2026-07-06",
+      "duplicateCandidates": [],
+      "id": "draft-summer-2026-beverly-strawberry-frozen-smoothie",
+      "name": "ストロベリー・フローズン・スムージー",
+      "normalizedName": "ストロベリーフローズンスムージー",
+      "category": "drink",
+      "price": 800,
+      "priceVariants": [
+        {
+          "label": "単品",
+          "price": 800,
+          "isDefault": true
+        }
+      ],
+      "shopName": "ビバリーヒルズ・ブランジェリー",
+      "shopOfficialUrl": "https://www.usj.co.jp/web/ja/jp/restaurants/beverly-hills-boulangerie",
+      "areaName": "ハリウッド・エリア",
+      "diningType": "quick_service",
+      "takeoutAvailable": null,
+      "description": "ビバリーヒルズ・ブランジェリー公式店舗ページとシーズナルページに掲載されているフローズン・スムージー。",
+      "saleTimeCondition": "商品単位の販売時間は未確認。店舗営業時間は確認日周辺で9:00-21:00中心。",
+      "sourceUrl": "https://www.usj.co.jp/web/ja/jp/restaurants/beverly-hills-boulangerie",
+      "officialReferenceUrls": [
+        "https://www.usj.co.jp/web/ja/jp/restaurants/seasonal-food",
+        "https://www.usj.co.jp/web/ja/jp/restaurants/beverly-hills-boulangerie"
+      ],
+      "imageUrl": "",
+      "imageSourceUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/restaurants/beverly-hills-boulangerie/index.html",
+      "imageCandidates": [
+        {
+          "url": "https://www.usj.co.jp/contentdata/usj/ja/jp/files/images/gds-images/usj-gds-food-tropical-frozen-smoothie-strawberry-and-mixed-tropical-fruits-and-mango-offercard-h.jpg",
+          "sourceUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/restaurants/beverly-hills-boulangerie/index.html",
+          "note": "Official combined offer-card image for the three frozen smoothies."
+        },
+        {
+          "url": "https://www.usj.co.jp/contentdata/usj/ja/jp/files/images/gds-images/usj-gds-food-tropical-frozen-smoothie-strawberry-and-mixed-tropical-fruits-and-mango-gallery-a.jpg",
+          "sourceUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/restaurants/seasonal-food/index.html",
+          "note": "Official combined gallery image for the three frozen smoothies."
+        }
+      ],
+      "unconfirmedFields": [
+        "saleStartDate",
+        "saleEndDate",
+        "saleTimeCondition.productSpecific",
+        "takeoutAvailable",
+        "imageUrl.singleProduct",
+        "description.productSpecific"
+      ],
+      "dedupeNotes": "No same-name generated/manual/override item found. Primary image is empty because only a combined official image was confirmed."
+    },
+    {
+      "reviewStatus": "draft",
+      "collectionId": "summer-2026",
+      "isLimited": true,
+      "priceSource": "official",
+      "saleStartDate": null,
+      "saleEndDate": null,
+      "eventStartDate": null,
+      "eventEndDate": null,
+      "lastCheckedAt": "2026-07-06",
+      "duplicateCandidates": [],
+      "id": "draft-summer-2026-beverly-tropical-fruits-frozen-smoothie",
+      "name": "トロピカルフルーツ・フローズン・スムージー",
+      "normalizedName": "トロピカルフルーツフローズンスムージー",
+      "category": "drink",
+      "price": 900,
+      "priceVariants": [
+        {
+          "label": "単品",
+          "price": 900,
+          "isDefault": true
+        }
+      ],
+      "shopName": "ビバリーヒルズ・ブランジェリー",
+      "shopOfficialUrl": "https://www.usj.co.jp/web/ja/jp/restaurants/beverly-hills-boulangerie",
+      "areaName": "ハリウッド・エリア",
+      "diningType": "quick_service",
+      "takeoutAvailable": null,
+      "description": "ビバリーヒルズ・ブランジェリー公式店舗ページとシーズナルページに掲載されているフローズン・スムージー。",
+      "saleTimeCondition": "商品単位の販売時間は未確認。店舗営業時間は確認日周辺で9:00-21:00中心。",
+      "sourceUrl": "https://www.usj.co.jp/web/ja/jp/restaurants/beverly-hills-boulangerie",
+      "officialReferenceUrls": [
+        "https://www.usj.co.jp/web/ja/jp/restaurants/seasonal-food",
+        "https://www.usj.co.jp/web/ja/jp/restaurants/beverly-hills-boulangerie"
+      ],
+      "imageUrl": "",
+      "imageSourceUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/restaurants/beverly-hills-boulangerie/index.html",
+      "imageCandidates": [
+        {
+          "url": "https://www.usj.co.jp/contentdata/usj/ja/jp/files/images/gds-images/usj-gds-food-tropical-frozen-smoothie-strawberry-and-mixed-tropical-fruits-and-mango-offercard-h.jpg",
+          "sourceUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/restaurants/beverly-hills-boulangerie/index.html",
+          "note": "Official combined offer-card image for the three frozen smoothies."
+        },
+        {
+          "url": "https://www.usj.co.jp/contentdata/usj/ja/jp/files/images/gds-images/usj-gds-food-tropical-frozen-smoothie-strawberry-and-mixed-tropical-fruits-and-mango-gallery-a.jpg",
+          "sourceUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/restaurants/seasonal-food/index.html",
+          "note": "Official combined gallery image for the three frozen smoothies."
+        }
+      ],
+      "unconfirmedFields": [
+        "saleStartDate",
+        "saleEndDate",
+        "saleTimeCondition.productSpecific",
+        "takeoutAvailable",
+        "imageUrl.singleProduct",
+        "description.productSpecific"
+      ],
+      "dedupeNotes": "No same-name generated/manual/override item found. Primary image is empty because only a combined official image was confirmed."
+    },
+    {
+      "reviewStatus": "draft",
+      "collectionId": "summer-2026",
+      "isLimited": true,
+      "priceSource": "official",
+      "saleStartDate": null,
+      "saleEndDate": null,
+      "eventStartDate": null,
+      "eventEndDate": null,
+      "lastCheckedAt": "2026-07-06",
+      "duplicateCandidates": [],
+      "id": "draft-summer-2026-beverly-mango-frozen-smoothie",
+      "name": "マンゴー・フローズン・スムージー",
+      "normalizedName": "マンゴーフローズンスムージー",
+      "category": "drink",
+      "price": 800,
+      "priceVariants": [
+        {
+          "label": "単品",
+          "price": 800,
+          "isDefault": true
+        }
+      ],
+      "shopName": "ビバリーヒルズ・ブランジェリー",
+      "shopOfficialUrl": "https://www.usj.co.jp/web/ja/jp/restaurants/beverly-hills-boulangerie",
+      "areaName": "ハリウッド・エリア",
+      "diningType": "quick_service",
+      "takeoutAvailable": null,
+      "description": "ビバリーヒルズ・ブランジェリー公式店舗ページとシーズナルページに掲載されているフローズン・スムージー。",
+      "saleTimeCondition": "商品単位の販売時間は未確認。店舗営業時間は確認日周辺で9:00-21:00中心。",
+      "sourceUrl": "https://www.usj.co.jp/web/ja/jp/restaurants/beverly-hills-boulangerie",
+      "officialReferenceUrls": [
+        "https://www.usj.co.jp/web/ja/jp/restaurants/seasonal-food",
+        "https://www.usj.co.jp/web/ja/jp/restaurants/beverly-hills-boulangerie"
+      ],
+      "imageUrl": "",
+      "imageSourceUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/restaurants/beverly-hills-boulangerie/index.html",
+      "imageCandidates": [
+        {
+          "url": "https://www.usj.co.jp/contentdata/usj/ja/jp/files/images/gds-images/usj-gds-food-tropical-frozen-smoothie-strawberry-and-mixed-tropical-fruits-and-mango-offercard-h.jpg",
+          "sourceUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/restaurants/beverly-hills-boulangerie/index.html",
+          "note": "Official combined offer-card image for the three frozen smoothies."
+        },
+        {
+          "url": "https://www.usj.co.jp/contentdata/usj/ja/jp/files/images/gds-images/usj-gds-food-tropical-frozen-smoothie-strawberry-and-mixed-tropical-fruits-and-mango-gallery-a.jpg",
+          "sourceUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/restaurants/seasonal-food/index.html",
+          "note": "Official combined gallery image for the three frozen smoothies."
+        }
+      ],
+      "unconfirmedFields": [
+        "saleStartDate",
+        "saleEndDate",
+        "saleTimeCondition.productSpecific",
+        "takeoutAvailable",
+        "imageUrl.singleProduct",
+        "description.productSpecific"
+      ],
+      "dedupeNotes": "No same-name generated/manual/override item found. Primary image is empty because only a combined official image was confirmed."
     }
   ],
   "excludedOfficialItems": [
@@ -474,6 +1197,18 @@
     {
       "name": "ゲーム景品",
       "reason": "Prize/non-sale item, not food."
+    },
+    {
+      "name": "ジョーズ・ドリンクボトル",
+      "reason": "Bottle/container item on the seasonal page; not added as a standalone food draft."
+    },
+    {
+      "name": "25周年アニバーサリー・ドリンクカップ",
+      "reason": "Drink cup/container item; not added as a standalone food draft."
     }
+  ],
+  "batchIds": [
+    "summer-2026-batch-1",
+    "summer-2026-batch-2"
   ]
 }

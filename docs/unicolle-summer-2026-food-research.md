@@ -199,3 +199,274 @@
 - 価格と商品単位の販売期間が不足しているため、全件 `draft`。
 - `approved` は使用しない。
 - 禁止されている大文字ブランド表記は使用しない。
+
+## 第2グループ（レストラン・デザート系）追記
+
+- 対象: 第2グループ（レストラン・デザート系）
+- 情報確認日: 2026-07-06
+- 登録状態: 商品単位の販売開始日・販売終了日が未確認のため、新規追記分は全件 `draft`
+- 今回変更しないもの: generated JSON / manual_foods / food_overrides / Supabase / UI
+
+## 第2グループで参照した公式ソース
+
+- USJ公式シーズナルメニュー: https://www.usj.co.jp/web/ja/jp/restaurants/seasonal-food
+- USJ公式店舗ページ（パークサイド・グリル）: https://www.usj.co.jp/web/ja/jp/restaurants/park-side-grille
+- USJ公式店舗ページ（SAIDO）: https://www.usj.co.jp/web/ja/jp/restaurants/saido
+- USJ公式店舗ページ（ルイズ N.Y. ピザパーラー）: https://www.usj.co.jp/web/ja/jp/restaurants/louies-ny-pizza-parlor
+- USJ公式店舗ページ（ビバリーヒルズ・ブランジェリー）: https://www.usj.co.jp/web/ja/jp/restaurants/beverly-hills-boulangerie
+- USJ公式店舗ページ（メルズ・ドライブイン）: https://www.usj.co.jp/web/ja/jp/restaurants/mels-drive-in
+- 公式 `contentdata` JSON:
+  - https://www.usj.co.jp/contentdata/usj/ja/jp/restaurants/seasonal-food/index.html
+  - https://www.usj.co.jp/contentdata/usj/ja/jp/restaurants/park-side-grille/index.html
+  - https://www.usj.co.jp/contentdata/usj/ja/jp/restaurants/saido/index.html
+  - https://www.usj.co.jp/contentdata/usj/ja/jp/restaurants/louies-ny-pizza-parlor/index.html
+  - https://www.usj.co.jp/contentdata/usj/ja/jp/restaurants/beverly-hills-boulangerie/index.html
+  - https://www.usj.co.jp/contentdata/usj/ja/jp/restaurants/mels-drive-in/index.html
+
+## 第2グループ公式ページ取得メモ
+
+- シーズナルメニュー公式ページで、夏向けレストランメニューとデザート系商品の商品名、説明、販売場所、画像を確認した。
+- 店舗ページで確認できた価格は公式価格として保存した。
+- 価格表記は公式ページ上で税込価格と明記されている。
+- 商品単位の販売開始日・販売終了日は、今回確認した公式本文内では未確認。
+- 店舗営業時間は確認日周辺の営業予定として保存し、商品販売期間とは分けて扱う。
+- りんご飴と水風船、フローズン・スムージー3種は公式画像が複数商品同時掲載のため、商品単体画像としては `imageUrl` を空にし、公式画像候補に保存する。
+
+## 第2グループ 商品別確認
+
+### りんご飴 ～りんごのムース～
+
+- 正式商品名: りんご飴 ～りんごのムース～
+- 価格: 950円（公式店舗ページで「各 ￥950」と確認）
+- 価格バリエーション: 水風船 ～ピーチゼリー＆レアチーズムース～と同価格。別商品として扱い、同一画像候補のみ共有。
+- 販売店舗: ビバリーヒルズ・ブランジェリー
+- エリア: ハリウッド・エリア
+- カテゴリ: dessert
+- 商品説明: りんご飴がケーキになった商品。角切り果肉と、カリっとした飴の歯ざわりをザラメで表現。
+- 販売開始日: 未確認
+- 販売終了日: 未確認
+- 販売時間条件: 商品単位の販売時間は未確認。店舗営業時間は確認日周辺で9:00～21:00中心。
+- テイクアウト可否: 未確認
+- 公式参照URL:
+  - https://www.usj.co.jp/web/ja/jp/restaurants/seasonal-food
+  - https://www.usj.co.jp/web/ja/jp/restaurants/beverly-hills-boulangerie
+- 商品画像:
+  - 採用: なし（単体画像未確認）
+  - 候補: https://www.usj.co.jp/contentdata/usj/ja/jp/files/images/gds-images/usj-gds-food-candy-apple-apple-mousse-and-water-balloon-peach-jelly-and-cheese-mousse-summer-2026-offercard-h.jpg
+  - 候補: https://www.usj.co.jp/contentdata/usj/ja/jp/files/images/gds-images/usj-gds-food-candy-apple-apple-mousse-and-water-balloon-peach-jelly-cheese-mousse-summer-2026-gallery-a.jpg
+  - 判定: 公式画像は水風船との同時掲載。誤画像を避けるため `imageUrl` は空にする。
+- 既存商品との重複: 同名なし。
+- 未確認項目: 商品単位の販売開始日、商品単位の販売終了日、商品単位の販売時間、テイクアウト可否、単体商品画像。
+
+### 水風船 ～ピーチゼリー＆レアチーズムース～
+
+- 正式商品名: 水風船 ～ピーチゼリー＆レアチーズムース～
+- 価格: 950円（公式店舗ページで「各 ￥950」と確認）
+- 価格バリエーション: りんご飴 ～りんごのムース～と同価格。別商品として扱い、同一画像候補のみ共有。
+- 販売店舗: ビバリーヒルズ・ブランジェリー
+- エリア: ハリウッド・エリア
+- カテゴリ: dessert
+- 商品説明: 水風船のフォルムが印象的なカップデザート。桃とレアチーズムースの爽やかな味わい。
+- 販売開始日: 未確認
+- 販売終了日: 未確認
+- 販売時間条件: 商品単位の販売時間は未確認。店舗営業時間は確認日周辺で9:00～21:00中心。
+- テイクアウト可否: 未確認
+- 公式参照URL:
+  - https://www.usj.co.jp/web/ja/jp/restaurants/seasonal-food
+  - https://www.usj.co.jp/web/ja/jp/restaurants/beverly-hills-boulangerie
+- 商品画像:
+  - 採用: なし（単体画像未確認）
+  - 候補: https://www.usj.co.jp/contentdata/usj/ja/jp/files/images/gds-images/usj-gds-food-candy-apple-apple-mousse-and-water-balloon-peach-jelly-and-cheese-mousse-summer-2026-offercard-h.jpg
+  - 候補: https://www.usj.co.jp/contentdata/usj/ja/jp/files/images/gds-images/usj-gds-food-candy-apple-apple-mousse-and-water-balloon-peach-jelly-cheese-mousse-summer-2026-gallery-b.jpg
+  - 判定: 公式画像はりんご飴との同時掲載。誤画像を避けるため `imageUrl` は空にする。
+- 既存商品との重複: 同名なし。
+- 未確認項目: 商品単位の販売開始日、商品単位の販売終了日、商品単位の販売時間、テイクアウト可否、単体商品画像。
+
+### 紫陽花 ～葡萄と柚子の和氷菓 焼き菓子添え～
+
+- 正式商品名: 紫陽花 ～葡萄と柚子の和氷菓 焼き菓子添え～
+- 価格: 1,800円
+- 価格バリエーション: 未確認
+- 販売店舗: SAIDO
+- エリア: ニューヨーク・エリア
+- カテゴリ: dessert
+- 商品説明: 葡萄シロップをかけて移ろう色味と雨の庭園の静寂を感じさせる氷菓。紫陽花の庭園を模した多彩な食感の和風デザート。
+- 販売開始日: 未確認
+- 販売終了日: 未確認
+- 販売時間条件: 商品単位の販売時間は未確認。店舗営業時間は確認日周辺で10:30～20:00。
+- テイクアウト可否: 未確認
+- 公式参照URL:
+  - https://www.usj.co.jp/web/ja/jp/restaurants/seasonal-food
+  - https://www.usj.co.jp/web/ja/jp/restaurants/saido
+- 商品画像:
+  - 採用候補: https://www.usj.co.jp/contentdata/usj/ja/jp/files/images/gds-images/usj-gds-food-hydrangea-grape-and-yuzu-japanese-shaved-ice-with-cake-summer-2026-gallery-a.jpg
+  - 追加候補: https://www.usj.co.jp/contentdata/usj/ja/jp/files/images/gds-images/usj-gds-food-hydrangea-grape-and-with-yuzu-japanese-japanese--shaved-ice-with-cake-summer-2026-offercard-h.jpg
+  - 判定: 商品名と一致する公式商品画像。
+- 既存商品との重複: 同名なし。
+- 未確認項目: 価格バリエーション、商品単位の販売開始日、商品単位の販売終了日、商品単位の販売時間、テイクアウト可否。
+
+### 柑橘おろしと白みその冷やしうどん御膳
+
+- 正式商品名: 柑橘おろしと白みその冷やしうどん御膳
+- 価格: 2,600円
+- 価格バリエーション: 未確認
+- 販売店舗: SAIDO
+- エリア: ニューヨーク・エリア
+- カテゴリ: meal
+- 商品説明: 夏にぴったりの冷製うどんと天ぷらの盛合わせ。柑橘おろしと胡麻味噌だれで味の変化を楽しめる。天ぷら3種、白胡麻豆腐、季節のジュレ、紅白なます、香の物付き。
+- 販売開始日: 未確認
+- 販売終了日: 未確認
+- 販売時間条件: 商品単位の販売時間は未確認。店舗営業時間は確認日周辺で10:30～20:00。
+- テイクアウト可否: 未確認
+- 公式参照URL:
+  - https://www.usj.co.jp/web/ja/jp/restaurants/seasonal-food
+  - https://www.usj.co.jp/web/ja/jp/restaurants/saido
+- 商品画像:
+  - 採用候補: https://www.usj.co.jp/contentdata/usj/ja/jp/files/images/gds-images/usj-gds-food-cold-udon-set-meal-with-citrus-grated-radish-and-white-miso-summer-2026-gallery-a.jpg
+  - 追加候補: https://www.usj.co.jp/contentdata/usj/ja/jp/files/images/gds-images/usj-gds-cold-udon-set-meal-with-citrus-grated-radish-and-white-miso-summer-2025-v2-offercard-h.jpg
+  - 判定: 商品名と一致する公式商品画像。店舗ページの画像ファイル名は2025を含むが、2026-07-06確認時点の公式店舗ページ掲載画像。
+- 既存商品との重複: 同名なし。
+- 未確認項目: 価格バリエーション、商品単位の販売開始日、商品単位の販売終了日、商品単位の販売時間、テイクアウト可否。
+
+### オマール海老の冷製パスタ アメリケーヌのグラニテ添え
+
+- 正式商品名: オマール海老の冷製パスタ アメリケーヌのグラニテ添え
+- 価格: 3,300円
+- 価格バリエーション: 未確認
+- 販売店舗: パークサイド・グリル
+- エリア: ニューヨーク・エリア
+- カテゴリ: pasta
+- 商品説明: ひんやり冷たいグラニテ仕立てのソースが特徴の冷製パスタ。海鮮と野菜のさまざまな食感を楽しめる。ソフトドリンク付き。
+- 販売開始日: 未確認
+- 販売終了日: 未確認
+- 販売時間条件: オープン～15:00まで販売。
+- テイクアウト可否: 未確認
+- 公式参照URL:
+  - https://www.usj.co.jp/web/ja/jp/restaurants/seasonal-food
+  - https://www.usj.co.jp/web/ja/jp/restaurants/park-side-grille
+- 商品画像:
+  - 採用候補: https://www.usj.co.jp/contentdata/usj/ja/jp/files/images/gds-images/usj-gds-food-chilled-lobster-pasta-with-americaine-granita-summer-2026-gallery-a.jpg
+  - 追加候補: https://www.usj.co.jp/contentdata/usj/ja/jp/files/images/gds-images/usj-gds-food-chilled-lobster-pasta-with-americaine-granita-summer-2026-offercard-h.jpg
+  - 判定: 商品名と一致する公式商品画像。
+- 既存商品との重複: 同名なし。
+- 未確認項目: 価格バリエーション、商品単位の販売開始日、商品単位の販売終了日、テイクアウト可否。
+
+### プルドポーク＆チキン・スパイシー BBQ ピッツアセット
+
+- 正式商品名: プルドポーク＆チキン・スパイシー BBQ ピッツアセット
+- 価格: 1,950円（ピッツァセット）
+- 価格バリエーション: ホールピッツァ 6,900円。セット違いとして `priceVariants` 候補に保存。
+- 販売店舗: ルイズ N.Y. ピザパーラー
+- エリア: ニューヨーク・エリア
+- カテゴリ: pizza
+- 商品説明: プルドポークとチキンのBBQピッツァ。野菜の彩りとハラペーニョがアクセント。ピッツァセットはフライドポテト、ソフトドリンク付き。
+- 販売開始日: 未確認
+- 販売終了日: 未確認
+- 販売時間条件: 商品単位の販売時間は未確認。店舗営業時間は確認日周辺で9:30～20:30。
+- テイクアウト可否: 未確認
+- 公式参照URL:
+  - https://www.usj.co.jp/web/ja/jp/restaurants/seasonal-food
+  - https://www.usj.co.jp/web/ja/jp/restaurants/louies-ny-pizza-parlor
+- 商品画像:
+  - 採用候補: https://www.usj.co.jp/contentdata/usj/ja/jp/files/images/gds-images/usj-gds-food-pulled-pork-and-chicken-spicy-bbq-pizza-meal-summer-2026-gallery-a.jpg
+  - 追加候補: https://www.usj.co.jp/contentdata/usj/ja/jp/files/images/gds-images/usj-gds-food-pizza-pulled-pork-and-chicken-spicy-bbq-summer-2026-offercard-h.jpg
+  - 判定: 商品名と一致する公式商品画像。
+- 既存商品との重複: 同名なし。
+- 未確認項目: 商品単位の販売開始日、商品単位の販売終了日、商品単位の販売時間、テイクアウト可否。
+
+## 第2グループ 関連商品
+
+### ガーリック・シュリンプ・ピッツァセット
+
+- 正式商品名: ガーリック・シュリンプ・ピッツァセット
+- 価格: 1,950円（ピッツァセット）
+- 価格バリエーション: ホールピッツァ 6,900円。セット違いとして `priceVariants` 候補に保存。
+- 販売店舗: ルイズ N.Y. ピザパーラー
+- エリア: ニューヨーク・エリア
+- カテゴリ: pizza
+- 商品説明: ガーリックたっぷりのピッツァ。焼いたレモンの爽やかさで味の変化も楽しめる。ピッツァセットはフライドポテト、ソフトドリンク付き。
+- 商品画像: https://www.usj.co.jp/contentdata/usj/ja/jp/files/images/gds-images/usj-gds-food-louies-pizza-meal-garlic-shrimp-summer-2026-gallery-a.jpg
+- 公式参照URL:
+  - https://www.usj.co.jp/web/ja/jp/restaurants/seasonal-food
+  - https://www.usj.co.jp/web/ja/jp/restaurants/louies-ny-pizza-parlor
+- 未確認項目: 商品単位の販売開始日、商品単位の販売終了日、商品単位の販売時間、テイクアウト可否。
+- 重複候補: 同名なし。
+
+### クランチ・タコスバーガーセット
+
+- 正式商品名: クランチ・タコスバーガーセット
+- 価格: 2,100円
+- 価格バリエーション: 未確認
+- 販売店舗: メルズ・ドライブイン
+- エリア: ハリウッド・エリア
+- カテゴリ: burger
+- 商品説明: サクサク食感がポイントのタコスバーガー。フライドポテト、ソフトドリンク付き。
+- 商品画像: https://www.usj.co.jp/contentdata/usj/ja/jp/files/images/gds-images/usj-gds-food-crunchy-taco-burger-meal-summer-2026-gallery-a.jpg
+- 公式参照URL:
+  - https://www.usj.co.jp/web/ja/jp/restaurants/seasonal-food
+  - https://www.usj.co.jp/web/ja/jp/restaurants/mels-drive-in
+- 未確認項目: 商品単位の販売開始日、商品単位の販売終了日、商品単位の販売時間、テイクアウト可否。
+- 重複候補: 同名なし。
+
+### SAIDO スペシャルドリンク ～柚子～/ ～抹茶～/ ～西瓜～
+
+- 正式商品名: SAIDO スペシャルドリンク ～柚子～/ ～抹茶～/ ～西瓜～
+- 価格: 各700円
+- 価格バリエーション: 柚子 / 抹茶 / 西瓜。すべて700円。
+- 販売店舗: SAIDO
+- エリア: ニューヨーク・エリア
+- カテゴリ: drink
+- 商品説明: 公式店舗ページのおすすめメニューに同時掲載されているスペシャルドリンク3種。
+- 商品画像: https://www.usj.co.jp/contentdata/usj/ja/jp/files/images/gds-images/usj-gds-food-saido-special-drink-yuzu-green-tea-watermelon-summer-2026-offercard-h.jpg
+- 公式参照URL: https://www.usj.co.jp/web/ja/jp/restaurants/saido
+- 未確認項目: 商品単位の販売開始日、商品単位の販売終了日、商品単位の販売時間、テイクアウト可否、各味の個別説明。
+- 重複候補: 同名なし。
+
+### ストロベリー・フローズン・スムージー / トロピカルフルーツ・フローズン・スムージー / マンゴー・フローズン・スムージー
+
+- 正式商品名:
+  - ストロベリー・フローズン・スムージー
+  - トロピカルフルーツ・フローズン・スムージー
+  - マンゴー・フローズン・スムージー
+- 価格:
+  - ストロベリー: 800円
+  - トロピカルフルーツ: 900円
+  - マンゴー: 800円
+- 販売店舗: ビバリーヒルズ・ブランジェリー
+- エリア: ハリウッド・エリア
+- カテゴリ: drink
+- 商品説明: 公式シーズナルページと店舗ページに同時掲載されているフローズン・スムージー3種。
+- 商品画像:
+  - 採用: なし（3商品同時掲載画像のみ確認）
+  - 候補: https://www.usj.co.jp/contentdata/usj/ja/jp/files/images/gds-images/usj-gds-food-tropical-frozen-smoothie-strawberry-and-mixed-tropical-fruits-and-mango-offercard-h.jpg
+  - 候補: https://www.usj.co.jp/contentdata/usj/ja/jp/files/images/gds-images/usj-gds-food-tropical-frozen-smoothie-strawberry-and-mixed-tropical-fruits-and-mango-gallery-a.jpg
+- 公式参照URL:
+  - https://www.usj.co.jp/web/ja/jp/restaurants/seasonal-food
+  - https://www.usj.co.jp/web/ja/jp/restaurants/beverly-hills-boulangerie
+- 未確認項目: 商品単位の販売開始日、商品単位の販売終了日、商品単位の販売時間、テイクアウト可否、単体商品画像、個別説明。
+- 重複候補: 同名なし。
+
+## 第2グループで除外する公式同時掲載物
+
+- ジョーズ・ドリンクボトル: ボトル/容器系商品のため食品ドラフトには追加しない。
+- ネオン・カップ: 容器/グッズ扱い。ドリンク商品の `priceVariants` としてのみ扱う。
+- 光る！ ボトルストラップ: ボトルストラップ単体。食品ではないため追加しない。
+
+## 第2グループ 重複照合メモ
+
+- 照合対象:
+  - `scripts/output/foods.generated.json`
+  - `data/manual-foods.json`
+  - `data/manual-food-overrides.json`
+  - `data/duplicate-overrides.json`
+  - 第1グループの `data/imports/unicolle-summer-2026-drafts.json`
+- 正規化商品名、商品名直接検索、画像URL、店舗、エリア、価格を確認した。
+- 第2グループ新規追記対象について、既存生成データ、manual、overrides、第1グループ内に同名候補なし。
+- 価格違い/セット違いは別商品にせず、ピッツァセットとホールピッツァを `priceVariants` として扱う。
+- 複数商品同時掲載画像は、誤画像を避けるため `imageUrl` を空にし、`imageCandidates` にだけ保存する。
+
+## 第2グループの判断
+
+- 公式で価格まで確認できたものは価格を保存した。
+- 商品単位の販売開始日・販売終了日が未確認のため、第2グループの新規追記分は全件 `draft`。
+- 第1グループで価格未確認だった `フローズン・ジントニック ～シトラス～` と `25周年カクテル ～ポップコーンフレーバー？～` は、パークサイド・グリル公式店舗ページで価格を確認できたためJSON側を補完する。
