@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "batchId": "summer-2026-batches-1-3",
+  "batchId": "summer-2026-batches-1-4",
   "collectionId": "summer-2026",
   "researchDocument": "docs/unicolle-summer-2026-food-research.md",
   "checkedAt": "2026-07-06",
@@ -29,7 +29,11 @@
     "https://www.usj.co.jp/web/ja/jp/restaurants/snoopys-backlot-cafe",
     "https://www.usj.co.jp/web/ja/jp/restaurants/boardwalk-snacks",
     "https://www.usj.co.jp/web/ja/jp/restaurants/wharf-cafe",
-    "https://www.usj.co.jp/web/ja/jp/restaurants/amity-landing-restaurant"
+    "https://www.usj.co.jp/web/ja/jp/restaurants/amity-landing-restaurant",
+    "https://www.usj.co.jp/web/ja/jp/restaurants/hello-kittys-corner-cafe",
+    "https://www.usj.co.jp/web/ja/jp/restaurants/jungle-beat-shakes",
+    "https://www.usj.co.jp/web/ja/jp/restaurants/pit-stop-popcorn",
+    "https://www.usj.co.jp/web/ja/jp/restaurants/yoshis-snack-island"
   ],
   "notes": [
     "All records remain draft because official single-item prices were not found in the checked official pages.",
@@ -40,7 +44,9 @@
     "Multi-product official images are saved as imageCandidates only when a single-product primary image could not be confirmed.",
     "Batch 3 adds official food-cart, character drink bottle, and frappe research as draft candidates. Product-level sale periods remain unconfirmed.",
     "Tropical frappe neon cup prices are represented as priceVariants, not separate draft items.",
-    "Bob, Jurassic Park drink bottle, and villain donut burger have generated-data duplicate candidates and require human dedupe before production registration."
+    "Bob, Jurassic Park drink bottle, and villain donut burger have generated-data duplicate candidates and require human dedupe before production registration.",
+    "Batch 4 completes remaining official seasonal/food-cart review and adds only the My Melody & Kuromi soft frozen grape item; Dave popcorn bucket and DK crush sundae are documented but not added because summer-2026 limited status was not confirmed from official pages.",
+    "Final audit keeps all candidates draft before human review."
   ],
   "items": [
     {
@@ -1854,6 +1860,55 @@
         "priceVariants"
       ],
       "dedupeNotes": "Related official same-page item. Existing generated candidate must be resolved before production registration."
+    },
+    {
+      "reviewStatus": "draft",
+      "collectionId": "summer-2026",
+      "isLimited": true,
+      "saleStartDate": null,
+      "saleEndDate": null,
+      "eventStartDate": null,
+      "eventEndDate": null,
+      "lastCheckedAt": "2026-07-06",
+      "priceSource": "unconfirmed",
+      "duplicateCandidates": [],
+      "id": "draft-summer-2026-foodcart-soft-frozen-grape-my-melody-kuromi-bucket-spoon",
+      "name": "ソフローズン グレープ マイメロディ＆クロミ バケツ＆スプーン付き",
+      "normalizedName": "ソフローズングレープマイメロディ＆クロミバケツ＆スプーン付き",
+      "category": "dessert_drink",
+      "price": null,
+      "priceVariants": [],
+      "shopName": "イルミネーション・シアター入口横フードカート / パークサイド・グリル横フードカート",
+      "shopOfficialUrl": "https://www.usj.co.jp/web/ja/jp/restaurants/food-cart",
+      "areaName": "ニューヨーク・エリア",
+      "diningType": "food_cart",
+      "takeoutAvailable": null,
+      "description": "マイメロディとクロミが新しい衣装でバケツ＆スプーンにオンステージ。ソフローズン グレープをバケツ＆スプーン付きで提供する公式シーズナル掲載商品。",
+      "saleTimeCondition": "通常販売時間は未確認。",
+      "sourceUrl": "https://www.usj.co.jp/web/ja/jp/restaurants/seasonal-food",
+      "officialReferenceUrls": [
+        "https://www.usj.co.jp/web/ja/jp/restaurants/seasonal-food",
+        "https://www.usj.co.jp/web/ja/jp/restaurants/food-cart"
+      ],
+      "imageUrl": "",
+      "imageSourceUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/restaurants/seasonal-food/index.html",
+      "imageCandidates": [
+        {
+          "url": "https://www.usj.co.jp/contentdata/usj/ja/jp/files/images/gds-images/usj-gds-food-my-melody-kuromi-bottle-strap-with-ice-pack-and-soft-frozen-grape-with-my-melody-kuromi-cup-and-spoon-summer-2026-gallery-a.jpg",
+          "sourceUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/restaurants/seasonal-food/index.html",
+          "note": "Official combined seasonal image for Kuromi bottle strap, soft frozen grape with My Melody & Kuromi bucket/spoon, and My Melody bottle strap. Primary image left empty because this is not a single-product image."
+        }
+      ],
+      "unconfirmedFields": [
+        "price",
+        "priceVariants",
+        "saleStartDate",
+        "saleEndDate",
+        "saleTimeCondition.normalHours",
+        "takeoutAvailable",
+        "imageUrl.singleProduct"
+      ],
+      "dedupeNotes": "No same-name generated/manual/override item found. Bottle strap items are excluded as goods; only the edible soft frozen grape bucket/spoon item is added as a draft candidate."
     }
   ],
   "excludedOfficialItems": [
@@ -1880,11 +1935,32 @@
     {
       "name": "25周年アニバーサリー・ドリンクカップ",
       "reason": "Drink cup/container item; not added as a standalone food draft."
+    },
+    {
+      "name": "クロミ・ボトルストラップ アイスパック付き",
+      "reason": "Goods/container accessory on official seasonal page. Not added as standalone food; related soft frozen grape bucket/spoon item added as draft candidate."
+    },
+    {
+      "name": "マイメロディ・ボトルストラップ アイスパック付き",
+      "reason": "Goods/container accessory on official seasonal page. Not added as standalone food; related soft frozen grape bucket/spoon item added as draft candidate."
+    },
+    {
+      "name": "めざせ大悪党！ デイブ・ポップコーンバケツ",
+      "reason": "Official food-cart/minion-food listing and image confirmed, but official summer-2026 limited status and official current item price were not confirmed. Existing generated duplicate candidates exist, so do not add to summer-2026 draft candidates."
+    },
+    {
+      "name": "DK クラッシュサンデー ～トロピカルバナナ・フレーバー～ マグカップ付き",
+      "reason": "Official food-cart and Jungle Beat Shakes listing confirmed, but official summer-2026 limited status was not confirmed. Existing generated candidates already contain this item and variants, so do not add to summer-2026 draft candidates."
+    },
+    {
+      "name": "DK クラッシュサンデー ～トロピカルバナナ・フレーバー～",
+      "reason": "Official Jungle Beat Shakes listing confirmed as non-mug variant, but official summer-2026 limited status was not confirmed. Treat as existing/regular candidate rather than summer-2026 draft."
     }
   ],
   "batchIds": [
     "summer-2026-batch-1",
     "summer-2026-batch-2",
-    "summer-2026-batch-3"
+    "summer-2026-batch-3",
+    "summer-2026-batch-4"
   ]
 }
