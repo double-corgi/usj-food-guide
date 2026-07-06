@@ -136,6 +136,7 @@ export default async function AdminPage() {
           <AdminSmallLink href="/admin/images" label="画像候補" />
           <AdminSmallLink href="/admin/prices" label="価格確認" />
           <AdminSmallLink href="/admin/data-quality" label="品質監査" />
+          <AdminSmallLink href="/admin/summer-2026-review" label="2026夏レビュー" />
           <AdminSmallLink href="/admin/reviews" label="レビュー管理" />
           <AdminSmallLink href="/admin/dashboard" label="ダッシュボード" />
         </div>
