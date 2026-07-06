@@ -46,7 +46,9 @@
     "Tropical frappe neon cup prices are represented as priceVariants, not separate draft items.",
     "Bob, Jurassic Park drink bottle, and villain donut burger have generated-data duplicate candidates and require human dedupe before production registration.",
     "Batch 4 completes remaining official seasonal/food-cart review and adds only the My Melody & Kuromi soft frozen grape item; Dave popcorn bucket and DK crush sundae are documented but not added because summer-2026 limited status was not confirmed from official pages.",
-    "Final audit keeps all candidates draft before human review."
+    "Final audit keeps all candidates draft before human review.",
+    "Import review adds priceVerification and importReview decisions. Item sale dates remain null; only collection-level event period is documented.",
+    "Pending means name, adopted image, price, shop, area, reference URL, and duplicate handling are present before human approval."
   ],
   "items": [
     {
@@ -110,7 +112,23 @@
         "saleTimeCondition.productSpecific"
       ],
       "duplicateCandidates": [],
-      "dedupeNotes": "No same-name generated/manual/override item found. Neon-cup version must stay as a variant."
+      "dedupeNotes": "No same-name generated/manual/override item found. Neon-cup version must stay as a variant.",
+      "priceVerification": {
+        "status": "unresolved",
+        "note": "Official/secondary price not confirmed during import review.",
+        "sourceUrls": [
+          "https://www.usj.co.jp/web/ja/jp/events/summer-2026/universal-summer/matsuri-nights",
+          "https://www.usj.co.jp/web/ja/jp/restaurants/food-cart"
+        ]
+      },
+      "importReview": {
+        "isExisting": false,
+        "useFoodId": null,
+        "duplicateHandling": "完全な新商品として追加",
+        "registrationPolicy": "manual_foodsへ新規候補として登録。ただし人間確認後。",
+        "needsHumanReview": true,
+        "notes": "No generated/manual/override duplicate selected."
+      }
     },
     {
       "id": "draft-summer-2026-matsuri-choco-banana-churritos",
@@ -175,7 +193,24 @@
           "reason": "Same normalized product name candidate. Existing item has mismatched shop/area/image compared with official 2026 summer pages."
         }
       ],
-      "dedupeNotes": "Treat as an update candidate for food-j4nvrm, not a separate approved food."
+      "dedupeNotes": "Treat as an update candidate for food-j4nvrm, not a separate approved food.",
+      "priceVerification": {
+        "status": "unresolved",
+        "note": "Official/secondary price not confirmed for 2026 summer item. Existing similarly named Minion choco-banana churro price is not used because it is a different product.",
+        "sourceUrls": [
+          "https://www.usj.co.jp/web/ja/jp/events/summer-2026/universal-summer/matsuri-nights",
+          "https://www.usj.co.jp/web/ja/jp/restaurants/food-cart"
+        ]
+      },
+      "importReview": {
+        "isExisting": true,
+        "useFoodId": "food-j4nvrm",
+        "canonicalGroupId": "group-fsp6dm",
+        "duplicateHandling": "既存商品へ情報をoverride",
+        "registrationPolicy": "新規作成しない。既存food-j4nvrmを使い、2026公式画像・店舗・エリア情報でoverride候補にする。価格は未確認のためdraft維持。",
+        "needsHumanReview": true,
+        "notes": "Existing item has same normalized product but generated record lacks confirmed price and appears to have older/mismatched image context."
+      }
     },
     {
       "id": "draft-summer-2026-matsuri-strawberry-condensed-milk-soda-smoothie",
@@ -238,7 +273,23 @@
         "saleTimeCondition.productSpecific"
       ],
       "duplicateCandidates": [],
-      "dedupeNotes": "No same-name generated/manual/override item found. Neon-cup version must stay as a variant."
+      "dedupeNotes": "No same-name generated/manual/override item found. Neon-cup version must stay as a variant.",
+      "priceVerification": {
+        "status": "unresolved",
+        "note": "Official/secondary price not confirmed during import review.",
+        "sourceUrls": [
+          "https://www.usj.co.jp/web/ja/jp/events/summer-2026/universal-summer/matsuri-nights",
+          "https://www.usj.co.jp/web/ja/jp/restaurants/food-cart"
+        ]
+      },
+      "importReview": {
+        "isExisting": false,
+        "useFoodId": null,
+        "duplicateHandling": "完全な新商品として追加",
+        "registrationPolicy": "manual_foodsへ新規候補として登録。ただし人間確認後。",
+        "needsHumanReview": true,
+        "notes": "No generated/manual/override duplicate selected."
+      }
     },
     {
       "id": "draft-summer-2026-matsuri-curry-naan-yakisoba-dog",
@@ -295,11 +346,27 @@
         "saleTimeCondition.productSpecific"
       ],
       "duplicateCandidates": [],
-      "dedupeNotes": "No same-name generated/manual/override item found."
+      "dedupeNotes": "No same-name generated/manual/override item found.",
+      "priceVerification": {
+        "status": "unresolved",
+        "note": "Official/secondary price not confirmed during import review.",
+        "sourceUrls": [
+          "https://www.usj.co.jp/web/ja/jp/events/summer-2026/universal-summer/matsuri-nights",
+          "https://www.usj.co.jp/web/ja/jp/restaurants/food-cart"
+        ]
+      },
+      "importReview": {
+        "isExisting": false,
+        "useFoodId": null,
+        "duplicateHandling": "完全な新商品として追加",
+        "registrationPolicy": "manual_foodsへ新規候補として登録。ただし人間確認後。",
+        "needsHumanReview": true,
+        "notes": "No generated/manual/override duplicate selected."
+      }
     },
     {
       "id": "draft-summer-2026-related-frozen-gin-tonic-citrus",
-      "reviewStatus": "draft",
+      "reviewStatus": "pending",
       "name": "フローズン・ジントニック ～シトラス～",
       "normalizedName": "フローズンジントニックシトラス",
       "category": "drink",
@@ -351,11 +418,27 @@
         "saleTimeCondition.productSpecificPeriod"
       ],
       "duplicateCandidates": [],
-      "dedupeNotes": "No same-name generated/manual/override item found."
+      "dedupeNotes": "No same-name generated/manual/override item found.",
+      "priceVerification": {
+        "status": "official-confirmed",
+        "note": "Price confirmed from official USJ page during batch research.",
+        "sourceUrls": [
+          "https://www.usj.co.jp/web/ja/jp/restaurants/food-cart",
+          "https://www.usj.co.jp/web/ja/jp/restaurants/park-side-grille"
+        ]
+      },
+      "importReview": {
+        "isExisting": false,
+        "useFoodId": null,
+        "duplicateHandling": "完全な新商品として追加",
+        "registrationPolicy": "manual_foodsへ新規候補として登録。ただし人間確認後。",
+        "needsHumanReview": true,
+        "notes": "No generated/manual/override duplicate selected."
+      }
     },
     {
       "id": "draft-summer-2026-related-25th-cocktail-popcorn-flavor",
-      "reviewStatus": "draft",
+      "reviewStatus": "pending",
       "name": "25周年カクテル ～ポップコーンフレーバー？～",
       "normalizedName": "25周年カクテルポップコーンフレーバー",
       "category": "drink",
@@ -422,18 +505,35 @@
           "reason": "Same generated product candidate with offer-card image. Same canonical group as food-d5v0l2."
         }
       ],
-      "dedupeNotes": "Existing generated same-name candidates found; do not add as a new production food."
+      "dedupeNotes": "Existing generated same-name candidates found; do not add as a new production food.",
+      "priceVerification": {
+        "status": "official-confirmed",
+        "note": "Price confirmed from official USJ page during batch research.",
+        "sourceUrls": [
+          "https://www.usj.co.jp/web/ja/jp/restaurants/food-cart",
+          "https://www.usj.co.jp/web/ja/jp/restaurants/park-side-grille"
+        ]
+      },
+      "importReview": {
+        "isExisting": true,
+        "useFoodId": "food-d5v0l2",
+        "canonicalGroupId": "group-16r5f57",
+        "duplicateHandling": "既存商品へ価格variantを追加",
+        "registrationPolicy": "新規作成しない。既存food-d5v0l2を使用し、テイクアウト900円/店内950円のpriceVariantsを反映するoverride候補にする。",
+        "needsHumanReview": true,
+        "notes": "food-gpkw6l is same canonical group offer-card duplicate."
+      }
     },
     {
       "id": "draft-summer-2026-related-caramel-popcorn-churritos",
-      "reviewStatus": "draft",
+      "reviewStatus": "pending",
       "name": "キャラメルポップコーン!? チュリトス",
       "normalizedName": "キャラメルポップコーンチュリトス",
       "category": "churro",
       "collectionId": "summer-2026",
       "isLimited": true,
-      "price": null,
-      "priceSource": "unknown",
+      "price": 800,
+      "priceSource": "secondary",
       "observedExistingPrice": {
         "price": 800,
         "source": "scripts/output/foods.generated.json",
@@ -443,8 +543,9 @@
       "priceVariants": [
         {
           "label": "単品",
-          "price": null,
-          "isDefault": true
+          "price": 800,
+          "isDefault": true,
+          "priceConfirmationStatus": "secondary-confirmed"
         }
       ],
       "shopName": "パークサイド・グリル横フードカート",
@@ -473,22 +574,56 @@
         }
       ],
       "unconfirmedFields": [
-        "price.official",
         "description",
         "saleStartDate",
         "saleEndDate",
-        "saleTimeCondition"
+        "saleTimeCondition",
+        "price.official"
       ],
       "duplicateCandidates": [
         {
           "source": "scripts/output/foods.generated.json",
-          "foodId": "food-ymiw07",
-          "name": "キャラメルポップコーン!? チュリトス",
+          "foodId": "food-14zoddb",
           "canonicalGroupId": "group-1xi5gxq",
-          "reason": "Same product already exists. This batch only confirms current official food-cart listing context."
+          "reason": "Same normalized name, same official food-cart image, official source URL."
+        },
+        {
+          "source": "scripts/output/foods.generated.json",
+          "foodId": "food-ymiw07",
+          "canonicalGroupId": "group-1xi5gxq",
+          "reason": "Same normalized name, same image family, secondary price 800."
+        },
+        {
+          "source": "scripts/output/foods.generated.json",
+          "foodId": "food-mb5wa6",
+          "canonicalGroupId": "group-1xi5gxq",
+          "reason": "Same normalized name and secondary source."
+        },
+        {
+          "source": "scripts/output/foods.generated.json",
+          "foodId": "food-5jnd64",
+          "canonicalGroupId": "group-1xi5gxq",
+          "reason": "Same normalized name and secondary source."
         }
       ],
-      "dedupeNotes": "Existing generated food; do not add as a new production food."
+      "dedupeNotes": "Existing generated food; do not add as a new production food.",
+      "priceVerification": {
+        "status": "secondary-confirmed",
+        "note": "Existing generated data has matching official food-cart image and secondary CASTEL-derived price 800. Official price was not confirmed in USJ pages.",
+        "sourceUrls": [
+          "scripts/output/foods.generated.json",
+          "https://castel.jp/p/3101"
+        ]
+      },
+      "importReview": {
+        "isExisting": true,
+        "useFoodId": "food-14zoddb",
+        "canonicalGroupId": "group-1xi5gxq",
+        "duplicateHandling": "既存商品へsummer-2026を追加",
+        "registrationPolicy": "新規作成しない。既存food-14zoddbを使用し、summer-2026コレクション紐付け候補にする。価格800円はsecondary-confirmed扱い。",
+        "needsHumanReview": true,
+        "notes": "Official price unresolved; use generated secondary price only as non-official evidence."
+      }
     },
     {
       "reviewStatus": "draft",
@@ -546,7 +681,23 @@
         "takeoutAvailable",
         "imageUrl.singleProduct"
       ],
-      "dedupeNotes": "No same-name generated/manual/override item found. Primary image is empty because only a combined official image was confirmed."
+      "dedupeNotes": "No same-name generated/manual/override item found. Primary image is empty because only a combined official image was confirmed.",
+      "priceVerification": {
+        "status": "official-confirmed",
+        "note": "Price confirmed from official USJ page during batch research.",
+        "sourceUrls": [
+          "https://www.usj.co.jp/web/ja/jp/restaurants/seasonal-food",
+          "https://www.usj.co.jp/web/ja/jp/restaurants/beverly-hills-boulangerie"
+        ]
+      },
+      "importReview": {
+        "isExisting": false,
+        "useFoodId": null,
+        "duplicateHandling": "完全な新商品として追加",
+        "registrationPolicy": "manual_foodsへ新規候補として登録。ただし人間確認後。",
+        "needsHumanReview": true,
+        "notes": "No generated/manual/override duplicate selected."
+      }
     },
     {
       "reviewStatus": "draft",
@@ -604,10 +755,26 @@
         "takeoutAvailable",
         "imageUrl.singleProduct"
       ],
-      "dedupeNotes": "No same-name generated/manual/override item found. Primary image is empty because only a combined official image was confirmed."
+      "dedupeNotes": "No same-name generated/manual/override item found. Primary image is empty because only a combined official image was confirmed.",
+      "priceVerification": {
+        "status": "official-confirmed",
+        "note": "Price confirmed from official USJ page during batch research.",
+        "sourceUrls": [
+          "https://www.usj.co.jp/web/ja/jp/restaurants/seasonal-food",
+          "https://www.usj.co.jp/web/ja/jp/restaurants/beverly-hills-boulangerie"
+        ]
+      },
+      "importReview": {
+        "isExisting": false,
+        "useFoodId": null,
+        "duplicateHandling": "完全な新商品として追加",
+        "registrationPolicy": "manual_foodsへ新規候補として登録。ただし人間確認後。",
+        "needsHumanReview": true,
+        "notes": "No generated/manual/override duplicate selected."
+      }
     },
     {
-      "reviewStatus": "draft",
+      "reviewStatus": "pending",
       "collectionId": "summer-2026",
       "isLimited": true,
       "priceSource": "official",
@@ -661,10 +828,26 @@
         "saleTimeCondition.productSpecific",
         "takeoutAvailable"
       ],
-      "dedupeNotes": "No same-name generated/manual/override item found."
+      "dedupeNotes": "No same-name generated/manual/override item found.",
+      "priceVerification": {
+        "status": "official-confirmed",
+        "note": "Price confirmed from official USJ page during batch research.",
+        "sourceUrls": [
+          "https://www.usj.co.jp/web/ja/jp/restaurants/seasonal-food",
+          "https://www.usj.co.jp/web/ja/jp/restaurants/saido"
+        ]
+      },
+      "importReview": {
+        "isExisting": false,
+        "useFoodId": null,
+        "duplicateHandling": "完全な新商品として追加",
+        "registrationPolicy": "manual_foodsへ新規候補として登録。ただし人間確認後。",
+        "needsHumanReview": true,
+        "notes": "No generated/manual/override duplicate selected."
+      }
     },
     {
-      "reviewStatus": "draft",
+      "reviewStatus": "pending",
       "collectionId": "summer-2026",
       "isLimited": true,
       "priceSource": "official",
@@ -718,10 +901,26 @@
         "saleTimeCondition.productSpecific",
         "takeoutAvailable"
       ],
-      "dedupeNotes": "No same-name generated/manual/override item found."
+      "dedupeNotes": "No same-name generated/manual/override item found.",
+      "priceVerification": {
+        "status": "official-confirmed",
+        "note": "Price confirmed from official USJ page during batch research.",
+        "sourceUrls": [
+          "https://www.usj.co.jp/web/ja/jp/restaurants/seasonal-food",
+          "https://www.usj.co.jp/web/ja/jp/restaurants/saido"
+        ]
+      },
+      "importReview": {
+        "isExisting": false,
+        "useFoodId": null,
+        "duplicateHandling": "完全な新商品として追加",
+        "registrationPolicy": "manual_foodsへ新規候補として登録。ただし人間確認後。",
+        "needsHumanReview": true,
+        "notes": "No generated/manual/override duplicate selected."
+      }
     },
     {
-      "reviewStatus": "draft",
+      "reviewStatus": "pending",
       "collectionId": "summer-2026",
       "isLimited": true,
       "priceSource": "official",
@@ -774,10 +973,26 @@
         "saleEndDate",
         "takeoutAvailable"
       ],
-      "dedupeNotes": "No same-name generated/manual/override item found."
+      "dedupeNotes": "No same-name generated/manual/override item found.",
+      "priceVerification": {
+        "status": "official-confirmed",
+        "note": "Price confirmed from official USJ page during batch research.",
+        "sourceUrls": [
+          "https://www.usj.co.jp/web/ja/jp/restaurants/seasonal-food",
+          "https://www.usj.co.jp/web/ja/jp/restaurants/park-side-grille"
+        ]
+      },
+      "importReview": {
+        "isExisting": false,
+        "useFoodId": null,
+        "duplicateHandling": "完全な新商品として追加",
+        "registrationPolicy": "manual_foodsへ新規候補として登録。ただし人間確認後。",
+        "needsHumanReview": true,
+        "notes": "No generated/manual/override duplicate selected."
+      }
     },
     {
-      "reviewStatus": "draft",
+      "reviewStatus": "pending",
       "collectionId": "summer-2026",
       "isLimited": true,
       "priceSource": "official",
@@ -836,10 +1051,26 @@
         "saleTimeCondition.productSpecific",
         "takeoutAvailable"
       ],
-      "dedupeNotes": "No same-name generated/manual/override item found. Whole pizza is stored as a price variant, not a separate draft."
+      "dedupeNotes": "No same-name generated/manual/override item found. Whole pizza is stored as a price variant, not a separate draft.",
+      "priceVerification": {
+        "status": "official-confirmed",
+        "note": "Price confirmed from official USJ page during batch research.",
+        "sourceUrls": [
+          "https://www.usj.co.jp/web/ja/jp/restaurants/seasonal-food",
+          "https://www.usj.co.jp/web/ja/jp/restaurants/louies-ny-pizza-parlor"
+        ]
+      },
+      "importReview": {
+        "isExisting": false,
+        "useFoodId": null,
+        "duplicateHandling": "完全な新商品として追加",
+        "registrationPolicy": "manual_foodsへ新規候補として登録。ただし人間確認後。",
+        "needsHumanReview": true,
+        "notes": "No generated/manual/override duplicate selected."
+      }
     },
     {
-      "reviewStatus": "draft",
+      "reviewStatus": "pending",
       "collectionId": "summer-2026",
       "isLimited": true,
       "priceSource": "official",
@@ -898,10 +1129,26 @@
         "saleTimeCondition.productSpecific",
         "takeoutAvailable"
       ],
-      "dedupeNotes": "No same-name generated/manual/override item found. Whole pizza is stored as a price variant, not a separate draft."
+      "dedupeNotes": "No same-name generated/manual/override item found. Whole pizza is stored as a price variant, not a separate draft.",
+      "priceVerification": {
+        "status": "official-confirmed",
+        "note": "Price confirmed from official USJ page during batch research.",
+        "sourceUrls": [
+          "https://www.usj.co.jp/web/ja/jp/restaurants/seasonal-food",
+          "https://www.usj.co.jp/web/ja/jp/restaurants/louies-ny-pizza-parlor"
+        ]
+      },
+      "importReview": {
+        "isExisting": false,
+        "useFoodId": null,
+        "duplicateHandling": "完全な新商品として追加",
+        "registrationPolicy": "manual_foodsへ新規候補として登録。ただし人間確認後。",
+        "needsHumanReview": true,
+        "notes": "No generated/manual/override duplicate selected."
+      }
     },
     {
-      "reviewStatus": "draft",
+      "reviewStatus": "pending",
       "collectionId": "summer-2026",
       "isLimited": true,
       "priceSource": "official",
@@ -955,10 +1202,26 @@
         "saleTimeCondition.productSpecific",
         "takeoutAvailable"
       ],
-      "dedupeNotes": "No same-name generated/manual/override item found."
+      "dedupeNotes": "No same-name generated/manual/override item found.",
+      "priceVerification": {
+        "status": "official-confirmed",
+        "note": "Price confirmed from official USJ page during batch research.",
+        "sourceUrls": [
+          "https://www.usj.co.jp/web/ja/jp/restaurants/seasonal-food",
+          "https://www.usj.co.jp/web/ja/jp/restaurants/mels-drive-in"
+        ]
+      },
+      "importReview": {
+        "isExisting": false,
+        "useFoodId": null,
+        "duplicateHandling": "完全な新商品として追加",
+        "registrationPolicy": "manual_foodsへ新規候補として登録。ただし人間確認後。",
+        "needsHumanReview": true,
+        "notes": "No generated/manual/override duplicate selected."
+      }
     },
     {
-      "reviewStatus": "draft",
+      "reviewStatus": "pending",
       "collectionId": "summer-2026",
       "isLimited": true,
       "priceSource": "official",
@@ -1017,7 +1280,22 @@
         "takeoutAvailable",
         "description.variantSpecific"
       ],
-      "dedupeNotes": "No same-name generated/manual/override item found. Three flavors are stored as price variants."
+      "dedupeNotes": "No same-name generated/manual/override item found. Three flavors are stored as price variants.",
+      "priceVerification": {
+        "status": "official-confirmed",
+        "note": "Price confirmed from official USJ page during batch research.",
+        "sourceUrls": [
+          "https://www.usj.co.jp/web/ja/jp/restaurants/saido"
+        ]
+      },
+      "importReview": {
+        "isExisting": false,
+        "useFoodId": null,
+        "duplicateHandling": "完全な新商品として追加",
+        "registrationPolicy": "manual_foodsへ新規候補として登録。ただし人間確認後。",
+        "needsHumanReview": true,
+        "notes": "No generated/manual/override duplicate selected."
+      }
     },
     {
       "reviewStatus": "draft",
@@ -1076,7 +1354,23 @@
         "imageUrl.singleProduct",
         "description.productSpecific"
       ],
-      "dedupeNotes": "No same-name generated/manual/override item found. Primary image is empty because only a combined official image was confirmed."
+      "dedupeNotes": "No same-name generated/manual/override item found. Primary image is empty because only a combined official image was confirmed.",
+      "priceVerification": {
+        "status": "official-confirmed",
+        "note": "Price confirmed from official USJ page during batch research.",
+        "sourceUrls": [
+          "https://www.usj.co.jp/web/ja/jp/restaurants/seasonal-food",
+          "https://www.usj.co.jp/web/ja/jp/restaurants/beverly-hills-boulangerie"
+        ]
+      },
+      "importReview": {
+        "isExisting": false,
+        "useFoodId": null,
+        "duplicateHandling": "完全な新商品として追加",
+        "registrationPolicy": "manual_foodsへ新規候補として登録。ただし人間確認後。",
+        "needsHumanReview": true,
+        "notes": "No generated/manual/override duplicate selected."
+      }
     },
     {
       "reviewStatus": "draft",
@@ -1135,7 +1429,23 @@
         "imageUrl.singleProduct",
         "description.productSpecific"
       ],
-      "dedupeNotes": "No same-name generated/manual/override item found. Primary image is empty because only a combined official image was confirmed."
+      "dedupeNotes": "No same-name generated/manual/override item found. Primary image is empty because only a combined official image was confirmed.",
+      "priceVerification": {
+        "status": "official-confirmed",
+        "note": "Price confirmed from official USJ page during batch research.",
+        "sourceUrls": [
+          "https://www.usj.co.jp/web/ja/jp/restaurants/seasonal-food",
+          "https://www.usj.co.jp/web/ja/jp/restaurants/beverly-hills-boulangerie"
+        ]
+      },
+      "importReview": {
+        "isExisting": false,
+        "useFoodId": null,
+        "duplicateHandling": "完全な新商品として追加",
+        "registrationPolicy": "manual_foodsへ新規候補として登録。ただし人間確認後。",
+        "needsHumanReview": true,
+        "notes": "No generated/manual/override duplicate selected."
+      }
     },
     {
       "reviewStatus": "draft",
@@ -1194,10 +1504,26 @@
         "imageUrl.singleProduct",
         "description.productSpecific"
       ],
-      "dedupeNotes": "No same-name generated/manual/override item found. Primary image is empty because only a combined official image was confirmed."
+      "dedupeNotes": "No same-name generated/manual/override item found. Primary image is empty because only a combined official image was confirmed.",
+      "priceVerification": {
+        "status": "official-confirmed",
+        "note": "Price confirmed from official USJ page during batch research.",
+        "sourceUrls": [
+          "https://www.usj.co.jp/web/ja/jp/restaurants/seasonal-food",
+          "https://www.usj.co.jp/web/ja/jp/restaurants/beverly-hills-boulangerie"
+        ]
+      },
+      "importReview": {
+        "isExisting": false,
+        "useFoodId": null,
+        "duplicateHandling": "完全な新商品として追加",
+        "registrationPolicy": "manual_foodsへ新規候補として登録。ただし人間確認後。",
+        "needsHumanReview": true,
+        "notes": "No generated/manual/override duplicate selected."
+      }
     },
     {
-      "reviewStatus": "draft",
+      "reviewStatus": "pending",
       "collectionId": "summer-2026",
       "isLimited": true,
       "saleStartDate": null,
@@ -1259,10 +1585,27 @@
         "priceVariants"
       ],
       "dedupeNotes": "No same-name generated/manual/override item found.",
-      "normalizedName": "クラッシュ大悪党のブラッドオレンジフローズンソーダ"
+      "normalizedName": "クラッシュ大悪党のブラッドオレンジフローズンソーダ",
+      "priceVerification": {
+        "status": "official-confirmed",
+        "note": "Price confirmed from official USJ page during batch research.",
+        "sourceUrls": [
+          "https://www.usj.co.jp/web/ja/jp/restaurants/food-cart",
+          "https://www.usj.co.jp/web/ja/jp/restaurants/minion-food",
+          "https://www.usj.co.jp/web/ja/jp/restaurants/evil-eats"
+        ]
+      },
+      "importReview": {
+        "isExisting": false,
+        "useFoodId": null,
+        "duplicateHandling": "完全な新商品として追加",
+        "registrationPolicy": "manual_foodsへ新規候補として登録。ただし人間確認後。",
+        "needsHumanReview": true,
+        "notes": "No generated/manual/override duplicate selected."
+      }
     },
     {
-      "reviewStatus": "draft",
+      "reviewStatus": "pending",
       "collectionId": "summer-2026",
       "isLimited": true,
       "saleStartDate": null,
@@ -1324,10 +1667,27 @@
         "priceVariants"
       ],
       "dedupeNotes": "No same-name generated/manual/override item found.",
-      "normalizedName": "映画スターのミニオンフラッペピーチ＆レモン"
+      "normalizedName": "映画スターのミニオンフラッペピーチ＆レモン",
+      "priceVerification": {
+        "status": "official-confirmed",
+        "note": "Price confirmed from official USJ page during batch research.",
+        "sourceUrls": [
+          "https://www.usj.co.jp/web/ja/jp/restaurants/food-cart",
+          "https://www.usj.co.jp/web/ja/jp/restaurants/minion-food",
+          "https://www.usj.co.jp/web/ja/jp/restaurants/delicious-me-the-cookie-kitchen"
+        ]
+      },
+      "importReview": {
+        "isExisting": false,
+        "useFoodId": null,
+        "duplicateHandling": "完全な新商品として追加",
+        "registrationPolicy": "manual_foodsへ新規候補として登録。ただし人間確認後。",
+        "needsHumanReview": true,
+        "notes": "No generated/manual/override duplicate selected."
+      }
     },
     {
-      "reviewStatus": "draft",
+      "reviewStatus": "pending",
       "collectionId": "summer-2026",
       "isLimited": true,
       "saleStartDate": null,
@@ -1387,10 +1747,26 @@
         "priceVariants"
       ],
       "dedupeNotes": "No same-name generated/manual/override item found.",
-      "normalizedName": "スヌーピーフラッペいちごミルク＆白桃"
+      "normalizedName": "スヌーピーフラッペいちごミルク＆白桃",
+      "priceVerification": {
+        "status": "official-confirmed",
+        "note": "Price confirmed from official USJ page during batch research.",
+        "sourceUrls": [
+          "https://www.usj.co.jp/web/ja/jp/restaurants/seasonal-food",
+          "https://www.usj.co.jp/web/ja/jp/restaurants/snoopys-backlot-cafe"
+        ]
+      },
+      "importReview": {
+        "isExisting": false,
+        "useFoodId": null,
+        "duplicateHandling": "完全な新商品として追加",
+        "registrationPolicy": "manual_foodsへ新規候補として登録。ただし人間確認後。",
+        "needsHumanReview": true,
+        "notes": "No generated/manual/override duplicate selected."
+      }
     },
     {
-      "reviewStatus": "draft",
+      "reviewStatus": "pending",
       "collectionId": "summer-2026",
       "isLimited": true,
       "saleStartDate": null,
@@ -1450,7 +1826,23 @@
         "priceVariants"
       ],
       "dedupeNotes": "No same-name generated/manual/override item found.",
-      "normalizedName": "遊泳禁止ジョーズフラッペピーチ＆ソルトホイップ"
+      "normalizedName": "遊泳禁止ジョーズフラッペピーチ＆ソルトホイップ",
+      "priceVerification": {
+        "status": "official-confirmed",
+        "note": "Price confirmed from official USJ page during batch research.",
+        "sourceUrls": [
+          "https://www.usj.co.jp/web/ja/jp/restaurants/seasonal-food",
+          "https://www.usj.co.jp/web/ja/jp/restaurants/boardwalk-snacks"
+        ]
+      },
+      "importReview": {
+        "isExisting": false,
+        "useFoodId": null,
+        "duplicateHandling": "完全な新商品として追加",
+        "registrationPolicy": "manual_foodsへ新規候補として登録。ただし人間確認後。",
+        "needsHumanReview": true,
+        "notes": "No generated/manual/override duplicate selected."
+      }
     },
     {
       "reviewStatus": "draft",
@@ -1520,7 +1912,25 @@
         "imageUrl.singleProduct"
       ],
       "dedupeNotes": "No same-name generated/manual/override item found. Primary image is empty because only a combined official image was confirmed.",
-      "normalizedName": "トロピカルフラッペストロベリー"
+      "normalizedName": "トロピカルフラッペストロベリー",
+      "priceVerification": {
+        "status": "official-confirmed",
+        "note": "Price confirmed from official USJ page during batch research.",
+        "sourceUrls": [
+          "https://www.usj.co.jp/web/ja/jp/restaurants/food-cart",
+          "https://www.usj.co.jp/web/ja/jp/restaurants/seasonal-food",
+          "https://www.usj.co.jp/web/ja/jp/restaurants/wharf-cafe",
+          "https://www.usj.co.jp/web/ja/jp/restaurants/boardwalk-snacks"
+        ]
+      },
+      "importReview": {
+        "isExisting": false,
+        "useFoodId": null,
+        "duplicateHandling": "完全な新商品として追加",
+        "registrationPolicy": "manual_foodsへ新規候補として登録。ただし人間確認後。",
+        "needsHumanReview": true,
+        "notes": "No generated/manual/override duplicate selected."
+      }
     },
     {
       "reviewStatus": "draft",
@@ -1590,10 +2000,28 @@
         "imageUrl.singleProduct"
       ],
       "dedupeNotes": "No same-name generated/manual/override item found. Primary image is empty because only a combined official image was confirmed.",
-      "normalizedName": "トロピカルフラッペマンゴー"
+      "normalizedName": "トロピカルフラッペマンゴー",
+      "priceVerification": {
+        "status": "official-confirmed",
+        "note": "Price confirmed from official USJ page during batch research.",
+        "sourceUrls": [
+          "https://www.usj.co.jp/web/ja/jp/restaurants/food-cart",
+          "https://www.usj.co.jp/web/ja/jp/restaurants/seasonal-food",
+          "https://www.usj.co.jp/web/ja/jp/restaurants/wharf-cafe",
+          "https://www.usj.co.jp/web/ja/jp/restaurants/boardwalk-snacks"
+        ]
+      },
+      "importReview": {
+        "isExisting": false,
+        "useFoodId": null,
+        "duplicateHandling": "完全な新商品として追加",
+        "registrationPolicy": "manual_foodsへ新規候補として登録。ただし人間確認後。",
+        "needsHumanReview": true,
+        "notes": "No generated/manual/override duplicate selected."
+      }
     },
     {
-      "reviewStatus": "draft",
+      "reviewStatus": "pending",
       "collectionId": "summer-2026",
       "isLimited": true,
       "saleStartDate": null,
@@ -1647,10 +2075,26 @@
         "takeoutAvailable"
       ],
       "dedupeNotes": "Batch 2 excluded this as container-only; Batch 3 adds it as a character bottle drink candidate because the official page lists it with soft drink (R).",
-      "normalizedName": "ジョーズドリンクボトル"
+      "normalizedName": "ジョーズドリンクボトル",
+      "priceVerification": {
+        "status": "official-confirmed",
+        "note": "Price confirmed from official USJ page during batch research.",
+        "sourceUrls": [
+          "https://www.usj.co.jp/web/ja/jp/restaurants/seasonal-food",
+          "https://www.usj.co.jp/web/ja/jp/restaurants/amity-landing-restaurant"
+        ]
+      },
+      "importReview": {
+        "isExisting": false,
+        "useFoodId": null,
+        "duplicateHandling": "完全な新商品として追加",
+        "registrationPolicy": "manual_foodsへ新規候補として登録。ただし人間確認後。",
+        "needsHumanReview": true,
+        "notes": "No generated/manual/override duplicate selected."
+      }
     },
     {
-      "reviewStatus": "draft",
+      "reviewStatus": "pending",
       "collectionId": "summer-2026",
       "isLimited": true,
       "saleStartDate": null,
@@ -1726,10 +2170,29 @@
         "description.productSpecific"
       ],
       "dedupeNotes": "Existing generated candidates must be resolved before any production registration.",
-      "normalizedName": "憧れの大悪党ボブドリンクボトル"
+      "normalizedName": "憧れの大悪党ボブドリンクボトル",
+      "priceVerification": {
+        "status": "official-confirmed",
+        "note": "Price confirmed from official USJ page during batch research.",
+        "sourceUrls": [
+          "https://www.usj.co.jp/web/ja/jp/restaurants/food-cart",
+          "https://www.usj.co.jp/web/ja/jp/restaurants/minion-food",
+          "https://www.usj.co.jp/web/ja/jp/restaurants/delicious-me-the-cookie-kitchen",
+          "https://www.usj.co.jp/web/ja/jp/restaurants/wharf-cafe"
+        ]
+      },
+      "importReview": {
+        "isExisting": true,
+        "useFoodId": "food-1kvqau2",
+        "canonicalGroupId": "group-g0zsp",
+        "duplicateHandling": "既存商品へsummer-2026を追加",
+        "registrationPolicy": "新規作成しない。既存food-1kvqau2を使用し、soft drink bottle offer-card画像や販売店舗の補完はoverride候補にする。",
+        "needsHumanReview": true,
+        "notes": "food-8xwq2b is same canonical duplicate. food-1h2frv3 is soft drink wording variant and should be merged/treated as variant."
+      }
     },
     {
-      "reviewStatus": "draft",
+      "reviewStatus": "pending",
       "collectionId": "summer-2026",
       "isLimited": true,
       "saleStartDate": null,
@@ -1737,7 +2200,7 @@
       "eventStartDate": null,
       "eventEndDate": null,
       "lastCheckedAt": "2026-07-06",
-      "priceSource": "unconfirmed",
+      "priceSource": "secondary",
       "duplicateCandidates": [
         {
           "source": "scripts/output/foods.generated.json",
@@ -1755,8 +2218,15 @@
       "id": "draft-summer-2026-character-jurassic-park-drink-bottle",
       "name": "ジュラシック・パーク・ドリンクボトル",
       "category": "drink",
-      "price": null,
-      "priceVariants": [],
+      "price": 2300,
+      "priceVariants": [
+        {
+          "label": "ドリンクボトル",
+          "price": 2300,
+          "isDefault": true,
+          "priceConfirmationStatus": "secondary-confirmed"
+        }
+      ],
       "shopName": "ジュラシック・パーク・ザ・ライド スプラッシュダウン前フードカート",
       "shopOfficialUrl": "https://www.usj.co.jp/web/ja/jp/restaurants/food-cart",
       "areaName": "ジュラシック・パーク",
@@ -1783,19 +2253,34 @@
         }
       ],
       "unconfirmedFields": [
-        "price",
-        "priceVariants",
         "saleStartDate",
         "saleEndDate",
         "saleTimeCondition.productSpecific",
         "takeoutAvailable",
-        "description.productSpecific"
+        "description.productSpecific",
+        "price.official"
       ],
       "dedupeNotes": "Official food-cart image/store confirmed; official price not confirmed. Existing generated candidates must be resolved before production registration.",
-      "normalizedName": "ジュラシックパークドリンクボトル"
+      "normalizedName": "ジュラシックパークドリンクボトル",
+      "priceVerification": {
+        "status": "secondary-confirmed",
+        "note": "Existing generated data records Travel Watch-derived price 2300 for Jurassic Park drink bottle. Official price was not confirmed in USJ pages.",
+        "sourceUrls": [
+          "scripts/output/foods.generated.json"
+        ]
+      },
+      "importReview": {
+        "isExisting": true,
+        "useFoodId": "food-alnomv",
+        "canonicalGroupId": "group-6kxx40",
+        "duplicateHandling": "既存商品へsummer-2026を追加",
+        "registrationPolicy": "新規作成しない。既存food-alnomvを使用し、summer-2026コレクション紐付け候補にする。価格2,300円はsecondary-confirmed扱い。",
+        "needsHumanReview": true,
+        "notes": "food-1242pz2 is the same canonical group/gallery duplicate."
+      }
     },
     {
-      "reviewStatus": "draft",
+      "reviewStatus": "pending",
       "collectionId": "summer-2026",
       "isLimited": true,
       "saleStartDate": null,
@@ -1859,7 +2344,25 @@
         "description.productSpecific",
         "priceVariants"
       ],
-      "dedupeNotes": "Related official same-page item. Existing generated candidate must be resolved before production registration."
+      "dedupeNotes": "Related official same-page item. Existing generated candidate must be resolved before production registration.",
+      "priceVerification": {
+        "status": "official-confirmed",
+        "note": "Price confirmed from official USJ page during batch research.",
+        "sourceUrls": [
+          "https://www.usj.co.jp/web/ja/jp/restaurants/food-cart",
+          "https://www.usj.co.jp/web/ja/jp/restaurants/minion-food",
+          "https://www.usj.co.jp/web/ja/jp/restaurants/evil-eats"
+        ]
+      },
+      "importReview": {
+        "isExisting": true,
+        "useFoodId": "food-r24nsm",
+        "canonicalGroupId": "group-qvxm6x",
+        "duplicateHandling": "既存商品へ情報をoverride",
+        "registrationPolicy": "新規作成しない。既存food-r24nsmを使用し、公式確認した価格・店舗・画像をoverride候補にする。",
+        "needsHumanReview": true,
+        "notes": "Draft official price 1200 supersedes secondary-only generated note for import review purposes."
+      }
     },
     {
       "reviewStatus": "draft",
@@ -1908,7 +2411,23 @@
         "takeoutAvailable",
         "imageUrl.singleProduct"
       ],
-      "dedupeNotes": "No same-name generated/manual/override item found. Bottle strap items are excluded as goods; only the edible soft frozen grape bucket/spoon item is added as a draft candidate."
+      "dedupeNotes": "No same-name generated/manual/override item found. Bottle strap items are excluded as goods; only the edible soft frozen grape bucket/spoon item is added as a draft candidate.",
+      "priceVerification": {
+        "status": "unresolved",
+        "note": "Official/secondary price not confirmed during import review.",
+        "sourceUrls": [
+          "https://www.usj.co.jp/web/ja/jp/restaurants/seasonal-food",
+          "https://www.usj.co.jp/web/ja/jp/restaurants/food-cart"
+        ]
+      },
+      "importReview": {
+        "isExisting": false,
+        "useFoodId": null,
+        "duplicateHandling": "完全な新商品として追加",
+        "registrationPolicy": "manual_foodsへ新規候補として登録。ただし人間確認後。",
+        "needsHumanReview": true,
+        "notes": "No generated/manual/override duplicate selected."
+      }
     }
   ],
   "excludedOfficialItems": [
@@ -1946,11 +2465,33 @@
     },
     {
       "name": "めざせ大悪党！ デイブ・ポップコーンバケツ",
-      "reason": "Official food-cart/minion-food listing and image confirmed, but official summer-2026 limited status and official current item price were not confirmed. Existing generated duplicate candidates exist, so do not add to summer-2026 draft candidates."
+      "reason": "Official food-cart/minion-food listing and image confirmed, but official summer-2026 limited status and official current item price were not confirmed. Existing generated duplicate candidates exist, so do not add to summer-2026 draft candidates.",
+      "importReview": {
+        "isExisting": true,
+        "useFoodId": "food-c2z2tz",
+        "canonicalGroupId": "group-cbhlq8",
+        "duplicateHandling": "2026年夏商品と確認できず除外",
+        "registrationPolicy": "summer-2026候補には登録しない。既存food-c2z2tz/food-1c6f0vwは現状維持。",
+        "priceVerification": {
+          "status": "secondary-confirmed",
+          "note": "Generated data has secondary price 4500 from USJ情報サイト; official price not confirmed."
+        }
+      }
     },
     {
       "name": "DK クラッシュサンデー ～トロピカルバナナ・フレーバー～ マグカップ付き",
-      "reason": "Official food-cart and Jungle Beat Shakes listing confirmed, but official summer-2026 limited status was not confirmed. Existing generated candidates already contain this item and variants, so do not add to summer-2026 draft candidates."
+      "reason": "Official food-cart and Jungle Beat Shakes listing confirmed, but official summer-2026 limited status was not confirmed. Existing generated candidates already contain this item and variants, so do not add to summer-2026 draft candidates.",
+      "importReview": {
+        "isExisting": true,
+        "useFoodId": "food-1yi0toj",
+        "canonicalGroupId": "group-1imiecz",
+        "duplicateHandling": "2026年夏商品と確認できず除外",
+        "registrationPolicy": "summer-2026候補には登録しない。将来扱う場合は通常版/マグカップ付きをpriceVariants統合。",
+        "priceVerification": {
+          "status": "secondary-confirmed",
+          "note": "Generated data has price 2200 for mug version and 1500 for regular version; official price not confirmed."
+        }
+      }
     },
     {
       "name": "DK クラッシュサンデー ～トロピカルバナナ・フレーバー～",
@@ -1962,5 +2503,12 @@
     "summer-2026-batch-2",
     "summer-2026-batch-3",
     "summer-2026-batch-4"
-  ]
+  ],
+  "collectionPeriod": {
+    "scope": "collection-level-reference-only",
+    "sourceUrl": "https://www.usj.co.jp/company/news/2026/0422/",
+    "startDate": "2026-07-01",
+    "endDate": "2026-08-26",
+    "note": "USJ official news confirms Universal Summer Matsuri Night event period. Item-level saleStartDate/saleEndDate remain null because product-specific dates were not confirmed."
+  }
 }
