@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "batchId": "summer-2026-batches-1-2",
+  "batchId": "summer-2026-batches-1-3",
   "collectionId": "summer-2026",
   "researchDocument": "docs/unicolle-summer-2026-food-research.md",
   "checkedAt": "2026-07-06",
@@ -22,7 +22,14 @@
     "https://www.usj.co.jp/contentdata/usj/ja/jp/restaurants/saido/index.html",
     "https://www.usj.co.jp/contentdata/usj/ja/jp/restaurants/louies-ny-pizza-parlor/index.html",
     "https://www.usj.co.jp/contentdata/usj/ja/jp/restaurants/beverly-hills-boulangerie/index.html",
-    "https://www.usj.co.jp/contentdata/usj/ja/jp/restaurants/mels-drive-in/index.html"
+    "https://www.usj.co.jp/contentdata/usj/ja/jp/restaurants/mels-drive-in/index.html",
+    "https://www.usj.co.jp/web/ja/jp/restaurants/minion-food",
+    "https://www.usj.co.jp/web/ja/jp/restaurants/evil-eats",
+    "https://www.usj.co.jp/web/ja/jp/restaurants/delicious-me-the-cookie-kitchen",
+    "https://www.usj.co.jp/web/ja/jp/restaurants/snoopys-backlot-cafe",
+    "https://www.usj.co.jp/web/ja/jp/restaurants/boardwalk-snacks",
+    "https://www.usj.co.jp/web/ja/jp/restaurants/wharf-cafe",
+    "https://www.usj.co.jp/web/ja/jp/restaurants/amity-landing-restaurant"
   ],
   "notes": [
     "All records remain draft because official single-item prices were not found in the checked official pages.",
@@ -30,7 +37,10 @@
     "Normal and neon-cup versions are represented as priceVariants, not separate foods.",
     "Batch 2 adds restaurant and dessert items from official seasonal and restaurant pages.",
     "Batch 2 prices are official only when confirmed on official restaurant pages.",
-    "Multi-product official images are saved as imageCandidates only when a single-product primary image could not be confirmed."
+    "Multi-product official images are saved as imageCandidates only when a single-product primary image could not be confirmed.",
+    "Batch 3 adds official food-cart, character drink bottle, and frappe research as draft candidates. Product-level sale periods remain unconfirmed.",
+    "Tropical frappe neon cup prices are represented as priceVariants, not separate draft items.",
+    "Bob, Jurassic Park drink bottle, and villain donut burger have generated-data duplicate candidates and require human dedupe before production registration."
   ],
   "items": [
     {
@@ -1179,6 +1189,671 @@
         "description.productSpecific"
       ],
       "dedupeNotes": "No same-name generated/manual/override item found. Primary image is empty because only a combined official image was confirmed."
+    },
+    {
+      "reviewStatus": "draft",
+      "collectionId": "summer-2026",
+      "isLimited": true,
+      "saleStartDate": null,
+      "saleEndDate": null,
+      "eventStartDate": null,
+      "eventEndDate": null,
+      "lastCheckedAt": "2026-07-06",
+      "priceSource": "official",
+      "duplicateCandidates": [],
+      "id": "draft-summer-2026-foodcart-villain-blood-orange-frozen-soda",
+      "name": "クラッシュ！大悪党のブラッドオレンジ・フローズンソーダ",
+      "category": "drink",
+      "price": 900,
+      "priceVariants": [
+        {
+          "label": "単品",
+          "price": 900,
+          "isDefault": true
+        }
+      ],
+      "shopName": "イーブル・イーツ",
+      "shopOfficialUrl": "https://www.usj.co.jp/web/ja/jp/restaurants/evil-eats",
+      "areaName": "ミニオン・パーク",
+      "diningType": "food_cart",
+      "takeoutAvailable": null,
+      "description": "公式フードカート/ミニオンフードでは販売場所と商品名を確認。商品本文説明は未確認。",
+      "saleTimeCondition": "商品単位の販売時間は未確認。",
+      "sourceUrl": "https://www.usj.co.jp/web/ja/jp/restaurants/evil-eats",
+      "officialReferenceUrls": [
+        "https://www.usj.co.jp/web/ja/jp/restaurants/food-cart",
+        "https://www.usj.co.jp/web/ja/jp/restaurants/minion-food",
+        "https://www.usj.co.jp/web/ja/jp/restaurants/evil-eats"
+      ],
+      "imageUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/files/images/gds-images/usj-gds-food-villain-con-blood-orange-frozen-soda-summer-2026-offercard-h.jpg",
+      "imageSourceUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/restaurants/evil-eats/index.html",
+      "imageCandidates": [
+        {
+          "url": "https://www.usj.co.jp/contentdata/usj/ja/jp/files/images/gds-images/usj-gds-food-villain-con-blood-orange-frozen-soda-summer-2026-offercard-h.jpg",
+          "sourceUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/restaurants/evil-eats/index.html",
+          "note": "Official offer-card image matched to the product alt text."
+        },
+        {
+          "url": "https://www.usj.co.jp/contentdata/usj/ja/jp/files/images/gds-images/usj-gds-food-villain-con-blood-orange-frozen-soda-summer-2026-a.jpg",
+          "sourceUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/restaurants/food-cart/index.html",
+          "note": "Official food-cart gallery image matched to the product alt text."
+        },
+        {
+          "url": "https://www.usj.co.jp/contentdata/usj/ja/jp/files/images/gds-images/usj-gds-food-villain-con-blood-orange-frozen-soda-summer-2026-b.jpg",
+          "sourceUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/restaurants/food-cart/index.html",
+          "note": "Official food-cart gallery image matched to the product alt text."
+        }
+      ],
+      "unconfirmedFields": [
+        "saleStartDate",
+        "saleEndDate",
+        "saleTimeCondition.productSpecific",
+        "takeoutAvailable",
+        "description.productSpecific",
+        "priceVariants"
+      ],
+      "dedupeNotes": "No same-name generated/manual/override item found.",
+      "normalizedName": "クラッシュ大悪党のブラッドオレンジフローズンソーダ"
+    },
+    {
+      "reviewStatus": "draft",
+      "collectionId": "summer-2026",
+      "isLimited": true,
+      "saleStartDate": null,
+      "saleEndDate": null,
+      "eventStartDate": null,
+      "eventEndDate": null,
+      "lastCheckedAt": "2026-07-06",
+      "priceSource": "official",
+      "duplicateCandidates": [],
+      "id": "draft-summer-2026-foodcart-movie-star-minion-frappe-peach-lemon",
+      "name": "映画スターのミニオンフラッペ ～ピーチ＆レモン～",
+      "category": "dessert_drink",
+      "price": 900,
+      "priceVariants": [
+        {
+          "label": "単品",
+          "price": 900,
+          "isDefault": true
+        }
+      ],
+      "shopName": "デリシャス・ミー！ ザ・クッキー・キッチン",
+      "shopOfficialUrl": "https://www.usj.co.jp/web/ja/jp/restaurants/delicious-me-the-cookie-kitchen",
+      "areaName": "ミニオン・パーク",
+      "diningType": "food_cart",
+      "takeoutAvailable": null,
+      "description": "公式フードカート/ミニオンフードでは販売場所と商品名を確認。商品本文説明は未確認。",
+      "saleTimeCondition": "商品単位の販売時間は未確認。",
+      "sourceUrl": "https://www.usj.co.jp/web/ja/jp/restaurants/delicious-me-the-cookie-kitchen",
+      "officialReferenceUrls": [
+        "https://www.usj.co.jp/web/ja/jp/restaurants/food-cart",
+        "https://www.usj.co.jp/web/ja/jp/restaurants/minion-food",
+        "https://www.usj.co.jp/web/ja/jp/restaurants/delicious-me-the-cookie-kitchen"
+      ],
+      "imageUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/files/images/gds-images/usj-gds-food-movie-star-minion-frappe-peach-and-lemon-summer-2026-offercard-h.jpg",
+      "imageSourceUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/restaurants/delicious-me-the-cookie-kitchen/index.html",
+      "imageCandidates": [
+        {
+          "url": "https://www.usj.co.jp/contentdata/usj/ja/jp/files/images/gds-images/usj-gds-food-movie-star-minion-frappe-peach-and-lemon-summer-2026-offercard-h.jpg",
+          "sourceUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/restaurants/delicious-me-the-cookie-kitchen/index.html",
+          "note": "Official offer-card image matched to the product alt text."
+        },
+        {
+          "url": "https://www.usj.co.jp/contentdata/usj/ja/jp/files/images/gds-images/usj-gds-food-movie-star-minion-frappe-peach-and-lemon-summer-2026-a.jpg",
+          "sourceUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/restaurants/food-cart/index.html",
+          "note": "Official food-cart gallery image matched to the product alt text."
+        },
+        {
+          "url": "https://www.usj.co.jp/contentdata/usj/ja/jp/files/images/gds-images/usj-gds-food-movie-star-minion-frappe-peach-and-lemon-summer-2026-b.jpg",
+          "sourceUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/restaurants/food-cart/index.html",
+          "note": "Official food-cart gallery image matched to the product alt text."
+        }
+      ],
+      "unconfirmedFields": [
+        "saleStartDate",
+        "saleEndDate",
+        "saleTimeCondition.productSpecific",
+        "takeoutAvailable",
+        "description.productSpecific",
+        "priceVariants"
+      ],
+      "dedupeNotes": "No same-name generated/manual/override item found.",
+      "normalizedName": "映画スターのミニオンフラッペピーチ＆レモン"
+    },
+    {
+      "reviewStatus": "draft",
+      "collectionId": "summer-2026",
+      "isLimited": true,
+      "saleStartDate": null,
+      "saleEndDate": null,
+      "eventStartDate": null,
+      "eventEndDate": null,
+      "lastCheckedAt": "2026-07-06",
+      "priceSource": "official",
+      "duplicateCandidates": [],
+      "id": "draft-summer-2026-foodcart-snoopy-frappe-strawberry-milk-white-peach",
+      "name": "スヌーピー・フラッペ ～いちごミルク＆白桃～",
+      "category": "dessert_drink",
+      "price": 900,
+      "priceVariants": [
+        {
+          "label": "単品",
+          "price": 900,
+          "isDefault": true
+        }
+      ],
+      "shopName": "スヌーピー™・バックロット・カフェ",
+      "shopOfficialUrl": "https://www.usj.co.jp/web/ja/jp/restaurants/snoopys-backlot-cafe",
+      "areaName": "ユニバーサル・ワンダーランド",
+      "diningType": "quick_service",
+      "takeoutAvailable": null,
+      "description": "サーフィンを楽しむスヌーピーがおしゃれなフラッペ。サーフボードの飾り付き。",
+      "saleTimeCondition": "商品単位の販売時間は未確認。",
+      "sourceUrl": "https://www.usj.co.jp/web/ja/jp/restaurants/snoopys-backlot-cafe",
+      "officialReferenceUrls": [
+        "https://www.usj.co.jp/web/ja/jp/restaurants/seasonal-food",
+        "https://www.usj.co.jp/web/ja/jp/restaurants/snoopys-backlot-cafe"
+      ],
+      "imageUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/files/images/gds-images/usj-gds-food-snoopy-frappe-offercard-h.jpg",
+      "imageSourceUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/restaurants/snoopys-backlot-cafe/index.html",
+      "imageCandidates": [
+        {
+          "url": "https://www.usj.co.jp/contentdata/usj/ja/jp/files/images/gds-images/usj-gds-food-snoopy-frappe-offercard-h.jpg",
+          "sourceUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/restaurants/snoopys-backlot-cafe/index.html",
+          "note": "Official offer-card image matched to the product alt text."
+        },
+        {
+          "url": "https://www.usj.co.jp/contentdata/usj/ja/jp/files/images/gds-images/usj-gds-food-snoopys-strawberry-white-peach-frappe-and-no-swimming-jaws-frappe-peaches-salted-cream-summer-2026-gallery-a.jpg",
+          "sourceUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/restaurants/seasonal-food/index.html",
+          "note": "Official combined gallery image with Jaws frappe."
+        },
+        {
+          "url": "https://www.usj.co.jp/contentdata/usj/ja/jp/files/images/gds-images/usj-gds-food-snoopys-strawberry-white-peach-frappe-and-no-swimming-jaws-frappe-peaches-salted-cream-summer-2026-gallery-b.jpg",
+          "sourceUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/restaurants/seasonal-food/index.html",
+          "note": "Official combined gallery image with Jaws frappe."
+        }
+      ],
+      "unconfirmedFields": [
+        "saleStartDate",
+        "saleEndDate",
+        "saleTimeCondition.productSpecific",
+        "takeoutAvailable",
+        "priceVariants"
+      ],
+      "dedupeNotes": "No same-name generated/manual/override item found.",
+      "normalizedName": "スヌーピーフラッペいちごミルク＆白桃"
+    },
+    {
+      "reviewStatus": "draft",
+      "collectionId": "summer-2026",
+      "isLimited": true,
+      "saleStartDate": null,
+      "saleEndDate": null,
+      "eventStartDate": null,
+      "eventEndDate": null,
+      "lastCheckedAt": "2026-07-06",
+      "priceSource": "official",
+      "duplicateCandidates": [],
+      "id": "draft-summer-2026-foodcart-no-swimming-jaws-frappe-peach-salt-whip",
+      "name": "遊泳禁止!! ジョーズ・フラッペ ～ピーチ＆ソルトホイップ～",
+      "category": "dessert_drink",
+      "price": 900,
+      "priceVariants": [
+        {
+          "label": "単品",
+          "price": 900,
+          "isDefault": true
+        }
+      ],
+      "shopName": "ボードウォーク・スナック",
+      "shopOfficialUrl": "https://www.usj.co.jp/web/ja/jp/restaurants/boardwalk-snacks",
+      "areaName": "アミティ・ビレッジ",
+      "diningType": "food_cart",
+      "takeoutAvailable": null,
+      "description": "遊泳禁止のサインと白波から覗くジョーズの気配を表現した、ピーチ＆ソルトホイップのフラッペ。",
+      "saleTimeCondition": "商品単位の販売時間は未確認。",
+      "sourceUrl": "https://www.usj.co.jp/web/ja/jp/restaurants/boardwalk-snacks",
+      "officialReferenceUrls": [
+        "https://www.usj.co.jp/web/ja/jp/restaurants/seasonal-food",
+        "https://www.usj.co.jp/web/ja/jp/restaurants/boardwalk-snacks"
+      ],
+      "imageUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/files/images/gds-images/usj-gds-food-no-swimming-allowed-jaws-frappe-peach-salt-whip-offercard-h.jpg",
+      "imageSourceUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/restaurants/boardwalk-snacks/index.html",
+      "imageCandidates": [
+        {
+          "url": "https://www.usj.co.jp/contentdata/usj/ja/jp/files/images/gds-images/usj-gds-food-no-swimming-allowed-jaws-frappe-peach-salt-whip-offercard-h.jpg",
+          "sourceUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/restaurants/boardwalk-snacks/index.html",
+          "note": "Official offer-card image matched to the product alt text."
+        },
+        {
+          "url": "https://www.usj.co.jp/contentdata/usj/ja/jp/files/images/gds-images/usj-gds-food-snoopys-strawberry-white-peach-frappe-and-no-swimming-jaws-frappe-peaches-salted-cream-summer-2026-gallery-a.jpg",
+          "sourceUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/restaurants/seasonal-food/index.html",
+          "note": "Official combined gallery image with Snoopy frappe."
+        },
+        {
+          "url": "https://www.usj.co.jp/contentdata/usj/ja/jp/files/images/gds-images/usj-gds-food-snoopys-strawberry-white-peach-frappe-and-no-swimming-jaws-frappe-peaches-salted-cream-summer-2026-gallery-b.jpg",
+          "sourceUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/restaurants/seasonal-food/index.html",
+          "note": "Official combined gallery image with Snoopy frappe."
+        }
+      ],
+      "unconfirmedFields": [
+        "saleStartDate",
+        "saleEndDate",
+        "saleTimeCondition.productSpecific",
+        "takeoutAvailable",
+        "priceVariants"
+      ],
+      "dedupeNotes": "No same-name generated/manual/override item found.",
+      "normalizedName": "遊泳禁止ジョーズフラッペピーチ＆ソルトホイップ"
+    },
+    {
+      "reviewStatus": "draft",
+      "collectionId": "summer-2026",
+      "isLimited": true,
+      "saleStartDate": null,
+      "saleEndDate": null,
+      "eventStartDate": null,
+      "eventEndDate": null,
+      "lastCheckedAt": "2026-07-06",
+      "priceSource": "official",
+      "duplicateCandidates": [],
+      "id": "draft-summer-2026-foodcart-tropical-frappe-strawberry",
+      "name": "トロピカル・フラッペ ～ストロベリー～",
+      "category": "dessert_drink",
+      "price": 800,
+      "priceVariants": [
+        {
+          "label": "通常",
+          "price": 800,
+          "isDefault": true
+        },
+        {
+          "label": "ネオン・カップ付き",
+          "price": 1650,
+          "isDefault": false
+        }
+      ],
+      "shopName": "ワーフカフェ / ボードウォーク・スナック",
+      "shopOfficialUrl": "https://www.usj.co.jp/web/ja/jp/restaurants/wharf-cafe",
+      "areaName": "サンフランシスコ・エリア / アミティ・ビレッジ",
+      "diningType": "food_cart",
+      "takeoutAvailable": null,
+      "description": "夏に食べたいフルーツかき氷。ネオン・カップ付きの価格バリエーションあり。",
+      "saleTimeCondition": "ネオン・カップ＆フラッペを18:00までに購入でソフトドリンク（L）引換券をレジで渡す旨を公式店舗ページで確認。通常販売時間は未確認。",
+      "sourceUrl": "https://www.usj.co.jp/web/ja/jp/restaurants/wharf-cafe",
+      "officialReferenceUrls": [
+        "https://www.usj.co.jp/web/ja/jp/restaurants/food-cart",
+        "https://www.usj.co.jp/web/ja/jp/restaurants/seasonal-food",
+        "https://www.usj.co.jp/web/ja/jp/restaurants/wharf-cafe",
+        "https://www.usj.co.jp/web/ja/jp/restaurants/boardwalk-snacks"
+      ],
+      "imageUrl": "",
+      "imageSourceUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/restaurants/wharf-cafe/index.html",
+      "imageCandidates": [
+        {
+          "url": "https://www.usj.co.jp/contentdata/usj/ja/jp/files/images/gds-images/usj-gds-food-tropical-frappe-mango-and-strawberry-summer-2026-offercard-h.jpg",
+          "sourceUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/restaurants/wharf-cafe/index.html",
+          "note": "Official combined offer-card image for strawberry and mango frappes."
+        },
+        {
+          "url": "https://www.usj.co.jp/contentdata/usj/ja/jp/files/images/gds-images/usj-gds-food-tropical-frappe-mango-strawberry-with-neon-cup-summer-2026-gallery-a.jpg",
+          "sourceUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/restaurants/food-cart/index.html",
+          "note": "Official combined gallery image for strawberry and mango with neon cup variants."
+        },
+        {
+          "url": "https://www.usj.co.jp/contentdata/usj/ja/jp/files/images/gds-images/usj-gds-food-tropical-frappe-mango-strawberry-with-neon-cup-summer-2026-gallery-b.jpg",
+          "sourceUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/restaurants/food-cart/index.html",
+          "note": "Official combined gallery image for strawberry and mango with neon cup variants."
+        }
+      ],
+      "unconfirmedFields": [
+        "saleStartDate",
+        "saleEndDate",
+        "takeoutAvailable",
+        "saleTimeCondition.normalHours",
+        "imageUrl.singleProduct"
+      ],
+      "dedupeNotes": "No same-name generated/manual/override item found. Primary image is empty because only a combined official image was confirmed.",
+      "normalizedName": "トロピカルフラッペストロベリー"
+    },
+    {
+      "reviewStatus": "draft",
+      "collectionId": "summer-2026",
+      "isLimited": true,
+      "saleStartDate": null,
+      "saleEndDate": null,
+      "eventStartDate": null,
+      "eventEndDate": null,
+      "lastCheckedAt": "2026-07-06",
+      "priceSource": "official",
+      "duplicateCandidates": [],
+      "id": "draft-summer-2026-foodcart-tropical-frappe-mango",
+      "name": "トロピカル・フラッペ ～マンゴー～",
+      "category": "dessert_drink",
+      "price": 800,
+      "priceVariants": [
+        {
+          "label": "通常",
+          "price": 800,
+          "isDefault": true
+        },
+        {
+          "label": "ネオン・カップ付き",
+          "price": 1650,
+          "isDefault": false
+        }
+      ],
+      "shopName": "ワーフカフェ / ボードウォーク・スナック",
+      "shopOfficialUrl": "https://www.usj.co.jp/web/ja/jp/restaurants/wharf-cafe",
+      "areaName": "サンフランシスコ・エリア / アミティ・ビレッジ",
+      "diningType": "food_cart",
+      "takeoutAvailable": null,
+      "description": "夏に食べたいフルーツかき氷。ネオン・カップ付きの価格バリエーションあり。",
+      "saleTimeCondition": "ネオン・カップ＆フラッペを18:00までに購入でソフトドリンク（L）引換券をレジで渡す旨を公式店舗ページで確認。通常販売時間は未確認。",
+      "sourceUrl": "https://www.usj.co.jp/web/ja/jp/restaurants/wharf-cafe",
+      "officialReferenceUrls": [
+        "https://www.usj.co.jp/web/ja/jp/restaurants/food-cart",
+        "https://www.usj.co.jp/web/ja/jp/restaurants/seasonal-food",
+        "https://www.usj.co.jp/web/ja/jp/restaurants/wharf-cafe",
+        "https://www.usj.co.jp/web/ja/jp/restaurants/boardwalk-snacks"
+      ],
+      "imageUrl": "",
+      "imageSourceUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/restaurants/wharf-cafe/index.html",
+      "imageCandidates": [
+        {
+          "url": "https://www.usj.co.jp/contentdata/usj/ja/jp/files/images/gds-images/usj-gds-food-tropical-frappe-mango-and-strawberry-summer-2026-offercard-h.jpg",
+          "sourceUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/restaurants/wharf-cafe/index.html",
+          "note": "Official combined offer-card image for strawberry and mango frappes."
+        },
+        {
+          "url": "https://www.usj.co.jp/contentdata/usj/ja/jp/files/images/gds-images/usj-gds-food-tropical-frappe-mango-strawberry-with-neon-cup-summer-2026-gallery-a.jpg",
+          "sourceUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/restaurants/food-cart/index.html",
+          "note": "Official combined gallery image for strawberry and mango with neon cup variants."
+        },
+        {
+          "url": "https://www.usj.co.jp/contentdata/usj/ja/jp/files/images/gds-images/usj-gds-food-tropical-frappe-mango-strawberry-with-neon-cup-summer-2026-gallery-b.jpg",
+          "sourceUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/restaurants/food-cart/index.html",
+          "note": "Official combined gallery image for strawberry and mango with neon cup variants."
+        }
+      ],
+      "unconfirmedFields": [
+        "saleStartDate",
+        "saleEndDate",
+        "takeoutAvailable",
+        "saleTimeCondition.normalHours",
+        "imageUrl.singleProduct"
+      ],
+      "dedupeNotes": "No same-name generated/manual/override item found. Primary image is empty because only a combined official image was confirmed.",
+      "normalizedName": "トロピカルフラッペマンゴー"
+    },
+    {
+      "reviewStatus": "draft",
+      "collectionId": "summer-2026",
+      "isLimited": true,
+      "saleStartDate": null,
+      "saleEndDate": null,
+      "eventStartDate": null,
+      "eventEndDate": null,
+      "lastCheckedAt": "2026-07-06",
+      "priceSource": "official",
+      "duplicateCandidates": [],
+      "id": "draft-summer-2026-character-jaws-drink-bottle",
+      "name": "ジョーズ・ドリンクボトル",
+      "category": "drink",
+      "price": 2300,
+      "priceVariants": [
+        {
+          "label": "ソフトドリンク（R）付き",
+          "price": 2300,
+          "isDefault": true
+        }
+      ],
+      "shopName": "アミティ・ランディング・レストラン",
+      "shopOfficialUrl": "https://www.usj.co.jp/web/ja/jp/restaurants/amity-landing-restaurant",
+      "areaName": "アミティ・ビレッジ",
+      "diningType": "quick_service",
+      "takeoutAvailable": null,
+      "description": "ジョーズのヒストリーを感じさせるワイルド＆レトロなデザインの大容量ドリンクボトル。25周年限定ストラップ付き、ソフトドリンク（R）付き。",
+      "saleTimeCondition": "商品単位の販売時間は未確認。",
+      "sourceUrl": "https://www.usj.co.jp/web/ja/jp/restaurants/amity-landing-restaurant",
+      "officialReferenceUrls": [
+        "https://www.usj.co.jp/web/ja/jp/restaurants/seasonal-food",
+        "https://www.usj.co.jp/web/ja/jp/restaurants/amity-landing-restaurant"
+      ],
+      "imageUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/files/images/gds-images/usj-gds-food-jaws-drink-bottle-2026-offercard-h.jpg",
+      "imageSourceUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/restaurants/amity-landing-restaurant/index.html",
+      "imageCandidates": [
+        {
+          "url": "https://www.usj.co.jp/contentdata/usj/ja/jp/files/images/gds-images/usj-gds-food-jaws-drink-bottle-2026-offercard-h.jpg",
+          "sourceUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/restaurants/amity-landing-restaurant/index.html",
+          "note": "Official offer-card image matched to the product alt text."
+        },
+        {
+          "url": "https://www.usj.co.jp/contentdata/usj/ja/jp/files/images/gds-images/usj-gds-food-jaws-drink-bottle-2026-gallery-a.jpg",
+          "sourceUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/restaurants/seasonal-food/index.html",
+          "note": "Official seasonal gallery image matched to the product alt text."
+        }
+      ],
+      "unconfirmedFields": [
+        "saleStartDate",
+        "saleEndDate",
+        "saleTimeCondition.productSpecific",
+        "takeoutAvailable"
+      ],
+      "dedupeNotes": "Batch 2 excluded this as container-only; Batch 3 adds it as a character bottle drink candidate because the official page lists it with soft drink (R).",
+      "normalizedName": "ジョーズドリンクボトル"
+    },
+    {
+      "reviewStatus": "draft",
+      "collectionId": "summer-2026",
+      "isLimited": true,
+      "saleStartDate": null,
+      "saleEndDate": null,
+      "eventStartDate": null,
+      "eventEndDate": null,
+      "lastCheckedAt": "2026-07-06",
+      "priceSource": "official",
+      "duplicateCandidates": [
+        {
+          "source": "scripts/output/foods.generated.json",
+          "foodId": "food-1kvqau2",
+          "canonicalGroupId": "group-g0zsp",
+          "reason": "Same normalized product name, price 2300, same official image family."
+        },
+        {
+          "source": "scripts/output/foods.generated.json",
+          "foodId": "food-8xwq2b",
+          "canonicalGroupId": "group-g0zsp",
+          "reason": "Same normalized product name, same official image family."
+        },
+        {
+          "source": "scripts/output/foods.generated.json",
+          "foodId": "food-1h2frv3",
+          "canonicalGroupId": "group-1gnfppe",
+          "reason": "Soft drink with Bob bottle variant, same offer-card image family."
+        }
+      ],
+      "id": "draft-summer-2026-character-bob-drink-bottle",
+      "name": "憧れの大悪党？ ボブ・ドリンクボトル",
+      "category": "drink",
+      "price": 2300,
+      "priceVariants": [
+        {
+          "label": "ソフトドリンク付き",
+          "price": 2300,
+          "isDefault": true
+        }
+      ],
+      "shopName": "デリシャス・ミー！ ザ・クッキー・キッチン / ワーフカフェ",
+      "shopOfficialUrl": "https://www.usj.co.jp/web/ja/jp/restaurants/delicious-me-the-cookie-kitchen",
+      "areaName": "ミニオン・パーク / サンフランシスコ・エリア",
+      "diningType": "food_cart",
+      "takeoutAvailable": null,
+      "description": "公式フードカート/ミニオンフードおよび店舗ページ掲載のボブ・ドリンクボトル。ワーフカフェでは「ソフトドリンク（憧れの大悪党？ ボブ・ドリンクボトル）」として掲載。",
+      "saleTimeCondition": "商品単位の販売時間は未確認。",
+      "sourceUrl": "https://www.usj.co.jp/web/ja/jp/restaurants/delicious-me-the-cookie-kitchen",
+      "officialReferenceUrls": [
+        "https://www.usj.co.jp/web/ja/jp/restaurants/food-cart",
+        "https://www.usj.co.jp/web/ja/jp/restaurants/minion-food",
+        "https://www.usj.co.jp/web/ja/jp/restaurants/delicious-me-the-cookie-kitchen",
+        "https://www.usj.co.jp/web/ja/jp/restaurants/wharf-cafe"
+      ],
+      "imageUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/files/images/gds-images/usj-gds-food-respected-villain-bob-drink-bottle-2025-offercard-h.jpg",
+      "imageSourceUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/restaurants/delicious-me-the-cookie-kitchen/index.html",
+      "imageCandidates": [
+        {
+          "url": "https://www.usj.co.jp/contentdata/usj/ja/jp/files/images/gds-images/usj-gds-food-respected-villain-bob-drink-bottle-2025-offercard-h.jpg",
+          "sourceUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/restaurants/delicious-me-the-cookie-kitchen/index.html",
+          "note": "Official offer-card image matched to soft drink with Bob bottle alt text."
+        },
+        {
+          "url": "https://www.usj.co.jp/contentdata/usj/ja/jp/files/images/gds-images/usj-gds-food-respected-villain-bob-drink-bottle-2025-a.jpg",
+          "sourceUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/restaurants/food-cart/index.html",
+          "note": "Official food-cart gallery image matched to the product alt text."
+        }
+      ],
+      "unconfirmedFields": [
+        "saleStartDate",
+        "saleEndDate",
+        "saleTimeCondition.productSpecific",
+        "takeoutAvailable",
+        "description.productSpecific"
+      ],
+      "dedupeNotes": "Existing generated candidates must be resolved before any production registration.",
+      "normalizedName": "憧れの大悪党ボブドリンクボトル"
+    },
+    {
+      "reviewStatus": "draft",
+      "collectionId": "summer-2026",
+      "isLimited": true,
+      "saleStartDate": null,
+      "saleEndDate": null,
+      "eventStartDate": null,
+      "eventEndDate": null,
+      "lastCheckedAt": "2026-07-06",
+      "priceSource": "unconfirmed",
+      "duplicateCandidates": [
+        {
+          "source": "scripts/output/foods.generated.json",
+          "foodId": "food-alnomv",
+          "canonicalGroupId": "group-6kxx40",
+          "reason": "Same normalized product name; generated price 2300 is not treated as official confirmation for this batch."
+        },
+        {
+          "source": "scripts/output/foods.generated.json",
+          "foodId": "food-1242pz2",
+          "canonicalGroupId": "group-6kxx40",
+          "reason": "Same normalized product name and same official gallery image family."
+        }
+      ],
+      "id": "draft-summer-2026-character-jurassic-park-drink-bottle",
+      "name": "ジュラシック・パーク・ドリンクボトル",
+      "category": "drink",
+      "price": null,
+      "priceVariants": [],
+      "shopName": "ジュラシック・パーク・ザ・ライド スプラッシュダウン前フードカート",
+      "shopOfficialUrl": "https://www.usj.co.jp/web/ja/jp/restaurants/food-cart",
+      "areaName": "ジュラシック・パーク",
+      "diningType": "food_cart",
+      "takeoutAvailable": null,
+      "description": "公式フードカート掲載のドリンクボトル。公式価格本文は確認できず。",
+      "saleTimeCondition": "商品単位の販売時間は未確認。",
+      "sourceUrl": "https://www.usj.co.jp/web/ja/jp/restaurants/food-cart",
+      "officialReferenceUrls": [
+        "https://www.usj.co.jp/web/ja/jp/restaurants/food-cart"
+      ],
+      "imageUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/files/images/gds-images/usj-gds-food-jurassic-park-drink-bottle-2026-gallery-a.jpg",
+      "imageSourceUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/restaurants/food-cart/index.html",
+      "imageCandidates": [
+        {
+          "url": "https://www.usj.co.jp/contentdata/usj/ja/jp/files/images/gds-images/usj-gds-food-jurassic-park-drink-bottle-2026-gallery-a.jpg",
+          "sourceUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/restaurants/food-cart/index.html",
+          "note": "Official food-cart gallery image matched to the product alt text."
+        },
+        {
+          "url": "https://www.usj.co.jp/contentdata/usj/ja/jp/files/images/gds-images/usj-gds-food-jurassic-park-drink-bottle-2026-gallery-b.jpg",
+          "sourceUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/restaurants/food-cart/index.html",
+          "note": "Official food-cart gallery image matched to the product alt text."
+        }
+      ],
+      "unconfirmedFields": [
+        "price",
+        "priceVariants",
+        "saleStartDate",
+        "saleEndDate",
+        "saleTimeCondition.productSpecific",
+        "takeoutAvailable",
+        "description.productSpecific"
+      ],
+      "dedupeNotes": "Official food-cart image/store confirmed; official price not confirmed. Existing generated candidates must be resolved before production registration.",
+      "normalizedName": "ジュラシックパークドリンクボトル"
+    },
+    {
+      "reviewStatus": "draft",
+      "collectionId": "summer-2026",
+      "isLimited": true,
+      "saleStartDate": null,
+      "saleEndDate": null,
+      "eventStartDate": null,
+      "eventEndDate": null,
+      "lastCheckedAt": "2026-07-06",
+      "priceSource": "official",
+      "duplicateCandidates": [
+        {
+          "source": "scripts/output/foods.generated.json",
+          "foodId": "food-r24nsm",
+          "canonicalGroupId": "group-qvxm6x",
+          "reason": "Same normalized product name, same official image family, generated price 1200."
+        }
+      ],
+      "id": "draft-summer-2026-related-villain-donut-burger-bbq-pork-bacon",
+      "name": "大悪党のためのドーナツ・バーガー ～BBQ ポーク&ベーコン～",
+      "normalizedName": "大悪党のためのドーナツバーガーbbqポーク＆ベーコン",
+      "category": "burger",
+      "price": 1200,
+      "priceVariants": [
+        {
+          "label": "単品",
+          "price": 1200,
+          "isDefault": true
+        }
+      ],
+      "shopName": "イーブル・イーツ",
+      "shopOfficialUrl": "https://www.usj.co.jp/web/ja/jp/restaurants/evil-eats",
+      "areaName": "ミニオン・パーク",
+      "diningType": "food_cart",
+      "takeoutAvailable": null,
+      "description": "公式フードカート/ミニオンフード同時掲載のドーナツ・バーガー。商品本文説明は未確認。",
+      "saleTimeCondition": "商品単位の販売時間は未確認。",
+      "sourceUrl": "https://www.usj.co.jp/web/ja/jp/restaurants/evil-eats",
+      "officialReferenceUrls": [
+        "https://www.usj.co.jp/web/ja/jp/restaurants/food-cart",
+        "https://www.usj.co.jp/web/ja/jp/restaurants/minion-food",
+        "https://www.usj.co.jp/web/ja/jp/restaurants/evil-eats"
+      ],
+      "imageUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/files/images/gds-images/usj-gds-food-villain-con-donut-burger-bbq-pork-and-bacon-2025-offercard-h.jpg",
+      "imageSourceUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/restaurants/evil-eats/index.html",
+      "imageCandidates": [
+        {
+          "url": "https://www.usj.co.jp/contentdata/usj/ja/jp/files/images/gds-images/usj-gds-food-villain-con-donut-burger-bbq-pork-and-bacon-2025-offercard-h.jpg",
+          "sourceUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/restaurants/evil-eats/index.html",
+          "note": "Official offer-card image matched to the product alt text."
+        },
+        {
+          "url": "https://www.usj.co.jp/contentdata/usj/ja/jp/files/images/gds-images/usj-gds-food-villain-con-donut-burger-bbq-pork-and-bacon-2025-a.jpg",
+          "sourceUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/restaurants/food-cart/index.html",
+          "note": "Official food-cart gallery image matched to the product alt text."
+        }
+      ],
+      "unconfirmedFields": [
+        "saleStartDate",
+        "saleEndDate",
+        "saleTimeCondition.productSpecific",
+        "takeoutAvailable",
+        "description.productSpecific",
+        "priceVariants"
+      ],
+      "dedupeNotes": "Related official same-page item. Existing generated candidate must be resolved before production registration."
     }
   ],
   "excludedOfficialItems": [
@@ -1200,7 +1875,7 @@
     },
     {
       "name": "ジョーズ・ドリンクボトル",
-      "reason": "Bottle/container item on the seasonal page; not added as a standalone food draft."
+      "reason": "Batch 2 excluded as container-only. Batch 3 rechecked under character bottle/cup drink scope and added as a draft candidate because the official page lists soft drink (R)付き."
     },
     {
       "name": "25周年アニバーサリー・ドリンクカップ",
@@ -1209,6 +1884,7 @@
   ],
   "batchIds": [
     "summer-2026-batch-1",
-    "summer-2026-batch-2"
+    "summer-2026-batch-2",
+    "summer-2026-batch-3"
   ]
 }

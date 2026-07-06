@@ -470,3 +470,272 @@
 - 公式で価格まで確認できたものは価格を保存した。
 - 商品単位の販売開始日・販売終了日が未確認のため、第2グループの新規追記分は全件 `draft`。
 - 第1グループで価格未確認だった `フローズン・ジントニック ～シトラス～` と `25周年カクテル ～ポップコーンフレーバー？～` は、パークサイド・グリル公式店舗ページで価格を確認できたためJSON側を補完する。
+
+# 第3グループ: フードカート・キャラクター系ドリンク・フラッペ
+
+- 情報確認日: 2026-07-06
+- 対象: フードカート掲載商品、キャラクター系ドリンクボトル、フラッペ。
+- 公式参照URL:
+  - https://www.usj.co.jp/web/ja/jp/restaurants/food-cart
+  - https://www.usj.co.jp/web/ja/jp/restaurants/seasonal-food
+  - https://www.usj.co.jp/web/ja/jp/restaurants/minion-food
+  - https://www.usj.co.jp/web/ja/jp/restaurants/evil-eats
+  - https://www.usj.co.jp/web/ja/jp/restaurants/delicious-me-the-cookie-kitchen
+  - https://www.usj.co.jp/web/ja/jp/restaurants/snoopys-backlot-cafe
+  - https://www.usj.co.jp/web/ja/jp/restaurants/boardwalk-snacks
+  - https://www.usj.co.jp/web/ja/jp/restaurants/wharf-cafe
+  - https://www.usj.co.jp/web/ja/jp/restaurants/amity-landing-restaurant
+- 取得メモ:
+  - `snoopy-backlot-cafe` と `boardwalk-snack` の単数形URLは本文取得できず、公式シーズナルページ内リンクから `snoopys-backlot-cafe` と `boardwalk-snacks` を確認した。
+  - 公式フードカート/シーズナルページは商品名・販売場所・画像を確認できるが、価格は店舗ページ側で確認したものを優先した。
+  - ジュラシック・パーク・ドリンクボトルは公式フードカート掲載と画像は確認できたが、公式ページ内の価格本文は確認できなかった。
+
+## 第3グループ 調査結果
+
+### クラッシュ！大悪党のブラッドオレンジ・フローズンソーダ
+
+- 正式商品名: クラッシュ！大悪党のブラッドオレンジ・フローズンソーダ
+- 価格: 900円
+- 価格バリエーション: 未確認
+- 販売店舗: イーブル・イーツ
+- エリア: ミニオン・パーク
+- カテゴリ: drink
+- 商品説明: 公式フードカート/ミニオンフードでは販売場所と商品名を確認。商品本文説明は未確認。
+- 販売開始日: 未確認
+- 販売終了日: 未確認
+- 販売時間条件: 商品単位の販売時間は未確認
+- テイクアウト可否: フードカート/スナック系掲載のため候補はあるが、公式本文で個別明記なし
+- 商品画像: https://www.usj.co.jp/contentdata/usj/ja/jp/files/images/gds-images/usj-gds-food-villain-con-blood-orange-frozen-soda-summer-2026-offercard-h.jpg
+- 画像出典URL: https://www.usj.co.jp/contentdata/usj/ja/jp/restaurants/evil-eats/index.html
+- 公式参照URL:
+  - https://www.usj.co.jp/web/ja/jp/restaurants/food-cart
+  - https://www.usj.co.jp/web/ja/jp/restaurants/minion-food
+  - https://www.usj.co.jp/web/ja/jp/restaurants/evil-eats
+- 未確認項目: 販売開始日、販売終了日、商品単位の販売時間、テイクアウト可否、商品説明本文、価格バリエーション。
+- 重複候補: 同名なし。
+
+### 映画スターのミニオンフラッペ ～ピーチ＆レモン～
+
+- 正式商品名: 映画スターのミニオンフラッペ ～ピーチ＆レモン～
+- 価格: 900円
+- 価格バリエーション: 未確認
+- 販売店舗: デリシャス・ミー！ ザ・クッキー・キッチン
+- エリア: ミニオン・パーク
+- カテゴリ: dessert_drink
+- 商品説明: 公式フードカート/ミニオンフードでは販売場所と商品名を確認。商品本文説明は未確認。
+- 販売開始日: 未確認
+- 販売終了日: 未確認
+- 販売時間条件: 商品単位の販売時間は未確認
+- テイクアウト可否: フードカート/スナック系掲載のため候補はあるが、公式本文で個別明記なし
+- 商品画像: https://www.usj.co.jp/contentdata/usj/ja/jp/files/images/gds-images/usj-gds-food-movie-star-minion-frappe-peach-and-lemon-summer-2026-offercard-h.jpg
+- 画像出典URL: https://www.usj.co.jp/contentdata/usj/ja/jp/restaurants/delicious-me-the-cookie-kitchen/index.html
+- 公式参照URL:
+  - https://www.usj.co.jp/web/ja/jp/restaurants/food-cart
+  - https://www.usj.co.jp/web/ja/jp/restaurants/minion-food
+  - https://www.usj.co.jp/web/ja/jp/restaurants/delicious-me-the-cookie-kitchen
+- 未確認項目: 販売開始日、販売終了日、商品単位の販売時間、テイクアウト可否、商品説明本文、価格バリエーション。
+- 重複候補: 同名なし。
+
+### スヌーピー・フラッペ ～いちごミルク＆白桃～
+
+- 正式商品名: スヌーピー・フラッペ ～いちごミルク＆白桃～
+- 価格: 900円
+- 価格バリエーション: 未確認
+- 販売店舗: スヌーピー™・バックロット・カフェ
+- エリア: ユニバーサル・ワンダーランド
+- カテゴリ: dessert_drink
+- 商品説明: サーフィンを楽しむスヌーピーがおしゃれなフラッペ。サーフボードの飾り付き。
+- 販売開始日: 未確認
+- 販売終了日: 未確認
+- 販売時間条件: 商品単位の販売時間は未確認
+- テイクアウト可否: 未確認
+- 商品画像: https://www.usj.co.jp/contentdata/usj/ja/jp/files/images/gds-images/usj-gds-food-snoopy-frappe-offercard-h.jpg
+- 画像出典URL: https://www.usj.co.jp/contentdata/usj/ja/jp/restaurants/snoopys-backlot-cafe/index.html
+- 公式参照URL:
+  - https://www.usj.co.jp/web/ja/jp/restaurants/seasonal-food
+  - https://www.usj.co.jp/web/ja/jp/restaurants/snoopys-backlot-cafe
+- 未確認項目: 販売開始日、販売終了日、商品単位の販売時間、テイクアウト可否、価格バリエーション。
+- 重複候補: 同名なし。
+
+### 遊泳禁止!! ジョーズ・フラッペ ～ピーチ＆ソルトホイップ～
+
+- 正式商品名: 遊泳禁止!! ジョーズ・フラッペ ～ピーチ＆ソルトホイップ～
+- 価格: 900円
+- 価格バリエーション: 未確認
+- 販売店舗: ボードウォーク・スナック
+- エリア: アミティ・ビレッジ
+- カテゴリ: dessert_drink
+- 商品説明: 遊泳禁止のサインと白波から覗くジョーズの気配を表現した、ピーチ＆ソルトホイップのフラッペ。
+- 販売開始日: 未確認
+- 販売終了日: 未確認
+- 販売時間条件: 商品単位の販売時間は未確認
+- テイクアウト可否: フードカート/スナック系掲載のため候補はあるが、公式本文で個別明記なし
+- 商品画像: https://www.usj.co.jp/contentdata/usj/ja/jp/files/images/gds-images/usj-gds-food-no-swimming-allowed-jaws-frappe-peach-salt-whip-offercard-h.jpg
+- 画像出典URL: https://www.usj.co.jp/contentdata/usj/ja/jp/restaurants/boardwalk-snacks/index.html
+- 公式参照URL:
+  - https://www.usj.co.jp/web/ja/jp/restaurants/seasonal-food
+  - https://www.usj.co.jp/web/ja/jp/restaurants/boardwalk-snacks
+- 未確認項目: 販売開始日、販売終了日、商品単位の販売時間、テイクアウト可否、価格バリエーション。
+- 重複候補: 同名なし。
+
+### トロピカル・フラッペ ～ストロベリー～
+
+- 正式商品名: トロピカル・フラッペ ～ストロベリー～
+- 価格: 800円
+- 価格バリエーション: 通常 800円 / ネオン・カップ付き 1,650円
+- 販売店舗: ワーフカフェ、ボードウォーク・スナック
+- エリア: サンフランシスコ・エリア、アミティ・ビレッジ
+- カテゴリ: dessert_drink
+- 商品説明: 夏に食べたいフルーツかき氷。ネオン・カップ付きの価格バリエーションあり。
+- 販売開始日: 未確認
+- 販売終了日: 未確認
+- 販売時間条件: ネオン・カップ＆フラッペを18:00までに購入でソフトドリンク（L）引換券をレジで渡す旨を公式店舗ページで確認。通常販売時間は未確認。
+- テイクアウト可否: フードカート/スナック系掲載のため候補はあるが、公式本文で個別明記なし
+- 商品画像: なし（マンゴーとの同時掲載画像のみ確認）
+- 画像候補:
+  - https://www.usj.co.jp/contentdata/usj/ja/jp/files/images/gds-images/usj-gds-food-tropical-frappe-mango-and-strawberry-summer-2026-offercard-h.jpg
+  - https://www.usj.co.jp/contentdata/usj/ja/jp/files/images/gds-images/usj-gds-food-tropical-frappe-mango-strawberry-with-neon-cup-summer-2026-gallery-a.jpg
+- 公式参照URL:
+  - https://www.usj.co.jp/web/ja/jp/restaurants/food-cart
+  - https://www.usj.co.jp/web/ja/jp/restaurants/seasonal-food
+  - https://www.usj.co.jp/web/ja/jp/restaurants/wharf-cafe
+  - https://www.usj.co.jp/web/ja/jp/restaurants/boardwalk-snacks
+- 未確認項目: 販売開始日、販売終了日、通常販売時間、テイクアウト可否、単体商品画像。
+- 重複候補: 同名なし。
+
+### トロピカル・フラッペ ～マンゴー～
+
+- 正式商品名: トロピカル・フラッペ ～マンゴー～
+- 価格: 800円
+- 価格バリエーション: 通常 800円 / ネオン・カップ付き 1,650円
+- 販売店舗: ワーフカフェ、ボードウォーク・スナック
+- エリア: サンフランシスコ・エリア、アミティ・ビレッジ
+- カテゴリ: dessert_drink
+- 商品説明: 夏に食べたいフルーツかき氷。ネオン・カップ付きの価格バリエーションあり。
+- 販売開始日: 未確認
+- 販売終了日: 未確認
+- 販売時間条件: ネオン・カップ＆フラッペを18:00までに購入でソフトドリンク（L）引換券をレジで渡す旨を公式店舗ページで確認。通常販売時間は未確認。
+- テイクアウト可否: フードカート/スナック系掲載のため候補はあるが、公式本文で個別明記なし
+- 商品画像: なし（ストロベリーとの同時掲載画像のみ確認）
+- 画像候補:
+  - https://www.usj.co.jp/contentdata/usj/ja/jp/files/images/gds-images/usj-gds-food-tropical-frappe-mango-and-strawberry-summer-2026-offercard-h.jpg
+  - https://www.usj.co.jp/contentdata/usj/ja/jp/files/images/gds-images/usj-gds-food-tropical-frappe-mango-strawberry-with-neon-cup-summer-2026-gallery-a.jpg
+- 公式参照URL:
+  - https://www.usj.co.jp/web/ja/jp/restaurants/food-cart
+  - https://www.usj.co.jp/web/ja/jp/restaurants/seasonal-food
+  - https://www.usj.co.jp/web/ja/jp/restaurants/wharf-cafe
+  - https://www.usj.co.jp/web/ja/jp/restaurants/boardwalk-snacks
+- 未確認項目: 販売開始日、販売終了日、通常販売時間、テイクアウト可否、単体商品画像。
+- 重複候補: 同名なし。
+
+### ジョーズ・ドリンクボトル
+
+- 正式商品名: ジョーズ・ドリンクボトル
+- 価格: 2,300円
+- 価格バリエーション: ソフトドリンク（R）付き 2,300円
+- 販売店舗: アミティ・ランディング・レストラン
+- エリア: アミティ・ビレッジ
+- カテゴリ: drink
+- 商品説明: ジョーズのヒストリーを感じさせるワイルド＆レトロなデザインの大容量ドリンクボトル。25周年限定ストラップ付き、ソフトドリンク（R）付き。
+- 販売開始日: 未確認
+- 販売終了日: 未確認
+- 販売時間条件: 商品単位の販売時間は未確認
+- テイクアウト可否: 未確認
+- 商品画像: https://www.usj.co.jp/contentdata/usj/ja/jp/files/images/gds-images/usj-gds-food-jaws-drink-bottle-2026-offercard-h.jpg
+- 画像出典URL: https://www.usj.co.jp/contentdata/usj/ja/jp/restaurants/amity-landing-restaurant/index.html
+- 公式参照URL:
+  - https://www.usj.co.jp/web/ja/jp/restaurants/seasonal-food
+  - https://www.usj.co.jp/web/ja/jp/restaurants/amity-landing-restaurant
+- 未確認項目: 販売開始日、販売終了日、商品単位の販売時間、テイクアウト可否。
+- 重複候補: 第2グループでは容器系として除外メモに入れていたが、第3グループではキャラクターボトル付きドリンク対象として再調査し、ドラフト候補に追加。
+
+### 憧れの大悪党？ ボブ・ドリンクボトル
+
+- 正式商品名: 憧れの大悪党？ ボブ・ドリンクボトル
+- 価格: 2,300円
+- 価格バリエーション: ソフトドリンク付き 2,300円
+- 販売店舗: デリシャス・ミー！ ザ・クッキー・キッチン、ワーフカフェ
+- エリア: ミニオン・パーク、サンフランシスコ・エリア
+- カテゴリ: drink
+- 商品説明: 公式フードカート/ミニオンフードおよび店舗ページ掲載のボブ・ドリンクボトル。ワーフカフェでは「ソフトドリンク（憧れの大悪党？ ボブ・ドリンクボトル）」として掲載。
+- 販売開始日: 未確認
+- 販売終了日: 未確認
+- 販売時間条件: 商品単位の販売時間は未確認
+- テイクアウト可否: フードカート/スナック系掲載のため候補はあるが、公式本文で個別明記なし
+- 商品画像: https://www.usj.co.jp/contentdata/usj/ja/jp/files/images/gds-images/usj-gds-food-respected-villain-bob-drink-bottle-2025-offercard-h.jpg
+- 画像出典URL: https://www.usj.co.jp/contentdata/usj/ja/jp/restaurants/delicious-me-the-cookie-kitchen/index.html
+- 公式参照URL:
+  - https://www.usj.co.jp/web/ja/jp/restaurants/food-cart
+  - https://www.usj.co.jp/web/ja/jp/restaurants/minion-food
+  - https://www.usj.co.jp/web/ja/jp/restaurants/delicious-me-the-cookie-kitchen
+  - https://www.usj.co.jp/web/ja/jp/restaurants/wharf-cafe
+- 未確認項目: 販売開始日、販売終了日、商品単位の販売時間、テイクアウト可否、商品説明本文。
+- 重複候補: `scripts/output/foods.generated.json` に `food-1kvqau2`、`food-8xwq2b`、`food-1h2frv3` が存在。新規本登録前に既存データとの統合確認が必要。
+
+### ジュラシック・パーク・ドリンクボトル
+
+- 正式商品名: ジュラシック・パーク・ドリンクボトル
+- 価格: 未確認
+- 価格バリエーション: 未確認
+- 販売店舗: ジュラシック・パーク・ザ・ライド スプラッシュダウン前フードカート
+- エリア: ジュラシック・パーク
+- カテゴリ: drink
+- 商品説明: 公式フードカート掲載のドリンクボトル。公式価格本文は確認できず。
+- 販売開始日: 未確認
+- 販売終了日: 未確認
+- 販売時間条件: 商品単位の販売時間は未確認
+- テイクアウト可否: フードカート掲載のため候補はあるが、公式本文で個別明記なし
+- 商品画像: https://www.usj.co.jp/contentdata/usj/ja/jp/files/images/gds-images/usj-gds-food-jurassic-park-drink-bottle-2026-gallery-a.jpg
+- 画像出典URL: https://www.usj.co.jp/contentdata/usj/ja/jp/restaurants/food-cart/index.html
+- 公式参照URL: https://www.usj.co.jp/web/ja/jp/restaurants/food-cart
+- 未確認項目: 価格、価格バリエーション、販売開始日、販売終了日、商品単位の販売時間、テイクアウト可否、商品説明本文。
+- 重複候補: `scripts/output/foods.generated.json` に `food-alnomv` と `food-1242pz2` が存在し、canonical_group_id は `group-6kxx40`。新規本登録前に既存データとの統合確認が必要。
+
+### 大悪党のためのドーナツ・バーガー ～BBQ ポーク&ベーコン～
+
+- 正式商品名: 大悪党のためのドーナツ・バーガー ～BBQ ポーク&ベーコン～
+- 価格: 1,200円
+- 価格バリエーション: 未確認
+- 販売店舗: イーブル・イーツ
+- エリア: ミニオン・パーク
+- カテゴリ: burger
+- 商品説明: 公式フードカート/ミニオンフード同時掲載のドーナツ・バーガー。商品本文説明は未確認。
+- 販売開始日: 未確認
+- 販売終了日: 未確認
+- 販売時間条件: 商品単位の販売時間は未確認
+- テイクアウト可否: フードカート/スナック系掲載のため候補はあるが、公式本文で個別明記なし
+- 商品画像: https://www.usj.co.jp/contentdata/usj/ja/jp/files/images/gds-images/usj-gds-food-villain-con-donut-burger-bbq-pork-and-bacon-2025-offercard-h.jpg
+- 画像出典URL: https://www.usj.co.jp/contentdata/usj/ja/jp/restaurants/evil-eats/index.html
+- 公式参照URL:
+  - https://www.usj.co.jp/web/ja/jp/restaurants/food-cart
+  - https://www.usj.co.jp/web/ja/jp/restaurants/minion-food
+  - https://www.usj.co.jp/web/ja/jp/restaurants/evil-eats
+- 未確認項目: 販売開始日、販売終了日、商品単位の販売時間、テイクアウト可否、商品説明本文、価格バリエーション。
+- 重複候補: `scripts/output/foods.generated.json` に `food-r24nsm` が存在。新規本登録前に既存データとの統合確認が必要。
+
+## 第3グループでJSON追加しない公式同時掲載物
+
+- めざせ大悪党！ デイブ・ポップコーンバケツ: 公式フードカート/ミニオンフードに掲載。ポップコーンバケツであり、公式価格を今回確認できなかったためJSON追加は見送り。
+- DK クラッシュサンデー ～トロピカルバナナ・フレーバー～ マグカップ付き: 公式フードカートに掲載。2026年夏限定としての価格・期間を今回確定できなかったためJSON追加は見送り。
+- ネオン・カップ: トロピカル・フラッペの `priceVariants` としてのみ扱い、単独商品として追加しない。
+- 光る！ ボトルストラップ: ドリンク容器の周辺グッズとして扱い、単独商品として追加しない。
+
+## 第3グループ 重複照合メモ
+
+- 照合対象:
+  - `scripts/output/foods.generated.json`
+  - `data/manual-foods.json`
+  - `data/manual-food-overrides.json`
+  - `data/duplicate-overrides.json`
+  - 第1・第2グループの `data/imports/unicolle-summer-2026-drafts.json`
+- 第3グループの最低限対象6商品は、既存生成データ、manual、overrides、第1・第2グループ候補に同名なし。
+- キャラクターボトル系では、ボブ・ドリンクボトルとジュラシック・パーク・ドリンクボトルに既存generated候補あり。
+- 関連同時掲載商品のドーナツ・バーガーにも既存generated候補あり。
+- 価格違い、ネオン・カップ付き、ボトル付きは原則 `priceVariants` として整理した。
+- 複数商品同時掲載画像は、誤画像を避けるため `imageUrl` を空にし、`imageCandidates` にだけ保存する。
+
+## 第3グループの判断
+
+- 公式で価格まで確認できたものは価格を保存した。
+- 商品単位の販売開始日・販売終了日が未確認のため、第3グループの新規追記分は全件 `draft`。
+- 第2グループで除外メモに入っていたジョーズ・ドリンクボトルは、今回のユーザー指定が「キャラクターボトル、カップ付きドリンク」を含むため、除外理由を更新し、第3グループのドラフト候補として追加する。
