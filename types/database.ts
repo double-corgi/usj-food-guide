@@ -94,6 +94,7 @@ export type Database = {
           is_featured: boolean;
           sort_order: number;
           created_at: string;
+          updated_at: string;
         };
         Insert: {
           id: string;
@@ -105,8 +106,41 @@ export type Database = {
           is_featured?: boolean;
           sort_order?: number;
           created_at?: string;
+          updated_at?: string;
         };
         Update: Partial<Database["public"]["Tables"]["collections"]["Insert"]>;
+        Relationships: [];
+      };
+      food_collection_memberships: {
+        Row: {
+          food_id: string;
+          collection_id: string;
+          created_at: string;
+        };
+        Insert: {
+          food_id: string;
+          collection_id: string;
+          created_at?: string;
+        };
+        Update: Partial<Database["public"]["Tables"]["food_collection_memberships"]["Insert"]>;
+        Relationships: [];
+      };
+      food_publication_metadata: {
+        Row: {
+          food_id: string;
+          review_status: ReviewStatus | null;
+          published_at: string | null;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          food_id: string;
+          review_status?: ReviewStatus | null;
+          published_at?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: Partial<Database["public"]["Tables"]["food_publication_metadata"]["Insert"]>;
         Relationships: [];
       };
       foods: {

@@ -31,6 +31,7 @@ function mapCollectionRow(row: CollectionRow): FoodCollection {
     accentColor: row.accent_color,
     isFeatured: row.is_featured,
     sortOrder: row.sort_order,
-    createdAt: row.created_at
+    createdAt: row.created_at,
+    updatedAt: row.updated_at
   };
 }

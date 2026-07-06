@@ -35,6 +35,7 @@ export type FoodCollection = {
   isFeatured: boolean;
   sortOrder: number;
   createdAt: string;
+  updatedAt?: string | null;
 };
 
 export type FoodVariant = {

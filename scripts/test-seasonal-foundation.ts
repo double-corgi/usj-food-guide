@@ -6,6 +6,7 @@ import {
   normalizeFoodFoundation,
   syncFoodPriceWithDefaultVariant
 } from "@/lib/food-variants";
+import { applySeasonalFoodFoundation } from "@/lib/repositories/seasonal-food-foundation";
 import {
   initialFoodCollections,
   isFoodInCollection,
@@ -75,6 +76,14 @@ const summerFood = food({
 assert.equal(initialFoodCollections[0]?.id, SUMMER_2026_COLLECTION_ID, "summer-2026 collection should be defined");
 assert.equal(isFoodInCollection(summerFood, SUMMER_2026_COLLECTION_ID), true, "summer collection foods should be identifiable by collectionId");
 
+const [membershipFood] = applySeasonalFoodFoundation([legacyFood], {
+  memberships: [{ food_id: "food-legacy", collection_id: SUMMER_2026_COLLECTION_ID, created_at: "2026-07-06T00:00:00.000Z" }],
+  publicationMetadata: [{ food_id: "food-legacy", review_status: "approved", published_at: "2026-07-06T10:00:00.000Z", created_at: "2026-07-06T00:00:00.000Z", updated_at: "2026-07-06T10:00:00.000Z" }],
+  variants: []
+});
+assert.equal(membershipFood?.collectionId, SUMMER_2026_COLLECTION_ID, "collection membership should apply to generated or manual foods by foodId");
+assert.equal(membershipFood?.publishedAt, "2026-07-06T10:00:00.000Z", "publication metadata should apply by foodId");
+
 const variantFood = food({
   id: "food-variant",
   name: "価格バリエーション",
@@ -106,6 +115,26 @@ assert.equal(getDefaultFoodVariant(variantFood)?.id, "var-single", "default vari
 assert.equal(variantFood.price, 600, "normalized foods.price should match default variant price");
 assert.equal(getEffectiveFoodPrice(variantFood), 600, "effective price should use the default variant");
 assert.equal(syncFoodPriceWithDefaultVariant({ price: 1000, variants: variantFood.variants }).price, 600, "price sync helper should use default variant price");
+
+const [foundationVariantFood] = applySeasonalFoodFoundation([food({ id: "food-foundation-variant", name: "DB価格バリエーション", price: 1000 })], {
+  memberships: [],
+  publicationMetadata: [],
+  variants: [
+    {
+      id: "var-foundation-default",
+      food_id: "food-foundation-variant",
+      label: "単品",
+      price: 650,
+      is_default: true,
+      sort_order: 1,
+      source_url: "https://example.com/variant",
+      last_checked_at: "2026-07-06T00:00:00.000Z",
+      created_at: "2026-07-06T00:00:00.000Z",
+      updated_at: "2026-07-06T00:00:00.000Z"
+    }
+  ]
+});
+assert.equal(foundationVariantFood?.price, 650, "DB default variant should sync the display food price without a DB foods table");
 
 const draftFood = food({ id: "food-draft", name: "下書き", reviewStatus: "draft" });
 const approvedFood = food({ id: "food-approved", name: "公開中", reviewStatus: "approved", hidden: false });
