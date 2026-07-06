@@ -1,5 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
+import { normalizeFoodFoundation } from "@/lib/food-variants";
 import type { Area, CrawlLog, FoodWithRelations, ImageCandidate, ReviewStatus, Shop } from "@/types/domain";
 
 type GeneratedDatasetFile = {
@@ -13,7 +14,7 @@ const outputDir = path.join(process.cwd(), "scripts", "output");
 export function readGeneratedFoods(options: { includeHidden?: boolean; reviewStatuses?: ReviewStatus[] } = {}) {
   const dataset = readJson<GeneratedDatasetFile>("foods.generated.json");
   const foods = Array.isArray(dataset?.foods) ? dataset.foods : [];
-  return foods.filter((food) => {
+  return foods.map(normalizeFoodFoundation).filter((food) => {
     if (!options.includeHidden && food.hidden) return false;
     if (options.reviewStatuses && !options.reviewStatuses.includes(food.reviewStatus)) return false;
     return true;

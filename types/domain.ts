@@ -20,9 +20,33 @@ export type FoodCategory =
 export type FoodImageSource = "official" | "own" | "user" | "ai" | "placeholder";
 export type PriceSource = "official" | "official_app" | "menu_photo" | "trusted_report" | "social_report" | "unknown";
 export type UserFoodStatus = "eaten";
-export type ReviewStatus = "pending" | "approved" | "rejected";
+export type ReviewStatus = "draft" | "pending" | "approved" | "rejected";
 export type DisplayQuality = "high" | "medium" | "low";
 export type DiningType = "takeout" | "eat_in" | "both" | "food_cart" | "unknown";
+export type SeasonType = "summer" | "halloween" | "christmas" | "easter" | "anniversary" | "event" | "other";
+
+export type FoodCollection = {
+  id: string;
+  name: string;
+  seasonType: SeasonType;
+  startsOn?: string | null;
+  endsOn?: string | null;
+  accentColor?: string | null;
+  isFeatured: boolean;
+  sortOrder: number;
+  createdAt: string;
+};
+
+export type FoodVariant = {
+  id: string;
+  foodId: string;
+  label: string;
+  price?: number | null;
+  isDefault: boolean;
+  sortOrder: number;
+  sourceUrl?: string | null;
+  lastCheckedAt?: string | null;
+};
 
 export type Area = {
   id: string;
@@ -78,6 +102,9 @@ export type Food = {
   extractionSourceCount: number;
   reviewStatus: ReviewStatus;
   hidden: boolean;
+  collectionId?: string | null;
+  publishedAt?: string | null;
+  variants?: FoodVariant[];
   duplicateGroupId?: string;
   manualOverride: boolean;
   compositeMenu: boolean;

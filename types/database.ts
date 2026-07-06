@@ -1,4 +1,4 @@
-import type { DiningType, FoodCategory, FoodImageSource, FoodStatus, ReviewStatus, SaleStatus, ShopType } from "@/types/domain";
+import type { DiningType, FoodCategory, FoodImageSource, FoodStatus, ReviewStatus, SaleStatus, SeasonType, ShopType } from "@/types/domain";
 
 export type Json = string | number | boolean | null | { [key: string]: Json | undefined } | Json[];
 
@@ -83,6 +83,32 @@ export type Database = {
         Update: Partial<Database["public"]["Tables"]["shops"]["Insert"]>;
         Relationships: [];
       };
+      collections: {
+        Row: {
+          id: string;
+          name: string;
+          season_type: SeasonType;
+          starts_on: string | null;
+          ends_on: string | null;
+          accent_color: string | null;
+          is_featured: boolean;
+          sort_order: number;
+          created_at: string;
+        };
+        Insert: {
+          id: string;
+          name: string;
+          season_type: SeasonType;
+          starts_on?: string | null;
+          ends_on?: string | null;
+          accent_color?: string | null;
+          is_featured?: boolean;
+          sort_order?: number;
+          created_at?: string;
+        };
+        Update: Partial<Database["public"]["Tables"]["collections"]["Insert"]>;
+        Relationships: [];
+      };
       foods: {
         Row: {
           id: string;
@@ -120,6 +146,8 @@ export type Database = {
           extraction_source_count: number;
           review_status: ReviewStatus;
           hidden: boolean;
+          collection_id: string | null;
+          published_at: string | null;
           duplicate_group_id: string | null;
           manual_override: boolean;
           composite_menu: boolean;
@@ -173,6 +201,8 @@ export type Database = {
           extraction_source_count?: number;
           review_status?: ReviewStatus;
           hidden?: boolean;
+          collection_id?: string | null;
+          published_at?: string | null;
           duplicate_group_id?: string | null;
           manual_override?: boolean;
           composite_menu?: boolean;
@@ -191,6 +221,46 @@ export type Database = {
           updated_at?: string;
         };
         Update: Partial<Database["public"]["Tables"]["foods"]["Insert"]>;
+        Relationships: [];
+      };
+      food_variants: {
+        Row: {
+          id: string;
+          food_id: string;
+          label: string;
+          price: number | null;
+          is_default: boolean;
+          sort_order: number;
+          source_url: string | null;
+          last_checked_at: string | null;
+          canonical_group_id: string | null;
+          flavor: string | null;
+          event_name: string | null;
+          collaboration_name: string | null;
+          release_period: string | null;
+          seasonal_version: string | null;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          food_id: string;
+          label: string;
+          price?: number | null;
+          is_default?: boolean;
+          sort_order?: number;
+          source_url?: string | null;
+          last_checked_at?: string | null;
+          canonical_group_id?: string | null;
+          flavor?: string | null;
+          event_name?: string | null;
+          collaboration_name?: string | null;
+          release_period?: string | null;
+          seasonal_version?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: Partial<Database["public"]["Tables"]["food_variants"]["Insert"]>;
         Relationships: [];
       };
       manual_foods: {
