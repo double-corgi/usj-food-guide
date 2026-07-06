@@ -1,0 +1,479 @@
+{
+  "schemaVersion": 1,
+  "batchId": "summer-2026-batch-1",
+  "collectionId": "summer-2026",
+  "researchDocument": "docs/unicolle-summer-2026-food-research.md",
+  "checkedAt": "2026-07-06",
+  "sourcePriority": "official",
+  "officialSources": [
+    "https://www.usj.co.jp/web/ja/jp/events/summer-2026/universal-summer/matsuri-nights",
+    "https://www.usj.co.jp/web/ja/jp/restaurants/food-cart",
+    "https://www.usj.co.jp/company/news/2026/0422/",
+    "https://www.usj.co.jp/contentdata/usj/ja/jp/events/summer-2026/universal-summer/matsuri-nights/index.html",
+    "https://www.usj.co.jp/contentdata/usj/ja/jp/restaurants/food-cart/index.html"
+  ],
+  "notes": [
+    "All records remain draft because official single-item prices were not found in the checked official pages.",
+    "Product sale start/end dates are not set from event dates. Event dates are saved separately as contextual evidence.",
+    "Normal and neon-cup versions are represented as priceVariants, not separate foods."
+  ],
+  "items": [
+    {
+      "id": "draft-summer-2026-matsuri-goldfish-lemon-soda",
+      "reviewStatus": "draft",
+      "name": "夏祭りの金魚 レモンサイダー",
+      "normalizedName": "夏祭りの金魚レモンサイダー",
+      "category": "drink",
+      "collectionId": "summer-2026",
+      "isLimited": true,
+      "price": null,
+      "priceSource": "unknown",
+      "priceVariants": [
+        {
+          "label": "夏祭りの金魚 レモンサイダー",
+          "price": null,
+          "isDefault": true
+        },
+        {
+          "label": "夏祭りの金魚 レモンサイダー ネオン・カップ付き",
+          "price": null,
+          "isDefault": false
+        }
+      ],
+      "shopName": "ユニバーサル・マーケット内ハピネス・ワゴン",
+      "shopOfficialUrl": "https://www.usj.co.jp/web/ja/jp/restaurants/universal-market",
+      "areaName": "ニューヨーク・エリア",
+      "diningType": "food_cart",
+      "takeoutAvailable": true,
+      "description": "シュワっとしたレモンサイダーに鮮やかな金魚が浮かんだ夏祭りのウキウキ感が上がる爽やかドリンク。",
+      "saleStartDate": null,
+      "saleEndDate": null,
+      "eventStartDate": "2026-07-01",
+      "eventEndDate": "2026-08-26",
+      "saleTimeCondition": "商品単位の販売時間は未確認。イベント開催時間は18:30-21:00、2026-07-03と2026-08-22は20:00まで、2026-08-21はイベント開催なし。",
+      "sourceUrl": "https://www.usj.co.jp/web/ja/jp/events/summer-2026/universal-summer/matsuri-nights",
+      "officialReferenceUrls": [
+        "https://www.usj.co.jp/web/ja/jp/events/summer-2026/universal-summer/matsuri-nights",
+        "https://www.usj.co.jp/web/ja/jp/restaurants/food-cart"
+      ],
+      "lastCheckedAt": "2026-07-06",
+      "imageUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/files/images/gds-images/usj-gds-food-summer-festival-goldfish-lemon-soda-with-neon-cup-summer-2026-gallery-a.jpg",
+      "imageSourceUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/restaurants/food-cart/index.html",
+      "imageCandidates": [
+        {
+          "url": "https://www.usj.co.jp/contentdata/usj/ja/jp/files/images/gds-images/usj-gds-food-summer-festival-goldfish-lemon-soda-with-neon-cup-summer-2026-gallery-a.jpg",
+          "sourceUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/restaurants/food-cart/index.html",
+          "note": "Official gallery image matching normal and neon-cup variants."
+        },
+        {
+          "url": "https://www.usj.co.jp/contentdata/usj/ja/jp/files/images/gds-images/usj-gds-summer-2026-matsuri-nights-goldfish-lemon-soda-infocard-h.jpg",
+          "sourceUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/events/summer-2026/universal-summer/matsuri-nights/index.html",
+          "note": "Official event info-card image matching the item."
+        }
+      ],
+      "unconfirmedFields": [
+        "price",
+        "priceVariants.price",
+        "saleStartDate",
+        "saleEndDate",
+        "saleTimeCondition.productSpecific"
+      ],
+      "duplicateCandidates": [],
+      "dedupeNotes": "No same-name generated/manual/override item found. Neon-cup version must stay as a variant."
+    },
+    {
+      "id": "draft-summer-2026-matsuri-choco-banana-churritos",
+      "reviewStatus": "draft",
+      "name": "超！！ チョコバナナ・チュリトス",
+      "normalizedName": "超チョコバナナチュリトス",
+      "category": "churro",
+      "collectionId": "summer-2026",
+      "isLimited": true,
+      "price": null,
+      "priceSource": "unknown",
+      "priceVariants": [
+        {
+          "label": "単品",
+          "price": null,
+          "isDefault": true
+        }
+      ],
+      "shopName": "ユニバーサル・マーケット内ハピネス・ワゴン",
+      "shopOfficialUrl": "https://www.usj.co.jp/web/ja/jp/restaurants/universal-market",
+      "areaName": "ニューヨーク・エリア",
+      "diningType": "food_cart",
+      "takeoutAvailable": true,
+      "description": "チョコバナナがチュリトスに変身。カラフルな見た目のバナナフレーバーのチュリトスにチョコソースを合わせたお祭りフード。",
+      "saleStartDate": null,
+      "saleEndDate": null,
+      "eventStartDate": "2026-07-01",
+      "eventEndDate": "2026-08-26",
+      "saleTimeCondition": "商品単位の販売時間は未確認。イベント開催時間は18:30-21:00、2026-07-03と2026-08-22は20:00まで、2026-08-21はイベント開催なし。",
+      "sourceUrl": "https://www.usj.co.jp/web/ja/jp/events/summer-2026/universal-summer/matsuri-nights",
+      "officialReferenceUrls": [
+        "https://www.usj.co.jp/web/ja/jp/events/summer-2026/universal-summer/matsuri-nights",
+        "https://www.usj.co.jp/web/ja/jp/restaurants/food-cart"
+      ],
+      "lastCheckedAt": "2026-07-06",
+      "imageUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/files/images/gds-images/usj-gds-food-extreme-choco-banana-churritos-summer-2026-gallery-a.jpg",
+      "imageSourceUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/restaurants/food-cart/index.html",
+      "imageCandidates": [
+        {
+          "url": "https://www.usj.co.jp/contentdata/usj/ja/jp/files/images/gds-images/usj-gds-food-extreme-choco-banana-churritos-summer-2026-gallery-a.jpg",
+          "sourceUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/restaurants/food-cart/index.html",
+          "note": "Official gallery image matching the item."
+        },
+        {
+          "url": "https://www.usj.co.jp/contentdata/usj/ja/jp/files/images/gds-images/usj-gds-summer-2026-matsuri-nights-choco-banana-churritos-infocard-h.jpg",
+          "sourceUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/events/summer-2026/universal-summer/matsuri-nights/index.html",
+          "note": "Official event info-card image matching the item."
+        }
+      ],
+      "unconfirmedFields": [
+        "price",
+        "saleStartDate",
+        "saleEndDate",
+        "saleTimeCondition.productSpecific"
+      ],
+      "duplicateCandidates": [
+        {
+          "source": "scripts/output/foods.generated.json",
+          "foodId": "food-j4nvrm",
+          "name": "超!! チョコバナナ・チュリトス",
+          "canonicalGroupId": "group-fsp6dm",
+          "reason": "Same normalized product name candidate. Existing item has mismatched shop/area/image compared with official 2026 summer pages."
+        }
+      ],
+      "dedupeNotes": "Treat as an update candidate for food-j4nvrm, not a separate approved food."
+    },
+    {
+      "id": "draft-summer-2026-matsuri-strawberry-condensed-milk-soda-smoothie",
+      "reviewStatus": "draft",
+      "name": "いちご練乳 ソーダスムージー",
+      "normalizedName": "いちご練乳ソーダスムージー",
+      "category": "drink",
+      "collectionId": "summer-2026",
+      "isLimited": true,
+      "price": null,
+      "priceSource": "unknown",
+      "priceVariants": [
+        {
+          "label": "いちご練乳 ソーダスムージー",
+          "price": null,
+          "isDefault": true
+        },
+        {
+          "label": "いちご練乳 ソーダスムージー ネオン・カップ付き",
+          "price": null,
+          "isDefault": false
+        }
+      ],
+      "shopName": "ユニバーサル・マーケット内トローリー・トリート",
+      "shopOfficialUrl": "https://www.usj.co.jp/web/ja/jp/restaurants/universal-market",
+      "areaName": "ニューヨーク・エリア",
+      "diningType": "food_cart",
+      "takeoutAvailable": true,
+      "description": "いちご氷とソーダを混ぜて楽しむ、練乳がけかき氷風の冷たいソーダスムージー。",
+      "saleStartDate": null,
+      "saleEndDate": null,
+      "eventStartDate": "2026-07-01",
+      "eventEndDate": "2026-08-26",
+      "saleTimeCondition": "商品単位の販売時間は未確認。イベント開催時間は18:30-21:00、2026-07-03と2026-08-22は20:00まで、2026-08-21はイベント開催なし。",
+      "sourceUrl": "https://www.usj.co.jp/web/ja/jp/events/summer-2026/universal-summer/matsuri-nights",
+      "officialReferenceUrls": [
+        "https://www.usj.co.jp/web/ja/jp/events/summer-2026/universal-summer/matsuri-nights",
+        "https://www.usj.co.jp/web/ja/jp/restaurants/food-cart"
+      ],
+      "lastCheckedAt": "2026-07-06",
+      "imageUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/files/images/gds-images/usj-gds-food-strawberry-and-condensed-milk-seltzer-smoothie-with-neon-cup-summer-2026-gallery-a.jpg",
+      "imageSourceUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/restaurants/food-cart/index.html",
+      "imageCandidates": [
+        {
+          "url": "https://www.usj.co.jp/contentdata/usj/ja/jp/files/images/gds-images/usj-gds-food-strawberry-and-condensed-milk-seltzer-smoothie-with-neon-cup-summer-2026-gallery-a.jpg",
+          "sourceUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/restaurants/food-cart/index.html",
+          "note": "Official gallery image matching normal and neon-cup variants."
+        },
+        {
+          "url": "https://www.usj.co.jp/contentdata/usj/ja/jp/files/images/gds-images/usj-gds-summer-2026-matsuri-nights-strawberry-and-condensed-milk-seltzer-smoothie-infocard-h.jpg",
+          "sourceUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/events/summer-2026/universal-summer/matsuri-nights/index.html",
+          "note": "Official event info-card image matching the item."
+        }
+      ],
+      "unconfirmedFields": [
+        "price",
+        "priceVariants.price",
+        "saleStartDate",
+        "saleEndDate",
+        "saleTimeCondition.productSpecific"
+      ],
+      "duplicateCandidates": [],
+      "dedupeNotes": "No same-name generated/manual/override item found. Neon-cup version must stay as a variant."
+    },
+    {
+      "id": "draft-summer-2026-matsuri-curry-naan-yakisoba-dog",
+      "reviewStatus": "draft",
+      "name": "カレーナン!? 焼きそばドッグ",
+      "normalizedName": "カレーナン焼きそばドッグ",
+      "category": "snack",
+      "collectionId": "summer-2026",
+      "isLimited": true,
+      "price": null,
+      "priceSource": "unknown",
+      "priceVariants": [
+        {
+          "label": "単品",
+          "price": null,
+          "isDefault": true
+        }
+      ],
+      "shopName": "ユニバーサル・マーケット内ホットドッグカート",
+      "shopOfficialUrl": "https://www.usj.co.jp/web/ja/jp/restaurants/universal-market",
+      "areaName": "ニューヨーク・エリア",
+      "diningType": "food_cart",
+      "takeoutAvailable": true,
+      "description": "焼きそばをカレー風味のナンで楽しむ、紅ショウガとマヨネーズのトッピング付きワンハンドメニュー。",
+      "saleStartDate": null,
+      "saleEndDate": null,
+      "eventStartDate": "2026-07-01",
+      "eventEndDate": "2026-08-26",
+      "saleTimeCondition": "商品単位の販売時間は未確認。イベント開催時間は18:30-21:00、2026-07-03と2026-08-22は20:00まで、2026-08-21はイベント開催なし。",
+      "sourceUrl": "https://www.usj.co.jp/web/ja/jp/events/summer-2026/universal-summer/matsuri-nights",
+      "officialReferenceUrls": [
+        "https://www.usj.co.jp/web/ja/jp/events/summer-2026/universal-summer/matsuri-nights",
+        "https://www.usj.co.jp/web/ja/jp/restaurants/food-cart"
+      ],
+      "lastCheckedAt": "2026-07-06",
+      "imageUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/files/images/gds-images/usj-gds-food-whats-this-yakisoba-dog-summer-2026-gallery-a.jpg",
+      "imageSourceUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/restaurants/food-cart/index.html",
+      "imageCandidates": [
+        {
+          "url": "https://www.usj.co.jp/contentdata/usj/ja/jp/files/images/gds-images/usj-gds-food-whats-this-yakisoba-dog-summer-2026-gallery-a.jpg",
+          "sourceUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/restaurants/food-cart/index.html",
+          "note": "Official gallery image matching the item."
+        },
+        {
+          "url": "https://www.usj.co.jp/contentdata/usj/ja/jp/files/images/gds-images/usj-gds-summer-2026-matsuri-nights-yakisoba-dog-infocard-h.jpg",
+          "sourceUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/events/summer-2026/universal-summer/matsuri-nights/index.html",
+          "note": "Official event info-card image matching the item."
+        }
+      ],
+      "unconfirmedFields": [
+        "price",
+        "saleStartDate",
+        "saleEndDate",
+        "saleTimeCondition.productSpecific"
+      ],
+      "duplicateCandidates": [],
+      "dedupeNotes": "No same-name generated/manual/override item found."
+    },
+    {
+      "id": "draft-summer-2026-related-frozen-gin-tonic-citrus",
+      "reviewStatus": "draft",
+      "name": "フローズン・ジントニック ～シトラス～",
+      "normalizedName": "フローズンジントニックシトラス",
+      "category": "drink",
+      "collectionId": "summer-2026",
+      "isLimited": true,
+      "price": null,
+      "priceSource": "unknown",
+      "priceVariants": [
+        {
+          "label": "フローズン・ジントニック ～シトラス～",
+          "price": null,
+          "isDefault": true
+        },
+        {
+          "label": "フローズン・ジントニック ～シトラス～ ネオン・カップ付き",
+          "price": null,
+          "isDefault": false
+        }
+      ],
+      "shopName": "パークサイド・グリル",
+      "shopOfficialUrl": "https://www.usj.co.jp/web/ja/jp/restaurants/park-side-grille",
+      "areaName": "ニューヨーク・エリア",
+      "diningType": "unknown",
+      "takeoutAvailable": null,
+      "description": null,
+      "saleStartDate": null,
+      "saleEndDate": null,
+      "eventStartDate": "2026-07-01",
+      "eventEndDate": "2026-08-26",
+      "saleTimeCondition": "未確認",
+      "sourceUrl": "https://www.usj.co.jp/web/ja/jp/restaurants/food-cart",
+      "officialReferenceUrls": [
+        "https://www.usj.co.jp/web/ja/jp/restaurants/food-cart"
+      ],
+      "lastCheckedAt": "2026-07-06",
+      "imageUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/files/images/gds-images/usj-gds-food-frozen-gin-and-tonic-citrus-with-neon-cup-summer-2026-gallery-a.jpg",
+      "imageSourceUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/restaurants/food-cart/index.html",
+      "imageCandidates": [
+        {
+          "url": "https://www.usj.co.jp/contentdata/usj/ja/jp/files/images/gds-images/usj-gds-food-frozen-gin-and-tonic-citrus-with-neon-cup-summer-2026-gallery-a.jpg",
+          "sourceUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/restaurants/food-cart/index.html",
+          "note": "Official gallery image matching normal and neon-cup variants."
+        }
+      ],
+      "unconfirmedFields": [
+        "price",
+        "priceVariants.price",
+        "description",
+        "takeoutAvailable",
+        "saleStartDate",
+        "saleEndDate",
+        "saleTimeCondition"
+      ],
+      "duplicateCandidates": [],
+      "dedupeNotes": "No same-name generated/manual/override item found."
+    },
+    {
+      "id": "draft-summer-2026-related-25th-cocktail-popcorn-flavor",
+      "reviewStatus": "draft",
+      "name": "25周年カクテル ～ポップコーンフレーバー？～",
+      "normalizedName": "25周年カクテルポップコーンフレーバー",
+      "category": "drink",
+      "collectionId": "summer-2026",
+      "isLimited": true,
+      "price": null,
+      "priceSource": "unknown",
+      "priceVariants": [
+        {
+          "label": "単品",
+          "price": null,
+          "isDefault": true
+        }
+      ],
+      "shopName": "パークサイド・グリル",
+      "shopOfficialUrl": "https://www.usj.co.jp/web/ja/jp/restaurants/park-side-grille",
+      "areaName": "ニューヨーク・エリア",
+      "diningType": "both",
+      "takeoutAvailable": true,
+      "description": "ジャパニーズクラフトジン 翠使用。テイクアウト、店内どちらでも注文可能。",
+      "saleStartDate": null,
+      "saleEndDate": null,
+      "eventStartDate": "2026-07-01",
+      "eventEndDate": "2026-08-26",
+      "saleTimeCondition": "未確認",
+      "sourceUrl": "https://www.usj.co.jp/web/ja/jp/restaurants/food-cart",
+      "officialReferenceUrls": [
+        "https://www.usj.co.jp/web/ja/jp/restaurants/food-cart"
+      ],
+      "lastCheckedAt": "2026-07-06",
+      "imageUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/files/images/gds-images/usj-gds-food-25th-anniversary-cocktail-popcorn-flavor-spring-2026-gallery-a.jpg",
+      "imageSourceUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/restaurants/food-cart/index.html",
+      "imageCandidates": [
+        {
+          "url": "https://www.usj.co.jp/contentdata/usj/ja/jp/files/images/gds-images/usj-gds-food-25th-anniversary-cocktail-popcorn-flavor-spring-2026-gallery-a.jpg",
+          "sourceUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/restaurants/food-cart/index.html",
+          "note": "Official gallery image matching the item."
+        }
+      ],
+      "unconfirmedFields": [
+        "price",
+        "saleStartDate",
+        "saleEndDate",
+        "saleTimeCondition"
+      ],
+      "duplicateCandidates": [
+        {
+          "source": "scripts/output/foods.generated.json",
+          "foodId": "food-d5v0l2",
+          "name": "25周年カクテル ~ポップコーンフレーバー?~",
+          "canonicalGroupId": "group-16r5f57",
+          "reason": "Same generated product candidate with gallery image. Existing price is not treated as official confirmation for this batch."
+        },
+        {
+          "source": "scripts/output/foods.generated.json",
+          "foodId": "food-gpkw6l",
+          "name": "25周年カクテル ~ポップコーンフレーバー?~",
+          "canonicalGroupId": "group-16r5f57",
+          "reason": "Same generated product candidate with offer-card image. Same canonical group as food-d5v0l2."
+        }
+      ],
+      "dedupeNotes": "Existing generated same-name candidates found; do not add as a new production food."
+    },
+    {
+      "id": "draft-summer-2026-related-caramel-popcorn-churritos",
+      "reviewStatus": "draft",
+      "name": "キャラメルポップコーン!? チュリトス",
+      "normalizedName": "キャラメルポップコーンチュリトス",
+      "category": "churro",
+      "collectionId": "summer-2026",
+      "isLimited": true,
+      "price": null,
+      "priceSource": "unknown",
+      "observedExistingPrice": {
+        "price": 800,
+        "source": "scripts/output/foods.generated.json",
+        "sourceUrl": "https://castel.jp/p/3101",
+        "note": "Existing data price is not an official confirmation from the pages checked in this batch."
+      },
+      "priceVariants": [
+        {
+          "label": "単品",
+          "price": null,
+          "isDefault": true
+        }
+      ],
+      "shopName": "パークサイド・グリル横フードカート",
+      "shopOfficialUrl": "https://www.usj.co.jp/web/ja/jp/restaurants/food-cart",
+      "areaName": "ニューヨーク・エリア",
+      "diningType": "food_cart",
+      "takeoutAvailable": true,
+      "description": null,
+      "saleStartDate": null,
+      "saleEndDate": null,
+      "eventStartDate": "2026-07-01",
+      "eventEndDate": "2026-08-26",
+      "saleTimeCondition": "未確認",
+      "sourceUrl": "https://www.usj.co.jp/web/ja/jp/restaurants/food-cart",
+      "officialReferenceUrls": [
+        "https://www.usj.co.jp/web/ja/jp/restaurants/food-cart"
+      ],
+      "lastCheckedAt": "2026-07-06",
+      "imageUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/files/images/gds-images/usj-gds-food-caramel-popcorn-churritos-spring-2026-gallery-a.jpg",
+      "imageSourceUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/restaurants/food-cart/index.html",
+      "imageCandidates": [
+        {
+          "url": "https://www.usj.co.jp/contentdata/usj/ja/jp/files/images/gds-images/usj-gds-food-caramel-popcorn-churritos-spring-2026-gallery-a.jpg",
+          "sourceUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/restaurants/food-cart/index.html",
+          "note": "Official gallery image matching the item."
+        }
+      ],
+      "unconfirmedFields": [
+        "price.official",
+        "description",
+        "saleStartDate",
+        "saleEndDate",
+        "saleTimeCondition"
+      ],
+      "duplicateCandidates": [
+        {
+          "source": "scripts/output/foods.generated.json",
+          "foodId": "food-ymiw07",
+          "name": "キャラメルポップコーン!? チュリトス",
+          "canonicalGroupId": "group-1xi5gxq",
+          "reason": "Same product already exists. This batch only confirms current official food-cart listing context."
+        }
+      ],
+      "dedupeNotes": "Existing generated food; do not add as a new production food."
+    }
+  ],
+  "excludedOfficialItems": [
+    {
+      "name": "ネオン・カップ",
+      "reason": "Container/goods item. Use only as a price variant label for drink products."
+    },
+    {
+      "name": "光る！ ボトルストラップ",
+      "reason": "Bottle strap item, not a standalone food."
+    },
+    {
+      "name": "ゴブレット・ロブ",
+      "reason": "Carnival game, not food."
+    },
+    {
+      "name": "ゲーム景品",
+      "reason": "Prize/non-sale item, not food."
+    }
+  ]
+}
