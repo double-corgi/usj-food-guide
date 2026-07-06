@@ -8,8 +8,9 @@ import { normalizeFoodName } from "@/lib/food-utils";
 import { buildManualFoodId } from "@/lib/repositories/manual-foods";
 import { readGeneratedFoods } from "@/lib/repositories/generated-data";
 import { createServiceSupabaseClient } from "@/lib/supabase-server";
-import type { Database } from "@/types/database";
-import type { FoodCategory, FoodWithRelations } from "@/types/domain";
+import { resolvePublishedAtForReviewStatusChange } from "@/lib/seasonal-collections";
+import type { Database, Json } from "@/types/database";
+import type { FoodCategory, FoodWithRelations, ReviewStatus } from "@/types/domain";
 
 export type AdminFoodSaveState = {
   ok: boolean;
@@ -19,6 +20,10 @@ export type AdminFoodSaveState = {
 type ManualFoodInsert = Database["public"]["Tables"]["manual_foods"]["Insert"];
 type ManualFoodUpdate = Database["public"]["Tables"]["manual_foods"]["Update"];
 type FoodOverrideUpsert = Database["public"]["Tables"]["food_overrides"]["Insert"];
+type FoodCollectionMembershipRow = Database["public"]["Tables"]["food_collection_memberships"]["Row"];
+type FoodPublicationMetadataRow = Database["public"]["Tables"]["food_publication_metadata"]["Row"];
+type FoodVariantRow = Database["public"]["Tables"]["food_variants"]["Row"];
+type FoodVariantInsert = Database["public"]["Tables"]["food_variants"]["Insert"];
 type ServiceSupabaseClient = NonNullable<ReturnType<typeof createServiceSupabaseClient>>;
 type ImageUploadResult = {
   publicUrl: string;
@@ -36,6 +41,22 @@ type GeneratedOverrideFormValue = {
   category: FoodCategory | null;
   categoryTags: string[] | null;
   adminNotes: string | null;
+  infoSourceUrl: string | null;
+};
+type SeasonalAdminFormValue = {
+  collectionId: string | null;
+  reviewStatus: ReviewStatus;
+  publishedAt: string | null;
+  variants: FoodVariantFormValue[];
+};
+type FoodVariantFormValue = {
+  id: string | null;
+  label: string;
+  price: number | null;
+  isDefault: boolean;
+  sortOrder: number;
+  sourceUrl: string | null;
+  lastCheckedAt: string | null;
 };
 
 const emptyState: AdminFoodSaveState = { ok: false, message: "" };
@@ -43,6 +64,7 @@ const allowedCategoryTags: Set<string> = new Set([...adminCategoryTagOptions.map
 const allowedFoodCategories: Set<string> = new Set(Array.from(allowedCategoryTags).filter(isFoodCategory));
 const allowedSaleStatuses: Set<string> = new Set(adminSaleStatusOptions.map((option) => option.value));
 const allowedPublicStates: Set<string> = new Set(adminPublicStateOptions.map((option) => option.value));
+const allowedReviewStatuses: Set<string> = new Set(["draft", "pending", "approved", "rejected"]);
 const allowedHiddenStates = new Set(["visible", "hidden"]);
 const manualFoodImageBucket = "food-images";
 const manualFoodImageMaxInputBytes = 5 * 1024 * 1024;
@@ -56,6 +78,8 @@ export async function createAdminFood(_previousState: AdminFoodSaveState = empty
 
   const parsed = parseFoodForm(formData);
   if (!parsed.ok) return { ok: false, message: parsed.message };
+  const seasonalParsed = parseSeasonalAdminForm(formData, parsed.value.publicState === "published" ? "approved" : "draft");
+  if (!seasonalParsed.ok) return { ok: false, message: seasonalParsed.message };
 
   const id = buildManualFoodId(parsed.value.areaName, parsed.value.shopName, parsed.value.name);
   if (readGeneratedFoods({ includeHidden: true }).some((food) => food.id === id)) {
@@ -89,7 +113,7 @@ export async function createAdminFood(_previousState: AdminFoodSaveState = empty
     start_date: parsed.value.saleStart,
     end_date: parsed.value.saleEnd,
     image_url: uploadedImage?.value.publicUrl ?? null,
-    source_url: "manual-admin",
+    source_url: parsed.value.infoSourceUrl ?? "manual-admin",
     admin_notes: parsed.value.adminNotes,
     created_by: adminEmail,
     updated_by: adminEmail,
@@ -103,6 +127,9 @@ export async function createAdminFood(_previousState: AdminFoodSaveState = empty
     return { ok: false, message: `保存に失敗しました: ${error.message}` };
   }
 
+  const seasonalSave = await saveSeasonalAdminFields(supabase, id, seasonalParsed.value, adminEmail, "manual-food-create");
+  if (!seasonalSave.ok) return { ok: false, message: seasonalSave.message };
+
   revalidateAdminFoods();
   redirect(`/admin/foods/${id}?saved=created${uploadedImage ? "&image=updated" : ""}`);
 }
@@ -115,12 +142,14 @@ export async function updateManualFood(_previousState: AdminFoodSaveState = empt
   const foodId = readCleanText(formData, "foodId", 120);
   if (!foodId) return { ok: false, message: "対象商品IDが不正です。" };
 
-  const existing = await supabase.from("manual_foods").select("id,image_url").eq("id", foodId).maybeSingle();
+  const existing = await supabase.from("manual_foods").select("id,image_url,source_url").eq("id", foodId).maybeSingle();
   if (existing.error) return { ok: false, message: `保存前確認に失敗しました: ${existing.error.message}` };
   if (!existing.data) return { ok: false, message: "自分で追加した商品だけ保存できます。自動取得の商品はまだ編集保存できません。" };
 
   const parsed = parseFoodForm(formData);
   if (!parsed.ok) return { ok: false, message: parsed.message };
+  const seasonalParsed = parseSeasonalAdminForm(formData, parsed.value.publicState === "published" ? "approved" : "draft");
+  if (!seasonalParsed.ok) return { ok: false, message: seasonalParsed.message };
 
   const imageFile = readImageFile(formData);
   if (!imageFile.ok) return { ok: false, message: imageFile.message };
@@ -142,6 +171,7 @@ export async function updateManualFood(_previousState: AdminFoodSaveState = empt
     start_date: parsed.value.saleStart,
     end_date: parsed.value.saleEnd,
     image_url: uploadedImage?.value.publicUrl ?? existing.data.image_url,
+    source_url: parsed.value.infoSourceUrl ?? existing.data.source_url,
     admin_notes: parsed.value.adminNotes,
     updated_by: admin.email ?? "unknown-admin",
     updated_at: new Date().toISOString()
@@ -149,6 +179,9 @@ export async function updateManualFood(_previousState: AdminFoodSaveState = empt
 
   const { error } = await supabase.from("manual_foods").update(payload).eq("id", foodId);
   if (error) return { ok: false, message: `保存に失敗しました: ${error.message}` };
+
+  const seasonalSave = await saveSeasonalAdminFields(supabase, foodId, seasonalParsed.value, admin.email ?? "unknown-admin", "manual-food-update");
+  if (!seasonalSave.ok) return { ok: false, message: seasonalSave.message };
 
   revalidateAdminFoods(foodId);
   redirect(`/admin/foods/${foodId}?saved=updated${uploadedImage ? "&image=updated" : ""}`);
@@ -171,6 +204,8 @@ export async function updateGeneratedFoodOverride(_previousState: AdminFoodSaveS
 
   const parsed = parseGeneratedOverrideForm(formData);
   if (!parsed.ok) return { ok: false, message: parsed.message };
+  const seasonalParsed = parseSeasonalAdminForm(formData, generatedFood.reviewStatus);
+  if (!seasonalParsed.ok) return { ok: false, message: seasonalParsed.message };
 
   const existingOverride = await supabase.from("food_overrides").select("food_id,image_path,hidden").eq("food_id", foodId).maybeSingle();
   if (existingOverride.error) return { ok: false, message: `修正内容の保存前確認に失敗しました: ${existingOverride.error.message}` };
@@ -195,6 +230,9 @@ export async function updateGeneratedFoodOverride(_previousState: AdminFoodSaveS
     if (uploadedImage) await removeUploadedManualFoodImage(supabase, uploadedImage.value.objectPath);
     return { ok: false, message: `修正内容の保存に失敗しました: ${error.message}` };
   }
+
+  const seasonalSave = await saveSeasonalAdminFields(supabase, foodId, seasonalParsed.value, admin.email ?? "unknown-admin", "generated-food-seasonal-update");
+  if (!seasonalSave.ok) return { ok: false, message: seasonalSave.message };
 
   revalidateAdminFoods(foodId);
   redirect(`/admin/foods/${foodId}?saved=override${uploadedImage ? "&image=updated" : ""}`);
@@ -396,6 +434,8 @@ function parseFoodForm(formData: FormData) {
   const category = primaryFoodCategory(categoryTags.values);
   const adminNotes = readOptionalCleanText(formData, "memo", 2000);
   if (adminNotes === false) return failure("管理メモに使用できない文字が含まれています。");
+  const infoSourceUrl = readOptionalUrl(formData, "infoSourceUrl", 500);
+  if (infoSourceUrl === false) return failure("公式参照URLの形式が不正です。");
 
   return {
     ok: true as const,
@@ -412,6 +452,7 @@ function parseFoodForm(formData: FormData) {
       category,
       categoryTags: categoryTags.values,
       adminNotes,
+      infoSourceUrl,
       hidden: hiddenState === "hidden"
     }
   };
@@ -449,6 +490,8 @@ function parseGeneratedOverrideForm(formData: FormData) {
 
   const adminNotes = readOptionalCleanText(formData, "memo", 2000);
   if (adminNotes === false) return failure("管理メモに使用できない文字が含まれています。");
+  const infoSourceUrl = readOptionalUrl(formData, "infoSourceUrl", 500);
+  if (infoSourceUrl === false) return failure("公式参照URLの形式が不正です。");
 
   return {
     ok: true as const,
@@ -463,8 +506,35 @@ function parseGeneratedOverrideForm(formData: FormData) {
       saleEnd,
       category: categoryTags.values.length > 0 ? primaryFoodCategory(categoryTags.values) : null,
       categoryTags: categoryTags.values.length > 0 ? categoryTags.values : null,
-      adminNotes
+      adminNotes,
+      infoSourceUrl
     }
+  };
+}
+
+function parseSeasonalAdminForm(formData: FormData, fallbackReviewStatus: ReviewStatus) {
+  const collectionIdValue = readOptionalCleanText(formData, "collectionId", 120);
+  if (collectionIdValue === false) return failure("コレクションIDに使用できない文字が含まれています。");
+
+  const reviewStatusValue = readOptionalCleanText(formData, "reviewStatus", 20);
+  if (reviewStatusValue === false) return failure("レビュー状態が不正です。");
+  const reviewStatus = (reviewStatusValue ?? fallbackReviewStatus) as ReviewStatus;
+  if (!allowedReviewStatuses.has(reviewStatus)) return failure("レビュー状態が不正です。");
+
+  const publishedAt = readOptionalDateTime(formData, "publishedAt");
+  if (publishedAt === false) return failure("公開日時の形式が不正です。");
+
+  const variants = readFoodVariantFormValues(formData);
+  if (!variants.ok) return failure(variants.message);
+
+  return {
+    ok: true as const,
+    value: {
+      collectionId: collectionIdValue,
+      reviewStatus,
+      publishedAt,
+      variants: variants.values
+    } satisfies SeasonalAdminFormValue
   };
 }
 
@@ -522,6 +592,95 @@ function parsePrice(value: FormDataEntryValue | null) {
 function readOptionalDate(formData: FormData, key: string) {
   const value = String(formData.get(key) ?? "").trim();
   if (!value) return null;
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(value)) return false;
+  return value;
+}
+
+function readOptionalDateTime(formData: FormData, key: string) {
+  const value = String(formData.get(key) ?? "").trim();
+  if (!value) return null;
+  const normalizedValue = /^\d{4}-\d{2}-\d{2}$/.test(value) ? `${value}T00:00` : value;
+  if (!/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}$/.test(normalizedValue)) return false;
+  const date = new Date(normalizedValue);
+  if (Number.isNaN(date.getTime())) return false;
+  return date.toISOString();
+}
+
+function readOptionalUrl(formData: FormData, key: string, maxLength: number) {
+  const value = String(formData.get(key) ?? "").trim();
+  if (!value) return null;
+  return parseRawUrl(value, maxLength);
+}
+
+function readFoodVariantFormValues(formData: FormData): { ok: true; values: FoodVariantFormValue[] } | { ok: false; message: string } {
+  const keys = formData.getAll("variantKey").map((value) => String(value).trim());
+  const ids = formData.getAll("variantId").map((value) => String(value).trim());
+  const labels = formData.getAll("variantLabel").map((value) => String(value).trim());
+  const prices = formData.getAll("variantPrice").map((value) => String(value).trim());
+  const sortOrders = formData.getAll("variantSortOrder").map((value) => String(value).trim());
+  const sourceUrls = formData.getAll("variantSourceUrl").map((value) => String(value).trim());
+  const lastCheckedAts = formData.getAll("variantLastCheckedAt").map((value) => String(value).trim());
+  const defaultKey = String(formData.get("variantDefaultKey") ?? "").trim();
+  const count = Math.max(keys.length, labels.length, prices.length, sortOrders.length, sourceUrls.length, lastCheckedAts.length);
+  const variants: FoodVariantFormValue[] = [];
+
+  for (let index = 0; index < count; index += 1) {
+    const label = labels[index] ?? "";
+    const priceText = prices[index] ?? "";
+    const sourceUrlText = sourceUrls[index] ?? "";
+    const lastCheckedText = lastCheckedAts[index] ?? "";
+    const sortOrderText = sortOrders[index] ?? "";
+    const id = ids[index] ?? "";
+    const key = keys[index] || id || `variant-${index}`;
+    if (!label && !priceText && !sourceUrlText && !lastCheckedText) continue;
+    if (!label || label.length > 80 || hasUnsafeText(label)) return { ok: false, message: "価格バリエーションのラベルを入力してください。" };
+
+    const price = parsePrice(priceText);
+    if (price === false) return { ok: false, message: "価格バリエーションの価格は数字で入力してください。" };
+
+    const sortOrder = sortOrderText ? Number(sortOrderText) : (index + 1) * 10;
+    if (!Number.isInteger(sortOrder) || sortOrder < 0 || sortOrder > 9999) return { ok: false, message: "価格バリエーションの並び順が不正です。" };
+
+    const sourceUrl = sourceUrlText ? parseRawUrl(sourceUrlText, 500) : null;
+    if (sourceUrl === false) return { ok: false, message: "価格バリエーションの参照URLが不正です。" };
+
+    const lastCheckedAt = lastCheckedText ? readDateText(lastCheckedText) : null;
+    if (lastCheckedAt === false) return { ok: false, message: "価格バリエーションの確認日が不正です。" };
+
+    if (id && (id.length > 120 || hasUnsafeText(id))) return { ok: false, message: "価格バリエーションIDが不正です。" };
+    variants.push({
+      id: id || null,
+      label,
+      price,
+      isDefault: defaultKey ? key === defaultKey : false,
+      sortOrder,
+      sourceUrl,
+      lastCheckedAt
+    });
+  }
+
+  if (variants.length > 0 && variants.filter((variant) => variant.isDefault).length === 0) {
+    variants[0] = { ...variants[0], isDefault: true };
+  }
+  if (variants.filter((variant) => variant.isDefault).length > 1) {
+    return { ok: false, message: "既定の価格バリエーションは1件だけ選択してください。" };
+  }
+
+  return { ok: true, values: variants };
+}
+
+function parseRawUrl(value: string, maxLength: number) {
+  if (!value || value.length > maxLength || hasUnsafeText(value)) return false;
+  try {
+    const url = new URL(value);
+    if (url.protocol !== "https:" && url.protocol !== "http:") return false;
+    return url.toString();
+  } catch {
+    return false;
+  }
+}
+
+function readDateText(value: string) {
   if (!/^\d{4}-\d{2}-\d{2}$/.test(value)) return false;
   return value;
 }
@@ -607,6 +766,122 @@ function appendImageVersion(publicUrl: string) {
   }
 }
 
+async function saveSeasonalAdminFields(
+  supabase: ServiceSupabaseClient,
+  foodId: string,
+  values: SeasonalAdminFormValue,
+  adminEmail: string,
+  action: string
+) {
+  const before = await readSeasonalAdminSnapshot(supabase, foodId);
+  const now = new Date().toISOString();
+
+  const membershipDelete = await supabase.from("food_collection_memberships").delete().eq("food_id", foodId);
+  if (membershipDelete.error) return { ok: false as const, message: `コレクション保存に失敗しました: ${membershipDelete.error.message}` };
+
+  if (values.collectionId) {
+    const membershipInsert = await supabase.from("food_collection_memberships").insert({
+      food_id: foodId,
+      collection_id: values.collectionId,
+      created_at: now
+    });
+    if (membershipInsert.error) return { ok: false as const, message: `コレクション保存に失敗しました: ${membershipInsert.error.message}` };
+  }
+
+  const existingMetadata = before.publicationMetadata;
+  const publishedAt =
+    values.publishedAt ??
+    resolvePublishedAtForReviewStatusChange({
+      previousReviewStatus: existingMetadata?.review_status ?? null,
+      nextReviewStatus: values.reviewStatus,
+      currentPublishedAt: existingMetadata?.published_at ?? null,
+      now
+    });
+  const metadata = await supabase.from("food_publication_metadata").upsert(
+    {
+      food_id: foodId,
+      review_status: values.reviewStatus,
+      published_at: publishedAt,
+      updated_at: now
+    },
+    { onConflict: "food_id" }
+  );
+  if (metadata.error) return { ok: false as const, message: `公開状態の保存に失敗しました: ${metadata.error.message}` };
+
+  const variantsDelete = await supabase.from("food_variants").delete().eq("food_id", foodId);
+  if (variantsDelete.error) return { ok: false as const, message: `価格バリエーション保存に失敗しました: ${variantsDelete.error.message}` };
+
+  if (values.variants.length > 0) {
+    const rows: FoodVariantInsert[] = values.variants.map((variant) => ({
+      ...(variant.id ? { id: variant.id } : {}),
+      food_id: foodId,
+      label: variant.label,
+      price: variant.price,
+      is_default: variant.isDefault,
+      sort_order: variant.sortOrder,
+      source_url: variant.sourceUrl,
+      last_checked_at: variant.lastCheckedAt,
+      updated_at: now
+    }));
+    const variantsInsert = await supabase.from("food_variants").insert(rows);
+    if (variantsInsert.error) return { ok: false as const, message: `価格バリエーション保存に失敗しました: ${variantsInsert.error.message}` };
+  }
+
+  const after = await readSeasonalAdminSnapshot(supabase, foodId);
+  await insertFoodAdminRevision(supabase, foodId, adminEmail, action, before, after);
+  return { ok: true as const };
+}
+
+async function readSeasonalAdminSnapshot(supabase: ServiceSupabaseClient, foodId: string) {
+  const [memberships, publicationMetadata, variants] = await Promise.all([
+    supabase.from("food_collection_memberships").select("*").eq("food_id", foodId),
+    supabase.from("food_publication_metadata").select("*").eq("food_id", foodId).maybeSingle(),
+    supabase.from("food_variants").select("*").eq("food_id", foodId).order("sort_order", { ascending: true })
+  ]);
+  return {
+    memberships: (memberships.data ?? []) as FoodCollectionMembershipRow[],
+    publicationMetadata: (publicationMetadata.data ?? null) as FoodPublicationMetadataRow | null,
+    variants: (variants.data ?? []) as FoodVariantRow[]
+  };
+}
+
+async function insertFoodAdminRevision(
+  supabase: ServiceSupabaseClient,
+  foodId: string,
+  actorEmail: string,
+  action: string,
+  before: Awaited<ReturnType<typeof readSeasonalAdminSnapshot>>,
+  after: Awaited<ReturnType<typeof readSeasonalAdminSnapshot>>
+) {
+  const versionResult = await supabase
+    .from("food_override_revisions")
+    .select("version")
+    .eq("food_id", foodId)
+    .order("version", { ascending: false })
+    .limit(1)
+    .maybeSingle();
+  if (versionResult.error) {
+    console.error("Failed to read food admin revision version", { foodId, message: versionResult.error.message });
+    return;
+  }
+  const version = (versionResult.data?.version ?? 0) + 1;
+  const snapshot = toJson({ scope: "seasonal-admin", before, after });
+  const { error } = await supabase.from("food_override_revisions").insert({
+    food_id: foodId,
+    version,
+    snapshot,
+    action,
+    actor_email: actorEmail
+  });
+  if (error) {
+    console.error("Failed to insert food admin revision", { foodId, message: error.message });
+  }
+}
+
+function toJson(value: unknown): Json {
+  return JSON.parse(JSON.stringify(value)) as Json;
+}
+
 function buildGeneratedOverridePayload({
   food,
   values,
@@ -645,7 +920,7 @@ function buildGeneratedOverridePayload({
     category_tags: categoryTags,
     image_path: imagePath,
     image_source_url: null,
-    info_source_url: null,
+    info_source_url: values.infoSourceUrl && values.infoSourceUrl !== food.sourceUrl ? values.infoSourceUrl : null,
     sale_status: saleStatus,
     status: null,
     hidden,

@@ -10,15 +10,20 @@ import {
   adminFoodCategoryOptions,
   adminSaleStatusOptions,
   formatAdminCategory,
+  formatAdminCollection,
+  formatAdminDateTime,
   formatAdminPrice,
   formatAdminPublicState,
+  formatAdminReviewStatus,
   formatAdminSaleStatus,
+  getAdminFoodInfoIssues,
   getAdminPublicState,
   getAdminSaleState
 } from "@/lib/admin-food-ui";
+import { listFoodCollections } from "@/lib/repositories/collections";
 import { listAllFoodCandidates } from "@/lib/repositories/foods";
 import type { ReactNode } from "react";
-import type { FoodWithRelations } from "@/types/domain";
+import type { FoodCollection, FoodWithRelations } from "@/types/domain";
 
 export const dynamic = "force-dynamic";
 
@@ -30,15 +35,19 @@ type AdminFoodsSearchParams = {
   publicState?: string;
   hidden?: string;
   deleted?: string;
+  reviewStatus?: string;
+  collection?: string;
+  issue?: string;
   saved?: string;
 };
 
 export default async function AdminFoodsPage({ searchParams }: { searchParams?: Promise<AdminFoodsSearchParams> }) {
   const params = (await searchParams) ?? {};
   const filters = normalizeFilters(params);
-  const [admin, foods] = await Promise.all([
+  const [admin, foods, collections] = await Promise.all([
     requireAdmin("viewer"),
-    listAllFoodCandidates({ includeDeletedManualFoods: true })
+    listAllFoodCandidates({ includeDeletedManualFoods: true }),
+    listFoodCollections()
   ]);
   const filteredFoods = foods.filter((food) => matchesFilters(food, filters));
   const visibleFoods = foods.filter((food) => getPublicState(food) === "published" && !isDeletedFood(food));
@@ -156,6 +165,29 @@ export default async function AdminFoodsPage({ searchParams }: { searchParams?: 
             <option value="published">公開</option>
             <option value="draft">下書き</option>
           </Select>
+          <Select label="レビュー状態" name="reviewStatus" defaultValue={filters.reviewStatus}>
+            <option value="all">すべて</option>
+            <option value="draft">下書き</option>
+            <option value="pending">確認中</option>
+            <option value="approved">承認済み</option>
+            <option value="rejected">差し戻し</option>
+          </Select>
+          <Select label="コレクション" name="collection" defaultValue={filters.collection}>
+            <option value="all">すべて</option>
+            {collections.map((collection) => (
+              <option key={collection.id} value={collection.id}>
+                {collection.name}
+              </option>
+            ))}
+          </Select>
+          <Select label="情報不足" name="issue" defaultValue={filters.issue}>
+            <option value="all">すべて</option>
+            <option value="image">画像未確認</option>
+            <option value="price">価格未確認</option>
+            <option value="duplicate">重複候補</option>
+            <option value="source-url">公式URL未登録</option>
+            <option value="stale">30日以上未確認</option>
+          </Select>
           <button type="submit" className="inline-flex h-11 items-center justify-center rounded-full bg-ink px-5 text-sm font-black text-white">
             絞り込み
           </button>
@@ -164,7 +196,7 @@ export default async function AdminFoodsPage({ searchParams }: { searchParams?: 
 
       <section className="space-y-3 lg:hidden">
         {filteredFoods.slice(0, 300).map((food) => (
-          <FoodCard key={food.id} food={food} canManage={canManage} />
+          <FoodCard key={food.id} food={food} canManage={canManage} collections={collections} />
         ))}
       </section>
 
@@ -182,6 +214,7 @@ export default async function AdminFoodsPage({ searchParams }: { searchParams?: 
                 <th className="px-4 py-3">カテゴリ</th>
                 <th className="px-4 py-3">エリア / 店舗</th>
                 <th className="px-4 py-3">状態</th>
+                <th className="px-4 py-3">季節 / 公開</th>
                 <th className="px-4 py-3">操作</th>
               </tr>
             </thead>
@@ -208,7 +241,15 @@ export default async function AdminFoodsPage({ searchParams }: { searchParams?: 
                     <p className="mt-1 text-xs font-bold text-slate-500">{food.shop.name}</p>
                   </td>
                   <td className="px-4 py-3">
-                    <StatusBadges food={food} />
+                    <StatusBadges food={food} collections={collections} />
+                  </td>
+                  <td className="px-4 py-3">
+                    <div className="space-y-1 text-xs font-bold text-slate-600">
+                      <p>コレクション: {formatAdminCollection(food, collections)}</p>
+                      <p>価格行: {(food.variants ?? []).length}件</p>
+                      <p>公開日時: {formatAdminDateTime(food.publishedAt)}</p>
+                      <p>最終確認: {formatAdminDateTime(food.lastCheckedAt)}</p>
+                    </div>
                   </td>
                   <td className="px-4 py-3">
                     <div className="flex flex-wrap gap-2">
@@ -257,6 +298,9 @@ type NormalizedFilters = {
   category: string;
   saleStatus: string;
   publicState: string;
+  reviewStatus: string;
+  collection: string;
+  issue: string;
 };
 
 function normalizeFilters(params: AdminFoodsSearchParams): NormalizedFilters {
@@ -270,7 +314,10 @@ function normalizeFilters(params: AdminFoodsSearchParams): NormalizedFilters {
     q: (params.q ?? "").trim(),
     category: params.category ?? "all",
     saleStatus: params.saleStatus ?? "all",
-    publicState: params.publicState ?? "all"
+    publicState: params.publicState ?? "all",
+    reviewStatus: params.reviewStatus ?? "all",
+    collection: params.collection ?? "all",
+    issue: params.issue ?? "all"
   };
 }
 
@@ -283,13 +330,16 @@ function matchesFilters(food: FoodWithRelations, filters: NormalizedFilters) {
   if (filters.category !== "all" && food.category !== filters.category) return false;
   if (filters.saleStatus !== "all" && getSaleState(food) !== filters.saleStatus) return false;
   if (filters.publicState !== "all" && getPublicState(food) !== filters.publicState) return false;
+  if (filters.reviewStatus !== "all" && food.reviewStatus !== filters.reviewStatus) return false;
+  if (filters.collection !== "all" && food.collectionId !== filters.collection) return false;
+  if (filters.issue !== "all" && !getAdminFoodInfoIssues(food).some((issue) => issue.id === filters.issue)) return false;
   if (filters.view === "normal" && (food.hidden || isDeletedFood(food))) return false;
   if (filters.view === "hidden" && (!food.hidden || isDeletedFood(food))) return false;
   if (filters.view === "deleted" && !isDeletedFood(food)) return false;
   return true;
 }
 
-function FoodCard({ food, canManage }: { food: FoodWithRelations; canManage: boolean }) {
+function FoodCard({ food, canManage, collections }: { food: FoodWithRelations; canManage: boolean; collections: FoodCollection[] }) {
   return (
     <article className="rounded-lg border border-slate-200 bg-white p-3 shadow-soft">
       <div className="flex gap-3">
@@ -309,7 +359,11 @@ function FoodCard({ food, canManage }: { food: FoodWithRelations; canManage: boo
           {food.area.name} / {food.shop.name}
         </p>
         <p className="text-sm font-bold text-slate-600">{formatAdminCategory(food.category)}</p>
-        <StatusBadges food={food} />
+        <StatusBadges food={food} collections={collections} />
+        <div className="rounded-lg bg-slate-50 px-3 py-2 text-xs font-bold leading-5 text-slate-600">
+          <p>レビュー: {formatAdminReviewStatus(food.reviewStatus)} / コレクション: {formatAdminCollection(food, collections)}</p>
+          <p>価格行: {(food.variants ?? []).length}件 / 公開日時: {formatAdminDateTime(food.publishedAt)}</p>
+        </div>
         <div className={canManage ? "grid grid-cols-2 gap-2 pt-1" : "grid grid-cols-1 gap-2 pt-1"}>
           <Link href={`/admin/foods/${food.id}`} className="inline-flex h-11 items-center justify-center rounded-full border border-park/30 bg-white px-3 text-center text-sm font-black text-park">
             {isManualFood(food) ? "詳細" : "管理画面で確認"}
@@ -346,7 +400,8 @@ function FoodCard({ food, canManage }: { food: FoodWithRelations; canManage: boo
   );
 }
 
-function StatusBadges({ food }: { food: FoodWithRelations }) {
+function StatusBadges({ food, collections }: { food: FoodWithRelations; collections: FoodCollection[] }) {
+  const issues = getAdminFoodInfoIssues(food);
   return (
     <div className="flex flex-wrap gap-1.5">
       <Badge label={isManualFood(food) ? "自分で追加した商品" : "自動取得の商品"} tone={isManualFood(food) ? "ok" : "default"} />
@@ -356,6 +411,12 @@ function StatusBadges({ food }: { food: FoodWithRelations }) {
       {!isDeletedFood(food) && food.hidden ? <Badge label="非表示中" tone="muted" /> : null}
       {!isDeletedFood(food) && !food.hidden && getPublicState(food) === "published" ? <Badge label="公開中" tone="ok" /> : null}
       {!isDeletedFood(food) && !food.hidden && getPublicState(food) !== "published" ? <Badge label={formatAdminPublicState(getPublicState(food))} tone="muted" /> : null}
+      <Badge label={formatAdminReviewStatus(food.reviewStatus)} tone={food.reviewStatus === "approved" ? "ok" : "muted"} />
+      {food.collectionId ? <Badge label={formatAdminCollection(food, collections)} tone="ok" /> : null}
+      {(food.variants ?? []).length > 0 ? <Badge label={`価格${(food.variants ?? []).length}件`} tone="ok" /> : null}
+      {issues.slice(0, 3).map((issue) => (
+        <Badge key={issue.id} label={issue.label} tone="muted" />
+      ))}
       <Badge label={formatAdminSaleStatus(getSaleState(food))} />
       <Badge label={formatAdminCategory(food.category)} />
     </div>
@@ -398,6 +459,9 @@ function buildAdminFoodsHref(filters: NormalizedFilters, view: NormalizedFilters
   if (filters.category !== "all") params.set("category", filters.category);
   if (filters.saleStatus !== "all") params.set("saleStatus", filters.saleStatus);
   if (filters.publicState !== "all") params.set("publicState", filters.publicState);
+  if (filters.reviewStatus !== "all") params.set("reviewStatus", filters.reviewStatus);
+  if (filters.collection !== "all") params.set("collection", filters.collection);
+  if (filters.issue !== "all") params.set("issue", filters.issue);
   return `/admin/foods?${params.toString()}`;
 }
 

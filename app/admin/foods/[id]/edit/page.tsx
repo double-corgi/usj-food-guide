@@ -5,6 +5,7 @@ import { AdminFoodForm } from "@/components/admin/food-form";
 import { ManualFoodDeleteButton } from "@/components/admin/manual-food-delete-button";
 import { requireAdmin } from "@/lib/admin-auth";
 import { buildAdminShopOptions } from "@/lib/admin-shop-options";
+import { listFoodCollections } from "@/lib/repositories/collections";
 import { listAllFoodCandidates } from "@/lib/repositories/foods";
 import { createServiceSupabaseClient } from "@/lib/supabase-server";
 import type { FoodWithRelations } from "@/types/domain";
@@ -13,7 +14,7 @@ export const dynamic = "force-dynamic";
 
 export default async function AdminEditFoodPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
-  const [admin, foods] = await Promise.all([requireAdmin("editor"), listAllFoodCandidates()]);
+  const [admin, foods, collections] = await Promise.all([requireAdmin("editor"), listAllFoodCandidates(), listFoodCollections()]);
   const food = foods.find((candidate) => candidate.id === id);
   if (!food) notFound();
 
@@ -59,6 +60,8 @@ export default async function AdminEditFoodPage({ params }: { params: Promise<{ 
         adminNotes={adminFields.adminNotes}
         categoryTags={adminFields.categoryTags}
         nameEn={adminFields.nameEn}
+        infoSourceUrl={adminFields.infoSourceUrl}
+        collections={collections}
       />
       {isManual ? (
         <details className="group rounded-2xl border border-rose-100 bg-white p-4 shadow-soft sm:p-5">
@@ -99,9 +102,9 @@ function getFormOptions(foods: FoodWithRelations[]) {
 async function getAdminFoodFields(food: FoodWithRelations) {
   const manualSource = food.manualOverride === true || food.sourceNames?.includes("manual_foods") === true || food.id.startsWith("food-manual-");
   const supabase = createServiceSupabaseClient();
-  if (!supabase) return { isManualFood: manualSource, hasOverride: false, adminNotes: null, categoryTags: null, nameEn: null };
+  if (!supabase) return { isManualFood: manualSource, hasOverride: false, adminNotes: null, categoryTags: null, nameEn: null, infoSourceUrl: food.sourceUrl };
 
-  const { data, error } = await supabase.from("manual_foods").select("id, admin_notes, category_tags, name_en").eq("id", food.id).maybeSingle();
+  const { data, error } = await supabase.from("manual_foods").select("id, admin_notes, category_tags, name_en, source_url").eq("id", food.id).maybeSingle();
   if (error) {
     console.error("Failed to confirm manual food edit status", {
       foodId: food.id,
@@ -116,11 +119,12 @@ async function getAdminFoodFields(food: FoodWithRelations) {
       hasOverride: false,
       adminNotes: data.admin_notes ?? null,
       categoryTags: data.category_tags ?? null,
-      nameEn: data.name_en ?? null
+      nameEn: data.name_en ?? null,
+      infoSourceUrl: data.source_url ?? food.sourceUrl
     };
   }
 
-  const override = await supabase.from("food_overrides").select("food_id, admin_notes, category_tags, name_en").eq("food_id", food.id).maybeSingle();
+  const override = await supabase.from("food_overrides").select("food_id, admin_notes, category_tags, name_en, info_source_url").eq("food_id", food.id).maybeSingle();
   if (override.error) {
     console.error("Failed to load food override admin fields", {
       foodId: food.id,
@@ -133,6 +137,7 @@ async function getAdminFoodFields(food: FoodWithRelations) {
     hasOverride: Boolean(override.data?.food_id),
     adminNotes: override.data?.admin_notes ?? null,
     categoryTags: override.data?.category_tags ?? null,
-    nameEn: override.data?.name_en ?? null
+    nameEn: override.data?.name_en ?? null,
+    infoSourceUrl: override.data?.info_source_url ?? food.sourceUrl
   };
 }

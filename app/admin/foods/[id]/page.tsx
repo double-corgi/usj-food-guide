@@ -10,6 +10,8 @@ import { requireAdmin } from "@/lib/admin-auth";
 import {
   formatAdminCanonicalState,
   formatAdminCategory,
+  formatAdminCollection,
+  formatAdminDateTime,
   formatAdminPrice,
   formatAdminPublicState,
   formatAdminReviewStatus,
@@ -18,6 +20,7 @@ import {
   getAdminPublicState,
   getAdminSaleState
 } from "@/lib/admin-food-ui";
+import { listFoodCollections } from "@/lib/repositories/collections";
 import { listAllFoodCandidates } from "@/lib/repositories/foods";
 import { createServiceSupabaseClient } from "@/lib/supabase-server";
 import type { FoodWithRelations } from "@/types/domain";
@@ -33,7 +36,7 @@ export default async function AdminFoodDetailPage({
 }) {
   const { id } = await params;
   const query = searchParams ? await searchParams : {};
-  const [admin, foods] = await Promise.all([requireAdmin("viewer"), listAllFoodCandidates({ includeDeletedManualFoods: true })]);
+  const [admin, foods, collections] = await Promise.all([requireAdmin("viewer"), listAllFoodCandidates({ includeDeletedManualFoods: true }), listFoodCollections()]);
   const food = foods.find((candidate) => candidate.id === id);
   if (!food) notFound();
 
@@ -153,6 +156,10 @@ export default async function AdminFoodDetailPage({
               <Field label="表示状態" value={formatAdminVisibility(food.hidden)} />
               <Field label="削除状態" value={isDeletedFood(food) ? "削除済み" : "通常"} />
               <Field label="レビュー状態" value={formatAdminReviewStatus(food.reviewStatus)} />
+              <Field label="季節コレクション" value={formatAdminCollection(food, collections)} />
+              <Field label="初回公開日時" value={formatAdminDateTime(food.publishedAt)} />
+              <Field label="最終確認日" value={formatAdminDateTime(food.lastCheckedAt)} />
+              <Field label="価格バリエーション" value={`${(food.variants ?? []).length}件`} />
               <Field label="表示品質" value={food.displayQuality} />
               <Field label="重複状態" value={formatAdminCanonicalState(food.canonicalFood)} />
               <Field label="重複グループID" value={food.duplicateGroupId ?? "なし"} />
@@ -160,6 +167,24 @@ export default async function AdminFoodDetailPage({
               <Field label="販売期間 end" value={food.saleEndDate ?? food.endDate ?? "未設定"} />
             </div>
           </section>
+
+          {(food.variants ?? []).length > 0 ? (
+            <section className="rounded-lg border border-slate-200 bg-white p-4 shadow-soft">
+              <h2 className="text-lg font-black text-ink">価格バリエーション</h2>
+              <div className="mt-3 space-y-2">
+                {(food.variants ?? []).map((variant) => (
+                  <div key={variant.id} className="rounded-lg border border-slate-100 p-3 text-sm font-bold text-slate-600">
+                    <p className="font-black text-ink">
+                      {variant.label} {variant.isDefault ? <span className="ml-2 rounded-full bg-mint px-2 py-0.5 text-xs text-park">既定</span> : null}
+                    </p>
+                    <p className="mt-1">価格: {typeof variant.price === "number" ? `¥${variant.price.toLocaleString("ja-JP")}` : "未確認"} / 並び順: {variant.sortOrder}</p>
+                    <p className="mt-1">確認日: {formatAdminDateTime(variant.lastCheckedAt)}</p>
+                    {variant.sourceUrl ? <p className="mt-1 break-all text-xs text-slate-500">{variant.sourceUrl}</p> : null}
+                  </div>
+                ))}
+              </div>
+            </section>
+          ) : null}
 
           {adminFields.adminNotes ? (
             <section className="rounded-lg border border-slate-200 bg-white p-4 shadow-soft">

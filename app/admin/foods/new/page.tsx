@@ -3,13 +3,14 @@ import { AdminFoodForm, type DuplicateCandidate } from "@/components/admin/food-
 import { createAdminFood } from "@/app/admin/foods/actions";
 import { requireAdmin } from "@/lib/admin-auth";
 import { buildAdminShopOptions } from "@/lib/admin-shop-options";
+import { listFoodCollections } from "@/lib/repositories/collections";
 import { listAllFoodCandidates } from "@/lib/repositories/foods";
 import type { FoodWithRelations } from "@/types/domain";
 
 export const dynamic = "force-dynamic";
 
 export default async function AdminNewFoodPage() {
-  const [admin, foods] = await Promise.all([requireAdmin("editor"), listAllFoodCandidates()]);
+  const [admin, foods, collections] = await Promise.all([requireAdmin("editor"), listAllFoodCandidates(), listFoodCollections()]);
   const { shops } = getFormOptions(foods);
   const duplicateCandidates = getDuplicateCandidates(foods);
 
@@ -37,7 +38,7 @@ export default async function AdminNewFoodPage() {
           </Link>
         </div>
       </div>
-      <AdminFoodForm mode="new" shopOptions={shops} action={createAdminFood} duplicateCandidates={duplicateCandidates} />
+      <AdminFoodForm mode="new" shopOptions={shops} action={createAdminFood} duplicateCandidates={duplicateCandidates} collections={collections} />
     </div>
   );
 }

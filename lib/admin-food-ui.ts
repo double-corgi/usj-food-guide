@@ -1,5 +1,6 @@
 import { categoryLabels } from "@/lib/constants";
-import type { FoodCategory, FoodWithRelations } from "@/types/domain";
+import { getDefaultFoodVariant } from "@/lib/food-variants";
+import type { FoodCategory, FoodCollection, FoodWithRelations } from "@/types/domain";
 
 export const adminAreaOptions = [
   "スーパー・ニンテンドー・ワールド",
@@ -25,6 +26,13 @@ export const adminSaleStatusOptions = [
 export const adminPublicStateOptions = [
   { value: "draft", label: "下書き" },
   { value: "published", label: "公開" }
+] as const;
+
+export const adminReviewStatusOptions = [
+  { value: "draft", label: "下書き" },
+  { value: "pending", label: "確認中" },
+  { value: "approved", label: "承認済み" },
+  { value: "rejected", label: "差し戻し" }
 ] as const;
 
 export const adminFoodCategoryOptions = [
@@ -92,6 +100,7 @@ export function formatAdminVisibility(hidden: boolean) {
 }
 
 export function formatAdminReviewStatus(value: string) {
+  if (value === "draft") return "下書き";
   if (value === "approved") return "承認済み";
   if (value === "pending") return "確認中";
   if (value === "rejected") return "差し戻し";
@@ -116,4 +125,47 @@ export function formatAdminPrice(food: FoodWithRelations) {
   if (typeof food.priceMin === "number" && typeof food.priceMax === "number") return `¥${food.priceMin.toLocaleString("ja-JP")}〜¥${food.priceMax.toLocaleString("ja-JP")}`;
   if (typeof food.priceMin === "number") return `¥${food.priceMin.toLocaleString("ja-JP")}〜`;
   return "未確認";
+}
+
+export function formatAdminCollection(food: Pick<FoodWithRelations, "collectionId">, collections: FoodCollection[] = []) {
+  if (!food.collectionId) return "未設定";
+  return collections.find((collection) => collection.id === food.collectionId)?.name ?? food.collectionId;
+}
+
+export function formatAdminDateTime(value?: string | null) {
+  if (!value) return "未設定";
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return value;
+  return new Intl.DateTimeFormat("ja-JP", {
+    timeZone: "Asia/Tokyo",
+    year: "numeric",
+    month: "numeric",
+    day: "numeric",
+    hour: "2-digit",
+    minute: "2-digit"
+  }).format(date);
+}
+
+export function getAdminFoodInfoIssues(food: FoodWithRelations) {
+  const issues: Array<{ id: string; label: string }> = [];
+  const hasEnabledImage = food.images.some((image) => image.enabled && Boolean(image.imageUrl));
+  if (!hasEnabledImage) issues.push({ id: "image", label: "画像未確認" });
+
+  const defaultVariant = getDefaultFoodVariant(food);
+  const hasPrice = typeof defaultVariant?.price === "number" || typeof food.price === "number";
+  if (!hasPrice) issues.push({ id: "price", label: "価格未確認" });
+
+  if (food.shop.name.includes("未確認") || food.shop.name === "不明") issues.push({ id: "shop", label: "店舗未確認" });
+  if (food.area.name.includes("未確認") || food.area.name === "不明") issues.push({ id: "area", label: "エリア未確認" });
+  if (!food.sourceUrl || food.sourceUrl === "manual-admin") issues.push({ id: "source-url", label: "公式URL未登録" });
+  if (food.canonicalFood === false || Boolean(food.duplicateGroupId)) issues.push({ id: "duplicate", label: "重複候補" });
+  if (isOlderThanDays(food.lastCheckedAt, 30)) issues.push({ id: "stale", label: "30日以上未確認" });
+  return issues;
+}
+
+function isOlderThanDays(value: string | undefined, days: number) {
+  if (!value) return true;
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return true;
+  return Date.now() - date.getTime() > days * 24 * 60 * 60 * 1000;
 }

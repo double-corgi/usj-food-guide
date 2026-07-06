@@ -83,6 +83,8 @@ const [membershipFood] = applySeasonalFoodFoundation([legacyFood], {
 });
 assert.equal(membershipFood?.collectionId, SUMMER_2026_COLLECTION_ID, "collection membership should apply to generated or manual foods by foodId");
 assert.equal(membershipFood?.publishedAt, "2026-07-06T10:00:00.000Z", "publication metadata should apply by foodId");
+const [unassignedFood] = applySeasonalFoodFoundation([legacyFood], { memberships: [], publicationMetadata: [], variants: [] });
+assert.equal(unassignedFood?.collectionId, null, "collection removal should leave the food unassigned");
 
 const variantFood = food({
   id: "food-variant",
@@ -154,12 +156,22 @@ assert.equal(
 assert.equal(
   resolvePublishedAtForReviewStatusChange({
     previousReviewStatus: "approved",
+    nextReviewStatus: "draft",
+    currentPublishedAt: "2026-07-06T10:00:00.000Z",
+    now: "2026-07-06T10:00:00.000Z"
+  }),
+  "2026-07-06T10:00:00.000Z",
+  "moving away from approved should not clear an existing publishedAt"
+);
+assert.equal(
+  resolvePublishedAtForReviewStatusChange({
+    previousReviewStatus: "approved",
     nextReviewStatus: "approved",
     currentPublishedAt: null,
     now: "2026-07-06T10:00:00.000Z"
   }),
   null,
-  "existing approved foods should not receive inferred publishedAt"
+  "existing approved foods should not receive inferred publishedAt when no publishedAt exists"
 );
 
 const userLog: UserFoodLog = {

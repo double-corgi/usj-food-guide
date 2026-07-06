@@ -5,12 +5,14 @@ import { useActionState, useEffect, useMemo, useState } from "react";
 import {
   adminAreaOptions,
   adminCategoryTagOptions,
+  adminReviewStatusOptions,
   adminSaleStatusOptions,
+  formatAdminDateTime,
   getAdminPublicState,
   getAdminSaleState
 } from "@/lib/admin-food-ui";
 import type { ChangeEventHandler, ReactNode } from "react";
-import type { FoodWithRelations, ShopType } from "@/types/domain";
+import type { FoodCollection, FoodVariant, FoodWithRelations, ReviewStatus, ShopType } from "@/types/domain";
 import type { AdminFoodSaveState } from "@/app/admin/foods/actions";
 
 type AdminFoodFormMode = "new" | "edit";
@@ -27,7 +29,9 @@ type AdminFoodFormProps = {
   adminNotes?: string | null;
   categoryTags?: string[] | null;
   nameEn?: string | null;
+  infoSourceUrl?: string | null;
   duplicateCandidates?: DuplicateCandidate[];
+  collections?: FoodCollection[];
 };
 
 export type DuplicateCandidate = {
@@ -55,7 +59,31 @@ const shopTypeOptions: Array<{ value: ShopType | "all"; label: string }> = [
   { value: "wagon", label: "ワゴン" }
 ];
 
-export function AdminFoodForm({ mode, food, shopOptions = [], action, visibilityAction, sourceKind: sourceKindProp, adminNotes, categoryTags, nameEn, duplicateCandidates = [] }: AdminFoodFormProps) {
+type VariantFormRow = {
+  key: string;
+  id: string;
+  label: string;
+  price: string;
+  isDefault: boolean;
+  sortOrder: string;
+  sourceUrl: string;
+  lastCheckedAt: string;
+};
+
+export function AdminFoodForm({
+  mode,
+  food,
+  shopOptions = [],
+  action,
+  visibilityAction,
+  sourceKind: sourceKindProp,
+  adminNotes,
+  categoryTags,
+  nameEn,
+  infoSourceUrl,
+  duplicateCandidates = [],
+  collections = []
+}: AdminFoodFormProps) {
   const initialArea = getInitialArea(food);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [selectedShopName, setSelectedShopName] = useState(() => getInitialSelectedShopName(food, shopOptions, initialArea));
@@ -82,6 +110,8 @@ export function AdminFoodForm({ mode, food, shopOptions = [], action, visibility
   const publicState = getPublicState(food);
   const [publicStateSelection, setPublicStateSelection] = useState<AdminPublicState>(publicState);
   const hiddenState = food?.hidden ? "hidden" : "visible";
+  const [variantRows, setVariantRows] = useState<VariantFormRow[]>(() => buildInitialVariantRows(food?.variants));
+  const defaultReviewStatus = food?.reviewStatus ?? (publicState === "published" ? "approved" : "draft");
   const preservedHiddenCategories = initialCategoryValues.filter((value) => !visibleCategoryValues.has(value));
   const hasAreaSelection = Boolean(areaSelection) && areaSelection !== "不明";
   const filteredShopOptions = useMemo(
@@ -142,6 +172,10 @@ export function AdminFoodForm({ mode, food, shopOptions = [], action, visibility
       }
       return next;
     });
+  }
+
+  function updateVariantRow(key: string, changes: Partial<Omit<VariantFormRow, "key">>) {
+    setVariantRows((current) => current.map((row) => (row.key === key ? { ...row, ...changes } : row)));
   }
 
   return (
@@ -408,7 +442,153 @@ export function AdminFoodForm({ mode, food, shopOptions = [], action, visibility
       </section>
 
       <section className="rounded-2xl border border-slate-200 bg-white p-4 shadow-soft sm:p-5">
-        <SectionHeading step="④" title="画像" description={isGeneratedOverride ? "画像を選ぶと、元画像は残したまま修正画像として保存します。未選択なら現在の画像を維持します。" : "公開する商品には画像が必要です。画像なしでも下書き保存できます。"} required={!isGeneratedOverride} />
+        <SectionHeading step="④" title="季節・公開・価格" description="夏コレクション、公開審査状態、価格違いを管理します。価格違いは1商品内にまとめます。" />
+        <div className="mt-4 grid gap-4 lg:grid-cols-2">
+          <SelectField label="季節コレクション" name="collectionId" defaultValue={food?.collectionId ?? ""}>
+            <option value="">コレクション未設定</option>
+            {collections.map((collection) => (
+              <option key={collection.id} value={collection.id}>
+                {collection.name}
+              </option>
+            ))}
+          </SelectField>
+          <SelectField label="レビュー状態" name="reviewStatus" defaultValue={defaultReviewStatus} requirement="required">
+            {adminReviewStatusOptions.map((option) => (
+              <option key={option.value} value={option.value}>
+                {option.label}
+              </option>
+            ))}
+          </SelectField>
+          <TextField
+            label="初回公開日時"
+            name="publishedAt"
+            type="datetime-local"
+            defaultValue={formatDateTimeLocalValue(food?.publishedAt)}
+            requirement="optional"
+            helpText={`未入力の場合、初めて承認済みにした時だけ自動で入ります。現在: ${formatAdminDateTime(food?.publishedAt)}`}
+          />
+          <TextField
+            label="公式参照URL"
+            name="infoSourceUrl"
+            defaultValue={formatSourceUrlValue(infoSourceUrl ?? food?.sourceUrl)}
+            placeholder="https://..."
+            requirement="optional"
+            helpText="未入力の場合は現在の参照元をそのまま使います。"
+          />
+        </div>
+
+        <div className="mt-5 rounded-2xl border border-slate-200 bg-slate-50 p-3 sm:p-4">
+          <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+            <div>
+              <h3 className="text-sm font-black text-ink">価格バリエーション</h3>
+              <p className="mt-1 text-xs font-bold leading-5 text-slate-500">単品、カップ付き、セットなどを同じ商品内に登録します。既定価格は公開画面の価格として使われます。</p>
+            </div>
+            <button
+              type="button"
+              onClick={() =>
+                setVariantRows((current) => [
+                  ...current,
+                  {
+                    key: `new-${Date.now()}-${current.length}`,
+                    id: "",
+                    label: "",
+                    price: "",
+                    isDefault: current.length === 0,
+                    sortOrder: String((current.length + 1) * 10),
+                    sourceUrl: "",
+                    lastCheckedAt: ""
+                  }
+                ])
+              }
+              className="h-10 rounded-full bg-park px-4 text-xs font-black text-white"
+            >
+              価格行を追加
+            </button>
+          </div>
+          <div className="mt-3 space-y-3">
+            {variantRows.length > 0 ? (
+              variantRows.map((variant, index) => (
+                <div key={variant.key} className="rounded-2xl border border-slate-200 bg-white p-3 shadow-sm">
+                  <input type="hidden" name="variantKey" value={variant.key} />
+                  <input type="hidden" name="variantId" value={variant.id} />
+                  <div className="grid gap-3 lg:grid-cols-[1.3fr_110px_86px_1.4fr_150px_auto] lg:items-end">
+                    <TextField
+                      label="ラベル"
+                      name="variantLabel"
+                      defaultValue={variant.label}
+                      placeholder="例: 単品"
+                      onChange={(event) => updateVariantRow(variant.key, { label: event.currentTarget.value })}
+                    />
+                    <TextField
+                      label="価格"
+                      name="variantPrice"
+                      inputMode="numeric"
+                      defaultValue={variant.price}
+                      placeholder="800"
+                      onChange={(event) => updateVariantRow(variant.key, { price: event.currentTarget.value })}
+                    />
+                    <TextField
+                      label="並び順"
+                      name="variantSortOrder"
+                      inputMode="numeric"
+                      defaultValue={variant.sortOrder}
+                      onChange={(event) => updateVariantRow(variant.key, { sortOrder: event.currentTarget.value })}
+                    />
+                    <TextField
+                      label="参照URL"
+                      name="variantSourceUrl"
+                      defaultValue={variant.sourceUrl}
+                      placeholder="https://..."
+                      onChange={(event) => updateVariantRow(variant.key, { sourceUrl: event.currentTarget.value })}
+                    />
+                    <TextField
+                      label="確認日"
+                      name="variantLastCheckedAt"
+                      type="date"
+                      defaultValue={variant.lastCheckedAt}
+                      onChange={(event) => updateVariantRow(variant.key, { lastCheckedAt: event.currentTarget.value })}
+                    />
+                    <div className="flex items-center gap-2 lg:justify-end">
+                      <label className="inline-flex h-10 items-center gap-2 rounded-full border border-slate-200 bg-white px-3 text-xs font-black text-slate-700">
+                        <input
+                          type="radio"
+                          name="variantDefaultKey"
+                          value={variant.key}
+                          checked={variant.isDefault}
+                          onChange={() => setVariantRows((current) => current.map((row) => ({ ...row, isDefault: row.key === variant.key })))}
+                          className="accent-park"
+                        />
+                        既定
+                      </label>
+                      <button
+                        type="button"
+                        onClick={() =>
+                          setVariantRows((current) => {
+                            const next = current.filter((row) => row.key !== variant.key);
+                            if (variant.isDefault && next.length > 0 && !next.some((row) => row.isDefault)) {
+                              next[0] = { ...next[0], isDefault: true };
+                            }
+                            return next;
+                          })
+                        }
+                        className="h-10 rounded-full border border-rose-100 bg-rose-50 px-3 text-xs font-black text-rose-700"
+                      >
+                        削除
+                      </button>
+                    </div>
+                  </div>
+                  {index === 0 ? <p className="mt-2 text-xs font-bold text-slate-500">価格行がない場合は従来の価格を使います。</p> : null}
+                </div>
+              ))
+            ) : (
+              <p className="rounded-xl bg-white px-4 py-3 text-sm font-bold text-slate-500">価格バリエーションは未設定です。従来の価格を使います。</p>
+            )}
+          </div>
+        </div>
+      </section>
+
+      <section className="rounded-2xl border border-slate-200 bg-white p-4 shadow-soft sm:p-5">
+        <SectionHeading step="⑤" title="画像" description={isGeneratedOverride ? "画像を選ぶと、元画像は残したまま修正画像として保存します。未選択なら現在の画像を維持します。" : "公開する商品には画像が必要です。画像なしでも下書き保存できます。"} required={!isGeneratedOverride} />
         <div className="mt-4 grid gap-4 lg:grid-cols-[280px_1fr]">
           <div className="overflow-hidden rounded-2xl border border-slate-200 bg-slate-50 shadow-sm">
             {previewUrl || activeImage?.imageUrl || food?.imageUrl ? (
@@ -450,7 +630,7 @@ export function AdminFoodForm({ mode, food, shopOptions = [], action, visibility
       </section>
 
       <section className="rounded-2xl border border-slate-200 bg-white p-4 shadow-soft sm:p-5">
-        <SectionHeading step="⑤" title="公開設定" description="追加画面では「今すぐ公開」だけを選べば十分です。" />
+        <SectionHeading step="⑥" title="公開設定" description="追加画面では「今すぐ公開」だけを選べば十分です。" />
         <div className="mt-4 grid gap-4">
           <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4">
             <input type="hidden" name="publicState" value={publicStateSelection} />
@@ -479,7 +659,7 @@ export function AdminFoodForm({ mode, food, shopOptions = [], action, visibility
         </div>
       </section>
 
-      <CollapsibleSection step="⑥" title="詳細（任意）" description="販売期間や管理メモを入力できます。必要なときだけ開いてください。">
+      <CollapsibleSection step="⑦" title="詳細（任意）" description="販売期間や管理メモを入力できます。必要なときだけ開いてください。">
         <div className="grid gap-4 lg:grid-cols-2">
           <SelectField label="販売状態" name="saleStatus" defaultValue={saleStatus} requirement="required">
             {adminSaleStatusOptions.map((option) => (
@@ -705,6 +885,44 @@ function formatPriceValue(food?: FoodWithRelations) {
   if (typeof food.priceMin === "number" && typeof food.priceMax === "number") return `${food.priceMin}-${food.priceMax}`;
   if (typeof food.priceMin === "number") return String(food.priceMin);
   return "";
+}
+
+function buildInitialVariantRows(variants?: FoodVariant[]): VariantFormRow[] {
+  return (variants ?? [])
+    .slice()
+    .sort((left, right) => left.sortOrder - right.sortOrder)
+    .map((variant, index) => ({
+      key: variant.id || `variant-${index}`,
+      id: variant.id,
+      label: variant.label,
+      price: typeof variant.price === "number" ? String(variant.price) : "",
+      isDefault: variant.isDefault,
+      sortOrder: String(variant.sortOrder),
+      sourceUrl: variant.sourceUrl ?? "",
+      lastCheckedAt: formatDateValue(variant.lastCheckedAt)
+    }));
+}
+
+function formatDateTimeLocalValue(value?: string | null) {
+  if (!value) return "";
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return "";
+  const local = new Date(date.getTime() - date.getTimezoneOffset() * 60 * 1000);
+  return local.toISOString().slice(0, 16);
+}
+
+function formatDateValue(value?: string | null) {
+  if (!value) return "";
+  if (/^\d{4}-\d{2}-\d{2}$/.test(value)) return value;
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return "";
+  return date.toISOString().slice(0, 10);
+}
+
+function formatSourceUrlValue(value?: string | null) {
+  if (!value || value === "manual-admin") return "";
+  if (!/^https?:\/\//.test(value)) return "";
+  return value;
 }
 
 function getInitialArea(food?: FoodWithRelations) {

@@ -3,11 +3,11 @@ import { createServiceSupabaseClient } from "@/lib/supabase-server";
 import type { Database } from "@/types/database";
 import type { FoodVariant, FoodWithRelations } from "@/types/domain";
 
-type MembershipRow = Database["public"]["Tables"]["food_collection_memberships"]["Row"];
-type PublicationMetadataRow = Database["public"]["Tables"]["food_publication_metadata"]["Row"];
-type FoodVariantRow = Database["public"]["Tables"]["food_variants"]["Row"];
+export type MembershipRow = Database["public"]["Tables"]["food_collection_memberships"]["Row"];
+export type PublicationMetadataRow = Database["public"]["Tables"]["food_publication_metadata"]["Row"];
+export type FoodVariantRow = Database["public"]["Tables"]["food_variants"]["Row"];
 
-type SeasonalFoodFoundation = {
+export type SeasonalFoodFoundation = {
   memberships: MembershipRow[];
   publicationMetadata: PublicationMetadataRow[];
   variants: FoodVariantRow[];

@@ -12,14 +12,14 @@ type ListAllFoodCandidatesOptions = {
 
 export async function listFoods(): Promise<FoodWithRelations[]> {
   const [overrides, foundation, manualFoodRows] = await Promise.all([listFoodOverrides(), listSeasonalFoodFoundation(), listManualFoods({ publicOnly: true })]);
-  const generatedFoods = filterVisibleFoods(applySeasonalFoodFoundation(applyFoodOverrides(readGeneratedFoods({ reviewStatuses: ["approved"] }), overrides), foundation));
+  const generatedFoods = filterVisibleFoods(applySeasonalFoodFoundation(applyFoodOverrides(readGeneratedFoods({ includeHidden: true }), overrides), foundation));
   const manualFoods = filterVisibleFoods(applySeasonalFoodFoundation(manualFoodRows, foundation));
   return mergeFoods(generatedFoods, manualFoods);
 }
 
 export async function listHomeActiveCollectionFoods(): Promise<FoodWithRelations[]> {
   const [overrides, foundation, manualFoodRows] = await Promise.all([listFoodOverrides(), listSeasonalFoodFoundation(), listManualFoods()]);
-  const generatedFoods = filterHomeVisibleFoods(applySeasonalFoodFoundation(applyFoodOverrides(readGeneratedFoods({ reviewStatuses: ["approved"] }), overrides), foundation));
+  const generatedFoods = filterHomeVisibleFoods(applySeasonalFoodFoundation(applyFoodOverrides(readGeneratedFoods({ includeHidden: true }), overrides), foundation));
   const manualFoods = filterHomeVisibleFoods(applySeasonalFoodFoundation(manualFoodRows, foundation));
   return mergeFoods(generatedFoods, manualFoods);
 }
