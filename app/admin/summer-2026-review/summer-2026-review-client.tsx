@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useState, useTransition } from "react";
-import { AlertTriangle, CalendarDays, CheckCircle2, Database, Filter, Link2, MapPin, ReceiptText, Save, Store, Tags } from "lucide-react";
+import { AlertTriangle, CalendarDays, CheckCircle2, ChevronDown, ChevronUp, Database, Filter, Link2, MapPin, ReceiptText, Save, Store, Tags } from "lucide-react";
 import { AdminFoodImagePreview } from "@/components/admin/admin-food-image-preview";
 import { adminAreaOptions, adminFoodCategoryOptions, adminLegacyCategoryTagOptions, adminReviewStatusOptions } from "@/lib/admin-food-ui";
 import { saveSummer2026ReviewDecisions } from "./actions";
@@ -88,6 +88,8 @@ export function Summer2026ReviewClient({
   const [decisions, setDecisions] = useState(initialDecisions);
   const [activeFilter, setActiveFilter] = useState<ReviewFilter>("all");
   const [dirtyIds, setDirtyIds] = useState<Set<string>>(() => new Set());
+  const [expandedIds, setExpandedIds] = useState<Set<string>>(() => new Set());
+  const [orderedItemIds] = useState(() => sortItems(items, initialDecisions).map((item) => item.id));
   const [saveMessage, setSaveMessage] = useState<{ tone: "idle" | "success" | "error" | "warn"; text: string }>({
     tone: canSave ? "idle" : "warn",
     text: canSave ? "変更はまだありません。" : "viewer権限では保存できません。editor以上で保存できます。"
@@ -98,7 +100,11 @@ export function Summer2026ReviewClient({
   const itemById = useMemo(() => new Map(items.map((item) => [item.id, item])), [items]);
   const metrics = useMemo(() => buildMetrics(decisions), [decisions]);
   const issues = useMemo(() => runRegistrationChecks(decisions), [decisions]);
-  const visibleItems = useMemo(() => sortItems(items, decisions).filter((item) => matchesFilter(item, decisionsById(decisions).get(item.id), activeFilter)), [items, decisions, activeFilter]);
+  const decisionsMap = useMemo(() => decisionsById(decisions), [decisions]);
+  const visibleItems = useMemo(() => {
+    const orderedItems = orderedItemIds.map((id) => itemById.get(id)).filter((item): item is ReviewItem => Boolean(item));
+    return orderedItems.filter((item) => matchesFilter(item, decisionsMap.get(item.id), activeFilter));
+  }, [activeFilter, decisionsMap, itemById, orderedItemIds]);
 
   const saveAll = useCallback(
     async (mode: "auto" | "manual" = "manual") => {
@@ -156,6 +162,18 @@ export function Summer2026ReviewClient({
     }));
   }
 
+  function toggleExpanded(id: string) {
+    setExpandedIds((current) => {
+      const next = new Set(current);
+      if (next.has(id)) {
+        next.delete(id);
+      } else {
+        next.add(id);
+      }
+      return next;
+    });
+  }
+
   return (
     <>
       <section className="grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
@@ -204,19 +222,34 @@ export function Summer2026ReviewClient({
             <Filter size={18} aria-hidden />
             表示フィルター
           </div>
-          <div className="flex flex-wrap gap-2">
-            {FILTERS.map((filter) => (
+          <div className="flex flex-col gap-3 lg:items-end">
+            <div className="flex flex-wrap gap-2">
+              {FILTERS.map((filter) => (
+                <button
+                  key={filter.id}
+                  type="button"
+                  onClick={() => setActiveFilter(filter.id)}
+                  className={`rounded-full border px-4 py-2 text-xs font-black transition ${
+                    activeFilter === filter.id ? "border-park bg-park text-white" : "border-slate-200 bg-white text-ink hover:border-park hover:text-park"
+                  }`}
+                >
+                  {filter.label}
+                </button>
+              ))}
+            </div>
+            <div className="flex flex-wrap items-center justify-end gap-2 text-xs font-black text-slate-600">
+              <span>
+                表示中 {visibleItems.length}件 / 全{items.length}件
+              </span>
               <button
-                key={filter.id}
                 type="button"
-                onClick={() => setActiveFilter(filter.id)}
-                className={`rounded-full border px-4 py-2 text-xs font-black transition ${
-                  activeFilter === filter.id ? "border-park bg-park text-white" : "border-slate-200 bg-white text-ink hover:border-park hover:text-park"
-                }`}
+                onClick={() => setExpandedIds(new Set())}
+                className="inline-flex min-h-10 items-center justify-center gap-2 rounded-full border border-slate-200 bg-white px-4 text-xs font-black text-ink shadow-soft transition hover:border-ink"
               >
-                {filter.label}
+                <ChevronUp size={14} aria-hidden />
+                すべて閉じる
               </button>
-            ))}
+            </div>
           </div>
         </div>
       </section>
@@ -248,10 +281,17 @@ export function Summer2026ReviewClient({
               item={item}
               decision={decision}
               dirty={dirtyIds.has(item.id)}
+              expanded={expandedIds.has(item.id)}
               issues={issues.filter((issue) => issue.proposedId === item.id)}
               canSave={canSave}
               isSaving={isSaving}
               onSave={() => void saveAll("manual")}
+              onToggleExpanded={() => toggleExpanded(item.id)}
+              onClose={() => setExpandedIds((current) => {
+                const next = new Set(current);
+                next.delete(item.id);
+                return next;
+              })}
               onDecisionChange={updateDecision}
               onEditedDataChange={updateEditedData}
             />
@@ -287,56 +327,88 @@ function ReviewCard({
   item,
   decision,
   dirty,
+  expanded,
   issues,
   canSave,
   isSaving,
   onSave,
+  onToggleExpanded,
+  onClose,
   onDecisionChange,
   onEditedDataChange
 }: {
   item: ReviewItem;
   decision: ReviewDecision;
   dirty: boolean;
+  expanded: boolean;
   issues: RegistrationCheckIssue[];
   canSave: boolean;
   isSaving: boolean;
   onSave: () => void;
+  onToggleExpanded: () => void;
+  onClose: () => void;
   onDecisionChange: (id: string, updater: (decision: ReviewDecision) => ReviewDecision) => void;
   onEditedDataChange: (id: string, changes: Partial<EditableReviewData>) => void;
 }) {
   const references = uniqueText([decision.editedData.sourceUrl, ...decision.editedData.officialReferenceUrls, item.shopOfficialUrl]);
   const existingName = item.duplicateCandidates?.find((candidate) => candidate.name)?.name ?? "既存商品名未確認";
   const existingActions = deriveExistingActionLabels(decision, item);
+  const detailsId = `summer-review-details-${safeDomId(item.id)}`;
 
   return (
     <article className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-soft" data-review-card={item.id}>
-      <div className="grid items-start gap-0 xl:grid-cols-[176px_minmax(0,1fr)]">
-        <div className="p-4 xl:p-0">
+      <div className="p-3">
+        <div className="grid items-start gap-3 lg:grid-cols-[176px_minmax(0,1fr)_minmax(210px,240px)]">
+          <div className="lg:w-[176px]">
           <AdminFoodImagePreview
             src={decision.editedData.imageUrl}
             alt={decision.editedData.name || item.name}
             variant="card"
             placeholderState={decision.imageReview === "no_image_planned" ? "no-image" : "unconfirmed"}
           />
+          </div>
+
+          <div className="min-w-0">
+            <div className="flex flex-wrap items-center gap-2">
+              <StatusBadge status={item.reviewStatus} />
+              <span className={`rounded-full px-3 py-1 text-xs font-black ${decision.targetType === "existing" ? "bg-ink text-white" : "bg-sun/25 text-amber-900"}`}>
+                {decision.targetType === "existing" ? "既存商品へ追記" : "新規商品"}
+              </span>
+              <ImageReviewBadge value={decision.imageReview} />
+              <PriceStatusBadge status={decision.priceReview} />
+            </div>
+            <h2 className="mt-3 text-lg font-black leading-snug text-ink [overflow-wrap:anywhere] sm:text-xl" title={decision.editedData.name || item.name}>
+              {decision.editedData.name || "商品名未確認"}
+            </h2>
+            <p className="mt-3 text-sm font-bold leading-6 text-slate-700 [overflow-wrap:anywhere]">
+              {decision.editedData.priceText || "価格未確認"} ・ {decision.editedData.shopName || "店舗未確認"}
+            </p>
+            <p className="text-sm font-bold leading-6 text-slate-600 [overflow-wrap:anywhere]">{decision.editedData.areaName || "エリア未確認"}</p>
+          </div>
+
+          <div className="grid gap-2">
+            <div>
+              <SaveStateBadge dirty={dirty} />
+            </div>
+            <CompactDecisionControl
+              decision={decision}
+              onChange={(value) => onDecisionChange(item.id, (current) => ({ ...current, decision: value }))}
+            />
+            <button
+              type="button"
+              aria-expanded={expanded}
+              aria-controls={detailsId}
+              onClick={onToggleExpanded}
+              className="inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-full border border-slate-200 bg-white px-4 text-sm font-black text-ink shadow-soft transition hover:border-ink"
+            >
+              {expanded ? <ChevronUp size={16} aria-hidden /> : <ChevronDown size={16} aria-hidden />}
+              {expanded ? "詳細を閉じる" : "詳細を開く"}
+            </button>
+          </div>
         </div>
 
-        <div className="space-y-5 p-5">
-          <div className="flex flex-wrap items-center gap-2">
-            <StatusBadge status={item.reviewStatus} />
-            <DecisionBadge decision={decision.decision} />
-            <ImageReviewBadge value={decision.imageReview} />
-            <PriceStatusBadge status={decision.priceReview} />
-            <span className={`rounded-full px-3 py-1 text-xs font-black ${decision.targetType === "existing" ? "bg-ink text-white" : "bg-sun/25 text-amber-900"}`}>
-              {decision.targetType === "existing" ? "既存商品へ追記" : "新規商品"}
-            </span>
-            {dirty ? <span className="rounded-full bg-amber-100 px-3 py-1 text-xs font-black text-amber-900">未保存</span> : null}
-          </div>
-
-          <div>
-            <h2 className="text-2xl font-black leading-tight text-ink [overflow-wrap:anywhere]">{decision.editedData.name || "商品名未確認"}</h2>
-            <p className="mt-2 text-sm font-bold leading-6 text-slate-600">{decision.editedData.description || "商品説明未確認"}</p>
-          </div>
-
+        {expanded ? (
+          <div id={detailsId} className="mt-5 space-y-5 border-t border-slate-200 pt-5">
           <section className="rounded-2xl border border-park/20 bg-mint p-4">
             <h3 className="text-sm font-black text-ink">採用判断</h3>
             <div className="mt-3 grid gap-3 lg:grid-cols-2">
@@ -492,7 +564,16 @@ function ReviewCard({
             <Save size={16} aria-hidden />
             この状態を保存
           </button>
-        </div>
+          <button
+            type="button"
+            onClick={onClose}
+            className="inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-full border border-slate-200 bg-white px-5 text-sm font-black text-ink shadow-soft sm:ml-3 sm:w-auto"
+          >
+            <ChevronUp size={16} aria-hidden />
+            詳細を閉じる
+          </button>
+          </div>
+        ) : null}
       </div>
     </article>
   );
@@ -601,6 +682,41 @@ function PriceStatusBadge({ status }: { status: PriceVerificationStatus }) {
         : { label: "価格: 未確認", className: "bg-slate-100 text-slate-700" };
 
   return <span className={`rounded-full px-3 py-1 text-xs font-black ${config.className}`}>{config.label}</span>;
+}
+
+function SaveStateBadge({ dirty }: { dirty: boolean }) {
+  return dirty ? (
+    <span className="rounded-full bg-amber-100 px-3 py-1 text-xs font-black text-amber-900">未保存</span>
+  ) : (
+    <span className="rounded-full bg-slate-100 px-3 py-1 text-xs font-black text-slate-700">保存済み</span>
+  );
+}
+
+function CompactDecisionControl({ decision, onChange }: { decision: ReviewDecision; onChange: (value: ReviewDecisionValue) => void }) {
+  return (
+    <div>
+      <select
+        aria-label="登録判断"
+        value={decision.decision}
+        onChange={(event) => onChange(event.currentTarget.value as ReviewDecisionValue)}
+        className="mt-2 min-h-11 w-full rounded-xl border border-slate-200 bg-white px-3 text-sm font-black text-ink outline-none focus:border-ink focus:ring-2 focus:ring-ink/10"
+      >
+        {decisionOptions.map((value) => {
+          const disabled = value === "register" && decision.imageReview === "wrong";
+          return (
+            <option
+              key={value}
+              value={value}
+              disabled={disabled}
+            >
+              {decisionLabels[value]}
+            </option>
+          );
+        })}
+      </select>
+      {decision.imageReview === "wrong" ? <p className="mt-2 text-xs font-bold leading-5 text-amber-900">画像が違う商品は登録不可です。</p> : null}
+    </div>
+  );
 }
 
 function RadioGroup({ label, value, options, onChange }: { label: string; value: string; options: Array<{ value: string; label: string }>; onChange: (value: string) => void }) {
@@ -800,4 +916,8 @@ function saveMessageClass(tone: "idle" | "success" | "error" | "warn") {
 
 function uniqueText(values: Array<string | null | undefined>) {
   return Array.from(new Set(values.filter((value): value is string => Boolean(value))));
+}
+
+function safeDomId(value: string) {
+  return value.replace(/[^a-zA-Z0-9_-]/g, "-");
 }
