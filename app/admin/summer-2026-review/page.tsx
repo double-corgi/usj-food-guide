@@ -3,40 +3,28 @@ import path from "node:path";
 import Link from "next/link";
 import { ArrowLeft, ShieldCheck } from "lucide-react";
 import { requireAdmin } from "@/lib/admin-auth";
-import { Summer2026ReviewClient, type ExcludedReviewItem, type ReviewItem, type SourceFileInfo } from "./summer-2026-review-client";
+import { readImportData, readReviewDecisionFile } from "./review-data";
+import { Summer2026ReviewClient } from "./summer-2026-review-client";
+import type { ExcludedReviewItem, SourceFileInfo } from "./review-types";
 
 export const dynamic = "force-dynamic";
 
-type ImportData = {
-  collectionId: string;
-  items: ReviewItem[];
-  excludedOfficialItems?: Array<{
-    name: string;
-    category?: string | null;
-    price?: number | null;
-    priceText?: string | null;
-    shopName?: string | null;
-    areaName?: string | null;
-    sourceUrl?: string | null;
-    reason?: string | null;
-    imageUrl?: string | null;
-    imageSourceUrl?: string | null;
-    importReview?: {
-      plannedFoodId?: string | null;
-      duplicateHandling?: string | null;
-      registrationPolicy?: string | null;
-    } | null;
-  }>;
-};
-
 const DATA_FILE = "data/imports/unicolle-summer-2026-drafts.json";
-const SOURCE_FILES = [DATA_FILE, "docs/unicolle-summer-2026-import-review.md", "docs/unicolle-summer-2026-food-research.md"];
+const SOURCE_FILES = [
+  DATA_FILE,
+  "docs/unicolle-summer-2026-import-review.md",
+  "docs/unicolle-summer-2026-food-research.md",
+  "data/imports/unicolle-summer-2026-review-decisions.json",
+  "data/imports/unicolle-summer-2026-import-ready.json"
+];
 
 export default async function Summer2026ReviewPage() {
   const admin = await requireAdmin("viewer");
   const data = readImportData();
+  const decisionFile = readReviewDecisionFile(data.items);
   const sourceFiles = readSourceFiles();
   const excludedItems = buildExcludedItems(data);
+  const canSave = admin.role === "owner" || admin.role === "editor";
 
   return (
     <div className="space-y-6">
@@ -64,29 +52,24 @@ export default async function Summer2026ReviewPage() {
         </div>
       </section>
 
-      <Summer2026ReviewClient items={data.items} excludedItems={excludedItems} sourceFiles={sourceFiles} />
+      <Summer2026ReviewClient items={data.items} initialDecisions={decisionFile.decisions} excludedItems={excludedItems} sourceFiles={sourceFiles} canSave={canSave} />
     </div>
   );
-}
-
-function readImportData(): ImportData {
-  const filePath = path.join(process.cwd(), DATA_FILE);
-  return JSON.parse(fs.readFileSync(filePath, "utf8")) as ImportData;
 }
 
 function readSourceFiles(): SourceFileInfo[] {
   return SOURCE_FILES.map((relativePath) => {
     const absolutePath = path.join(process.cwd(), relativePath);
-    const stat = fs.statSync(absolutePath);
+    const stat = fs.existsSync(absolutePath) ? fs.statSync(absolutePath) : null;
     return {
       path: relativePath,
-      size: stat.size,
-      updatedAt: stat.mtime.toISOString()
+      size: stat?.size ?? 0,
+      updatedAt: stat?.mtime.toISOString() ?? ""
     };
   });
 }
 
-function buildExcludedItems(data: ImportData): ExcludedReviewItem[] {
+function buildExcludedItems(data: ReturnType<typeof readImportData>): ExcludedReviewItem[] {
   const excluded = data.excludedOfficialItems ?? [];
   const dave = excluded.find((item) => item.name.includes("デイブ・ポップコーンバケツ"));
   const dkMug = excluded.find((item) => item.name.includes("DK クラッシュサンデー") && item.name.includes("マグカップ付き"));
@@ -110,7 +93,7 @@ function buildExcludedItems(data: ImportData): ExcludedReviewItem[] {
   ].filter(Boolean) as ExcludedReviewItem[];
 }
 
-function mapExcludedItem(item: NonNullable<ImportData["excludedOfficialItems"]>[number]): ExcludedReviewItem {
+function mapExcludedItem(item: NonNullable<ReturnType<typeof readImportData>["excludedOfficialItems"]>[number]): ExcludedReviewItem {
   return {
     name: item.name,
     reason: item.reason ?? "除外理由未確認",

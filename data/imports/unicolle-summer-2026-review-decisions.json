@@ -1,0 +1,1375 @@
+{
+  "schemaVersion": 1,
+  "sourceDraftFile": "data/imports/unicolle-summer-2026-drafts.json",
+  "generatedAt": "2026-07-07T01:19:58.691Z",
+  "updatedAt": "2026-07-07T01:19:58.691Z",
+  "decisions": [
+    {
+      "proposedId": "draft-summer-2026-matsuri-goldfish-lemon-soda",
+      "decision": "needs_revision",
+      "editedData": {
+        "name": "夏祭りの金魚 レモンサイダー",
+        "price": null,
+        "priceText": "",
+        "shopName": "ユニバーサル・マーケット内ハピネス・ワゴン",
+        "areaName": "ニューヨーク・エリア",
+        "category": "drink",
+        "description": "シュワっとしたレモンサイダーに鮮やかな金魚が浮かんだ夏祭りのウキウキ感が上がる爽やかドリンク。",
+        "imageUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/files/images/gds-images/usj-gds-food-summer-festival-goldfish-lemon-soda-with-neon-cup-summer-2026-gallery-a.jpg",
+        "imageSourceUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/restaurants/food-cart/index.html",
+        "sourceUrl": "https://www.usj.co.jp/web/ja/jp/events/summer-2026/universal-summer/matsuri-nights",
+        "officialReferenceUrls": [
+          "https://www.usj.co.jp/web/ja/jp/events/summer-2026/universal-summer/matsuri-nights",
+          "https://www.usj.co.jp/web/ja/jp/restaurants/food-cart"
+        ],
+        "collectionId": "summer-2026",
+        "reviewStatus": "draft",
+        "unconfirmedFields": [
+          "price",
+          "priceVariants.price",
+          "saleStartDate",
+          "saleEndDate",
+          "saleTimeCondition.productSpecific"
+        ],
+        "duplicateHandling": "完全な新商品として追加",
+        "priceVariants": [
+          {
+            "label": "夏祭りの金魚 レモンサイダー",
+            "price": null,
+            "isDefault": true
+          },
+          {
+            "label": "夏祭りの金魚 レモンサイダー ネオン・カップ付き",
+            "price": null,
+            "isDefault": false
+          }
+        ]
+      },
+      "targetType": "new",
+      "existingFoodId": null,
+      "duplicateAction": "new_manual_food",
+      "imageReview": "unconfirmed",
+      "priceReview": "unresolved",
+      "reviewerNote": "",
+      "reviewedAt": null
+    },
+    {
+      "proposedId": "draft-summer-2026-matsuri-choco-banana-churritos",
+      "decision": "needs_revision",
+      "editedData": {
+        "name": "超！！ チョコバナナ・チュリトス",
+        "price": null,
+        "priceText": "",
+        "shopName": "ユニバーサル・マーケット内ハピネス・ワゴン",
+        "areaName": "ニューヨーク・エリア",
+        "category": "churro",
+        "description": "チョコバナナがチュリトスに変身。カラフルな見た目のバナナフレーバーのチュリトスにチョコソースを合わせたお祭りフード。",
+        "imageUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/files/images/gds-images/usj-gds-food-extreme-choco-banana-churritos-summer-2026-gallery-a.jpg",
+        "imageSourceUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/restaurants/food-cart/index.html",
+        "sourceUrl": "https://www.usj.co.jp/web/ja/jp/events/summer-2026/universal-summer/matsuri-nights",
+        "officialReferenceUrls": [
+          "https://www.usj.co.jp/web/ja/jp/events/summer-2026/universal-summer/matsuri-nights",
+          "https://www.usj.co.jp/web/ja/jp/restaurants/food-cart"
+        ],
+        "collectionId": "summer-2026",
+        "reviewStatus": "draft",
+        "unconfirmedFields": [
+          "price",
+          "saleStartDate",
+          "saleEndDate",
+          "saleTimeCondition.productSpecific"
+        ],
+        "duplicateHandling": "既存商品へ情報をoverride",
+        "priceVariants": [
+          {
+            "label": "単品",
+            "price": null,
+            "isDefault": true
+          }
+        ]
+      },
+      "targetType": "existing",
+      "existingFoodId": "food-j4nvrm",
+      "duplicateAction": "override_add",
+      "imageReview": "unconfirmed",
+      "priceReview": "unresolved",
+      "reviewerNote": "",
+      "reviewedAt": null
+    },
+    {
+      "proposedId": "draft-summer-2026-matsuri-strawberry-condensed-milk-soda-smoothie",
+      "decision": "needs_revision",
+      "editedData": {
+        "name": "いちご練乳 ソーダスムージー",
+        "price": null,
+        "priceText": "",
+        "shopName": "ユニバーサル・マーケット内トローリー・トリート",
+        "areaName": "ニューヨーク・エリア",
+        "category": "drink",
+        "description": "いちご氷とソーダを混ぜて楽しむ、練乳がけかき氷風の冷たいソーダスムージー。",
+        "imageUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/files/images/gds-images/usj-gds-food-strawberry-and-condensed-milk-seltzer-smoothie-with-neon-cup-summer-2026-gallery-a.jpg",
+        "imageSourceUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/restaurants/food-cart/index.html",
+        "sourceUrl": "https://www.usj.co.jp/web/ja/jp/events/summer-2026/universal-summer/matsuri-nights",
+        "officialReferenceUrls": [
+          "https://www.usj.co.jp/web/ja/jp/events/summer-2026/universal-summer/matsuri-nights",
+          "https://www.usj.co.jp/web/ja/jp/restaurants/food-cart"
+        ],
+        "collectionId": "summer-2026",
+        "reviewStatus": "draft",
+        "unconfirmedFields": [
+          "price",
+          "priceVariants.price",
+          "saleStartDate",
+          "saleEndDate",
+          "saleTimeCondition.productSpecific"
+        ],
+        "duplicateHandling": "完全な新商品として追加",
+        "priceVariants": [
+          {
+            "label": "いちご練乳 ソーダスムージー",
+            "price": null,
+            "isDefault": true
+          },
+          {
+            "label": "いちご練乳 ソーダスムージー ネオン・カップ付き",
+            "price": null,
+            "isDefault": false
+          }
+        ]
+      },
+      "targetType": "new",
+      "existingFoodId": null,
+      "duplicateAction": "new_manual_food",
+      "imageReview": "unconfirmed",
+      "priceReview": "unresolved",
+      "reviewerNote": "",
+      "reviewedAt": null
+    },
+    {
+      "proposedId": "draft-summer-2026-matsuri-curry-naan-yakisoba-dog",
+      "decision": "needs_revision",
+      "editedData": {
+        "name": "カレーナン!? 焼きそばドッグ",
+        "price": null,
+        "priceText": "",
+        "shopName": "ユニバーサル・マーケット内ホットドッグカート",
+        "areaName": "ニューヨーク・エリア",
+        "category": "snack",
+        "description": "焼きそばをカレー風味のナンで楽しむ、紅ショウガとマヨネーズのトッピング付きワンハンドメニュー。",
+        "imageUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/files/images/gds-images/usj-gds-food-whats-this-yakisoba-dog-summer-2026-gallery-a.jpg",
+        "imageSourceUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/restaurants/food-cart/index.html",
+        "sourceUrl": "https://www.usj.co.jp/web/ja/jp/events/summer-2026/universal-summer/matsuri-nights",
+        "officialReferenceUrls": [
+          "https://www.usj.co.jp/web/ja/jp/events/summer-2026/universal-summer/matsuri-nights",
+          "https://www.usj.co.jp/web/ja/jp/restaurants/food-cart"
+        ],
+        "collectionId": "summer-2026",
+        "reviewStatus": "draft",
+        "unconfirmedFields": [
+          "price",
+          "saleStartDate",
+          "saleEndDate",
+          "saleTimeCondition.productSpecific"
+        ],
+        "duplicateHandling": "完全な新商品として追加",
+        "priceVariants": [
+          {
+            "label": "単品",
+            "price": null,
+            "isDefault": true
+          }
+        ]
+      },
+      "targetType": "new",
+      "existingFoodId": null,
+      "duplicateAction": "new_manual_food",
+      "imageReview": "unconfirmed",
+      "priceReview": "unresolved",
+      "reviewerNote": "",
+      "reviewedAt": null
+    },
+    {
+      "proposedId": "draft-summer-2026-related-frozen-gin-tonic-citrus",
+      "decision": "unreviewed",
+      "editedData": {
+        "name": "フローズン・ジントニック ～シトラス～",
+        "price": 900,
+        "priceText": "900円",
+        "shopName": "パークサイド・グリル",
+        "areaName": "ニューヨーク・エリア",
+        "category": "drink",
+        "description": "ジャパニーズクラフトジン 翠使用。ネオン・カップ付きの価格バリエーションあり。",
+        "imageUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/files/images/gds-images/usj-gds-food-frozen-gin-and-tonic-citrus-with-neon-cup-summer-2026-gallery-a.jpg",
+        "imageSourceUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/restaurants/food-cart/index.html",
+        "sourceUrl": "https://www.usj.co.jp/web/ja/jp/restaurants/food-cart",
+        "officialReferenceUrls": [
+          "https://www.usj.co.jp/web/ja/jp/restaurants/food-cart",
+          "https://www.usj.co.jp/web/ja/jp/restaurants/park-side-grille"
+        ],
+        "collectionId": "summer-2026",
+        "reviewStatus": "pending",
+        "unconfirmedFields": [
+          "saleStartDate",
+          "saleEndDate",
+          "saleTimeCondition.productSpecificPeriod"
+        ],
+        "duplicateHandling": "完全な新商品として追加",
+        "priceVariants": [
+          {
+            "label": "フローズン・ジントニック ～シトラス～",
+            "price": 900,
+            "isDefault": true
+          },
+          {
+            "label": "フローズン・ジントニック ～シトラス～ ネオン・カップ付き",
+            "price": 1750,
+            "isDefault": false
+          }
+        ]
+      },
+      "targetType": "new",
+      "existingFoodId": null,
+      "duplicateAction": "new_manual_food",
+      "imageReview": "unconfirmed",
+      "priceReview": "official-confirmed",
+      "reviewerNote": "",
+      "reviewedAt": null
+    },
+    {
+      "proposedId": "draft-summer-2026-related-25th-cocktail-popcorn-flavor",
+      "decision": "unreviewed",
+      "editedData": {
+        "name": "25周年カクテル ～ポップコーンフレーバー？～",
+        "price": 900,
+        "priceText": "900円",
+        "shopName": "パークサイド・グリル",
+        "areaName": "ニューヨーク・エリア",
+        "category": "drink",
+        "description": "ジャパニーズクラフトジン 翠使用。テイクアウト、店内どちらでも注文可能。",
+        "imageUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/files/images/gds-images/usj-gds-food-25th-anniversary-cocktail-popcorn-flavor-spring-2026-gallery-a.jpg",
+        "imageSourceUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/restaurants/food-cart/index.html",
+        "sourceUrl": "https://www.usj.co.jp/web/ja/jp/restaurants/food-cart",
+        "officialReferenceUrls": [
+          "https://www.usj.co.jp/web/ja/jp/restaurants/food-cart",
+          "https://www.usj.co.jp/web/ja/jp/restaurants/park-side-grille"
+        ],
+        "collectionId": "summer-2026",
+        "reviewStatus": "pending",
+        "unconfirmedFields": [
+          "saleStartDate",
+          "saleEndDate",
+          "saleTimeCondition"
+        ],
+        "duplicateHandling": "既存商品へ価格variantを追加",
+        "priceVariants": [
+          {
+            "label": "テイクアウト",
+            "price": 900,
+            "isDefault": true
+          },
+          {
+            "label": "店内",
+            "price": 950,
+            "isDefault": false
+          }
+        ]
+      },
+      "targetType": "existing",
+      "existingFoodId": "food-d5v0l2",
+      "duplicateAction": "variant_add",
+      "imageReview": "unconfirmed",
+      "priceReview": "official-confirmed",
+      "reviewerNote": "",
+      "reviewedAt": null
+    },
+    {
+      "proposedId": "draft-summer-2026-related-caramel-popcorn-churritos",
+      "decision": "unreviewed",
+      "editedData": {
+        "name": "キャラメルポップコーン!? チュリトス",
+        "price": 800,
+        "priceText": "800円",
+        "shopName": "パークサイド・グリル横フードカート",
+        "areaName": "ニューヨーク・エリア",
+        "category": "churro",
+        "description": "",
+        "imageUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/files/images/gds-images/usj-gds-food-caramel-popcorn-churritos-spring-2026-gallery-a.jpg",
+        "imageSourceUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/restaurants/food-cart/index.html",
+        "sourceUrl": "https://www.usj.co.jp/web/ja/jp/restaurants/food-cart",
+        "officialReferenceUrls": [
+          "https://www.usj.co.jp/web/ja/jp/restaurants/food-cart"
+        ],
+        "collectionId": "summer-2026",
+        "reviewStatus": "pending",
+        "unconfirmedFields": [
+          "description",
+          "saleStartDate",
+          "saleEndDate",
+          "saleTimeCondition",
+          "price.official"
+        ],
+        "duplicateHandling": "既存商品へsummer-2026を追加",
+        "priceVariants": [
+          {
+            "label": "単品",
+            "price": 800,
+            "isDefault": true,
+            "priceConfirmationStatus": "secondary-confirmed"
+          }
+        ]
+      },
+      "targetType": "existing",
+      "existingFoodId": "food-14zoddb",
+      "duplicateAction": "collection_add",
+      "imageReview": "unconfirmed",
+      "priceReview": "secondary-confirmed",
+      "reviewerNote": "",
+      "reviewedAt": null
+    },
+    {
+      "proposedId": "draft-summer-2026-dessert-candy-apple-apple-mousse",
+      "decision": "needs_revision",
+      "editedData": {
+        "name": "りんご飴 ～りんごのムース～",
+        "price": 950,
+        "priceText": "950円",
+        "shopName": "ビバリーヒルズ・ブランジェリー",
+        "areaName": "ハリウッド・エリア",
+        "category": "dessert",
+        "description": "りんご飴がキュートなケーキになった商品。角切り果肉と、カリっとした飴の歯ざわりをザラメで表現。",
+        "imageUrl": "",
+        "imageSourceUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/restaurants/beverly-hills-boulangerie/index.html",
+        "sourceUrl": "https://www.usj.co.jp/web/ja/jp/restaurants/seasonal-food",
+        "officialReferenceUrls": [
+          "https://www.usj.co.jp/web/ja/jp/restaurants/seasonal-food",
+          "https://www.usj.co.jp/web/ja/jp/restaurants/beverly-hills-boulangerie"
+        ],
+        "collectionId": "summer-2026",
+        "reviewStatus": "draft",
+        "unconfirmedFields": [
+          "saleStartDate",
+          "saleEndDate",
+          "saleTimeCondition.productSpecific",
+          "takeoutAvailable",
+          "imageUrl.singleProduct"
+        ],
+        "duplicateHandling": "完全な新商品として追加",
+        "priceVariants": [
+          {
+            "label": "単品",
+            "price": 950,
+            "isDefault": true
+          }
+        ]
+      },
+      "targetType": "new",
+      "existingFoodId": null,
+      "duplicateAction": "new_manual_food",
+      "imageReview": "unconfirmed",
+      "priceReview": "official-confirmed",
+      "reviewerNote": "",
+      "reviewedAt": null
+    },
+    {
+      "proposedId": "draft-summer-2026-dessert-water-balloon-peach-jelly-rare-cheese-mousse",
+      "decision": "needs_revision",
+      "editedData": {
+        "name": "水風船 ～ピーチゼリー＆レアチーズムース～",
+        "price": 950,
+        "priceText": "950円",
+        "shopName": "ビバリーヒルズ・ブランジェリー",
+        "areaName": "ハリウッド・エリア",
+        "category": "dessert",
+        "description": "夏祭りの情景が広がる水風船のフォルムが印象的なカップデザート。桃とレアチーズムースの爽やかな味わい。",
+        "imageUrl": "",
+        "imageSourceUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/restaurants/beverly-hills-boulangerie/index.html",
+        "sourceUrl": "https://www.usj.co.jp/web/ja/jp/restaurants/seasonal-food",
+        "officialReferenceUrls": [
+          "https://www.usj.co.jp/web/ja/jp/restaurants/seasonal-food",
+          "https://www.usj.co.jp/web/ja/jp/restaurants/beverly-hills-boulangerie"
+        ],
+        "collectionId": "summer-2026",
+        "reviewStatus": "draft",
+        "unconfirmedFields": [
+          "saleStartDate",
+          "saleEndDate",
+          "saleTimeCondition.productSpecific",
+          "takeoutAvailable",
+          "imageUrl.singleProduct"
+        ],
+        "duplicateHandling": "完全な新商品として追加",
+        "priceVariants": [
+          {
+            "label": "単品",
+            "price": 950,
+            "isDefault": true
+          }
+        ]
+      },
+      "targetType": "new",
+      "existingFoodId": null,
+      "duplicateAction": "new_manual_food",
+      "imageReview": "unconfirmed",
+      "priceReview": "official-confirmed",
+      "reviewerNote": "",
+      "reviewedAt": null
+    },
+    {
+      "proposedId": "draft-summer-2026-dessert-hydrangea-grape-yuzu-shaved-ice-cake",
+      "decision": "unreviewed",
+      "editedData": {
+        "name": "紫陽花 ～葡萄と柚子の和氷菓 焼き菓子添え～",
+        "price": 1800,
+        "priceText": "1,800円",
+        "shopName": "SAIDO",
+        "areaName": "ニューヨーク・エリア",
+        "category": "dessert",
+        "description": "葡萄シロップをかけて移ろう色味と雨の庭園の静寂を感じさせる氷菓。紫陽花の庭園を模した多彩な食感を楽しむ和風の一皿。",
+        "imageUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/files/images/gds-images/usj-gds-food-hydrangea-grape-and-yuzu-japanese-shaved-ice-with-cake-summer-2026-gallery-a.jpg",
+        "imageSourceUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/restaurants/seasonal-food/index.html",
+        "sourceUrl": "https://www.usj.co.jp/web/ja/jp/restaurants/seasonal-food",
+        "officialReferenceUrls": [
+          "https://www.usj.co.jp/web/ja/jp/restaurants/seasonal-food",
+          "https://www.usj.co.jp/web/ja/jp/restaurants/saido"
+        ],
+        "collectionId": "summer-2026",
+        "reviewStatus": "pending",
+        "unconfirmedFields": [
+          "saleStartDate",
+          "saleEndDate",
+          "saleTimeCondition.productSpecific",
+          "takeoutAvailable"
+        ],
+        "duplicateHandling": "完全な新商品として追加",
+        "priceVariants": [
+          {
+            "label": "単品",
+            "price": 1800,
+            "isDefault": true
+          }
+        ]
+      },
+      "targetType": "new",
+      "existingFoodId": null,
+      "duplicateAction": "new_manual_food",
+      "imageReview": "unconfirmed",
+      "priceReview": "official-confirmed",
+      "reviewerNote": "",
+      "reviewedAt": null
+    },
+    {
+      "proposedId": "draft-summer-2026-meal-citrus-grated-radish-white-miso-cold-udon-set",
+      "decision": "unreviewed",
+      "editedData": {
+        "name": "柑橘おろしと白みその冷やしうどん御膳",
+        "price": 2600,
+        "priceText": "2,600円",
+        "shopName": "SAIDO",
+        "areaName": "ニューヨーク・エリア",
+        "category": "meal",
+        "description": "夏にぴったりの冷製うどんと天ぷらの盛合わせ。柑橘おろしと胡麻味噌だれで味の変化を楽しめる。天ぷら3種、白胡麻豆腐、季節のジュレ、紅白なます、香の物付き。",
+        "imageUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/files/images/gds-images/usj-gds-food-cold-udon-set-meal-with-citrus-grated-radish-and-white-miso-summer-2026-gallery-a.jpg",
+        "imageSourceUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/restaurants/seasonal-food/index.html",
+        "sourceUrl": "https://www.usj.co.jp/web/ja/jp/restaurants/seasonal-food",
+        "officialReferenceUrls": [
+          "https://www.usj.co.jp/web/ja/jp/restaurants/seasonal-food",
+          "https://www.usj.co.jp/web/ja/jp/restaurants/saido"
+        ],
+        "collectionId": "summer-2026",
+        "reviewStatus": "pending",
+        "unconfirmedFields": [
+          "saleStartDate",
+          "saleEndDate",
+          "saleTimeCondition.productSpecific",
+          "takeoutAvailable"
+        ],
+        "duplicateHandling": "完全な新商品として追加",
+        "priceVariants": [
+          {
+            "label": "単品",
+            "price": 2600,
+            "isDefault": true
+          }
+        ]
+      },
+      "targetType": "new",
+      "existingFoodId": null,
+      "duplicateAction": "new_manual_food",
+      "imageReview": "unconfirmed",
+      "priceReview": "official-confirmed",
+      "reviewerNote": "",
+      "reviewedAt": null
+    },
+    {
+      "proposedId": "draft-summer-2026-parkside-chilled-lobster-pasta-americaine-granita",
+      "decision": "unreviewed",
+      "editedData": {
+        "name": "オマール海老の冷製パスタ アメリケーヌのグラニテ添え",
+        "price": 3300,
+        "priceText": "3,300円",
+        "shopName": "パークサイド・グリル",
+        "areaName": "ニューヨーク・エリア",
+        "category": "pasta",
+        "description": "ひんやり冷たいグラニテ仕立てのソースが特徴の冷製パスタ。海鮮と野菜のさまざまな食感を楽しめる。ソフトドリンク付き。",
+        "imageUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/files/images/gds-images/usj-gds-food-chilled-lobster-pasta-with-americaine-granita-summer-2026-gallery-a.jpg",
+        "imageSourceUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/restaurants/seasonal-food/index.html",
+        "sourceUrl": "https://www.usj.co.jp/web/ja/jp/restaurants/seasonal-food",
+        "officialReferenceUrls": [
+          "https://www.usj.co.jp/web/ja/jp/restaurants/seasonal-food",
+          "https://www.usj.co.jp/web/ja/jp/restaurants/park-side-grille"
+        ],
+        "collectionId": "summer-2026",
+        "reviewStatus": "pending",
+        "unconfirmedFields": [
+          "saleStartDate",
+          "saleEndDate",
+          "takeoutAvailable"
+        ],
+        "duplicateHandling": "完全な新商品として追加",
+        "priceVariants": [
+          {
+            "label": "ソフトドリンク付き",
+            "price": 3300,
+            "isDefault": true
+          }
+        ]
+      },
+      "targetType": "new",
+      "existingFoodId": null,
+      "duplicateAction": "new_manual_food",
+      "imageReview": "unconfirmed",
+      "priceReview": "official-confirmed",
+      "reviewerNote": "",
+      "reviewedAt": null
+    },
+    {
+      "proposedId": "draft-summer-2026-louies-pulled-pork-chicken-spicy-bbq-pizza-set",
+      "decision": "unreviewed",
+      "editedData": {
+        "name": "プルドポーク＆チキン・スパイシー BBQ ピッツアセット",
+        "price": 1950,
+        "priceText": "1,950円",
+        "shopName": "ルイズ N.Y. ピザパーラー",
+        "areaName": "ニューヨーク・エリア",
+        "category": "pizza",
+        "description": "プルドポークとチキンの食べ応え抜群のBBQピッツァ。野菜の彩りとハラペーニョがアクセント。セットはフライドポテト、ソフトドリンク付き。",
+        "imageUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/files/images/gds-images/usj-gds-food-pulled-pork-and-chicken-spicy-bbq-pizza-meal-summer-2026-gallery-a.jpg",
+        "imageSourceUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/restaurants/seasonal-food/index.html",
+        "sourceUrl": "https://www.usj.co.jp/web/ja/jp/restaurants/seasonal-food",
+        "officialReferenceUrls": [
+          "https://www.usj.co.jp/web/ja/jp/restaurants/seasonal-food",
+          "https://www.usj.co.jp/web/ja/jp/restaurants/louies-ny-pizza-parlor"
+        ],
+        "collectionId": "summer-2026",
+        "reviewStatus": "pending",
+        "unconfirmedFields": [
+          "saleStartDate",
+          "saleEndDate",
+          "saleTimeCondition.productSpecific",
+          "takeoutAvailable"
+        ],
+        "duplicateHandling": "完全な新商品として追加",
+        "priceVariants": [
+          {
+            "label": "ピッツァセット（フライドポテト、ソフトドリンク付き）",
+            "price": 1950,
+            "isDefault": true
+          },
+          {
+            "label": "ホールピッツァ",
+            "price": 6900,
+            "isDefault": false
+          }
+        ]
+      },
+      "targetType": "new",
+      "existingFoodId": null,
+      "duplicateAction": "new_manual_food",
+      "imageReview": "unconfirmed",
+      "priceReview": "official-confirmed",
+      "reviewerNote": "",
+      "reviewedAt": null
+    },
+    {
+      "proposedId": "draft-summer-2026-louies-garlic-shrimp-pizza-set",
+      "decision": "unreviewed",
+      "editedData": {
+        "name": "ガーリック・シュリンプ・ピッツァセット",
+        "price": 1950,
+        "priceText": "1,950円",
+        "shopName": "ルイズ N.Y. ピザパーラー",
+        "areaName": "ニューヨーク・エリア",
+        "category": "pizza",
+        "description": "ガーリックたっぷりのピッツァ。焼いたレモンの爽やかさで味の変化も楽しめる。セットはフライドポテト、ソフトドリンク付き。",
+        "imageUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/files/images/gds-images/usj-gds-food-louies-pizza-meal-garlic-shrimp-summer-2026-gallery-a.jpg",
+        "imageSourceUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/restaurants/seasonal-food/index.html",
+        "sourceUrl": "https://www.usj.co.jp/web/ja/jp/restaurants/seasonal-food",
+        "officialReferenceUrls": [
+          "https://www.usj.co.jp/web/ja/jp/restaurants/seasonal-food",
+          "https://www.usj.co.jp/web/ja/jp/restaurants/louies-ny-pizza-parlor"
+        ],
+        "collectionId": "summer-2026",
+        "reviewStatus": "pending",
+        "unconfirmedFields": [
+          "saleStartDate",
+          "saleEndDate",
+          "saleTimeCondition.productSpecific",
+          "takeoutAvailable"
+        ],
+        "duplicateHandling": "完全な新商品として追加",
+        "priceVariants": [
+          {
+            "label": "ピッツァセット（フライドポテト、ソフトドリンク付き）",
+            "price": 1950,
+            "isDefault": true
+          },
+          {
+            "label": "ホールピッツァ",
+            "price": 6900,
+            "isDefault": false
+          }
+        ]
+      },
+      "targetType": "new",
+      "existingFoodId": null,
+      "duplicateAction": "new_manual_food",
+      "imageReview": "unconfirmed",
+      "priceReview": "official-confirmed",
+      "reviewerNote": "",
+      "reviewedAt": null
+    },
+    {
+      "proposedId": "draft-summer-2026-mels-crunchy-taco-burger-set",
+      "decision": "unreviewed",
+      "editedData": {
+        "name": "クランチ・タコスバーガーセット",
+        "price": 2100,
+        "priceText": "2,100円",
+        "shopName": "メルズ・ドライブイン",
+        "areaName": "ハリウッド・エリア",
+        "category": "burger",
+        "description": "サクサク食感がポイントのタコスバーガー。フライドポテト、ソフトドリンク付き。",
+        "imageUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/files/images/gds-images/usj-gds-food-crunchy-taco-burger-meal-summer-2026-gallery-a.jpg",
+        "imageSourceUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/restaurants/seasonal-food/index.html",
+        "sourceUrl": "https://www.usj.co.jp/web/ja/jp/restaurants/seasonal-food",
+        "officialReferenceUrls": [
+          "https://www.usj.co.jp/web/ja/jp/restaurants/seasonal-food",
+          "https://www.usj.co.jp/web/ja/jp/restaurants/mels-drive-in"
+        ],
+        "collectionId": "summer-2026",
+        "reviewStatus": "pending",
+        "unconfirmedFields": [
+          "saleStartDate",
+          "saleEndDate",
+          "saleTimeCondition.productSpecific",
+          "takeoutAvailable"
+        ],
+        "duplicateHandling": "完全な新商品として追加",
+        "priceVariants": [
+          {
+            "label": "フライドポテト、ソフトドリンク付き",
+            "price": 2100,
+            "isDefault": true
+          }
+        ]
+      },
+      "targetType": "new",
+      "existingFoodId": null,
+      "duplicateAction": "new_manual_food",
+      "imageReview": "unconfirmed",
+      "priceReview": "official-confirmed",
+      "reviewerNote": "",
+      "reviewedAt": null
+    },
+    {
+      "proposedId": "draft-summer-2026-saido-special-drinks-yuzu-matcha-watermelon",
+      "decision": "unreviewed",
+      "editedData": {
+        "name": "SAIDO スペシャルドリンク ～柚子～/ ～抹茶～/ ～西瓜～",
+        "price": 700,
+        "priceText": "700円",
+        "shopName": "SAIDO",
+        "areaName": "ニューヨーク・エリア",
+        "category": "drink",
+        "description": "SAIDO公式店舗ページのおすすめメニューに掲載されているスペシャルドリンク3種。",
+        "imageUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/files/images/gds-images/usj-gds-food-saido-special-drink-yuzu-green-tea-watermelon-summer-2026-offercard-h.jpg",
+        "imageSourceUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/restaurants/saido/index.html",
+        "sourceUrl": "https://www.usj.co.jp/web/ja/jp/restaurants/saido",
+        "officialReferenceUrls": [
+          "https://www.usj.co.jp/web/ja/jp/restaurants/saido"
+        ],
+        "collectionId": "summer-2026",
+        "reviewStatus": "pending",
+        "unconfirmedFields": [
+          "saleStartDate",
+          "saleEndDate",
+          "saleTimeCondition.productSpecific",
+          "takeoutAvailable",
+          "description.variantSpecific"
+        ],
+        "duplicateHandling": "完全な新商品として追加",
+        "priceVariants": [
+          {
+            "label": "柚子",
+            "price": 700,
+            "isDefault": true
+          },
+          {
+            "label": "抹茶",
+            "price": 700,
+            "isDefault": false
+          },
+          {
+            "label": "西瓜",
+            "price": 700,
+            "isDefault": false
+          }
+        ]
+      },
+      "targetType": "new",
+      "existingFoodId": null,
+      "duplicateAction": "new_manual_food",
+      "imageReview": "unconfirmed",
+      "priceReview": "official-confirmed",
+      "reviewerNote": "",
+      "reviewedAt": null
+    },
+    {
+      "proposedId": "draft-summer-2026-beverly-strawberry-frozen-smoothie",
+      "decision": "needs_revision",
+      "editedData": {
+        "name": "ストロベリー・フローズン・スムージー",
+        "price": 800,
+        "priceText": "800円",
+        "shopName": "ビバリーヒルズ・ブランジェリー",
+        "areaName": "ハリウッド・エリア",
+        "category": "drink",
+        "description": "ビバリーヒルズ・ブランジェリー公式店舗ページとシーズナルページに掲載されているフローズン・スムージー。",
+        "imageUrl": "",
+        "imageSourceUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/restaurants/beverly-hills-boulangerie/index.html",
+        "sourceUrl": "https://www.usj.co.jp/web/ja/jp/restaurants/beverly-hills-boulangerie",
+        "officialReferenceUrls": [
+          "https://www.usj.co.jp/web/ja/jp/restaurants/seasonal-food",
+          "https://www.usj.co.jp/web/ja/jp/restaurants/beverly-hills-boulangerie"
+        ],
+        "collectionId": "summer-2026",
+        "reviewStatus": "draft",
+        "unconfirmedFields": [
+          "saleStartDate",
+          "saleEndDate",
+          "saleTimeCondition.productSpecific",
+          "takeoutAvailable",
+          "imageUrl.singleProduct",
+          "description.productSpecific"
+        ],
+        "duplicateHandling": "完全な新商品として追加",
+        "priceVariants": [
+          {
+            "label": "単品",
+            "price": 800,
+            "isDefault": true
+          }
+        ]
+      },
+      "targetType": "new",
+      "existingFoodId": null,
+      "duplicateAction": "new_manual_food",
+      "imageReview": "unconfirmed",
+      "priceReview": "official-confirmed",
+      "reviewerNote": "",
+      "reviewedAt": null
+    },
+    {
+      "proposedId": "draft-summer-2026-beverly-tropical-fruits-frozen-smoothie",
+      "decision": "needs_revision",
+      "editedData": {
+        "name": "トロピカルフルーツ・フローズン・スムージー",
+        "price": 900,
+        "priceText": "900円",
+        "shopName": "ビバリーヒルズ・ブランジェリー",
+        "areaName": "ハリウッド・エリア",
+        "category": "drink",
+        "description": "ビバリーヒルズ・ブランジェリー公式店舗ページとシーズナルページに掲載されているフローズン・スムージー。",
+        "imageUrl": "",
+        "imageSourceUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/restaurants/beverly-hills-boulangerie/index.html",
+        "sourceUrl": "https://www.usj.co.jp/web/ja/jp/restaurants/beverly-hills-boulangerie",
+        "officialReferenceUrls": [
+          "https://www.usj.co.jp/web/ja/jp/restaurants/seasonal-food",
+          "https://www.usj.co.jp/web/ja/jp/restaurants/beverly-hills-boulangerie"
+        ],
+        "collectionId": "summer-2026",
+        "reviewStatus": "draft",
+        "unconfirmedFields": [
+          "saleStartDate",
+          "saleEndDate",
+          "saleTimeCondition.productSpecific",
+          "takeoutAvailable",
+          "imageUrl.singleProduct",
+          "description.productSpecific"
+        ],
+        "duplicateHandling": "完全な新商品として追加",
+        "priceVariants": [
+          {
+            "label": "単品",
+            "price": 900,
+            "isDefault": true
+          }
+        ]
+      },
+      "targetType": "new",
+      "existingFoodId": null,
+      "duplicateAction": "new_manual_food",
+      "imageReview": "unconfirmed",
+      "priceReview": "official-confirmed",
+      "reviewerNote": "",
+      "reviewedAt": null
+    },
+    {
+      "proposedId": "draft-summer-2026-beverly-mango-frozen-smoothie",
+      "decision": "needs_revision",
+      "editedData": {
+        "name": "マンゴー・フローズン・スムージー",
+        "price": 800,
+        "priceText": "800円",
+        "shopName": "ビバリーヒルズ・ブランジェリー",
+        "areaName": "ハリウッド・エリア",
+        "category": "drink",
+        "description": "ビバリーヒルズ・ブランジェリー公式店舗ページとシーズナルページに掲載されているフローズン・スムージー。",
+        "imageUrl": "",
+        "imageSourceUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/restaurants/beverly-hills-boulangerie/index.html",
+        "sourceUrl": "https://www.usj.co.jp/web/ja/jp/restaurants/beverly-hills-boulangerie",
+        "officialReferenceUrls": [
+          "https://www.usj.co.jp/web/ja/jp/restaurants/seasonal-food",
+          "https://www.usj.co.jp/web/ja/jp/restaurants/beverly-hills-boulangerie"
+        ],
+        "collectionId": "summer-2026",
+        "reviewStatus": "draft",
+        "unconfirmedFields": [
+          "saleStartDate",
+          "saleEndDate",
+          "saleTimeCondition.productSpecific",
+          "takeoutAvailable",
+          "imageUrl.singleProduct",
+          "description.productSpecific"
+        ],
+        "duplicateHandling": "完全な新商品として追加",
+        "priceVariants": [
+          {
+            "label": "単品",
+            "price": 800,
+            "isDefault": true
+          }
+        ]
+      },
+      "targetType": "new",
+      "existingFoodId": null,
+      "duplicateAction": "new_manual_food",
+      "imageReview": "unconfirmed",
+      "priceReview": "official-confirmed",
+      "reviewerNote": "",
+      "reviewedAt": null
+    },
+    {
+      "proposedId": "draft-summer-2026-foodcart-villain-blood-orange-frozen-soda",
+      "decision": "unreviewed",
+      "editedData": {
+        "name": "クラッシュ！大悪党のブラッドオレンジ・フローズンソーダ",
+        "price": 900,
+        "priceText": "900円",
+        "shopName": "イーブル・イーツ",
+        "areaName": "ミニオン・パーク",
+        "category": "drink",
+        "description": "公式フードカート/ミニオンフードでは販売場所と商品名を確認。商品本文説明は未確認。",
+        "imageUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/files/images/gds-images/usj-gds-food-villain-con-blood-orange-frozen-soda-summer-2026-offercard-h.jpg",
+        "imageSourceUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/restaurants/evil-eats/index.html",
+        "sourceUrl": "https://www.usj.co.jp/web/ja/jp/restaurants/evil-eats",
+        "officialReferenceUrls": [
+          "https://www.usj.co.jp/web/ja/jp/restaurants/food-cart",
+          "https://www.usj.co.jp/web/ja/jp/restaurants/minion-food",
+          "https://www.usj.co.jp/web/ja/jp/restaurants/evil-eats"
+        ],
+        "collectionId": "summer-2026",
+        "reviewStatus": "pending",
+        "unconfirmedFields": [
+          "saleStartDate",
+          "saleEndDate",
+          "saleTimeCondition.productSpecific",
+          "takeoutAvailable",
+          "description.productSpecific",
+          "priceVariants"
+        ],
+        "duplicateHandling": "完全な新商品として追加",
+        "priceVariants": [
+          {
+            "label": "単品",
+            "price": 900,
+            "isDefault": true
+          }
+        ]
+      },
+      "targetType": "new",
+      "existingFoodId": null,
+      "duplicateAction": "new_manual_food",
+      "imageReview": "unconfirmed",
+      "priceReview": "official-confirmed",
+      "reviewerNote": "",
+      "reviewedAt": null
+    },
+    {
+      "proposedId": "draft-summer-2026-foodcart-movie-star-minion-frappe-peach-lemon",
+      "decision": "unreviewed",
+      "editedData": {
+        "name": "映画スターのミニオンフラッペ ～ピーチ＆レモン～",
+        "price": 900,
+        "priceText": "900円",
+        "shopName": "デリシャス・ミー！ ザ・クッキー・キッチン",
+        "areaName": "ミニオン・パーク",
+        "category": "dessert_drink",
+        "description": "公式フードカート/ミニオンフードでは販売場所と商品名を確認。商品本文説明は未確認。",
+        "imageUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/files/images/gds-images/usj-gds-food-movie-star-minion-frappe-peach-and-lemon-summer-2026-offercard-h.jpg",
+        "imageSourceUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/restaurants/delicious-me-the-cookie-kitchen/index.html",
+        "sourceUrl": "https://www.usj.co.jp/web/ja/jp/restaurants/delicious-me-the-cookie-kitchen",
+        "officialReferenceUrls": [
+          "https://www.usj.co.jp/web/ja/jp/restaurants/food-cart",
+          "https://www.usj.co.jp/web/ja/jp/restaurants/minion-food",
+          "https://www.usj.co.jp/web/ja/jp/restaurants/delicious-me-the-cookie-kitchen"
+        ],
+        "collectionId": "summer-2026",
+        "reviewStatus": "pending",
+        "unconfirmedFields": [
+          "saleStartDate",
+          "saleEndDate",
+          "saleTimeCondition.productSpecific",
+          "takeoutAvailable",
+          "description.productSpecific",
+          "priceVariants"
+        ],
+        "duplicateHandling": "完全な新商品として追加",
+        "priceVariants": [
+          {
+            "label": "単品",
+            "price": 900,
+            "isDefault": true
+          }
+        ]
+      },
+      "targetType": "new",
+      "existingFoodId": null,
+      "duplicateAction": "new_manual_food",
+      "imageReview": "unconfirmed",
+      "priceReview": "official-confirmed",
+      "reviewerNote": "",
+      "reviewedAt": null
+    },
+    {
+      "proposedId": "draft-summer-2026-foodcart-snoopy-frappe-strawberry-milk-white-peach",
+      "decision": "unreviewed",
+      "editedData": {
+        "name": "スヌーピー・フラッペ ～いちごミルク＆白桃～",
+        "price": 900,
+        "priceText": "900円",
+        "shopName": "スヌーピー™・バックロット・カフェ",
+        "areaName": "ユニバーサル・ワンダーランド",
+        "category": "dessert_drink",
+        "description": "サーフィンを楽しむスヌーピーがおしゃれなフラッペ。サーフボードの飾り付き。",
+        "imageUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/files/images/gds-images/usj-gds-food-snoopy-frappe-offercard-h.jpg",
+        "imageSourceUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/restaurants/snoopys-backlot-cafe/index.html",
+        "sourceUrl": "https://www.usj.co.jp/web/ja/jp/restaurants/snoopys-backlot-cafe",
+        "officialReferenceUrls": [
+          "https://www.usj.co.jp/web/ja/jp/restaurants/seasonal-food",
+          "https://www.usj.co.jp/web/ja/jp/restaurants/snoopys-backlot-cafe"
+        ],
+        "collectionId": "summer-2026",
+        "reviewStatus": "pending",
+        "unconfirmedFields": [
+          "saleStartDate",
+          "saleEndDate",
+          "saleTimeCondition.productSpecific",
+          "takeoutAvailable",
+          "priceVariants"
+        ],
+        "duplicateHandling": "完全な新商品として追加",
+        "priceVariants": [
+          {
+            "label": "単品",
+            "price": 900,
+            "isDefault": true
+          }
+        ]
+      },
+      "targetType": "new",
+      "existingFoodId": null,
+      "duplicateAction": "new_manual_food",
+      "imageReview": "unconfirmed",
+      "priceReview": "official-confirmed",
+      "reviewerNote": "",
+      "reviewedAt": null
+    },
+    {
+      "proposedId": "draft-summer-2026-foodcart-no-swimming-jaws-frappe-peach-salt-whip",
+      "decision": "unreviewed",
+      "editedData": {
+        "name": "遊泳禁止!! ジョーズ・フラッペ ～ピーチ＆ソルトホイップ～",
+        "price": 900,
+        "priceText": "900円",
+        "shopName": "ボードウォーク・スナック",
+        "areaName": "アミティ・ビレッジ",
+        "category": "dessert_drink",
+        "description": "遊泳禁止のサインと白波から覗くジョーズの気配を表現した、ピーチ＆ソルトホイップのフラッペ。",
+        "imageUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/files/images/gds-images/usj-gds-food-no-swimming-allowed-jaws-frappe-peach-salt-whip-offercard-h.jpg",
+        "imageSourceUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/restaurants/boardwalk-snacks/index.html",
+        "sourceUrl": "https://www.usj.co.jp/web/ja/jp/restaurants/boardwalk-snacks",
+        "officialReferenceUrls": [
+          "https://www.usj.co.jp/web/ja/jp/restaurants/seasonal-food",
+          "https://www.usj.co.jp/web/ja/jp/restaurants/boardwalk-snacks"
+        ],
+        "collectionId": "summer-2026",
+        "reviewStatus": "pending",
+        "unconfirmedFields": [
+          "saleStartDate",
+          "saleEndDate",
+          "saleTimeCondition.productSpecific",
+          "takeoutAvailable",
+          "priceVariants"
+        ],
+        "duplicateHandling": "完全な新商品として追加",
+        "priceVariants": [
+          {
+            "label": "単品",
+            "price": 900,
+            "isDefault": true
+          }
+        ]
+      },
+      "targetType": "new",
+      "existingFoodId": null,
+      "duplicateAction": "new_manual_food",
+      "imageReview": "unconfirmed",
+      "priceReview": "official-confirmed",
+      "reviewerNote": "",
+      "reviewedAt": null
+    },
+    {
+      "proposedId": "draft-summer-2026-foodcart-tropical-frappe-strawberry",
+      "decision": "needs_revision",
+      "editedData": {
+        "name": "トロピカル・フラッペ ～ストロベリー～",
+        "price": 800,
+        "priceText": "800円",
+        "shopName": "ワーフカフェ / ボードウォーク・スナック",
+        "areaName": "サンフランシスコ・エリア / アミティ・ビレッジ",
+        "category": "dessert_drink",
+        "description": "夏に食べたいフルーツかき氷。ネオン・カップ付きの価格バリエーションあり。",
+        "imageUrl": "",
+        "imageSourceUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/restaurants/wharf-cafe/index.html",
+        "sourceUrl": "https://www.usj.co.jp/web/ja/jp/restaurants/wharf-cafe",
+        "officialReferenceUrls": [
+          "https://www.usj.co.jp/web/ja/jp/restaurants/food-cart",
+          "https://www.usj.co.jp/web/ja/jp/restaurants/seasonal-food",
+          "https://www.usj.co.jp/web/ja/jp/restaurants/wharf-cafe",
+          "https://www.usj.co.jp/web/ja/jp/restaurants/boardwalk-snacks"
+        ],
+        "collectionId": "summer-2026",
+        "reviewStatus": "draft",
+        "unconfirmedFields": [
+          "saleStartDate",
+          "saleEndDate",
+          "takeoutAvailable",
+          "saleTimeCondition.normalHours",
+          "imageUrl.singleProduct"
+        ],
+        "duplicateHandling": "完全な新商品として追加",
+        "priceVariants": [
+          {
+            "label": "通常",
+            "price": 800,
+            "isDefault": true
+          },
+          {
+            "label": "ネオン・カップ付き",
+            "price": 1650,
+            "isDefault": false
+          }
+        ]
+      },
+      "targetType": "new",
+      "existingFoodId": null,
+      "duplicateAction": "new_manual_food",
+      "imageReview": "unconfirmed",
+      "priceReview": "official-confirmed",
+      "reviewerNote": "",
+      "reviewedAt": null
+    },
+    {
+      "proposedId": "draft-summer-2026-foodcart-tropical-frappe-mango",
+      "decision": "needs_revision",
+      "editedData": {
+        "name": "トロピカル・フラッペ ～マンゴー～",
+        "price": 800,
+        "priceText": "800円",
+        "shopName": "ワーフカフェ / ボードウォーク・スナック",
+        "areaName": "サンフランシスコ・エリア / アミティ・ビレッジ",
+        "category": "dessert_drink",
+        "description": "夏に食べたいフルーツかき氷。ネオン・カップ付きの価格バリエーションあり。",
+        "imageUrl": "",
+        "imageSourceUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/restaurants/wharf-cafe/index.html",
+        "sourceUrl": "https://www.usj.co.jp/web/ja/jp/restaurants/wharf-cafe",
+        "officialReferenceUrls": [
+          "https://www.usj.co.jp/web/ja/jp/restaurants/food-cart",
+          "https://www.usj.co.jp/web/ja/jp/restaurants/seasonal-food",
+          "https://www.usj.co.jp/web/ja/jp/restaurants/wharf-cafe",
+          "https://www.usj.co.jp/web/ja/jp/restaurants/boardwalk-snacks"
+        ],
+        "collectionId": "summer-2026",
+        "reviewStatus": "draft",
+        "unconfirmedFields": [
+          "saleStartDate",
+          "saleEndDate",
+          "takeoutAvailable",
+          "saleTimeCondition.normalHours",
+          "imageUrl.singleProduct"
+        ],
+        "duplicateHandling": "完全な新商品として追加",
+        "priceVariants": [
+          {
+            "label": "通常",
+            "price": 800,
+            "isDefault": true
+          },
+          {
+            "label": "ネオン・カップ付き",
+            "price": 1650,
+            "isDefault": false
+          }
+        ]
+      },
+      "targetType": "new",
+      "existingFoodId": null,
+      "duplicateAction": "new_manual_food",
+      "imageReview": "unconfirmed",
+      "priceReview": "official-confirmed",
+      "reviewerNote": "",
+      "reviewedAt": null
+    },
+    {
+      "proposedId": "draft-summer-2026-character-jaws-drink-bottle",
+      "decision": "unreviewed",
+      "editedData": {
+        "name": "ジョーズ・ドリンクボトル",
+        "price": 2300,
+        "priceText": "2,300円",
+        "shopName": "アミティ・ランディング・レストラン",
+        "areaName": "アミティ・ビレッジ",
+        "category": "drink",
+        "description": "ジョーズのヒストリーを感じさせるワイルド＆レトロなデザインの大容量ドリンクボトル。25周年限定ストラップ付き、ソフトドリンク（R）付き。",
+        "imageUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/files/images/gds-images/usj-gds-food-jaws-drink-bottle-2026-offercard-h.jpg",
+        "imageSourceUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/restaurants/amity-landing-restaurant/index.html",
+        "sourceUrl": "https://www.usj.co.jp/web/ja/jp/restaurants/amity-landing-restaurant",
+        "officialReferenceUrls": [
+          "https://www.usj.co.jp/web/ja/jp/restaurants/seasonal-food",
+          "https://www.usj.co.jp/web/ja/jp/restaurants/amity-landing-restaurant"
+        ],
+        "collectionId": "summer-2026",
+        "reviewStatus": "pending",
+        "unconfirmedFields": [
+          "saleStartDate",
+          "saleEndDate",
+          "saleTimeCondition.productSpecific",
+          "takeoutAvailable"
+        ],
+        "duplicateHandling": "完全な新商品として追加",
+        "priceVariants": [
+          {
+            "label": "ソフトドリンク（R）付き",
+            "price": 2300,
+            "isDefault": true
+          }
+        ]
+      },
+      "targetType": "new",
+      "existingFoodId": null,
+      "duplicateAction": "new_manual_food",
+      "imageReview": "unconfirmed",
+      "priceReview": "official-confirmed",
+      "reviewerNote": "",
+      "reviewedAt": null
+    },
+    {
+      "proposedId": "draft-summer-2026-character-bob-drink-bottle",
+      "decision": "unreviewed",
+      "editedData": {
+        "name": "憧れの大悪党？ ボブ・ドリンクボトル",
+        "price": 2300,
+        "priceText": "2,300円",
+        "shopName": "デリシャス・ミー！ ザ・クッキー・キッチン / ワーフカフェ",
+        "areaName": "ミニオン・パーク / サンフランシスコ・エリア",
+        "category": "drink",
+        "description": "公式フードカート/ミニオンフードおよび店舗ページ掲載のボブ・ドリンクボトル。ワーフカフェでは「ソフトドリンク（憧れの大悪党？ ボブ・ドリンクボトル）」として掲載。",
+        "imageUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/files/images/gds-images/usj-gds-food-respected-villain-bob-drink-bottle-2025-offercard-h.jpg",
+        "imageSourceUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/restaurants/delicious-me-the-cookie-kitchen/index.html",
+        "sourceUrl": "https://www.usj.co.jp/web/ja/jp/restaurants/delicious-me-the-cookie-kitchen",
+        "officialReferenceUrls": [
+          "https://www.usj.co.jp/web/ja/jp/restaurants/food-cart",
+          "https://www.usj.co.jp/web/ja/jp/restaurants/minion-food",
+          "https://www.usj.co.jp/web/ja/jp/restaurants/delicious-me-the-cookie-kitchen",
+          "https://www.usj.co.jp/web/ja/jp/restaurants/wharf-cafe"
+        ],
+        "collectionId": "summer-2026",
+        "reviewStatus": "pending",
+        "unconfirmedFields": [
+          "saleStartDate",
+          "saleEndDate",
+          "saleTimeCondition.productSpecific",
+          "takeoutAvailable",
+          "description.productSpecific"
+        ],
+        "duplicateHandling": "既存商品へsummer-2026を追加",
+        "priceVariants": [
+          {
+            "label": "ソフトドリンク付き",
+            "price": 2300,
+            "isDefault": true
+          }
+        ]
+      },
+      "targetType": "existing",
+      "existingFoodId": "food-1kvqau2",
+      "duplicateAction": "override_add",
+      "imageReview": "unconfirmed",
+      "priceReview": "official-confirmed",
+      "reviewerNote": "",
+      "reviewedAt": null
+    },
+    {
+      "proposedId": "draft-summer-2026-character-jurassic-park-drink-bottle",
+      "decision": "unreviewed",
+      "editedData": {
+        "name": "ジュラシック・パーク・ドリンクボトル",
+        "price": 2300,
+        "priceText": "2,300円",
+        "shopName": "ジュラシック・パーク・ザ・ライド スプラッシュダウン前フードカート",
+        "areaName": "ジュラシック・パーク",
+        "category": "drink",
+        "description": "公式フードカート掲載のドリンクボトル。公式価格本文は確認できず。",
+        "imageUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/files/images/gds-images/usj-gds-food-jurassic-park-drink-bottle-2026-gallery-a.jpg",
+        "imageSourceUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/restaurants/food-cart/index.html",
+        "sourceUrl": "https://www.usj.co.jp/web/ja/jp/restaurants/food-cart",
+        "officialReferenceUrls": [
+          "https://www.usj.co.jp/web/ja/jp/restaurants/food-cart"
+        ],
+        "collectionId": "summer-2026",
+        "reviewStatus": "pending",
+        "unconfirmedFields": [
+          "saleStartDate",
+          "saleEndDate",
+          "saleTimeCondition.productSpecific",
+          "takeoutAvailable",
+          "description.productSpecific",
+          "price.official"
+        ],
+        "duplicateHandling": "既存商品へsummer-2026を追加",
+        "priceVariants": [
+          {
+            "label": "ドリンクボトル",
+            "price": 2300,
+            "isDefault": true,
+            "priceConfirmationStatus": "secondary-confirmed"
+          }
+        ]
+      },
+      "targetType": "existing",
+      "existingFoodId": "food-alnomv",
+      "duplicateAction": "collection_add",
+      "imageReview": "unconfirmed",
+      "priceReview": "secondary-confirmed",
+      "reviewerNote": "",
+      "reviewedAt": null
+    },
+    {
+      "proposedId": "draft-summer-2026-related-villain-donut-burger-bbq-pork-bacon",
+      "decision": "unreviewed",
+      "editedData": {
+        "name": "大悪党のためのドーナツ・バーガー ～BBQ ポーク&ベーコン～",
+        "price": 1200,
+        "priceText": "1,200円",
+        "shopName": "イーブル・イーツ",
+        "areaName": "ミニオン・パーク",
+        "category": "burger",
+        "description": "公式フードカート/ミニオンフード同時掲載のドーナツ・バーガー。商品本文説明は未確認。",
+        "imageUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/files/images/gds-images/usj-gds-food-villain-con-donut-burger-bbq-pork-and-bacon-2025-offercard-h.jpg",
+        "imageSourceUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/restaurants/evil-eats/index.html",
+        "sourceUrl": "https://www.usj.co.jp/web/ja/jp/restaurants/evil-eats",
+        "officialReferenceUrls": [
+          "https://www.usj.co.jp/web/ja/jp/restaurants/food-cart",
+          "https://www.usj.co.jp/web/ja/jp/restaurants/minion-food",
+          "https://www.usj.co.jp/web/ja/jp/restaurants/evil-eats"
+        ],
+        "collectionId": "summer-2026",
+        "reviewStatus": "pending",
+        "unconfirmedFields": [
+          "saleStartDate",
+          "saleEndDate",
+          "saleTimeCondition.productSpecific",
+          "takeoutAvailable",
+          "description.productSpecific",
+          "priceVariants"
+        ],
+        "duplicateHandling": "既存商品へ情報をoverride",
+        "priceVariants": [
+          {
+            "label": "単品",
+            "price": 1200,
+            "isDefault": true
+          }
+        ]
+      },
+      "targetType": "existing",
+      "existingFoodId": "food-r24nsm",
+      "duplicateAction": "override_add",
+      "imageReview": "unconfirmed",
+      "priceReview": "official-confirmed",
+      "reviewerNote": "",
+      "reviewedAt": null
+    },
+    {
+      "proposedId": "draft-summer-2026-foodcart-soft-frozen-grape-my-melody-kuromi-bucket-spoon",
+      "decision": "needs_revision",
+      "editedData": {
+        "name": "ソフローズン グレープ マイメロディ＆クロミ バケツ＆スプーン付き",
+        "price": null,
+        "priceText": "",
+        "shopName": "イルミネーション・シアター入口横フードカート / パークサイド・グリル横フードカート",
+        "areaName": "ニューヨーク・エリア",
+        "category": "dessert_drink",
+        "description": "マイメロディとクロミが新しい衣装でバケツ＆スプーンにオンステージ。ソフローズン グレープをバケツ＆スプーン付きで提供する公式シーズナル掲載商品。",
+        "imageUrl": "",
+        "imageSourceUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/restaurants/seasonal-food/index.html",
+        "sourceUrl": "https://www.usj.co.jp/web/ja/jp/restaurants/seasonal-food",
+        "officialReferenceUrls": [
+          "https://www.usj.co.jp/web/ja/jp/restaurants/seasonal-food",
+          "https://www.usj.co.jp/web/ja/jp/restaurants/food-cart"
+        ],
+        "collectionId": "summer-2026",
+        "reviewStatus": "draft",
+        "unconfirmedFields": [
+          "price",
+          "priceVariants",
+          "saleStartDate",
+          "saleEndDate",
+          "saleTimeCondition.normalHours",
+          "takeoutAvailable",
+          "imageUrl.singleProduct"
+        ],
+        "duplicateHandling": "完全な新商品として追加",
+        "priceVariants": []
+      },
+      "targetType": "new",
+      "existingFoodId": null,
+      "duplicateAction": "new_manual_food",
+      "imageReview": "unconfirmed",
+      "priceReview": "unresolved",
+      "reviewerNote": "",
+      "reviewedAt": null
+    }
+  ]
+}
