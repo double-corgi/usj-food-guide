@@ -1,7 +1,8 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useState, useTransition } from "react";
-import { AlertTriangle, CalendarDays, CheckCircle2, Database, Filter, ImageOff, Link2, MapPin, ReceiptText, Save, Store, Tags } from "lucide-react";
+import { AlertTriangle, CalendarDays, CheckCircle2, Database, Filter, Link2, MapPin, ReceiptText, Save, Store, Tags } from "lucide-react";
+import { AdminFoodImagePreview } from "@/components/admin/admin-food-image-preview";
 import { adminAreaOptions, adminFoodCategoryOptions, adminLegacyCategoryTagOptions, adminReviewStatusOptions } from "@/lib/admin-food-ui";
 import { saveSummer2026ReviewDecisions } from "./actions";
 import {
@@ -309,23 +310,14 @@ function ReviewCard({
 
   return (
     <article className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-soft" data-review-card={item.id}>
-      <div className="grid gap-0 xl:grid-cols-[minmax(300px,0.8fr)_1.2fr]">
-        <div className="bg-slate-100">
-          {decision.editedData.imageUrl ? (
-            // Candidate image URLs are reviewed as-is; missing or mismatched fallbacks are intentionally avoided here.
-            // eslint-disable-next-line @next/next/no-img-element
-            <img src={decision.editedData.imageUrl} alt={decision.editedData.name} className="aspect-[4/3] h-full min-h-80 w-full object-cover" loading="lazy" />
-          ) : (
-            <div className="grid aspect-[4/3] min-h-80 place-items-center bg-slate-100 p-6 text-center">
-              <div>
-                <span className="mx-auto grid h-14 w-14 place-items-center rounded-2xl bg-white text-slate-500 shadow-soft">
-                  <ImageOff size={28} aria-hidden />
-                </span>
-                <p className="mt-4 text-sm font-black text-ink">画像未確認</p>
-                <p className="mt-1 text-xs font-bold leading-5 text-slate-500">採用画像なし。代替画像は使用していません。</p>
-              </div>
-            </div>
-          )}
+      <div className="grid items-start gap-0 xl:grid-cols-[176px_minmax(0,1fr)]">
+        <div className="p-4 xl:p-0">
+          <AdminFoodImagePreview
+            src={decision.editedData.imageUrl}
+            alt={decision.editedData.name || item.name}
+            variant="card"
+            placeholderState={decision.imageReview === "no_image_planned" ? "no-image" : "unconfirmed"}
+          />
         </div>
 
         <div className="space-y-5 p-5">
