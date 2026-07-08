@@ -1,7 +1,26 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useState, useTransition } from "react";
-import { AlertTriangle, CalendarDays, CheckCircle2, ChevronDown, ChevronUp, Database, Filter, Link2, MapPin, ReceiptText, Save, Store, Tags } from "lucide-react";
+import {
+  AlertTriangle,
+  CalendarDays,
+  CheckCircle2,
+  ChevronDown,
+  ChevronUp,
+  Clock3,
+  Database,
+  Filter,
+  Link2,
+  Loader2,
+  MapPin,
+  ReceiptText,
+  RotateCcw,
+  Save,
+  Search,
+  Store,
+  Tags,
+  XCircle
+} from "lucide-react";
 import { AdminFoodImagePicker } from "@/components/admin/admin-food-image-picker";
 import { AdminFoodImagePreview } from "@/components/admin/admin-food-image-preview";
 import { adminAreaOptions, adminFoodCategoryOptions, adminLegacyCategoryTagOptions, adminReviewStatusOptions } from "@/lib/admin-food-ui";
@@ -33,51 +52,36 @@ import type {
   TargetType
 } from "./review-types";
 
-type ReviewFilter =
-  | "all"
-  | "unreviewed"
-  | "register"
-  | "needs_revision"
-  | "hold"
-  | "exclude"
-  | "image-confirmed"
-  | "image-incorrect"
-  | "image-unresolved"
-  | "image-none"
-  | "image-candidate-only"
-  | "image-no-candidates"
-  | "price-missing"
-  | "new"
-  | "existing"
-  | "pending"
-  | "draft";
+type DecisionFilter = "all" | ReviewDecisionValue;
+type ImageFilter = "all" | ImageReviewValue;
+type TargetFilter = "all" | TargetType;
+type MissingFilter = "none" | "price" | "no-candidates" | "official-url" | "shop" | "area";
+type SaveMessageTone = "idle" | "success" | "error" | "warn" | "saving";
 
-const FILTERS: Array<{ id: ReviewFilter; label: string }> = [
-  { id: "all", label: "すべて" },
-  { id: "unreviewed", label: "未判断" },
-  { id: "register", label: "登録する" },
-  { id: "needs_revision", label: "修正が必要" },
-  { id: "hold", label: "保留" },
-  { id: "exclude", label: "除外" },
-  { id: "image-confirmed", label: "画像確認済み" },
-  { id: "image-incorrect", label: "画像が違う" },
-  { id: "image-unresolved", label: "画像未確認" },
-  { id: "image-none", label: "画像なし" },
-  { id: "image-candidate-only", label: "候補あり・未採用" },
-  { id: "image-no-candidates", label: "候補なし" },
-  { id: "price-missing", label: "価格未確認" },
-  { id: "new", label: "新規商品" },
-  { id: "existing", label: "既存商品へ追記" },
-  { id: "pending", label: "pending" },
-  { id: "draft", label: "draft" }
-];
+type ReviewFilters = {
+  decision: DecisionFilter;
+  image: ImageFilter;
+  target: TargetFilter;
+  missing: MissingFilter;
+};
 
 const decisionOptions: ReviewDecisionValue[] = ["unreviewed", "register", "needs_revision", "hold", "exclude"];
 const imageReviewOptions: ImageReviewValue[] = ["confirmed", "incorrect", "unresolved", "candidate-only", "no-image"];
 const priceReviewOptions: PriceVerificationStatus[] = ["official-confirmed", "secondary-confirmed", "unresolved"];
+const decisionFilterOptions: Array<{ value: DecisionFilter; label: string }> = [{ value: "all", label: "すべて" }, ...decisionOptions.map((value) => ({ value, label: decisionLabels[value] }))];
+const imageFilterOptions: Array<{ value: ImageFilter; label: string }> = [{ value: "all", label: "すべて" }, ...imageReviewOptions.map((value) => ({ value, label: imageReviewLabels[value] }))];
 const targetTypeOptions: Array<{ value: TargetType; label: string }> = [
   { value: "new", label: "新規商品" },
   { value: "existing", label: "既存商品へ追記" }
+];
+const targetFilterOptions: Array<{ value: TargetFilter; label: string }> = [{ value: "all", label: "すべて" }, ...targetTypeOptions];
+const missingFilterOptions: Array<{ value: MissingFilter; label: string }> = [
+  { value: "none", label: "指定なし" },
+  { value: "price", label: "価格未確認" },
+  { value: "no-candidates", label: "画像候補なし" },
+  { value: "official-url", label: "公式URLなし" },
+  { value: "shop", label: "店舗未確認" },
+  { value: "area", label: "エリア未確認" }
 ];
 const duplicateActionOptions = Object.keys(duplicateActionLabels) as DuplicateAction[];
 
@@ -95,59 +99,116 @@ export function Summer2026ReviewClient({
   canSave: boolean;
 }) {
   const [decisions, setDecisions] = useState(initialDecisions);
-  const [activeFilter, setActiveFilter] = useState<ReviewFilter>("all");
+  const [decisionFilter, setDecisionFilter] = useState<DecisionFilter>("all");
+  const [imageFilter, setImageFilter] = useState<ImageFilter>("all");
+  const [targetFilter, setTargetFilter] = useState<TargetFilter>("all");
+  const [missingFilter, setMissingFilter] = useState<MissingFilter>("none");
+  const [searchQuery, setSearchQuery] = useState("");
   const [dirtyIds, setDirtyIds] = useState<Set<string>>(() => new Set());
+  const [recentlySavedIds, setRecentlySavedIds] = useState<Set<string>>(() => new Set());
   const [expandedIds, setExpandedIds] = useState<Set<string>>(() => new Set());
   const [orderedItemIds] = useState(() => sortItems(items, initialDecisions).map((item) => item.id));
-  const [saveMessage, setSaveMessage] = useState<{ tone: "idle" | "success" | "error" | "warn"; text: string }>({
+  const [saveMessage, setSaveMessage] = useState<{ tone: SaveMessageTone; text: string }>({
     tone: canSave ? "idle" : "warn",
     text: canSave ? "変更はまだありません。" : "viewer権限では保存できません。editor以上で保存できます。"
   });
+  const [autoSavePaused, setAutoSavePaused] = useState(false);
   const [lastSavedAt, setLastSavedAt] = useState<string | null>(null);
+  const [savingInFlight, setSavingInFlight] = useState(false);
   const [isSaving, startSaving] = useTransition();
+  const saving = isSaving || savingInFlight;
 
   const itemById = useMemo(() => new Map(items.map((item) => [item.id, item])), [items]);
   const metrics = useMemo(() => buildMetrics(decisions), [decisions]);
   const issues = useMemo(() => runRegistrationChecks(decisions), [decisions]);
   const decisionsMap = useMemo(() => decisionsById(decisions), [decisions]);
+  const filters = useMemo<ReviewFilters>(
+    () => ({ decision: decisionFilter, image: imageFilter, target: targetFilter, missing: missingFilter }),
+    [decisionFilter, imageFilter, targetFilter, missingFilter]
+  );
+  const hasActiveFilters = decisionFilter !== "all" || imageFilter !== "all" || targetFilter !== "all" || missingFilter !== "none" || searchQuery.trim().length > 0;
   const visibleItems = useMemo(() => {
     const orderedItems = orderedItemIds.map((id) => itemById.get(id)).filter((item): item is ReviewItem => Boolean(item));
-    return orderedItems.filter((item) => matchesFilter(item, decisionsMap.get(item.id), activeFilter));
-  }, [activeFilter, decisionsMap, itemById, orderedItemIds]);
+    return orderedItems.filter((item) => matchesFilters(item, decisionsMap.get(item.id), filters, searchQuery));
+  }, [decisionsMap, filters, itemById, orderedItemIds, searchQuery]);
 
   const saveAll = useCallback(
     async (mode: "auto" | "manual" = "manual") => {
-      if (!canSave || isSaving) return;
+      if (!canSave || savingInFlight) return;
+      if (dirtyIds.size === 0) return;
+      const savingIds = Array.from(dirtyIds);
       const snapshot = decisions.map((decision) => ({ ...decision, editedData: { ...decision.editedData } }));
+      setSavingInFlight(true);
+      setSaveMessage({ tone: "saving", text: `${mode === "auto" ? "自動保存" : "保存"}中です。` });
       startSaving(async () => {
-        const result = await saveSummer2026ReviewDecisions(snapshot);
-        if (result.ok) {
-          setDecisions(result.decisions);
-          setDirtyIds(new Set());
-          setLastSavedAt(result.savedAt);
-          setSaveMessage({
-            tone: "success",
-            text: `${mode === "auto" ? "自動保存" : "保存"}しました。import-ready ${result.importReadyCount}件、チェック指摘 ${result.issues.length}件。`
-          });
-        } else {
-          setSaveMessage({ tone: "error", text: result.message });
+        try {
+          const result = await saveSummer2026ReviewDecisions(snapshot);
+          if (result.ok) {
+            setDecisions(result.decisions);
+            setDirtyIds(new Set());
+            setRecentlySavedIds(new Set(savingIds));
+            setAutoSavePaused(false);
+            setLastSavedAt(result.savedAt);
+            setSaveMessage({
+              tone: "success",
+              text: `${mode === "auto" ? "自動保存" : "保存"}しました。import-ready ${result.importReadyCount}件、チェック指摘 ${result.issues.length}件。`
+            });
+            window.setTimeout(() => {
+              setRecentlySavedIds(new Set());
+            }, 2500);
+            window.setTimeout(() => {
+              setSaveMessage((current) => (current.tone === "success" ? { tone: "idle", text: "保存済みです。" } : current));
+            }, 4000);
+          } else {
+            setAutoSavePaused(true);
+            setSaveMessage({ tone: "error", text: result.message });
+          }
+        } catch (error) {
+          setAutoSavePaused(true);
+          setSaveMessage({ tone: "error", text: error instanceof Error ? error.message : "保存に失敗しました。" });
+        } finally {
+          setSavingInFlight(false);
         }
       });
     },
-    [canSave, decisions, isSaving, startSaving]
+    [canSave, decisions, dirtyIds, savingInFlight, startSaving]
   );
 
   useEffect(() => {
-    if (!canSave || dirtyIds.size === 0 || isSaving) return;
+    if (!canSave || dirtyIds.size === 0 || saving || autoSavePaused) return;
     const timer = window.setTimeout(() => {
       void saveAll("auto");
     }, 2500);
     return () => window.clearTimeout(timer);
-  }, [canSave, dirtyIds, isSaving, saveAll]);
+  }, [autoSavePaused, canSave, dirtyIds, saveAll, saving]);
+
+  useEffect(() => {
+    if (dirtyIds.size === 0) return undefined;
+    const handleBeforeUnload = (event: BeforeUnloadEvent) => {
+      event.preventDefault();
+      event.returnValue = "";
+    };
+    window.addEventListener("beforeunload", handleBeforeUnload);
+    return () => window.removeEventListener("beforeunload", handleBeforeUnload);
+  }, [dirtyIds.size]);
 
   function markDirty(id: string) {
     setDirtyIds((current) => new Set(current).add(id));
+    setRecentlySavedIds((current) => {
+      if (!current.has(id)) return current;
+      const next = new Set(current);
+      next.delete(id);
+      return next;
+    });
     setSaveMessage({ tone: "warn", text: "未保存の変更があります。自動保存待ちです。" });
+  }
+
+  function clearFilters() {
+    setDecisionFilter("all");
+    setImageFilter("all");
+    setTargetFilter("all");
+    setMissingFilter("none");
+    setSearchQuery("");
   }
 
   function updateDecision(id: string, updater: (decision: ReviewDecision) => ReviewDecision) {
@@ -185,81 +246,92 @@ export function Summer2026ReviewClient({
 
   return (
     <>
-      <section className="grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
-        <MetricCard label="未判断" value={metrics.unreviewed} tone="slate" />
-        <MetricCard label="登録する" value={metrics.register} tone="blue" />
-        <MetricCard label="修正が必要" value={metrics.needsRevision} tone="warn" />
-        <MetricCard label="保留" value={metrics.hold} tone="slate" />
-        <MetricCard label="除外" value={metrics.exclude} tone="slate" />
-        <MetricCard label="画像未確認" value={metrics.imageUnconfirmed} tone="warn" />
-        <MetricCard label="価格未確認" value={metrics.priceMissing} tone="warn" />
-        <MetricCard label="新規登録" value={metrics.newItems} tone="gold" />
-        <MetricCard label="既存商品へ追記" value={metrics.existingItems} tone="blue" />
-        <MetricCard label="全候補" value={decisions.length} tone="slate" />
-      </section>
-
-      <section className="rounded-2xl border border-slate-200 bg-white p-4 shadow-soft">
-        <div className="flex flex-col gap-4 xl:flex-row xl:items-center xl:justify-between">
-          <div>
-            <div className="flex items-center gap-2 text-sm font-black text-ink">
-              <Save size={18} aria-hidden />
-              保存状態
-            </div>
-            <p className={`mt-1 text-sm font-bold leading-6 ${saveMessageClass(saveMessage.tone)}`}>
-              {saveMessage.text}
-              {lastSavedAt ? <span className="ml-2 text-slate-500">最終保存: {formatDateTime(lastSavedAt)}</span> : null}
-            </p>
-          </div>
-          <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
-            {dirtyIds.size > 0 ? <span className="rounded-full bg-sun/25 px-3 py-2 text-xs font-black text-amber-900">未保存 {dirtyIds.size}件</span> : null}
-            <button
-              type="button"
-              onClick={() => void saveAll("manual")}
-              disabled={!canSave || dirtyIds.size === 0 || isSaving}
-              className="inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-ink px-5 text-sm font-black text-white shadow-soft disabled:cursor-not-allowed disabled:bg-slate-300"
-            >
-              <Save size={16} aria-hidden />
-              {isSaving ? "保存中" : "変更を保存"}
-            </button>
-          </div>
-        </div>
-      </section>
-
-      <section className="rounded-2xl border border-slate-200 bg-white p-4 shadow-soft">
-        <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
-          <div className="flex items-center gap-2 text-sm font-black text-ink">
-            <Filter size={18} aria-hidden />
-            表示フィルター
-          </div>
-          <div className="flex flex-col gap-3 lg:items-end">
-            <div className="flex flex-wrap gap-2">
-              {FILTERS.map((filter) => (
-                <button
-                  key={filter.id}
-                  type="button"
-                  onClick={() => setActiveFilter(filter.id)}
-                  className={`rounded-full border px-4 py-2 text-xs font-black transition ${
-                    activeFilter === filter.id ? "border-park bg-park text-white" : "border-slate-200 bg-white text-ink hover:border-park hover:text-park"
-                  }`}
-                >
-                  {filter.label}
-                </button>
-              ))}
-            </div>
-            <div className="flex flex-wrap items-center justify-end gap-2 text-xs font-black text-slate-600">
-              <span>
+      <section className="z-20 rounded-2xl border border-slate-200 bg-white p-3 shadow-soft lg:sticky lg:top-0">
+        <div className="flex flex-col gap-3">
+          <div className="flex flex-col gap-3 xl:flex-row xl:items-center xl:justify-between">
+            <div className="min-w-0">
+              <h2 className="text-lg font-black leading-tight text-ink">2026夏 登録前レビュー</h2>
+              <p className="mt-1 text-xs font-bold leading-5 text-slate-600">
                 表示中 {visibleItems.length}件 / 全{items.length}件
+                {hasActiveFilters ? <span className="ml-2 text-amber-900">絞り込み中</span> : null}
+              </p>
+            </div>
+            <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
+              <SaveStatusPill
+                tone={saving ? "saving" : saveMessage.tone}
+                dirtyCount={dirtyIds.size}
+                message={saveMessage.text}
+                lastSavedAt={lastSavedAt}
+              />
+              <button
+                type="button"
+                onClick={() => void saveAll("manual")}
+                disabled={!canSave || dirtyIds.size === 0 || saving}
+                className="inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-ink px-5 text-sm font-black text-white shadow-soft transition hover:bg-blue-950 disabled:cursor-not-allowed disabled:bg-slate-300"
+              >
+                {saving ? <Loader2 size={16} className="animate-spin" aria-hidden /> : <Save size={16} aria-hidden />}
+                {saving ? "保存中" : dirtyIds.size > 0 ? "変更を保存" : "保存済み"}
+              </button>
+            </div>
+          </div>
+
+          <div className="flex gap-2 overflow-x-auto pb-1" aria-label="状態集計">
+            <MetricChip label="全" value={decisions.length} tone="slate" onClick={clearFilters} />
+            <MetricChip label="未判断" value={metrics.unreviewed} tone="slate" onClick={() => setDecisionFilter("unreviewed")} />
+            <MetricChip label="登録する" value={metrics.register} tone="blue" onClick={() => setDecisionFilter("register")} />
+            <MetricChip label="修正が必要" value={metrics.needsRevision} tone="gold" onClick={() => setDecisionFilter("needs_revision")} />
+            <MetricChip label="保留" value={metrics.hold} tone="slate" onClick={() => setDecisionFilter("hold")} />
+            <MetricChip label="除外" value={metrics.exclude} tone="slate" onClick={() => setDecisionFilter("exclude")} />
+            <MetricChip label="confirmed" value={metrics.imageConfirmed} tone="blue" onClick={() => setImageFilter("confirmed")} />
+            <MetricChip label="candidate-only" value={metrics.imageCandidateOnly} tone="gold" onClick={() => setImageFilter("candidate-only")} />
+            <MetricChip label="unresolved" value={metrics.imageUnresolved} tone="slate" onClick={() => setImageFilter("unresolved")} />
+            <MetricChip label="incorrect" value={metrics.imageIncorrect} tone="danger" onClick={() => setImageFilter("incorrect")} />
+            <MetricChip label="no-image" value={metrics.imageNoImage} tone="slate" onClick={() => setImageFilter("no-image")} />
+            <MetricChip label="価格未確認" value={metrics.priceMissing} tone="gold" onClick={() => setMissingFilter("price")} />
+            <MetricChip label="新規" value={metrics.newItems} tone="gold" onClick={() => setTargetFilter("new")} />
+            <MetricChip label="既存追記" value={metrics.existingItems} tone="blue" onClick={() => setTargetFilter("existing")} />
+          </div>
+
+          <div className="grid gap-3 xl:grid-cols-[minmax(220px,1fr)_repeat(4,minmax(150px,180px))_auto] xl:items-end">
+            <label className="block">
+              <span className="flex items-center gap-2 text-xs font-black text-slate-600">
+                <Search size={14} aria-hidden />
+                検索
               </span>
+              <input
+                value={searchQuery}
+                onChange={(event) => setSearchQuery(event.currentTarget.value)}
+                placeholder="商品名・店舗・エリア・foodId"
+                className="mt-2 min-h-11 w-full rounded-xl border border-slate-200 bg-white px-3 text-sm font-bold text-ink outline-none focus:border-ink focus:ring-2 focus:ring-ink/10"
+              />
+            </label>
+            <SelectControl label="判断状態" value={decisionFilter} options={decisionFilterOptions} onChange={(value) => setDecisionFilter(value as DecisionFilter)} />
+            <SelectControl label="画像状態" value={imageFilter} options={imageFilterOptions} onChange={(value) => setImageFilter(value as ImageFilter)} />
+            <SelectControl label="登録方式" value={targetFilter} options={targetFilterOptions} onChange={(value) => setTargetFilter(value as TargetFilter)} />
+            <SelectControl label="情報不足" value={missingFilter} options={missingFilterOptions} onChange={(value) => setMissingFilter(value as MissingFilter)} />
+            <div className="flex flex-wrap gap-2 xl:justify-end">
+              <button
+                type="button"
+                onClick={clearFilters}
+                disabled={!hasActiveFilters}
+                className="inline-flex min-h-11 items-center justify-center gap-2 rounded-full border border-slate-200 bg-white px-4 text-xs font-black text-ink shadow-soft transition hover:border-ink disabled:cursor-not-allowed disabled:text-slate-400"
+              >
+                <RotateCcw size={14} aria-hidden />
+                フィルター解除
+              </button>
               <button
                 type="button"
                 onClick={() => setExpandedIds(new Set())}
-                className="inline-flex min-h-10 items-center justify-center gap-2 rounded-full border border-slate-200 bg-white px-4 text-xs font-black text-ink shadow-soft transition hover:border-ink"
+                className="inline-flex min-h-11 items-center justify-center gap-2 rounded-full border border-slate-200 bg-white px-4 text-xs font-black text-ink shadow-soft transition hover:border-ink"
               >
                 <ChevronUp size={14} aria-hidden />
                 すべて閉じる
               </button>
             </div>
           </div>
+          <p className="text-xs font-bold leading-5 text-slate-600">
+            現在の条件: {describeFilters(filters, searchQuery)}
+          </p>
         </div>
       </section>
 
@@ -290,10 +362,11 @@ export function Summer2026ReviewClient({
               item={item}
               decision={decision}
               dirty={dirtyIds.has(item.id)}
+              recentlySaved={recentlySavedIds.has(item.id)}
               expanded={expandedIds.has(item.id)}
               issues={issues.filter((issue) => issue.proposedId === item.id)}
               canSave={canSave}
-              isSaving={isSaving}
+              isSaving={saving}
               onSave={() => void saveAll("manual")}
               onToggleExpanded={() => toggleExpanded(item.id)}
               onClose={() => setExpandedIds((current) => {
@@ -336,6 +409,7 @@ function ReviewCard({
   item,
   decision,
   dirty,
+  recentlySaved,
   expanded,
   issues,
   canSave,
@@ -349,6 +423,7 @@ function ReviewCard({
   item: ReviewItem;
   decision: ReviewDecision;
   dirty: boolean;
+  recentlySaved: boolean;
   expanded: boolean;
   issues: RegistrationCheckIssue[];
   canSave: boolean;
@@ -397,7 +472,7 @@ function ReviewCard({
 
           <div className="grid gap-2">
             <div>
-              <SaveStateBadge dirty={dirty} />
+              <SaveStateBadge dirty={dirty} saving={isSaving && dirty} recentlySaved={recentlySaved} />
             </div>
             <CompactDecisionControl
               decision={decision}
@@ -418,7 +493,7 @@ function ReviewCard({
 
         {expanded ? (
           <div id={detailsId} className="mt-5 space-y-5 border-t border-slate-200 pt-5">
-          <section className="rounded-2xl border border-park/20 bg-mint p-4">
+          <section className="rounded-2xl border border-blue-100 bg-blue-50 p-4">
             <h3 className="text-sm font-black text-ink">採用判断</h3>
             <div className="mt-3 grid gap-3 lg:grid-cols-2">
               <RadioGroup
@@ -514,7 +589,7 @@ function ReviewCard({
               <p className="mt-3 text-sm font-bold leading-6 text-slate-700">{decision.editedData.duplicateHandling || item.importReview?.registrationPolicy || "追加予定の内容未確認"}</p>
               <div className="mt-3 flex flex-wrap gap-2">
                 {existingActions.map((label) => (
-                  <span key={label} className="rounded-full bg-white px-3 py-1 text-xs font-black text-park ring-1 ring-park/20">
+                  <span key={label} className="rounded-full bg-white px-3 py-1 text-xs font-black text-blue-800 ring-1 ring-blue-200">
                     {label}
                   </span>
                 ))}
@@ -628,7 +703,7 @@ function RegistrationCheckPanel({ issues, decisions }: { issues: RegistrationChe
   return (
     <section className="rounded-2xl border border-slate-200 bg-white p-5 shadow-soft">
       <div className="flex items-start gap-3">
-        <span className={`grid h-11 w-11 shrink-0 place-items-center rounded-2xl ${issues.length > 0 ? "bg-sun/20 text-amber-800" : "bg-mint text-park"}`}>
+        <span className={`grid h-11 w-11 shrink-0 place-items-center rounded-2xl ${issues.length > 0 ? "bg-sun/20 text-amber-800" : "bg-blue-50 text-blue-800"}`}>
           {issues.length > 0 ? <AlertTriangle size={21} aria-hidden /> : <CheckCircle2 size={21} aria-hidden />}
         </span>
         <div>
@@ -649,7 +724,7 @@ function RegistrationCheckPanel({ issues, decisions }: { issues: RegistrationChe
           ))}
         </ul>
       ) : (
-        <p className="mt-5 rounded-xl bg-mint px-4 py-3 text-sm font-black text-park">現在の「登録する」商品には登録可能性チェックの指摘がありません。</p>
+        <p className="mt-5 rounded-xl bg-blue-50 px-4 py-3 text-sm font-black text-blue-800">現在の「登録する」商品には登録可能性チェックの指摘がありません。</p>
       )}
     </section>
   );
@@ -672,43 +747,67 @@ function ExcludedCard({ item }: { item: ExcludedReviewItem }) {
   );
 }
 
-function MetricCard({ label, value, tone }: { label: string; value: number; tone: "blue" | "gold" | "slate" | "warn" }) {
-  const toneClass = {
-    blue: "border-park/20 bg-mint text-park",
-    gold: "border-sun/40 bg-sun/20 text-amber-900",
-    slate: "border-slate-200 bg-white text-ink",
-    warn: "border-amber-300 bg-amber-50 text-amber-900"
+function SaveStatusPill({
+  tone,
+  dirtyCount,
+  message,
+  lastSavedAt
+}: {
+  tone: SaveMessageTone;
+  dirtyCount: number;
+  message: string;
+  lastSavedAt: string | null;
+}) {
+  const config = {
+    idle: { icon: <CheckCircle2 size={16} aria-hidden />, label: "保存済み", className: "border-slate-200 bg-slate-50 text-slate-700" },
+    success: { icon: <CheckCircle2 size={16} aria-hidden />, label: "保存成功", className: "border-blue-200 bg-blue-50 text-blue-800" },
+    error: { icon: <XCircle size={16} aria-hidden />, label: "保存失敗", className: "border-rose-200 bg-rose-50 text-rose-700" },
+    warn: { icon: <Clock3 size={16} aria-hidden />, label: "未保存", className: "border-amber-200 bg-sun/25 text-amber-900" },
+    saving: { icon: <Loader2 size={16} className="animate-spin" aria-hidden />, label: "保存中", className: "border-blue-200 bg-blue-50 text-blue-800" }
   }[tone];
 
   return (
-    <div className={`rounded-2xl border p-4 shadow-soft ${toneClass}`}>
-      <p className="text-xs font-black">{label}</p>
-      <p className="mt-2 text-3xl font-black leading-none">{value}</p>
+    <div className={`rounded-2xl border px-3 py-2 ${config.className}`} aria-live="polite">
+      <p className="flex items-center gap-2 text-xs font-black">
+        {config.icon}
+        {config.label}
+        {dirtyCount > 0 ? <span>未保存{dirtyCount}件</span> : null}
+      </p>
+      <p className="mt-1 max-w-xl text-xs font-bold leading-5 [overflow-wrap:anywhere]">
+        {message}
+        {lastSavedAt ? <span className="ml-2 opacity-80">最終保存: {formatDateTime(lastSavedAt)}</span> : null}
+      </p>
     </div>
   );
 }
 
-function StatusBadge({ status }: { status: string }) {
-  const className = status === "pending" ? "bg-park text-white" : status === "draft" ? "bg-slate-100 text-slate-700" : "bg-berry text-white";
-  return <span className={`rounded-full px-3 py-1 text-xs font-black ${className}`}>{status}</span>;
+function MetricChip({ label, value, tone, onClick }: { label: string; value: number; tone: "blue" | "gold" | "slate" | "danger"; onClick?: () => void }) {
+  const toneClass = {
+    blue: "border-blue-200 bg-blue-50 text-blue-800",
+    gold: "border-amber-200 bg-sun/25 text-amber-900",
+    slate: "border-slate-200 bg-white text-slate-700",
+    danger: "border-rose-200 bg-rose-50 text-rose-700"
+  }[tone];
+
+  const className = `inline-flex min-h-9 shrink-0 items-center gap-2 rounded-full border px-3 text-xs font-black shadow-sm ${toneClass}`;
+  if (!onClick) return <span className={className}>{label} {value}件</span>;
+
+  return (
+    <button type="button" onClick={onClick} className={`${className} transition hover:border-ink hover:text-ink`}>
+      {label} {value}件
+    </button>
+  );
 }
 
-function DecisionBadge({ decision }: { decision: ReviewDecisionValue }) {
-  const className =
-    decision === "register"
-      ? "bg-park text-white"
-      : decision === "needs_revision"
-        ? "bg-sun/25 text-amber-900"
-        : decision === "exclude"
-          ? "bg-slate-700 text-white"
-          : "bg-slate-100 text-slate-700";
-  return <span className={`rounded-full px-3 py-1 text-xs font-black ${className}`}>判断: {decisionLabels[decision]}</span>;
+function StatusBadge({ status }: { status: string }) {
+  const className = status === "pending" ? "bg-blue-50 text-blue-800 ring-1 ring-blue-200" : status === "draft" ? "bg-slate-100 text-slate-700" : "bg-berry text-white";
+  return <span className={`rounded-full px-3 py-1 text-xs font-black ${className}`}>{status}</span>;
 }
 
 function ImageReviewBadge({ value, candidateCount }: { value: ImageReviewValue; candidateCount: number }) {
   const className =
     value === "confirmed"
-      ? "bg-mint text-park"
+      ? "bg-blue-50 text-blue-800 ring-1 ring-blue-200"
       : value === "incorrect"
         ? "bg-berry text-white"
         : value === "no-image"
@@ -722,7 +821,7 @@ function ImageReviewBadge({ value, candidateCount }: { value: ImageReviewValue; 
 function PriceStatusBadge({ status }: { status: PriceVerificationStatus }) {
   const config =
     status === "official-confirmed"
-      ? { label: "価格: 公式確認", className: "bg-mint text-park" }
+      ? { label: "価格: 公式確認", className: "bg-blue-50 text-blue-800 ring-1 ring-blue-200" }
       : status === "secondary-confirmed"
         ? { label: "価格: 補助情報確認", className: "bg-sun/25 text-amber-900" }
         : { label: "価格: 未確認", className: "bg-slate-100 text-slate-700" };
@@ -730,12 +829,11 @@ function PriceStatusBadge({ status }: { status: PriceVerificationStatus }) {
   return <span className={`rounded-full px-3 py-1 text-xs font-black ${config.className}`}>{config.label}</span>;
 }
 
-function SaveStateBadge({ dirty }: { dirty: boolean }) {
-  return dirty ? (
-    <span className="rounded-full bg-amber-100 px-3 py-1 text-xs font-black text-amber-900">未保存</span>
-  ) : (
-    <span className="rounded-full bg-slate-100 px-3 py-1 text-xs font-black text-slate-700">保存済み</span>
-  );
+function SaveStateBadge({ dirty, saving, recentlySaved }: { dirty: boolean; saving: boolean; recentlySaved: boolean }) {
+  if (saving) return <span className="inline-flex items-center gap-1 rounded-full bg-blue-50 px-3 py-1 text-xs font-black text-blue-800"><Loader2 size={13} className="animate-spin" aria-hidden />保存中</span>;
+  if (dirty) return <span className="inline-flex items-center gap-1 rounded-full bg-sun/25 px-3 py-1 text-xs font-black text-amber-900"><Clock3 size={13} aria-hidden />未保存</span>;
+  if (recentlySaved) return <span className="inline-flex items-center gap-1 rounded-full bg-blue-50 px-3 py-1 text-xs font-black text-blue-800"><CheckCircle2 size={13} aria-hidden />保存成功</span>;
+  return <span className="inline-flex items-center gap-1 rounded-full bg-slate-100 px-3 py-1 text-xs font-black text-slate-700"><CheckCircle2 size={13} aria-hidden />保存済み</span>;
 }
 
 function CompactDecisionControl({ decision, onChange }: { decision: ReviewDecision; onChange: (value: ReviewDecisionValue) => void }) {
@@ -771,7 +869,7 @@ function RadioGroup({ label, value, options, onChange }: { label: string; value:
       <legend className="text-xs font-black text-slate-600">{label}</legend>
       <div className="mt-2 flex flex-wrap gap-2">
         {options.map((option) => (
-          <label key={option.value} className={`inline-flex min-h-10 cursor-pointer items-center gap-2 rounded-full border px-3 text-xs font-black ${value === option.value ? "border-park bg-white text-park" : "border-slate-200 bg-white text-ink"}`}>
+          <label key={option.value} className={`inline-flex min-h-10 cursor-pointer items-center gap-2 rounded-full border px-3 text-xs font-black ${value === option.value ? "border-ink bg-ink text-white" : "border-slate-200 bg-white text-ink"}`}>
             <input type="radio" className="h-4 w-4 accent-blue-700" checked={value === option.value} onChange={() => onChange(option.value)} />
             {option.label}
           </label>
@@ -785,7 +883,7 @@ function TextControl({ label, value, onChange, placeholder }: { label: string; v
   return (
     <label className="block">
       <span className="text-xs font-black text-slate-600">{label}</span>
-      <input value={value} onChange={(event) => onChange(event.currentTarget.value)} placeholder={placeholder} className="mt-2 min-h-11 w-full rounded-xl border border-slate-200 bg-white px-3 text-sm font-bold text-ink outline-none focus:border-park focus:ring-2 focus:ring-park/10" />
+      <input value={value} onChange={(event) => onChange(event.currentTarget.value)} placeholder={placeholder} className="mt-2 min-h-11 w-full rounded-xl border border-slate-200 bg-white px-3 text-sm font-bold text-ink outline-none focus:border-ink focus:ring-2 focus:ring-ink/10" />
     </label>
   );
 }
@@ -794,7 +892,7 @@ function TextareaControl({ label, value, onChange, rows }: { label: string; valu
   return (
     <label className="block">
       <span className="text-xs font-black text-slate-600">{label}</span>
-      <textarea value={value} onChange={(event) => onChange(event.currentTarget.value)} rows={rows} className="mt-2 w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm font-bold leading-6 text-ink outline-none focus:border-park focus:ring-2 focus:ring-park/10" />
+      <textarea value={value} onChange={(event) => onChange(event.currentTarget.value)} rows={rows} className="mt-2 w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm font-bold leading-6 text-ink outline-none focus:border-ink focus:ring-2 focus:ring-ink/10" />
     </label>
   );
 }
@@ -803,7 +901,7 @@ function SelectControl({ label, value, options, onChange }: { label: string; val
   return (
     <label className="block">
       <span className="text-xs font-black text-slate-600">{label}</span>
-      <select value={value} onChange={(event) => onChange(event.currentTarget.value)} className="mt-2 min-h-11 w-full rounded-xl border border-slate-200 bg-white px-3 text-sm font-black text-ink outline-none focus:border-park focus:ring-2 focus:ring-park/10">
+      <select value={value} onChange={(event) => onChange(event.currentTarget.value)} className="mt-2 min-h-11 w-full rounded-xl border border-slate-200 bg-white px-3 text-sm font-black text-ink outline-none focus:border-ink focus:ring-2 focus:ring-ink/10">
         {options.map((option) => (
           <option key={option.value} value={option.value}>
             {option.label}
@@ -855,7 +953,7 @@ function LinkList({ urls, emptyText }: { urls: string[]; emptyText: string }) {
     <ul className="space-y-2">
       {urls.map((url) => (
         <li key={url}>
-          <a href={url} target="_blank" rel="noreferrer" className="inline-flex max-w-full items-start gap-2 text-xs font-black leading-5 text-park underline underline-offset-4">
+          <a href={url} target="_blank" rel="noreferrer" className="inline-flex max-w-full items-start gap-2 text-xs font-black leading-5 text-blue-800 underline underline-offset-4">
             <Link2 size={14} className="mt-0.5 shrink-0" aria-hidden />
             <span className="[overflow-wrap:anywhere]">{url}</span>
           </a>
@@ -872,29 +970,64 @@ function buildMetrics(decisions: ReviewDecision[]) {
     needsRevision: decisions.filter((decision) => decision.decision === "needs_revision").length,
     hold: decisions.filter((decision) => decision.decision === "hold").length,
     exclude: decisions.filter((decision) => decision.decision === "exclude").length,
-    imageUnconfirmed: decisions.filter((decision) => decision.imageReview === "unresolved" || decision.imageReview === "candidate-only").length,
+    imageConfirmed: decisions.filter((decision) => decision.imageReview === "confirmed").length,
+    imageCandidateOnly: decisions.filter((decision) => decision.imageReview === "candidate-only").length,
+    imageUnresolved: decisions.filter((decision) => decision.imageReview === "unresolved").length,
+    imageIncorrect: decisions.filter((decision) => decision.imageReview === "incorrect").length,
+    imageNoImage: decisions.filter((decision) => decision.imageReview === "no-image").length,
     priceMissing: decisions.filter((decision) => decision.priceReview === "unresolved").length,
     newItems: decisions.filter((decision) => decision.targetType === "new").length,
     existingItems: decisions.filter((decision) => decision.targetType === "existing").length
   };
 }
 
-function matchesFilter(item: ReviewItem, decision: ReviewDecision | undefined, filter: ReviewFilter) {
+function matchesFilters(item: ReviewItem, decision: ReviewDecision | undefined, filters: ReviewFilters, searchQuery: string) {
   if (!decision) return false;
-  if (filter === "all") return true;
-  if (filter === "pending") return item.reviewStatus === "pending";
-  if (filter === "draft") return item.reviewStatus === "draft";
-  if (filter === "unreviewed" || filter === "register" || filter === "needs_revision" || filter === "hold" || filter === "exclude") return decision.decision === filter;
-  if (filter === "image-confirmed") return decision.imageReview === "confirmed";
-  if (filter === "image-incorrect") return decision.imageReview === "incorrect";
-  if (filter === "image-unresolved") return decision.imageReview === "unresolved";
-  if (filter === "image-none") return decision.imageReview === "no-image";
-  if (filter === "image-candidate-only") return decision.imageReview === "candidate-only";
-  if (filter === "image-no-candidates") return decision.editedData.imageCandidates.length === 0;
-  if (filter === "price-missing") return decision.priceReview === "unresolved";
-  if (filter === "new") return decision.targetType === "new";
-  if (filter === "existing") return decision.targetType === "existing";
+  if (filters.decision !== "all" && decision.decision !== filters.decision) return false;
+  if (filters.image !== "all" && decision.imageReview !== filters.image) return false;
+  if (filters.target !== "all" && decision.targetType !== filters.target) return false;
+  if (filters.missing !== "none" && !matchesMissingFilter(decision, filters.missing)) return false;
+  if (searchQuery.trim() && !matchesSearch(item, decision, searchQuery)) return false;
   return true;
+}
+
+function matchesMissingFilter(decision: ReviewDecision, filter: MissingFilter) {
+  if (filter === "price") return decision.priceReview === "unresolved" || !decision.editedData.priceText.trim();
+  if (filter === "no-candidates") return decision.editedData.imageCandidates.length === 0;
+  if (filter === "official-url") return !decision.editedData.sourceUrl.trim() && decision.editedData.officialReferenceUrls.length === 0;
+  if (filter === "shop") return !decision.editedData.shopName.trim();
+  if (filter === "area") return !decision.editedData.areaName.trim();
+  return true;
+}
+
+function matchesSearch(item: ReviewItem, decision: ReviewDecision, query: string) {
+  const search = normalizeSearch(query);
+  if (!search) return true;
+  const fields = [
+    decision.editedData.name,
+    item.name,
+    decision.editedData.shopName,
+    decision.editedData.areaName,
+    decision.editedData.category,
+    decision.proposedId,
+    decision.existingFoodId,
+    item.id
+  ];
+  return fields.some((field) => normalizeSearch(field ?? "").includes(search));
+}
+
+function describeFilters(filters: ReviewFilters, searchQuery: string) {
+  const labels: string[] = [];
+  if (searchQuery.trim()) labels.push(`検索「${searchQuery.trim()}」`);
+  if (filters.decision !== "all") labels.push(`判断=${decisionLabels[filters.decision]}`);
+  if (filters.image !== "all") labels.push(`画像=${imageReviewLabels[filters.image]}`);
+  if (filters.target !== "all") labels.push(`登録方式=${targetTypeOptions.find((option) => option.value === filters.target)?.label ?? filters.target}`);
+  if (filters.missing !== "none") labels.push(`不足=${missingFilterOptions.find((option) => option.value === filters.missing)?.label ?? filters.missing}`);
+  return labels.length > 0 ? labels.join(" / ") : "すべて表示";
+}
+
+function normalizeSearch(value: string) {
+  return value.normalize("NFKC").replace(/\s+/g, "").toLowerCase();
 }
 
 function sortItems(items: ReviewItem[], decisions: ReviewDecision[]) {
@@ -966,13 +1099,6 @@ function formatDateTime(value: string) {
 function formatFileSize(size: number) {
   if (size < 1024) return `${size}B`;
   return `${Math.round(size / 1024).toLocaleString("ja-JP")}KB`;
-}
-
-function saveMessageClass(tone: "idle" | "success" | "error" | "warn") {
-  if (tone === "success") return "text-park";
-  if (tone === "error") return "text-berry";
-  if (tone === "warn") return "text-amber-900";
-  return "text-slate-600";
 }
 
 function uniqueText(values: Array<string | null | undefined>) {

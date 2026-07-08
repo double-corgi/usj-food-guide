@@ -18,7 +18,7 @@ const placeholderCopy: Record<AdminFoodImagePlaceholderState, { title: string; d
   loading: {
     title: "画像を読み込み中",
     description: "固定サイズで表示を準備しています",
-    tone: "bg-mint text-park",
+    tone: "bg-blue-50 text-blue-800",
     icon: "loader"
   },
   error: {

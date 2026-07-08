@@ -31,15 +31,18 @@ export default async function Summer2026ReviewPage() {
       <section className="rounded-2xl border border-slate-200 bg-white p-5 shadow-soft sm:p-7">
         <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
           <div>
-            <Link href="/admin" className="inline-flex items-center gap-2 text-xs font-black text-park underline underline-offset-4">
+            <Link href="/admin" className="inline-flex items-center gap-2 text-xs font-black text-blue-800 underline underline-offset-4">
               <ArrowLeft size={14} aria-hidden />
               管理メニューへ戻る
             </Link>
-            <p className="mt-4 inline-flex items-center gap-2 rounded-full bg-mint px-3 py-1 text-xs font-black text-park">
+            <p className="mt-4 inline-flex items-center gap-2 rounded-full bg-blue-50 px-3 py-1 text-xs font-black text-blue-800 ring-1 ring-blue-200">
               <ShieldCheck size={14} aria-hidden />
               管理者限定レビュー
             </p>
-            <h1 className="mt-3 text-3xl font-black leading-tight text-ink sm:text-4xl">2026年夏フード 登録前レビュー</h1>
+            <h1 className="mt-3 text-2xl font-black leading-tight text-ink sm:text-4xl">
+              <span className="block sm:inline">2026年夏フード</span>
+              <span className="block sm:inline">登録前レビュー</span>
+            </h1>
             <p className="mt-2 max-w-3xl text-sm font-bold leading-6 text-slate-600">
               Supabase登録前の30候補を画像付きで確認する画面です。登録、公開、承認の操作はここにはありません。
             </p>
@@ -47,7 +50,7 @@ export default async function Summer2026ReviewPage() {
           <div className="rounded-2xl border border-slate-200 bg-cream px-4 py-3 text-sm font-bold text-slate-600">
             <p className="text-xs font-black text-slate-400">閲覧者</p>
             <p className="mt-1 break-all text-ink">{admin.email ?? "管理者確認済み"}</p>
-            <p className="mt-1 text-park">権限: {formatAdminRole(admin.role)}</p>
+            <p className="mt-1 text-blue-800">権限: {formatAdminRole(admin.role)}</p>
           </div>
         </div>
       </section>

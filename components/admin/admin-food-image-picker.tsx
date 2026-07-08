@@ -111,7 +111,7 @@ export function AdminFoodImagePicker({
   }
 
   return (
-    <section className="rounded-2xl border border-park/20 bg-mint p-4">
+    <section className="rounded-2xl border border-blue-100 bg-blue-50 p-4">
       <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
         <div>
           <h3 className="text-sm font-black text-ink">画像レビュー</h3>
@@ -161,7 +161,7 @@ export function AdminFoodImagePicker({
                         setZoomFit("contain");
                         setZoomImage({ url, sourceUrl, title });
                       }}
-                      className="block rounded-xl outline-none focus:ring-2 focus:ring-park/40"
+                      className="block rounded-xl outline-none focus:ring-2 focus:ring-ink/20"
                       aria-label={`${title}の候補画像を拡大表示`}
                     >
                       <AdminFoodImagePreview src={url} alt={title} variant="candidate" placeholderState="unconfirmed" />
@@ -171,7 +171,7 @@ export function AdminFoodImagePicker({
                     {candidate.note ? <p className="mt-1 text-[11px] font-bold leading-4 text-slate-500 [overflow-wrap:anywhere]">{candidate.note}</p> : null}
                     <div className="mt-2 grid gap-2">
                       {sourceUrl ? (
-                        <a href={sourceUrl} target="_blank" rel="noreferrer" className="inline-flex min-h-8 items-center justify-center gap-1 rounded-full border border-slate-200 bg-white px-2 text-[11px] font-black text-park">
+                        <a href={sourceUrl} target="_blank" rel="noreferrer" className="inline-flex min-h-8 items-center justify-center gap-1 rounded-full border border-slate-200 bg-white px-2 text-[11px] font-black text-blue-800">
                           <ExternalLink size={12} aria-hidden />
                           出典
                         </a>
@@ -179,7 +179,7 @@ export function AdminFoodImagePicker({
                       <button
                         type="button"
                         onClick={() => adoptImage(url, sourceUrl)}
-                        className="inline-flex min-h-8 items-center justify-center gap-1 rounded-full bg-park px-2 text-[11px] font-black text-white"
+                        className="inline-flex min-h-8 items-center justify-center gap-1 rounded-full bg-ink px-2 text-[11px] font-black text-white"
                       >
                         <CheckCircle2 size={12} aria-hidden />
                         この画像を採用
@@ -218,11 +218,11 @@ export function AdminFoodImagePicker({
         <div className="mt-3 grid gap-3 lg:grid-cols-2">
           <label className="block">
             <span className="text-xs font-black text-slate-600">画像URL</span>
-            <input value={manualUrl} onChange={(event) => setManualUrl(event.currentTarget.value)} className="mt-2 min-h-11 w-full rounded-xl border border-slate-200 bg-white px-3 text-sm font-bold text-ink outline-none focus:border-park focus:ring-2 focus:ring-park/10" />
+            <input value={manualUrl} onChange={(event) => setManualUrl(event.currentTarget.value)} className="mt-2 min-h-11 w-full rounded-xl border border-slate-200 bg-white px-3 text-sm font-bold text-ink outline-none focus:border-ink focus:ring-2 focus:ring-ink/10" />
           </label>
           <label className="block">
             <span className="text-xs font-black text-slate-600">出典URL</span>
-            <input value={manualSourceUrl} onChange={(event) => setManualSourceUrl(event.currentTarget.value)} className="mt-2 min-h-11 w-full rounded-xl border border-slate-200 bg-white px-3 text-sm font-bold text-ink outline-none focus:border-park focus:ring-2 focus:ring-park/10" />
+            <input value={manualSourceUrl} onChange={(event) => setManualSourceUrl(event.currentTarget.value)} className="mt-2 min-h-11 w-full rounded-xl border border-slate-200 bg-white px-3 text-sm font-bold text-ink outline-none focus:border-ink focus:ring-2 focus:ring-ink/10" />
           </label>
         </div>
         <label className="mt-3 block">
@@ -231,7 +231,7 @@ export function AdminFoodImagePicker({
             value={imageReviewNote}
             onChange={(event) => onChange({ imageReviewNote: event.currentTarget.value })}
             rows={3}
-            className="mt-2 w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm font-bold leading-6 text-ink outline-none focus:border-park focus:ring-2 focus:ring-park/10"
+            className="mt-2 w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm font-bold leading-6 text-ink outline-none focus:border-ink focus:ring-2 focus:ring-ink/10"
           />
         </label>
         <div className="mt-3 flex flex-col gap-2 sm:flex-row">
@@ -271,7 +271,7 @@ export function AdminFoodImagePicker({
               <div>
                 <p className="text-sm font-black text-ink [overflow-wrap:anywhere]">{zoomImage.title}</p>
                 {zoomImage.sourceUrl ? (
-                  <a href={zoomImage.sourceUrl} target="_blank" rel="noreferrer" className="mt-1 inline-flex items-center gap-1 text-xs font-black text-park underline underline-offset-4">
+                  <a href={zoomImage.sourceUrl} target="_blank" rel="noreferrer" className="mt-1 inline-flex items-center gap-1 text-xs font-black text-blue-800 underline underline-offset-4">
                     <ExternalLink size={13} aria-hidden />
                     出典ページを開く
                   </a>
@@ -281,7 +281,7 @@ export function AdminFoodImagePicker({
                 <button type="button" onClick={() => setZoomFit((value) => (value === "cover" ? "contain" : "cover"))} className="min-h-10 rounded-full border border-slate-200 bg-white px-4 text-xs font-black text-ink">
                   {zoomFit === "cover" ? "containで確認" : "coverで確認"}
                 </button>
-                <button type="button" onClick={() => adoptImage(zoomImage.url, zoomImage.sourceUrl)} className="min-h-10 rounded-full bg-park px-4 text-xs font-black text-white">
+                <button type="button" onClick={() => adoptImage(zoomImage.url, zoomImage.sourceUrl)} className="min-h-10 rounded-full bg-ink px-4 text-xs font-black text-white">
                   この画像を採用
                 </button>
                 <button type="button" onClick={() => setZoomImage(null)} className="inline-flex min-h-10 items-center justify-center rounded-full border border-slate-200 bg-white px-4 text-xs font-black text-ink" aria-label="拡大表示を閉じる">
@@ -341,7 +341,7 @@ function inferSourceType(url: string) {
 }
 
 function statusClass(status: ImageReviewValue) {
-  if (status === "confirmed") return "bg-mint text-park";
+  if (status === "confirmed") return "bg-blue-50 text-blue-800 ring-1 ring-blue-200";
   if (status === "incorrect") return "bg-berry text-white";
   if (status === "no-image") return "bg-slate-700 text-white";
   if (status === "candidate-only") return "bg-sun/25 text-amber-900";
