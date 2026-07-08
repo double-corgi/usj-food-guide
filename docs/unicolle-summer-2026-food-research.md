@@ -1072,3 +1072,14 @@
 - 採用画像URL重複: 0件
 - 同一商品内の候補URL重複: 0件
 - Google検索サムネイルURL、ローカルURL、一時URL: 0件
+
+## 画像候補再監査（2026-07-08 R5後）
+
+- 実施日時: 2026-07-08T14:15:00.000+09:00
+- 監査前: candidate-only 8件 / unresolved 22件
+- 監査後: candidate-only 29件 / unresolved 1件
+- 公式ページ本文で、シーズナルメニュー大特集および食べ歩きフード特集に対象商品のImage alt/商品名掲載を確認した。
+- shell環境では `curl -I` が `www.usj.co.jp` をDNS解決できなかったため、画像URLのネットワーク到達性はブラウザ検索ツールと公式ページ掲載状況で確認した。
+- Codexではconfirmedへ変更せず、imageUrlにも正式採用しない。候補画像はすべて人間確認用としてimageCandidatesへ保存。
+- 集合画像はnoteへ集合画像/複数商品掲載の可能性と切り抜き禁止を明記した。
+- 詳細表は `docs/unicolle-summer-2026-image-candidate-audit.md` を参照。
