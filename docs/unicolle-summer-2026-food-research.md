@@ -1014,5 +1014,61 @@
 
 - `data/imports/unicolle-summer-2026-drafts.json` に `imageReviewStatus`、`imageReviewNote`、`imageCheckedAt` を追加。
 - `imageCandidates` は URL重複を除外し、`sourceUrl`、`sourceType`、`title`、`note`、`discoveredAt`、`status` を保持。
-- 既存の `unconfirmed` 判断は、候補ありの場合 `candidate-only`、候補なしの場合 `unresolved` に正規化。
+- R3時点では既存の `unconfirmed` 判断を、候補ありの場合 `candidate-only`、候補なしの場合 `unresolved` に正規化した。R3.1監査でこの一律変換を修正。
 - 人間が確認済みの `confirmed` は存在しないため、今回の整理で自動confirmed化した商品は0件。
+
+# Phase R3.1 画像レビュー状態監査
+
+- 情報確認日: 2026-07-08
+- 対象: R3後に全30件が `candidate-only` になった状態の監査。
+- 比較元: `fd41dc4` 時点の `data/imports/unicolle-summer-2026-drafts.json` / `data/imports/unicolle-summer-2026-review-decisions.json`
+
+## 原因
+
+- R3前のレビュー判断は30件すべて旧値 `unconfirmed`。
+- R3前のdraftには30件すべて `imageCandidates` が存在していた。
+- R3の正規化で「旧 `unconfirmed` かつ候補あり」を一律 `candidate-only` に変換したため、R3前から `imageUrl` が存在した22件まで候補未採用扱いになった。
+- R3の保存正規化で、編集済み `imageUrl` を候補配列へ自動混入していたため、再保存時にもcandidate判定が広がりやすい状態だった。
+
+## 修正方針
+
+- 旧 `unconfirmed` は候補数に関係なく `unresolved` へ変換する。
+- `candidate-only` は、正式採用済みの `imageUrl` がなく、有効な `imageCandidates` が1件以上ある商品に限定する。
+- `confirmed`、`incorrect`、`no-image` は、人間が保存した履歴がある場合だけ維持する。
+- 現在採用中の `imageUrl` はPicker上の「現在採用中の画像」として表示し、正規化時に候補へ自動混入しない。
+
+## R3.1整理後の件数
+
+- confirmed: 0件
+- candidate-only: 8件
+- unresolved: 22件
+- incorrect: 0件
+- no-image: 0件
+- approved: 0件
+- import-ready: 0件
+
+## candidate-only 8件
+
+いずれもR3前から `imageUrl` が空で、公式候補画像はあるが単体正式採用できていない商品。
+
+- りんご飴 ～りんごのムース～
+- 水風船 ～ピーチゼリー＆レアチーズムース～
+- ストロベリー・フローズン・スムージー
+- トロピカルフルーツ・フローズン・スムージー
+- マンゴー・フローズン・スムージー
+- トロピカル・フラッペ ～ストロベリー～
+- トロピカル・フラッペ ～マンゴー～
+- ソフローズン グレープ マイメロディ＆クロミ バケツ＆スプーン付き
+
+## unresolved 22件
+
+- R3前から `imageUrl` と `imageSourceUrl` は存在する。
+- ただし `review-decisions.json` に人間confirmed履歴はなく、旧 `imageReview` は全件 `unconfirmed`。
+- Codexだけでは `confirmed` にせず、人間がレビュー画面で採用保存するまで `unresolved` とする。
+
+## 候補検査
+
+- candidate-onlyで候補0件の商品: 0件
+- 採用画像URL重複: 0件
+- 同一商品内の候補URL重複: 0件
+- Google検索サムネイルURL、ローカルURL、一時URL: 0件

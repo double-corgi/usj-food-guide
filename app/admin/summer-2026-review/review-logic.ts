@@ -197,7 +197,9 @@ export function deriveExistingActionLabels(decision: ReviewDecision, item: Revie
 function normalizeDecision(item: ReviewItem, source: ReviewDecision | undefined, now: string, markReviewed: boolean): ReviewDecision {
   const targetType: TargetType = source?.targetType ?? (item.importReview?.isExisting ? "existing" : "new");
   const editedData = normalizeEditedData(item, source?.editedData);
-  const imageReview = normalizeImageReview(source?.imageReview ?? editedData.imageReviewStatus ?? item.imageReviewStatus ?? "unresolved", editedData.imageCandidates);
+  const imageReview = normalizeImageReview(source?.imageReview ?? editedData.imageReviewStatus ?? item.imageReviewStatus, editedData.imageCandidates, {
+    hasImageUrl: Boolean(editedData.imageUrl.trim())
+  });
   const decision = normalizeDecisionValue(source?.decision ?? (item.reviewStatus === "draft" ? "needs_revision" : "unreviewed"), imageReview);
   const normalizedEditedData = {
     ...editedData,
@@ -233,15 +235,10 @@ function normalizeEditedData(item: ReviewItem, source?: EditableReviewData): Edi
     description: source?.description ?? item.description ?? "",
     imageUrl: source?.imageUrl ?? item.imageUrl ?? "",
     imageSourceUrl: source?.imageSourceUrl ?? item.imageSourceUrl ?? "",
-    imageCandidates: normalizeImageCandidates(
-      [
-        ...(source?.imageUrl ? [{ url: source.imageUrl, sourceUrl: source.imageSourceUrl, title: source.name, note: "Edited image URL retained as a candidate for review." }] : []),
-        ...(item.imageCandidates ?? []),
-        ...(source?.imageCandidates ?? [])
-      ],
-      item
-    ),
-    imageReviewStatus: normalizeImageReview(source?.imageReviewStatus ?? item.imageReviewStatus ?? "unresolved", source?.imageCandidates ?? item.imageCandidates ?? []),
+    imageCandidates: normalizeImageCandidates([...(item.imageCandidates ?? []), ...(source?.imageCandidates ?? [])], item),
+    imageReviewStatus: normalizeImageReview(source?.imageReviewStatus ?? item.imageReviewStatus, source?.imageCandidates ?? item.imageCandidates ?? [], {
+      hasImageUrl: Boolean((source?.imageUrl ?? item.imageUrl ?? "").trim())
+    }),
     imageReviewNote: source?.imageReviewNote ?? item.imageReviewNote ?? "",
     imageCheckedAt: source?.imageCheckedAt ?? item.imageCheckedAt ?? null,
     sourceUrl,
@@ -260,12 +257,17 @@ function normalizeDecisionValue(value: string, imageReview: ImageReviewValue): R
   return "unreviewed";
 }
 
-export function normalizeImageReview(value: string | null | undefined, candidates: ReviewImageCandidate[] = []): ImageReviewValue {
+export function normalizeImageReview(
+  value: string | null | undefined,
+  candidates: ReviewImageCandidate[] = [],
+  options: { hasImageUrl?: boolean } = {}
+): ImageReviewValue {
   if (value === "confirmed" || value === "incorrect" || value === "unresolved" || value === "no-image" || value === "candidate-only") return value;
   if (value === "verified") return "confirmed";
   if (value === "wrong") return "incorrect";
   if (value === "no_image_planned") return "no-image";
-  if (value === "unconfirmed") return candidates.length > 0 ? "candidate-only" : "unresolved";
+  if (value === "unconfirmed") return "unresolved";
+  if (options.hasImageUrl) return "unresolved";
   return candidates.length > 0 ? "candidate-only" : "unresolved";
 }
 

@@ -98,7 +98,7 @@
           "sourceUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/restaurants/food-cart/index.html",
           "sourceType": "official-restaurant",
           "title": "夏祭りの金魚 レモンサイダー",
-          "note": "Current review image retained as a candidate for human confirmation.",
+          "note": "Official gallery image matching normal and neon-cup variants.",
           "discoveredAt": "2026-07-08T00:00:00.000+09:00",
           "status": "candidate"
         },
@@ -137,8 +137,8 @@
         "needsHumanReview": true,
         "notes": "No generated/manual/override duplicate selected."
       },
-      "imageReviewStatus": "candidate-only",
-      "imageReviewNote": "候補画像あり。人間レビューで正式採用が必要。",
+      "imageReviewStatus": "unresolved",
+      "imageReviewNote": "R3前からimageUrlあり。ただし人間confirmed履歴がないため画像未確認として維持。",
       "imageCheckedAt": null
     },
     {
@@ -183,7 +183,7 @@
           "sourceUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/restaurants/food-cart/index.html",
           "sourceType": "official-restaurant",
           "title": "超！！ チョコバナナ・チュリトス",
-          "note": "Current review image retained as a candidate for human confirmation.",
+          "note": "Official gallery image matching the item.",
           "discoveredAt": "2026-07-08T00:00:00.000+09:00",
           "status": "candidate"
         },
@@ -230,8 +230,8 @@
         "needsHumanReview": true,
         "notes": "Existing item has same normalized product but generated record lacks confirmed price and appears to have older/mismatched image context."
       },
-      "imageReviewStatus": "candidate-only",
-      "imageReviewNote": "候補画像あり。人間レビューで正式採用が必要。",
+      "imageReviewStatus": "unresolved",
+      "imageReviewNote": "R3前からimageUrlあり。ただし人間confirmed履歴がないため画像未確認として維持。",
       "imageCheckedAt": null
     },
     {
@@ -281,7 +281,7 @@
           "sourceUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/restaurants/food-cart/index.html",
           "sourceType": "official-restaurant",
           "title": "いちご練乳 ソーダスムージー",
-          "note": "Current review image retained as a candidate for human confirmation.",
+          "note": "Official gallery image matching normal and neon-cup variants.",
           "discoveredAt": "2026-07-08T00:00:00.000+09:00",
           "status": "candidate"
         },
@@ -320,8 +320,8 @@
         "needsHumanReview": true,
         "notes": "No generated/manual/override duplicate selected."
       },
-      "imageReviewStatus": "candidate-only",
-      "imageReviewNote": "候補画像あり。人間レビューで正式採用が必要。",
+      "imageReviewStatus": "unresolved",
+      "imageReviewNote": "R3前からimageUrlあり。ただし人間confirmed履歴がないため画像未確認として維持。",
       "imageCheckedAt": null
     },
     {
@@ -366,7 +366,7 @@
           "sourceUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/restaurants/food-cart/index.html",
           "sourceType": "official-restaurant",
           "title": "カレーナン!? 焼きそばドッグ",
-          "note": "Current review image retained as a candidate for human confirmation.",
+          "note": "Official gallery image matching the item.",
           "discoveredAt": "2026-07-08T00:00:00.000+09:00",
           "status": "candidate"
         },
@@ -404,8 +404,8 @@
         "needsHumanReview": true,
         "notes": "No generated/manual/override duplicate selected."
       },
-      "imageReviewStatus": "candidate-only",
-      "imageReviewNote": "候補画像あり。人間レビューで正式採用が必要。",
+      "imageReviewStatus": "unresolved",
+      "imageReviewNote": "R3前からimageUrlあり。ただし人間confirmed履歴がないため画像未確認として維持。",
       "imageCheckedAt": null
     },
     {
@@ -455,7 +455,7 @@
           "sourceUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/restaurants/food-cart/index.html",
           "sourceType": "official-restaurant",
           "title": "フローズン・ジントニック ～シトラス～",
-          "note": "Current review image retained as a candidate for human confirmation.",
+          "note": "Official gallery image matching normal and neon-cup variants.",
           "discoveredAt": "2026-07-08T00:00:00.000+09:00",
           "status": "candidate"
         }
@@ -483,8 +483,8 @@
         "needsHumanReview": true,
         "notes": "No generated/manual/override duplicate selected."
       },
-      "imageReviewStatus": "candidate-only",
-      "imageReviewNote": "候補画像あり。人間レビューで正式採用が必要。",
+      "imageReviewStatus": "unresolved",
+      "imageReviewNote": "R3前からimageUrlあり。ただし人間confirmed履歴がないため画像未確認として維持。",
       "imageCheckedAt": null
     },
     {
@@ -534,7 +534,7 @@
           "sourceUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/restaurants/food-cart/index.html",
           "sourceType": "official-restaurant",
           "title": "25周年カクテル ～ポップコーンフレーバー？～",
-          "note": "Current review image retained as a candidate for human confirmation.",
+          "note": "Official gallery image matching the item.",
           "discoveredAt": "2026-07-08T00:00:00.000+09:00",
           "status": "candidate"
         }
@@ -578,8 +578,8 @@
         "needsHumanReview": true,
         "notes": "food-gpkw6l is same canonical group offer-card duplicate."
       },
-      "imageReviewStatus": "candidate-only",
-      "imageReviewNote": "候補画像あり。人間レビューで正式採用が必要。",
+      "imageReviewStatus": "unresolved",
+      "imageReviewNote": "R3前からimageUrlあり。ただし人間confirmed履歴がないため画像未確認として維持。",
       "imageCheckedAt": null
     },
     {
@@ -630,7 +630,7 @@
           "sourceUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/restaurants/food-cart/index.html",
           "sourceType": "official-restaurant",
           "title": "キャラメルポップコーン!? チュリトス",
-          "note": "Current review image retained as a candidate for human confirmation.",
+          "note": "Official gallery image matching the item.",
           "discoveredAt": "2026-07-08T00:00:00.000+09:00",
           "status": "candidate"
         }
@@ -686,8 +686,8 @@
         "needsHumanReview": true,
         "notes": "Official price unresolved; use generated secondary price only as non-official evidence."
       },
-      "imageReviewStatus": "candidate-only",
-      "imageReviewNote": "候補画像あり。人間レビューで正式採用が必要。",
+      "imageReviewStatus": "unresolved",
+      "imageReviewNote": "R3前からimageUrlあり。ただし人間confirmed履歴がないため画像未確認として維持。",
       "imageCheckedAt": null
     },
     {
@@ -903,7 +903,7 @@
           "sourceUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/restaurants/seasonal-food/index.html",
           "sourceType": "official-restaurant",
           "title": "紫陽花 ～葡萄と柚子の和氷菓 焼き菓子添え～",
-          "note": "Current review image retained as a candidate for human confirmation.",
+          "note": "Official seasonal gallery image matching the item.",
           "discoveredAt": "2026-07-08T00:00:00.000+09:00",
           "status": "candidate"
         },
@@ -940,8 +940,8 @@
         "needsHumanReview": true,
         "notes": "No generated/manual/override duplicate selected."
       },
-      "imageReviewStatus": "candidate-only",
-      "imageReviewNote": "候補画像あり。人間レビューで正式採用が必要。",
+      "imageReviewStatus": "unresolved",
+      "imageReviewNote": "R3前からimageUrlあり。ただし人間confirmed履歴がないため画像未確認として維持。",
       "imageCheckedAt": null
     },
     {
@@ -987,7 +987,7 @@
           "sourceUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/restaurants/seasonal-food/index.html",
           "sourceType": "official-restaurant",
           "title": "柑橘おろしと白みその冷やしうどん御膳",
-          "note": "Current review image retained as a candidate for human confirmation.",
+          "note": "Official seasonal gallery image matching the item.",
           "discoveredAt": "2026-07-08T00:00:00.000+09:00",
           "status": "candidate"
         },
@@ -1024,8 +1024,8 @@
         "needsHumanReview": true,
         "notes": "No generated/manual/override duplicate selected."
       },
-      "imageReviewStatus": "candidate-only",
-      "imageReviewNote": "候補画像あり。人間レビューで正式採用が必要。",
+      "imageReviewStatus": "unresolved",
+      "imageReviewNote": "R3前からimageUrlあり。ただし人間confirmed履歴がないため画像未確認として維持。",
       "imageCheckedAt": null
     },
     {
@@ -1071,7 +1071,7 @@
           "sourceUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/restaurants/seasonal-food/index.html",
           "sourceType": "official-restaurant",
           "title": "オマール海老の冷製パスタ アメリケーヌのグラニテ添え",
-          "note": "Current review image retained as a candidate for human confirmation.",
+          "note": "Official seasonal gallery image matching the item.",
           "discoveredAt": "2026-07-08T00:00:00.000+09:00",
           "status": "candidate"
         },
@@ -1107,8 +1107,8 @@
         "needsHumanReview": true,
         "notes": "No generated/manual/override duplicate selected."
       },
-      "imageReviewStatus": "candidate-only",
-      "imageReviewNote": "候補画像あり。人間レビューで正式採用が必要。",
+      "imageReviewStatus": "unresolved",
+      "imageReviewNote": "R3前からimageUrlあり。ただし人間confirmed履歴がないため画像未確認として維持。",
       "imageCheckedAt": null
     },
     {
@@ -1159,7 +1159,7 @@
           "sourceUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/restaurants/seasonal-food/index.html",
           "sourceType": "official-restaurant",
           "title": "プルドポーク＆チキン・スパイシー BBQ ピッツアセット",
-          "note": "Current review image retained as a candidate for human confirmation.",
+          "note": "Official seasonal gallery image matching the item.",
           "discoveredAt": "2026-07-08T00:00:00.000+09:00",
           "status": "candidate"
         },
@@ -1196,8 +1196,8 @@
         "needsHumanReview": true,
         "notes": "No generated/manual/override duplicate selected."
       },
-      "imageReviewStatus": "candidate-only",
-      "imageReviewNote": "候補画像あり。人間レビューで正式採用が必要。",
+      "imageReviewStatus": "unresolved",
+      "imageReviewNote": "R3前からimageUrlあり。ただし人間confirmed履歴がないため画像未確認として維持。",
       "imageCheckedAt": null
     },
     {
@@ -1248,7 +1248,7 @@
           "sourceUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/restaurants/seasonal-food/index.html",
           "sourceType": "official-restaurant",
           "title": "ガーリック・シュリンプ・ピッツァセット",
-          "note": "Current review image retained as a candidate for human confirmation.",
+          "note": "Official seasonal gallery image matching the item.",
           "discoveredAt": "2026-07-08T00:00:00.000+09:00",
           "status": "candidate"
         },
@@ -1285,8 +1285,8 @@
         "needsHumanReview": true,
         "notes": "No generated/manual/override duplicate selected."
       },
-      "imageReviewStatus": "candidate-only",
-      "imageReviewNote": "候補画像あり。人間レビューで正式採用が必要。",
+      "imageReviewStatus": "unresolved",
+      "imageReviewNote": "R3前からimageUrlあり。ただし人間confirmed履歴がないため画像未確認として維持。",
       "imageCheckedAt": null
     },
     {
@@ -1332,7 +1332,7 @@
           "sourceUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/restaurants/seasonal-food/index.html",
           "sourceType": "official-restaurant",
           "title": "クランチ・タコスバーガーセット",
-          "note": "Current review image retained as a candidate for human confirmation.",
+          "note": "Official seasonal gallery image matching the item.",
           "discoveredAt": "2026-07-08T00:00:00.000+09:00",
           "status": "candidate"
         },
@@ -1369,8 +1369,8 @@
         "needsHumanReview": true,
         "notes": "No generated/manual/override duplicate selected."
       },
-      "imageReviewStatus": "candidate-only",
-      "imageReviewNote": "候補画像あり。人間レビューで正式採用が必要。",
+      "imageReviewStatus": "unresolved",
+      "imageReviewNote": "R3前からimageUrlあり。ただし人間confirmed履歴がないため画像未確認として維持。",
       "imageCheckedAt": null
     },
     {
@@ -1425,7 +1425,7 @@
           "sourceUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/restaurants/saido/index.html",
           "sourceType": "official-restaurant",
           "title": "SAIDO スペシャルドリンク ～柚子～/ ～抹茶～/ ～西瓜～",
-          "note": "Current review image retained as a candidate for human confirmation.",
+          "note": "Official SAIDO offer-card image for the three special drink variants.",
           "discoveredAt": "2026-07-08T00:00:00.000+09:00",
           "status": "candidate"
         }
@@ -1453,8 +1453,8 @@
         "needsHumanReview": true,
         "notes": "No generated/manual/override duplicate selected."
       },
-      "imageReviewStatus": "candidate-only",
-      "imageReviewNote": "候補画像あり。人間レビューで正式採用が必要。",
+      "imageReviewStatus": "unresolved",
+      "imageReviewNote": "R3前からimageUrlあり。ただし人間confirmed履歴がないため画像未確認として維持。",
       "imageCheckedAt": null
     },
     {
@@ -1758,7 +1758,7 @@
           "sourceUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/restaurants/evil-eats/index.html",
           "sourceType": "official-restaurant",
           "title": "クラッシュ！大悪党のブラッドオレンジ・フローズンソーダ",
-          "note": "Current review image retained as a candidate for human confirmation.",
+          "note": "Official offer-card image matched to the product alt text.",
           "discoveredAt": "2026-07-08T00:00:00.000+09:00",
           "status": "candidate"
         },
@@ -1808,8 +1808,8 @@
         "needsHumanReview": true,
         "notes": "No generated/manual/override duplicate selected."
       },
-      "imageReviewStatus": "candidate-only",
-      "imageReviewNote": "候補画像あり。人間レビューで正式採用が必要。",
+      "imageReviewStatus": "unresolved",
+      "imageReviewNote": "R3前からimageUrlあり。ただし人間confirmed履歴がないため画像未確認として維持。",
       "imageCheckedAt": null
     },
     {
@@ -1855,7 +1855,7 @@
           "sourceUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/restaurants/delicious-me-the-cookie-kitchen/index.html",
           "sourceType": "official-restaurant",
           "title": "映画スターのミニオンフラッペ ～ピーチ＆レモン～",
-          "note": "Current review image retained as a candidate for human confirmation.",
+          "note": "Official offer-card image matched to the product alt text.",
           "discoveredAt": "2026-07-08T00:00:00.000+09:00",
           "status": "candidate"
         },
@@ -1905,8 +1905,8 @@
         "needsHumanReview": true,
         "notes": "No generated/manual/override duplicate selected."
       },
-      "imageReviewStatus": "candidate-only",
-      "imageReviewNote": "候補画像あり。人間レビューで正式採用が必要。",
+      "imageReviewStatus": "unresolved",
+      "imageReviewNote": "R3前からimageUrlあり。ただし人間confirmed履歴がないため画像未確認として維持。",
       "imageCheckedAt": null
     },
     {
@@ -1951,7 +1951,7 @@
           "sourceUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/restaurants/snoopys-backlot-cafe/index.html",
           "sourceType": "official-restaurant",
           "title": "スヌーピー・フラッペ ～いちごミルク＆白桃～",
-          "note": "Current review image retained as a candidate for human confirmation.",
+          "note": "Official offer-card image matched to the product alt text.",
           "discoveredAt": "2026-07-08T00:00:00.000+09:00",
           "status": "candidate"
         },
@@ -1999,8 +1999,8 @@
         "needsHumanReview": true,
         "notes": "No generated/manual/override duplicate selected."
       },
-      "imageReviewStatus": "candidate-only",
-      "imageReviewNote": "候補画像あり。人間レビューで正式採用が必要。",
+      "imageReviewStatus": "unresolved",
+      "imageReviewNote": "R3前からimageUrlあり。ただし人間confirmed履歴がないため画像未確認として維持。",
       "imageCheckedAt": null
     },
     {
@@ -2045,7 +2045,7 @@
           "sourceUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/restaurants/boardwalk-snacks/index.html",
           "sourceType": "official-restaurant",
           "title": "遊泳禁止!! ジョーズ・フラッペ ～ピーチ＆ソルトホイップ～",
-          "note": "Current review image retained as a candidate for human confirmation.",
+          "note": "Official offer-card image matched to the product alt text.",
           "discoveredAt": "2026-07-08T00:00:00.000+09:00",
           "status": "candidate"
         },
@@ -2093,8 +2093,8 @@
         "needsHumanReview": true,
         "notes": "No generated/manual/override duplicate selected."
       },
-      "imageReviewStatus": "candidate-only",
-      "imageReviewNote": "候補画像あり。人間レビューで正式採用が必要。",
+      "imageReviewStatus": "unresolved",
+      "imageReviewNote": "R3前からimageUrlあり。ただし人間confirmed履歴がないため画像未確認として維持。",
       "imageCheckedAt": null
     },
     {
@@ -2345,7 +2345,7 @@
           "sourceUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/restaurants/amity-landing-restaurant/index.html",
           "sourceType": "official-restaurant",
           "title": "ジョーズ・ドリンクボトル",
-          "note": "Current review image retained as a candidate for human confirmation.",
+          "note": "Official offer-card image matched to the product alt text.",
           "discoveredAt": "2026-07-08T00:00:00.000+09:00",
           "status": "candidate"
         },
@@ -2383,8 +2383,8 @@
         "needsHumanReview": true,
         "notes": "No generated/manual/override duplicate selected."
       },
-      "imageReviewStatus": "candidate-only",
-      "imageReviewNote": "候補画像あり。人間レビューで正式採用が必要。",
+      "imageReviewStatus": "unresolved",
+      "imageReviewNote": "R3前からimageUrlあり。ただし人間confirmed履歴がないため画像未確認として維持。",
       "imageCheckedAt": null
     },
     {
@@ -2450,7 +2450,7 @@
           "sourceUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/restaurants/delicious-me-the-cookie-kitchen/index.html",
           "sourceType": "official-restaurant",
           "title": "憧れの大悪党？ ボブ・ドリンクボトル",
-          "note": "Current review image retained as a candidate for human confirmation.",
+          "note": "Official offer-card image matched to soft drink with Bob bottle alt text.",
           "discoveredAt": "2026-07-08T00:00:00.000+09:00",
           "status": "candidate"
         },
@@ -2492,8 +2492,8 @@
         "needsHumanReview": true,
         "notes": "food-8xwq2b is same canonical duplicate. food-1h2frv3 is soft drink wording variant and should be merged/treated as variant."
       },
-      "imageReviewStatus": "candidate-only",
-      "imageReviewNote": "候補画像あり。人間レビューで正式採用が必要。",
+      "imageReviewStatus": "unresolved",
+      "imageReviewNote": "R3前からimageUrlあり。ただし人間confirmed履歴がないため画像未確認として維持。",
       "imageCheckedAt": null
     },
     {
@@ -2551,7 +2551,7 @@
           "sourceUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/restaurants/food-cart/index.html",
           "sourceType": "official-restaurant",
           "title": "ジュラシック・パーク・ドリンクボトル",
-          "note": "Current review image retained as a candidate for human confirmation.",
+          "note": "Official food-cart gallery image matched to the product alt text.",
           "discoveredAt": "2026-07-08T00:00:00.000+09:00",
           "status": "candidate"
         },
@@ -2591,8 +2591,8 @@
         "needsHumanReview": true,
         "notes": "food-1242pz2 is the same canonical group/gallery duplicate."
       },
-      "imageReviewStatus": "candidate-only",
-      "imageReviewNote": "候補画像あり。人間レビューで正式採用が必要。",
+      "imageReviewStatus": "unresolved",
+      "imageReviewNote": "R3前からimageUrlあり。ただし人間confirmed履歴がないため画像未確認として維持。",
       "imageCheckedAt": null
     },
     {
@@ -2646,7 +2646,7 @@
           "sourceUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/restaurants/evil-eats/index.html",
           "sourceType": "official-restaurant",
           "title": "大悪党のためのドーナツ・バーガー ～BBQ ポーク&ベーコン～",
-          "note": "Current review image retained as a candidate for human confirmation.",
+          "note": "Official offer-card image matched to the product alt text.",
           "discoveredAt": "2026-07-08T00:00:00.000+09:00",
           "status": "candidate"
         },
@@ -2687,8 +2687,8 @@
         "needsHumanReview": true,
         "notes": "Draft official price 1200 supersedes secondary-only generated note for import review purposes."
       },
-      "imageReviewStatus": "candidate-only",
-      "imageReviewNote": "候補画像あり。人間レビューで正式採用が必要。",
+      "imageReviewStatus": "unresolved",
+      "imageReviewNote": "R3前からimageUrlあり。ただし人間confirmed履歴がないため画像未確認として維持。",
       "imageCheckedAt": null
     },
     {
