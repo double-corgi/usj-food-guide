@@ -13,6 +13,8 @@
     "test:recent-foods": "ts-node -r tsconfig-paths/register --transpile-only --compiler-options '{\"module\":\"CommonJS\",\"moduleResolution\":\"node\",\"target\":\"ES2022\"}' scripts/test-recent-home-foods.ts",
     "test:seasonal-foundation": "ts-node -r tsconfig-paths/register --transpile-only --compiler-options '{\"module\":\"CommonJS\",\"moduleResolution\":\"node\",\"target\":\"ES2022\"}' scripts/test-seasonal-foundation.ts",
     "verify:ios-admob-build": "ts-node --transpile-only --compiler-options '{\"module\":\"CommonJS\",\"moduleResolution\":\"node\",\"target\":\"ES2022\"}' scripts/verify-ios-admob-build.ts",
+    "review:summer-2026:auto": "ts-node -r tsconfig-paths/register --transpile-only --compiler-options '{\"module\":\"CommonJS\",\"moduleResolution\":\"node\",\"target\":\"ES2022\"}' scripts/auto-review-summer-2026.ts",
+    "import:summer-2026:auto": "ts-node -r tsconfig-paths/register --transpile-only --compiler-options '{\"module\":\"CommonJS\",\"moduleResolution\":\"node\",\"target\":\"ES2022\"}' scripts/import-auto-verified-summer-2026.ts",
     "format:check": "eslint .",
     "typecheck": "next typegen && tsc --noEmit --target es2022 --downlevelIteration",
     "crawl": "ts-node --transpile-only --compiler-options '{\"module\":\"CommonJS\",\"moduleResolution\":\"node\",\"target\":\"ES2022\"}' scripts/crawl-usj-foods.ts all",

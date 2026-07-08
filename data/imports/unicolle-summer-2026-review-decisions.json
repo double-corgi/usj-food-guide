@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "sourceDraftFile": "data/imports/unicolle-summer-2026-drafts.json",
   "generatedAt": "2026-07-07T01:19:58.691Z",
-  "updatedAt": "2026-07-08T14:15:00.000+09:00",
+  "updatedAt": "2026-07-08T17:46:39.317Z",
   "decisions": [
     {
       "proposedId": "draft-summer-2026-matsuri-goldfish-lemon-soda",
@@ -64,16 +64,16 @@
             "status": "candidate"
           }
         ],
-        "imageReviewStatus": "candidate-only",
-        "imageReviewNote": "画像候補を再監査済み。Codexではconfirmedへ変更せず、人間レビューで正式採用が必要。",
+        "imageReviewStatus": "unresolved",
+        "imageReviewNote": "auto-verification C: 公式価格が確定していない / 候補画像が複数あり、1商品1画像に自動確定できない",
         "imageCheckedAt": null
       },
       "targetType": "new",
       "existingFoodId": null,
       "duplicateAction": "new_manual_food",
-      "imageReview": "candidate-only",
+      "imageReview": "unresolved",
       "priceReview": "unresolved",
-      "reviewerNote": "",
+      "reviewerNote": "auto-verification C: 公式価格が確定していない / 候補画像が複数あり、1商品1画像に自動確定できない",
       "reviewedAt": null
     },
     {
@@ -130,16 +130,16 @@
             "status": "candidate"
           }
         ],
-        "imageReviewStatus": "candidate-only",
-        "imageReviewNote": "画像候補を再監査済み。Codexではconfirmedへ変更せず、人間レビューで正式採用が必要。",
+        "imageReviewStatus": "unresolved",
+        "imageReviewNote": "auto-verification C: 公式価格が確定していない / 既存商品との統合方法が自動確定には不十分 / 候補画像が複数あり、1商品1画像に自動確定できない",
         "imageCheckedAt": null
       },
       "targetType": "existing",
       "existingFoodId": "food-j4nvrm",
       "duplicateAction": "override_add",
-      "imageReview": "candidate-only",
+      "imageReview": "unresolved",
       "priceReview": "unresolved",
-      "reviewerNote": "",
+      "reviewerNote": "auto-verification C: 公式価格が確定していない / 既存商品との統合方法が自動確定には不十分 / 候補画像が複数あり、1商品1画像に自動確定できない",
       "reviewedAt": null
     },
     {
@@ -202,16 +202,16 @@
             "status": "candidate"
           }
         ],
-        "imageReviewStatus": "candidate-only",
-        "imageReviewNote": "画像候補を再監査済み。Codexではconfirmedへ変更せず、人間レビューで正式採用が必要。",
+        "imageReviewStatus": "unresolved",
+        "imageReviewNote": "auto-verification C: 公式価格が確定していない / 候補画像が複数あり、1商品1画像に自動確定できない",
         "imageCheckedAt": null
       },
       "targetType": "new",
       "existingFoodId": null,
       "duplicateAction": "new_manual_food",
-      "imageReview": "candidate-only",
+      "imageReview": "unresolved",
       "priceReview": "unresolved",
-      "reviewerNote": "",
+      "reviewerNote": "auto-verification C: 公式価格が確定していない / 候補画像が複数あり、1商品1画像に自動確定できない",
       "reviewedAt": null
     },
     {
@@ -268,16 +268,16 @@
             "status": "candidate"
           }
         ],
-        "imageReviewStatus": "candidate-only",
-        "imageReviewNote": "画像候補を再監査済み。Codexではconfirmedへ変更せず、人間レビューで正式採用が必要。",
+        "imageReviewStatus": "unresolved",
+        "imageReviewNote": "auto-verification C: 公式価格が確定していない / 候補画像が複数あり、1商品1画像に自動確定できない",
         "imageCheckedAt": null
       },
       "targetType": "new",
       "existingFoodId": null,
       "duplicateAction": "new_manual_food",
-      "imageReview": "candidate-only",
+      "imageReview": "unresolved",
       "priceReview": "unresolved",
-      "reviewerNote": "",
+      "reviewerNote": "auto-verification C: 公式価格が確定していない / 候補画像が複数あり、1商品1画像に自動確定できない",
       "reviewedAt": null
     },
     {
@@ -330,7 +330,7 @@
           }
         ],
         "imageReviewStatus": "candidate-only",
-        "imageReviewNote": "画像候補を再監査済み。Codexではconfirmedへ変更せず、人間レビューで正式採用が必要。",
+        "imageReviewNote": "auto-verification B: 画像候補が集合画像またはバリエーションを含む可能性がある / 公式ページのDOM/構造化データを取得できず同一ブロックを証明できない / perceptual hashを計算できない",
         "imageCheckedAt": null
       },
       "targetType": "new",
@@ -338,7 +338,7 @@
       "duplicateAction": "new_manual_food",
       "imageReview": "candidate-only",
       "priceReview": "official-confirmed",
-      "reviewerNote": "",
+      "reviewerNote": "auto-verification B: 画像候補が集合画像またはバリエーションを含む可能性がある / 公式ページのDOM/構造化データを取得できず同一ブロックを証明できない / perceptual hashを計算できない",
       "reviewedAt": null
     },
     {
@@ -391,7 +391,7 @@
           }
         ],
         "imageReviewStatus": "candidate-only",
-        "imageReviewNote": "画像候補を再監査済み。Codexではconfirmedへ変更せず、人間レビューで正式採用が必要。",
+        "imageReviewNote": "auto-verification B: 既存商品との統合方法が自動確定には不十分 / 画像候補が集合画像またはバリエーションを含む可能性がある / 公式ページのDOM/構造化データを取得できず同一ブロックを証明できない / perceptual hashを計算できない",
         "imageCheckedAt": null
       },
       "targetType": "existing",
@@ -399,7 +399,7 @@
       "duplicateAction": "variant_add",
       "imageReview": "candidate-only",
       "priceReview": "official-confirmed",
-      "reviewerNote": "",
+      "reviewerNote": "auto-verification B: 既存商品との統合方法が自動確定には不十分 / 画像候補が集合画像またはバリエーションを含む可能性がある / 公式ページのDOM/構造化データを取得できず同一ブロックを証明できない / perceptual hashを計算できない",
       "reviewedAt": null
     },
     {
@@ -449,7 +449,7 @@
           }
         ],
         "imageReviewStatus": "candidate-only",
-        "imageReviewNote": "画像候補を再監査済み。Codexではconfirmedへ変更せず、人間レビューで正式採用が必要。",
+        "imageReviewNote": "auto-verification B: 公式価格が確定していない / 画像候補が集合画像またはバリエーションを含む可能性がある / 公式ページのDOM/構造化データを取得できず同一ブロックを証明できない / perceptual hashを計算できない",
         "imageCheckedAt": null
       },
       "targetType": "existing",
@@ -457,7 +457,7 @@
       "duplicateAction": "collection_add",
       "imageReview": "candidate-only",
       "priceReview": "secondary-confirmed",
-      "reviewerNote": "",
+      "reviewerNote": "auto-verification B: 公式価格が確定していない / 画像候補が集合画像またはバリエーションを含む可能性がある / 公式ページのDOM/構造化データを取得できず同一ブロックを証明できない / perceptual hashを計算できない",
       "reviewedAt": null
     },
     {
@@ -507,7 +507,7 @@
           }
         ],
         "imageReviewStatus": "candidate-only",
-        "imageReviewNote": "画像候補を再監査済み。Codexではconfirmedへ変更せず、人間レビューで正式採用が必要。",
+        "imageReviewNote": "auto-verification B: 画像候補が集合画像またはバリエーションを含む可能性がある / 公式ページのDOM/構造化データを取得できず同一ブロックを証明できない / perceptual hashを計算できない",
         "imageCheckedAt": null
       },
       "targetType": "new",
@@ -515,7 +515,7 @@
       "duplicateAction": "new_manual_food",
       "imageReview": "candidate-only",
       "priceReview": "official-confirmed",
-      "reviewerNote": "",
+      "reviewerNote": "auto-verification B: 画像候補が集合画像またはバリエーションを含む可能性がある / 公式ページのDOM/構造化データを取得できず同一ブロックを証明できない / perceptual hashを計算できない",
       "reviewedAt": null
     },
     {
@@ -565,7 +565,7 @@
           }
         ],
         "imageReviewStatus": "candidate-only",
-        "imageReviewNote": "画像候補を再監査済み。Codexではconfirmedへ変更せず、人間レビューで正式採用が必要。",
+        "imageReviewNote": "auto-verification B: 画像候補が集合画像またはバリエーションを含む可能性がある / 公式ページのDOM/構造化データを取得できず同一ブロックを証明できない / perceptual hashを計算できない",
         "imageCheckedAt": null
       },
       "targetType": "new",
@@ -573,7 +573,7 @@
       "duplicateAction": "new_manual_food",
       "imageReview": "candidate-only",
       "priceReview": "official-confirmed",
-      "reviewerNote": "",
+      "reviewerNote": "auto-verification B: 画像候補が集合画像またはバリエーションを含む可能性がある / 公式ページのDOM/構造化データを取得できず同一ブロックを証明できない / perceptual hashを計算できない",
       "reviewedAt": null
     },
     {
@@ -631,7 +631,7 @@
           }
         ],
         "imageReviewStatus": "candidate-only",
-        "imageReviewNote": "画像候補を再監査済み。Codexではconfirmedへ変更せず、人間レビューで正式採用が必要。",
+        "imageReviewNote": "auto-verification B: 候補画像が複数あり、1商品1画像に自動確定できない",
         "imageCheckedAt": null
       },
       "targetType": "new",
@@ -639,7 +639,7 @@
       "duplicateAction": "new_manual_food",
       "imageReview": "candidate-only",
       "priceReview": "official-confirmed",
-      "reviewerNote": "",
+      "reviewerNote": "auto-verification B: 候補画像が複数あり、1商品1画像に自動確定できない",
       "reviewedAt": null
     },
     {
@@ -697,7 +697,7 @@
           }
         ],
         "imageReviewStatus": "candidate-only",
-        "imageReviewNote": "画像候補を再監査済み。Codexではconfirmedへ変更せず、人間レビューで正式採用が必要。",
+        "imageReviewNote": "auto-verification B: 候補画像が複数あり、1商品1画像に自動確定できない",
         "imageCheckedAt": null
       },
       "targetType": "new",
@@ -705,7 +705,7 @@
       "duplicateAction": "new_manual_food",
       "imageReview": "candidate-only",
       "priceReview": "official-confirmed",
-      "reviewerNote": "",
+      "reviewerNote": "auto-verification B: 候補画像が複数あり、1商品1画像に自動確定できない",
       "reviewedAt": null
     },
     {
@@ -762,7 +762,7 @@
           }
         ],
         "imageReviewStatus": "candidate-only",
-        "imageReviewNote": "画像候補を再監査済み。Codexではconfirmedへ変更せず、人間レビューで正式採用が必要。",
+        "imageReviewNote": "auto-verification B: 候補画像が複数あり、1商品1画像に自動確定できない",
         "imageCheckedAt": null
       },
       "targetType": "new",
@@ -770,7 +770,7 @@
       "duplicateAction": "new_manual_food",
       "imageReview": "candidate-only",
       "priceReview": "official-confirmed",
-      "reviewerNote": "",
+      "reviewerNote": "auto-verification B: 候補画像が複数あり、1商品1画像に自動確定できない",
       "reviewedAt": null
     },
     {
@@ -833,7 +833,7 @@
           }
         ],
         "imageReviewStatus": "candidate-only",
-        "imageReviewNote": "画像候補を再監査済み。Codexではconfirmedへ変更せず、人間レビューで正式採用が必要。",
+        "imageReviewNote": "auto-verification B: 候補画像が複数あり、1商品1画像に自動確定できない",
         "imageCheckedAt": null
       },
       "targetType": "new",
@@ -841,7 +841,7 @@
       "duplicateAction": "new_manual_food",
       "imageReview": "candidate-only",
       "priceReview": "official-confirmed",
-      "reviewerNote": "",
+      "reviewerNote": "auto-verification B: 候補画像が複数あり、1商品1画像に自動確定できない",
       "reviewedAt": null
     },
     {
@@ -904,7 +904,7 @@
           }
         ],
         "imageReviewStatus": "candidate-only",
-        "imageReviewNote": "画像候補を再監査済み。Codexではconfirmedへ変更せず、人間レビューで正式採用が必要。",
+        "imageReviewNote": "auto-verification B: 候補画像が複数あり、1商品1画像に自動確定できない",
         "imageCheckedAt": null
       },
       "targetType": "new",
@@ -912,7 +912,7 @@
       "duplicateAction": "new_manual_food",
       "imageReview": "candidate-only",
       "priceReview": "official-confirmed",
-      "reviewerNote": "",
+      "reviewerNote": "auto-verification B: 候補画像が複数あり、1商品1画像に自動確定できない",
       "reviewedAt": null
     },
     {
@@ -970,7 +970,7 @@
           }
         ],
         "imageReviewStatus": "candidate-only",
-        "imageReviewNote": "画像候補を再監査済み。Codexではconfirmedへ変更せず、人間レビューで正式採用が必要。",
+        "imageReviewNote": "auto-verification B: 候補画像が複数あり、1商品1画像に自動確定できない",
         "imageCheckedAt": null
       },
       "targetType": "new",
@@ -978,7 +978,7 @@
       "duplicateAction": "new_manual_food",
       "imageReview": "candidate-only",
       "priceReview": "official-confirmed",
-      "reviewerNote": "",
+      "reviewerNote": "auto-verification B: 候補画像が複数あり、1商品1画像に自動確定できない",
       "reviewedAt": null
     },
     {
@@ -1037,7 +1037,7 @@
           }
         ],
         "imageReviewStatus": "candidate-only",
-        "imageReviewNote": "画像候補を再監査済み。Codexではconfirmedへ変更せず、人間レビューで正式採用が必要。",
+        "imageReviewNote": "auto-verification B: 画像候補が集合画像またはバリエーションを含む可能性がある / 公式ページのDOM/構造化データを取得できず同一ブロックを証明できない / perceptual hashを計算できない",
         "imageCheckedAt": null
       },
       "targetType": "new",
@@ -1045,7 +1045,7 @@
       "duplicateAction": "new_manual_food",
       "imageReview": "candidate-only",
       "priceReview": "official-confirmed",
-      "reviewerNote": "",
+      "reviewerNote": "auto-verification B: 画像候補が集合画像またはバリエーションを含む可能性がある / 公式ページのDOM/構造化データを取得できず同一ブロックを証明できない / perceptual hashを計算できない",
       "reviewedAt": null
     },
     {
@@ -1096,7 +1096,7 @@
           }
         ],
         "imageReviewStatus": "candidate-only",
-        "imageReviewNote": "画像候補を再監査済み。Codexではconfirmedへ変更せず、人間レビューで正式採用が必要。",
+        "imageReviewNote": "auto-verification B: 画像候補が集合画像またはバリエーションを含む可能性がある / 公式ページのDOM/構造化データを取得できず同一ブロックを証明できない / perceptual hashを計算できない",
         "imageCheckedAt": null
       },
       "targetType": "new",
@@ -1104,7 +1104,7 @@
       "duplicateAction": "new_manual_food",
       "imageReview": "candidate-only",
       "priceReview": "official-confirmed",
-      "reviewerNote": "",
+      "reviewerNote": "auto-verification B: 画像候補が集合画像またはバリエーションを含む可能性がある / 公式ページのDOM/構造化データを取得できず同一ブロックを証明できない / perceptual hashを計算できない",
       "reviewedAt": null
     },
     {
@@ -1155,7 +1155,7 @@
           }
         ],
         "imageReviewStatus": "candidate-only",
-        "imageReviewNote": "画像候補を再監査済み。Codexではconfirmedへ変更せず、人間レビューで正式採用が必要。",
+        "imageReviewNote": "auto-verification B: 画像候補が集合画像またはバリエーションを含む可能性がある / 公式ページのDOM/構造化データを取得できず同一ブロックを証明できない / perceptual hashを計算できない",
         "imageCheckedAt": null
       },
       "targetType": "new",
@@ -1163,7 +1163,7 @@
       "duplicateAction": "new_manual_food",
       "imageReview": "candidate-only",
       "priceReview": "official-confirmed",
-      "reviewerNote": "",
+      "reviewerNote": "auto-verification B: 画像候補が集合画像またはバリエーションを含む可能性がある / 公式ページのDOM/構造化データを取得できず同一ブロックを証明できない / perceptual hashを計算できない",
       "reviewedAt": null
     },
     {
@@ -1204,7 +1204,7 @@
         ],
         "imageCandidates": [],
         "imageReviewStatus": "unresolved",
-        "imageReviewNote": "公式ページでは3種集合画像のみ確認。候補URL重複0件を維持できる未使用の公式候補を確保できなかった。",
+        "imageReviewNote": "auto-verification C: 有効な公式画像候補がない",
         "imageCheckedAt": null
       },
       "targetType": "new",
@@ -1212,7 +1212,7 @@
       "duplicateAction": "new_manual_food",
       "imageReview": "unresolved",
       "priceReview": "official-confirmed",
-      "reviewerNote": "",
+      "reviewerNote": "auto-verification C: 有効な公式画像候補がない",
       "reviewedAt": null
     },
     {
@@ -1282,7 +1282,7 @@
           }
         ],
         "imageReviewStatus": "candidate-only",
-        "imageReviewNote": "画像候補を再監査済み。Codexではconfirmedへ変更せず、人間レビューで正式採用が必要。",
+        "imageReviewNote": "auto-verification B: 候補画像が複数あり、1商品1画像に自動確定できない",
         "imageCheckedAt": null
       },
       "targetType": "new",
@@ -1290,7 +1290,7 @@
       "duplicateAction": "new_manual_food",
       "imageReview": "candidate-only",
       "priceReview": "official-confirmed",
-      "reviewerNote": "",
+      "reviewerNote": "auto-verification B: 候補画像が複数あり、1商品1画像に自動確定できない",
       "reviewedAt": null
     },
     {
@@ -1360,7 +1360,7 @@
           }
         ],
         "imageReviewStatus": "candidate-only",
-        "imageReviewNote": "画像候補を再監査済み。Codexではconfirmedへ変更せず、人間レビューで正式採用が必要。",
+        "imageReviewNote": "auto-verification B: 候補画像が複数あり、1商品1画像に自動確定できない",
         "imageCheckedAt": null
       },
       "targetType": "new",
@@ -1368,7 +1368,7 @@
       "duplicateAction": "new_manual_food",
       "imageReview": "candidate-only",
       "priceReview": "official-confirmed",
-      "reviewerNote": "",
+      "reviewerNote": "auto-verification B: 候補画像が複数あり、1商品1画像に自動確定できない",
       "reviewedAt": null
     },
     {
@@ -1418,7 +1418,7 @@
           }
         ],
         "imageReviewStatus": "candidate-only",
-        "imageReviewNote": "画像候補を再監査済み。Codexではconfirmedへ変更せず、人間レビューで正式採用が必要。",
+        "imageReviewNote": "auto-verification B: 画像候補が集合画像またはバリエーションを含む可能性がある / 公式ページのDOM/構造化データを取得できず同一ブロックを証明できない / perceptual hashを計算できない",
         "imageCheckedAt": null
       },
       "targetType": "new",
@@ -1426,7 +1426,7 @@
       "duplicateAction": "new_manual_food",
       "imageReview": "candidate-only",
       "priceReview": "official-confirmed",
-      "reviewerNote": "",
+      "reviewerNote": "auto-verification B: 画像候補が集合画像またはバリエーションを含む可能性がある / 公式ページのDOM/構造化データを取得できず同一ブロックを証明できない / perceptual hashを計算できない",
       "reviewedAt": null
     },
     {
@@ -1476,7 +1476,7 @@
           }
         ],
         "imageReviewStatus": "candidate-only",
-        "imageReviewNote": "画像候補を再監査済み。Codexではconfirmedへ変更せず、人間レビューで正式採用が必要。",
+        "imageReviewNote": "auto-verification B: 画像候補が集合画像またはバリエーションを含む可能性がある / 公式ページのDOM/構造化データを取得できず同一ブロックを証明できない / perceptual hashを計算できない",
         "imageCheckedAt": null
       },
       "targetType": "new",
@@ -1484,7 +1484,7 @@
       "duplicateAction": "new_manual_food",
       "imageReview": "candidate-only",
       "priceReview": "official-confirmed",
-      "reviewerNote": "",
+      "reviewerNote": "auto-verification B: 画像候補が集合画像またはバリエーションを含む可能性がある / 公式ページのDOM/構造化データを取得できず同一ブロックを証明できない / perceptual hashを計算できない",
       "reviewedAt": null
     },
     {
@@ -1541,7 +1541,7 @@
           }
         ],
         "imageReviewStatus": "candidate-only",
-        "imageReviewNote": "画像候補を再監査済み。Codexではconfirmedへ変更せず、人間レビューで正式採用が必要。",
+        "imageReviewNote": "auto-verification B: 複数店舗または複数エリアのため一意に確定できない / 画像候補が集合画像またはバリエーションを含む可能性がある / 公式ページのDOM/構造化データを取得できず同一ブロックを証明できない / perceptual hashを計算できない",
         "imageCheckedAt": null
       },
       "targetType": "new",
@@ -1549,7 +1549,7 @@
       "duplicateAction": "new_manual_food",
       "imageReview": "candidate-only",
       "priceReview": "official-confirmed",
-      "reviewerNote": "",
+      "reviewerNote": "auto-verification B: 複数店舗または複数エリアのため一意に確定できない / 画像候補が集合画像またはバリエーションを含む可能性がある / 公式ページのDOM/構造化データを取得できず同一ブロックを証明できない / perceptual hashを計算できない",
       "reviewedAt": null
     },
     {
@@ -1615,7 +1615,7 @@
           }
         ],
         "imageReviewStatus": "candidate-only",
-        "imageReviewNote": "画像候補を再監査済み。Codexではconfirmedへ変更せず、人間レビューで正式採用が必要。",
+        "imageReviewNote": "auto-verification B: 複数店舗または複数エリアのため一意に確定できない / 候補画像が複数あり、1商品1画像に自動確定できない",
         "imageCheckedAt": null
       },
       "targetType": "new",
@@ -1623,7 +1623,7 @@
       "duplicateAction": "new_manual_food",
       "imageReview": "candidate-only",
       "priceReview": "official-confirmed",
-      "reviewerNote": "",
+      "reviewerNote": "auto-verification B: 複数店舗または複数エリアのため一意に確定できない / 候補画像が複数あり、1商品1画像に自動確定できない",
       "reviewedAt": null
     },
     {
@@ -1681,7 +1681,7 @@
           }
         ],
         "imageReviewStatus": "candidate-only",
-        "imageReviewNote": "画像候補を再監査済み。Codexではconfirmedへ変更せず、人間レビューで正式採用が必要。",
+        "imageReviewNote": "auto-verification B: 候補画像が複数あり、1商品1画像に自動確定できない",
         "imageCheckedAt": null
       },
       "targetType": "new",
@@ -1689,7 +1689,7 @@
       "duplicateAction": "new_manual_food",
       "imageReview": "candidate-only",
       "priceReview": "official-confirmed",
-      "reviewerNote": "",
+      "reviewerNote": "auto-verification B: 候補画像が複数あり、1商品1画像に自動確定できない",
       "reviewedAt": null
     },
     {
@@ -1750,7 +1750,7 @@
           }
         ],
         "imageReviewStatus": "candidate-only",
-        "imageReviewNote": "画像候補を再監査済み。Codexではconfirmedへ変更せず、人間レビューで正式採用が必要。",
+        "imageReviewNote": "auto-verification B: 複数店舗または複数エリアのため一意に確定できない / 候補画像が複数あり、1商品1画像に自動確定できない",
         "imageCheckedAt": null
       },
       "targetType": "existing",
@@ -1758,7 +1758,7 @@
       "duplicateAction": "override_add",
       "imageReview": "candidate-only",
       "priceReview": "official-confirmed",
-      "reviewerNote": "",
+      "reviewerNote": "auto-verification B: 複数店舗または複数エリアのため一意に確定できない / 候補画像が複数あり、1商品1画像に自動確定できない",
       "reviewedAt": null
     },
     {
@@ -1818,7 +1818,7 @@
           }
         ],
         "imageReviewStatus": "candidate-only",
-        "imageReviewNote": "画像候補を再監査済み。Codexではconfirmedへ変更せず、人間レビューで正式採用が必要。",
+        "imageReviewNote": "auto-verification B: 公式価格が確定していない / 候補画像が複数あり、1商品1画像に自動確定できない",
         "imageCheckedAt": null
       },
       "targetType": "existing",
@@ -1826,7 +1826,7 @@
       "duplicateAction": "collection_add",
       "imageReview": "candidate-only",
       "priceReview": "secondary-confirmed",
-      "reviewerNote": "",
+      "reviewerNote": "auto-verification B: 公式価格が確定していない / 候補画像が複数あり、1商品1画像に自動確定できない",
       "reviewedAt": null
     },
     {
@@ -1887,7 +1887,7 @@
           }
         ],
         "imageReviewStatus": "candidate-only",
-        "imageReviewNote": "画像候補を再監査済み。Codexではconfirmedへ変更せず、人間レビューで正式採用が必要。",
+        "imageReviewNote": "auto-verification B: 既存商品との統合方法が自動確定には不十分 / 候補画像が複数あり、1商品1画像に自動確定できない",
         "imageCheckedAt": null
       },
       "targetType": "existing",
@@ -1895,7 +1895,7 @@
       "duplicateAction": "override_add",
       "imageReview": "candidate-only",
       "priceReview": "official-confirmed",
-      "reviewerNote": "",
+      "reviewerNote": "auto-verification B: 既存商品との統合方法が自動確定には不十分 / 候補画像が複数あり、1商品1画像に自動確定できない",
       "reviewedAt": null
     },
     {
@@ -1940,16 +1940,16 @@
             "status": "candidate"
           }
         ],
-        "imageReviewStatus": "candidate-only",
-        "imageReviewNote": "画像候補を再監査済み。Codexではconfirmedへ変更せず、人間レビューで正式採用が必要。",
+        "imageReviewStatus": "unresolved",
+        "imageReviewNote": "auto-verification C: 公式価格が確定していない / 複数店舗または複数エリアのため一意に確定できない / 画像候補が集合画像またはバリエーションを含む可能性がある / 公式ページのDOM/構造化データを取得できず同一ブロックを証明できない / perceptual hashを計算できない",
         "imageCheckedAt": null
       },
       "targetType": "new",
       "existingFoodId": null,
       "duplicateAction": "new_manual_food",
-      "imageReview": "candidate-only",
+      "imageReview": "unresolved",
       "priceReview": "unresolved",
-      "reviewerNote": "",
+      "reviewerNote": "auto-verification C: 公式価格が確定していない / 複数店舗または複数エリアのため一意に確定できない / 画像候補が集合画像またはバリエーションを含む可能性がある / 公式ページのDOM/構造化データを取得できず同一ブロックを証明できない / perceptual hashを計算できない",
       "reviewedAt": null
     }
   ]
