@@ -1,7 +1,8 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ExternalLink, PencilLine } from "lucide-react";
-import { FoodImage } from "@/components/food-image";
+import { AdminFoodImagePreview } from "@/components/admin/admin-food-image-preview";
+import { AdminFoodImageViewer } from "@/components/admin/admin-food-image-viewer";
 import { ManualFoodDeleteButton } from "@/components/admin/manual-food-delete-button";
 import { ManualFoodVisibilityButton } from "@/components/admin/manual-food-visibility-button";
 import { ResetGeneratedFoodButton } from "@/components/admin/reset-generated-food-button";
@@ -126,19 +127,20 @@ export default async function AdminFoodDetailPage({
       </section>
 
       <section className="grid gap-5 lg:grid-cols-[360px_1fr]">
-        <div className="overflow-hidden rounded-lg border border-slate-200 bg-white shadow-soft">
-          <div className="aspect-[4/3] bg-slate-100">
-            <FoodImage food={food} className="h-full w-full" variant="cover" eager />
-          </div>
+        <div className="rounded-lg border border-slate-200 bg-white p-4 shadow-soft">
+          <AdminFoodImageViewer
+            src={activeImage?.imageUrl ?? food.imageUrl}
+            alt={`${food.name}の商品画像`}
+            sourceUrl={activeImage?.sourceUrl}
+            label="現在の画像"
+            variant="detail"
+            placeholderState="no-image"
+            zoomable
+            eager
+          />
           <div className="space-y-2 p-4 text-sm font-bold text-slate-500">
             <p>画像ID: {activeImage?.id ?? "なし"}</p>
             <p>画像source: {activeImage?.sourceType ?? "なし"}</p>
-            {activeImage?.sourceUrl ? (
-              <a href={activeImage.sourceUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 font-black text-park underline underline-offset-4">
-                画像出典
-                <ExternalLink size={14} aria-hidden />
-              </a>
-            ) : null}
           </div>
         </div>
 
@@ -207,10 +209,19 @@ export default async function AdminFoodDetailPage({
             <div className="mt-3 space-y-2">
               {food.images.length > 0 ? (
                 food.images.map((image) => (
-                  <div key={image.id} className="rounded-lg border border-slate-100 p-3 text-sm font-bold text-slate-600">
-                    <p className="text-ink">{image.id}</p>
-                    <p>enabled: {image.enabled ? "true" : "false"} / source: {image.sourceType}</p>
-                    <p className="break-all text-xs text-slate-500">{image.imageUrl}</p>
+                  <div key={image.id} className="flex gap-3 rounded-lg border border-slate-100 p-3 text-sm font-bold text-slate-600">
+                    <AdminFoodImagePreview src={image.imageUrl} alt={`${food.name}の登録画像`} variant="thumb" placeholderState="no-image" />
+                    <div className="min-w-0 flex-1">
+                      <p className="text-ink">{image.id}</p>
+                      <p>enabled: {image.enabled ? "true" : "false"} / source: {image.sourceType}</p>
+                      <p className="break-all text-xs text-slate-500">{image.imageUrl}</p>
+                      {image.sourceUrl ? (
+                        <a href={image.sourceUrl} target="_blank" rel="noopener noreferrer" className="mt-1 inline-flex items-center gap-1 text-xs font-black text-blue-800 underline underline-offset-4">
+                          出典ページを開く
+                          <ExternalLink size={13} aria-hidden />
+                        </a>
+                      ) : null}
+                    </div>
                   </div>
                 ))
               ) : (

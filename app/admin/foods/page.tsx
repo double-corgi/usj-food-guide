@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { PencilLine, Plus, Search } from "lucide-react";
 import { resetGeneratedFoodOverride, setGeneratedFoodVisibility, setManualFoodDeleted, setManualFoodVisibility } from "@/app/admin/foods/actions";
-import { FoodImage } from "@/components/food-image";
+import { AdminFoodImagePreview } from "@/components/admin/admin-food-image-preview";
 import { ManualFoodDeleteButton } from "@/components/admin/manual-food-delete-button";
 import { ManualFoodVisibilityButton } from "@/components/admin/manual-food-visibility-button";
 import { ResetGeneratedFoodButton } from "@/components/admin/reset-generated-food-button";
@@ -223,8 +223,14 @@ export default async function AdminFoodsPage({ searchParams }: { searchParams?: 
                 <tr key={food.id} className="align-top">
                   <td className="px-4 py-3">
                     <div className="flex gap-3">
-                      <div className="h-16 w-20 shrink-0 overflow-hidden rounded-lg bg-slate-100">
-                        <FoodImage food={food} className="h-full w-full" />
+                      <div className="shrink-0 space-y-1">
+                        <AdminFoodImagePreview
+                          src={getPrimaryImageUrl(food)}
+                          alt={`${food.name}の商品画像`}
+                          variant="candidate"
+                          placeholderState="no-image"
+                        />
+                        <p className="text-center text-[11px] font-black text-slate-500">{getPrimaryImageUrl(food) ? "画像あり" : "画像なし"}</p>
                       </div>
                       <div className="min-w-0">
                         <Link href={`/admin/foods/${food.id}`} className="line-clamp-2 font-black text-ink hover:text-park">
@@ -343,8 +349,14 @@ function FoodCard({ food, canManage, collections }: { food: FoodWithRelations; c
   return (
     <article className="rounded-lg border border-slate-200 bg-white p-3 shadow-soft">
       <div className="flex gap-3">
-        <div className="h-24 w-28 shrink-0 overflow-hidden rounded-lg bg-slate-100">
-          <FoodImage food={food} className="h-full w-full" />
+        <div className="shrink-0 space-y-1">
+          <AdminFoodImagePreview
+            src={getPrimaryImageUrl(food)}
+            alt={`${food.name}の商品画像`}
+            variant="candidate"
+            placeholderState="no-image"
+          />
+          <p className="text-center text-[11px] font-black text-slate-500">{getPrimaryImageUrl(food) ? "画像あり" : "画像なし"}</p>
         </div>
         <div className="min-w-0 flex-1">
           <Link href={`/admin/foods/${food.id}`} className="line-clamp-2 text-base font-black leading-6 text-ink">
@@ -398,6 +410,10 @@ function FoodCard({ food, canManage, collections }: { food: FoodWithRelations; c
       </div>
     </article>
   );
+}
+
+function getPrimaryImageUrl(food: FoodWithRelations) {
+  return (food.images.find((image) => image.enabled) ?? food.images[0])?.imageUrl ?? food.imageUrl ?? "";
 }
 
 function StatusBadges({ food, collections }: { food: FoodWithRelations; collections: FoodCollection[] }) {

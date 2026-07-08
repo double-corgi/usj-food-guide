@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { AdminFoodImagePlaceholder, type AdminFoodImagePlaceholderState } from "@/components/admin/admin-food-image-placeholder";
 
-export type AdminFoodImagePreviewVariant = "card" | "current" | "candidate" | "form" | "thumb" | "zoom";
+export type AdminFoodImagePreviewVariant = "card" | "current" | "candidate" | "form" | "detail" | "thumb" | "zoom";
 export type AdminFoodImageFit = "cover" | "contain";
 
 const variantFrameClass: Record<AdminFoodImagePreviewVariant, string> = {
@@ -11,6 +11,7 @@ const variantFrameClass: Record<AdminFoodImagePreviewVariant, string> = {
   current: "h-[105px] w-[140px]",
   candidate: "h-[72px] w-[96px]",
   form: "w-full max-w-[420px] aspect-[4/3] max-h-[315px]",
+  detail: "w-full max-w-[560px] aspect-[4/3] max-h-[420px]",
   thumb: "h-[60px] w-[80px]",
   zoom: "max-h-[min(70vh,540px)] max-w-[min(90vw,720px)]"
 };

@@ -1,7 +1,8 @@
 "use client";
 
-import { ImagePlus, Lock } from "lucide-react";
+import { Lock } from "lucide-react";
 import { useActionState, useEffect, useMemo, useState } from "react";
+import { AdminFoodImageViewer } from "@/components/admin/admin-food-image-viewer";
 import {
   adminAreaOptions,
   adminCategoryTagOptions,
@@ -101,6 +102,8 @@ export function AdminFoodForm({
     () => new Set(initialCategoryValues.filter((value) => visibleCategoryValues.has(value)))
   );
   const activeImage = getActiveImage(food);
+  const formPreviewImageUrl = previewUrl ?? activeImage?.imageUrl ?? food?.imageUrl ?? "";
+  const formPreviewSourceUrl = activeImage?.sourceUrl ?? formatSourceUrlValue(infoSourceUrl ?? food?.sourceUrl);
   const title = mode === "new" ? "商品追加フォーム" : "商品編集フォーム";
   const sourceKind = sourceKindProp ?? "manual";
   const isGeneratedOverride = sourceKind === "generated";
@@ -590,16 +593,15 @@ export function AdminFoodForm({
       <section className="rounded-2xl border border-slate-200 bg-white p-4 shadow-soft sm:p-5">
         <SectionHeading step="⑤" title="画像" description={isGeneratedOverride ? "画像を選ぶと、元画像は残したまま修正画像として保存します。未選択なら現在の画像を維持します。" : "公開する商品には画像が必要です。画像なしでも下書き保存できます。"} required={!isGeneratedOverride} />
         <div className="mt-4 grid gap-4 lg:grid-cols-[280px_1fr]">
-          <div className="overflow-hidden rounded-2xl border border-slate-200 bg-slate-50 shadow-sm">
-            {previewUrl || activeImage?.imageUrl || food?.imageUrl ? (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img src={previewUrl ?? activeImage?.imageUrl ?? food?.imageUrl} alt="" className="aspect-[4/3] w-full object-cover" />
-            ) : (
-              <div className="grid aspect-[4/3] place-items-center text-slate-400">
-                <ImagePlus size={32} aria-hidden />
-              </div>
-            )}
-          </div>
+          <AdminFoodImageViewer
+            src={formPreviewImageUrl}
+            alt={`${nameInput || food?.name || "商品"}の保存前画像プレビュー`}
+            sourceUrl={formPreviewSourceUrl}
+            label={previewUrl ? "保存前プレビュー" : "現在の画像"}
+            variant="form"
+            placeholderState="no-image"
+            zoomable
+          />
           <div className="space-y-3">
             <label className="block">
               <span className="text-xs font-black text-slate-500">
@@ -624,6 +626,9 @@ export function AdminFoodForm({
               {isGeneratedOverride
                 ? "画像を選んで保存すると、修正画像として商品カード向けサイズに自動調整されます。画像を選ばなければ現在の画像を維持します。"
                 : "画像なしでも下書き保存できます。公開する場合は画像が必要です。画像は自動で商品カード向けサイズに調整されます。編集時に画像を選ばなければ既存画像を維持します。"}
+            </p>
+            <p className="rounded-2xl border border-slate-200 bg-white px-4 py-3 text-xs font-bold leading-5 text-slate-600">
+              出典URLは「公式参照URL」欄または既存画像のsourceUrlを表示します。画像をクリックしても保存は実行されません。
             </p>
           </div>
         </div>
