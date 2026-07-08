@@ -1,7 +1,9 @@
 export type PriceVerificationStatus = "official-confirmed" | "secondary-confirmed" | "unresolved" | string;
 
 export type ReviewDecisionValue = "unreviewed" | "register" | "needs_revision" | "hold" | "exclude";
-export type ImageReviewValue = "verified" | "wrong" | "unconfirmed" | "no_image_planned";
+export type ImageReviewValue = "confirmed" | "incorrect" | "unresolved" | "no-image" | "candidate-only";
+export type LegacyImageReviewValue = "verified" | "wrong" | "unconfirmed" | "no_image_planned";
+export type ImageCandidateSourceType = "official-usj" | "official-press" | "official-restaurant" | "official-event" | "secondary" | "unknown" | string;
 export type TargetType = "new" | "existing";
 export type DuplicateAction =
   | "new_manual_food"
@@ -40,12 +42,10 @@ export type ReviewItem = {
   lastCheckedAt?: string | null;
   imageUrl?: string | null;
   imageSourceUrl?: string | null;
-  imageCandidates?: Array<{
-    url?: string | null;
-    sourceUrl?: string | null;
-    status?: string | null;
-    note?: string | null;
-  }>;
+  imageCandidates?: ReviewImageCandidate[];
+  imageReviewStatus?: ImageReviewValue | LegacyImageReviewValue | string | null;
+  imageReviewNote?: string | null;
+  imageCheckedAt?: string | null;
   unconfirmedFields?: string[];
   duplicateCandidates?: Array<{
     source?: string | null;
@@ -83,6 +83,16 @@ export type ReviewPriceVariant = {
   note?: string | null;
 };
 
+export type ReviewImageCandidate = {
+  url?: string | null;
+  sourceUrl?: string | null;
+  sourceType?: ImageCandidateSourceType | null;
+  title?: string | null;
+  note?: string | null;
+  discoveredAt?: string | null;
+  status?: "candidate" | "adopted" | "rejected" | string | null;
+};
+
 export type EditableReviewData = {
   name: string;
   price: number | null;
@@ -93,6 +103,10 @@ export type EditableReviewData = {
   description: string;
   imageUrl: string;
   imageSourceUrl: string;
+  imageCandidates: ReviewImageCandidate[];
+  imageReviewStatus: ImageReviewValue;
+  imageReviewNote: string;
+  imageCheckedAt: string | null;
   sourceUrl: string;
   officialReferenceUrls: string[];
   collectionId: string;

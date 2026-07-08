@@ -982,3 +982,37 @@
 - 各候補の `saleStartDate` / `saleEndDate` はnullを維持。
 - 公式ニュースで `ユニバーサル・サマー・マツリ・ナイト ～ネオン・グロウアップ～` のイベント期間 2026-07-01〜2026-08-26 を確認。
 - この日付はcollection-level referenceとしてJSONに保存し、商品個別日付には推測入力しない。
+
+# Phase R3 画像候補レビュー整理
+
+- 情報確認日: 2026-07-08
+- 対象: `/admin/summer-2026-review` の画像候補Picker実装前データ整理。
+- 方針: Codex調査だけでは `confirmed` にしない。単体商品画像として確定できない公式画像は `imageCandidates` に保存し、`imageReviewStatus` は `candidate-only` または `unresolved` とする。
+- 5値化: `confirmed` / `incorrect` / `unresolved` / `no-image` / `candidate-only`。
+
+## 現在画像未採用の商品
+
+現在のJSONを正として、画像未登録・未採用の商品は8件。
+
+- りんご飴 ～りんごのムース～
+- 水風船 ～ピーチゼリー＆レアチーズムース～
+- ストロベリー・フローズン・スムージー
+- トロピカルフルーツ・フローズン・スムージー
+- マンゴー・フローズン・スムージー
+- トロピカル・フラッペ ～ストロベリー～
+- トロピカル・フラッペ ～マンゴー～
+- ソフローズン グレープ マイメロディ＆クロミ バケツ＆スプーン付き
+
+## 公式候補画像の再確認
+
+- りんご飴 / 水風船: USJ公式ビバリーヒルズ・ブランジェリーおよびシーズナルフードの公式画像を候補として保持。2商品同時掲載画像のため、単体採用は行わない。
+- ストロベリー / トロピカルフルーツ / マンゴー・フローズン・スムージー: USJ公式ビバリーヒルズ・ブランジェリーおよびシーズナルフードの3商品同時掲載画像を候補として保持。単体商品画像ではないため、`imageUrl` は空欄維持。
+- トロピカル・フラッペ ～ストロベリー～ / ～マンゴー～: USJ公式ワーフカフェおよびフードカートの2商品同時掲載画像、ネオンカップ付きgallery画像を候補として保持。単体採用は行わない。
+- ソフローズン グレープ マイメロディ＆クロミ バケツ＆スプーン付き: USJ公式シーズナルフードのマイメロディ/クロミ関連商品同時掲載画像を候補として保持。商品単体画像ではないため、`imageUrl` は空欄維持。
+
+## R3データ反映
+
+- `data/imports/unicolle-summer-2026-drafts.json` に `imageReviewStatus`、`imageReviewNote`、`imageCheckedAt` を追加。
+- `imageCandidates` は URL重複を除外し、`sourceUrl`、`sourceType`、`title`、`note`、`discoveredAt`、`status` を保持。
+- 既存の `unconfirmed` 判断は、候補ありの場合 `candidate-only`、候補なしの場合 `unresolved` に正規化。
+- 人間が確認済みの `confirmed` は存在しないため、今回の整理で自動confirmed化した商品は0件。

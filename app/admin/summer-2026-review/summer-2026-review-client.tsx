@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useMemo, useState, useTransition } from "react";
 import { AlertTriangle, CalendarDays, CheckCircle2, ChevronDown, ChevronUp, Database, Filter, Link2, MapPin, ReceiptText, Save, Store, Tags } from "lucide-react";
+import { AdminFoodImagePicker } from "@/components/admin/admin-food-image-picker";
 import { AdminFoodImagePreview } from "@/components/admin/admin-food-image-preview";
 import { adminAreaOptions, adminFoodCategoryOptions, adminLegacyCategoryTagOptions, adminReviewStatusOptions } from "@/lib/admin-food-ui";
 import { saveSummer2026ReviewDecisions } from "./actions";
@@ -39,8 +40,12 @@ type ReviewFilter =
   | "needs_revision"
   | "hold"
   | "exclude"
-  | "image-wrong"
-  | "image-unconfirmed"
+  | "image-confirmed"
+  | "image-incorrect"
+  | "image-unresolved"
+  | "image-none"
+  | "image-candidate-only"
+  | "image-no-candidates"
   | "price-missing"
   | "new"
   | "existing"
@@ -54,8 +59,12 @@ const FILTERS: Array<{ id: ReviewFilter; label: string }> = [
   { id: "needs_revision", label: "修正が必要" },
   { id: "hold", label: "保留" },
   { id: "exclude", label: "除外" },
-  { id: "image-wrong", label: "画像が違う" },
-  { id: "image-unconfirmed", label: "画像未確認" },
+  { id: "image-confirmed", label: "画像確認済み" },
+  { id: "image-incorrect", label: "画像が違う" },
+  { id: "image-unresolved", label: "画像未確認" },
+  { id: "image-none", label: "画像なし" },
+  { id: "image-candidate-only", label: "候補あり・未採用" },
+  { id: "image-no-candidates", label: "候補なし" },
   { id: "price-missing", label: "価格未確認" },
   { id: "new", label: "新規商品" },
   { id: "existing", label: "既存商品へ追記" },
@@ -64,7 +73,7 @@ const FILTERS: Array<{ id: ReviewFilter; label: string }> = [
 ];
 
 const decisionOptions: ReviewDecisionValue[] = ["unreviewed", "register", "needs_revision", "hold", "exclude"];
-const imageReviewOptions: ImageReviewValue[] = ["verified", "wrong", "unconfirmed", "no_image_planned"];
+const imageReviewOptions: ImageReviewValue[] = ["confirmed", "incorrect", "unresolved", "candidate-only", "no-image"];
 const priceReviewOptions: PriceVerificationStatus[] = ["official-confirmed", "secondary-confirmed", "unresolved"];
 const targetTypeOptions: Array<{ value: TargetType; label: string }> = [
   { value: "new", label: "新規商品" },
@@ -364,7 +373,7 @@ function ReviewCard({
             src={decision.editedData.imageUrl}
             alt={decision.editedData.name || item.name}
             variant="card"
-            placeholderState={decision.imageReview === "no_image_planned" ? "no-image" : "unconfirmed"}
+            placeholderState={decision.imageReview === "no-image" ? "no-image" : "unconfirmed"}
           />
           </div>
 
@@ -374,7 +383,7 @@ function ReviewCard({
               <span className={`rounded-full px-3 py-1 text-xs font-black ${decision.targetType === "existing" ? "bg-ink text-white" : "bg-sun/25 text-amber-900"}`}>
                 {decision.targetType === "existing" ? "既存商品へ追記" : "新規商品"}
               </span>
-              <ImageReviewBadge value={decision.imageReview} />
+              <ImageReviewBadge value={decision.imageReview} candidateCount={decision.editedData.imageCandidates.length} />
               <PriceStatusBadge status={decision.priceReview} />
             </div>
             <h2 className="mt-3 text-lg font-black leading-snug text-ink [overflow-wrap:anywhere] sm:text-xl" title={decision.editedData.name || item.name}>
@@ -417,7 +426,7 @@ function ReviewCard({
                 value={decision.decision}
                 options={decisionOptions.map((value) => ({ value, label: decisionLabels[value] }))}
                 onChange={(value) => {
-                  if (value === "register" && decision.imageReview === "wrong") return;
+                  if (value === "register" && blocksRegisterForImage(decision.imageReview)) return;
                   onDecisionChange(item.id, (current) => ({ ...current, decision: value as ReviewDecisionValue }));
                 }}
               />
@@ -425,7 +434,17 @@ function ReviewCard({
                 label="画像確認"
                 value={decision.imageReview}
                 options={imageReviewOptions.map((value) => ({ value, label: imageReviewLabels[value] }))}
-                onChange={(value) => onDecisionChange(item.id, (current) => ({ ...current, imageReview: value as ImageReviewValue }))}
+                onChange={(value) =>
+                  onDecisionChange(item.id, (current) => ({
+                    ...current,
+                    imageReview: value as ImageReviewValue,
+                    editedData: {
+                      ...current.editedData,
+                      imageReviewStatus: value as ImageReviewValue,
+                      imageCheckedAt: value === "confirmed" || value === "incorrect" || value === "no-image" ? new Date().toISOString() : current.editedData.imageCheckedAt
+                    }
+                  }))
+                }
               />
             </div>
             <div className="mt-3 grid gap-3 lg:grid-cols-3">
@@ -455,10 +474,35 @@ function ReviewCard({
                 onChange={(value) => onDecisionChange(item.id, (current) => ({ ...current, duplicateAction: value as DuplicateAction }))}
               />
             </div>
-            {decision.imageReview === "wrong" ? <WarningText>画像が違う商品は「登録する」にできません。修正後に画像確認を変更してください。</WarningText> : null}
-            {decision.imageReview === "unconfirmed" ? <WarningText>画像未確認です。登録前に商品画像の一致確認が必要です。</WarningText> : null}
+            {decision.imageReview === "incorrect" ? <WarningText>画像が違う商品は「登録する」にできません。修正後に画像確認を変更してください。</WarningText> : null}
+            {decision.imageReview === "unresolved" ? <WarningText>画像未確認です。登録前に商品画像の一致確認が必要です。</WarningText> : null}
+            {decision.imageReview === "candidate-only" ? <WarningText>候補画像はありますが未採用です。「この画像を採用」または画像なし方針を選ぶまでimport-readyには入りません。</WarningText> : null}
             {decision.decision === "register" && decision.priceReview === "unresolved" ? <WarningText>価格未確認のまま登録判断になっています。登録可能性チェックにも表示されます。</WarningText> : null}
           </section>
+
+          <AdminFoodImagePicker
+            productName={decision.editedData.name || item.name}
+            imageUrl={decision.editedData.imageUrl}
+            imageSourceUrl={decision.editedData.imageSourceUrl}
+            imageCandidates={decision.editedData.imageCandidates}
+            imageReviewStatus={decision.imageReview}
+            imageReviewNote={decision.editedData.imageReviewNote}
+            imageCheckedAt={decision.editedData.imageCheckedAt}
+            onChange={(changes) =>
+              onDecisionChange(item.id, (current) => {
+                const imageReview = changes.imageReviewStatus ?? current.imageReview;
+                return {
+                  ...current,
+                  imageReview,
+                  editedData: {
+                    ...current.editedData,
+                    ...changes,
+                    imageReviewStatus: imageReview
+                  }
+                };
+              })
+            }
+          />
 
           {decision.targetType === "existing" ? (
             <section className="rounded-2xl border border-slate-200 bg-cream p-4">
@@ -661,16 +705,18 @@ function DecisionBadge({ decision }: { decision: ReviewDecisionValue }) {
   return <span className={`rounded-full px-3 py-1 text-xs font-black ${className}`}>判断: {decisionLabels[decision]}</span>;
 }
 
-function ImageReviewBadge({ value }: { value: ImageReviewValue }) {
+function ImageReviewBadge({ value, candidateCount }: { value: ImageReviewValue; candidateCount: number }) {
   const className =
-    value === "verified"
+    value === "confirmed"
       ? "bg-mint text-park"
-      : value === "wrong"
+      : value === "incorrect"
         ? "bg-berry text-white"
-        : value === "no_image_planned"
+        : value === "no-image"
           ? "bg-slate-700 text-white"
+          : value === "candidate-only"
+            ? "bg-sun/25 text-amber-900"
           : "bg-sun/25 text-amber-900";
-  return <span className={`rounded-full px-3 py-1 text-xs font-black ${className}`}>{imageReviewLabels[value]}</span>;
+  return <span className={`rounded-full px-3 py-1 text-xs font-black ${className}`}>{imageReviewLabels[value]} / 候補{candidateCount > 0 ? `${candidateCount}件` : "なし"}</span>;
 }
 
 function PriceStatusBadge({ status }: { status: PriceVerificationStatus }) {
@@ -702,7 +748,7 @@ function CompactDecisionControl({ decision, onChange }: { decision: ReviewDecisi
         className="mt-2 min-h-11 w-full rounded-xl border border-slate-200 bg-white px-3 text-sm font-black text-ink outline-none focus:border-ink focus:ring-2 focus:ring-ink/10"
       >
         {decisionOptions.map((value) => {
-          const disabled = value === "register" && decision.imageReview === "wrong";
+          const disabled = value === "register" && blocksRegisterForImage(decision.imageReview);
           return (
             <option
               key={value}
@@ -714,7 +760,7 @@ function CompactDecisionControl({ decision, onChange }: { decision: ReviewDecisi
           );
         })}
       </select>
-      {decision.imageReview === "wrong" ? <p className="mt-2 text-xs font-bold leading-5 text-amber-900">画像が違う商品は登録不可です。</p> : null}
+      {blocksRegisterForImage(decision.imageReview) ? <p className="mt-2 text-xs font-bold leading-5 text-amber-900">画像状態が未確定のため登録不可です。</p> : null}
     </div>
   );
 }
@@ -826,7 +872,7 @@ function buildMetrics(decisions: ReviewDecision[]) {
     needsRevision: decisions.filter((decision) => decision.decision === "needs_revision").length,
     hold: decisions.filter((decision) => decision.decision === "hold").length,
     exclude: decisions.filter((decision) => decision.decision === "exclude").length,
-    imageUnconfirmed: decisions.filter((decision) => decision.imageReview === "unconfirmed").length,
+    imageUnconfirmed: decisions.filter((decision) => decision.imageReview === "unresolved" || decision.imageReview === "candidate-only").length,
     priceMissing: decisions.filter((decision) => decision.priceReview === "unresolved").length,
     newItems: decisions.filter((decision) => decision.targetType === "new").length,
     existingItems: decisions.filter((decision) => decision.targetType === "existing").length
@@ -839,8 +885,12 @@ function matchesFilter(item: ReviewItem, decision: ReviewDecision | undefined, f
   if (filter === "pending") return item.reviewStatus === "pending";
   if (filter === "draft") return item.reviewStatus === "draft";
   if (filter === "unreviewed" || filter === "register" || filter === "needs_revision" || filter === "hold" || filter === "exclude") return decision.decision === filter;
-  if (filter === "image-wrong") return decision.imageReview === "wrong";
-  if (filter === "image-unconfirmed") return decision.imageReview === "unconfirmed";
+  if (filter === "image-confirmed") return decision.imageReview === "confirmed";
+  if (filter === "image-incorrect") return decision.imageReview === "incorrect";
+  if (filter === "image-unresolved") return decision.imageReview === "unresolved";
+  if (filter === "image-none") return decision.imageReview === "no-image";
+  if (filter === "image-candidate-only") return decision.imageReview === "candidate-only";
+  if (filter === "image-no-candidates") return decision.editedData.imageCandidates.length === 0;
   if (filter === "price-missing") return decision.priceReview === "unresolved";
   if (filter === "new") return decision.targetType === "new";
   if (filter === "existing") return decision.targetType === "existing";
@@ -878,13 +928,24 @@ function targetRank(value: TargetType | undefined) {
 }
 
 function enforceDecisionRules(decision: ReviewDecision): ReviewDecision {
-  if (decision.imageReview === "wrong" && decision.decision === "register") {
-    return { ...decision, decision: "needs_revision" };
+  if (blocksRegisterForImage(decision.imageReview) && decision.decision === "register") {
+    return {
+      ...decision,
+      decision: "needs_revision",
+      editedData: {
+        ...decision.editedData,
+        imageReviewStatus: decision.imageReview
+      }
+    };
   }
   if (decision.targetType === "new" && decision.duplicateAction !== "exclude") {
     return { ...decision, existingFoodId: null, duplicateAction: decision.duplicateAction === "new_manual_food" ? decision.duplicateAction : decision.duplicateAction };
   }
   return decision;
+}
+
+function blocksRegisterForImage(value: ImageReviewValue) {
+  return value === "incorrect" || value === "unresolved" || value === "candidate-only";
 }
 
 function formatSalePeriod(item: ReviewItem) {

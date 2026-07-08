@@ -8,6 +8,7 @@ import type {
   ReviewDecision,
   ReviewDecisionFile,
   ReviewDecisionValue,
+  ReviewImageCandidate,
   ReviewItem,
   ReviewPriceVariant,
   TargetType
@@ -26,10 +27,11 @@ export const decisionLabels: Record<ReviewDecisionValue, string> = {
 };
 
 export const imageReviewLabels: Record<ImageReviewValue, string> = {
-  verified: "画像確認済み",
-  wrong: "画像が違う",
-  unconfirmed: "画像未確認",
-  no_image_planned: "画像なしで登録予定"
+  confirmed: "画像確認済み",
+  incorrect: "画像が違う",
+  unresolved: "画像未確認",
+  "no-image": "画像なし",
+  "candidate-only": "候補あり・未採用"
 };
 
 export const priceReviewLabels: Record<string, string> = {
@@ -102,8 +104,10 @@ export function runRegistrationChecks(decisions: ReviewDecision[]): Registration
     if (decision.targetType === "existing" && !decision.existingFoodId?.trim()) addIssue(issues, decision, "既存foodId不明");
     if (!decision.editedData.collectionId.trim()) addIssue(issues, decision, "collectionId不明");
     if (decision.priceReview === "unresolved" || !decision.editedData.priceText.trim()) addIssue(issues, decision, "価格未確認");
-    if (decision.imageReview === "wrong") addIssue(issues, decision, "画像が違う");
-    if (decision.imageReview === "unconfirmed" || (!decision.editedData.imageUrl.trim() && decision.imageReview !== "no_image_planned")) addIssue(issues, decision, "画像未確認");
+    if (decision.imageReview === "incorrect") addIssue(issues, decision, "画像が違う");
+    if (decision.imageReview === "unresolved" || decision.imageReview === "candidate-only") addIssue(issues, decision, imageReviewLabels[decision.imageReview]);
+    if (!decision.editedData.imageUrl.trim() && decision.imageReview !== "no-image") addIssue(issues, decision, "画像未確認");
+    if (decision.editedData.imageUrl.trim() && !decision.editedData.imageSourceUrl.trim()) addIssue(issues, decision, "画像出典URL未登録");
     if (!decision.editedData.shopName.trim()) addIssue(issues, decision, "店舗未確認");
     if (!decision.editedData.areaName.trim()) addIssue(issues, decision, "エリア未確認");
     if (!decision.editedData.sourceUrl.trim() && decision.editedData.officialReferenceUrls.length === 0) addIssue(issues, decision, "公式URL未登録");
@@ -115,11 +119,13 @@ export function runRegistrationChecks(decisions: ReviewDecision[]): Registration
 
 export function isImportReadyItem(decision: ReviewDecision) {
   if (decision.decision !== "register") return false;
-  if (decision.imageReview === "wrong") return false;
+  if (decision.imageReview === "incorrect" || decision.imageReview === "unresolved" || decision.imageReview === "candidate-only") return false;
   if (!decision.editedData.name.trim()) return false;
   if (!decision.editedData.shopName.trim()) return false;
   if (!decision.editedData.areaName.trim()) return false;
   if (!decision.editedData.duplicateHandling.trim() || decision.duplicateAction === "needs_review") return false;
+  if (decision.editedData.imageUrl.trim() && !decision.editedData.imageSourceUrl.trim()) return false;
+  if (!decision.editedData.imageUrl.trim() && decision.imageReview !== "no-image") return false;
   if (decision.targetType === "existing" && !decision.existingFoodId?.trim()) return false;
   if (decision.editedData.reviewStatus === "approved") return false;
   return true;
@@ -190,14 +196,18 @@ export function deriveExistingActionLabels(decision: ReviewDecision, item: Revie
 
 function normalizeDecision(item: ReviewItem, source: ReviewDecision | undefined, now: string, markReviewed: boolean): ReviewDecision {
   const targetType: TargetType = source?.targetType ?? (item.importReview?.isExisting ? "existing" : "new");
-  const imageReview = normalizeImageReview(source?.imageReview ?? (!item.imageUrl ? "unconfirmed" : "unconfirmed"));
-  const decision = normalizeDecisionValue(source?.decision ?? (item.reviewStatus === "draft" ? "needs_revision" : "unreviewed"), imageReview);
   const editedData = normalizeEditedData(item, source?.editedData);
+  const imageReview = normalizeImageReview(source?.imageReview ?? editedData.imageReviewStatus ?? item.imageReviewStatus ?? "unresolved", editedData.imageCandidates);
+  const decision = normalizeDecisionValue(source?.decision ?? (item.reviewStatus === "draft" ? "needs_revision" : "unreviewed"), imageReview);
+  const normalizedEditedData = {
+    ...editedData,
+    imageReviewStatus: imageReview
+  };
 
   return {
     proposedId: source?.proposedId?.trim() || item.id,
     decision,
-    editedData,
+    editedData: normalizedEditedData,
     targetType,
     existingFoodId: targetType === "existing" ? source?.existingFoodId?.trim() || inferExistingFoodId(item) : null,
     duplicateAction: normalizeDuplicateAction(source?.duplicateAction ?? inferDuplicateAction(item), targetType),
@@ -223,6 +233,17 @@ function normalizeEditedData(item: ReviewItem, source?: EditableReviewData): Edi
     description: source?.description ?? item.description ?? "",
     imageUrl: source?.imageUrl ?? item.imageUrl ?? "",
     imageSourceUrl: source?.imageSourceUrl ?? item.imageSourceUrl ?? "",
+    imageCandidates: normalizeImageCandidates(
+      [
+        ...(source?.imageUrl ? [{ url: source.imageUrl, sourceUrl: source.imageSourceUrl, title: source.name, note: "Edited image URL retained as a candidate for review." }] : []),
+        ...(item.imageCandidates ?? []),
+        ...(source?.imageCandidates ?? [])
+      ],
+      item
+    ),
+    imageReviewStatus: normalizeImageReview(source?.imageReviewStatus ?? item.imageReviewStatus ?? "unresolved", source?.imageCandidates ?? item.imageCandidates ?? []),
+    imageReviewNote: source?.imageReviewNote ?? item.imageReviewNote ?? "",
+    imageCheckedAt: source?.imageCheckedAt ?? item.imageCheckedAt ?? null,
     sourceUrl,
     officialReferenceUrls,
     collectionId: source?.collectionId ?? item.collectionId ?? "summer-2026",
@@ -234,14 +255,18 @@ function normalizeEditedData(item: ReviewItem, source?: EditableReviewData): Edi
 }
 
 function normalizeDecisionValue(value: string, imageReview: ImageReviewValue): ReviewDecisionValue {
-  if (imageReview === "wrong" && value === "register") return "needs_revision";
+  if ((imageReview === "incorrect" || imageReview === "candidate-only" || imageReview === "unresolved") && value === "register") return "needs_revision";
   if (value === "register" || value === "needs_revision" || value === "hold" || value === "exclude" || value === "unreviewed") return value;
   return "unreviewed";
 }
 
-function normalizeImageReview(value: string): ImageReviewValue {
-  if (value === "verified" || value === "wrong" || value === "unconfirmed" || value === "no_image_planned") return value;
-  return "unconfirmed";
+export function normalizeImageReview(value: string | null | undefined, candidates: ReviewImageCandidate[] = []): ImageReviewValue {
+  if (value === "confirmed" || value === "incorrect" || value === "unresolved" || value === "no-image" || value === "candidate-only") return value;
+  if (value === "verified") return "confirmed";
+  if (value === "wrong") return "incorrect";
+  if (value === "no_image_planned") return "no-image";
+  if (value === "unconfirmed") return candidates.length > 0 ? "candidate-only" : "unresolved";
+  return candidates.length > 0 ? "candidate-only" : "unresolved";
 }
 
 function normalizePriceReview(value: string): PriceVerificationStatus {
@@ -253,6 +278,47 @@ function normalizeDuplicateAction(value: string, targetType: TargetType): Duplic
   const allowed: DuplicateAction[] = ["new_manual_food", "collection_add", "override_add", "variant_add", "publication_metadata_add", "existing_update", "exclude", "needs_review"];
   if (allowed.includes(value as DuplicateAction)) return value as DuplicateAction;
   return targetType === "existing" ? "existing_update" : "new_manual_food";
+}
+
+export function normalizeImageCandidates(candidates: ReviewImageCandidate[], item?: ReviewItem): ReviewImageCandidate[] {
+  const seen = new Set<string>();
+  const now = new Date().toISOString();
+  const normalized: ReviewImageCandidate[] = [];
+  for (const candidate of candidates) {
+    const url = candidate.url?.trim();
+    if (!url || !/^https?:\/\//i.test(url)) continue;
+    const key = normalizeImageUrlKey(url);
+    if (seen.has(key)) continue;
+    seen.add(key);
+    normalized.push({
+      url,
+      sourceUrl: candidate.sourceUrl?.trim() || item?.imageSourceUrl || item?.sourceUrl || null,
+      sourceType: candidate.sourceType ?? inferImageSourceType(candidate.sourceUrl ?? item?.sourceUrl ?? item?.imageSourceUrl),
+      title: candidate.title ?? item?.name ?? null,
+      note: candidate.note ?? null,
+      discoveredAt: candidate.discoveredAt ?? now,
+      status: candidate.status ?? "candidate"
+    });
+  }
+  return normalized;
+}
+
+export function normalizeImageUrlKey(url: string) {
+  try {
+    const parsed = new URL(url);
+    parsed.search = "";
+    return `${parsed.hostname}${parsed.pathname}`.toLowerCase();
+  } catch {
+    return url.split("?")[0].toLowerCase();
+  }
+}
+
+function inferImageSourceType(url: string | null | undefined) {
+  if (!url) return "unknown";
+  if (/usj\.co\.jp\/contentdata\/usj\/ja\/jp\/restaurants\//.test(url)) return "official-restaurant";
+  if (/usj\.co\.jp\/web\/ja\/jp\/restaurants\/seasonal-food|usj\.co\.jp\/web\/ja\/jp\/events\//.test(url)) return "official-event";
+  if (/usj\.co\.jp/.test(url)) return "official-usj";
+  return "secondary";
 }
 
 function addDuplicateIssues(issues: RegistrationCheckIssue[], decisions: ReviewDecision[], getKey: (decision: ReviewDecision) => string, reason: string) {
