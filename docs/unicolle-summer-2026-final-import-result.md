@@ -6,10 +6,13 @@
 - 初回実登録: inserted 24, updated 4, skipped 0
 - 初回冪等再実行（修正前）: inserted 0, updated 28, skipped 0
 - 最終QA冪等再実行（修正後）: inserted 0, updated 0, skipped 28
+- pending追加調査後の差分更新: inserted 0, updated 5, skipped 23
+- publishedAt補正更新: inserted 0, updated 2, skipped 26
+- pending追加調査後の最終冪等再実行: inserted 0, updated 0, skipped 28
 - 新規商品: 24
 - 既存商品追記: 4
-- approved: 11
-- pending: 17
+- approved: 13
+- pending: 15
 - rejected: 0
 - publishedAtあり: 0
 - hidden manual foods: 0
@@ -26,7 +29,7 @@
 - DB全体 publication metadata: 0 -> 28
 - DB全体 variants: 0 -> 38
 - DB全体 overrides: 1 -> 5
-- DB全体 revisions: 0 -> 28
+- DB全体 revisions: 0 -> 30
 
 ## 登録対象
 
@@ -56,8 +59,8 @@
 | トロピカル・フラッペ ～ストロベリー～ | food-manual-cba8c213d3 | new | pending | manual_foods / food_collection_memberships / food_variants / food_publication_metadata / food_override_revisions | inserted: manual_foodsへ新規追加 | https://unicolle.vercel.app/foods/food-manual-cba8c213d3 |
 | トロピカル・フラッペ ～マンゴー～ | food-manual-79498d79ed | new | pending | manual_foods / food_collection_memberships / food_variants / food_publication_metadata / food_override_revisions | inserted: manual_foodsへ新規追加 | https://unicolle.vercel.app/foods/food-manual-79498d79ed |
 | ジョーズ・ドリンクボトル | food-manual-ff85e1ea6d | new | approved | manual_foods / food_collection_memberships / food_variants / food_publication_metadata / food_override_revisions | inserted: manual_foodsへ新規追加 | https://unicolle.vercel.app/foods/food-manual-ff85e1ea6d |
-| 憧れの大悪党？ ボブ・ドリンクボトル | food-1kvqau2 | existing | pending | food_overrides / food_collection_memberships / food_variants / food_publication_metadata / food_override_revisions | updated: collection summer-2026 追加, publication metadata保存、published_at null, food_variants冪等保存, food_override_revisionsへ履歴追加, food_overridesを冪等upsert | https://unicolle.vercel.app/foods/food-1kvqau2 |
-| ジュラシック・パーク・ドリンクボトル | food-alnomv | existing | pending | food_overrides / food_collection_memberships / food_variants / food_publication_metadata / food_override_revisions | updated: collection summer-2026 追加, publication metadata保存、published_at null, food_variants冪等保存, food_override_revisionsへ履歴追加, food_overridesを冪等upsert | https://unicolle.vercel.app/foods/food-alnomv |
+| 憧れの大悪党？ ボブ・ドリンクボトル | food-1kvqau2 | existing | approved | food_overrides / food_collection_memberships / food_variants / food_publication_metadata / food_override_revisions | updated: collection summer-2026 追加, publication metadata保存、published_at null, food_variants冪等保存, food_override_revisionsへ履歴追加, food_overridesを冪等upsert | https://unicolle.vercel.app/foods/food-1kvqau2 |
+| ジュラシック・パーク・ドリンクボトル | food-alnomv | existing | approved | food_overrides / food_collection_memberships / food_variants / food_publication_metadata / food_override_revisions | updated: collection summer-2026 追加, publication metadata保存、published_at null, food_variants冪等保存, food_override_revisionsへ履歴追加, food_overridesを冪等upsert | https://unicolle.vercel.app/foods/food-alnomv |
 | 大悪党のためのドーナツ・バーガー ～BBQ ポーク&ベーコン～ | food-r24nsm | existing | approved | food_overrides / food_collection_memberships / food_variants / food_publication_metadata / food_override_revisions | updated: collection summer-2026 追加, publication metadata保存、published_at null, food_variants冪等保存, food_override_revisionsへ履歴追加, food_overridesを冪等upsert | https://unicolle.vercel.app/foods/food-r24nsm |
 | ソフローズン グレープ マイメロディ＆クロミ バケツ＆スプーン付き | food-manual-a12824cd38 | new | pending | manual_foods / food_collection_memberships / food_variants / food_publication_metadata / food_override_revisions | inserted: manual_foodsへ新規追加 | https://unicolle.vercel.app/foods/food-manual-a12824cd38 |
 
@@ -84,6 +87,7 @@
 - default variant重複: 0
 - 再実行時の追加insert: 0
 - 最終QA後の同一内容再実行: inserted 0, updated 0, skipped 28
+- pending追加調査後の同一内容再実行: inserted 0, updated 0, skipped 28
 - 同一内容時は `manual_foods` / `food_overrides` / `food_publication_metadata` / `food_variants` / `food_override_revisions` を書き込まないように修正。
 
 ## ロールバック方法
@@ -95,14 +99,15 @@
 ## 本番登録後 最終QA（2026-07-09）
 
 - 対象: 登録済み28件（新規24件、既存追記4件）
-- 最終reviewStatus: approved 11件、pending 17件、rejected 0件
+- 最終reviewStatus: approved 13件、pending 15件、rejected 0件
 - publishedAtあり: 0件（既存公開ルール上、`reviewStatus=approved` と `hidden=false` で公開確認済み。無理なpublishedAt設定は行っていない）
 - hidden manual foods: 0件
-- approvedへ変更した商品: なし
-- pending維持: 17件。画像未確定または価格未確認が残る商品は公開せず、管理画面で編集可能なpendingとして維持。
+- approvedへ変更した商品: 2件（憧れの大悪党？ ボブ・ドリンクボトル、ジュラシック・パーク・ドリンクボトル）。どちらも既存foodIdを維持し、summer-2026所属・価格・画像・店舗・エリア・重複処理が揃ったため公開可能と判断。
+- pending維持: 15件。画像未確定または価格未確認が残る商品は公開せず、管理画面で編集可能なpendingとして維持。
 - 画像HTTP確認: 画像URLあり16件はすべてHTTPSかつHTTP 200。画像URLなし12件はpending維持。
 - 価格確認: 価格未確認4件はpending維持。
-- Vercel公開確認: `/`, `/foods`, `/areas`, `/stores` は200。approved 11商品の詳細URLはすべて200。
+- Vercel公開確認: `/`, `/foods`, `/areas`, `/stores` は200。approved 13商品の詳細URLはすべて200。
+- 最終デプロイ確認: 一時import API `/api/internal-summer-2026-import` は本番で404。追加approved 2件（`food-1kvqau2`, `food-alnomv`）の詳細URLは200。
 - 管理画面確認: `/admin/foods` は未ログイン時 `/admin/login?next=%2Fadmin%2Ffoods` へ307リダイレクトし、認証保護を維持。通常の商品管理画面は既存Supabase repository/actionsで編集・公開管理する。
 - Web / PWA / iOS: 既存repositoryを共有し、HTTPS画像のみを使用。UserFoodLog、localStorageキー、Bundle ID、Capacitor appId、AdMob設定は変更していない。
 - 保留2件の再調査:
@@ -137,7 +142,7 @@
 | トロピカル・フラッペ ～ストロベリー～ | food-manual-cba8c213d3 | pending | 800円 | 未登録 | ワーフカフェ / ボードウォーク・スナック | サンフランシスコ・エリア / アミティ・ビレッジ | pending維持（画像未確定） |
 | トロピカル・フラッペ ～マンゴー～ | food-manual-79498d79ed | pending | 800円 | 未登録 | ワーフカフェ / ボードウォーク・スナック | サンフランシスコ・エリア / アミティ・ビレッジ | pending維持（画像未確定） |
 | ジョーズ・ドリンクボトル | food-manual-ff85e1ea6d | approved | 2300円 | HTTP 200 | アミティ・ランディング・レストラン | アミティ・ビレッジ | approved維持（公開詳細URL 200） |
-| 憧れの大悪党？ ボブ・ドリンクボトル | food-1kvqau2 | pending | 2300円 | HTTP 200 | デリシャス・ミー！ ザ・クッキー・キッチン / ワーフカフェ | ミニオン・パーク / サンフランシスコ・エリア | pending維持（既存商品追記の人間確認待ち） |
-| ジュラシック・パーク・ドリンクボトル | food-alnomv | pending | 2300円 | HTTP 200 | ジュラシック・パーク・ザ・ライド スプラッシュダウン前フードカート | ジュラシック・パーク | pending維持（既存商品追記の人間確認待ち） |
+| 憧れの大悪党？ ボブ・ドリンクボトル | food-1kvqau2 | approved | 2300円 | HTTP 200 | デリシャス・ミー！ ザ・クッキー・キッチン / ワーフカフェ | ミニオン・パーク / サンフランシスコ・エリア | approvedへ変更（既存foodId維持、公開詳細URL 200） |
+| ジュラシック・パーク・ドリンクボトル | food-alnomv | approved | 2300円 | HTTP 200 | ジュラシック・パーク・ザ・ライド スプラッシュダウン前フードカート | ジュラシック・パーク | approvedへ変更（既存foodId維持、公開詳細URL 200） |
 | 大悪党のためのドーナツ・バーガー ～BBQ ポーク&ベーコン～ | food-r24nsm | approved | 1200円 | HTTP 200 | イーブル・イーツ | ミニオン・パーク | approved維持（公開詳細URL 200） |
 | ソフローズン グレープ マイメロディ＆クロミ バケツ＆スプーン付き | food-manual-a12824cd38 | pending | 未確認 | 未登録 | イルミネーション・シアター入口横フードカート / パークサイド・グリル横フードカート | ニューヨーク・エリア | pending維持（画像未確定 / 価格未確認） |

@@ -422,6 +422,8 @@ async function savePublicationMetadata(supabase: Supabase, decision: ReviewDecis
     { onConflict: "food_id" }
   );
   if (metadata.error) throw new Error(`publication metadata保存失敗 ${foodId}: ${metadata.error.message}`);
+  const clearPublishedAt = await supabase.from("food_publication_metadata").update({ published_at: null, updated_at: now }).eq("food_id", foodId);
+  if (clearPublishedAt.error) throw new Error(`published_at null化失敗 ${foodId}: ${clearPublishedAt.error.message}`);
   return true;
 }
 

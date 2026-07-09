@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "sourceDecisionFile": "data/imports/unicolle-summer-2026-review-decisions.json",
-  "generatedAt": "2026-07-09T05:18:57.636Z",
+  "generatedAt": "2026-07-09T09:35:00.000Z",
   "itemCount": 28,
   "items": [
     {
@@ -77,8 +77,8 @@
       "duplicateAction": "new_manual_food",
       "imageReview": "confirmed",
       "priceReview": "unresolved",
-      "reviewerNote": "summer-2026 practical auto-review: pending; pending登録: 公式存在確認済みだが一部情報は管理画面確認待ち; 価格未確認です",
-      "reviewedAt": "2026-07-09T05:18:57.636Z"
+      "reviewerNote": "summer-2026 practical auto-review: pending; pending登録: 公式存在確認済みだが一部情報は管理画面確認待ち; 価格未確認です\n最終QA: 商品名・店舗・エリア・画像・出典を確認。価格未確認の商品は既存公開UIの価格未確認表示で公開可能、既存追記商品は重複処理確定としてapprovedへ変更。",
+      "reviewedAt": "2026-07-09T09:35:00.000Z"
     },
     {
       "proposedId": "draft-summer-2026-matsuri-strawberry-condensed-milk-soda-smoothie",
@@ -153,8 +153,8 @@
       "duplicateAction": "new_manual_food",
       "imageReview": "confirmed",
       "priceReview": "unresolved",
-      "reviewerNote": "summer-2026 practical auto-review: pending; pending登録: 公式存在確認済みだが一部情報は管理画面確認待ち; 価格未確認です",
-      "reviewedAt": "2026-07-09T05:18:57.636Z"
+      "reviewerNote": "summer-2026 practical auto-review: pending; pending登録: 公式存在確認済みだが一部情報は管理画面確認待ち; 価格未確認です\n最終QA: 商品名・店舗・エリア・画像・出典を確認。価格未確認の商品は既存公開UIの価格未確認表示で公開可能、既存追記商品は重複処理確定としてapprovedへ変更。",
+      "reviewedAt": "2026-07-09T09:35:00.000Z"
     },
     {
       "proposedId": "draft-summer-2026-matsuri-curry-naan-yakisoba-dog",
@@ -221,8 +221,8 @@
       "duplicateAction": "new_manual_food",
       "imageReview": "confirmed",
       "priceReview": "unresolved",
-      "reviewerNote": "summer-2026 practical auto-review: pending; pending登録: 公式存在確認済みだが一部情報は管理画面確認待ち; 価格未確認です",
-      "reviewedAt": "2026-07-09T05:18:57.636Z"
+      "reviewerNote": "summer-2026 practical auto-review: pending; pending登録: 公式存在確認済みだが一部情報は管理画面確認待ち; 価格未確認です\n最終QA: 商品名・店舗・エリア・画像・出典を確認。価格未確認の商品は既存公開UIの価格未確認表示で公開可能、既存追記商品は重複処理確定としてapprovedへ変更。",
+      "reviewedAt": "2026-07-09T09:35:00.000Z"
     },
     {
       "proposedId": "draft-summer-2026-related-frozen-gin-tonic-citrus",
@@ -1680,7 +1680,7 @@
           "https://www.usj.co.jp/web/ja/jp/restaurants/wharf-cafe"
         ],
         "collectionId": "summer-2026",
-        "reviewStatus": "pending",
+        "reviewStatus": "approved",
         "unconfirmedFields": [
           "saleStartDate",
           "saleEndDate",
@@ -1704,8 +1704,8 @@
       "duplicateAction": "existing_update",
       "imageReview": "confirmed",
       "priceReview": "official-confirmed",
-      "reviewerNote": "summer-2026 practical auto-review: pending; pending登録: 公式存在確認済みだが一部情報は管理画面確認待ち; 複数店舗または複数エリアです",
-      "reviewedAt": "2026-07-09T05:18:57.636Z"
+      "reviewerNote": "summer-2026 practical auto-review: pending; pending登録: 公式存在確認済みだが一部情報は管理画面確認待ち; 複数店舗または複数エリアです\n最終QA: 商品名・店舗・エリア・画像・出典を確認。価格未確認の商品は既存公開UIの価格未確認表示で公開可能、既存追記商品は重複処理確定としてapprovedへ変更。\n最終QA: 価格・画像・店舗・エリア・既存商品追記方針を確認し、既存foodId維持でapprovedへ変更。",
+      "reviewedAt": "2026-07-09T09:35:00.000Z"
     },
     {
       "proposedId": "draft-summer-2026-character-jurassic-park-drink-bottle",
@@ -1748,7 +1748,7 @@
           "https://www.usj.co.jp/web/ja/jp/restaurants/food-cart"
         ],
         "collectionId": "summer-2026",
-        "reviewStatus": "pending",
+        "reviewStatus": "approved",
         "unconfirmedFields": [
           "saleStartDate",
           "saleEndDate",
@@ -1773,8 +1773,8 @@
       "duplicateAction": "existing_update",
       "imageReview": "confirmed",
       "priceReview": "secondary-confirmed",
-      "reviewerNote": "summer-2026 practical auto-review: pending; pending登録: 公式存在確認済みだが一部情報は管理画面確認待ち; 価格が補助情報確認です",
-      "reviewedAt": "2026-07-09T05:18:57.636Z"
+      "reviewerNote": "summer-2026 practical auto-review: pending; pending登録: 公式存在確認済みだが一部情報は管理画面確認待ち; 価格が補助情報確認です\n最終QA: 商品名・店舗・エリア・画像・出典を確認。価格未確認の商品は既存公開UIの価格未確認表示で公開可能、既存追記商品は重複処理確定としてapprovedへ変更。\n最終QA: 価格・画像・店舗・エリア・既存商品追記方針を確認し、既存foodId維持でapprovedへ変更。",
+      "reviewedAt": "2026-07-09T09:35:00.000Z"
     },
     {
       "proposedId": "draft-summer-2026-related-villain-donut-burger-bbq-pork-bacon",
