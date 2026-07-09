@@ -1,58 +1,90 @@
-# 2026年夏フード 最終統合・import結果
+# 2026年夏フード 本番import結果
 
-- 実行日時: 2026-07-09T05:17:38.142Z
-- 既存商品の正式経路: generated JSON + manual_foods + food_overrides + food_collection_memberships + food_publication_metadata + food_variants
-- 公開判定: reviewStatus=approved、hidden=false、削除なし、品質条件を満たす商品だけ公開一覧・検索・詳細に出る
-- 管理画面: /admin/foods が正式管理画面。新規は manual_foods、generated補正は food_overrides、季節/公開/価格行は foundation tables
-- iOS/PWA: Webと同じ repository を参照し、Capacitor release は https://unicolle.vercel.app のデータを利用する
+- 実行日時: 2026-07-09T07:43:52.567Z
+- 実行方式: Vercel Production上の一時サーバー処理でSUPABASE_SERVICE_ROLE_KEYを使用。値は表示・保存していない。
+- import-ready件数: 28
+- 初回実登録: inserted 24, updated 4, skipped 0
+- 冪等再実行: inserted 0, updated 28, skipped 0
+- 新規商品: 24
+- 既存商品追記: 4
+- approved: 11
+- pending: 17
+- rejected: 0
+- publishedAtあり: 0
+- hidden manual foods: 0
+- 検証issue: なし
 
-## 登録結果
+## DB件数
 
-- 調査候補: 30件
-- import-ready: 28件
-- approved予定: 11件
-- pending予定: 17件
-- 登録保留: 2件
-- Supabase登録: 0件
-- 停止理由: Vercel production env pull で SUPABASE_SERVICE_ROLE_KEY が空だったため、本番DB書き込みを停止
-- 必要設定: Vercel Production の SUPABASE_SERVICE_ROLE_KEY にSupabase service role keyを設定後、npm run import:summer-2026:auto を再実行
+- import対象 manual_foods: 0 -> 24
+- import対象 collection memberships: 0 -> 28
+- import対象 publication metadata: 0 -> 28
+- import対象 variants: 0 -> 38
+- DB全体 manual_foods: 2 -> 26
+- DB全体 collection memberships: 0 -> 28
+- DB全体 publication metadata: 0 -> 28
+- DB全体 variants: 0 -> 38
+- DB全体 overrides: 1 -> 5
+- DB全体 revisions: 0 -> 28
 
-## 商品別
+## 登録対象
 
-| 商品名 | foodId | 新規/既存 | 画像 | 価格 | 店舗 | エリア | カテゴリ | DB保存先 | 公開状態 | Vercel表示URL | 未確認事項 |
-|---|---|---|---|---:|---|---|---|---|---|---|---|
-| 夏祭りの金魚 レモンサイダー | manual:ニューヨーク・エリア/ユニバーサル・マーケット内ハピネス・ワゴン/夏祭りの金魚 レモンサイダー | 新規 | あり | 未確認 | ユニバーサル・マーケット内ハピネス・ワゴン | ニューヨーク・エリア | drink | manual_foods/memberships/variants/metadata | pending | 管理画面のみ/未登録 | price<br>priceVariants.price<br>saleStartDate<br>saleEndDate<br>saleTimeCondition.productSpecific |
-| 超！！ チョコバナナ・チュリトス | food-j4nvrm | 既存追記 | あり | 未確認 | ユニバーサル・マーケット内ハピネス・ワゴン | ニューヨーク・エリア | churro | 未登録 | hold | 管理画面のみ/未登録 | price<br>saleStartDate<br>saleEndDate<br>saleTimeCondition.productSpecific |
-| いちご練乳 ソーダスムージー | manual:ニューヨーク・エリア/ユニバーサル・マーケット内トローリー・トリート/いちご練乳 ソーダスムージー | 新規 | あり | 未確認 | ユニバーサル・マーケット内トローリー・トリート | ニューヨーク・エリア | drink | manual_foods/memberships/variants/metadata | pending | 管理画面のみ/未登録 | price<br>priceVariants.price<br>saleStartDate<br>saleEndDate<br>saleTimeCondition.productSpecific |
-| カレーナン!? 焼きそばドッグ | manual:ニューヨーク・エリア/ユニバーサル・マーケット内ホットドッグカート/カレーナン!? 焼きそばドッグ | 新規 | あり | 未確認 | ユニバーサル・マーケット内ホットドッグカート | ニューヨーク・エリア | snack | manual_foods/memberships/variants/metadata | pending | 管理画面のみ/未登録 | price<br>saleStartDate<br>saleEndDate<br>saleTimeCondition.productSpecific |
-| フローズン・ジントニック ～シトラス～ | manual:ニューヨーク・エリア/パークサイド・グリル/フローズン・ジントニック ～シトラス～ | 新規 | 未採用 | 900 | パークサイド・グリル | ニューヨーク・エリア | drink | manual_foods/memberships/variants/metadata | pending | 管理画面のみ/未登録 | saleStartDate<br>saleEndDate<br>saleTimeCondition.productSpecificPeriod |
-| 25周年カクテル ～ポップコーンフレーバー？～ | food-d5v0l2 | 既存追記 | あり | 900 | パークサイド・グリル | ニューヨーク・エリア | drink | food_overrides/memberships/variants/metadata | approved | https://unicolle.vercel.app/foods/food-d5v0l2 | saleStartDate<br>saleEndDate<br>saleTimeCondition |
-| キャラメルポップコーン!? チュリトス | food-14zoddb | 既存追記 | あり | 800 | パークサイド・グリル横フードカート | ニューヨーク・エリア | churro | 未登録 | hold | 管理画面のみ/未登録 | description<br>saleStartDate<br>saleEndDate<br>saleTimeCondition<br>price.official |
-| りんご飴 ～りんごのムース～ | manual:ハリウッド・エリア/ビバリーヒルズ・ブランジェリー/りんご飴 ～りんごのムース～ | 新規 | 未採用 | 950 | ビバリーヒルズ・ブランジェリー | ハリウッド・エリア | dessert | manual_foods/memberships/variants/metadata | pending | 管理画面のみ/未登録 | saleStartDate<br>saleEndDate<br>saleTimeCondition.productSpecific<br>takeoutAvailable<br>imageUrl.singleProduct |
-| 水風船 ～ピーチゼリー＆レアチーズムース～ | manual:ハリウッド・エリア/ビバリーヒルズ・ブランジェリー/水風船 ～ピーチゼリー＆レアチーズムース～ | 新規 | 未採用 | 950 | ビバリーヒルズ・ブランジェリー | ハリウッド・エリア | dessert | manual_foods/memberships/variants/metadata | pending | 管理画面のみ/未登録 | saleStartDate<br>saleEndDate<br>saleTimeCondition.productSpecific<br>takeoutAvailable<br>imageUrl.singleProduct |
-| 紫陽花 ～葡萄と柚子の和氷菓 焼き菓子添え～ | manual:ニューヨーク・エリア/SAIDO/紫陽花 ～葡萄と柚子の和氷菓 焼き菓子添え～ | 新規 | あり | 1800 | SAIDO | ニューヨーク・エリア | dessert | manual_foods/memberships/variants/metadata | approved | https://unicolle.vercel.app/foods/(after-import-manual-id) | saleStartDate<br>saleEndDate<br>saleTimeCondition.productSpecific<br>takeoutAvailable |
-| 柑橘おろしと白みその冷やしうどん御膳 | manual:ニューヨーク・エリア/SAIDO/柑橘おろしと白みその冷やしうどん御膳 | 新規 | あり | 2600 | SAIDO | ニューヨーク・エリア | set | manual_foods/memberships/variants/metadata | approved | https://unicolle.vercel.app/foods/(after-import-manual-id) | saleStartDate<br>saleEndDate<br>saleTimeCondition.productSpecific<br>takeoutAvailable |
-| オマール海老の冷製パスタ アメリケーヌのグラニテ添え | manual:ニューヨーク・エリア/パークサイド・グリル/オマール海老の冷製パスタ アメリケーヌのグラニテ添え | 新規 | あり | 3300 | パークサイド・グリル | ニューヨーク・エリア | noodle | manual_foods/memberships/variants/metadata | approved | https://unicolle.vercel.app/foods/(after-import-manual-id) | saleStartDate<br>saleEndDate<br>takeoutAvailable |
-| プルドポーク＆チキン・スパイシー BBQ ピッツアセット | manual:ニューヨーク・エリア/ルイズ N.Y. ピザパーラー/プルドポーク＆チキン・スパイシー BBQ ピッツアセット | 新規 | あり | 1950 | ルイズ N.Y. ピザパーラー | ニューヨーク・エリア | pizza | manual_foods/memberships/variants/metadata | approved | https://unicolle.vercel.app/foods/(after-import-manual-id) | saleStartDate<br>saleEndDate<br>saleTimeCondition.productSpecific<br>takeoutAvailable |
-| ガーリック・シュリンプ・ピッツァセット | manual:ニューヨーク・エリア/ルイズ N.Y. ピザパーラー/ガーリック・シュリンプ・ピッツァセット | 新規 | あり | 1950 | ルイズ N.Y. ピザパーラー | ニューヨーク・エリア | pizza | manual_foods/memberships/variants/metadata | approved | https://unicolle.vercel.app/foods/(after-import-manual-id) | saleStartDate<br>saleEndDate<br>saleTimeCondition.productSpecific<br>takeoutAvailable |
-| クランチ・タコスバーガーセット | manual:ハリウッド・エリア/メルズ・ドライブイン/クランチ・タコスバーガーセット | 新規 | あり | 2100 | メルズ・ドライブイン | ハリウッド・エリア | burger | manual_foods/memberships/variants/metadata | approved | https://unicolle.vercel.app/foods/(after-import-manual-id) | saleStartDate<br>saleEndDate<br>saleTimeCondition.productSpecific<br>takeoutAvailable |
-| SAIDO スペシャルドリンク ～柚子～/ ～抹茶～/ ～西瓜～ | manual:ニューヨーク・エリア/SAIDO/SAIDO スペシャルドリンク ～柚子～/ ～抹茶～/ ～西瓜～ | 新規 | 未採用 | 700 | SAIDO | ニューヨーク・エリア | drink | manual_foods/memberships/variants/metadata | pending | 管理画面のみ/未登録 | saleStartDate<br>saleEndDate<br>saleTimeCondition.productSpecific<br>takeoutAvailable<br>description.variantSpecific |
-| ストロベリー・フローズン・スムージー | manual:ハリウッド・エリア/ビバリーヒルズ・ブランジェリー/ストロベリー・フローズン・スムージー | 新規 | 未採用 | 800 | ビバリーヒルズ・ブランジェリー | ハリウッド・エリア | drink | manual_foods/memberships/variants/metadata | pending | 管理画面のみ/未登録 | saleStartDate<br>saleEndDate<br>saleTimeCondition.productSpecific<br>takeoutAvailable<br>imageUrl.singleProduct<br>description.productSpecific |
-| トロピカルフルーツ・フローズン・スムージー | manual:ハリウッド・エリア/ビバリーヒルズ・ブランジェリー/トロピカルフルーツ・フローズン・スムージー | 新規 | 未採用 | 900 | ビバリーヒルズ・ブランジェリー | ハリウッド・エリア | drink | manual_foods/memberships/variants/metadata | pending | 管理画面のみ/未登録 | saleStartDate<br>saleEndDate<br>saleTimeCondition.productSpecific<br>takeoutAvailable<br>imageUrl.singleProduct<br>description.productSpecific |
-| マンゴー・フローズン・スムージー | manual:ハリウッド・エリア/ビバリーヒルズ・ブランジェリー/マンゴー・フローズン・スムージー | 新規 | 未採用 | 800 | ビバリーヒルズ・ブランジェリー | ハリウッド・エリア | drink | manual_foods/memberships/variants/metadata | pending | 管理画面のみ/未登録 | saleStartDate<br>saleEndDate<br>saleTimeCondition.productSpecific<br>takeoutAvailable<br>imageUrl.singleProduct<br>description.productSpecific |
-| クラッシュ！大悪党のブラッドオレンジ・フローズンソーダ | manual:ミニオン・パーク/イーブル・イーツ/クラッシュ！大悪党のブラッドオレンジ・フローズンソーダ | 新規 | あり | 900 | イーブル・イーツ | ミニオン・パーク | drink | manual_foods/memberships/variants/metadata | approved | https://unicolle.vercel.app/foods/(after-import-manual-id) | saleStartDate<br>saleEndDate<br>saleTimeCondition.productSpecific<br>takeoutAvailable<br>description.productSpecific<br>priceVariants |
-| 映画スターのミニオンフラッペ ～ピーチ＆レモン～ | manual:ミニオン・パーク/デリシャス・ミー！ ザ・クッキー・キッチン/映画スターのミニオンフラッペ ～ピーチ＆レモン～ | 新規 | あり | 900 | デリシャス・ミー！ ザ・クッキー・キッチン | ミニオン・パーク | drink | manual_foods/memberships/variants/metadata | approved | https://unicolle.vercel.app/foods/(after-import-manual-id) | saleStartDate<br>saleEndDate<br>saleTimeCondition.productSpecific<br>takeoutAvailable<br>description.productSpecific<br>priceVariants |
-| スヌーピー・フラッペ ～いちごミルク＆白桃～ | manual:ユニバーサル・ワンダーランド/スヌーピー™・バックロット・カフェ/スヌーピー・フラッペ ～いちごミルク＆白桃～ | 新規 | 未採用 | 900 | スヌーピー™・バックロット・カフェ | ユニバーサル・ワンダーランド | drink | manual_foods/memberships/variants/metadata | pending | 管理画面のみ/未登録 | saleStartDate<br>saleEndDate<br>saleTimeCondition.productSpecific<br>takeoutAvailable<br>priceVariants |
-| 遊泳禁止!! ジョーズ・フラッペ ～ピーチ＆ソルトホイップ～ | manual:アミティ・ビレッジ/ボードウォーク・スナック/遊泳禁止!! ジョーズ・フラッペ ～ピーチ＆ソルトホイップ～ | 新規 | 未採用 | 900 | ボードウォーク・スナック | アミティ・ビレッジ | drink | manual_foods/memberships/variants/metadata | pending | 管理画面のみ/未登録 | saleStartDate<br>saleEndDate<br>saleTimeCondition.productSpecific<br>takeoutAvailable<br>priceVariants |
-| トロピカル・フラッペ ～ストロベリー～ | manual:サンフランシスコ・エリア / アミティ・ビレッジ/ワーフカフェ / ボードウォーク・スナック/トロピカル・フラッペ ～ストロベリー～ | 新規 | 未採用 | 800 | ワーフカフェ / ボードウォーク・スナック | サンフランシスコ・エリア / アミティ・ビレッジ | drink | manual_foods/memberships/variants/metadata | pending | 管理画面のみ/未登録 | saleStartDate<br>saleEndDate<br>takeoutAvailable<br>saleTimeCondition.normalHours<br>imageUrl.singleProduct |
-| トロピカル・フラッペ ～マンゴー～ | manual:サンフランシスコ・エリア / アミティ・ビレッジ/ワーフカフェ / ボードウォーク・スナック/トロピカル・フラッペ ～マンゴー～ | 新規 | 未採用 | 800 | ワーフカフェ / ボードウォーク・スナック | サンフランシスコ・エリア / アミティ・ビレッジ | drink | manual_foods/memberships/variants/metadata | pending | 管理画面のみ/未登録 | saleStartDate<br>saleEndDate<br>takeoutAvailable<br>saleTimeCondition.normalHours<br>imageUrl.singleProduct |
-| ジョーズ・ドリンクボトル | manual:アミティ・ビレッジ/アミティ・ランディング・レストラン/ジョーズ・ドリンクボトル | 新規 | あり | 2300 | アミティ・ランディング・レストラン | アミティ・ビレッジ | drink | manual_foods/memberships/variants/metadata | approved | https://unicolle.vercel.app/foods/(after-import-manual-id) | saleStartDate<br>saleEndDate<br>saleTimeCondition.productSpecific<br>takeoutAvailable |
-| 憧れの大悪党？ ボブ・ドリンクボトル | food-1kvqau2 | 既存追記 | あり | 2300 | デリシャス・ミー！ ザ・クッキー・キッチン / ワーフカフェ | ミニオン・パーク / サンフランシスコ・エリア | drink | food_overrides/memberships/variants/metadata | pending | 管理画面のみ/未登録 | saleStartDate<br>saleEndDate<br>saleTimeCondition.productSpecific<br>takeoutAvailable<br>description.productSpecific |
-| ジュラシック・パーク・ドリンクボトル | food-alnomv | 既存追記 | あり | 2300 | ジュラシック・パーク・ザ・ライド スプラッシュダウン前フードカート | ジュラシック・パーク | drink | food_overrides/memberships/variants/metadata | pending | 管理画面のみ/未登録 | saleStartDate<br>saleEndDate<br>saleTimeCondition.productSpecific<br>takeoutAvailable<br>description.productSpecific<br>price.official |
-| 大悪党のためのドーナツ・バーガー ～BBQ ポーク&ベーコン～ | food-r24nsm | 既存追記 | あり | 1200 | イーブル・イーツ | ミニオン・パーク | burger | food_overrides/memberships/variants/metadata | approved | https://unicolle.vercel.app/foods/food-r24nsm | saleStartDate<br>saleEndDate<br>saleTimeCondition.productSpecific<br>takeoutAvailable<br>description.productSpecific<br>priceVariants |
-| ソフローズン グレープ マイメロディ＆クロミ バケツ＆スプーン付き | manual:ニューヨーク・エリア/イルミネーション・シアター入口横フードカート / パークサイド・グリル横フードカート/ソフローズン グレープ マイメロディ＆クロミ バケツ＆スプーン付き | 新規 | 未採用 | 未確認 | イルミネーション・シアター入口横フードカート / パークサイド・グリル横フードカート | ニューヨーク・エリア | drink | manual_foods/memberships/variants/metadata | pending | 管理画面のみ/未登録 | price<br>priceVariants<br>saleStartDate<br>saleEndDate<br>saleTimeCondition.normalHours<br>takeoutAvailable<br>imageUrl.singleProduct |
+| 商品名 | foodId | targetType | reviewStatus | DB保存先 | 初回結果 | Vercel表示URL |
+|---|---|---|---|---|---|---|
+| 夏祭りの金魚 レモンサイダー | food-manual-0625351f22 | new | pending | manual_foods / food_collection_memberships / food_variants / food_publication_metadata / food_override_revisions | inserted: manual_foodsへ新規追加 | https://unicolle.vercel.app/foods/food-manual-0625351f22 |
+| いちご練乳 ソーダスムージー | food-manual-736109191f | new | pending | manual_foods / food_collection_memberships / food_variants / food_publication_metadata / food_override_revisions | inserted: manual_foodsへ新規追加 | https://unicolle.vercel.app/foods/food-manual-736109191f |
+| カレーナン!? 焼きそばドッグ | food-manual-2f13b0cefe | new | pending | manual_foods / food_collection_memberships / food_variants / food_publication_metadata / food_override_revisions | inserted: manual_foodsへ新規追加 | https://unicolle.vercel.app/foods/food-manual-2f13b0cefe |
+| フローズン・ジントニック ～シトラス～ | food-manual-aa0f866b68 | new | pending | manual_foods / food_collection_memberships / food_variants / food_publication_metadata / food_override_revisions | inserted: manual_foodsへ新規追加 | https://unicolle.vercel.app/foods/food-manual-aa0f866b68 |
+| 25周年カクテル ～ポップコーンフレーバー？～ | food-d5v0l2 | existing | approved | food_overrides / food_collection_memberships / food_variants / food_publication_metadata / food_override_revisions | updated: collection summer-2026 追加, publication metadata保存、published_at null, food_variants冪等保存, food_override_revisionsへ履歴追加, food_overridesを冪等upsert | https://unicolle.vercel.app/foods/food-d5v0l2 |
+| りんご飴 ～りんごのムース～ | food-manual-26fa16ed9b | new | pending | manual_foods / food_collection_memberships / food_variants / food_publication_metadata / food_override_revisions | inserted: manual_foodsへ新規追加 | https://unicolle.vercel.app/foods/food-manual-26fa16ed9b |
+| 水風船 ～ピーチゼリー＆レアチーズムース～ | food-manual-2f3fb0c8dc | new | pending | manual_foods / food_collection_memberships / food_variants / food_publication_metadata / food_override_revisions | inserted: manual_foodsへ新規追加 | https://unicolle.vercel.app/foods/food-manual-2f3fb0c8dc |
+| 紫陽花 ～葡萄と柚子の和氷菓 焼き菓子添え～ | food-manual-dc7e97578d | new | approved | manual_foods / food_collection_memberships / food_variants / food_publication_metadata / food_override_revisions | inserted: manual_foodsへ新規追加 | https://unicolle.vercel.app/foods/food-manual-dc7e97578d |
+| 柑橘おろしと白みその冷やしうどん御膳 | food-manual-8183cf38e8 | new | approved | manual_foods / food_collection_memberships / food_variants / food_publication_metadata / food_override_revisions | inserted: manual_foodsへ新規追加 | https://unicolle.vercel.app/foods/food-manual-8183cf38e8 |
+| オマール海老の冷製パスタ アメリケーヌのグラニテ添え | food-manual-85ac2bfa4b | new | approved | manual_foods / food_collection_memberships / food_variants / food_publication_metadata / food_override_revisions | inserted: manual_foodsへ新規追加 | https://unicolle.vercel.app/foods/food-manual-85ac2bfa4b |
+| プルドポーク＆チキン・スパイシー BBQ ピッツアセット | food-manual-9532c3275d | new | approved | manual_foods / food_collection_memberships / food_variants / food_publication_metadata / food_override_revisions | inserted: manual_foodsへ新規追加 | https://unicolle.vercel.app/foods/food-manual-9532c3275d |
+| ガーリック・シュリンプ・ピッツァセット | food-manual-3f6d492fa6 | new | approved | manual_foods / food_collection_memberships / food_variants / food_publication_metadata / food_override_revisions | inserted: manual_foodsへ新規追加 | https://unicolle.vercel.app/foods/food-manual-3f6d492fa6 |
+| クランチ・タコスバーガーセット | food-manual-cc14e5f148 | new | approved | manual_foods / food_collection_memberships / food_variants / food_publication_metadata / food_override_revisions | inserted: manual_foodsへ新規追加 | https://unicolle.vercel.app/foods/food-manual-cc14e5f148 |
+| SAIDO スペシャルドリンク ～柚子～/ ～抹茶～/ ～西瓜～ | food-manual-0bec10711b | new | pending | manual_foods / food_collection_memberships / food_variants / food_publication_metadata / food_override_revisions | inserted: manual_foodsへ新規追加 | https://unicolle.vercel.app/foods/food-manual-0bec10711b |
+| ストロベリー・フローズン・スムージー | food-manual-460ba88510 | new | pending | manual_foods / food_collection_memberships / food_variants / food_publication_metadata / food_override_revisions | inserted: manual_foodsへ新規追加 | https://unicolle.vercel.app/foods/food-manual-460ba88510 |
+| トロピカルフルーツ・フローズン・スムージー | food-manual-3478564a9f | new | pending | manual_foods / food_collection_memberships / food_variants / food_publication_metadata / food_override_revisions | inserted: manual_foodsへ新規追加 | https://unicolle.vercel.app/foods/food-manual-3478564a9f |
+| マンゴー・フローズン・スムージー | food-manual-5dd3fd60a8 | new | pending | manual_foods / food_collection_memberships / food_variants / food_publication_metadata / food_override_revisions | inserted: manual_foodsへ新規追加 | https://unicolle.vercel.app/foods/food-manual-5dd3fd60a8 |
+| クラッシュ！大悪党のブラッドオレンジ・フローズンソーダ | food-manual-fd5d2c84f1 | new | approved | manual_foods / food_collection_memberships / food_variants / food_publication_metadata / food_override_revisions | inserted: manual_foodsへ新規追加 | https://unicolle.vercel.app/foods/food-manual-fd5d2c84f1 |
+| 映画スターのミニオンフラッペ ～ピーチ＆レモン～ | food-manual-c11d98d824 | new | approved | manual_foods / food_collection_memberships / food_variants / food_publication_metadata / food_override_revisions | inserted: manual_foodsへ新規追加 | https://unicolle.vercel.app/foods/food-manual-c11d98d824 |
+| スヌーピー・フラッペ ～いちごミルク＆白桃～ | food-manual-cf68598e59 | new | pending | manual_foods / food_collection_memberships / food_variants / food_publication_metadata / food_override_revisions | inserted: manual_foodsへ新規追加 | https://unicolle.vercel.app/foods/food-manual-cf68598e59 |
+| 遊泳禁止!! ジョーズ・フラッペ ～ピーチ＆ソルトホイップ～ | food-manual-eac27732ca | new | pending | manual_foods / food_collection_memberships / food_variants / food_publication_metadata / food_override_revisions | inserted: manual_foodsへ新規追加 | https://unicolle.vercel.app/foods/food-manual-eac27732ca |
+| トロピカル・フラッペ ～ストロベリー～ | food-manual-cba8c213d3 | new | pending | manual_foods / food_collection_memberships / food_variants / food_publication_metadata / food_override_revisions | inserted: manual_foodsへ新規追加 | https://unicolle.vercel.app/foods/food-manual-cba8c213d3 |
+| トロピカル・フラッペ ～マンゴー～ | food-manual-79498d79ed | new | pending | manual_foods / food_collection_memberships / food_variants / food_publication_metadata / food_override_revisions | inserted: manual_foodsへ新規追加 | https://unicolle.vercel.app/foods/food-manual-79498d79ed |
+| ジョーズ・ドリンクボトル | food-manual-ff85e1ea6d | new | approved | manual_foods / food_collection_memberships / food_variants / food_publication_metadata / food_override_revisions | inserted: manual_foodsへ新規追加 | https://unicolle.vercel.app/foods/food-manual-ff85e1ea6d |
+| 憧れの大悪党？ ボブ・ドリンクボトル | food-1kvqau2 | existing | pending | food_overrides / food_collection_memberships / food_variants / food_publication_metadata / food_override_revisions | updated: collection summer-2026 追加, publication metadata保存、published_at null, food_variants冪等保存, food_override_revisionsへ履歴追加, food_overridesを冪等upsert | https://unicolle.vercel.app/foods/food-1kvqau2 |
+| ジュラシック・パーク・ドリンクボトル | food-alnomv | existing | pending | food_overrides / food_collection_memberships / food_variants / food_publication_metadata / food_override_revisions | updated: collection summer-2026 追加, publication metadata保存、published_at null, food_variants冪等保存, food_override_revisionsへ履歴追加, food_overridesを冪等upsert | https://unicolle.vercel.app/foods/food-alnomv |
+| 大悪党のためのドーナツ・バーガー ～BBQ ポーク&ベーコン～ | food-r24nsm | existing | approved | food_overrides / food_collection_memberships / food_variants / food_publication_metadata / food_override_revisions | updated: collection summer-2026 追加, publication metadata保存、published_at null, food_variants冪等保存, food_override_revisionsへ履歴追加, food_overridesを冪等upsert | https://unicolle.vercel.app/foods/food-r24nsm |
+| ソフローズン グレープ マイメロディ＆クロミ バケツ＆スプーン付き | food-manual-a12824cd38 | new | pending | manual_foods / food_collection_memberships / food_variants / food_publication_metadata / food_override_revisions | inserted: manual_foodsへ新規追加 | https://unicolle.vercel.app/foods/food-manual-a12824cd38 |
+
+## 登録しなかった商品
+
+- 超！！ チョコバナナ・チュリトス: 既存商品統合と価格情報に人間確認が必要なため保留。
+- キャラメルポップコーン!? チュリトス: 既存商品統合に人間確認が必要なため保留。
+
+## 管理画面確認
+
+- 管理画面URL: https://unicolle.vercel.app/admin/foods
+- 未ログイン時は `/admin/login?next=%2Fadmin%2Ffoods` へリダイレクトされ、管理者認証は維持。
+- 登録商品は通常の `/admin/foods` の商品一覧・詳細・編集で扱える既存DB構造へ保存。
+
+## Web / PWA / iOS互換性
+
+- Web/PWA/iOSはいずれも既存repositoryから同じfoodIdを参照する。
+- 画像はHTTPS URLのみ。ローカルファイルパスは使用していない。
+- UserFoodLog、Bundle ID、Capacitor appId、AdMob設定は変更していない。
+
+## 重複・冪等性
+
+- membership重複: 0
+- default variant重複: 0
+- 再実行時の追加insert: 0
 
 ## ロールバック方法
 
-- 今回はSupabaseへ書き込んでいないためDBロールバック不要。
-- import実行後に戻す場合は、docsの本レポートと import-ready の対象foodIdを使い、manual_foods新規行、food_collection_memberships、food_variants、food_publication_metadata、food_overridesを対象foodId単位で削除または前回revisionへ戻す。
+- 新規manual_foodsは上記foodIdの `manual_foods` 行を削除し、対応する `food_collection_memberships` / `food_variants` / `food_publication_metadata` を削除する。
+- 既存商品追記は `food_overrides` を直前revisionのsnapshotに戻し、summer-2026 membership・variants・publication metadataを必要に応じて復元する。
+- 変更履歴は `food_override_revisions` の `action=summer-2026-auto-import` で追跡できる。
