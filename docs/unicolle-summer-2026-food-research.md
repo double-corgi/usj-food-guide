@@ -1096,3 +1096,42 @@
 - Supabase本番登録は未実施。Vercel production envから取得した `SUPABASE_SERVICE_ROLE_KEY` が空だったため、停止条件に従いDB書き込み前で停止した。
 - 登録再開条件: Vercel Production に `SUPABASE_SERVICE_ROLE_KEY` を設定し、`npm run import:summer-2026:auto` を実行する。
 - 最終importレポートは `docs/unicolle-summer-2026-final-import-result.md`、自動判定詳細は `docs/unicolle-summer-2026-auto-verification-result.md` を参照。
+
+## 残未完成商品の追加証拠収集（2026-07-10）
+
+- 対象: pending 15件、未登録保留 2件。
+- 目的: 画像未登録12件、価格未確認4件、未登録保留2件の統合方針を商品単位で再調査。
+- 詳細監査: `docs/unicolle-summer-2026-remaining-gaps.md`
+
+### 公式単体画像を正式採用できた商品
+
+#### スヌーピー・フラッペ ～いちごミルク＆白桃～
+
+- foodId: `food-manual-cf68598e59`
+- 公式画像: `https://www.usj.co.jp/contentdata/usj/ja/jp/files/images/gds-images/usj-gds-food-snoopy-frappe-offercard-h.jpg`
+- 画像出典: `https://www.usj.co.jp/contentdata/usj/ja/jp/restaurants/snoopys-backlot-cafe/index.html`
+- 確認結果: HTTPS、HTTP 200、USJ公式レストランcontentdata、商品単体のoffer-card画像。商品名と候補titleが一致し、集合画像ではないため正式imageUrlへ設定。
+- 価格: 900円（既存調査で公式確認済み）
+- 店舗/エリア: スヌーピー™・バックロット・カフェ / ユニバーサル・ワンダーランド
+- 状態: `approved` へ変更。
+
+#### 遊泳禁止!! ジョーズ・フラッペ ～ピーチ＆ソルトホイップ～
+
+- foodId: `food-manual-eac27732ca`
+- 公式画像: `https://www.usj.co.jp/contentdata/usj/ja/jp/files/images/gds-images/usj-gds-food-no-swimming-allowed-jaws-frappe-peach-salt-whip-offercard-h.jpg`
+- 画像出典: `https://www.usj.co.jp/contentdata/usj/ja/jp/restaurants/boardwalk-snacks/index.html`
+- 確認結果: HTTPS、HTTP 200、USJ公式レストランcontentdata、商品単体のoffer-card画像。商品名と候補titleが一致し、集合画像ではないため正式imageUrlへ設定。
+- 価格: 900円（既存調査で公式確認済み）
+- 店舗/エリア: ボードウォーク・スナック / アミティ・ビレッジ
+- 状態: `approved` へ変更。
+
+### pending維持の主な理由
+
+- 夏祭りの金魚 レモンサイダー、いちご練乳 ソーダスムージー、カレーナン!? 焼きそばドッグ: 公式画像・店舗・エリアは確認済みだが価格未確認。
+- フローズン・ジントニック、りんご飴、水風船、SAIDOスペシャルドリンク、3種スムージー、トロピカル・フラッペ2種: 価格は確認済みだが公式画像が集合画像または複数商品画像のみ。正式imageUrlには採用しない。
+- ソフローズン グレープ マイメロディ＆クロミ バケツ＆スプーン付き: 価格未確認かつ公式画像が複数商品集合のみ。
+
+### 未登録保留維持
+
+- 超！！ チョコバナナ・チュリトス: 公式単体画像は確認済み。ただし価格未確認で、既存 `food-j4nvrm` は画像/エリアが夏公式情報と不一致のため統合判断を保留。
+- キャラメルポップコーン!? チュリトス: 公式単体画像と既存generated価格800円は確認済み。ただし同名generated候補が複数あり、`food-14zoddb` と `food-ymiw07` の統合先判断を保留。

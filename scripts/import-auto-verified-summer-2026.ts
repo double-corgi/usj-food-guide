@@ -40,12 +40,13 @@ const cliDryRun = process.argv.includes("--dry-run");
 type ImportRunOptions = {
   dryRun?: boolean;
   writeReports?: boolean;
+  importReadyOverride?: ImportReadyFile;
 };
 
 export async function runSummer2026Import(options: ImportRunOptions = {}) {
   const runDryRun = options.dryRun ?? cliDryRun;
   const writeReports = options.writeReports ?? true;
-  const importReady = readJson<ImportReadyFile>(IMPORT_READY_FILE);
+  const importReady = options.importReadyOverride ?? readJson<ImportReadyFile>(IMPORT_READY_FILE);
   validateImportReady(importReady);
 
   if (importReady.items.length === 0) {

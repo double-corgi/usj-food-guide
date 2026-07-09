@@ -1855,7 +1855,7 @@
       "imageCheckedAt": null
     },
     {
-      "reviewStatus": "pending",
+      "reviewStatus": "approved",
       "collectionId": "summer-2026",
       "isLimited": true,
       "saleStartDate": null,
@@ -1888,8 +1888,8 @@
         "https://www.usj.co.jp/web/ja/jp/restaurants/seasonal-food",
         "https://www.usj.co.jp/web/ja/jp/restaurants/snoopys-backlot-cafe"
       ],
-      "imageUrl": "",
-      "imageSourceUrl": "",
+      "imageUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/files/images/gds-images/usj-gds-food-snoopy-frappe-offercard-h.jpg",
+      "imageSourceUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/restaurants/snoopys-backlot-cafe/index.html",
       "imageCandidates": [
         {
           "url": "https://www.usj.co.jp/contentdata/usj/ja/jp/files/images/gds-images/usj-gds-food-snoopy-frappe-offercard-h.jpg",
@@ -1924,14 +1924,15 @@
         "duplicateHandling": "完全な新商品として追加",
         "registrationPolicy": "manual_foodsへ新規候補として登録。ただし人間確認後。",
         "needsHumanReview": true,
-        "notes": "No generated/manual/override duplicate selected."
+        "notes": "No generated/manual/override duplicate selected.",
+        "status": "approved"
       },
-      "imageReviewStatus": "candidate-only",
-      "imageReviewNote": "画像候補を再監査済み。Codexではconfirmedへ変更せず、人間レビューで正式採用が必要。",
-      "imageCheckedAt": null
+      "imageReviewStatus": "confirmed",
+      "imageReviewNote": "2026-07-10追加調査: USJ公式レストランcontentdataのoffer-card単体画像をHTTP 200で確認。商品本体が単独で主役として写り、候補title/公式店舗ページの商品名と一致するため正式画像として採用。価格900円、店舗、エリア、collection、重複なしも既存調査済みのためapprovedへ変更。",
+      "imageCheckedAt": "2026-07-10T00:55:00.000+09:00"
     },
     {
-      "reviewStatus": "pending",
+      "reviewStatus": "approved",
       "collectionId": "summer-2026",
       "isLimited": true,
       "saleStartDate": null,
@@ -1964,8 +1965,8 @@
         "https://www.usj.co.jp/web/ja/jp/restaurants/seasonal-food",
         "https://www.usj.co.jp/web/ja/jp/restaurants/boardwalk-snacks"
       ],
-      "imageUrl": "",
-      "imageSourceUrl": "",
+      "imageUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/files/images/gds-images/usj-gds-food-no-swimming-allowed-jaws-frappe-peach-salt-whip-offercard-h.jpg",
+      "imageSourceUrl": "https://www.usj.co.jp/contentdata/usj/ja/jp/restaurants/boardwalk-snacks/index.html",
       "imageCandidates": [
         {
           "url": "https://www.usj.co.jp/contentdata/usj/ja/jp/files/images/gds-images/usj-gds-food-no-swimming-allowed-jaws-frappe-peach-salt-whip-offercard-h.jpg",
@@ -2000,11 +2001,12 @@
         "duplicateHandling": "完全な新商品として追加",
         "registrationPolicy": "manual_foodsへ新規候補として登録。ただし人間確認後。",
         "needsHumanReview": true,
-        "notes": "No generated/manual/override duplicate selected."
+        "notes": "No generated/manual/override duplicate selected.",
+        "status": "approved"
       },
-      "imageReviewStatus": "candidate-only",
-      "imageReviewNote": "画像候補を再監査済み。Codexではconfirmedへ変更せず、人間レビューで正式採用が必要。",
-      "imageCheckedAt": null
+      "imageReviewStatus": "confirmed",
+      "imageReviewNote": "2026-07-10追加調査: USJ公式レストランcontentdataのoffer-card単体画像をHTTP 200で確認。商品本体が単独で主役として写り、候補title/公式店舗ページの商品名と一致するため正式画像として採用。価格900円、店舗、エリア、collection、重複なしも既存調査済みのためapprovedへ変更。",
+      "imageCheckedAt": "2026-07-10T00:55:00.000+09:00"
     },
     {
       "reviewStatus": "draft",
