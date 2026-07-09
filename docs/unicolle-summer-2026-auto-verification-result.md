@@ -1,59 +1,48 @@
 # 2026年夏フード 自動検証結果
 
-- 実行日時: 2026-07-08T17:46:39.317Z
+- 実行日時: 2026-07-09T05:18:57.636Z
 - 対象件数: 30
-- A 自動登録可能: 0件
-- B 人間確認が必要: 24件
-- C 情報不足: 6件
-- import-ready: 0件
-- Supabase登録結果: reviewスクリプトでは登録しない。importスクリプトでimport-readyのみ登録対象。
+- approved登録可能: 11件
+- pending登録可能: 17件
+- 登録保留: 2件
+- import-ready: 28件
+- 判定基準: 既存約200商品の運用に合わせ、公式ページで存在・店舗・画像候補を確認できる商品はpending登録対象にし、価格・公式単体画像・店舗・エリアが揃う商品はapproved登録対象にした。
 
 ## 判定表
 
-| 商品名 | 判定 | 自動確定 | 商品名根拠 | 画像根拠 | 価格根拠 | 店舗根拠 | エリア根拠 | 重複検査 | 使用するfoodId | 登録処理 | 登録結果 | 人間確認が必要な理由 |
-|---|---:|---|---|---|---|---|---|---|---|---|---|---|
-| 夏祭りの金魚 レモンサイダー | C | 不可 | 公式ソースを取得できず、既存候補データのみ | 公式候補が複数あり単一画像を自動選択不可 | unresolved | ユニバーサル・マーケット内ハピネス・ワゴン | ニューヨーク・エリア | 完全な新商品として追加 | draft-summer-2026-matsuri-goldfish-lemon-soda | 登録しない | 未登録 | 公式価格が確定していない<br>候補画像が複数あり、1商品1画像に自動確定できない |
-| 超！！ チョコバナナ・チュリトス | C | 不可 | 公式ソースを取得できず、既存候補データのみ | 公式候補が複数あり単一画像を自動選択不可 | unresolved | ユニバーサル・マーケット内ハピネス・ワゴン | ニューヨーク・エリア | 既存商品へ情報をoverride | food-j4nvrm | 登録しない | 未登録 | 公式価格が確定していない<br>既存商品との統合方法が自動確定には不十分<br>候補画像が複数あり、1商品1画像に自動確定できない |
-| いちご練乳 ソーダスムージー | C | 不可 | 公式ソースを取得できず、既存候補データのみ | 公式候補が複数あり単一画像を自動選択不可 | unresolved | ユニバーサル・マーケット内トローリー・トリート | ニューヨーク・エリア | 完全な新商品として追加 | draft-summer-2026-matsuri-strawberry-condensed-milk-soda-smoothie | 登録しない | 未登録 | 公式価格が確定していない<br>候補画像が複数あり、1商品1画像に自動確定できない |
-| カレーナン!? 焼きそばドッグ | C | 不可 | 公式ソースを取得できず、既存候補データのみ | 公式候補が複数あり単一画像を自動選択不可 | unresolved | ユニバーサル・マーケット内ホットドッグカート | ニューヨーク・エリア | 完全な新商品として追加 | draft-summer-2026-matsuri-curry-naan-yakisoba-dog | 登録しない | 未登録 | 公式価格が確定していない<br>候補画像が複数あり、1商品1画像に自動確定できない |
-| フローズン・ジントニック ～シトラス～ | B | 不可 | 公式ソースを取得できず、既存候補データのみ | 公式候補だが同一ブロック未証明 | 公式確認済み: 900 | パークサイド・グリル | ニューヨーク・エリア | 完全な新商品として追加 | draft-summer-2026-related-frozen-gin-tonic-citrus | 登録しない | 未登録 | 画像候補が集合画像またはバリエーションを含む可能性がある<br>公式ページのDOM/構造化データを取得できず同一ブロックを証明できない<br>perceptual hashを計算できない |
-| 25周年カクテル ～ポップコーンフレーバー？～ | B | 不可 | 公式ソースを取得できず、既存候補データのみ | 公式候補だが同一ブロック未証明 | 公式確認済み: 900 | パークサイド・グリル | ニューヨーク・エリア | 既存商品へ価格variantを追加 | food-d5v0l2 | 登録しない | 未登録 | 既存商品との統合方法が自動確定には不十分<br>画像候補が集合画像またはバリエーションを含む可能性がある<br>公式ページのDOM/構造化データを取得できず同一ブロックを証明できない<br>perceptual hashを計算できない |
-| キャラメルポップコーン!? チュリトス | B | 不可 | 公式ソースを取得できず、既存候補データのみ | 公式候補だが同一ブロック未証明 | secondary-confirmed | パークサイド・グリル横フードカート | ニューヨーク・エリア | 既存商品へsummer-2026を追加 | food-14zoddb | 登録しない | 未登録 | 公式価格が確定していない<br>画像候補が集合画像またはバリエーションを含む可能性がある<br>公式ページのDOM/構造化データを取得できず同一ブロックを証明できない<br>perceptual hashを計算できない |
-| りんご飴 ～りんごのムース～ | B | 不可 | 公式ソースを取得できず、既存候補データのみ | 公式候補だが同一ブロック未証明 | 公式確認済み: 950 | ビバリーヒルズ・ブランジェリー | ハリウッド・エリア | 完全な新商品として追加 | draft-summer-2026-dessert-candy-apple-apple-mousse | 登録しない | 未登録 | 画像候補が集合画像またはバリエーションを含む可能性がある<br>公式ページのDOM/構造化データを取得できず同一ブロックを証明できない<br>perceptual hashを計算できない |
-| 水風船 ～ピーチゼリー＆レアチーズムース～ | B | 不可 | 公式ソースを取得できず、既存候補データのみ | 公式候補だが同一ブロック未証明 | 公式確認済み: 950 | ビバリーヒルズ・ブランジェリー | ハリウッド・エリア | 完全な新商品として追加 | draft-summer-2026-dessert-water-balloon-peach-jelly-rare-cheese-mousse | 登録しない | 未登録 | 画像候補が集合画像またはバリエーションを含む可能性がある<br>公式ページのDOM/構造化データを取得できず同一ブロックを証明できない<br>perceptual hashを計算できない |
-| 紫陽花 ～葡萄と柚子の和氷菓 焼き菓子添え～ | B | 不可 | 公式ソースを取得できず、既存候補データのみ | 公式候補が複数あり単一画像を自動選択不可 | 公式確認済み: 1800 | SAIDO | ニューヨーク・エリア | 完全な新商品として追加 | draft-summer-2026-dessert-hydrangea-grape-yuzu-shaved-ice-cake | 登録しない | 未登録 | 候補画像が複数あり、1商品1画像に自動確定できない |
-| 柑橘おろしと白みその冷やしうどん御膳 | B | 不可 | 公式ソースを取得できず、既存候補データのみ | 公式候補が複数あり単一画像を自動選択不可 | 公式確認済み: 2600 | SAIDO | ニューヨーク・エリア | 完全な新商品として追加 | draft-summer-2026-meal-citrus-grated-radish-white-miso-cold-udon-set | 登録しない | 未登録 | 候補画像が複数あり、1商品1画像に自動確定できない |
-| オマール海老の冷製パスタ アメリケーヌのグラニテ添え | B | 不可 | 公式ソースを取得できず、既存候補データのみ | 公式候補が複数あり単一画像を自動選択不可 | 公式確認済み: 3300 | パークサイド・グリル | ニューヨーク・エリア | 完全な新商品として追加 | draft-summer-2026-parkside-chilled-lobster-pasta-americaine-granita | 登録しない | 未登録 | 候補画像が複数あり、1商品1画像に自動確定できない |
-| プルドポーク＆チキン・スパイシー BBQ ピッツアセット | B | 不可 | 公式ソースを取得できず、既存候補データのみ | 公式候補が複数あり単一画像を自動選択不可 | 公式確認済み: 1950 | ルイズ N.Y. ピザパーラー | ニューヨーク・エリア | 完全な新商品として追加 | draft-summer-2026-louies-pulled-pork-chicken-spicy-bbq-pizza-set | 登録しない | 未登録 | 候補画像が複数あり、1商品1画像に自動確定できない |
-| ガーリック・シュリンプ・ピッツァセット | B | 不可 | 公式ソースを取得できず、既存候補データのみ | 公式候補が複数あり単一画像を自動選択不可 | 公式確認済み: 1950 | ルイズ N.Y. ピザパーラー | ニューヨーク・エリア | 完全な新商品として追加 | draft-summer-2026-louies-garlic-shrimp-pizza-set | 登録しない | 未登録 | 候補画像が複数あり、1商品1画像に自動確定できない |
-| クランチ・タコスバーガーセット | B | 不可 | 公式ソースを取得できず、既存候補データのみ | 公式候補が複数あり単一画像を自動選択不可 | 公式確認済み: 2100 | メルズ・ドライブイン | ハリウッド・エリア | 完全な新商品として追加 | draft-summer-2026-mels-crunchy-taco-burger-set | 登録しない | 未登録 | 候補画像が複数あり、1商品1画像に自動確定できない |
-| SAIDO スペシャルドリンク ～柚子～/ ～抹茶～/ ～西瓜～ | B | 不可 | 公式ソースを取得できず、既存候補データのみ | 公式候補だが同一ブロック未証明 | 公式確認済み: 700 | SAIDO | ニューヨーク・エリア | 完全な新商品として追加 | draft-summer-2026-saido-special-drinks-yuzu-matcha-watermelon | 登録しない | 未登録 | 画像候補が集合画像またはバリエーションを含む可能性がある<br>公式ページのDOM/構造化データを取得できず同一ブロックを証明できない<br>perceptual hashを計算できない |
-| ストロベリー・フローズン・スムージー | B | 不可 | 公式ソースを取得できず、既存候補データのみ | 公式候補だが同一ブロック未証明 | 公式確認済み: 800 | ビバリーヒルズ・ブランジェリー | ハリウッド・エリア | 完全な新商品として追加 | draft-summer-2026-beverly-strawberry-frozen-smoothie | 登録しない | 未登録 | 画像候補が集合画像またはバリエーションを含む可能性がある<br>公式ページのDOM/構造化データを取得できず同一ブロックを証明できない<br>perceptual hashを計算できない |
-| トロピカルフルーツ・フローズン・スムージー | B | 不可 | 公式ソースを取得できず、既存候補データのみ | 公式候補だが同一ブロック未証明 | 公式確認済み: 900 | ビバリーヒルズ・ブランジェリー | ハリウッド・エリア | 完全な新商品として追加 | draft-summer-2026-beverly-tropical-fruits-frozen-smoothie | 登録しない | 未登録 | 画像候補が集合画像またはバリエーションを含む可能性がある<br>公式ページのDOM/構造化データを取得できず同一ブロックを証明できない<br>perceptual hashを計算できない |
-| マンゴー・フローズン・スムージー | C | 不可 | 公式ソースを取得できず、既存候補データのみ | 有効な単体画像候補なし | 公式確認済み: 800 | ビバリーヒルズ・ブランジェリー | ハリウッド・エリア | 完全な新商品として追加 | draft-summer-2026-beverly-mango-frozen-smoothie | 登録しない | 未登録 | 有効な公式画像候補がない |
-| クラッシュ！大悪党のブラッドオレンジ・フローズンソーダ | B | 不可 | 公式ソースを取得できず、既存候補データのみ | 公式候補が複数あり単一画像を自動選択不可 | 公式確認済み: 900 | イーブル・イーツ | ミニオン・パーク | 完全な新商品として追加 | draft-summer-2026-foodcart-villain-blood-orange-frozen-soda | 登録しない | 未登録 | 候補画像が複数あり、1商品1画像に自動確定できない |
-| 映画スターのミニオンフラッペ ～ピーチ＆レモン～ | B | 不可 | 公式ソースを取得できず、既存候補データのみ | 公式候補が複数あり単一画像を自動選択不可 | 公式確認済み: 900 | デリシャス・ミー！ ザ・クッキー・キッチン | ミニオン・パーク | 完全な新商品として追加 | draft-summer-2026-foodcart-movie-star-minion-frappe-peach-lemon | 登録しない | 未登録 | 候補画像が複数あり、1商品1画像に自動確定できない |
-| スヌーピー・フラッペ ～いちごミルク＆白桃～ | B | 不可 | 公式ソースを取得できず、既存候補データのみ | 公式候補だが同一ブロック未証明 | 公式確認済み: 900 | スヌーピー™・バックロット・カフェ | ユニバーサル・ワンダーランド | 完全な新商品として追加 | draft-summer-2026-foodcart-snoopy-frappe-strawberry-milk-white-peach | 登録しない | 未登録 | 画像候補が集合画像またはバリエーションを含む可能性がある<br>公式ページのDOM/構造化データを取得できず同一ブロックを証明できない<br>perceptual hashを計算できない |
-| 遊泳禁止!! ジョーズ・フラッペ ～ピーチ＆ソルトホイップ～ | B | 不可 | 公式ソースを取得できず、既存候補データのみ | 公式候補だが同一ブロック未証明 | 公式確認済み: 900 | ボードウォーク・スナック | アミティ・ビレッジ | 完全な新商品として追加 | draft-summer-2026-foodcart-no-swimming-jaws-frappe-peach-salt-whip | 登録しない | 未登録 | 画像候補が集合画像またはバリエーションを含む可能性がある<br>公式ページのDOM/構造化データを取得できず同一ブロックを証明できない<br>perceptual hashを計算できない |
-| トロピカル・フラッペ ～ストロベリー～ | B | 不可 | 公式ソースを取得できず、既存候補データのみ | 公式候補だが同一ブロック未証明 | 公式確認済み: 800 | ワーフカフェ / ボードウォーク・スナック | サンフランシスコ・エリア / アミティ・ビレッジ | 完全な新商品として追加 | draft-summer-2026-foodcart-tropical-frappe-strawberry | 登録しない | 未登録 | 複数店舗または複数エリアのため一意に確定できない<br>画像候補が集合画像またはバリエーションを含む可能性がある<br>公式ページのDOM/構造化データを取得できず同一ブロックを証明できない<br>perceptual hashを計算できない |
-| トロピカル・フラッペ ～マンゴー～ | B | 不可 | 公式ソースを取得できず、既存候補データのみ | 公式候補が複数あり単一画像を自動選択不可 | 公式確認済み: 800 | ワーフカフェ / ボードウォーク・スナック | サンフランシスコ・エリア / アミティ・ビレッジ | 完全な新商品として追加 | draft-summer-2026-foodcart-tropical-frappe-mango | 登録しない | 未登録 | 複数店舗または複数エリアのため一意に確定できない<br>候補画像が複数あり、1商品1画像に自動確定できない |
-| ジョーズ・ドリンクボトル | B | 不可 | 公式ソースを取得できず、既存候補データのみ | 公式候補が複数あり単一画像を自動選択不可 | 公式確認済み: 2300 | アミティ・ランディング・レストラン | アミティ・ビレッジ | 完全な新商品として追加 | draft-summer-2026-character-jaws-drink-bottle | 登録しない | 未登録 | 候補画像が複数あり、1商品1画像に自動確定できない |
-| 憧れの大悪党？ ボブ・ドリンクボトル | B | 不可 | 公式ソースを取得できず、既存候補データのみ | 公式候補が複数あり単一画像を自動選択不可 | 公式確認済み: 2300 | デリシャス・ミー！ ザ・クッキー・キッチン / ワーフカフェ | ミニオン・パーク / サンフランシスコ・エリア | 既存商品へsummer-2026を追加 | food-1kvqau2 | 登録しない | 未登録 | 複数店舗または複数エリアのため一意に確定できない<br>候補画像が複数あり、1商品1画像に自動確定できない |
-| ジュラシック・パーク・ドリンクボトル | B | 不可 | 公式ソースを取得できず、既存候補データのみ | 公式候補が複数あり単一画像を自動選択不可 | secondary-confirmed | ジュラシック・パーク・ザ・ライド スプラッシュダウン前フードカート | ジュラシック・パーク | 既存商品へsummer-2026を追加 | food-alnomv | 登録しない | 未登録 | 公式価格が確定していない<br>候補画像が複数あり、1商品1画像に自動確定できない |
-| 大悪党のためのドーナツ・バーガー ～BBQ ポーク&ベーコン～ | B | 不可 | 公式ソースを取得できず、既存候補データのみ | 公式候補が複数あり単一画像を自動選択不可 | 公式確認済み: 1200 | イーブル・イーツ | ミニオン・パーク | 既存商品へ情報をoverride | food-r24nsm | 登録しない | 未登録 | 既存商品との統合方法が自動確定には不十分<br>候補画像が複数あり、1商品1画像に自動確定できない |
-| ソフローズン グレープ マイメロディ＆クロミ バケツ＆スプーン付き | C | 不可 | 公式ソースを取得できず、既存候補データのみ | 公式候補だが同一ブロック未証明 | unresolved | イルミネーション・シアター入口横フードカート / パークサイド・グリル横フードカート | ニューヨーク・エリア | 完全な新商品として追加 | draft-summer-2026-foodcart-soft-frozen-grape-my-melody-kuromi-bucket-spoon | 登録しない | 未登録 | 公式価格が確定していない<br>複数店舗または複数エリアのため一意に確定できない<br>画像候補が集合画像またはバリエーションを含む可能性がある<br>公式ページのDOM/構造化データを取得できず同一ブロックを証明できない<br>perceptual hashを計算できない |
+| 商品名 | 判定 | foodId | 新規/既存 | 画像 | 価格 | 店舗 | エリア | confidence | DB保存先 | 公開状態 | 未確認/保留理由 |
+|---|---:|---|---|---|---|---|---|---|---|---|---|
+| 夏祭りの金魚 レモンサイダー | pending | food-manual-0625351f22 | 新規 | https://www.usj.co.jp/contentdata/usj/ja/jp/files/images/gds-images/usj-gds-summer-2026-matsuri-nights-goldfish-lemon-soda-infocard-h.jpg | 未確認 / unresolved | ユニバーサル・マーケット内ハピネス・ワゴン | ニューヨーク・エリア | official-partial | manual_foods / memberships / variants / metadata | 管理画面のみ | 価格未確認です |
+| 超！！ チョコバナナ・チュリトス | hold | food-j4nvrm | 既存追記 | https://www.usj.co.jp/contentdata/usj/ja/jp/files/images/gds-images/usj-gds-summer-2026-matsuri-nights-choco-banana-churritos-infocard-h.jpg | 未確認 / unresolved | ユニバーサル・マーケット内ハピネス・ワゴン | ニューヨーク・エリア | needs-human-review | food_overrides / memberships / variants / metadata | 登録保留 | 既存商品との統合で公開状態や商品内容を誤って上書きする可能性があります |
+| いちご練乳 ソーダスムージー | pending | food-manual-736109191f | 新規 | https://www.usj.co.jp/contentdata/usj/ja/jp/files/images/gds-images/usj-gds-summer-2026-matsuri-nights-strawberry-and-condensed-milk-seltzer-smoothie-infocard-h.jpg | 未確認 / unresolved | ユニバーサル・マーケット内トローリー・トリート | ニューヨーク・エリア | official-partial | manual_foods / memberships / variants / metadata | 管理画面のみ | 価格未確認です |
+| カレーナン!? 焼きそばドッグ | pending | food-manual-2f13b0cefe | 新規 | https://www.usj.co.jp/contentdata/usj/ja/jp/files/images/gds-images/usj-gds-summer-2026-matsuri-nights-yakisoba-dog-infocard-h.jpg | 未確認 / unresolved | ユニバーサル・マーケット内ホットドッグカート | ニューヨーク・エリア | official-partial | manual_foods / memberships / variants / metadata | 管理画面のみ | 価格未確認です |
+| フローズン・ジントニック ～シトラス～ | pending | food-manual-aa0f866b68 | 新規 | 未採用 | 900円 / official-confirmed | パークサイド・グリル | ニューヨーク・エリア | official-partial | manual_foods / memberships / variants / metadata | 管理画面のみ | 正式採用できる単体公式画像がありません |
+| 25周年カクテル ～ポップコーンフレーバー？～ | approved | food-d5v0l2 | 既存追記 | https://www.usj.co.jp/contentdata/usj/ja/jp/files/images/gds-images/usj-gds-food-25th-anniversary-cocktail-popcorn-flavor-spring-2026-gallery-a.jpg | 900円 / official-confirmed | パークサイド・グリル | ニューヨーク・エリア | official-complete | food_overrides / memberships / variants / metadata | 公開対象 | - |
+| キャラメルポップコーン!? チュリトス | hold | food-14zoddb | 既存追記 | https://www.usj.co.jp/contentdata/usj/ja/jp/files/images/gds-images/usj-gds-food-caramel-popcorn-churritos-spring-2026-gallery-a.jpg | 800円 / secondary-confirmed | パークサイド・グリル横フードカート | ニューヨーク・エリア | needs-human-review | food_overrides / memberships / variants / metadata | 登録保留 | 既存商品との統合で公開状態や商品内容を誤って上書きする可能性があります |
+| りんご飴 ～りんごのムース～ | pending | food-manual-26fa16ed9b | 新規 | 未採用 | 950円 / official-confirmed | ビバリーヒルズ・ブランジェリー | ハリウッド・エリア | official-partial | manual_foods / memberships / variants / metadata | 管理画面のみ | 正式採用できる単体公式画像がありません |
+| 水風船 ～ピーチゼリー＆レアチーズムース～ | pending | food-manual-2f3fb0c8dc | 新規 | 未採用 | 950円 / official-confirmed | ビバリーヒルズ・ブランジェリー | ハリウッド・エリア | official-partial | manual_foods / memberships / variants / metadata | 管理画面のみ | 正式採用できる単体公式画像がありません |
+| 紫陽花 ～葡萄と柚子の和氷菓 焼き菓子添え～ | approved | food-manual-dc7e97578d | 新規 | https://www.usj.co.jp/contentdata/usj/ja/jp/files/images/gds-images/usj-gds-food-hydrangea-grape-and-with-yuzu-japanese-japanese--shaved-ice-with-cake-summer-2026-offercard-h.jpg | 1,800円 / official-confirmed | SAIDO | ニューヨーク・エリア | official-complete | manual_foods / memberships / variants / metadata | 公開対象 | - |
+| 柑橘おろしと白みその冷やしうどん御膳 | approved | food-manual-8183cf38e8 | 新規 | https://www.usj.co.jp/contentdata/usj/ja/jp/files/images/gds-images/usj-gds-cold-udon-set-meal-with-citrus-grated-radish-and-white-miso-summer-2025-v2-offercard-h.jpg | 2,600円 / official-confirmed | SAIDO | ニューヨーク・エリア | official-complete | manual_foods / memberships / variants / metadata | 公開対象 | - |
+| オマール海老の冷製パスタ アメリケーヌのグラニテ添え | approved | food-manual-85ac2bfa4b | 新規 | https://www.usj.co.jp/contentdata/usj/ja/jp/files/images/gds-images/usj-gds-food-chilled-lobster-pasta-with-americaine-granita-summer-2026-offercard-h.jpg | 3,300円 / official-confirmed | パークサイド・グリル | ニューヨーク・エリア | official-complete | manual_foods / memberships / variants / metadata | 公開対象 | - |
+| プルドポーク＆チキン・スパイシー BBQ ピッツアセット | approved | food-manual-9532c3275d | 新規 | https://www.usj.co.jp/contentdata/usj/ja/jp/files/images/gds-images/usj-gds-food-pizza-pulled-pork-and-chicken-spicy-bbq-summer-2026-offercard-h.jpg | 1,950円 / official-confirmed | ルイズ N.Y. ピザパーラー | ニューヨーク・エリア | official-complete | manual_foods / memberships / variants / metadata | 公開対象 | - |
+| ガーリック・シュリンプ・ピッツァセット | approved | food-manual-3f6d492fa6 | 新規 | https://www.usj.co.jp/contentdata/usj/ja/jp/files/images/gds-images/usj-gds-louies-pizza-set-garlic-shrimp-offercard-h.jpg | 1,950円 / official-confirmed | ルイズ N.Y. ピザパーラー | ニューヨーク・エリア | official-complete | manual_foods / memberships / variants / metadata | 公開対象 | - |
+| クランチ・タコスバーガーセット | approved | food-manual-cc14e5f148 | 新規 | https://www.usj.co.jp/contentdata/usj/ja/jp/files/images/gds-images/usj-gds-crunchy-taco-burger-meal-summer-2025-v2-offercard-h.jpg | 2,100円 / official-confirmed | メルズ・ドライブイン | ハリウッド・エリア | official-complete | manual_foods / memberships / variants / metadata | 公開対象 | - |
+| SAIDO スペシャルドリンク ～柚子～/ ～抹茶～/ ～西瓜～ | pending | food-manual-0bec10711b | 新規 | 未採用 | 700円 / official-confirmed | SAIDO | ニューヨーク・エリア | official-partial | manual_foods / memberships / variants / metadata | 管理画面のみ | 正式採用できる単体公式画像がありません |
+| ストロベリー・フローズン・スムージー | pending | food-manual-460ba88510 | 新規 | 未採用 | 800円 / official-confirmed | ビバリーヒルズ・ブランジェリー | ハリウッド・エリア | official-partial | manual_foods / memberships / variants / metadata | 管理画面のみ | 正式採用できる単体公式画像がありません |
+| トロピカルフルーツ・フローズン・スムージー | pending | food-manual-3478564a9f | 新規 | 未採用 | 900円 / official-confirmed | ビバリーヒルズ・ブランジェリー | ハリウッド・エリア | official-partial | manual_foods / memberships / variants / metadata | 管理画面のみ | 正式採用できる単体公式画像がありません |
+| マンゴー・フローズン・スムージー | pending | food-manual-5dd3fd60a8 | 新規 | 未採用 | 800円 / official-confirmed | ビバリーヒルズ・ブランジェリー | ハリウッド・エリア | official-partial | manual_foods / memberships / variants / metadata | 管理画面のみ | 正式採用できる単体公式画像がありません |
+| クラッシュ！大悪党のブラッドオレンジ・フローズンソーダ | approved | food-manual-fd5d2c84f1 | 新規 | https://www.usj.co.jp/contentdata/usj/ja/jp/files/images/gds-images/usj-gds-food-villain-con-blood-orange-frozen-soda-summer-2026-offercard-h.jpg | 900円 / official-confirmed | イーブル・イーツ | ミニオン・パーク | official-complete | manual_foods / memberships / variants / metadata | 公開対象 | - |
+| 映画スターのミニオンフラッペ ～ピーチ＆レモン～ | approved | food-manual-c11d98d824 | 新規 | https://www.usj.co.jp/contentdata/usj/ja/jp/files/images/gds-images/usj-gds-food-movie-star-minion-frappe-peach-and-lemon-summer-2026-offercard-h.jpg | 900円 / official-confirmed | デリシャス・ミー！ ザ・クッキー・キッチン | ミニオン・パーク | official-complete | manual_foods / memberships / variants / metadata | 公開対象 | - |
+| スヌーピー・フラッペ ～いちごミルク＆白桃～ | pending | food-manual-cf68598e59 | 新規 | 未採用 | 900円 / official-confirmed | スヌーピー™・バックロット・カフェ | ユニバーサル・ワンダーランド | official-partial | manual_foods / memberships / variants / metadata | 管理画面のみ | 正式採用できる単体公式画像がありません |
+| 遊泳禁止!! ジョーズ・フラッペ ～ピーチ＆ソルトホイップ～ | pending | food-manual-eac27732ca | 新規 | 未採用 | 900円 / official-confirmed | ボードウォーク・スナック | アミティ・ビレッジ | official-partial | manual_foods / memberships / variants / metadata | 管理画面のみ | 正式採用できる単体公式画像がありません |
+| トロピカル・フラッペ ～ストロベリー～ | pending | food-manual-cba8c213d3 | 新規 | 未採用 | 800円 / official-confirmed | ワーフカフェ / ボードウォーク・スナック | サンフランシスコ・エリア / アミティ・ビレッジ | official-partial | manual_foods / memberships / variants / metadata | 管理画面のみ | 正式採用できる単体公式画像がありません<br>複数店舗または複数エリアです |
+| トロピカル・フラッペ ～マンゴー～ | pending | food-manual-79498d79ed | 新規 | 未採用 | 800円 / official-confirmed | ワーフカフェ / ボードウォーク・スナック | サンフランシスコ・エリア / アミティ・ビレッジ | official-partial | manual_foods / memberships / variants / metadata | 管理画面のみ | 正式採用できる単体公式画像がありません<br>複数店舗または複数エリアです |
+| ジョーズ・ドリンクボトル | approved | food-manual-ff85e1ea6d | 新規 | https://www.usj.co.jp/contentdata/usj/ja/jp/files/images/gds-images/usj-gds-food-jaws-drink-bottle-2026-offercard-h.jpg | 2,300円 / official-confirmed | アミティ・ランディング・レストラン | アミティ・ビレッジ | official-complete | manual_foods / memberships / variants / metadata | 公開対象 | - |
+| 憧れの大悪党？ ボブ・ドリンクボトル | pending | food-1kvqau2 | 既存追記 | https://www.usj.co.jp/contentdata/usj/ja/jp/files/images/gds-images/usj-gds-food-respected-villain-bob-drink-bottle-2025-offercard-h.jpg | 2,300円 / official-confirmed | デリシャス・ミー！ ザ・クッキー・キッチン / ワーフカフェ | ミニオン・パーク / サンフランシスコ・エリア | official-partial | food_overrides / memberships / variants / metadata | 管理画面のみ | 複数店舗または複数エリアです |
+| ジュラシック・パーク・ドリンクボトル | pending | food-alnomv | 既存追記 | https://www.usj.co.jp/contentdata/usj/ja/jp/files/images/gds-images/usj-gds-food-jurassic-park-drink-bottle-2026-gallery-a.jpg | 2,300円 / secondary-confirmed | ジュラシック・パーク・ザ・ライド スプラッシュダウン前フードカート | ジュラシック・パーク | official-partial | food_overrides / memberships / variants / metadata | 管理画面のみ | 価格が補助情報確認です |
+| 大悪党のためのドーナツ・バーガー ～BBQ ポーク&ベーコン～ | approved | food-r24nsm | 既存追記 | https://www.usj.co.jp/contentdata/usj/ja/jp/files/images/gds-images/usj-gds-food-villain-con-donut-burger-bbq-pork-and-bacon-2025-offercard-h.jpg | 1,200円 / official-confirmed | イーブル・イーツ | ミニオン・パーク | official-complete | food_overrides / memberships / variants / metadata | 公開対象 | - |
+| ソフローズン グレープ マイメロディ＆クロミ バケツ＆スプーン付き | pending | food-manual-a12824cd38 | 新規 | 未採用 | 未確認 / unresolved | イルミネーション・シアター入口横フードカート / パークサイド・グリル横フードカート | ニューヨーク・エリア | official-partial | manual_foods / memberships / variants / metadata | 管理画面のみ | 価格未確認です<br>正式採用できる単体公式画像がありません<br>複数店舗または複数エリアです |
 
 ## 登録可能性チェック
 
 - 指摘なし。
-
-## 自動登録しなかった理由
-
-- USJ公式の通常URLはAngularシェルHTMLで、商品名・価格・店舗・画像が同一DOMブロックにあることを機械的に証明できない商品はBへ残した。
-- 集合画像、複数候補、通常版/カップ付きの曖昧さ、補助価格、複数店舗/複数エリア、既存商品統合が残る商品は自動登録禁止条件に該当する。
-
-## 自動登録実行結果
-
-- 実行日時: 2026-07-08T17:46:50.440Z
-- 対象件数: 0
-- import-readyが0件のためSupabase書き込みなし。

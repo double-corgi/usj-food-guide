@@ -42,6 +42,7 @@ async function main() {
   const supabase = createServiceSupabaseClient();
   if (!supabase) throw new Error("Supabase service role settings are missing; import stopped before writes.");
 
+  await ensureSummerCollection(supabase);
   const before = await readImportSnapshot(supabase, importReady.items);
   const results: ImportResult[] = [];
   for (const decision of importReady.items) {
@@ -82,8 +83,8 @@ async function importNewManualFood(supabase: Supabase, decision: ReviewDecision,
     name: decision.editedData.name,
     normalized_name: normalizeFoodName(decision.editedData.name),
     name_en: null,
-    category: decision.editedData.category || "unknown",
-    category_tags: [decision.editedData.category || "unknown", "seasonal"],
+    category: normalizeCategory(decision.editedData.category),
+    category_tags: Array.from(new Set([normalizeCategory(decision.editedData.category), "seasonal"])),
     price: decision.editedData.price,
     area_name: decision.editedData.areaName,
     shop_name: decision.editedData.shopName,
@@ -102,7 +103,8 @@ async function importNewManualFood(supabase: Supabase, decision: ReviewDecision,
   };
 
   if (existing.data) {
-    const update = await supabase.from("manual_foods").update({ ...payload, created_at: undefined }).eq("id", foodId);
+    const { created_at: _createdAt, created_by: _createdBy, ...updatePayload } = payload;
+    const update = await supabase.from("manual_foods").update(updatePayload).eq("id", foodId);
     if (update.error) throw new Error(`manual_foods更新失敗 ${foodId}: ${update.error.message}`);
     await saveFoundation(supabase, decision, foodId);
     return { foodId, name: decision.editedData.name, targetType: "new", action: "manual_foods update", status: "updated", details: ["manual_foods既存行を冪等更新"] };
@@ -121,10 +123,8 @@ async function importExistingFoodUpdates(supabase: Supabase, decision: ReviewDec
   if (!generatedExists && !manualExists.data) throw new Error(`既存foodIdが見つかりません: ${foodId}`);
 
   const details = await saveFoundation(supabase, decision, foodId);
-  if (decision.duplicateAction === "override_add" || decision.duplicateAction === "existing_update") {
-    await upsertOverride(supabase, decision, foodId);
-    details.push("food_overridesを冪等upsert");
-  }
+  await upsertOverride(supabase, decision, foodId);
+  details.push("food_overridesを冪等upsert");
   return { foodId, name: decision.editedData.name, targetType: "existing", action: decision.duplicateAction, status: "updated", details };
 }
 
@@ -144,8 +144,8 @@ async function saveFoundation(supabase: Supabase, decision: ReviewDecision, food
   const metadata = await supabase.from("food_publication_metadata").upsert(
     {
       food_id: foodId,
-      review_status: "pending",
-      published_at: null,
+      review_status: decision.editedData.reviewStatus === "approved" ? "approved" : "pending",
+      published_at: decision.editedData.reviewStatus === "approved" ? undefined : null,
       updated_at: now
     },
     { onConflict: "food_id" }
@@ -155,8 +155,8 @@ async function saveFoundation(supabase: Supabase, decision: ReviewDecision, food
 
   await saveVariants(supabase, foodId, decision.editedData.priceVariants, decision.editedData.price, decision.editedData.sourceUrl || decision.editedData.officialReferenceUrls[0] || null);
   details.push("food_variants冪等保存");
-  await insertRevision(supabase, foodId, decision, "summer-2026-auto-import");
-  details.push("food_override_revisionsへ履歴追加");
+  const revisionInserted = await insertRevision(supabase, foodId, decision, "summer-2026-auto-import");
+  details.push(revisionInserted ? "food_override_revisionsへ履歴追加" : "food_override_revisionsは同一内容のため追加なし");
   return details;
 }
 
@@ -165,16 +165,11 @@ async function saveVariants(supabase: Supabase, foodId: string, variants: Review
   const existing = await supabase.from("food_variants").select("*").eq("food_id", foodId);
   if (existing.error) throw new Error(`variant確認失敗 ${foodId}: ${existing.error.message}`);
 
-  for (const row of rows) {
-    const current = existing.data?.find((candidate) => candidate.label === row.label);
-    if (current) {
-      const update = await supabase.from("food_variants").update(row).eq("id", current.id);
-      if (update.error) throw new Error(`variant更新失敗 ${foodId}: ${update.error.message}`);
-    } else {
-      const insert = await supabase.from("food_variants").insert({ ...row, food_id: foodId });
-      if (insert.error) throw new Error(`variant追加失敗 ${foodId}: ${insert.error.message}`);
-    }
-  }
+  const remove = await supabase.from("food_variants").delete().eq("food_id", foodId);
+  if (remove.error) throw new Error(`variant削除失敗 ${foodId}: ${remove.error.message}`);
+  if (rows.length === 0) return;
+  const insert = await supabase.from("food_variants").insert(rows.map((row) => ({ ...row, food_id: foodId })));
+  if (insert.error) throw new Error(`variant追加失敗 ${foodId}: ${insert.error.message}`);
 }
 
 function normalizeVariants(variants: ReviewPriceVariant[], fallbackPrice: number | null, sourceUrl: string | null) {
@@ -197,12 +192,16 @@ async function upsertOverride(supabase: Supabase, decision: ReviewDecision, food
     price: decision.editedData.price,
     area_name: decision.editedData.areaName,
     shop_name: decision.editedData.shopName,
-    category: decision.editedData.category,
-    category_tags: [decision.editedData.category || "unknown", "seasonal"],
+    category: normalizeCategory(decision.editedData.category),
+    category_tags: Array.from(new Set([normalizeCategory(decision.editedData.category), "seasonal"])),
+    image_path: decision.editedData.imageUrl || null,
     image_source_url: decision.editedData.imageSourceUrl || null,
     info_source_url: decision.editedData.sourceUrl || decision.editedData.officialReferenceUrls[0] || null,
+    hidden: decision.editedData.reviewStatus === "approved" ? false : null,
+    sale_status: "active",
+    status: "active",
     admin_source_type: "summer-2026-auto-import",
-    admin_confidence: "high",
+    admin_confidence: decision.editedData.reviewStatus === "approved" ? "high" : "medium",
     admin_notes: decision.reviewerNote,
     is_deleted: false,
     updated_by: actorEmail,
@@ -215,15 +214,19 @@ async function upsertOverride(supabase: Supabase, decision: ReviewDecision, food
 async function insertRevision(supabase: Supabase, foodId: string, decision: ReviewDecision, action: string) {
   const latest = await supabase.from("food_override_revisions").select("version").eq("food_id", foodId).order("version", { ascending: false }).limit(1).maybeSingle();
   if (latest.error) throw new Error(`revision version確認失敗 ${foodId}: ${latest.error.message}`);
+  const importKey = buildImportKey(foodId, decision);
+  const latestSnapshot = await supabase.from("food_override_revisions").select("snapshot").eq("food_id", foodId).eq("action", action).order("version", { ascending: false }).limit(1).maybeSingle();
+  if (!latestSnapshot.error && latestSnapshot.data && readSnapshotImportKey(latestSnapshot.data.snapshot) === importKey) return false;
   const version = (latest.data?.version ?? 0) + 1;
   const result = await supabase.from("food_override_revisions").insert({
     food_id: foodId,
     version,
     action,
     actor_email: actorEmail,
-    snapshot: JSON.parse(JSON.stringify({ source: "summer-2026-auto-import", decision })) as Json
+    snapshot: JSON.parse(JSON.stringify({ source: "summer-2026-auto-import", importKey, decision })) as Json
   });
   if (result.error) throw new Error(`revision追加失敗 ${foodId}: ${result.error.message}`);
+  return true;
 }
 
 function validateImportReady(importReady: ImportReadyFile) {
@@ -231,8 +234,9 @@ function validateImportReady(importReady: ImportReadyFile) {
   const ids = new Set<string>();
   for (const decision of importReady.items) {
     if (decision.decision !== "register") throw new Error(`register以外が含まれています: ${decision.editedData.name}`);
-    if (decision.imageReview !== "confirmed") throw new Error(`画像confirmed以外が含まれています: ${decision.editedData.name}`);
-    if (decision.editedData.reviewStatus === "approved") throw new Error(`approvedが含まれています: ${decision.editedData.name}`);
+    if (decision.editedData.reviewStatus !== "approved" && decision.editedData.reviewStatus !== "pending") throw new Error(`reviewStatusが不正です: ${decision.editedData.name}`);
+    if (decision.editedData.reviewStatus === "approved" && decision.imageReview !== "confirmed") throw new Error(`approvedなのに画像confirmedではありません: ${decision.editedData.name}`);
+    if (decision.editedData.reviewStatus === "approved" && !decision.editedData.imageUrl) throw new Error(`approvedなのに画像URLがありません: ${decision.editedData.name}`);
     if (decision.targetType === "existing" && !decision.existingFoodId) throw new Error(`existingFoodIdなし: ${decision.editedData.name}`);
     const foodId = resolveFoodId(decision);
     if (ids.has(foodId)) throw new Error(`foodId重複: ${foodId}`);
@@ -267,6 +271,50 @@ function buildSnapshotSummary(before: Record<string, number>, after: Record<stri
 function resolveFoodId(decision: ReviewDecision) {
   if (decision.targetType === "existing") return decision.existingFoodId ?? "";
   return buildManualFoodId(decision.editedData.areaName, decision.editedData.shopName, decision.editedData.name);
+}
+
+async function ensureSummerCollection(supabase: Supabase) {
+  const result = await supabase.from("collections").upsert(
+    {
+      id: "summer-2026",
+      name: "2026 サマーコレクション",
+      season_type: "summer",
+      starts_on: "2026-07-01",
+      ends_on: "2026-08-26",
+      accent_color: "#38b6c9",
+      is_featured: true,
+      sort_order: 100,
+      updated_at: now
+    },
+    { onConflict: "id" }
+  );
+  if (result.error) throw new Error(`summer-2026 collection保存失敗: ${result.error.message}`);
+}
+
+function normalizeCategory(value: string | null | undefined) {
+  if (!value) return "unknown";
+  if (value === "meal") return "set";
+  if (value === "pasta") return "noodle";
+  if (value === "dessert_drink") return "drink";
+  return value;
+}
+
+function buildImportKey(foodId: string, decision: ReviewDecision) {
+  return [
+    foodId,
+    decision.editedData.reviewStatus,
+    decision.editedData.name,
+    decision.editedData.price ?? "",
+    decision.editedData.imageUrl,
+    decision.editedData.collectionId,
+    decision.editedData.priceVariants.map((variant) => `${variant.label}:${variant.price ?? ""}`).join(",")
+  ].join("|");
+}
+
+function readSnapshotImportKey(snapshot: Json) {
+  if (!snapshot || typeof snapshot !== "object" || Array.isArray(snapshot)) return null;
+  const value = (snapshot as { importKey?: unknown }).importKey;
+  return typeof value === "string" ? value : null;
 }
 
 function appendImportResult(results: ImportResult[], summary: string) {

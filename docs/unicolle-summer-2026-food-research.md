@@ -1083,3 +1083,16 @@
 - Codexではconfirmedへ変更せず、imageUrlにも正式採用しない。候補画像はすべて人間確認用としてimageCandidatesへ保存。
 - 集合画像はnoteへ集合画像/複数商品掲載の可能性と切り抜き禁止を明記した。
 - 詳細表は `docs/unicolle-summer-2026-image-candidate-audit.md` を参照。
+
+## 既存商品基盤への統合判定（2026-07-09）
+
+- 既存商品は `scripts/output/foods.generated.json` と Supabase の `manual_foods` を `lib/repositories/foods.ts` で統合し、`food_overrides`、`food_collection_memberships`、`food_publication_metadata`、`food_variants` を重ねて公開・季節・価格バリエーションを解決する。
+- 公開判定は既存ルールどおり `reviewStatus: approved`、`hidden: false`、削除なし、品質条件を満たすこと。`pending` は管理画面 `/admin/foods` で確認・編集可能だが、一般公開一覧・検索・詳細には出さない。
+- 以前の「公式ページ同一DOMブロック完全一致」基準は実運用より厳しすぎたため廃止し、既存約200商品と同じ実用基準へ変更した。
+- 公式ページで商品存在・店舗・エリア・公式画像候補・価格を確認でき、単体画像として扱えるものは `approved` 予定、価格や画像の一部が未確認でも公式存在が確認できるものは `pending` 予定とした。
+- 登録判定結果: approved予定 11件、pending予定 17件、登録保留 2件、import-ready 28件。
+- 登録保留は「超！！ チョコバナナ・チュリトス」と「キャラメルポップコーン!? チュリトス」。既存商品との統合と価格確認が曖昧なため、人間確認へ残す。
+- 新規登録予定は24件、既存商品追記予定は4件。
+- Supabase本番登録は未実施。Vercel production envから取得した `SUPABASE_SERVICE_ROLE_KEY` が空だったため、停止条件に従いDB書き込み前で停止した。
+- 登録再開条件: Vercel Production に `SUPABASE_SERVICE_ROLE_KEY` を設定し、`npm run import:summer-2026:auto` を実行する。
+- 最終importレポートは `docs/unicolle-summer-2026-final-import-result.md`、自動判定詳細は `docs/unicolle-summer-2026-auto-verification-result.md` を参照。
