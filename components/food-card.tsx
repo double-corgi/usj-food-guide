@@ -6,6 +6,7 @@ import { formatPriceI18n } from "@/lib/i18n/format-price";
 import { getFoodNameI18n } from "@/lib/i18n/name-translations";
 import { getUrgencyLabelI18n } from "@/lib/i18n/sale-label-utils";
 import { useLocale } from "@/lib/i18n/use-locale";
+import { SUMMER_2026_COLLECTION_ID } from "@/lib/seasonal-collections";
 import type { FoodWithRelations, UserFoodLog } from "@/types/domain";
 import { FoodImage } from "@/components/food-image";
 
@@ -187,6 +188,7 @@ function getCardBadges({
 }) {
   const badges: Array<{ label: string; className: string }> = [];
   const urgencyLabel = getUrgencyLabelI18n(food, t);
+  if (food.collectionId === SUMMER_2026_COLLECTION_ID) badges.push({ label: "2026夏", className: "bg-white/92 text-[#0f5f78]" });
   if (urgencyLabel && getSaleStatus(food) === "active") badges.push({ label: urgencyLabel, className: "bg-berry text-white" });
   if (food.isLimited) badges.push({ label: t("foods.badgeLimited"), className: "animate-soft-glow bg-berry text-white" });
   if (getSaleStatus(food) === "ended") badges.unshift({ label: t("common.ended"), className: "bg-slate-800/88 text-white" });

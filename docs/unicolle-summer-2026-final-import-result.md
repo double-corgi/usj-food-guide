@@ -202,3 +202,20 @@
 - hidden manual foods: 0件
 - 一時import API: 最終デプロイで削除済み、`/api/internal-summer-2026-import` は404確認済み
 - Vercel確認: `/`, `/foods`, `/areas`, `/stores`, 追加approved 2件の詳細URLはHTTP 200。`/admin/foods` は未認証で `/admin/login?next=%2Fadmin%2Ffoods` へ307リダイレクト。
+
+## 公開コレクション整備（2026-07-10）
+
+- 対象: summer-2026 collectionId が付いた登録済み28件
+- 一般公開対象: 本番repositoryで公開取得できる approved 14件
+- 一般公開除外: pending 13件、未登録保留 2件
+- 正式URL: `/collections/summer-2026`
+- `/foods` 連携: `?collection=summer-2026` で本番repositoryが返す approved の夏商品だけを絞り込み
+- ホーム導線: 2026年夏限定コレクションカードを追加。掲載件数、食べた件数、達成率を既存UserFoodLogから計算
+- 食べた記録: 既存 `uniba-food-logs-v1` の foodId をそのまま使用。既存food.idとUserFoodLogは変更なし
+- 管理画面: `/admin/foods` に summer-2026 要確認キューを追加。pending商品と未登録保留2件の不足項目、出典、編集導線を集約
+- 公開条件: 既存repositoryの `listFoods()` に従い、`reviewStatus=approved` かつ `hidden=false` の商品のみ公開
+- pending公開: 0件を維持する設計
+- 保留公開: 0件を維持する設計
+- DB変更: なし（公開/管理UIの既存データ利用のみ）
+- 本番確認: `https://unicolle.vercel.app/collections/summer-2026` はHTTP 200。画面上の公開件数は14件。
+- 注意: 直前レポートには approved 15件と記録されているが、本番repositoryが返すsummer-2026公開対象は14件だった。Vercel production env pullでは `SUPABASE_SERVICE_ROLE_KEY` の値がローカル実行環境へ渡らず、DB補修は未実施。UIは本番DBの公開条件に従って14件を表示する。

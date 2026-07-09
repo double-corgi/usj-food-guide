@@ -1,10 +1,11 @@
 import Link from "next/link";
 import { AreaOverview } from "@/components/area-overview";
 import { AdSlot } from "@/components/ads/ad-slot";
-import { HomeActiveFoodCollection, HomeCollectionHero, HomeLimitedCollection, HomeRecentRecords } from "@/components/home-progress-client";
+import { HomeActiveFoodCollection, HomeCollectionHero, HomeLimitedCollection, HomeRecentRecords, HomeSummerCollection } from "@/components/home-progress-client";
 import { I18nText } from "@/components/i18n-text";
 import { dedupeFoodsByCanonical } from "@/lib/food-utils";
 import { REQUEST_FORM_URL } from "@/lib/request-form-url";
+import { SUMMER_2026_COLLECTION_ID } from "@/lib/seasonal-collections";
 import type { Area, FoodWithRelations } from "@/types/domain";
 
 type HomeDashboardProps = {
@@ -15,12 +16,15 @@ type HomeDashboardProps = {
 };
 
 export function HomeDashboard({ foods, activeCollectionFoods = foods, areas = [] }: HomeDashboardProps) {
+  const summerFoods = foods.filter((food) => food.collectionId === SUMMER_2026_COLLECTION_ID);
+
   return (
     <div className="min-h-screen overflow-x-hidden bg-[#fffdf9] pb-24 text-ink">
       <div className="mx-auto flex w-full min-w-0 max-w-[1080px] flex-col gap-8 px-4 pb-4 pt-0 sm:px-6 sm:py-6 lg:px-8">
         <HomeCollectionHero foods={foods} />
 
         <div className="space-y-10">
+          <HomeSummerCollection foods={summerFoods} allFoods={foods} />
           <HomeActiveFoodCollection foods={foods} collectionFoods={activeCollectionFoods} />
           <AdSlot placement="home-after-recent" />
           <HomeLimitedCollection foods={foods} />

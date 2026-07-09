@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { PencilLine, Plus, Search } from "lucide-react";
+import { AlertTriangle, ExternalLink, PencilLine, Plus, Search } from "lucide-react";
 import { resetGeneratedFoodOverride, setGeneratedFoodVisibility, setManualFoodDeleted, setManualFoodVisibility } from "@/app/admin/foods/actions";
 import { AdminFoodImagePreview } from "@/components/admin/admin-food-image-preview";
 import { ManualFoodDeleteButton } from "@/components/admin/manual-food-delete-button";
@@ -22,8 +22,11 @@ import {
 } from "@/lib/admin-food-ui";
 import { listFoodCollections } from "@/lib/repositories/collections";
 import { listAllFoodCandidates } from "@/lib/repositories/foods";
+import { SUMMER_2026_COLLECTION_ID } from "@/lib/seasonal-collections";
 import type { ReactNode } from "react";
 import type { FoodCollection, FoodWithRelations } from "@/types/domain";
+import type { ReviewDecision, ReviewDecisionFile } from "@/app/admin/summer-2026-review/review-types";
+import summerReviewDecisionsData from "@/data/imports/unicolle-summer-2026-review-decisions.json";
 
 export const dynamic = "force-dynamic";
 
@@ -38,8 +41,11 @@ type AdminFoodsSearchParams = {
   reviewStatus?: string;
   collection?: string;
   issue?: string;
+  source?: string;
   saved?: string;
 };
+
+const summerReviewDecisions = summerReviewDecisionsData as ReviewDecisionFile;
 
 export default async function AdminFoodsPage({ searchParams }: { searchParams?: Promise<AdminFoodsSearchParams> }) {
   const params = (await searchParams) ?? {};
@@ -54,6 +60,9 @@ export default async function AdminFoodsPage({ searchParams }: { searchParams?: 
   const canManage = admin.role !== "viewer";
   const listTabs = buildListTabs(foods, filters);
   const currentTab = listTabs.find((tab) => tab.value === filters.view) ?? listTabs[0];
+  const summerFoods = foods.filter((food) => food.collectionId === SUMMER_2026_COLLECTION_ID && !isDeletedFood(food));
+  const summerPendingQueue = summerFoods.filter((food) => food.reviewStatus !== "approved" || getAdminFoodInfoIssues(food).length > 0);
+  const summerHoldQueue = summerReviewDecisions.decisions.filter((decision) => decision.decision === "hold");
 
   return (
     <div className="space-y-5">
@@ -100,6 +109,12 @@ export default async function AdminFoodsPage({ searchParams }: { searchParams?: 
         <Metric label="削除済み" value={foods.filter(isDeletedFood).length} />
         <Metric label="絞り込み" value={filteredFoods.length} />
       </div>
+
+      <Summer2026AdminQueue
+        pendingFoods={summerPendingQueue}
+        holdDecisions={summerHoldQueue}
+        collections={collections}
+      />
 
       <section className="rounded-2xl border border-slate-200 bg-white p-3 shadow-soft sm:p-4">
         <div className="grid gap-2 sm:grid-cols-2 xl:grid-cols-4">
@@ -184,9 +199,16 @@ export default async function AdminFoodsPage({ searchParams }: { searchParams?: 
             <option value="all">すべて</option>
             <option value="image">画像未確認</option>
             <option value="price">価格未確認</option>
+            <option value="shop">店舗未確認</option>
+            <option value="area">エリア未確認</option>
             <option value="duplicate">重複候補</option>
             <option value="source-url">公式URL未登録</option>
             <option value="stale">30日以上未確認</option>
+          </Select>
+          <Select label="登録方式" name="source" defaultValue={filters.source}>
+            <option value="all">すべて</option>
+            <option value="new">新規商品</option>
+            <option value="existing">既存商品へ追記</option>
           </Select>
           <button type="submit" className="inline-flex h-11 items-center justify-center rounded-full bg-ink px-5 text-sm font-black text-white">
             絞り込み
@@ -307,6 +329,7 @@ type NormalizedFilters = {
   reviewStatus: string;
   collection: string;
   issue: string;
+  source: string;
 };
 
 function normalizeFilters(params: AdminFoodsSearchParams): NormalizedFilters {
@@ -323,7 +346,8 @@ function normalizeFilters(params: AdminFoodsSearchParams): NormalizedFilters {
     publicState: params.publicState ?? "all",
     reviewStatus: params.reviewStatus ?? "all",
     collection: params.collection ?? "all",
-    issue: params.issue ?? "all"
+    issue: params.issue ?? "all",
+    source: params.source ?? "all"
   };
 }
 
@@ -339,6 +363,8 @@ function matchesFilters(food: FoodWithRelations, filters: NormalizedFilters) {
   if (filters.reviewStatus !== "all" && food.reviewStatus !== filters.reviewStatus) return false;
   if (filters.collection !== "all" && food.collectionId !== filters.collection) return false;
   if (filters.issue !== "all" && !getAdminFoodInfoIssues(food).some((issue) => issue.id === filters.issue)) return false;
+  if (filters.source === "new" && !isManualFood(food)) return false;
+  if (filters.source === "existing" && isManualFood(food)) return false;
   if (filters.view === "normal" && (food.hidden || isDeletedFood(food))) return false;
   if (filters.view === "hidden" && (!food.hidden || isDeletedFood(food))) return false;
   if (filters.view === "deleted" && !isDeletedFood(food)) return false;
@@ -412,6 +438,150 @@ function FoodCard({ food, canManage, collections }: { food: FoodWithRelations; c
   );
 }
 
+function Summer2026AdminQueue({
+  pendingFoods,
+  holdDecisions,
+  collections
+}: {
+  pendingFoods: FoodWithRelations[];
+  holdDecisions: ReviewDecision[];
+  collections: FoodCollection[];
+}) {
+  if (pendingFoods.length === 0 && holdDecisions.length === 0) return null;
+
+  return (
+    <section className="rounded-2xl border border-amber-200 bg-[#fffaf5] p-4 shadow-soft sm:p-5">
+      <div className="flex flex-col gap-3 lg:flex-row lg:items-start lg:justify-between">
+        <div className="min-w-0">
+          <p className="inline-flex items-center gap-1 text-xs font-black uppercase tracking-[0.16em] text-[#8a5b16]">
+            <AlertTriangle size={15} aria-hidden />
+            summer-2026 review queue
+          </p>
+          <h2 className="mt-1 text-2xl font-black text-ink">2026夏 要確認キュー</h2>
+          <p className="mt-2 max-w-3xl text-sm font-bold leading-6 text-slate-600">
+            pending商品と未登録保留商品だけを集約しています。公開前チェック、画像未登録、価格未確認、重複統合の残り作業をここから確認できます。
+          </p>
+        </div>
+        <div className="flex flex-wrap gap-2">
+          <QuickFilterLink href="/admin/foods?collection=summer-2026" label="夏商品すべて" />
+          <QuickFilterLink href="/admin/foods?collection=summer-2026&reviewStatus=pending" label="pending" />
+          <QuickFilterLink href="/admin/foods?collection=summer-2026&issue=image" label="画像未登録" />
+          <QuickFilterLink href="/admin/foods?collection=summer-2026&issue=price" label="価格未確認" />
+        </div>
+      </div>
+
+      <div className="mt-4 grid gap-3 lg:grid-cols-2">
+        {pendingFoods.map((food) => {
+          const issues = getSummerQueueIssues(food);
+          return (
+            <article key={food.id} className="rounded-xl border border-white bg-white p-3 shadow-sm">
+              <div className="flex gap-3">
+                <AdminFoodImagePreview src={getPrimaryImageUrl(food)} alt={`${food.name}の商品画像`} variant="candidate" placeholderState="no-image" />
+                <div className="min-w-0 flex-1">
+                  <div className="flex flex-wrap items-start justify-between gap-2">
+                    <div className="min-w-0">
+                      <Link href={`/admin/foods/${food.id}`} className="line-clamp-2 font-black leading-6 text-ink hover:text-park">
+                        {food.name}
+                      </Link>
+                      <p className="mt-1 break-all text-xs font-bold text-slate-400">{food.id}</p>
+                    </div>
+                    <Badge label={formatAdminReviewStatus(food.reviewStatus)} tone={food.reviewStatus === "approved" ? "ok" : "muted"} />
+                  </div>
+                  <div className="mt-2 flex flex-wrap gap-1.5">
+                    {issues.map((issue) => (
+                      <Badge key={issue} label={issue} tone="muted" />
+                    ))}
+                  </div>
+                  <div className="mt-2 grid gap-1 text-xs font-bold leading-5 text-slate-600">
+                    <p>価格: {formatAdminPrice(food)} / {food.area.name} / {food.shop.name}</p>
+                    <p>コレクション: {formatAdminCollection(food, collections)} / 登録方式: {isManualFood(food) ? "新規商品" : "既存商品へ追記"}</p>
+                  </div>
+                  <div className="mt-3 flex flex-wrap gap-2">
+                    <Link href={`/admin/foods/${food.id}/edit`} className="inline-flex h-9 items-center justify-center rounded-full bg-park px-3 text-xs font-black text-white">
+                      編集画面を開く
+                    </Link>
+                    <Link href="/admin/summer-2026-review" className="inline-flex h-9 items-center justify-center rounded-full border border-slate-200 bg-white px-3 text-xs font-black text-ink">
+                      夏レビュー画面
+                    </Link>
+                    {food.sourceUrl ? (
+                      <a href={food.sourceUrl} target="_blank" rel="noopener noreferrer" className="inline-flex h-9 items-center gap-1 rounded-full border border-slate-200 bg-white px-3 text-xs font-black text-park">
+                        出典
+                        <ExternalLink size={13} aria-hidden />
+                      </a>
+                    ) : null}
+                  </div>
+                </div>
+              </div>
+            </article>
+          );
+        })}
+
+        {holdDecisions.map((decision) => (
+          <article key={decision.proposedId} className="rounded-xl border border-amber-200 bg-white p-3 shadow-sm">
+            <div className="flex gap-3">
+              <AdminFoodImagePreview src={decision.editedData.imageUrl} alt={`${decision.editedData.name}の商品画像候補`} variant="candidate" placeholderState="no-image" />
+              <div className="min-w-0 flex-1">
+                <div className="flex flex-wrap items-start justify-between gap-2">
+                  <div className="min-w-0">
+                    <p className="line-clamp-2 font-black leading-6 text-ink">{decision.editedData.name}</p>
+                    <p className="mt-1 break-all text-xs font-bold text-slate-400">{decision.proposedId}</p>
+                  </div>
+                  <Badge label="未登録保留" tone="muted" />
+                </div>
+                <div className="mt-2 flex flex-wrap gap-1.5">
+                  <Badge label="重複統合未確定" tone="muted" />
+                  {decision.editedData.price == null ? <Badge label="価格未確認" tone="muted" /> : null}
+                  {decision.existingFoodId ? <Badge label={`候補 ${decision.existingFoodId}`} tone="muted" /> : null}
+                </div>
+                <div className="mt-2 grid gap-1 text-xs font-bold leading-5 text-slate-600">
+                  <p>価格: {decision.editedData.price == null ? "未確認" : `¥${decision.editedData.price.toLocaleString("ja-JP")}`} / {decision.editedData.areaName} / {decision.editedData.shopName}</p>
+                  <p>統合方針: {decision.editedData.duplicateHandling || "未確定"}</p>
+                  <p className="line-clamp-2">メモ: {decision.reviewerNote}</p>
+                </div>
+                <div className="mt-3 flex flex-wrap gap-2">
+                  <Link href="/admin/summer-2026-review" className="inline-flex h-9 items-center justify-center rounded-full bg-ink px-3 text-xs font-black text-white">
+                    夏レビュー画面で確認
+                  </Link>
+                  {decision.editedData.sourceUrl ? (
+                    <a href={decision.editedData.sourceUrl} target="_blank" rel="noopener noreferrer" className="inline-flex h-9 items-center gap-1 rounded-full border border-slate-200 bg-white px-3 text-xs font-black text-park">
+                      公式情報
+                      <ExternalLink size={13} aria-hidden />
+                    </a>
+                  ) : null}
+                  {decision.editedData.imageSourceUrl ? (
+                    <a href={decision.editedData.imageSourceUrl} target="_blank" rel="noopener noreferrer" className="inline-flex h-9 items-center gap-1 rounded-full border border-slate-200 bg-white px-3 text-xs font-black text-park">
+                      画像出典
+                      <ExternalLink size={13} aria-hidden />
+                    </a>
+                  ) : null}
+                </div>
+              </div>
+            </div>
+          </article>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function QuickFilterLink({ href, label }: { href: string; label: string }) {
+  return (
+    <Link href={href} className="inline-flex h-10 items-center rounded-full border border-amber-200 bg-white px-4 text-xs font-black text-[#8a5b16] hover:border-[#8a5b16]">
+      {label}
+    </Link>
+  );
+}
+
+function getSummerQueueIssues(food: FoodWithRelations) {
+  const labels = new Set<string>();
+  if (food.reviewStatus !== "approved") labels.add("公開前");
+  for (const issue of getAdminFoodInfoIssues(food)) labels.add(issue.label);
+  if (!getPrimaryImageUrl(food)) labels.add("画像未登録");
+  if (!food.collectionId) labels.add("summer-2026未設定");
+  if (!food.sourceUrl || food.sourceUrl === "manual-admin") labels.add("情報出典不足");
+  return Array.from(labels);
+}
+
 function getPrimaryImageUrl(food: FoodWithRelations) {
   return (food.images.find((image) => image.enabled) ?? food.images[0])?.imageUrl ?? food.imageUrl ?? "";
 }
@@ -478,6 +648,7 @@ function buildAdminFoodsHref(filters: NormalizedFilters, view: NormalizedFilters
   if (filters.reviewStatus !== "all") params.set("reviewStatus", filters.reviewStatus);
   if (filters.collection !== "all") params.set("collection", filters.collection);
   if (filters.issue !== "all") params.set("issue", filters.issue);
+  if (filters.source !== "all") params.set("source", filters.source);
   return `/admin/foods?${params.toString()}`;
 }
 

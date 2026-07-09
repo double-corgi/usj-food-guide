@@ -6,6 +6,7 @@ import { ChevronDown, Search, SlidersHorizontal } from "lucide-react";
 import { diningTypeLabels, shopTypeLabels, statusLabels } from "@/lib/constants";
 import { dedupeFoodsByCanonical, foodMatchesArea, getFoodAreaNames, getFoodAreaSummary, getSaleStatus, getSaleType, isEndingSoon, getCanonicalFoodKey, getEatenCanonicalKeys, isEatenCanonical, normalizeDisplayAreaName, normalizeFoodName } from "@/lib/food-utils";
 import { REQUEST_FORM_URL } from "@/lib/request-form-url";
+import { SUMMER_2026_COLLECTION_ID } from "@/lib/seasonal-collections";
 import { tAreaName } from "@/lib/i18n/area-name";
 import type { TranslationKey } from "@/lib/i18n/dictionaries";
 import { getFoodNameI18n } from "@/lib/i18n/name-translations";
@@ -47,6 +48,7 @@ export function FoodGrid({
   initialDiningType,
   initialSaleFilter,
   initialSort,
+  initialCollectionId,
   title,
   showRequestCta = true,
   adminCanEdit = false
@@ -59,6 +61,7 @@ export function FoodGrid({
   initialDiningType?: DiningType;
   initialSaleFilter?: SaleFilter;
   initialSort?: SortMode;
+  initialCollectionId?: string;
   title?: string;
   generatedAt?: string;
   showRequestCta?: boolean;
@@ -75,6 +78,7 @@ export function FoodGrid({
   const [diningType, setDiningType] = useState<DiningType | "all">(initialDiningType ?? "all");
   const [status, setStatus] = useState<FoodStatus | "all">("all");
   const [saleFilter, setSaleFilter] = useState<SaleFilter>(initialSaleFilter ?? (mode === "all" ? "active" : "all"));
+  const [collectionId, setCollectionId] = useState<string>(initialCollectionId ?? "all");
   const [sort, setSort] = useState<SortMode>(initialSort ?? "recommended");
   const [filtersOpen, setFiltersOpen] = useState(false);
   const [imageOnly, setImageOnly] = useState(false);
@@ -84,7 +88,7 @@ export function FoodGrid({
   const [pendingEatenState, setPendingEatenState] = useState<{ scopeKey: string; keys: Set<string> }>(() => ({ scopeKey: "", keys: new Set() }));
   const canonicalFoods = useMemo(() => dedupeFoodsByCanonical(foods), [foods]);
   const eatenCanonicalKeys = useMemo(() => getEatenCanonicalKeys(foods, logs), [foods, logs]);
-  const filterScopeKey = `${areaId}|${category}|${diningType}|${imageOnly}|${mode}|${priceFilter}|${query}|${saleFilter}|${shopId}|${shopType}|${sort}|${status}`;
+  const filterScopeKey = `${areaId}|${category}|${collectionId}|${diningType}|${imageOnly}|${mode}|${priceFilter}|${query}|${saleFilter}|${shopId}|${shopType}|${sort}|${status}`;
   const pendingEatenKeys = pendingEatenState.scopeKey === filterScopeKey ? pendingEatenState.keys : null;
 
   const areas = useMemo(() => Array.from(new Map(foods.flatMap((food) => [
@@ -96,7 +100,8 @@ export function FoodGrid({
   ])).values()).sort((a, b) => a.sortOrder - b.sortOrder || a.name.localeCompare(b.name, "ja")), [foods]);
   const shops = useMemo(() => Array.from(new Map(canonicalFoods.map((food) => [food.shop.id, food.shop])).values()), [canonicalFoods]);
   const filteredFoods = useMemo(() => {
-    const result = canonicalFoods.filter((food) => {
+    const baseFoods = collectionId === SUMMER_2026_COLLECTION_ID ? foods : canonicalFoods;
+    const result = baseFoods.filter((food) => {
       if (query && !matchesFoodQuery(food, query, t)) return false;
       if (category !== "all" && food.category !== category) return false;
       const selectedArea = areas.find((area) => area.id === areaId);
@@ -105,6 +110,7 @@ export function FoodGrid({
       if (shopType !== "all" && food.shop.type !== shopType) return false;
       if (diningType !== "all" && food.diningType !== diningType) return false;
       if (status !== "all" && food.status !== status) return false;
+      if (collectionId !== "all" && food.collectionId !== collectionId) return false;
       if (!matchesSaleFilter(food, saleFilter)) return false;
       if (imageOnly && getFoodImage(food) === getCategoryPlaceholder(food.category)) return false;
       if (priceFilter === "known" && !hasPrice(food)) return false;
@@ -114,7 +120,7 @@ export function FoodGrid({
       return true;
     });
     return result.sort((a, b) => sortFood(a, b, sort, foods, logs, pendingEatenKeys));
-  }, [areaId, areas, canonicalFoods, category, diningType, eatenCanonicalKeys, foods, imageOnly, logs, mode, pendingEatenKeys, priceFilter, query, saleFilter, shopId, shopType, sort, status, t]);
+  }, [areaId, areas, canonicalFoods, category, collectionId, diningType, eatenCanonicalKeys, foods, imageOnly, logs, mode, pendingEatenKeys, priceFilter, query, saleFilter, shopId, shopType, sort, status, t]);
 
   const displayedFoods = filteredFoods.slice(0, visibleCount);
   const handleToggleEaten = useCallback((foodId: string, spentAmount?: number) => {
@@ -206,6 +212,7 @@ export function FoodGrid({
         <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[11px] font-bold text-slate-400">
           <span>{t("foods.resultCount", { count: filteredFoods.length })}</span>
           <span>{t("foods.catalogCount", { count: canonicalFoods.length })}</span>
+          {collectionId === SUMMER_2026_COLLECTION_ID ? <span className="font-black text-[#0f5f78]">2026年夏限定で絞り込み中</span> : null}
         </div>
 
         {query.trim() ? (
@@ -227,6 +234,10 @@ export function FoodGrid({
         ) : null}
 
         <div className={`${filtersOpen ? "grid" : "hidden"} gap-2 md:grid-cols-4 lg:grid-cols-6`}>
+        <select value={collectionId} onChange={(event) => { setCollectionId(event.target.value); setVisibleCount(60); }} className="h-10 rounded-xl border border-slate-200 bg-white px-2.5 text-xs font-bold">
+          <option value="all">コレクション: すべて</option>
+          <option value={SUMMER_2026_COLLECTION_ID}>2026年夏限定</option>
+        </select>
         <select value={saleFilter} onChange={(event) => { setSaleFilter(event.target.value as SaleFilter); setVisibleCount(60); }} className="h-10 rounded-xl border border-slate-200 bg-white px-2.5 text-xs font-bold">
           <option value="active">{t("common.saleActive")}</option>
           <option value="endingSoon">{t("foods.saleFilterEndingSoon")}</option>
@@ -304,6 +315,14 @@ export function FoodGrid({
         </select>
         </div>
         <div className={`${filtersOpen ? "flex" : "hidden"} flex-wrap gap-1.5`}>
+          <TogglePill
+            active={collectionId === SUMMER_2026_COLLECTION_ID}
+            label="2026年夏限定"
+            onClick={() => {
+              setCollectionId((current) => current === SUMMER_2026_COLLECTION_ID ? "all" : SUMMER_2026_COLLECTION_ID);
+              setVisibleCount(60);
+            }}
+          />
           <TogglePill active={imageOnly} label={t("foods.toggleImageOnly")} onClick={() => setImageOnly((current) => !current)} />
           <TogglePill active={priceFilter === "known"} label={t("foods.priceFilterKnown")} onClick={() => setPriceFilter((current) => current === "known" ? "all" : "known")} />
           <TogglePill active={priceFilter === "unknown"} label={t("foods.priceFilterUnknown")} onClick={() => setPriceFilter((current) => current === "unknown" ? "all" : "unknown")} />

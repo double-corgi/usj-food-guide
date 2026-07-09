@@ -180,6 +180,65 @@ export function HomeActiveFoodCollection({ foods, collectionFoods = foods }: { f
   );
 }
 
+export function HomeSummerCollection({ foods, allFoods }: { foods: FoodWithRelations[]; allFoods: FoodWithRelations[] }) {
+  const { locale } = useLocale();
+  const { logs } = useFoodLogs();
+  const collectionFoods = useMemo(() => [...foods].sort((a, b) => (b.lastCheckedAt || "").localeCompare(a.lastCheckedAt || "") || a.name.localeCompare(b.name, "ja")), [foods]);
+  const eatenKeys = getEatenCanonicalKeys(allFoods, logs);
+  if (collectionFoods.length === 0) return null;
+
+  const eaten = collectionFoods.filter((food) => eatenKeys.has(getCanonicalFoodKey(food))).length;
+  const remaining = Math.max(collectionFoods.length - eaten, 0);
+  const progress = Math.round((eaten / collectionFoods.length) * 100);
+
+  return (
+    <section className="space-y-4 rounded-[1.35rem] border border-[#eadcc8] bg-[#fffaf5] p-4 shadow-[0_12px_30px_rgba(15,23,42,0.06)] sm:p-5">
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+        <div className="min-w-0">
+          <p className="text-xs font-black uppercase tracking-[0.16em] text-[#0f5f78]">Seasonal collection</p>
+          <h2 className="mt-1 text-xl font-black text-ink">2026年夏限定</h2>
+          <p className="mt-1 text-xs font-bold leading-5 text-slate-500">
+            掲載中{collectionFoods.length.toLocaleString("ja-JP")}件 / 食べた{eaten.toLocaleString("ja-JP")}件 / 達成率{progress}%
+          </p>
+        </div>
+        <div className="flex flex-wrap gap-2">
+          <span className="inline-flex h-9 items-center rounded-full bg-white px-3 text-xs font-black text-[#8a5b16] ring-1 ring-[#eadcc8]">
+            残り{remaining.toLocaleString("ja-JP")}件
+          </span>
+          <Link href="/collections/summer-2026" className="inline-flex h-10 items-center rounded-full bg-ink px-4 text-xs font-black text-white shadow-sm">
+            コレクションを見る
+          </Link>
+        </div>
+      </div>
+      <div className="h-2 overflow-hidden rounded-full bg-white">
+        <div className="h-full rounded-full bg-[#f5b841]" style={{ width: `${progress}%` }} />
+      </div>
+      <div className="flex gap-3 overflow-x-auto pb-1 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+        {collectionFoods.slice(0, 10).map((food) => {
+          const displayName = getFoodNameI18n(food.id, locale, food.name);
+          const isEaten = eatenKeys.has(getCanonicalFoodKey(food));
+          return (
+            <Link key={food.id} href={`/foods/${food.id}`} className="w-[140px] shrink-0 transition active:scale-[0.99] md:hover:-translate-y-0.5">
+              <div className="relative aspect-[4/3] overflow-hidden rounded-[1rem] bg-slate-100">
+                <FoodImage food={food} alt={displayName} className="h-full w-full" />
+                {isEaten ? (
+                  <span className="absolute bottom-1.5 right-1.5 grid h-6 w-6 place-items-center rounded-full bg-[#f5b841] text-[13px] font-black leading-none text-[#071b3a] ring-1 ring-white/90" aria-hidden>
+                    ✓
+                  </span>
+                ) : null}
+                <span className="absolute left-1.5 top-1.5 rounded-full bg-white/92 px-2 py-0.5 text-[10px] font-black text-[#0f5f78]">
+                  夏限定
+                </span>
+              </div>
+              <p className="mt-2 line-clamp-2 min-h-9 break-words text-xs font-black leading-[1.45] text-ink [overflow-wrap:anywhere]">{displayName}</p>
+            </Link>
+          );
+        })}
+      </div>
+    </section>
+  );
+}
+
 export function HomeLimitedCollection({ foods }: { foods: FoodWithRelations[] }) {
   const { locale, t } = useLocale();
   const { logs } = useFoodLogs();

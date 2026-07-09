@@ -83,12 +83,14 @@ function parseSort(value?: string): SortMode | undefined {
 export default async function FoodsPage({
   searchParams
 }: {
-  searchParams: Promise<{ category?: string; area?: string; shop?: string; diningType?: string; status?: string; sale?: string; mode?: string; sort?: string }>;
+  searchParams: Promise<{ category?: string; area?: string; shop?: string; diningType?: string; status?: string; sale?: string; mode?: string; sort?: string; collection?: string }>;
 }) {
   const resolvedSearchParams = await searchParams;
   const [foods, admin] = await Promise.all([listFoods(), getCurrentAdmin()]);
   const generatedSummary = readGeneratedSummary();
   const adminCanEdit = admin?.mode === "supabase" && (admin.role === "owner" || admin.role === "editor");
+  const initialCollectionId = resolvedSearchParams.collection === "summer-2026" ? "summer-2026" : undefined;
+  const initialSaleFilter = parseSaleFilter(resolvedSearchParams.sale ?? resolvedSearchParams.status) ?? (initialCollectionId ? "all" : undefined);
   return (
     <FoodGrid
       foods={foods}
@@ -99,8 +101,9 @@ export default async function FoodsPage({
       initialAreaId={resolvedSearchParams.area}
       initialShopId={resolvedSearchParams.shop}
       initialDiningType={parseDiningType(resolvedSearchParams.diningType) as DiningType | undefined}
-      initialSaleFilter={parseSaleFilter(resolvedSearchParams.sale ?? resolvedSearchParams.status)}
+      initialSaleFilter={initialSaleFilter}
       initialSort={parseSort(resolvedSearchParams.sort)}
+      initialCollectionId={initialCollectionId}
     />
   );
 }

@@ -6,6 +6,7 @@ import { Check, ChevronLeft, ChevronRight, ExternalLink, Flag, MapPin, Store } f
 import { getCanonicalFoodId, getCanonicalFoodKey, getDisplayLocationAreaName, getFoodAreaSummary, getFoodAreaNames, getPriceSource, getPriceSourceLabel, getSaleEndDate, getSaleStartDate, getSaleStatus, getSaleStatusTone, getZukanCode, isCompletableFood, isEatenCanonical } from "@/lib/food-utils";
 import { useFoodLogs } from "@/lib/use-food-logs";
 import { useNextWantFoods } from "@/lib/use-next-want-foods";
+import { SUMMER_2026_COLLECTION_ID } from "@/lib/seasonal-collections";
 import { filterDeletedFoodIds, isDeletedFoodId } from "@/lib/deleted-foods";
 import type { DiningType, FoodCategory, FoodLocation, FoodWithRelations } from "@/types/domain";
 import { FoodImage } from "@/components/food-image";
@@ -129,6 +130,11 @@ export function FoodDetail({
               <span className={`rounded-full px-3 py-1 text-xs font-black ${getSaleStatusTone(food)}`}>{getSaleStatusLabelI18n(food, t)}</span>
               {urgencyLabel ? <span className="rounded-full bg-berry px-3 py-1 text-xs font-black text-white">{urgencyLabel}</span> : null}
               {food.isLimited ? <span className="rounded-full bg-sun/30 px-3 py-1 text-xs font-black text-ink">{t("foods.badgeLimited")}</span> : null}
+              {food.collectionId === SUMMER_2026_COLLECTION_ID ? (
+                <Link href="/collections/summer-2026" className="rounded-full bg-white px-3 py-1 text-xs font-black text-[#0f5f78] ring-1 ring-[#d9e8ef]">
+                  2026年夏限定
+                </Link>
+              ) : null}
             </div>
             {!knownPrice ? <p className="text-xs font-black leading-5 text-amber-700">{t("foodDetail.priceUnknownNote")}</p> : null}
             <p className="flex min-w-0 items-start gap-2 text-sm font-bold text-slate-600">
