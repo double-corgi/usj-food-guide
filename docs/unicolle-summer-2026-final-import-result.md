@@ -4,7 +4,8 @@
 - 実行方式: Vercel Production上の一時サーバー処理でSUPABASE_SERVICE_ROLE_KEYを使用。値は表示・保存していない。
 - import-ready件数: 28
 - 初回実登録: inserted 24, updated 4, skipped 0
-- 冪等再実行: inserted 0, updated 28, skipped 0
+- 初回冪等再実行（修正前）: inserted 0, updated 28, skipped 0
+- 最終QA冪等再実行（修正後）: inserted 0, updated 0, skipped 28
 - 新規商品: 24
 - 既存商品追記: 4
 - approved: 11
@@ -82,9 +83,61 @@
 - membership重複: 0
 - default variant重複: 0
 - 再実行時の追加insert: 0
+- 最終QA後の同一内容再実行: inserted 0, updated 0, skipped 28
+- 同一内容時は `manual_foods` / `food_overrides` / `food_publication_metadata` / `food_variants` / `food_override_revisions` を書き込まないように修正。
 
 ## ロールバック方法
 
 - 新規manual_foodsは上記foodIdの `manual_foods` 行を削除し、対応する `food_collection_memberships` / `food_variants` / `food_publication_metadata` を削除する。
 - 既存商品追記は `food_overrides` を直前revisionのsnapshotに戻し、summer-2026 membership・variants・publication metadataを必要に応じて復元する。
 - 変更履歴は `food_override_revisions` の `action=summer-2026-auto-import` で追跡できる。
+
+## 本番登録後 最終QA（2026-07-09）
+
+- 対象: 登録済み28件（新規24件、既存追記4件）
+- 最終reviewStatus: approved 11件、pending 17件、rejected 0件
+- publishedAtあり: 0件（既存公開ルール上、`reviewStatus=approved` と `hidden=false` で公開確認済み。無理なpublishedAt設定は行っていない）
+- hidden manual foods: 0件
+- approvedへ変更した商品: なし
+- pending維持: 17件。画像未確定または価格未確認が残る商品は公開せず、管理画面で編集可能なpendingとして維持。
+- 画像HTTP確認: 画像URLあり16件はすべてHTTPSかつHTTP 200。画像URLなし12件はpending維持。
+- 価格確認: 価格未確認4件はpending維持。
+- Vercel公開確認: `/`, `/foods`, `/areas`, `/stores` は200。approved 11商品の詳細URLはすべて200。
+- 管理画面確認: `/admin/foods` は未ログイン時 `/admin/login?next=%2Fadmin%2Ffoods` へ307リダイレクトし、認証保護を維持。通常の商品管理画面は既存Supabase repository/actionsで編集・公開管理する。
+- Web / PWA / iOS: 既存repositoryを共有し、HTTPS画像のみを使用。UserFoodLog、localStorageキー、Bundle ID、Capacitor appId、AdMob設定は変更していない。
+- 保留2件の再調査:
+  - 超！！ チョコバナナ・チュリトス: USJ公式フードカートページで商品名・画像・ニューヨーク・エリア掲載は確認。価格と既存チュリトス統合判断を確定できず、未登録を維持。
+  - キャラメルポップコーン!? チュリトス: USJ公式フードカートページで商品名・画像・ニューヨーク・エリア掲載は確認。価格と既存チュリトス統合判断を確定できず、未登録を維持。
+
+### 全28件の最終状態
+
+| 商品名 | foodId | 状態 | 価格 | 画像 | 店舗 | エリア | 最終QA判断 |
+|---|---|---|---|---|---|---|---|
+| 夏祭りの金魚 レモンサイダー | food-manual-0625351f22 | pending | 未確認 | HTTP 200 | ユニバーサル・マーケット内ハピネス・ワゴン | ニューヨーク・エリア | pending維持（価格未確認） |
+| いちご練乳 ソーダスムージー | food-manual-736109191f | pending | 未確認 | HTTP 200 | ユニバーサル・マーケット内トローリー・トリート | ニューヨーク・エリア | pending維持（価格未確認） |
+| カレーナン!? 焼きそばドッグ | food-manual-2f13b0cefe | pending | 未確認 | HTTP 200 | ユニバーサル・マーケット内ホットドッグカート | ニューヨーク・エリア | pending維持（価格未確認） |
+| フローズン・ジントニック ～シトラス～ | food-manual-aa0f866b68 | pending | 900円 | 未登録 | パークサイド・グリル | ニューヨーク・エリア | pending維持（画像未確定） |
+| 25周年カクテル ～ポップコーンフレーバー？～ | food-d5v0l2 | approved | 900円 | HTTP 200 | パークサイド・グリル | ニューヨーク・エリア | approved維持（公開詳細URL 200） |
+| りんご飴 ～りんごのムース～ | food-manual-26fa16ed9b | pending | 950円 | 未登録 | ビバリーヒルズ・ブランジェリー | ハリウッド・エリア | pending維持（画像未確定） |
+| 水風船 ～ピーチゼリー＆レアチーズムース～ | food-manual-2f3fb0c8dc | pending | 950円 | 未登録 | ビバリーヒルズ・ブランジェリー | ハリウッド・エリア | pending維持（画像未確定） |
+| 紫陽花 ～葡萄と柚子の和氷菓 焼き菓子添え～ | food-manual-dc7e97578d | approved | 1800円 | HTTP 200 | SAIDO | ニューヨーク・エリア | approved維持（公開詳細URL 200） |
+| 柑橘おろしと白みその冷やしうどん御膳 | food-manual-8183cf38e8 | approved | 2600円 | HTTP 200 | SAIDO | ニューヨーク・エリア | approved維持（公開詳細URL 200） |
+| オマール海老の冷製パスタ アメリケーヌのグラニテ添え | food-manual-85ac2bfa4b | approved | 3300円 | HTTP 200 | パークサイド・グリル | ニューヨーク・エリア | approved維持（公開詳細URL 200） |
+| プルドポーク＆チキン・スパイシー BBQ ピッツアセット | food-manual-9532c3275d | approved | 1950円 | HTTP 200 | ルイズ N.Y. ピザパーラー | ニューヨーク・エリア | approved維持（公開詳細URL 200） |
+| ガーリック・シュリンプ・ピッツァセット | food-manual-3f6d492fa6 | approved | 1950円 | HTTP 200 | ルイズ N.Y. ピザパーラー | ニューヨーク・エリア | approved維持（公開詳細URL 200） |
+| クランチ・タコスバーガーセット | food-manual-cc14e5f148 | approved | 2100円 | HTTP 200 | メルズ・ドライブイン | ハリウッド・エリア | approved維持（公開詳細URL 200） |
+| SAIDO スペシャルドリンク ～柚子～/ ～抹茶～/ ～西瓜～ | food-manual-0bec10711b | pending | 700円 | 未登録 | SAIDO | ニューヨーク・エリア | pending維持（画像未確定） |
+| ストロベリー・フローズン・スムージー | food-manual-460ba88510 | pending | 800円 | 未登録 | ビバリーヒルズ・ブランジェリー | ハリウッド・エリア | pending維持（画像未確定） |
+| トロピカルフルーツ・フローズン・スムージー | food-manual-3478564a9f | pending | 900円 | 未登録 | ビバリーヒルズ・ブランジェリー | ハリウッド・エリア | pending維持（画像未確定） |
+| マンゴー・フローズン・スムージー | food-manual-5dd3fd60a8 | pending | 800円 | 未登録 | ビバリーヒルズ・ブランジェリー | ハリウッド・エリア | pending維持（画像未確定） |
+| クラッシュ！大悪党のブラッドオレンジ・フローズンソーダ | food-manual-fd5d2c84f1 | approved | 900円 | HTTP 200 | イーブル・イーツ | ミニオン・パーク | approved維持（公開詳細URL 200） |
+| 映画スターのミニオンフラッペ ～ピーチ＆レモン～ | food-manual-c11d98d824 | approved | 900円 | HTTP 200 | デリシャス・ミー！ ザ・クッキー・キッチン | ミニオン・パーク | approved維持（公開詳細URL 200） |
+| スヌーピー・フラッペ ～いちごミルク＆白桃～ | food-manual-cf68598e59 | pending | 900円 | 未登録 | スヌーピー™・バックロット・カフェ | ユニバーサル・ワンダーランド | pending維持（画像未確定） |
+| 遊泳禁止!! ジョーズ・フラッペ ～ピーチ＆ソルトホイップ～ | food-manual-eac27732ca | pending | 900円 | 未登録 | ボードウォーク・スナック | アミティ・ビレッジ | pending維持（画像未確定） |
+| トロピカル・フラッペ ～ストロベリー～ | food-manual-cba8c213d3 | pending | 800円 | 未登録 | ワーフカフェ / ボードウォーク・スナック | サンフランシスコ・エリア / アミティ・ビレッジ | pending維持（画像未確定） |
+| トロピカル・フラッペ ～マンゴー～ | food-manual-79498d79ed | pending | 800円 | 未登録 | ワーフカフェ / ボードウォーク・スナック | サンフランシスコ・エリア / アミティ・ビレッジ | pending維持（画像未確定） |
+| ジョーズ・ドリンクボトル | food-manual-ff85e1ea6d | approved | 2300円 | HTTP 200 | アミティ・ランディング・レストラン | アミティ・ビレッジ | approved維持（公開詳細URL 200） |
+| 憧れの大悪党？ ボブ・ドリンクボトル | food-1kvqau2 | pending | 2300円 | HTTP 200 | デリシャス・ミー！ ザ・クッキー・キッチン / ワーフカフェ | ミニオン・パーク / サンフランシスコ・エリア | pending維持（既存商品追記の人間確認待ち） |
+| ジュラシック・パーク・ドリンクボトル | food-alnomv | pending | 2300円 | HTTP 200 | ジュラシック・パーク・ザ・ライド スプラッシュダウン前フードカート | ジュラシック・パーク | pending維持（既存商品追記の人間確認待ち） |
+| 大悪党のためのドーナツ・バーガー ～BBQ ポーク&ベーコン～ | food-r24nsm | approved | 1200円 | HTTP 200 | イーブル・イーツ | ミニオン・パーク | approved維持（公開詳細URL 200） |
+| ソフローズン グレープ マイメロディ＆クロミ バケツ＆スプーン付き | food-manual-a12824cd38 | pending | 未確認 | 未登録 | イルミネーション・シアター入口横フードカート / パークサイド・グリル横フードカート | ニューヨーク・エリア | pending維持（画像未確定 / 価格未確認） |

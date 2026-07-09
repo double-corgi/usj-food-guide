@@ -24,6 +24,11 @@ type ImportResult = {
   status: "inserted" | "updated" | "skipped";
   details: string[];
 };
+type ManualFoodRow = Database["public"]["Tables"]["manual_foods"]["Row"];
+type ManualFoodInsert = Database["public"]["Tables"]["manual_foods"]["Insert"];
+type OverrideRow = Database["public"]["Tables"]["food_overrides"]["Row"];
+type OverrideInsert = Database["public"]["Tables"]["food_overrides"]["Insert"];
+type VariantInsert = Database["public"]["Tables"]["food_variants"]["Insert"];
 
 const IMPORT_READY_FILE = "data/imports/unicolle-summer-2026-import-ready.json";
 const REPORT_FILE = "docs/unicolle-summer-2026-auto-verification-result.md";
@@ -117,7 +122,7 @@ export async function runSummer2026Import(options: ImportRunOptions = {}) {
     inserted: results.filter((result) => result.status === "inserted").length,
     updated: results.filter((result) => result.status === "updated").length,
     skipped: results.filter((result) => result.status === "skipped").length,
-    wroteSupabase: results.length > 0,
+    wroteSupabase: results.some((result) => result.status !== "skipped"),
     issues: verification.issues,
     results,
     before,
@@ -137,10 +142,45 @@ async function importDecision(supabase: Supabase, decision: ReviewDecision): Pro
 }
 
 async function importNewManualFood(supabase: Supabase, decision: ReviewDecision, foodId: string): Promise<ImportResult> {
-  const existing = await supabase.from("manual_foods").select("id").eq("id", foodId).maybeSingle();
+  const existing = await supabase.from("manual_foods").select("*").eq("id", foodId).maybeSingle();
   if (existing.error) throw new Error(`manual_foods確認失敗 ${foodId}: ${existing.error.message}`);
 
-  const payload: Database["public"]["Tables"]["manual_foods"]["Insert"] = {
+  const payload = buildManualFoodPayload(decision, foodId);
+
+  if (existing.data) {
+    const foundationMatches = await hasMatchingFoundation(supabase, decision, foodId);
+    if (manualFoodMatches(existing.data, payload) && foundationMatches) {
+      return {
+        foodId,
+        name: decision.editedData.name,
+        targetType: "new",
+        action: "manual_foods skip",
+        status: "skipped",
+        details: ["manual_foods / collection / metadata / variantsが同一内容のため書き込みなし"]
+      };
+    }
+    const { created_at: _createdAt, created_by: _createdBy, ...updatePayload } = payload;
+    const update = await supabase.from("manual_foods").update(updatePayload).eq("id", foodId);
+    if (update.error) throw new Error(`manual_foods更新失敗 ${foodId}: ${update.error.message}`);
+    const details = await saveFoundation(supabase, decision, foodId);
+    return {
+      foodId,
+      name: decision.editedData.name,
+      targetType: "new",
+      action: "manual_foods update",
+      status: "updated",
+      details: ["manual_foods既存行を差分更新", ...details]
+    };
+  }
+
+  const insert = await supabase.from("manual_foods").insert(payload);
+  if (insert.error) throw new Error(`manual_foods追加失敗 ${foodId}: ${insert.error.message}`);
+  const details = await saveFoundation(supabase, decision, foodId);
+  return { foodId, name: decision.editedData.name, targetType: "new", action: "manual_foods insert", status: "inserted", details: ["manual_foodsへ新規追加", ...details] };
+}
+
+function buildManualFoodPayload(decision: ReviewDecision, foodId: string): ManualFoodInsert {
+  return {
     id: foodId,
     name: decision.editedData.name,
     normalized_name: normalizeFoodName(decision.editedData.name),
@@ -163,19 +203,6 @@ async function importNewManualFood(supabase: Supabase, decision: ReviewDecision,
     created_at: now,
     updated_at: now
   };
-
-  if (existing.data) {
-    const { created_at: _createdAt, created_by: _createdBy, ...updatePayload } = payload;
-    const update = await supabase.from("manual_foods").update(updatePayload).eq("id", foodId);
-    if (update.error) throw new Error(`manual_foods更新失敗 ${foodId}: ${update.error.message}`);
-    await saveFoundation(supabase, decision, foodId);
-    return { foodId, name: decision.editedData.name, targetType: "new", action: "manual_foods update", status: "updated", details: ["manual_foods既存行を冪等更新"] };
-  }
-
-  const insert = await supabase.from("manual_foods").insert(payload);
-  if (insert.error) throw new Error(`manual_foods追加失敗 ${foodId}: ${insert.error.message}`);
-  await saveFoundation(supabase, decision, foodId);
-  return { foodId, name: decision.editedData.name, targetType: "new", action: "manual_foods insert", status: "inserted", details: ["manual_foodsへ新規追加"] };
 }
 
 async function importExistingFoodUpdates(supabase: Supabase, decision: ReviewDecision, foodId: string): Promise<ImportResult> {
@@ -184,9 +211,22 @@ async function importExistingFoodUpdates(supabase: Supabase, decision: ReviewDec
   if (manualExists.error) throw new Error(`既存food確認失敗 ${foodId}: ${manualExists.error.message}`);
   if (!generatedExists && !manualExists.data) throw new Error(`既存foodIdが見つかりません: ${foodId}`);
 
+  const foundationMatches = await hasMatchingFoundation(supabase, decision, foodId);
+  const overrideMatches = await hasMatchingOverride(supabase, decision, foodId);
+  if (foundationMatches && overrideMatches) {
+    return {
+      foodId,
+      name: decision.editedData.name,
+      targetType: "existing",
+      action: decision.duplicateAction,
+      status: "skipped",
+      details: ["collection / metadata / variants / food_overridesが同一内容のため書き込みなし"]
+    };
+  }
+
   const details = await saveFoundation(supabase, decision, foodId);
-  await upsertOverride(supabase, decision, foodId);
-  details.push("food_overridesを冪等upsert");
+  const overrideChanged = await upsertOverride(supabase, decision, foodId);
+  details.push(overrideChanged ? "food_overridesを差分upsert" : "food_overridesは同一内容のため書き込みなし");
   return { foodId, name: decision.editedData.name, targetType: "existing", action: decision.duplicateAction, status: "updated", details };
 }
 
@@ -203,24 +243,17 @@ async function saveFoundation(supabase: Supabase, decision: ReviewDecision, food
     details.push(`collection ${collectionId} 既存`);
   }
 
-  const metadata = await supabase.from("food_publication_metadata").upsert(
-    {
-      food_id: foodId,
-      review_status: decision.editedData.reviewStatus === "approved" ? "approved" : "pending",
-      published_at: null,
-      updated_at: now
-    },
-    { onConflict: "food_id" }
-  );
-  if (metadata.error) throw new Error(`publication metadata保存失敗 ${foodId}: ${metadata.error.message}`);
-  const clearPublishedAt = await supabase.from("food_publication_metadata").update({ published_at: null, updated_at: now }).eq("food_id", foodId);
-  if (clearPublishedAt.error) throw new Error(`published_at null化失敗 ${foodId}: ${clearPublishedAt.error.message}`);
-  details.push("publication metadata保存、published_at null");
+  const metadataChanged = await savePublicationMetadata(supabase, decision, foodId);
+  details.push(metadataChanged ? "publication metadata保存、published_at null" : "publication metadataは同一内容のため書き込みなし");
 
-  await saveVariants(supabase, foodId, decision.editedData.priceVariants, decision.editedData.price, decision.editedData.sourceUrl || decision.editedData.officialReferenceUrls[0] || null);
-  details.push("food_variants冪等保存");
-  const revisionInserted = await insertRevision(supabase, foodId, decision, "summer-2026-auto-import");
-  details.push(revisionInserted ? "food_override_revisionsへ履歴追加" : "food_override_revisionsは同一内容のため追加なし");
+  const variantsChanged = await saveVariants(supabase, foodId, decision.editedData.priceVariants, decision.editedData.price, decision.editedData.sourceUrl || decision.editedData.officialReferenceUrls[0] || null);
+  details.push(variantsChanged ? "food_variants差分保存" : "food_variantsは同一内容のため書き込みなし");
+  if (!membership.data || metadataChanged || variantsChanged) {
+    const revisionInserted = await insertRevision(supabase, foodId, decision, "summer-2026-auto-import");
+    details.push(revisionInserted ? "food_override_revisionsへ履歴追加" : "food_override_revisionsは同一内容のため追加なし");
+  } else {
+    details.push("foundation差分なしのためrevision追加なし");
+  }
   return details;
 }
 
@@ -228,12 +261,14 @@ async function saveVariants(supabase: Supabase, foodId: string, variants: Review
   const rows = normalizeVariants(variants, fallbackPrice, sourceUrl);
   const existing = await supabase.from("food_variants").select("*").eq("food_id", foodId);
   if (existing.error) throw new Error(`variant確認失敗 ${foodId}: ${existing.error.message}`);
+  if (variantsMatch(existing.data ?? [], rows)) return false;
 
   const remove = await supabase.from("food_variants").delete().eq("food_id", foodId);
   if (remove.error) throw new Error(`variant削除失敗 ${foodId}: ${remove.error.message}`);
-  if (rows.length === 0) return;
+  if (rows.length === 0) return true;
   const insert = await supabase.from("food_variants").insert(rows.map((row) => ({ ...row, food_id: foodId })));
   if (insert.error) throw new Error(`variant追加失敗 ${foodId}: ${insert.error.message}`);
+  return true;
 }
 
 function normalizeVariants(variants: ReviewPriceVariant[], fallbackPrice: number | null, sourceUrl: string | null) {
@@ -249,8 +284,159 @@ function normalizeVariants(variants: ReviewPriceVariant[], fallbackPrice: number
   }));
 }
 
+async function hasMatchingFoundation(supabase: Supabase, decision: ReviewDecision, foodId: string) {
+  const collectionId = decision.editedData.collectionId || "summer-2026";
+  const [membership, metadata, variants] = await Promise.all([
+    supabase.from("food_collection_memberships").select("food_id").eq("food_id", foodId).eq("collection_id", collectionId).maybeSingle(),
+    supabase.from("food_publication_metadata").select("food_id,review_status,published_at").eq("food_id", foodId).maybeSingle(),
+    supabase.from("food_variants").select("*").eq("food_id", foodId)
+  ]);
+  if (membership.error) throw new Error(`collection確認失敗 ${foodId}: ${membership.error.message}`);
+  if (metadata.error) throw new Error(`publication metadata確認失敗 ${foodId}: ${metadata.error.message}`);
+  if (variants.error) throw new Error(`variant確認失敗 ${foodId}: ${variants.error.message}`);
+  const desiredVariants = normalizeVariants(
+    decision.editedData.priceVariants,
+    decision.editedData.price,
+    decision.editedData.sourceUrl || decision.editedData.officialReferenceUrls[0] || null
+  );
+  return Boolean(membership.data) && metadata.data?.review_status === desiredReviewStatus(decision) && !metadata.data.published_at && variantsMatch(variants.data ?? [], desiredVariants);
+}
+
+async function hasMatchingOverride(supabase: Supabase, decision: ReviewDecision, foodId: string) {
+  const existing = await supabase.from("food_overrides").select("*").eq("food_id", foodId).maybeSingle();
+  if (existing.error) throw new Error(`food_overrides確認失敗 ${foodId}: ${existing.error.message}`);
+  return Boolean(existing.data && overrideMatches(existing.data, buildOverridePayload(decision, foodId)));
+}
+
+function manualFoodMatches(row: ManualFoodRow, payload: ManualFoodInsert) {
+  return (
+    row.id === payload.id &&
+    row.name === payload.name &&
+    row.normalized_name === payload.normalized_name &&
+    sameNullable(row.name_en, payload.name_en) &&
+    row.category === payload.category &&
+    arrayEqual(row.category_tags, payload.category_tags) &&
+    sameNullable(row.price, payload.price) &&
+    sameNullable(row.area_name, payload.area_name) &&
+    sameNullable(row.shop_name, payload.shop_name) &&
+    row.sale_status === payload.sale_status &&
+    row.public_state === payload.public_state &&
+    row.hidden === payload.hidden &&
+    sameNullable(row.start_date, payload.start_date) &&
+    sameNullable(row.end_date, payload.end_date) &&
+    sameNullable(row.image_url, payload.image_url) &&
+    sameNullable(row.source_url, payload.source_url) &&
+    sameNullable(row.admin_notes, payload.admin_notes) &&
+    row.deleted_at === null
+  );
+}
+
+function overrideMatches(row: OverrideRow, payload: OverrideInsert) {
+  return (
+    row.food_id === payload.food_id &&
+    sameNullable(row.name, payload.name) &&
+    sameNullable(row.price, payload.price) &&
+    sameNullable(row.area_name, payload.area_name) &&
+    sameNullable(row.shop_name, payload.shop_name) &&
+    sameNullable(row.category, payload.category) &&
+    arrayEqual(row.category_tags, payload.category_tags) &&
+    sameNullable(row.image_path, payload.image_path) &&
+    sameNullable(row.image_source_url, payload.image_source_url) &&
+    sameNullable(row.info_source_url, payload.info_source_url) &&
+    sameNullable(row.hidden, payload.hidden) &&
+    sameNullable(row.sale_status, payload.sale_status) &&
+    sameNullable(row.status, payload.status) &&
+    sameNullable(row.admin_source_type, payload.admin_source_type) &&
+    sameNullable(row.admin_confidence, payload.admin_confidence) &&
+    sameNullable(row.admin_notes, payload.admin_notes) &&
+    row.is_deleted === payload.is_deleted
+  );
+}
+
+function variantsMatch(
+  existing: Database["public"]["Tables"]["food_variants"]["Row"][],
+  desiredRows: Omit<VariantInsert, "food_id">[]
+) {
+  const normalizedExisting = existing
+    .map((row) => ({
+      label: row.label,
+      price: row.price,
+      is_default: row.is_default,
+      sort_order: row.sort_order,
+      source_url: row.source_url
+    }))
+    .sort(compareVariants);
+  const normalizedDesired = desiredRows
+    .map((row) => ({
+      label: row.label,
+      price: row.price,
+      is_default: row.is_default,
+      sort_order: row.sort_order,
+      source_url: row.source_url
+    }))
+    .sort(compareVariants);
+  if (normalizedExisting.length !== normalizedDesired.length) return false;
+  return normalizedDesired.every((desired, index) => {
+    const current = normalizedExisting[index];
+    return (
+      current.label === desired.label &&
+      sameNullable(current.price, desired.price) &&
+      current.is_default === desired.is_default &&
+      current.sort_order === desired.sort_order &&
+      sameNullable(current.source_url, desired.source_url)
+    );
+  });
+}
+
+function compareVariants(left: { sort_order?: number | null; label: string }, right: { sort_order?: number | null; label: string }) {
+  return (left.sort_order ?? 0) - (right.sort_order ?? 0) || left.label.localeCompare(right.label);
+}
+
+function desiredReviewStatus(decision: ReviewDecision) {
+  return decision.editedData.reviewStatus === "approved" ? "approved" : "pending";
+}
+
+function sameNullable(left: unknown, right: unknown) {
+  return (left ?? null) === (right ?? null);
+}
+
+function arrayEqual(left: unknown[] | null, right: unknown[] | null | undefined) {
+  const leftItems = left ?? [];
+  const rightItems = right ?? [];
+  if (leftItems.length !== rightItems.length) return false;
+  return leftItems.every((item, index) => item === rightItems[index]);
+}
+
+async function savePublicationMetadata(supabase: Supabase, decision: ReviewDecision, foodId: string) {
+  const desiredStatus = desiredReviewStatus(decision);
+  const existing = await supabase.from("food_publication_metadata").select("food_id,review_status,published_at").eq("food_id", foodId).maybeSingle();
+  if (existing.error) throw new Error(`publication metadata確認失敗 ${foodId}: ${existing.error.message}`);
+  if (existing.data?.review_status === desiredStatus && !existing.data.published_at) return false;
+  const metadata = await supabase.from("food_publication_metadata").upsert(
+    {
+      food_id: foodId,
+      review_status: desiredStatus,
+      published_at: null,
+      updated_at: now
+    },
+    { onConflict: "food_id" }
+  );
+  if (metadata.error) throw new Error(`publication metadata保存失敗 ${foodId}: ${metadata.error.message}`);
+  return true;
+}
+
 async function upsertOverride(supabase: Supabase, decision: ReviewDecision, foodId: string) {
-  const payload: Database["public"]["Tables"]["food_overrides"]["Insert"] = {
+  const payload = buildOverridePayload(decision, foodId);
+  const existing = await supabase.from("food_overrides").select("*").eq("food_id", foodId).maybeSingle();
+  if (existing.error) throw new Error(`food_overrides確認失敗 ${foodId}: ${existing.error.message}`);
+  if (existing.data && overrideMatches(existing.data, payload)) return false;
+  const result = await supabase.from("food_overrides").upsert(payload, { onConflict: "food_id" });
+  if (result.error) throw new Error(`food_overrides保存失敗 ${foodId}: ${result.error.message}`);
+  return true;
+}
+
+function buildOverridePayload(decision: ReviewDecision, foodId: string): OverrideInsert {
+  return {
     food_id: foodId,
     name: decision.editedData.name,
     price: decision.editedData.price,
@@ -271,8 +457,6 @@ async function upsertOverride(supabase: Supabase, decision: ReviewDecision, food
     updated_by: actorEmail,
     updated_at: now
   };
-  const result = await supabase.from("food_overrides").upsert(payload, { onConflict: "food_id" });
-  if (result.error) throw new Error(`food_overrides保存失敗 ${foodId}: ${result.error.message}`);
 }
 
 async function insertRevision(supabase: Supabase, foodId: string, decision: ReviewDecision, action: string) {
@@ -360,16 +544,32 @@ function resolveFoodId(decision: ReviewDecision) {
 }
 
 async function ensureSummerCollection(supabase: Supabase) {
+  const payload = {
+    id: "summer-2026",
+    name: "2026 サマーコレクション",
+    season_type: "summer" as const,
+    starts_on: "2026-07-01",
+    ends_on: "2026-08-26",
+    accent_color: "#38b6c9",
+    is_featured: true,
+    sort_order: 100
+  };
+  const existing = await supabase.from("collections").select("id,name,season_type,starts_on,ends_on,accent_color,is_featured,sort_order").eq("id", payload.id).maybeSingle();
+  if (existing.error) throw new Error(`summer-2026 collection確認失敗: ${existing.error.message}`);
+  if (
+    existing.data?.name === payload.name &&
+    existing.data.season_type === payload.season_type &&
+    existing.data.starts_on === payload.starts_on &&
+    existing.data.ends_on === payload.ends_on &&
+    existing.data.accent_color === payload.accent_color &&
+    existing.data.is_featured === payload.is_featured &&
+    existing.data.sort_order === payload.sort_order
+  ) {
+    return;
+  }
   const result = await supabase.from("collections").upsert(
     {
-      id: "summer-2026",
-      name: "2026 サマーコレクション",
-      season_type: "summer",
-      starts_on: "2026-07-01",
-      ends_on: "2026-08-26",
-      accent_color: "#38b6c9",
-      is_featured: true,
-      sort_order: 100,
+      ...payload,
       updated_at: now
     },
     { onConflict: "id" }
