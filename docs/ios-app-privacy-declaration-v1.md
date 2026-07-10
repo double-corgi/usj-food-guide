@@ -1,57 +1,96 @@
 # iOS App Privacy Declaration v1
 
-作成日: 2026-06-30
+更新日: 2026-07-10
 
 対象アプリ: ユニコレ  
 Bundle ID: `com.doublecorgi.unicolle`
 
+## 結論
+
+ユニコレ本体は、通常利用者の食べた記録・評価・メモを端末内 `localStorage` に保存し、ユーザーアカウントを要求しない。
+iOS版ではGoogle AdMobとGoogle User Messaging Platformを利用するため、App Store ConnectのApp Privacy回答では、SDK由来の広告データ、識別子、診断データ、使用状況データを申告候補として扱う必要がある。
+
+不明な項目は推測で「収集しない」としない。App Store Connect入力前に、Googleの最新Data disclosureとXcode OrganizerのPrivacy Reportで最終確認する。
+
 ## 確認した実装
 
-- iOS広告: `@capacitor-community/admob` 8系
+- iOS広告: `@capacitor-community/admob` 8.0.0
+- Google Mobile Ads SDK: 12.14.0
+- Google User Messaging Platform: 3.1.0
 - 広告表示: `components/mobile-admob-banner.tsx`
-- 広告方針: `npa: true` による非パーソナライズ広告を基本方針
+- プライバシー設定導線: `components/admob-privacy-options-button.tsx`
 - UMP同意管理: `AdMob.requestConsentInfo` / `AdMob.showConsentForm` / `AdMob.showPrivacyOptionsForm`
-- ATT: `requestTrackingAuthorization` は呼ばない
-- Web/PWA: native AdMobは表示しない
-- `/admin`: native AdMobとUMP導線は表示しない
+- ATT: アプリコードから `requestTrackingAuthorization` は呼ばない
+- Web/PWA: native AdMobを起動しない
+- `/admin`: native AdMobとUMP導線を表示しない
 - 食べた記録・評価・メモ・金額: 端末内 `localStorage`
 - 管理者向けデータ: Supabaseをサーバー側処理で利用
+- 問い合わせ: `/contact` からユーザー入力を受け付ける
 
-## 参照した公式資料
+## Privacy Manifest実測
 
-- Google AdMob iOS privacy strategies / SKAdNetwork identifiers
-  - URL: https://developers.google.com/admob/ios/privacy/strategies
-  - 確認日: 2026-06-30
-  - ページ最終更新: 2026-05-21 UTC
-- Google AdMob iOS privacy
-  - URL: https://developers.google.com/admob/ios/privacy
-  - 確認日: 2026-06-30
-- Google AdMob GDPR / UMP
-  - URL: https://developers.google.com/admob/ios/privacy/gdpr
-  - 確認日: 2026-06-30
-- Google AdMob data disclosure
-  - URL: https://developers.google.com/admob/ios/privacy/data-disclosure
-  - 確認日: 2026-06-30
-- Apple App Privacy Details
-  - URL: https://developer.apple.com/app-store/app-privacy-details/
-  - 確認日: 2026-06-30
-- Apple App Store Connect App Privacy
-  - URL: https://developer.apple.com/help/app-store-connect/manage-app-information/manage-app-privacy/
-  - 確認日: 2026-06-30
+確認対象:
 
-## SKAdNetwork
+- `node_modules/@capacitor/ios/Capacitor/Capacitor/PrivacyInfo.xcprivacy`
+- `node_modules/@capacitor/ios/CapacitorCordova/CapacitorCordova/PrivacyInfo.xcprivacy`
+- `GoogleMobileAds.framework/PrivacyInfo.xcprivacy`
+- `UserMessagingPlatform.framework/PrivacyInfo.xcprivacy`
 
-`ios/App/App/Info.plist` に、Google公式資料の `SKAdNetworkItems` 一覧を追加した。
+結果:
 
-- `GADApplicationIdentifier` は既存の `$(GAD_APPLICATION_IDENTIFIER)` を維持
-- Debug: `ios/debug.xcconfig` のGoogle公式テストApp IDを維持
-- Release: `ios/release.xcconfig` の本番AdMob App IDを維持
-- 重複IDなし
-- `plutil -lint ios/App/App/Info.plist` でXML妥当性を確認する
+| SDK | Required Reason API | 収集データ | Tracking |
+| --- | --- | --- | --- |
+| Capacitor | なし | なし | false |
+| Cordova | なし | なし | false |
+| GoogleMobileAds | System boot time, UserDefaults, Disk space | Other Diagnostic Data, Coarse Location, Performance Data, Crash Data, Advertising Data, Product Interaction, Device ID | Device IDがtrue |
+| UserMessagingPlatform | UserDefaults | Coarse Location, Performance Data, Product Interaction | false |
+
+アプリ本体の `ios/App/App/PrivacyInfo.xcprivacy` は存在しない。AS1監査では、アプリ本体で追加宣言が必要なRequired Reason APIは確認していない。
+
+## App Privacy回答候補
+
+| データ種別 | 収集/処理の可能性 | 利用目的 | ユーザーに紐づくか | トラッキングに使うか | 根拠 | App Store Connect入力方針 |
+| --- | --- | --- | --- | --- | --- | --- |
+| メールアドレス | 管理者ログインや問い合わせで扱う可能性 | 管理者認証、問い合わせ対応 | 入力者には紐づく | 使わない | Supabase Auth / `/contact` | Contact Infoとして要確認。通常利用者はアカウント不要である旨を審査メモに記載候補 |
+| 問い合わせ内容 | 送信時のみ | 問い合わせ対応 | 入力内容次第 | 使わない | `/contact` | User Contentとして要確認 |
+| 食べた記録 | 端末内のみ | コレクション進捗表示 | 端末内のみ | 使わない | `localStorage` | 端末外へ送信しないため収集データとしては申告不要候補 |
+| 評価 | 端末内のみ | 食べた記録表示 | 端末内のみ | 使わない | `localStorage` | 端末外へ送信しないため申告不要候補 |
+| メモ | 端末内のみ | 食べた記録表示 | 端末内のみ | 使わない | `localStorage` | 端末外へ送信しないため申告不要候補 |
+| 金額メモ | 端末内のみ | 食べた記録表示 | 端末内のみ | 使わない | `localStorage` | 端末外へ送信しないため申告不要候補 |
+| 広告データ | AdMob SDKが処理する可能性 | 広告表示、測定、不正防止 | GoogleMobileAds manifestではlinked=true | Google資料と設定に依存 | GoogleMobileAds PrivacyInfo | Advertising Dataとして申告候補 |
+| Device ID | AdMob SDKが処理する可能性 | 広告表示、測定、不正防止 | linked=true | GoogleMobileAds manifestではtracking=true | GoogleMobileAds PrivacyInfo | Identifiersとして申告候補。Trackingの扱いは人間が最終確認 |
+| Coarse Location | AdMob/UMP SDKが処理する可能性 | 広告/同意処理/分析 | GoogleMobileAdsではlinked=true、UMPではlinked=false | false | SDK PrivacyInfo | Locationとして申告候補 |
+| Product Interaction | AdMob/UMP SDKが処理する可能性 | 広告、分析、同意処理 | GoogleMobileAdsではlinked=true、UMPではlinked=false | false | SDK PrivacyInfo | Usage Dataとして申告候補 |
+| Advertising Data | AdMob SDKが処理する可能性 | 広告配信、測定、不正防止 | linked=true | false | SDK PrivacyInfo | Advertising Dataとして申告候補 |
+| Crash Data | AdMob SDKが処理する可能性 | 診断、品質改善 | linked=false | false | SDK PrivacyInfo | Diagnosticsとして申告候補 |
+| Performance Data | AdMob/UMP SDKが処理する可能性 | 診断、品質改善、広告関連 | linked=false | false | SDK PrivacyInfo | Diagnosticsとして申告候補 |
+| Other Diagnostic Data | AdMob SDKが処理する可能性 | 診断、広告関連 | linked=false | false | SDK PrivacyInfo | Diagnosticsとして申告候補 |
+| 位置情報の正確な取得 | アプリ本体では取得しない | なし | なし | なし | Info.plistに位置情報権限なし | Precise Locationは申告しない候補 |
+| 写真/カメラ | 通常利用者向けには取得しない | なし | なし | なし | Info.plistに権限説明なし | Photos/Cameraは申告しない候補 |
+| 連絡先 | 取得しない | なし | なし | なし | 権限説明なし | Contactsは申告しない候補 |
+
+## ATTの扱い
+
+AS1時点では次を行わない。
+
+- ATTダイアログを追加しない
+- `NSUserTrackingUsageDescription` を追加しない
+- `AdMob.requestTrackingAuthorization()` を呼ばない
+
+理由:
+
+- アプリコードでATT APIを呼んでいない
+- Info.plistにATT説明文はない
+- 現在の広告リクエストはUMP consent確認後に行う
+
+注意:
+
+- GoogleMobileAds SDKのPrivacy ManifestではDevice IDがtracking=trueとして宣言されている
+- App Store Connectの「Tracking」回答は、Google資料、AdMob設定、Apple定義に照らして人間が最終判断する
 
 ## UMP同意管理
 
-アプリ起動時の広告表示は次の順序にする。
+実装順序:
 
 1. native Capacitor環境か確認
 2. `/admin` では広告・同意処理を実行しない
@@ -60,71 +99,43 @@ Bundle ID: `com.doublecorgi.unicolle`
 5. 同意フォームが必要で利用可能な場合のみ `AdMob.showConsentForm`
 6. `canRequestAds === true` の場合だけ `AdMob.showBanner`
 
-同意情報の取得やフォーム表示に失敗した場合、アプリ本体は利用可能なままとし、広告表示は行わない。
+Debug検証用環境変数:
 
-Debug検証用に以下の環境変数を利用できる。ただしReleaseでは利用しない。
+- `NEXT_PUBLIC_IOS_ADMOB_CONSENT_DEBUG_GEOGRAPHY`
+- `NEXT_PUBLIC_IOS_ADMOB_CONSENT_TEST_DEVICE_IDS`
 
-- `NEXT_PUBLIC_IOS_ADMOB_CONSENT_DEBUG_GEOGRAPHY=eea|us|other`
-- `NEXT_PUBLIC_IOS_ADMOB_CONSENT_TEST_DEVICE_IDS=<comma-separated ids>`
+Release modeでは、これらを渡さない実装になっている。
 
-注意:
+## SKAdNetwork
 
-- テスト端末IDをReleaseに入れない
-- debug geographyをReleaseに入れない
-- 本番広告を自分でクリックしない
-- AdMob管理画面側でGDPRプライバシーメッセージ作成が必要な場合は、人間がAdMob画面で設定する
+`ios/App/App/Info.plist` に `SKAdNetworkItems` 50件を設定済み。重複なし。
 
-## ATTの扱い
+## プライバシー・サポートURL
 
-今回の実装では次を行わない。
+ProductionでHTTP 200を確認:
 
-- `AdMob.requestTrackingAuthorization()` を呼ばない
-- `NSUserTrackingUsageDescription` を追加しない
-- パーソナライズ広告へ変更しない
-- IDFA利用を明示的に開始しない
-
-理由:
-
-- 現在の方針は非パーソナライズ広告
-- ATTが必要と確認できる追跡実装を追加していない
-- ATTが必要と判明した場合は、実装前に利用目的、説明文、App Privacy申告への影響を再整理する
-
-## App Privacy申告候補
-
-| データ種別 | 収集するか | 利用目的 | ユーザーに紐づくか | トラッキングに使うか | 根拠 | App Store Connect候補 |
-| --- | --- | --- | --- | --- | --- | --- |
-| メールアドレス | 管理者のみ / 通常利用者は収集しない | 管理画面ログイン・権限確認 | 管理者には紐づく | 使わない | `admin_users`, Supabase Auth, `requireAdmin` | 通常利用者向け申告では要確認。管理者限定利用として審査メモに説明 |
-| ユーザーID | 要確認 | AdMob/Supabase SDK側で生成される可能性 | 要確認 | 要確認 | Google data disclosure / Supabase Auth | 要確認 |
-| 広告識別子 | 要確認 | 広告配信・不正防止・測定 | 要確認 | 現方針ではトラッキング目的に使わない | Google AdMob SDK | 要確認。Google資料とPrivacy Manifestで最終確認 |
-| デバイスID | 処理される場合あり | 広告配信・不正防止・診断 | 要確認 | 要確認 | Google AdMob SDK | 識別子または診断情報として要確認 |
-| 製品操作 | 処理される場合あり | 広告配信・品質改善・不正防止 | 要確認 | 現方針ではトラッキング目的に使わない | Google AdMob SDK / 任意 analytics env | Product Interaction候補として要確認 |
-| 広告データ | 処理される場合あり | 広告表示・測定・不正防止 | 要確認 | 現方針ではトラッキング目的に使わない | Google AdMob SDK | Advertising Data候補 |
-| クラッシュ情報 | 条件付き | エラー調査 | 要確認 | 使わない | `NEXT_PUBLIC_SENTRY_DSN` 設定時のみ | Crash Data候補。ただしSentry未設定なら収集なし |
-| パフォーマンス情報 | 条件付き | 品質改善 | 要確認 | 使わない | AdMob/Vercel/Sentry設定に依存 | Performance Data候補として要確認 |
-| その他診断情報 | 条件付き | 広告SDK・配信基盤の診断 | 要確認 | 要確認 | Google AdMob / Vercel | Diagnostics候補として要確認 |
-| 位置情報 | 収集しない | なし | なし | なし | アプリコードに位置情報取得なし | 申告しない候補 |
-| 写真 | 収集しない | なし | なし | なし | 通常利用者向け画像アップロードなし。管理画面はWeb限定運用 | 申告しない候補 |
-| 食べた記録 | 端末内保存 | コレクション表示 | 端末内のみ | 使わない | `localStorage` | 端末内のみ。収集データとしては申告不要候補 |
-| 評価 | 端末内保存 | 食べた記録表示 | 端末内のみ | 使わない | `localStorage` | 端末内のみ。収集データとしては申告不要候補 |
-| メモ | 端末内保存 | 食べた記録表示 | 端末内のみ | 使わない | `localStorage` | 端末内のみ。収集データとしては申告不要候補 |
-| 問い合わせ内容 | 送信時のみ | 問い合わせ対応・報告確認 | 入力内容次第 | 使わない | `/contact` / Googleフォーム運用 | User Content / Contact Infoは入力項目次第で要確認 |
+- `https://unicolle.vercel.app/privacy`
+- `https://unicolle.vercel.app/contact`
+- `https://unicolle.vercel.app/terms`
+- `https://unicolle.vercel.app/about`
+- `https://unicolle.vercel.app/disclaimer`
 
 ## 人間がApp Store Connectで最終確認すること
 
 1. Google AdMob SDKの最新Data Disclosureを確認する
-2. Xcode Privacy ReportでAdMob/Capacitor関連のPrivacy Manifestを確認する
-3. `NEXT_PUBLIC_SENTRY_DSN` と analytics endpoint をReleaseで使うか確認する
-4. 問い合わせフォームで任意連絡先を収集するか確認する
-5. App Privacyで「トラッキング」扱いになるかを、Google資料・Apple定義・実際の広告設定で最終判断する
-6. AdMobのGDPRプライバシーメッセージをAdMob管理画面で作成・公開する
+2. Xcode OrganizerのPrivacy ReportでSDK manifestを確認する
+3. AdMobの広告設定が「トラッキング」に該当するかApple定義で最終判断する
+4. 問い合わせフォームで収集する入力項目をApp Privacy回答へ反映する
+5. 管理者ログイン用途のメールアドレスを通常ユーザー向け収集データとして扱うか審査メモで整理する
+6. GDPRプライバシーメッセージをAdMob管理画面で作成・公開する
 
 ## 提出前チェック
 
 - DebugではGoogle公式テスト広告のみ表示
-- Releaseでは本番AdMob App ID / 広告ユニットIDに切り替え可能
+- Releaseでは本番AdMob App ID / 広告ユニットIDを使用
 - Releaseにdebug geographyやテスト端末IDを入れない
 - `requestTrackingAuthorization` を呼ばない
 - `NSUserTrackingUsageDescription` を理由なく追加しない
 - `/admin` に広告・同意画面を出さない
 - Web/PWAにnative AdMobやUMP画面を出さない
-- `service role` keyがクライアント成果物に含まれないことを確認する
+- service role keyがクライアント成果物に含まれないことを確認する
