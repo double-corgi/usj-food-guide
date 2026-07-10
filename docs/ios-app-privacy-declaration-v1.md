@@ -1,6 +1,6 @@
 # iOS App Privacy Declaration v1
 
-更新日: 2026-07-10
+更新日: 2026-07-11
 
 対象アプリ: ユニコレ  
 Bundle ID: `com.doublecorgi.unicolle`
@@ -105,6 +105,38 @@ Debug検証用環境変数:
 - `NEXT_PUBLIC_IOS_ADMOB_CONSENT_TEST_DEVICE_IDS`
 
 Release modeでは、これらを渡さない実装になっている。
+
+AS2実測:
+
+- `components/mobile-admob-banner.tsx` は `NEXT_PUBLIC_IOS_ADMOB_MODE === "production"` かつ本番バナーIDがある場合だけ本番広告IDを使う。
+- Production modeでは `debugGeography` と `testDeviceIdentifiers` を渡さない。
+- `AdMob.showBanner` には `npa: true` を渡している。
+- Publisher first-party IDを明示設定するコードは確認していない。
+- `AdMob.requestTrackingAuthorization` / `ATTrackingManager` / `requestTrackingAuthorization` の呼び出しは確認していない。
+
+## AS2 TestFlight実測
+
+AS2で作成したApp Store Connect向けIPAには、次のSDK Privacy Manifestが含まれることを確認した。
+
+- `Capacitor.framework/PrivacyInfo.xcprivacy`
+- `Cordova.framework/PrivacyInfo.xcprivacy`
+- `GoogleMobileAds.framework/PrivacyInfo.xcprivacy`
+- `UserMessagingPlatform.framework/PrivacyInfo.xcprivacy`
+
+アプリ本体の `ios/App/App/PrivacyInfo.xcprivacy` は引き続き存在しない。Xcodeのarchive/export時にはSDK manifestがスキャンされ、IPAへのUploadは成功した。
+
+TestFlight Upload結果:
+
+- Version: `1.0`
+- Build: `1`
+- Bundle ID: `com.doublecorgi.unicolle`
+- Apple Distribution: Cloud Managed Apple Distribution
+- Provisioning Profile: App Store Connect用の自動署名profile
+- Upload: 成功、App Store ConnectでProcessing開始
+
+注意:
+
+- GoogleMobileAds.framework と UserMessagingPlatform.framework のdSYMアップロード警告が出た。IPA本体のアップロードは成功しているが、必要に応じてApp Store Connect上のシンボル状態を人間が確認する。
 
 ## SKAdNetwork
 
