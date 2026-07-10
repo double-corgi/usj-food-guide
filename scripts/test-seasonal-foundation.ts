@@ -97,6 +97,46 @@ assert.deepEqual(
   "multiple memberships should be preserved without dropping later collection rows"
 );
 assert.equal(isFoodInCollection(multiMembershipFood!, SUMMER_2026_COLLECTION_ID), true, "summer collection membership should match even when it is not the primary collectionId");
+const canonicalDuplicate = food({
+  id: "food-canonical-visible",
+  name: "公開canonical",
+  canonicalGroupId: "group-seasonal-duplicate",
+  canonicalFood: true,
+  price: 950
+});
+const hiddenDuplicate = food({
+  id: "food-hidden-duplicate",
+  name: "非公開duplicate",
+  canonicalGroupId: "group-seasonal-duplicate",
+  canonicalFood: false,
+  hidden: true,
+  price: 950
+});
+const [resolvedCanonicalDuplicate] = applySeasonalFoodFoundation([canonicalDuplicate, hiddenDuplicate], {
+  memberships: [{ food_id: "food-hidden-duplicate", collection_id: SUMMER_2026_COLLECTION_ID, created_at: "2026-07-06T00:00:00.000Z" }],
+  publicationMetadata: [{ food_id: "food-hidden-duplicate", review_status: "approved", published_at: null, created_at: "2026-07-06T00:00:00.000Z", updated_at: "2026-07-06T10:00:00.000Z" }],
+  variants: [
+    {
+      id: "var-hidden-duplicate-default",
+      food_id: "food-hidden-duplicate",
+      label: "テイクアウト",
+      price: 900,
+      is_default: true,
+      sort_order: 1,
+      source_url: "https://example.com/variant",
+      last_checked_at: "2026-07-06T00:00:00.000Z",
+      created_at: "2026-07-06T00:00:00.000Z",
+      updated_at: "2026-07-06T00:00:00.000Z"
+    }
+  ]
+});
+assert.equal(
+  isFoodInCollection(resolvedCanonicalDuplicate!, SUMMER_2026_COLLECTION_ID),
+  true,
+  "seasonal foundation attached to a hidden duplicate should also apply to the visible canonical food"
+);
+assert.equal(resolvedCanonicalDuplicate?.reviewStatus, "approved", "publication metadata on a hidden duplicate should apply to the visible canonical food");
+assert.equal(resolvedCanonicalDuplicate?.variants[0]?.foodId, "food-canonical-visible", "duplicate variant display rows should point at the visible canonical food");
 const [unassignedFood] = applySeasonalFoodFoundation([legacyFood], { memberships: [], publicationMetadata: [], variants: [] });
 assert.equal(unassignedFood?.collectionId, null, "collection removal should leave the food unassigned");
 

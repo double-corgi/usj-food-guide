@@ -206,7 +206,7 @@
 ## 公開コレクション整備（2026-07-10）
 
 - 対象: summer-2026 collectionId が付いた登録済み28件
-- 一般公開対象: 本番repositoryで公開取得できる approved 14件
+- 一般公開対象: 本番repositoryで公開取得できる approved 15件（後続の不整合修復後）
 - 一般公開除外: pending 13件、未登録保留 2件
 - 正式URL: `/collections/summer-2026`
 - `/foods` 連携: `?collection=summer-2026` で本番repositoryが返す approved の夏商品だけを絞り込み
@@ -217,14 +217,15 @@
 - pending公開: 0件を維持する設計
 - 保留公開: 0件を維持する設計
 - DB変更: なし（公開/管理UIの既存データ利用のみ）
-- 本番確認: `https://unicolle.vercel.app/collections/summer-2026` はHTTP 200。画面上の公開件数は14件。
-- 注意: 直前レポートには approved 15件と記録されているが、本番repositoryが返すsummer-2026公開対象は14件だった。Vercel production env pullでは `SUPABASE_SERVICE_ROLE_KEY` の値がローカル実行環境へ渡らず、DB補修は未実施。UIは本番DBの公開条件に従って14件を表示する。
+- 本番確認: `https://unicolle.vercel.app/collections/summer-2026` はHTTP 200。初回整備時点では画面上の公開件数が14件で、後続の修復対象になった。
+- 注意: 直前レポートには approved 15件と記録されていたが、本番repositoryが返すsummer-2026公開対象は14件だった。原因と修復内容は次節に記録する。
 
 ## summer-2026 公開件数不整合修復（2026-07-10）
 
 - 対象不整合: publication metadata上は approved 15件だが、`/collections/summer-2026` の公開表示が14件。
 - 欠けていた商品: `25周年カクテル ～ポップコーンフレーバー？～`
-- foodId: `food-d5v0l2`
+- importでsummer-2026情報を付けていたfoodId: `food-d5v0l2`
+- 公開canonical foodId: `food-gpkw6l`
 - targetType: existing（既存generated商品へsummer-2026情報を追記）
 - 修復前のapproved件数: 15件
 - 修復前の公開件数: 14件
@@ -234,12 +235,13 @@
   - A - B: 0件
   - A（DB metadata上のapproved）: 15件
   - A - B: 0件
-- 不整合原因: DB行欠落ではなく、既存商品が複数collectionへ所属する場合に `applySeasonalFoodFoundation()` が最初のmembershipだけを `collectionId` へ反映し、後続の `summer-2026` membership を公開判定で見落としていたため。`food-d5v0l2` は既存の25周年系collectionとsummer-2026の複数membershipを持つため、collection詳細・一覧・ホーム導線から落ちていた。
-- 欠けていたDB行: なし。`food_collection_memberships` / `food_publication_metadata` / `food_variants` は存在確認済み。
+- 不整合原因: DB行欠落ではなく、`food-d5v0l2` が同一canonical group内の非公開duplicate（`hidden=true`, `canonicalFood=false`）で、公開可能なcanonical商品は `food-gpkw6l` だったため。summer-2026の `food_collection_memberships` / `food_publication_metadata` / `food_variants` が非canonical側に付いていたため、公開repositoryの `filterVisibleFoods()` で `food-d5v0l2` が除外され、canonicalの `food-gpkw6l` にはsummer-2026所属が反映されていなかった。
+- 欠けていたDB行: なし。`food-d5v0l2` 側の `food_collection_memberships` / `food_publication_metadata` / `food_variants` は存在確認済み。公開に使うcanonical側へ継承できていなかった。
 - 修復したDB行: なし。DBへの書き込みは行っていない。
 - 修復内容:
   - `FoodWithRelations` に `collectionIds` を追加。
   - `applySeasonalFoodFoundation()` で同一foodIdの複数membershipを保持。
+  - 非公開duplicateに紐付いたseasonal foundationを、同一canonical groupの公開canonical foodへも継承するように修復。
   - `isFoodInCollection()` を `collectionId` または `collectionIds` のどちらでも判定するよう変更。
   - `/collections/[id]`, `/foods?collection=summer-2026`, ホーム夏導線、商品カード/詳細の夏ラベル、`/admin/foods?collection=summer-2026` が複数membershipを扱えるように修復。
 - 冪等性: DB書き込みなし。既存membershipとmetadataを読み直しても追加insert/update/revisionは発生しない。

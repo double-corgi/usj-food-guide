@@ -29,23 +29,47 @@ export async function listSeasonalFoodFoundation(): Promise<SeasonalFoodFoundati
 export function applySeasonalFoodFoundation<T extends FoodWithRelations>(foods: T[], foundation: SeasonalFoodFoundation): T[] {
   if (foundation.memberships.length === 0 && foundation.publicationMetadata.length === 0 && foundation.variants.length === 0) return foods;
 
+  const canonicalFoodIdByGroup = new Map<string, string>();
+  for (const food of foods) {
+    if (!food.canonicalGroupId || food.canonicalFood === false) continue;
+    if (!canonicalFoodIdByGroup.has(food.canonicalGroupId)) canonicalFoodIdByGroup.set(food.canonicalGroupId, food.id);
+  }
+  const foundationTargetByFoodId = new Map<string, string>();
+  for (const food of foods) {
+    if (!food.canonicalGroupId || food.canonicalFood !== false) continue;
+    const canonicalFoodId = canonicalFoodIdByGroup.get(food.canonicalGroupId);
+    if (canonicalFoodId && canonicalFoodId !== food.id) foundationTargetByFoodId.set(food.id, canonicalFoodId);
+  }
+
   const collectionByFoodId = new Map<string, string>();
   const collectionsByFoodId = new Map<string, string[]>();
   for (const membership of foundation.memberships) {
-    const collectionIds = collectionsByFoodId.get(membership.food_id) ?? [];
-    if (!collectionIds.includes(membership.collection_id)) {
-      collectionIds.push(membership.collection_id);
-      collectionsByFoodId.set(membership.food_id, collectionIds);
+    const targetFoodIds = getFoundationTargetFoodIds(membership.food_id, foundationTargetByFoodId);
+    for (const foodId of targetFoodIds) {
+      const collectionIds = collectionsByFoodId.get(foodId) ?? [];
+      if (!collectionIds.includes(membership.collection_id)) {
+        collectionIds.push(membership.collection_id);
+        collectionsByFoodId.set(foodId, collectionIds);
+      }
+      if (!collectionByFoodId.has(foodId)) collectionByFoodId.set(foodId, membership.collection_id);
     }
-    if (!collectionByFoodId.has(membership.food_id)) collectionByFoodId.set(membership.food_id, membership.collection_id);
   }
 
-  const metadataByFoodId = new Map(foundation.publicationMetadata.map((metadata) => [metadata.food_id, metadata]));
+  const metadataByFoodId = new Map<string, PublicationMetadataRow>();
+  for (const metadata of foundation.publicationMetadata) {
+    const targetFoodIds = getFoundationTargetFoodIds(metadata.food_id, foundationTargetByFoodId);
+    for (const foodId of targetFoodIds) {
+      if (!metadataByFoodId.has(foodId) || foodId === metadata.food_id) metadataByFoodId.set(foodId, metadata);
+    }
+  }
   const variantsByFoodId = new Map<string, FoodVariant[]>();
   for (const row of foundation.variants) {
-    const next = variantsByFoodId.get(row.food_id) ?? [];
-    next.push(mapFoodVariantRow(row));
-    variantsByFoodId.set(row.food_id, next);
+    const targetFoodIds = getFoundationTargetFoodIds(row.food_id, foundationTargetByFoodId);
+    for (const foodId of targetFoodIds) {
+      const next = variantsByFoodId.get(foodId) ?? [];
+      next.push(mapFoodVariantRow(row, foodId));
+      variantsByFoodId.set(foodId, next);
+    }
   }
 
   return foods.map((food) => {
@@ -69,6 +93,12 @@ function emptyFoundation(): SeasonalFoodFoundation {
   return { memberships: [], publicationMetadata: [], variants: [] };
 }
 
+function getFoundationTargetFoodIds(foodId: string, foundationTargetByFoodId: Map<string, string>) {
+  const canonicalFoodId = foundationTargetByFoodId.get(foodId);
+  if (!canonicalFoodId) return [foodId];
+  return [foodId, canonicalFoodId];
+}
+
 async function listRows<T>(table: "food_collection_memberships" | "food_publication_metadata" | "food_variants", orderColumn?: string) {
   const supabase = createServiceSupabaseClient();
   if (!supabase) return [];
@@ -86,10 +116,10 @@ async function listRows<T>(table: "food_collection_memberships" | "food_publicat
   return data as T[];
 }
 
-function mapFoodVariantRow(row: FoodVariantRow): FoodVariant {
+function mapFoodVariantRow(row: FoodVariantRow, foodId = row.food_id): FoodVariant {
   return {
     id: row.id,
-    foodId: row.food_id,
+    foodId,
     label: row.label,
     price: row.price,
     isDefault: row.is_default,
