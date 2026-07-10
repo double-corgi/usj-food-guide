@@ -13,6 +13,7 @@ export function normalizeFoodFoundation<T extends FoodWithRelations>(food: T): T
   const normalizedFood = {
     ...food,
     collectionId: readNullableString(raw.collectionId ?? raw.collection_id),
+    collectionIds: normalizeCollectionIds(raw.collectionIds ?? raw.collection_ids),
     publishedAt: readNullableString(raw.publishedAt ?? raw.published_at),
     variants
   };
@@ -65,6 +66,11 @@ function readString(value: unknown) {
 function readNullableString(value: unknown) {
   if (value === null || typeof value === "undefined") return null;
   return typeof value === "string" && value.trim() ? value.trim() : null;
+}
+
+function normalizeCollectionIds(value: unknown) {
+  if (!Array.isArray(value)) return [];
+  return Array.from(new Set(value.filter((item): item is string => typeof item === "string" && item.trim().length > 0).map((item) => item.trim())));
 }
 
 function readNullableNumber(value: unknown) {

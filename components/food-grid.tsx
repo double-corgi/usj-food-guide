@@ -6,7 +6,7 @@ import { ChevronDown, Search, SlidersHorizontal } from "lucide-react";
 import { diningTypeLabels, shopTypeLabels, statusLabels } from "@/lib/constants";
 import { dedupeFoodsByCanonical, foodMatchesArea, getFoodAreaNames, getFoodAreaSummary, getSaleStatus, getSaleType, isEndingSoon, getCanonicalFoodKey, getEatenCanonicalKeys, isEatenCanonical, normalizeDisplayAreaName, normalizeFoodName } from "@/lib/food-utils";
 import { REQUEST_FORM_URL } from "@/lib/request-form-url";
-import { SUMMER_2026_COLLECTION_ID } from "@/lib/seasonal-collections";
+import { isFoodInCollection, SUMMER_2026_COLLECTION_ID } from "@/lib/seasonal-collections";
 import { tAreaName } from "@/lib/i18n/area-name";
 import type { TranslationKey } from "@/lib/i18n/dictionaries";
 import { getFoodNameI18n } from "@/lib/i18n/name-translations";
@@ -110,7 +110,7 @@ export function FoodGrid({
       if (shopType !== "all" && food.shop.type !== shopType) return false;
       if (diningType !== "all" && food.diningType !== diningType) return false;
       if (status !== "all" && food.status !== status) return false;
-      if (collectionId !== "all" && food.collectionId !== collectionId) return false;
+      if (collectionId !== "all" && !isFoodInCollection(food, collectionId)) return false;
       if (!matchesSaleFilter(food, saleFilter)) return false;
       if (imageOnly && getFoodImage(food) === getCategoryPlaceholder(food.category)) return false;
       if (priceFilter === "known" && !hasPrice(food)) return false;

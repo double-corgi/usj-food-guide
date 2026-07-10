@@ -83,6 +83,20 @@ const [membershipFood] = applySeasonalFoodFoundation([legacyFood], {
 });
 assert.equal(membershipFood?.collectionId, SUMMER_2026_COLLECTION_ID, "collection membership should apply to generated or manual foods by foodId");
 assert.equal(membershipFood?.publishedAt, "2026-07-06T10:00:00.000Z", "publication metadata should apply by foodId");
+const [multiMembershipFood] = applySeasonalFoodFoundation([legacyFood], {
+  memberships: [
+    { food_id: "food-legacy", collection_id: "anniversary-2026", created_at: "2026-07-01T00:00:00.000Z" },
+    { food_id: "food-legacy", collection_id: SUMMER_2026_COLLECTION_ID, created_at: "2026-07-06T00:00:00.000Z" }
+  ],
+  publicationMetadata: [],
+  variants: []
+});
+assert.deepEqual(
+  multiMembershipFood?.collectionIds,
+  ["anniversary-2026", SUMMER_2026_COLLECTION_ID],
+  "multiple memberships should be preserved without dropping later collection rows"
+);
+assert.equal(isFoodInCollection(multiMembershipFood!, SUMMER_2026_COLLECTION_ID), true, "summer collection membership should match even when it is not the primary collectionId");
 const [unassignedFood] = applySeasonalFoodFoundation([legacyFood], { memberships: [], publicationMetadata: [], variants: [] });
 assert.equal(unassignedFood?.collectionId, null, "collection removal should leave the food unassigned");
 

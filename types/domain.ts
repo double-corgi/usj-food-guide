@@ -104,6 +104,7 @@ export type Food = {
   reviewStatus: ReviewStatus;
   hidden: boolean;
   collectionId?: string | null;
+  collectionIds?: string[];
   publishedAt?: string | null;
   variants?: FoodVariant[];
   duplicateGroupId?: string;

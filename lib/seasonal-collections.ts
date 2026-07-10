@@ -28,8 +28,8 @@ export const legacyAnniversaryCollectionTemplate: Omit<FoodCollection, "createdA
   sortOrder: 200
 };
 
-export function isFoodInCollection(food: Pick<FoodWithRelations, "collectionId">, collectionId: string) {
-  return food.collectionId === collectionId;
+export function isFoodInCollection(food: Pick<FoodWithRelations, "collectionId" | "collectionIds">, collectionId: string) {
+  return food.collectionId === collectionId || Boolean(food.collectionIds?.includes(collectionId));
 }
 
 export function isPublicReviewStatus(reviewStatus: ReviewStatus) {

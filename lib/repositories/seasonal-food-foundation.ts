@@ -30,7 +30,13 @@ export function applySeasonalFoodFoundation<T extends FoodWithRelations>(foods: 
   if (foundation.memberships.length === 0 && foundation.publicationMetadata.length === 0 && foundation.variants.length === 0) return foods;
 
   const collectionByFoodId = new Map<string, string>();
+  const collectionsByFoodId = new Map<string, string[]>();
   for (const membership of foundation.memberships) {
+    const collectionIds = collectionsByFoodId.get(membership.food_id) ?? [];
+    if (!collectionIds.includes(membership.collection_id)) {
+      collectionIds.push(membership.collection_id);
+      collectionsByFoodId.set(membership.food_id, collectionIds);
+    }
     if (!collectionByFoodId.has(membership.food_id)) collectionByFoodId.set(membership.food_id, membership.collection_id);
   }
 
@@ -45,10 +51,12 @@ export function applySeasonalFoodFoundation<T extends FoodWithRelations>(foods: 
   return foods.map((food) => {
     const metadata = metadataByFoodId.get(food.id);
     const variants = variantsByFoodId.get(food.id);
+    const collectionIds = collectionsByFoodId.get(food.id) ?? food.collectionIds ?? [];
     const collectionId = collectionByFoodId.get(food.id);
     const merged = {
       ...food,
       collectionId: collectionId ?? food.collectionId ?? null,
+      collectionIds,
       publishedAt: metadata?.published_at ?? food.publishedAt ?? null,
       reviewStatus: metadata?.review_status ?? food.reviewStatus,
       variants: variants ?? food.variants ?? []

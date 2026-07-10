@@ -219,3 +219,29 @@
 - DB変更: なし（公開/管理UIの既存データ利用のみ）
 - 本番確認: `https://unicolle.vercel.app/collections/summer-2026` はHTTP 200。画面上の公開件数は14件。
 - 注意: 直前レポートには approved 15件と記録されているが、本番repositoryが返すsummer-2026公開対象は14件だった。Vercel production env pullでは `SUPABASE_SERVICE_ROLE_KEY` の値がローカル実行環境へ渡らず、DB補修は未実施。UIは本番DBの公開条件に従って14件を表示する。
+
+## summer-2026 公開件数不整合修復（2026-07-10）
+
+- 対象不整合: publication metadata上は approved 15件だが、`/collections/summer-2026` の公開表示が14件。
+- 欠けていた商品: `25周年カクテル ～ポップコーンフレーバー？～`
+- foodId: `food-d5v0l2`
+- targetType: existing（既存generated商品へsummer-2026情報を追記）
+- 修復前のapproved件数: 15件
+- 修復前の公開件数: 14件
+- DB集合確認:
+  - A（import-ready上のapproved）: 15件
+  - B（summer-2026 membership）: 28件
+  - A - B: 0件
+  - A（DB metadata上のapproved）: 15件
+  - A - B: 0件
+- 不整合原因: DB行欠落ではなく、既存商品が複数collectionへ所属する場合に `applySeasonalFoodFoundation()` が最初のmembershipだけを `collectionId` へ反映し、後続の `summer-2026` membership を公開判定で見落としていたため。`food-d5v0l2` は既存の25周年系collectionとsummer-2026の複数membershipを持つため、collection詳細・一覧・ホーム導線から落ちていた。
+- 欠けていたDB行: なし。`food_collection_memberships` / `food_publication_metadata` / `food_variants` は存在確認済み。
+- 修復したDB行: なし。DBへの書き込みは行っていない。
+- 修復内容:
+  - `FoodWithRelations` に `collectionIds` を追加。
+  - `applySeasonalFoodFoundation()` で同一foodIdの複数membershipを保持。
+  - `isFoodInCollection()` を `collectionId` または `collectionIds` のどちらでも判定するよう変更。
+  - `/collections/[id]`, `/foods?collection=summer-2026`, ホーム夏導線、商品カード/詳細の夏ラベル、`/admin/foods?collection=summer-2026` が複数membershipを扱えるように修復。
+- 冪等性: DB書き込みなし。既存membershipとmetadataを読み直しても追加insert/update/revisionは発生しない。
+- ロールバック方法: この修復commitをrevertすると、DBは変更していないためアプリ側のcollection判定だけが以前の単一membership挙動へ戻る。
+- 補足: `npx vercel env run -e production -- node ...` で `SUPABASE_SERVICE_ROLE_KEY` の存在確認を行ったが、このローカル実行環境では値がコマンドへ注入されず `missing` だった。値の出力・保存は行っていない。今回の原因はDB欠落ではなかったため、本番DB修復は不要。

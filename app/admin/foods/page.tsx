@@ -22,7 +22,7 @@ import {
 } from "@/lib/admin-food-ui";
 import { listFoodCollections } from "@/lib/repositories/collections";
 import { listAllFoodCandidates } from "@/lib/repositories/foods";
-import { SUMMER_2026_COLLECTION_ID } from "@/lib/seasonal-collections";
+import { isFoodInCollection, SUMMER_2026_COLLECTION_ID } from "@/lib/seasonal-collections";
 import type { ReactNode } from "react";
 import type { FoodCollection, FoodWithRelations } from "@/types/domain";
 import type { ReviewDecision, ReviewDecisionFile } from "@/app/admin/summer-2026-review/review-types";
@@ -60,7 +60,7 @@ export default async function AdminFoodsPage({ searchParams }: { searchParams?: 
   const canManage = admin.role !== "viewer";
   const listTabs = buildListTabs(foods, filters);
   const currentTab = listTabs.find((tab) => tab.value === filters.view) ?? listTabs[0];
-  const summerFoods = foods.filter((food) => food.collectionId === SUMMER_2026_COLLECTION_ID && !isDeletedFood(food));
+  const summerFoods = foods.filter((food) => isFoodInCollection(food, SUMMER_2026_COLLECTION_ID) && !isDeletedFood(food));
   const summerPendingQueue = summerFoods.filter((food) => food.reviewStatus !== "approved" || getAdminFoodInfoIssues(food).length > 0);
   const summerHoldQueue = summerReviewDecisions.decisions.filter((decision) => decision.decision === "hold");
 
@@ -361,7 +361,7 @@ function matchesFilters(food: FoodWithRelations, filters: NormalizedFilters) {
   if (filters.saleStatus !== "all" && getSaleState(food) !== filters.saleStatus) return false;
   if (filters.publicState !== "all" && getPublicState(food) !== filters.publicState) return false;
   if (filters.reviewStatus !== "all" && food.reviewStatus !== filters.reviewStatus) return false;
-  if (filters.collection !== "all" && food.collectionId !== filters.collection) return false;
+  if (filters.collection !== "all" && !isFoodInCollection(food, filters.collection)) return false;
   if (filters.issue !== "all" && !getAdminFoodInfoIssues(food).some((issue) => issue.id === filters.issue)) return false;
   if (filters.source === "new" && !isManualFood(food)) return false;
   if (filters.source === "existing" && isManualFood(food)) return false;
@@ -577,7 +577,7 @@ function getSummerQueueIssues(food: FoodWithRelations) {
   if (food.reviewStatus !== "approved") labels.add("公開前");
   for (const issue of getAdminFoodInfoIssues(food)) labels.add(issue.label);
   if (!getPrimaryImageUrl(food)) labels.add("画像未登録");
-  if (!food.collectionId) labels.add("summer-2026未設定");
+  if (!isFoodInCollection(food, SUMMER_2026_COLLECTION_ID)) labels.add("summer-2026未設定");
   if (!food.sourceUrl || food.sourceUrl === "manual-admin") labels.add("情報出典不足");
   return Array.from(labels);
 }

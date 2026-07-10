@@ -5,7 +5,7 @@ import { HomeActiveFoodCollection, HomeCollectionHero, HomeLimitedCollection, Ho
 import { I18nText } from "@/components/i18n-text";
 import { dedupeFoodsByCanonical } from "@/lib/food-utils";
 import { REQUEST_FORM_URL } from "@/lib/request-form-url";
-import { SUMMER_2026_COLLECTION_ID } from "@/lib/seasonal-collections";
+import { isFoodInCollection, SUMMER_2026_COLLECTION_ID } from "@/lib/seasonal-collections";
 import type { Area, FoodWithRelations } from "@/types/domain";
 
 type HomeDashboardProps = {
@@ -16,7 +16,7 @@ type HomeDashboardProps = {
 };
 
 export function HomeDashboard({ foods, activeCollectionFoods = foods, areas = [] }: HomeDashboardProps) {
-  const summerFoods = foods.filter((food) => food.collectionId === SUMMER_2026_COLLECTION_ID);
+  const summerFoods = foods.filter((food) => isFoodInCollection(food, SUMMER_2026_COLLECTION_ID));
 
   return (
     <div className="min-h-screen overflow-x-hidden bg-[#fffdf9] pb-24 text-ink">
