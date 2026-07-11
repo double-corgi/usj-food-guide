@@ -44,7 +44,7 @@ type GeneratedOverrideFormValue = {
   infoSourceUrl: string | null;
 };
 type SeasonalAdminFormValue = {
-  collectionId: string | null;
+  collectionIds: string[];
   reviewStatus: ReviewStatus;
   publishedAt: string | null;
   variants: FoodVariantFormValue[];
@@ -312,6 +312,36 @@ export async function setManualFoodDeleted(formData: FormData): Promise<void> {
   redirect(`/admin/foods?saved=${intent === "delete" ? "deleted" : "restored"}${intent === "delete" ? "&deleted=deleted" : ""}`);
 }
 
+export async function permanentlyDeleteManualFood(formData: FormData): Promise<void> {
+  await requireAdmin("owner");
+  const supabase = createServiceSupabaseClient();
+  if (!supabase) redirect("/admin/foods?error=supabase");
+
+  const foodId = readCleanText(formData, "foodId", 120);
+  const confirmationName = readCleanText(formData, "confirmationName", 160);
+  if (!foodId) redirect("/admin/foods?error=missing-food");
+
+  const existing = await supabase.from("manual_foods").select("id,name,deleted_at").eq("id", foodId).maybeSingle();
+  if (existing.error || !existing.data) redirect(`/admin/foods/${foodId}?error=manual-only`);
+  if (!existing.data.deleted_at) redirect(`/admin/foods/${foodId}?error=delete-first`);
+  if (confirmationName !== existing.data.name) redirect(`/admin/foods/${foodId}?error=confirmation-name`);
+
+  const foodIdFilter = { food_id: foodId };
+  const revisionDelete = await supabase.from("food_override_revisions").delete().match(foodIdFilter);
+  if (revisionDelete.error) redirect(`/admin/foods/${foodId}?error=purge-failed`);
+  const variantDelete = await supabase.from("food_variants").delete().match(foodIdFilter);
+  if (variantDelete.error) redirect(`/admin/foods/${foodId}?error=purge-failed`);
+  const membershipDelete = await supabase.from("food_collection_memberships").delete().match(foodIdFilter);
+  if (membershipDelete.error) redirect(`/admin/foods/${foodId}?error=purge-failed`);
+  const metadataDelete = await supabase.from("food_publication_metadata").delete().match(foodIdFilter);
+  if (metadataDelete.error) redirect(`/admin/foods/${foodId}?error=purge-failed`);
+  const manualDelete = await supabase.from("manual_foods").delete().eq("id", foodId);
+  if (manualDelete.error) redirect(`/admin/foods/${foodId}?error=purge-failed`);
+
+  revalidateAdminFoods(foodId);
+  redirect("/admin/foods?view=deleted&saved=purged");
+}
+
 export async function setGeneratedFoodVisibility(formData: FormData): Promise<void> {
   const admin = await requireAdmin("editor");
   const supabase = createServiceSupabaseClient();
@@ -418,7 +448,10 @@ function parseFoodForm(formData: FormData) {
   const saleStatus = readCleanText(formData, "saleStatus", 20);
   if (!saleStatus || !allowedSaleStatuses.has(saleStatus)) return failure("販売状態が不正です。");
 
-  const publicState = readCleanText(formData, "publicState", 20);
+  const saveMode = readOptionalCleanText(formData, "saveMode", 20);
+  if (saveMode === false || (saveMode && saveMode !== "draft" && saveMode !== "publish")) return failure("保存方法が不正です。");
+  const publicStateInput = readCleanText(formData, "publicState", 20);
+  const publicState = saveMode === "draft" ? "draft" : saveMode === "publish" ? "published" : publicStateInput;
   if (!publicState || !allowedPublicStates.has(publicState)) return failure("公開状態が不正です。");
 
   const hiddenState = readCleanText(formData, "hiddenState", 20);
@@ -513,12 +546,15 @@ function parseGeneratedOverrideForm(formData: FormData) {
 }
 
 function parseSeasonalAdminForm(formData: FormData, fallbackReviewStatus: ReviewStatus) {
-  const collectionIdValue = readOptionalCleanText(formData, "collectionId", 120);
-  if (collectionIdValue === false) return failure("コレクションIDに使用できない文字が含まれています。");
+  const collectionIdsResult = readCollectionIds(formData);
+  if (!collectionIdsResult.ok) return failure(collectionIdsResult.message);
+
+  const saveMode = readOptionalCleanText(formData, "saveMode", 20);
+  if (saveMode === false || (saveMode && saveMode !== "draft" && saveMode !== "publish")) return failure("保存方法が不正です。");
 
   const reviewStatusValue = readOptionalCleanText(formData, "reviewStatus", 20);
   if (reviewStatusValue === false) return failure("レビュー状態が不正です。");
-  const reviewStatus = (reviewStatusValue ?? fallbackReviewStatus) as ReviewStatus;
+  const reviewStatus = (saveMode === "draft" ? "pending" : saveMode === "publish" ? "approved" : (reviewStatusValue ?? fallbackReviewStatus)) as ReviewStatus;
   if (!allowedReviewStatuses.has(reviewStatus)) return failure("レビュー状態が不正です。");
 
   const publishedAt = readOptionalDateTime(formData, "publishedAt");
@@ -530,12 +566,26 @@ function parseSeasonalAdminForm(formData: FormData, fallbackReviewStatus: Review
   return {
     ok: true as const,
     value: {
-      collectionId: collectionIdValue,
+      collectionIds: collectionIdsResult.values,
       reviewStatus,
       publishedAt,
       variants: variants.values
     } satisfies SeasonalAdminFormValue
   };
+}
+
+function readCollectionIds(formData: FormData): { ok: true; values: string[] } | { ok: false; message: string } {
+  const values = [
+    ...formData.getAll("collectionIds"),
+    ...formData.getAll("collectionId")
+  ]
+    .map((value) => String(value).trim())
+    .filter(Boolean);
+  const uniqueValues = Array.from(new Set(values));
+  if (uniqueValues.some((value) => value.length > 120 || hasUnsafeText(value))) {
+    return { ok: false, message: "特集タグに使用できない文字が含まれています。" };
+  }
+  return { ok: true, values: uniqueValues };
 }
 
 function readCleanText(formData: FormData, key: string, maxLength: number) {
@@ -776,16 +826,31 @@ async function saveSeasonalAdminFields(
   const before = await readSeasonalAdminSnapshot(supabase, foodId);
   const now = new Date().toISOString();
 
-  const membershipDelete = await supabase.from("food_collection_memberships").delete().eq("food_id", foodId);
-  if (membershipDelete.error) return { ok: false as const, message: `コレクション保存に失敗しました: ${membershipDelete.error.message}` };
+  const existingMemberships = before.memberships;
+  const nextCollectionIds = new Set(values.collectionIds);
+  const existingCollectionIds = new Set(existingMemberships.map((membership) => membership.collection_id));
+  const membershipsToDelete = existingMemberships.filter((membership) => !nextCollectionIds.has(membership.collection_id));
+  if (membershipsToDelete.length > 0) {
+    for (const membership of membershipsToDelete) {
+      const membershipDelete = await supabase
+        .from("food_collection_memberships")
+        .delete()
+        .eq("food_id", foodId)
+        .eq("collection_id", membership.collection_id);
+      if (membershipDelete.error) return { ok: false as const, message: `特集タグの保存に失敗しました: ${membershipDelete.error.message}` };
+    }
+  }
 
-  if (values.collectionId) {
-    const membershipInsert = await supabase.from("food_collection_memberships").insert({
-      food_id: foodId,
-      collection_id: values.collectionId,
-      created_at: now
-    });
-    if (membershipInsert.error) return { ok: false as const, message: `コレクション保存に失敗しました: ${membershipInsert.error.message}` };
+  const membershipsToInsert = values.collectionIds.filter((collectionId) => !existingCollectionIds.has(collectionId));
+  if (membershipsToInsert.length > 0) {
+    const membershipInsert = await supabase.from("food_collection_memberships").insert(
+      membershipsToInsert.map((collectionId) => ({
+        food_id: foodId,
+        collection_id: collectionId,
+        created_at: now
+      }))
+    );
+    if (membershipInsert.error) return { ok: false as const, message: `特集タグの保存に失敗しました: ${membershipInsert.error.message}` };
   }
 
   const existingMetadata = before.publicationMetadata;

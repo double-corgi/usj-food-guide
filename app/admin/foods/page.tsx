@@ -1,8 +1,9 @@
 import Link from "next/link";
 import { AlertTriangle, ExternalLink, PencilLine, Plus, Search } from "lucide-react";
-import { resetGeneratedFoodOverride, setGeneratedFoodVisibility, setManualFoodDeleted, setManualFoodVisibility } from "@/app/admin/foods/actions";
+import { permanentlyDeleteManualFood, resetGeneratedFoodOverride, setGeneratedFoodVisibility, setManualFoodDeleted, setManualFoodVisibility } from "@/app/admin/foods/actions";
 import { AdminFoodImagePreview } from "@/components/admin/admin-food-image-preview";
 import { ManualFoodDeleteButton } from "@/components/admin/manual-food-delete-button";
+import { ManualFoodPermanentDeleteForm } from "@/components/admin/manual-food-permanent-delete-form";
 import { ManualFoodVisibilityButton } from "@/components/admin/manual-food-visibility-button";
 import { ResetGeneratedFoodButton } from "@/components/admin/reset-generated-food-button";
 import { requireAdmin } from "@/lib/admin-auth";
@@ -58,6 +59,7 @@ export default async function AdminFoodsPage({ searchParams }: { searchParams?: 
   const filteredFoods = foods.filter((food) => matchesFilters(food, filters));
   const visibleFoods = foods.filter((food) => getPublicState(food) === "published" && !isDeletedFood(food));
   const canManage = admin.role !== "viewer";
+  const canPermanentlyDelete = admin.role === "owner";
   const listTabs = buildListTabs(foods, filters);
   const currentTab = listTabs.find((tab) => tab.value === filters.view) ?? listTabs[0];
   const summerFoods = foods.filter((food) => isFoodInCollection(food, SUMMER_2026_COLLECTION_ID) && !isDeletedFood(food));
@@ -180,14 +182,14 @@ export default async function AdminFoodsPage({ searchParams }: { searchParams?: 
             <option value="published">公開</option>
             <option value="draft">下書き</option>
           </Select>
-          <Select label="レビュー状態" name="reviewStatus" defaultValue={filters.reviewStatus}>
+          <Select label="公開確認" name="reviewStatus" defaultValue={filters.reviewStatus}>
             <option value="all">すべて</option>
             <option value="draft">下書き</option>
-            <option value="pending">確認中</option>
-            <option value="approved">承認済み</option>
+            <option value="pending">下書き確認中</option>
+            <option value="approved">公開中</option>
             <option value="rejected">差し戻し</option>
           </Select>
-          <Select label="コレクション" name="collection" defaultValue={filters.collection}>
+          <Select label="特集タグ" name="collection" defaultValue={filters.collection}>
             <option value="all">すべて</option>
             {collections.map((collection) => (
               <option key={collection.id} value={collection.id}>
@@ -195,7 +197,7 @@ export default async function AdminFoodsPage({ searchParams }: { searchParams?: 
               </option>
             ))}
           </Select>
-          <Select label="情報不足" name="issue" defaultValue={filters.issue}>
+          <Select label="確認したい項目" name="issue" defaultValue={filters.issue}>
             <option value="all">すべて</option>
             <option value="image">画像未確認</option>
             <option value="price">価格未確認</option>
@@ -205,7 +207,7 @@ export default async function AdminFoodsPage({ searchParams }: { searchParams?: 
             <option value="source-url">公式URL未登録</option>
             <option value="stale">30日以上未確認</option>
           </Select>
-          <Select label="登録方式" name="source" defaultValue={filters.source}>
+          <Select label="登録元" name="source" defaultValue={filters.source}>
             <option value="all">すべて</option>
             <option value="new">新規商品</option>
             <option value="existing">既存商品へ追記</option>
@@ -218,7 +220,7 @@ export default async function AdminFoodsPage({ searchParams }: { searchParams?: 
 
       <section className="space-y-3 lg:hidden">
         {filteredFoods.slice(0, 300).map((food) => (
-          <FoodCard key={food.id} food={food} canManage={canManage} collections={collections} />
+          <FoodCard key={food.id} food={food} canManage={canManage} canPermanentlyDelete={canPermanentlyDelete} collections={collections} />
         ))}
       </section>
 
@@ -302,6 +304,14 @@ export default async function AdminFoodsPage({ searchParams }: { searchParams?: 
                       {canManage && isManualFood(food) ? (
                         <ManualFoodDeleteButton foodId={food.id} deleted={isDeletedFood(food)} action={setManualFoodDeleted} />
                       ) : null}
+                      {canPermanentlyDelete && isManualFood(food) && isDeletedFood(food) ? (
+                        <details className="w-full rounded-lg border border-rose-100 bg-rose-50 p-2">
+                          <summary className="cursor-pointer text-xs font-black text-rose-700">完全削除</summary>
+                          <div className="mt-2">
+                            <ManualFoodPermanentDeleteForm foodId={food.id} foodName={food.name} action={permanentlyDeleteManualFood} />
+                          </div>
+                        </details>
+                      ) : null}
                       {canManage && !isManualFood(food) ? (
                         <ManualFoodVisibilityButton foodId={food.id} hidden={food.hidden} action={setGeneratedFoodVisibility} />
                       ) : null}
@@ -371,7 +381,7 @@ function matchesFilters(food: FoodWithRelations, filters: NormalizedFilters) {
   return true;
 }
 
-function FoodCard({ food, canManage, collections }: { food: FoodWithRelations; canManage: boolean; collections: FoodCollection[] }) {
+function FoodCard({ food, canManage, canPermanentlyDelete, collections }: { food: FoodWithRelations; canManage: boolean; canPermanentlyDelete: boolean; collections: FoodCollection[] }) {
   return (
     <article className="rounded-lg border border-slate-200 bg-white p-3 shadow-soft">
       <div className="flex gap-3">
@@ -422,6 +432,14 @@ function FoodCard({ food, canManage, collections }: { food: FoodWithRelations; c
           <div className="pt-1">
             <ManualFoodDeleteButton foodId={food.id} deleted={isDeletedFood(food)} action={setManualFoodDeleted} />
           </div>
+        ) : null}
+        {canPermanentlyDelete && isManualFood(food) && isDeletedFood(food) ? (
+          <details className="rounded-lg border border-rose-100 bg-white p-3">
+            <summary className="cursor-pointer text-xs font-black text-rose-700">完全削除を確認</summary>
+            <div className="mt-3">
+              <ManualFoodPermanentDeleteForm foodId={food.id} foodName={food.name} action={permanentlyDeleteManualFood} />
+            </div>
+          </details>
         ) : null}
         {canManage && !isManualFood(food) ? (
           <div className="pt-1">
@@ -686,7 +704,9 @@ function SaveMessage({ value }: { value: string }) {
             ? "商品を削除済みにしました。公開ページと通常の管理一覧から消えました。あとで復元できます。"
             : value === "restored"
               ? "商品を復元しました。"
-              : value === "reset"
+              : value === "purged"
+                ? "商品を完全削除しました。"
+                : value === "reset"
                 ? "元データに戻しました。"
                 : null;
   if (!message) return null;
@@ -746,7 +766,7 @@ function hasOverrideImage(food: FoodWithRelations) {
 
 function formatAdminRole(role: string) {
   if (role === "owner") return "管理者";
-  if (role === "editor") return "編集できる人";
+  if (role === "editor") return "運営者";
   if (role === "viewer") return "見るだけ";
   return role;
 }

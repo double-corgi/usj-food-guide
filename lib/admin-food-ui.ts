@@ -90,7 +90,7 @@ export function formatAdminSaleStatus(value: string) {
 }
 
 export function formatAdminPublicState(value: string) {
-  if (value === "published") return "公開";
+  if (value === "published") return "公開中";
   if (value === "draft") return "下書き";
   return value;
 }
@@ -101,8 +101,8 @@ export function formatAdminVisibility(hidden: boolean) {
 
 export function formatAdminReviewStatus(value: string) {
   if (value === "draft") return "下書き";
-  if (value === "approved") return "承認済み";
-  if (value === "pending") return "確認中";
+  if (value === "approved") return "公開中";
+  if (value === "pending") return "下書き確認中";
   if (value === "rejected") return "差し戻し";
   return value;
 }
@@ -127,9 +127,10 @@ export function formatAdminPrice(food: FoodWithRelations) {
   return "未確認";
 }
 
-export function formatAdminCollection(food: Pick<FoodWithRelations, "collectionId">, collections: FoodCollection[] = []) {
-  if (!food.collectionId) return "未設定";
-  return collections.find((collection) => collection.id === food.collectionId)?.name ?? food.collectionId;
+export function formatAdminCollection(food: Pick<FoodWithRelations, "collectionId" | "collectionIds">, collections: FoodCollection[] = []) {
+  const collectionIds = food.collectionIds && food.collectionIds.length > 0 ? food.collectionIds : food.collectionId ? [food.collectionId] : [];
+  if (collectionIds.length === 0) return "未設定";
+  return collectionIds.map((collectionId) => collections.find((collection) => collection.id === collectionId)?.name ?? collectionId).join("、");
 }
 
 export function formatAdminDateTime(value?: string | null) {

@@ -1,6 +1,6 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
-import { Eye, EyeOff, ListChecks, Plus, ShieldCheck, SquareArrowOutUpRight } from "lucide-react";
+import { Eye, EyeOff, ListChecks, Plus, ShieldCheck, SquareArrowOutUpRight, Users } from "lucide-react";
 import { requireAdmin } from "@/lib/admin-auth";
 import { listAllFoodCandidates } from "@/lib/repositories/foods";
 
@@ -39,7 +39,7 @@ export default async function AdminPage() {
         </div>
       </section>
 
-      <section className="grid gap-3 sm:grid-cols-3">
+      <section className="grid gap-3 sm:grid-cols-4">
         <AdminActionCard
           href="/admin/foods"
           icon={<ListChecks size={24} aria-hidden />}
@@ -61,6 +61,14 @@ export default async function AdminPage() {
             <p className="mt-2">viewer は追加できません。商品を見るだけの権限です。</p>
           </div>
         )}
+        {admin.role === "owner" ? (
+          <AdminActionCard
+            href="/admin/operators"
+            icon={<Users size={24} aria-hidden />}
+            title="運営者を管理"
+            description="家族や運営者のメールアドレスと権限を管理します。"
+          />
+        ) : null}
         <AdminActionCard
           href="/"
           icon={<SquareArrowOutUpRight size={24} aria-hidden />}
@@ -151,7 +159,7 @@ function isManualFood(food: Awaited<ReturnType<typeof listAllFoodCandidates>>[nu
 
 function formatAdminRole(role: string) {
   if (role === "owner") return "管理者";
-  if (role === "editor") return "編集できる人";
+  if (role === "editor") return "運営者";
   if (role === "viewer") return "見るだけ";
   return role;
 }

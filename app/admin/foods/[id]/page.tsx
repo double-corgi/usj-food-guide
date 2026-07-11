@@ -4,9 +4,10 @@ import { ExternalLink, PencilLine } from "lucide-react";
 import { AdminFoodImagePreview } from "@/components/admin/admin-food-image-preview";
 import { AdminFoodImageViewer } from "@/components/admin/admin-food-image-viewer";
 import { ManualFoodDeleteButton } from "@/components/admin/manual-food-delete-button";
+import { ManualFoodPermanentDeleteForm } from "@/components/admin/manual-food-permanent-delete-form";
 import { ManualFoodVisibilityButton } from "@/components/admin/manual-food-visibility-button";
 import { ResetGeneratedFoodButton } from "@/components/admin/reset-generated-food-button";
-import { resetGeneratedFoodOverride, setGeneratedFoodVisibility, setManualFoodDeleted, setManualFoodVisibility } from "@/app/admin/foods/actions";
+import { permanentlyDeleteManualFood, resetGeneratedFoodOverride, setGeneratedFoodVisibility, setManualFoodDeleted, setManualFoodVisibility } from "@/app/admin/foods/actions";
 import { requireAdmin } from "@/lib/admin-auth";
 import {
   formatAdminCanonicalState,
@@ -42,6 +43,7 @@ export default async function AdminFoodDetailPage({
   if (!food) notFound();
 
   const canManage = admin.role !== "viewer";
+  const canPermanentlyDelete = admin.role === "owner";
   const activeImage = food.images.find((image) => image.enabled) ?? food.images[0];
   const adminFields = await getManualAdminFields(food.id);
   const manualFood = adminFields.isManualFood || isManualFood(food);
@@ -51,7 +53,7 @@ export default async function AdminFoodDetailPage({
     <div className="space-y-5">
       <div className="flex flex-col gap-3 lg:flex-row lg:items-end lg:justify-between">
         <div>
-          <p className="text-xs font-black uppercase tracking-[0.18em] text-park">Read-only detail</p>
+          <p className="text-xs font-black uppercase tracking-[0.18em] text-park">商品詳細</p>
           <h1 className="mt-1 text-3xl font-black text-ink">{food.name}</h1>
           <p className="mt-2 text-sm font-bold text-slate-500">{food.id}</p>
         </div>
@@ -157,14 +159,14 @@ export default async function AdminFoodDetailPage({
               <Field label="公開状態" value={formatAdminPublicState(getPublicState(food))} />
               <Field label="表示状態" value={formatAdminVisibility(food.hidden)} />
               <Field label="削除状態" value={isDeletedFood(food) ? "削除済み" : "通常"} />
-              <Field label="レビュー状態" value={formatAdminReviewStatus(food.reviewStatus)} />
-              <Field label="季節コレクション" value={formatAdminCollection(food, collections)} />
+              <Field label="公開確認" value={formatAdminReviewStatus(food.reviewStatus)} />
+              <Field label="特集タグ" value={formatAdminCollection(food, collections)} />
               <Field label="初回公開日時" value={formatAdminDateTime(food.publishedAt)} />
               <Field label="最終確認日" value={formatAdminDateTime(food.lastCheckedAt)} />
               <Field label="価格バリエーション" value={`${(food.variants ?? []).length}件`} />
               <Field label="表示品質" value={food.displayQuality} />
-              <Field label="重複状態" value={formatAdminCanonicalState(food.canonicalFood)} />
-              <Field label="重複グループID" value={food.duplicateGroupId ?? "なし"} />
+              <Field label="重複確認" value={formatAdminCanonicalState(food.canonicalFood)} />
+              <Field label="詳細ID" value={food.duplicateGroupId ?? "なし"} />
               <Field label="販売期間 start" value={food.saleStartDate ?? food.startDate ?? "未設定"} />
               <Field label="販売期間 end" value={food.saleEndDate ?? food.endDate ?? "未設定"} />
             </div>
@@ -203,6 +205,16 @@ export default async function AdminFoodDetailPage({
               <SourceLink label="priceSourceUrl" url={food.priceSourceUrl} />
             </div>
           </section>
+
+          {canPermanentlyDelete && manualFood && isDeletedFood(food) ? (
+            <section className="rounded-lg border border-rose-100 bg-white p-4 shadow-soft">
+              <h2 className="text-lg font-black text-rose-800">完全削除</h2>
+              <p className="mt-2 text-sm font-bold leading-6 text-rose-700">削除済みの手動商品だけ完全削除できます。食べた記録がある可能性のある商品は、通常は非表示または削除済みのまま残してください。</p>
+              <div className="mt-3 max-w-xl">
+                <ManualFoodPermanentDeleteForm foodId={food.id} foodName={food.name} action={permanentlyDeleteManualFood} />
+              </div>
+            </section>
+          ) : null}
 
           <section className="rounded-lg border border-slate-200 bg-white p-4 shadow-soft">
             <h2 className="text-lg font-black text-ink">画像一覧</h2>

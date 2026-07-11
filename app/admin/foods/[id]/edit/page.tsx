@@ -31,7 +31,7 @@ export default async function AdminEditFoodPage({ params }: { params: Promise<{ 
           <p className="text-xs font-black uppercase tracking-[0.18em] text-park">商品管理</p>
           <h1 className="mt-1 text-3xl font-black text-ink">商品編集</h1>
           <p className="mt-2 text-sm font-bold text-slate-500">
-            {admin.role} 権限で閲覧できます。
+            {formatAdminRole(admin.role)} 権限で操作できます。
             {isManual ? "自分で追加した商品を保存できます。画像未選択時は既存画像を維持します。" : "自動取得の商品は、元データを変えずに基本情報と画像だけ修正できます。"}
           </p>
           <span className={`mt-3 inline-flex rounded-full px-3 py-1 text-xs font-black ${isManual ? "bg-mint text-park" : "bg-slate-100 text-slate-600"}`}>
@@ -140,4 +140,11 @@ async function getAdminFoodFields(food: FoodWithRelations) {
     nameEn: override.data?.name_en ?? null,
     infoSourceUrl: override.data?.info_source_url ?? food.sourceUrl
   };
+}
+
+function formatAdminRole(role: string) {
+  if (role === "owner") return "管理者";
+  if (role === "editor") return "運営者";
+  if (role === "viewer") return "見るだけ";
+  return role;
 }

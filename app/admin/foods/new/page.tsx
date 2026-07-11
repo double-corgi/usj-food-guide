@@ -26,7 +26,7 @@ export default async function AdminNewFoodPage() {
             </p>
           </div>
           <div className="rounded-2xl border border-white/70 bg-white/80 p-3 text-sm font-black text-park shadow-sm">
-            {admin.role} 権限で保存できます
+            {formatAdminRole(admin.role)} 権限で保存できます
           </div>
         </div>
         <div className="flex flex-wrap gap-2 p-4 sm:p-5">
@@ -57,4 +57,11 @@ function getFormOptions(foods: FoodWithRelations[]) {
   return {
     shops: buildAdminShopOptions(foods)
   };
+}
+
+function formatAdminRole(role: string) {
+  if (role === "owner") return "管理者";
+  if (role === "editor") return "運営者";
+  if (role === "viewer") return "見るだけ";
+  return role;
 }

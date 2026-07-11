@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { Lock } from "lucide-react";
 import { useActionState, useEffect, useMemo, useState } from "react";
 import { AdminFoodImageViewer } from "@/components/admin/admin-food-image-viewer";
@@ -110,6 +111,8 @@ export function AdminFoodForm({
   const coreFieldsRequired = !isGeneratedOverride;
   const imageUploadEnabled = Boolean(action);
   const saleStatus = getFormSaleStatus(food);
+  const initialSaleType = food?.saleStartDate || food?.saleEndDate || food?.startDate || food?.endDate || food?.isLimited ? "limited" : "regular";
+  const [saleTypeSelection, setSaleTypeSelection] = useState<"regular" | "limited">(initialSaleType);
   const publicState = getPublicState(food);
   const [publicStateSelection, setPublicStateSelection] = useState<AdminPublicState>(publicState);
   const hiddenState = food?.hidden ? "hidden" : "visible";
@@ -149,6 +152,8 @@ export function AdminFoodForm({
     { label: "カテゴリ", done: selectedCategoryValues.size > 0 },
     { label: "画像", done: hasImageForPublish }
   ];
+  const visibleCollectionIds = new Set(getVisibleCollections(collections).map((collection) => collection.id));
+  const preservedCollectionIds = (food?.collectionIds ?? (food?.collectionId ? [food.collectionId] : [])).filter((collectionId) => !visibleCollectionIds.has(collectionId));
   const duplicateWarnings =
     mode === "new"
       ? findDuplicateWarnings({
@@ -445,20 +450,62 @@ export function AdminFoodForm({
       </section>
 
       <section className="rounded-2xl border border-slate-200 bg-white p-4 shadow-soft sm:p-5">
-        <SectionHeading step="④" title="季節・公開・価格" description="夏コレクション、公開審査状態、価格違いを管理します。価格違いは1商品内にまとめます。" />
+        <SectionHeading step="④" title="販売区分・特集タグ・価格" description="期間限定や2026夏限定の掲載先を選びます。特集タグだけでは公開されません。" />
         <div className="mt-4 grid gap-4 lg:grid-cols-2">
-          <SelectField label="季節コレクション" name="collectionId" defaultValue={food?.collectionId ?? ""}>
-            <option value="">コレクション未設定</option>
-            {collections.map((collection) => (
-              <option key={collection.id} value={collection.id}>
-                {collection.name}
-              </option>
+          <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4 lg:col-span-2">
+            <p className="text-sm font-black text-ink">販売区分</p>
+            <p className="mt-1 text-xs font-bold leading-5 text-slate-500">期間限定を選ぶと販売開始日・終了日を入力できます。日付が分からない場合は空欄で保存できます。</p>
+            <div className="mt-3 grid gap-2 sm:grid-cols-2">
+              <label className="flex min-h-12 items-center gap-2 rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm font-black text-slate-700 has-[:checked]:border-park has-[:checked]:bg-mint has-[:checked]:text-park">
+                <input type="radio" name="saleType" value="regular" checked={saleTypeSelection === "regular"} onChange={() => setSaleTypeSelection("regular")} className="accent-park" />
+                通常販売
+              </label>
+              <label className="flex min-h-12 items-center gap-2 rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm font-black text-slate-700 has-[:checked]:border-park has-[:checked]:bg-mint has-[:checked]:text-park">
+                <input type="radio" name="saleType" value="limited" checked={saleTypeSelection === "limited"} onChange={() => setSaleTypeSelection("limited")} className="accent-park" />
+                期間限定
+              </label>
+            </div>
+            {saleTypeSelection === "limited" ? (
+              <div className="mt-4 grid gap-4 lg:grid-cols-2">
+                <TextField label="販売開始日" name="saleStart" defaultValue={food?.saleStartDate ?? food?.startDate ?? ""} type="date" requirement="optional" />
+                <TextField label="販売終了日" name="saleEnd" defaultValue={food?.saleEndDate ?? food?.endDate ?? ""} type="date" requirement="optional" />
+              </div>
+            ) : (
+              <>
+                <input type="hidden" name="saleStart" value="" />
+                <input type="hidden" name="saleEnd" value="" />
+              </>
+            )}
+          </div>
+
+          <div className="rounded-2xl border border-slate-200 bg-white p-4 lg:col-span-2">
+            <p className="text-sm font-black text-ink">特集タグ</p>
+            <p className="mt-1 text-xs font-bold leading-5 text-slate-500">ONにすると対象の特集一覧に入ります。公開するには下の「保存して公開」も必要です。</p>
+            {preservedCollectionIds.map((collectionId) => (
+              <input key={collectionId} type="hidden" name="collectionIds" value={collectionId} />
             ))}
-          </SelectField>
-          <SelectField label="レビュー状態" name="reviewStatus" defaultValue={defaultReviewStatus} requirement="required">
+            <div className="mt-3 grid gap-2 sm:grid-cols-2">
+              {getVisibleCollections(collections).map((collection) => {
+                const checked = (food?.collectionIds ?? (food?.collectionId ? [food.collectionId] : [])).includes(collection.id);
+                return (
+                  <label key={collection.id} className="rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm font-bold text-slate-700 has-[:checked]:border-park has-[:checked]:bg-mint has-[:checked]:text-park">
+                    <span className="flex items-start gap-2">
+                      <input type="checkbox" name="collectionIds" value={collection.id} defaultChecked={checked} className="mt-1 h-4 w-4 accent-park" />
+                      <span>
+                        <span className="block font-black">{formatCollectionAdminLabel(collection)}</span>
+                        <span className="mt-1 block text-xs leading-5 text-slate-500">ONにすると、対応する特集一覧に掲載できます。</span>
+                      </span>
+                    </span>
+                  </label>
+                );
+              })}
+            </div>
+          </div>
+
+          <SelectField label="公開状態（詳細）" name="reviewStatus" defaultValue={defaultReviewStatus} requirement="required">
             {adminReviewStatusOptions.map((option) => (
               <option key={option.value} value={option.value}>
-                {option.label}
+                {formatReviewStatusForOperator(option.value)}
               </option>
             ))}
           </SelectField>
@@ -468,7 +515,7 @@ export function AdminFoodForm({
             type="datetime-local"
             defaultValue={formatDateTimeLocalValue(food?.publishedAt)}
             requirement="optional"
-            helpText={`未入力の場合、初めて承認済みにした時だけ自動で入ります。現在: ${formatAdminDateTime(food?.publishedAt)}`}
+            helpText={`未入力の場合、初めて公開にした時だけ自動で入ります。現在: ${formatAdminDateTime(food?.publishedAt)}`}
           />
           <TextField
             label="公式参照URL"
@@ -677,8 +724,6 @@ export function AdminFoodForm({
             <option value="visible">表示中</option>
             <option value="hidden">非表示</option>
           </SelectField>
-          <TextField label="販売期間 start" name="saleStart" defaultValue={food?.saleStartDate ?? food?.startDate ?? ""} type="date" requirement="optional" />
-          <TextField label="販売期間 end" name="saleEnd" defaultValue={food?.saleEndDate ?? food?.endDate ?? ""} type="date" requirement="optional" />
           <label className="block rounded-2xl border border-amber-100 bg-amber-50 p-4 lg:col-span-2">
             <span className="flex items-center gap-2 text-xs font-black text-slate-600">
               <Lock size={14} aria-hidden />
@@ -694,6 +739,17 @@ export function AdminFoodForm({
           </label>
         </div>
       </CollapsibleSection>
+
+      <section className="rounded-2xl border border-amber-200 bg-amber-50 p-4 shadow-soft sm:p-5">
+        <h2 className="text-lg font-black text-amber-950">別の商品だった場合</h2>
+        <p className="mt-2 text-sm font-bold leading-6 text-amber-900">
+          別の商品だった場合は、この商品を非表示または削除し、正しい商品を新規追加してください。foodIdを別の商品へ使い回さないでください。
+        </p>
+        <div className="mt-3 flex flex-wrap gap-2">
+          <Link href="/admin/foods/new" className="inline-flex h-10 items-center rounded-full bg-ink px-4 text-xs font-black text-white">正しい商品を新規追加</Link>
+          {mode === "edit" ? <span className="inline-flex h-10 items-center rounded-full border border-amber-300 bg-white px-4 text-xs font-black text-amber-900">この商品は下の操作から非表示・削除できます</span> : null}
+        </div>
+      </section>
 
       <div className="flex flex-col gap-4 rounded-2xl border border-park/20 bg-white p-4 shadow-soft sm:p-5 lg:flex-row lg:items-center lg:justify-between">
         <div className="space-y-3">
@@ -732,8 +788,11 @@ export function AdminFoodForm({
               {saveEnabled ? (food?.hidden ? "再表示する" : "非表示にする") : "自動取得の商品は非表示にできません"}
             </button>
           ) : null}
-          <button type="submit" disabled={pending || !saveEnabled} className="h-12 rounded-full bg-park px-7 text-sm font-black text-white shadow-soft transition hover:-translate-y-0.5 disabled:cursor-wait disabled:bg-slate-300 disabled:shadow-none disabled:hover:translate-y-0 sm:h-11">
-            {pending ? "保存中..." : saveEnabled ? (isGeneratedOverride ? "修正内容を保存する" : "保存する") : "自動取得の商品は保存できません"}
+          <button type="submit" name="saveMode" value="draft" disabled={pending || !saveEnabled} className="h-12 rounded-full border border-slate-200 bg-white px-6 text-sm font-black text-slate-700 shadow-sm transition hover:-translate-y-0.5 disabled:cursor-wait disabled:bg-slate-100 disabled:text-slate-400 disabled:hover:translate-y-0 sm:h-11">
+            {pending ? "保存中..." : saveEnabled ? "下書き保存" : "保存できません"}
+          </button>
+          <button type="submit" name="saveMode" value="publish" disabled={pending || !saveEnabled} className="h-12 rounded-full bg-park px-7 text-sm font-black text-white shadow-soft transition hover:-translate-y-0.5 disabled:cursor-wait disabled:bg-slate-300 disabled:shadow-none disabled:hover:translate-y-0 sm:h-11">
+            {pending ? "保存中..." : saveEnabled ? (isGeneratedOverride ? "修正して公開" : "保存して公開") : "保存できません"}
           </button>
         </div>
       </div>
@@ -866,6 +925,22 @@ function RequiredBadge() {
 
 function OptionalBadge() {
   return <span className="rounded-full bg-slate-100 px-2 py-0.5 text-[10px] font-black text-slate-500">任意</span>;
+}
+
+function getVisibleCollections(collections: FoodCollection[]) {
+  return collections.filter((collection) => collection.isFeatured || collection.id === "summer-2026");
+}
+
+function formatCollectionAdminLabel(collection: FoodCollection) {
+  if (collection.id === "summer-2026") return "2026夏限定";
+  return collection.name;
+}
+
+function formatReviewStatusForOperator(value: string) {
+  if (value === "approved") return "公開中";
+  if (value === "pending" || value === "draft") return "下書き";
+  if (value === "rejected") return "差し戻し";
+  return value;
 }
 
 function getActiveImage(food?: FoodWithRelations) {

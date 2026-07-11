@@ -115,7 +115,7 @@ function uniqueText(values: Array<string | null | undefined>) {
 
 function formatAdminRole(role: string) {
   if (role === "owner") return "管理者";
-  if (role === "editor") return "編集できる人";
+  if (role === "editor") return "運営者";
   if (role === "viewer") return "見るだけ";
   return role;
 }
