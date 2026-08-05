@@ -186,6 +186,7 @@ export function FoodGrid({
           <div className="relative">
           <Search className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={16} aria-hidden />
           <input
+            data-testid="public-food-search-input"
             value={query}
             onChange={(event) => {
               setQuery(event.target.value);
@@ -195,7 +196,7 @@ export function FoodGrid({
             onKeyDown={(event) => {
               if (event.key === "Enter") commitSearch(event.currentTarget.value);
             }}
-            className="h-11 w-full rounded-full border border-slate-200 bg-white pl-9 pr-4 text-sm font-bold outline-none focus:border-park focus:ring-4 focus:ring-mint"
+            className="public-food-search-input h-11 w-full rounded-full border border-slate-200 bg-white pl-9 pr-4 text-base font-bold outline-none focus:border-park focus:ring-4 focus:ring-mint"
             placeholder={t("foods.searchPlaceholder")}
           />
           </div>
@@ -220,7 +221,12 @@ export function FoodGrid({
             {filteredFoods.slice(0, 5).map((food) => {
               const displayName = getFoodNameI18n(food.id, locale, food.name);
               return (
-                <Link key={`suggest-${food.id}`} href={`/foods/${food.id}`} className="flex items-center gap-2 border-b border-slate-100 py-2 active:scale-[0.99]">
+                <Link
+                  key={`suggest-${food.id}`}
+                  href={`/foods/${food.id}`}
+                  data-testid="public-food-search-result-link"
+                  className="flex items-center gap-2 border-b border-slate-100 py-2 active:scale-[0.99]"
+                >
                   <SafeThumb food={food} className="h-10 w-10 rounded-md" />
                   <span className="min-w-0">
                     <span className="block truncate text-xs font-black text-ink">{displayName}</span>
@@ -234,11 +240,11 @@ export function FoodGrid({
         ) : null}
 
         <div className={`${filtersOpen ? "grid" : "hidden"} gap-2 md:grid-cols-4 lg:grid-cols-6`}>
-        <select value={collectionId} onChange={(event) => { setCollectionId(event.target.value); setVisibleCount(60); }} className="h-10 rounded-xl border border-slate-200 bg-white px-2.5 text-xs font-bold">
+        <select value={collectionId} onChange={(event) => { setCollectionId(event.target.value); setVisibleCount(60); }} className="public-food-filter-select h-10 rounded-xl border border-slate-200 bg-white px-2.5 text-xs font-bold">
           <option value="all">コレクション: すべて</option>
           <option value={SUMMER_2026_COLLECTION_ID}>2026年夏限定</option>
         </select>
-        <select value={saleFilter} onChange={(event) => { setSaleFilter(event.target.value as SaleFilter); setVisibleCount(60); }} className="h-10 rounded-xl border border-slate-200 bg-white px-2.5 text-xs font-bold">
+        <select value={saleFilter} onChange={(event) => { setSaleFilter(event.target.value as SaleFilter); setVisibleCount(60); }} className="public-food-filter-select h-10 rounded-xl border border-slate-200 bg-white px-2.5 text-xs font-bold">
           <option value="active">{t("common.saleActive")}</option>
           <option value="endingSoon">{t("foods.saleFilterEndingSoon")}</option>
           <option value="ended">{t("common.ended")}</option>
@@ -248,7 +254,7 @@ export function FoodGrid({
           <option value="unknown">{t("foods.saleFilterUnknown")}</option>
           <option value="all">{t("foods.saleFilterAll")}</option>
         </select>
-        <select value={category} onChange={(event) => { setCategory(event.target.value as FoodCategory | "all"); setVisibleCount(60); }} className="h-10 rounded-xl border border-slate-200 bg-white px-2.5 text-xs font-bold">
+        <select value={category} onChange={(event) => { setCategory(event.target.value as FoodCategory | "all"); setVisibleCount(60); }} className="public-food-filter-select h-10 rounded-xl border border-slate-200 bg-white px-2.5 text-xs font-bold">
           <option value="all">{t("foods.categoryFilterAll")}</option>
           {categoryChips.filter((item): item is { value: FoodCategory; label: string; icon: string } => item.value !== "all").map(({ value }) => (
             <option key={value} value={value}>
@@ -256,7 +262,7 @@ export function FoodGrid({
             </option>
           ))}
         </select>
-        <select value={areaId} onChange={(event) => { setAreaId(event.target.value); setVisibleCount(60); }} className="h-10 rounded-xl border border-slate-200 bg-white px-2.5 text-xs font-bold">
+        <select value={areaId} onChange={(event) => { setAreaId(event.target.value); setVisibleCount(60); }} className="public-food-filter-select h-10 rounded-xl border border-slate-200 bg-white px-2.5 text-xs font-bold">
           <option value="all">{t("foods.areaFilterAll")}</option>
           {areas.map((area) => (
             <option key={area.id} value={area.id}>
@@ -264,7 +270,7 @@ export function FoodGrid({
             </option>
           ))}
         </select>
-        <select value={shopId} onChange={(event) => { setShopId(event.target.value); setVisibleCount(60); }} className="h-10 rounded-xl border border-slate-200 bg-white px-2.5 text-xs font-bold">
+        <select value={shopId} onChange={(event) => { setShopId(event.target.value); setVisibleCount(60); }} className="public-food-filter-select h-10 rounded-xl border border-slate-200 bg-white px-2.5 text-xs font-bold">
           <option value="all">{t("foods.shopFilterAll")}</option>
           {shops.map((shop) => (
             <option key={shop.id} value={shop.id}>
@@ -272,7 +278,7 @@ export function FoodGrid({
             </option>
           ))}
         </select>
-        <select value={shopType} onChange={(event) => { setShopType(event.target.value as ShopType | "all"); setVisibleCount(60); }} className="h-10 rounded-xl border border-slate-200 bg-white px-2.5 text-xs font-bold">
+        <select value={shopType} onChange={(event) => { setShopType(event.target.value as ShopType | "all"); setVisibleCount(60); }} className="public-food-filter-select h-10 rounded-xl border border-slate-200 bg-white px-2.5 text-xs font-bold">
           <option value="all">{t("foods.shopTypeFilterAll")}</option>
           {(Object.keys(shopTypeLabels) as ShopType[]).map((value) => (
             <option key={value} value={value}>
@@ -280,7 +286,7 @@ export function FoodGrid({
             </option>
           ))}
         </select>
-        <select value={diningType} onChange={(event) => { setDiningType(event.target.value as DiningType | "all"); setVisibleCount(60); }} className="h-10 rounded-xl border border-slate-200 bg-white px-2.5 text-xs font-bold">
+        <select value={diningType} onChange={(event) => { setDiningType(event.target.value as DiningType | "all"); setVisibleCount(60); }} className="public-food-filter-select h-10 rounded-xl border border-slate-200 bg-white px-2.5 text-xs font-bold">
           <option value="all">{t("foods.diningTypeFilterAll")}</option>
           {(Object.keys(diningTypeLabels) as DiningType[]).map((value) => (
             <option key={value} value={value}>
@@ -288,7 +294,7 @@ export function FoodGrid({
             </option>
           ))}
         </select>
-        <select value={status} onChange={(event) => { setStatus(event.target.value as FoodStatus | "all"); setVisibleCount(60); }} className="h-10 rounded-xl border border-slate-200 bg-white px-2.5 text-xs font-bold">
+        <select value={status} onChange={(event) => { setStatus(event.target.value as FoodStatus | "all"); setVisibleCount(60); }} className="public-food-filter-select h-10 rounded-xl border border-slate-200 bg-white px-2.5 text-xs font-bold">
           <option value="all">{t("foods.statusFilterAll")}</option>
           {Object.entries(statusLabels).map(([value, label]) => (
             <option key={value} value={value}>
@@ -296,12 +302,12 @@ export function FoodGrid({
             </option>
           ))}
         </select>
-        <select value={priceFilter} onChange={(event) => { setPriceFilter(event.target.value as PriceFilter); setVisibleCount(60); }} className="h-10 rounded-xl border border-slate-200 bg-white px-2.5 text-xs font-bold">
+        <select value={priceFilter} onChange={(event) => { setPriceFilter(event.target.value as PriceFilter); setVisibleCount(60); }} className="public-food-filter-select h-10 rounded-xl border border-slate-200 bg-white px-2.5 text-xs font-bold">
           <option value="all">{t("foods.priceFilterAll")}</option>
           <option value="known">{t("foods.priceFilterKnown")}</option>
           <option value="unknown">{t("foods.priceFilterUnknown")}</option>
         </select>
-        <select value={sort} onChange={(event) => setSort(event.target.value as SortMode)} className="h-10 rounded-xl border border-slate-200 bg-white px-2.5 text-xs font-bold">
+        <select value={sort} onChange={(event) => setSort(event.target.value as SortMode)} className="public-food-filter-select h-10 rounded-xl border border-slate-200 bg-white px-2.5 text-xs font-bold">
           <option value="recommended">{t("foods.sortRecommended")}</option>
           <option value="new">{t("foods.sortNew")}</option>
           <option value="image">{t("foods.sortImage")}</option>

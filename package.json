@@ -92,7 +92,8 @@
     "test:staff-input-focus-zoom": "playwright test tests/staff-input-focus-zoom.spec.ts --project=chromium",
     "test:staff-product-editor": "playwright test tests/staff-product-editor.spec.ts --project=chromium",
     "verify:staff-product-editor": "node scripts/verify-staff-product-editor.mjs",
-    "verify:product-kind-audit": "node scripts/verify-product-kind-audit.mjs"
+    "verify:product-kind-audit": "node scripts/verify-product-kind-audit.mjs",
+    "test:public-food-search-focus-zoom": "playwright test tests/public-food-search-focus-zoom.spec.ts --project=chromium --project=webkit"
   },
   "dependencies": {
     "@capacitor-community/admob": "^8.0.0",
