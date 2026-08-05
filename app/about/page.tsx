@@ -1,8 +1,12 @@
+import { StaffEntryTrigger } from "@/components/staff-entry-trigger";
+
 export default function AboutPage() {
   return (
     <article className="mx-auto max-w-4xl rounded-[1.6rem] border border-white/80 bg-white p-6 shadow-soft">
-      <p className="text-xs font-black uppercase tracking-[0.18em] text-park">About</p>
-      <h1 className="mt-2 text-3xl font-black text-ink">このアプリについて</h1>
+      <StaffEntryTrigger>
+        <p className="text-xs font-black uppercase tracking-[0.18em] text-park">About</p>
+        <h1 className="mt-2 text-3xl font-black text-ink">このアプリについて</h1>
+      </StaffEntryTrigger>
       <div className="mt-6 space-y-4 text-sm font-bold leading-7 text-slate-600">
         <p>ユニコレは、ユニバ（USJ）フードを集めて楽しむための非公式コレクションアプリです。</p>
         <p>公式情報、公開メニュー、信頼できる補助情報をもとに、商品画像、価格、販売場所、エリア、販売期間を整理しています。</p>

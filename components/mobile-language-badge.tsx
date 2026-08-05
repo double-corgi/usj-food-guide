@@ -15,7 +15,13 @@ export function MobileLanguageBadge() {
   const { locale, setLocale } = useLocale();
 
   return (
-    <div className="mb-2 flex justify-end md:hidden">
+    <div
+      className="fixed z-40 md:hidden"
+      style={{
+        top: "calc(env(safe-area-inset-top, 0px) + 0.75rem)",
+        right: "calc(env(safe-area-inset-right, 0px) + 0.75rem)"
+      }}
+    >
       <div className="relative inline-flex">
         <select
           value={locale}
@@ -25,7 +31,7 @@ export function MobileLanguageBadge() {
               setLocale(next);
             }
           }}
-          className="cursor-pointer appearance-none rounded-full border border-slate-200 bg-white/90 py-1 pl-6 pr-5 text-xs font-black text-slate-500 transition hover:border-park hover:text-park focus:outline-none focus:ring-2 focus:ring-park/30"
+          className="min-h-11 min-w-11 cursor-pointer appearance-none rounded-full border border-slate-200 bg-white/95 py-2 pl-8 pr-7 text-xs font-black text-slate-500 shadow-[0_10px_24px_rgba(7,27,58,0.12)] backdrop-blur transition hover:border-park hover:text-park focus:outline-none focus:ring-2 focus:ring-park/30"
           aria-label="Language"
         >
           {supportedLocales.map((loc) => (

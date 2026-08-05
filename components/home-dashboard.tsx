@@ -6,16 +6,17 @@ import { I18nText } from "@/components/i18n-text";
 import { dedupeFoodsByCanonical } from "@/lib/food-utils";
 import { REQUEST_FORM_URL } from "@/lib/request-form-url";
 import { isFoodInCollection, SUMMER_2026_COLLECTION_ID } from "@/lib/seasonal-collections";
-import type { Area, FoodWithRelations } from "@/types/domain";
+import type { Area, FoodCollection, FoodWithRelations } from "@/types/domain";
 
 type HomeDashboardProps = {
   foods: FoodWithRelations[];
   activeCollectionFoods?: FoodWithRelations[];
+  collections?: FoodCollection[];
   areas?: Area[];
   generatedAt?: string | null;
 };
 
-export function HomeDashboard({ foods, activeCollectionFoods = foods, areas = [] }: HomeDashboardProps) {
+export function HomeDashboard({ foods, activeCollectionFoods = foods, collections = [], areas = [] }: HomeDashboardProps) {
   const summerFoods = foods.filter((food) => isFoodInCollection(food, SUMMER_2026_COLLECTION_ID));
 
   return (
@@ -25,6 +26,7 @@ export function HomeDashboard({ foods, activeCollectionFoods = foods, areas = []
 
         <div className="space-y-10">
           <HomeSummerCollection foods={summerFoods} allFoods={foods} />
+          <HomeFeaturedEvents collections={collections} foods={foods} />
           <HomeActiveFoodCollection foods={foods} collectionFoods={activeCollectionFoods} />
           <AdSlot placement="home-after-recent" />
           <HomeLimitedCollection foods={foods} />
@@ -44,6 +46,48 @@ export function HomeDashboard({ foods, activeCollectionFoods = foods, areas = []
         </div>
       </div>
     </div>
+  );
+}
+
+function HomeFeaturedEvents({ collections, foods }: { collections: FoodCollection[]; foods: FoodWithRelations[] }) {
+  const today = new Date();
+  const visibleCollections = collections
+    .filter((collection) => collection.id !== SUMMER_2026_COLLECTION_ID && collection.isFeatured)
+    .filter((collection) => !collection.endsOn || new Date(collection.endsOn + "T23:59:59").getTime() >= today.getTime())
+    .map((collection) => ({ collection, collectionFoods: foods.filter((food) => isFoodInCollection(food, collection.id)) }))
+    .filter((item) => item.collectionFoods.length > 0)
+    .sort((a, b) => a.collection.sortOrder - b.collection.sortOrder)
+    .slice(0, 4);
+
+  if (visibleCollections.length === 0) return null;
+
+  return (
+    <section className="space-y-4">
+      <div className="flex items-end justify-between gap-3">
+        <div>
+          <p className="text-xs font-black text-park">期間限定イベント</p>
+          <h2 className="text-xl font-black text-ink">いま見られるイベント</h2>
+        </div>
+      </div>
+      <div className="grid gap-3 sm:grid-cols-2">
+        {visibleCollections.map(({ collection, collectionFoods }) => {
+          const firstFood = collectionFoods[0];
+          const status = collection.startsOn && new Date(collection.startsOn + "T00:00:00").getTime() > today.getTime() ? "開催予定" : "開催中";
+          const imageUrl = collection.imageUrl || firstFood?.imageUrl;
+          return (
+            <Link key={collection.id} href={`/collections/${collection.id}`} className="overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-soft active:scale-[0.99]">
+              {imageUrl ? <img src={imageUrl} alt="" className="h-36 w-full object-cover" /> : null}
+              <div className="space-y-2 p-4">
+                <span className="inline-flex rounded-full bg-mint px-3 py-1 text-xs font-black text-park">{status}</span>
+                <h3 className="break-words text-base font-black text-ink">{collection.name}</h3>
+                {collection.description ? <p className="line-clamp-2 text-xs font-bold leading-5 text-slate-500">{collection.description}</p> : null}
+                <p className="text-xs font-black text-slate-500">掲載商品 {collectionFoods.length.toLocaleString("ja-JP")}件</p>
+              </div>
+            </Link>
+          );
+        })}
+      </div>
+    </section>
   );
 }
 

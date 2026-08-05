@@ -20,6 +20,26 @@ const nextConfig = {
   ...(isCapacitorStaticExport
     ? {}
     : {
+        async redirects() {
+          const appRouteRedirects = [
+            "/foods",
+            "/foods/:path*",
+            "/eaten",
+            "/eaten/:path*",
+            "/areas",
+            "/areas/:path*",
+            "/stores",
+            "/stores/:path*",
+            "/shops",
+            "/shops/:path*",
+            "/genres",
+            "/genres/:path*",
+            "/collections/:path*",
+            "/settings"
+          ].map((source) => ({ source, destination: "/", permanent: false }));
+
+          return [{ source: "/contact", destination: "/request", permanent: false }, ...appRouteRedirects];
+        },
         async headers() {
           const contentSecurityPolicy = [
             "default-src 'self'",

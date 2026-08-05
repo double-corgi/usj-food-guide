@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { CalendarDays } from "lucide-react";
 import { categoryLabels } from "@/lib/constants";
@@ -9,10 +9,12 @@ import { calculateArchiveRecordRate, calculateCompletion, dedupeFoodsByCanonical
 import { tAreaName } from "@/lib/i18n/area-name";
 import type { TranslationKey } from "@/lib/i18n/dictionaries";
 import { getFoodNameI18n } from "@/lib/i18n/name-translations";
+import { syncWidgetSummary, rememberWidgetRecentFoodName } from "@/lib/ios/widget-sync";
 import { useFoodLogs } from "@/lib/use-food-logs";
 import { useNextWantFoods } from "@/lib/use-next-want-foods";
 import type { FoodCategory, FoodWithRelations, UserFoodLog } from "@/types/domain";
 import { FoodImage } from "@/components/food-image";
+import { FoodRecordDetailModal, RecordPhotoImage } from "@/components/ios/food-record-modal";
 import { AdSlot } from "@/components/ads/ad-slot";
 import { EatenGenreProgress } from "@/components/eaten-genre-progress";
 import { useLocale } from "@/lib/i18n/use-locale";
@@ -27,10 +29,11 @@ type AlbumMode = "recent" | "month" | "area" | "genre" | "all";
 type EatenTab = "eaten" | "want";
 
 export function EatenExperience({ foods }: { foods: FoodWithRelations[] }) {
-  const { t } = useLocale();
-  const { logs, ready, error } = useFoodLogs();
+  const { t, locale } = useLocale();
+  const { logs, ready, error, reload } = useFoodLogs();
   const { wantedFoods } = useNextWantFoods(foods);
-  const [activeTab, setActiveTab] = useState<EatenTab>("eaten");
+  const [activeTab, setActiveTab] = useState<EatenTab>(() => (typeof window !== "undefined" && new URLSearchParams(window.location.search).get("tab") === "want" ? "want" : "eaten"));
+  const [selectedRecord, setSelectedRecord] = useState<EatenAlbumRecord | null>(null);
   const [areaFilter, setAreaFilter] = useState("all");
   const [categoryFilter, setCategoryFilter] = useState<FoodCategory | "all">("all");
   const completion = calculateCompletion(foods, logs);
@@ -57,6 +60,13 @@ export function EatenExperience({ foods }: { foods: FoodWithRelations[] }) {
   }, [areaFilter, categoryFilter, eatenRecords]);
   const albumSections = useMemo(() => buildAlbumSections(filteredEatenRecords, "all", t), [filteredEatenRecords, t]);
   const displayedRecordCount = albumSections.reduce((sum, section) => sum + section.records.length, 0);
+  useEffect(() => {
+    const latestRecord = eatenRecords.slice().sort((a, b) => compareByDate(b.log, a.log))[0];
+    const latestFoodName = latestRecord ? getFoodNameI18n(latestRecord.food.id, locale, latestRecord.food.name) : undefined;
+    rememberWidgetRecentFoodName(latestFoodName);
+    void syncWidgetSummary({ eatenCount: eatenRecords.length, progressRate: completion.rate, recentFoodName: latestFoodName });
+  }, [completion.rate, eatenRecords, locale]);
+
   const totalSpend = logs
     .filter((log) => log.status === "eaten")
     .reduce((sum, log) => {
@@ -164,7 +174,7 @@ export function EatenExperience({ foods }: { foods: FoodWithRelations[] }) {
               ) : null}
               <div className="grid grid-cols-5 gap-0.5 md:grid-cols-8 lg:grid-cols-10">
                 {section.records.map((record) => (
-                  <CollectionThumb key={`${section.id}-${record.key}-${record.log.eatenAt ?? "unknown"}`} record={record} />
+                  <CollectionThumb key={`${section.id}-${record.key}-${record.log.eatenAt ?? "unknown"}`} record={record} onOpen={() => setSelectedRecord(record)} />
                 ))}
               </div>
             </div>
@@ -224,6 +234,17 @@ export function EatenExperience({ foods }: { foods: FoodWithRelations[] }) {
       </p>
         </>
       )}
+      {selectedRecord ? (
+        <FoodRecordDetailModal
+          record={{ food: selectedRecord.food, log: selectedRecord.log }}
+          onClose={() => setSelectedRecord(null)}
+          onChanged={(log) => {
+            reload();
+            if (!log) setSelectedRecord(null);
+            else setSelectedRecord({ ...selectedRecord, log });
+          }}
+        />
+      ) : null}
     </div>
   );
 }
@@ -298,20 +319,21 @@ function EatenAlbumCard({ record }: { record: EatenAlbumRecord }) {
   );
 }
 
-function CollectionThumb({ record }: { record: EatenAlbumRecord }) {
+function CollectionThumb({ record, onOpen }: { record: EatenAlbumRecord; onOpen: () => void }) {
   const { locale } = useLocale();
   const { food } = record;
   const displayName = getFoodNameI18n(food.id, locale, food.name);
   return (
-    <Link
-      href={`/foods/${food.id}`}
+    <button
+      type="button"
+      onClick={onOpen}
       aria-label={displayName}
       className="group min-w-0 transition active:scale-95"
     >
       <div className="relative aspect-square overflow-hidden rounded-[0.45rem] border border-slate-200/60 bg-white shadow-[0_1px_3px_rgba(15,23,42,0.05)] transition-opacity group-active:opacity-80">
-        <FoodImage food={food} alt={displayName} className="h-full w-full transition duration-300 group-hover:scale-105" />
+        <RecordPhotoImage record={{ food, log: record.log }} className="h-full w-full object-cover transition duration-300 group-hover:scale-105" />
       </div>
-    </Link>
+    </button>
   );
 }
 

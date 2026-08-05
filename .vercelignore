@@ -13,6 +13,8 @@ coverage
 # Project documentation not needed at runtime
 docs
 /screenshots
+PROJECT_STATUS_UNICOLLE.md
+/appstore_screenshots_unicolle_v2_unified
 
 # Local/editor/system files
 .DS_Store
@@ -26,3 +28,14 @@ pnpm-debug.log*
 .env
 .env.*
 !.env.example
+
+# Native/mobile artifacts not needed for Vercel runtime
+/ios
+/ios-native
+backups
+appstore_screenshots_unicolle_build7_review
+appstore_screenshots_unicolle_v2_unified
+appstore_screenshots_unicolle_v2_unified/**
+appstore_screenshots_unicolle_build7_review/**
+test-results
+.cache

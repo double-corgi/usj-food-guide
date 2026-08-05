@@ -46,7 +46,7 @@ export function buildStoresFromFoods(foods: FoodWithRelations[]): StoreWithFoods
     const candidates = getFoodShopCandidates(food);
     for (const candidate of candidates) {
       const officialUrl = getSafeStoreOfficialUrl(candidate.officialUrl);
-      const storeKey = buildStoreIdentityKey(candidate.name, candidate.areaName);
+      const storeKey = candidate.id;
       const current = storeMap.get(storeKey);
       const nextFoods = appendUniqueStoreFood(current?.foods ?? [], food);
       const cleanName = cleanShopName(candidate.name);

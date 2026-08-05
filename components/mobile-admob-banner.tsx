@@ -45,7 +45,7 @@ function isNativeCapacitorApp(): boolean {
 }
 
 function isAdminPath(pathname: string | null): boolean {
-  return pathname === "/admin" || Boolean(pathname?.startsWith("/admin/"));
+  return pathname === "/admin" || Boolean(pathname?.startsWith("/admin/")) || pathname === "/staff" || Boolean(pathname?.startsWith("/staff/"));
 }
 
 function describeError(error: unknown): { name?: string; message?: string } {

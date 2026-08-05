@@ -39,6 +39,34 @@ export type Database = {
         Update: Partial<Database["public"]["Tables"]["admin_users"]["Insert"]>;
         Relationships: [];
       };
+      staff_members: {
+        Row: {
+          user_id: string;
+          email: string | null;
+          display_name: string | null;
+          role: "owner" | "editor";
+          is_active: boolean;
+          created_at: string;
+          updated_at: string;
+          created_by: string | null;
+          disabled_at: string | null;
+          disabled_by: string | null;
+        };
+        Insert: {
+          user_id: string;
+          email?: string | null;
+          display_name?: string | null;
+          role: "owner" | "editor";
+          is_active?: boolean;
+          created_at?: string;
+          updated_at?: string;
+          created_by?: string | null;
+          disabled_at?: string | null;
+          disabled_by?: string | null;
+        };
+        Update: Partial<Database["public"]["Tables"]["staff_members"]["Insert"]>;
+        Relationships: [];
+      };
       admin_auth_pkce_attempts: {
         Row: {
           id: string;
@@ -321,6 +349,8 @@ export type Database = {
           created_at: string;
           updated_at: string;
           deleted_at: string | null;
+          deleted_by: string | null;
+          version: number;
         };
         Insert: {
           id: string;
@@ -345,6 +375,8 @@ export type Database = {
           created_at?: string;
           updated_at?: string;
           deleted_at?: string | null;
+          deleted_by?: string | null;
+          version?: number;
         };
         Update: Partial<Database["public"]["Tables"]["manual_foods"]["Insert"]>;
         Relationships: [];
@@ -374,6 +406,9 @@ export type Database = {
           admin_confidence: string | null;
           admin_notes: string | null;
           is_deleted: boolean;
+          deleted_at: string | null;
+          deleted_by: string | null;
+          version: number;
           created_by: string | null;
           updated_by: string | null;
           created_at: string;
@@ -403,6 +438,9 @@ export type Database = {
           admin_confidence?: string | null;
           admin_notes?: string | null;
           is_deleted?: boolean;
+          deleted_at?: string | null;
+          deleted_by?: string | null;
+          version?: number;
           created_by?: string | null;
           updated_by?: string | null;
           created_at?: string;
@@ -431,6 +469,32 @@ export type Database = {
           created_at?: string;
         };
         Update: Partial<Database["public"]["Tables"]["food_override_revisions"]["Insert"]>;
+        Relationships: [];
+      };
+      staff_audit_logs: {
+        Row: {
+          id: string;
+          table_name: string;
+          record_id: string;
+          operation: "INSERT" | "UPDATE" | "DELETE";
+          old_data: Json | null;
+          new_data: Json | null;
+          actor_user_id: string | null;
+          actor_aal: string | null;
+          created_at: string;
+        };
+        Insert: {
+          id?: string;
+          table_name: string;
+          record_id: string;
+          operation: "INSERT" | "UPDATE" | "DELETE";
+          old_data?: Json | null;
+          new_data?: Json | null;
+          actor_user_id?: string | null;
+          actor_aal?: string | null;
+          created_at?: string;
+        };
+        Update: Partial<Database["public"]["Tables"]["staff_audit_logs"]["Insert"]>;
         Relationships: [];
       };
       food_images: {

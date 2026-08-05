@@ -62,7 +62,7 @@ const footerPrimaryLinks = [
 ] as const;
 
 const footerSupportLinks = [
-  { href: "/contact", labelKey: "footer.contact" },
+  { href: "/request", labelKey: "footer.contact" },
   { href: "/settings", labelKey: "footer.settings" },
   { href: "/terms", labelKey: "footer.terms" },
   { href: "/security", labelKey: "footer.security" },

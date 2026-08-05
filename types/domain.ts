@@ -28,6 +28,8 @@ export type SeasonType = "summer" | "halloween" | "christmas" | "easter" | "anni
 export type FoodCollection = {
   id: string;
   name: string;
+  description?: string | null;
+  imageUrl?: string | null;
   seasonType: SeasonType;
   startsOn?: string | null;
   endsOn?: string | null;
@@ -217,6 +219,9 @@ export type UserFoodLog = {
   repeatWant?: boolean;
   recommended?: boolean;
   sharedAt?: string;
+  photoIds?: string[];
+  shopId?: string;
+  updatedAt?: string;
 };
 
 export type FoodWithRelations = Food & {

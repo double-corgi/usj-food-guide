@@ -45,6 +45,9 @@ export function isLocalFoodLog(value: unknown): value is UserFoodLog {
     optionalNumber(log.eatenCount) &&
     optionalNumber(log.spentAmount) &&
     optionalString(log.userPhotoUrl) &&
+    optionalStringArray(log.photoIds) &&
+    optionalString(log.shopId) &&
+    optionalString(log.updatedAt) &&
     optionalBoolean(log.repeatWant) &&
     optionalBoolean(log.recommended) &&
     optionalString(log.sharedAt)
@@ -196,6 +199,10 @@ function optionalString(value: unknown) {
 
 function optionalNumber(value: unknown) {
   return value === undefined || typeof value === "number";
+}
+
+function optionalStringArray(value: unknown) {
+  return value === undefined || (Array.isArray(value) && value.every((item) => typeof item === "string"));
 }
 
 function optionalBoolean(value: unknown) {

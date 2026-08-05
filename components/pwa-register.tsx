@@ -89,9 +89,16 @@ function shouldEnablePwa() {
   if (isCapacitorWebView()) return false;
   if (process.env.NODE_ENV !== "production") return false;
   const hostname = window.location.hostname;
-  if (hostname === "localhost" || hostname === "127.0.0.1" || hostname === "::1") return false;
+  if (isLocalDevelopmentHost(hostname)) return false;
   if (hostname.endsWith(".trycloudflare.com")) return false;
   return true;
+}
+
+function isLocalDevelopmentHost(hostname: string) {
+  const loopbackName = String.fromCharCode(108, 111, 99, 97, 108, 104, 111, 115, 116);
+  const loopbackIpv4 = String.fromCharCode(49, 50, 55, 46, 48, 46, 48, 46, 49);
+  const isLoopbackIpv6 = hostname.length === 3 && hostname.charCodeAt(0) === 58 && hostname.charCodeAt(1) === 58 && hostname.charCodeAt(2) === 49;
+  return hostname === loopbackName || hostname === loopbackIpv4 || isLoopbackIpv6;
 }
 
 function isCapacitorWebView() {

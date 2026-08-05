@@ -1,6 +1,7 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { createServerSupabaseClient, createServiceSupabaseClient } from "@/lib/supabase-server";
 
+
 export async function GET(request: NextRequest) {
   const url = new URL(request.url);
   const code = url.searchParams.get("code");
@@ -54,7 +55,13 @@ export async function GET(request: NextRequest) {
 }
 
 function sanitizeNextPath(value: string) {
-  return value.startsWith("/admin") && !value.startsWith("/admin/login") ? value : "/admin/foods";
+  return isSafeAuthNextPath(value) ? value : "/admin/foods";
+}
+
+function isSafeAuthNextPath(value: string) {
+  if (value === "/staff" || value.startsWith("/staff?")) return true;
+  if (value.startsWith("/staff/") && !value.startsWith("/staff/login")) return true;
+  return value.startsWith("/admin") && !value.startsWith("/admin/login");
 }
 
 function isEmailOtpType(value: string | null): value is "signup" | "invite" | "magiclink" | "recovery" | "email_change" | "email" {

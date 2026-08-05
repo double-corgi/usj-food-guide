@@ -12,9 +12,6 @@ export default async function FoodDetailPage({ params }: { params: Promise<{ id:
   const food = await getFoodById(resolvedParams.id);
   if (!food) notFound();
   const foods = await listFoods();
-  const currentIndex = foods.findIndex((candidate) => candidate.id === food.id);
-  const previousFood = currentIndex > 0 ? foods[currentIndex - 1] : undefined;
-  const nextFood = currentIndex >= 0 && currentIndex < foods.length - 1 ? foods[currentIndex + 1] : undefined;
   const sameCategory = foods.filter((candidate) => candidate.id !== food.id && candidate.category === food.category);
   const sameCategoryIds = new Set(sameCategory.map((candidate) => candidate.id));
   const sameArea = foods.filter((candidate) => candidate.id !== food.id && candidate.area.id === food.area.id && !sameCategoryIds.has(candidate.id));
@@ -46,8 +43,6 @@ export default async function FoodDetailPage({ params }: { params: Promise<{ id:
       <FoodDetail
         food={food}
         allFoods={foods}
-        previousFood={previousFood}
-        nextFood={nextFood}
         relatedGroups={{
           sameCategory,
           sameArea,

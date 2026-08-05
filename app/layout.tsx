@@ -1,21 +1,21 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
-import { AdminSessionBar } from "@/components/admin-session-bar";
 import { AnalyticsTracker } from "@/components/analytics-tracker";
-import { AppFooter } from "@/components/app-footer";
-import { AppHeader } from "@/components/app-header";
+import { SiteFooter, SiteHeader } from "@/components/public-marketing-shell";
 import { MobileLanguageBadge } from "@/components/mobile-language-badge";
 import { MobileAdMobBanner } from "@/components/mobile-admob-banner";
 import { PwaRegister } from "@/components/pwa-register";
+import { NativeDeepLinkBridge } from "@/components/native-deep-link-bridge";
 import { appBrand } from "@/lib/constants";
-import { getCurrentAdmin } from "@/lib/admin-auth";
 import { LocaleProvider } from "@/lib/i18n/use-locale";
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://new-app-chi-rosy.vercel.app";
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://unicolle.vercel.app";
 const siteOrigin = siteUrl.replace(/\/$/, "");
 const appTitle = appBrand.name;
 const appDescription = appBrand.description;
 const ogImageUrl = `${siteOrigin}/og-image.png`;
+const isCapacitorStaticExport = process.env.CAPACITOR_STATIC_EXPORT === "1";
+const isPublicMarketingSite = !isCapacitorStaticExport;
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteOrigin),
@@ -69,25 +69,22 @@ export const viewport: Viewport = {
 };
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
-  const currentAdmin = await getCurrentAdmin();
-  const adminForPublicBar = currentAdmin?.mode === "supabase" ? currentAdmin : null;
-
   return (
     <html lang="ja">
       <body className="flex min-h-dvh flex-col">
         <LocaleProvider>
-          <AppHeader />
+          <SiteHeader marketingMode={isPublicMarketingSite} />
           <main className="app-shell-main mx-auto w-full max-w-7xl flex-1 px-4 pt-6 sm:px-6 md:pt-8 lg:px-8">
             <MobileLanguageBadge />
             {children}
           </main>
           <div className="app-shell-footer">
-            <AppFooter />
+            <SiteFooter marketingMode={isPublicMarketingSite} />
           </div>
-          {adminForPublicBar ? <AdminSessionBar role={adminForPublicBar.role} email={adminForPublicBar.email} /> : null}
           <AnalyticsTracker />
-          <MobileAdMobBanner />
+          {isCapacitorStaticExport ? <MobileAdMobBanner /> : null}
           <PwaRegister />
+          <NativeDeepLinkBridge />
         </LocaleProvider>
       </body>
     </html>

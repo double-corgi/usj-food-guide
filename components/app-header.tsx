@@ -30,8 +30,10 @@ export function AppHeader() {
   const { t, locale, setLocale } = useLocale();
   const pathname = usePathname();
   const isAdminPath = pathname.startsWith("/admin");
-  const effectiveNavItems = isAdminPath
-    ? [{ href: "/admin", label: "管理", icon: House }, ...navItems.slice(1)]
+  const isStaffPath = pathname.startsWith("/staff");
+  const isOperatorPath = isAdminPath || isStaffPath;
+  const effectiveNavItems = isOperatorPath
+    ? [{ href: isStaffPath ? "/staff" : "/admin", label: isStaffPath ? "運営" : "管理", icon: House }, ...navItems.slice(1)]
     : navItems;
 
   return (
@@ -51,7 +53,7 @@ export function AppHeader() {
             ))}
           </nav>
 
-          {isAdminPath ? (
+          {isOperatorPath ? (
             <Link href="/" className="inline-flex items-center rounded-full border border-slate-200 bg-white px-3 py-2 text-sm font-black text-park transition hover:border-park">
               公開ページを見る
             </Link>
@@ -81,27 +83,29 @@ export function AppHeader() {
           </div>
         </div>
       </header>
-      <nav
-        aria-label={t("nav.label")}
-        className="app-mobile-bottom-nav fixed inset-x-3 isolate z-50 grid grid-cols-5 rounded-[1.35rem] border border-slate-200 bg-white p-1 shadow-[0_-1px_0_rgba(0,0,0,0.04),0_10px_30px_rgba(7,27,58,0.13)] md:hidden"
-      >
-        {effectiveNavItems.map((item) => {
-          const active = isNavActive(pathname, item.href);
-          return (
-            <Link
-              key={item.href}
-              href={item.href}
-              aria-current={active ? "page" : undefined}
-              className={`flex min-h-[3.15rem] touch-manipulation flex-col items-center justify-center gap-0.5 rounded-[1.05rem] text-[10px] font-black leading-none transition active:scale-95 ${
-                active ? "bg-mint text-park shadow-sm" : "bg-white text-slate-500 hover:bg-mint/55 active:bg-mint"
-              }`}
-            >
-              <item.icon size={18} strokeWidth={2.5} aria-hidden />
-              {"label" in item ? item.label : t(item.labelKey)}
-            </Link>
-          );
-        })}
-      </nav>
+      {!isOperatorPath ? (
+        <nav
+          aria-label={t("nav.label")}
+          className="app-mobile-bottom-nav fixed inset-x-3 isolate z-50 grid grid-cols-5 rounded-[1.35rem] border border-slate-200 bg-white p-1 shadow-[0_-1px_0_rgba(0,0,0,0.04),0_10px_30px_rgba(7,27,58,0.13)] md:hidden"
+        >
+          {effectiveNavItems.map((item) => {
+            const active = isNavActive(pathname, item.href);
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                aria-current={active ? "page" : undefined}
+                className={`flex min-h-[3.15rem] touch-manipulation flex-col items-center justify-center gap-0.5 rounded-[1.05rem] text-[10px] font-black leading-none transition active:scale-95 ${
+                  active ? "bg-mint text-park shadow-sm" : "bg-white text-slate-500 hover:bg-mint/55 active:bg-mint"
+                }`}
+              >
+                <item.icon size={18} strokeWidth={2.5} aria-hidden />
+                {"label" in item ? item.label : t(item.labelKey)}
+              </Link>
+            );
+          })}
+        </nav>
+      ) : null}
     </>
   );
 }

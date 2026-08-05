@@ -29,6 +29,7 @@ export function StoresOverview({ stores }: { stores: StoreWithFoods[] }) {
       <section className="space-y-2">
         <p className="text-xs font-black text-park">{t("stores.kicker")}</p>
         <h1 className="text-[1.85rem] font-black tracking-tight text-ink md:text-4xl">{t("stores.title")}</h1>
+        <p className="inline-flex rounded-full bg-white/80 px-3 py-1.5 text-xs font-black text-park shadow-sm ring-1 ring-slate-200">{t("stores.totalCount", { count: new Set(stores.map((store) => store.id)).size })}</p>
       </section>
 
       <section className="space-y-6">

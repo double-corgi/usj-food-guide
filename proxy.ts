@@ -77,6 +77,10 @@ async function protectWithSupabaseAdmin(request: NextRequest) {
 
   if (userError || !user) return rejectSupabaseAdminRequest(request, "unauthenticated");
 
+  const staff = await readProxyStaffMember(supabase, user.id);
+  if (staff === "inactive") return rejectSupabaseAdminRequest(request, "forbidden");
+  if (staff === "active") return response;
+
   const { data: adminUser, error: adminError } = await supabase.from("admin_users").select("role").eq("id", user.id).maybeSingle();
   if (adminError || !adminUser?.role) return rejectSupabaseAdminRequest(request, "forbidden");
 
@@ -121,4 +125,13 @@ function denyAdminAccess() {
     },
     status: 404
   });
+}
+
+
+async function readProxyStaffMember(supabase: any, userId: string) {
+  const { data, error } = await supabase.from("staff_members").select("role,is_active").eq("user_id", userId).maybeSingle();
+  if (error || !data?.role) return "missing" as const;
+  if (data.is_active === false) return "inactive" as const;
+  if (data.role === "owner" || data.role === "editor") return "active" as const;
+  return "missing" as const;
 }

@@ -5,7 +5,7 @@ export const appBrand = {
   shortName: "ユニコレ",
   tagline: "食べた記録が、そのままコレクションになる。",
   description:
-    "ユニバ（USJ）フードを集めて楽しむための非公式コレクションアプリ。販売中の商品検索、食べた記録、店舗・エリア別のコレクション管理ができます。"
+    "ユニコレは、USJフードを写真付きで記録し、アルバムのように残せる非公式ファンアプリです。公開Webではアプリの機能、サポート、利用規約を案内しています。"
 } as const;
 
 export const unofficialNotice =

@@ -2,6 +2,7 @@ import { redirect } from "next/navigation";
 import { createServerSupabaseClient } from "@/lib/supabase-server";
 
 export type AdminRole = "owner" | "editor" | "viewer";
+export type StaffRole = "owner" | "editor";
 
 export type AdminSession =
   | {
@@ -46,6 +47,17 @@ export async function getCurrentAdmin(): Promise<AdminSession | null> {
   } = await supabase.auth.getUser();
   if (userError || !user) return null;
 
+  const staff = await readStaffMember(supabase, user.id);
+  if (staff.state === "active") {
+    return {
+      mode: "supabase",
+      email: staff.email ?? user.email ?? "",
+      role: staff.role,
+      userId: user.id
+    };
+  }
+  if (staff.state === "inactive") return null;
+
   const { data: adminUser, error: adminError } = await supabase.from("admin_users").select("role,email").eq("id", user.id).maybeSingle();
   if (adminError || !adminUser?.role || !isAdminRole(adminUser.role)) return null;
 
@@ -66,4 +78,13 @@ export async function requireAdmin(minRole: AdminRole = "viewer") {
 
 function isAdminRole(value: unknown): value is AdminRole {
   return value === "owner" || value === "editor" || value === "viewer";
+}
+
+
+async function readStaffMember(supabase: any, userId: string): Promise<{ state: "active"; role: StaffRole; email: string | null } | { state: "inactive" } | { state: "missing" }> {
+  const { data, error } = await supabase.from("staff_members").select("role,email,is_active").eq("user_id", userId).maybeSingle();
+  if (error || !data?.role) return { state: "missing" };
+  if (data.is_active === false) return { state: "inactive" };
+  if (data.role !== "owner" && data.role !== "editor") return { state: "missing" };
+  return { state: "active", role: data.role, email: data.email ?? null };
 }

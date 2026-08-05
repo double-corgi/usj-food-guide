@@ -13,11 +13,13 @@ import type { Area, FoodWithRelations } from "@/types/domain";
 export function AreaOverview({ areas, foods }: { areas: Area[]; foods: FoodWithRelations[] }) {
   const { logs } = useFoodLogs();
   const { t } = useLocale();
-  const visibleAreas = areaImageDefinitions.map((definition) => {
-    const matched = areas.find((area) => normalizeAreaImageName(area.name) === definition.name);
+  const visibleAreas = areas.map((area) => {
+    const imageDefinition = areaImageDefinitions.find((definition) => normalizeAreaImageName(area.name) === definition.name);
     return {
-      ...definition,
-      id: matched?.id ?? definition.name,
+      id: area.id,
+      name: area.name,
+      image: imageDefinition?.image ?? areaImageDefinitions[0].image,
+      sortOrder: area.sortOrder,
     };
   });
   if (areas.length === 0) {
@@ -37,11 +39,12 @@ export function AreaOverview({ areas, foods }: { areas: Area[]; foods: FoodWithR
         <p className="text-xs font-black tracking-[0.16em] text-park/70">{t("areas.kicker")}</p>
         <h1 className="mt-2 text-[1.85rem] font-black tracking-tight text-ink md:text-4xl">{t("areas.title")}</h1>
         <p className="mt-2 max-w-2xl text-sm font-semibold leading-6 text-slate-500">{t("areas.subtitle")}</p>
+        <p className="mt-2 inline-flex rounded-full bg-white/80 px-3 py-1.5 text-xs font-black text-park shadow-sm ring-1 ring-slate-200">{t("areas.totalCount", { count: visibleAreas.length })}</p>
       </div>
       <div className="grid gap-3.5 md:grid-cols-2">
         {visibleAreas.map((area) => {
           const completion = calculateAreaProgress(foods, logs, { id: area.id, name: area.name, sortOrder: 0 }).active;
-          const href = areas.some((sourceArea) => sourceArea.id === area.id) ? `/areas/${area.id}` : "/areas";
+          const href = `/areas/${area.id}`;
 
           return (
             <Link key={area.name} href={href} className="group mobile-card-surface block overflow-hidden rounded-[1.35rem] transition active:scale-[0.99] md:hover:-translate-y-0.5">

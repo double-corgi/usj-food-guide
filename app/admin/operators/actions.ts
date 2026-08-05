@@ -30,6 +30,8 @@ export async function inviteAdminOperator(formData: FormData): Promise<void> {
   );
   if (error) redirect(`/admin/operators?error=${encodeURIComponent(error.message)}`);
 
+  await syncStaffMember(supabase, { userId: user.id, email, role, createdBy: null });
+
   revalidatePath("/admin/operators");
   redirect("/admin/operators?saved=invited");
 }
@@ -47,6 +49,8 @@ export async function updateAdminOperatorRole(formData: FormData): Promise<void>
   const { error } = await supabase.from("admin_users").update({ role }).eq("id", userId);
   if (error) redirect(`/admin/operators?error=${encodeURIComponent(error.message)}`);
 
+  await syncStaffMember(supabase, { userId, email: null, role, createdBy: admin.userId });
+
   revalidatePath("/admin/operators");
   redirect("/admin/operators?saved=role");
 }
@@ -60,11 +64,60 @@ export async function disableAdminOperator(formData: FormData): Promise<void> {
   if (!userId) redirect("/admin/operators?error=invalid-input");
   if (admin.userId === userId) redirect("/admin/operators?error=self-disable");
 
+  await deactivateStaffMember(supabase, userId, admin.userId);
+
   const { error } = await supabase.from("admin_users").delete().eq("id", userId);
   if (error) redirect(`/admin/operators?error=${encodeURIComponent(error.message)}`);
 
   revalidatePath("/admin/operators");
   redirect("/admin/operators?saved=disabled");
+}
+
+
+async function syncStaffMember(
+  supabase: NonNullable<ReturnType<typeof createServiceSupabaseClient>>,
+  input: { userId: string; email: string | null; role: AdminRole; createdBy: string | null }
+) {
+  if (input.role !== "owner" && input.role !== "editor") {
+    await deactivateStaffMember(supabase, input.userId, input.createdBy);
+    return;
+  }
+
+  const { error } = await supabase.from("staff_members").upsert(
+    {
+      user_id: input.userId,
+      email: input.email,
+      role: input.role,
+      is_active: true,
+      updated_at: new Date().toISOString(),
+      created_by: input.createdBy
+    },
+    { onConflict: "user_id" }
+  );
+
+  if (error && !isMissingStaffMembersTable(error)) {
+    console.error("staff member sync failed", { message: error.message, code: error.code });
+  }
+}
+
+async function deactivateStaffMember(supabase: NonNullable<ReturnType<typeof createServiceSupabaseClient>>, userId: string, disabledBy: string | null) {
+  const { error } = await supabase
+    .from("staff_members")
+    .update({
+      is_active: false,
+      disabled_at: new Date().toISOString(),
+      disabled_by: disabledBy,
+      updated_at: new Date().toISOString()
+    })
+    .eq("user_id", userId);
+
+  if (error && !isMissingStaffMembersTable(error)) {
+    console.error("staff member deactivate failed", { message: error.message, code: error.code });
+  }
+}
+
+function isMissingStaffMembersTable(error: { code?: string; message?: string }) {
+  return error.code === "42P01" || /staff_members/i.test(error.message ?? "") && /does not exist|not found/i.test(error.message ?? "");
 }
 
 async function findOrInviteUser(supabase: NonNullable<ReturnType<typeof createServiceSupabaseClient>>, email: string) {

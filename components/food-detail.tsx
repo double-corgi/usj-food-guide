@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useEffect } from "react";
-import { Check, ChevronLeft, ChevronRight, ExternalLink, Flag, MapPin, Store } from "lucide-react";
+import { ChevronLeft, ExternalLink, Flag, MapPin, Store } from "lucide-react";
 import { getCanonicalFoodId, getCanonicalFoodKey, getDisplayLocationAreaName, getFoodAreaSummary, getFoodAreaNames, getPriceSource, getPriceSourceLabel, getSaleEndDate, getSaleStartDate, getSaleStatus, getSaleStatusTone, getZukanCode, isCompletableFood, isEatenCanonical } from "@/lib/food-utils";
 import { useFoodLogs } from "@/lib/use-food-logs";
 import { useNextWantFoods } from "@/lib/use-next-want-foods";
@@ -13,6 +13,7 @@ import { FoodImage } from "@/components/food-image";
 import { AdSlot } from "@/components/ads/ad-slot";
 import { FoodCorrectionReportForm } from "@/components/food-correction-report-form";
 import { FoodReviews } from "@/components/food-reviews";
+import { FoodRecordAction } from "@/components/ios/food-record-modal";
 import { UnofficialNotice } from "@/components/unofficial-notice";
 import type { TranslationKey } from "@/lib/i18n/dictionaries";
 import { formatDateI18n } from "@/lib/i18n/format-date";
@@ -33,24 +34,21 @@ type RelatedGroups = {
 export function FoodDetail({
   food,
   allFoods,
-  previousFood,
-  nextFood,
   relatedGroups,
 }: {
   food: FoodWithRelations;
   allFoods?: FoodWithRelations[];
-  previousFood?: FoodWithRelations;
-  nextFood?: FoodWithRelations;
   relatedGroups?: RelatedGroups;
 }) {
   const { locale, t } = useLocale();
-  const { logs, toggleEaten } = useFoodLogs();
+  const { logs, toggleEaten, reload } = useFoodLogs();
   const foodPool = allFoods ?? [food];
   const { isWanted, toggleWanted } = useNextWantFoods(foodPool);
   const eatenActionFoodId = getCanonicalActionFoodId(foodPool, logs, food, "eaten");
   const eaten = isEatenCanonical(foodPool, logs, food);
   const wanted = isWanted(food);
   const eatToggleFoodId = eatenActionFoodId;
+  const existingEatenLog = logs.find((log) => log.foodId === eatToggleFoodId && log.status === "eaten");
   const locations = getDisplayLocations(food);
   const primaryLocation = locations[0];
   const periodLabel = getSalePeriodLabelI18n(food, locale, t);
@@ -86,20 +84,6 @@ export function FoodDetail({
           <ChevronLeft size={17} aria-hidden />
           {t("foodDetail.backToList")}
         </Link>
-        <div className="grid grid-cols-2 gap-2">
-          {previousFood ? (
-            <Link href={`/foods/${previousFood.id}`} className="inline-flex min-h-10 items-center justify-center gap-1 rounded-full bg-white/70 px-3 text-xs font-black text-slate-600">
-              <ChevronLeft size={15} aria-hidden />
-              {t("foodDetail.previous")}
-            </Link>
-          ) : null}
-          {nextFood ? (
-            <Link href={`/foods/${nextFood.id}`} className="inline-flex min-h-10 items-center justify-center gap-1 rounded-full bg-white/70 px-3 text-xs font-black text-slate-600">
-              {t("foodDetail.next")}
-              <ChevronRight size={15} aria-hidden />
-            </Link>
-          ) : null}
-        </div>
       </div>
 
       <section className="space-y-5 text-ink">
@@ -143,14 +127,17 @@ export function FoodDetail({
             </p>
           </div>
           <div className="grid gap-2 sm:grid-cols-2 lg:w-[360px]">
-            <button
-              type="button"
-              onClick={() => toggleEaten(eatToggleFoodId, getStoredSpendAmount(food))}
-              className={`inline-flex min-h-14 w-full items-center justify-center gap-2 rounded-full text-base font-black shadow-sm active:scale-[0.98] ${eaten ? "bg-park text-white" : "bg-park text-white"}`}
-            >
-              <Check size={20} aria-hidden />
-              {eaten ? t("foodCard.eatenDone") : t("foodCard.markEaten")}
-            </button>
+            <FoodRecordAction
+              food={food}
+              recordFoodId={eatToggleFoodId}
+              eaten={eaten}
+              existingLog={existingEatenLog}
+              className="inline-flex min-h-14 w-full items-center justify-center gap-2 rounded-full bg-park text-base font-black text-white shadow-sm active:scale-[0.98]"
+              quickLabel={t("foodCard.markEaten")}
+              doneLabel={t("foodCard.eatenDone")}
+              onQuickRecord={() => toggleEaten(eatToggleFoodId, getStoredSpendAmount(food))}
+              onChanged={reload}
+            />
             <button
               type="button"
               onClick={() => toggleWanted(food)}
