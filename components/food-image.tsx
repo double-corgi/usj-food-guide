@@ -1,3 +1,6 @@
+"use client";
+
+import { useMemo, useState } from "react";
 import { getCategoryPlaceholder, getFoodImage, normalizeImageUrl } from "@/lib/utils/image";
 import type { FoodWithRelations } from "@/types/domain";
 
@@ -17,7 +20,9 @@ export function FoodImage({
   variant?: FoodImageVariant;
 }) {
   const fallback = getCategoryPlaceholder(food.category);
-  const src = normalizeImageUrl(getFoodImage(food)) ?? fallback;
+  const resolvedSrc = useMemo(() => normalizeImageUrl(getFoodImage(food)) ?? fallback, [fallback, food]);
+  const [failedSrc, setFailedSrc] = useState<string | null>(null);
+  const src = failedSrc === resolvedSrc ? fallback : resolvedSrc;
   const real = src !== fallback;
   const imageClass = getImageClass(variant, !real);
 
@@ -30,6 +35,9 @@ export function FoodImage({
       decoding="async"
       fetchPriority={eager ? "high" : "auto"}
       referrerPolicy="no-referrer"
+      onError={() => {
+        if (src !== fallback) setFailedSrc(src);
+      }}
       width={640}
       height={480}
       className={`${className ?? ""} ${imageClass}`}
