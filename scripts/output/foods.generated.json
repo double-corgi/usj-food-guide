@@ -75,10 +75,10 @@
       "trusted_placeholder": false,
       "lastCheckedAt": "2026-05-31T12:23:38.387Z",
       "last_checked_at": "2026-05-31T12:23:38.387Z",
-      "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-super-star-anniversary-plate-mushroom-lasagna-and-fried-chicken-spring-2026-offercard-h.jpg",
-      "image_url": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-super-star-anniversary-plate-mushroom-lasagna-and-fried-chicken-spring-2026-offercard-h.jpg",
-      "representativeImageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-super-star-anniversary-plate-mushroom-lasagna-and-fried-chicken-spring-2026-offercard-h.jpg",
-      "representative_image_url": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-super-star-anniversary-plate-mushroom-lasagna-and-fried-chicken-spring-2026-offercard-h.jpg",
+      "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-super-star-anniversary-plate-mushroom-lasagna-and-fried-chicken-spring-2026-gallery-a.jpg",
+      "image_url": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-super-star-anniversary-plate-mushroom-lasagna-and-fried-chicken-spring-2026-gallery-a.jpg",
+      "representativeImageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-super-star-anniversary-plate-mushroom-lasagna-and-fried-chicken-spring-2026-gallery-a.jpg",
+      "representative_image_url": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-super-star-anniversary-plate-mushroom-lasagna-and-fried-chicken-spring-2026-gallery-a.jpg",
       "sourceNames": [
         "official-category-kids-menus",
         "official-complete-coverage",
@@ -124,6 +124,22 @@
       },
       "images": [
         {
+          "id": "image-lxp5js",
+          "foodId": "food-62sv4l",
+          "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-super-star-anniversary-plate-mushroom-lasagna-and-fried-chicken-spring-2026-gallery-a.jpg",
+          "sourceType": "official",
+          "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/seasonal-food/index.html",
+          "imageConfidenceScore": 100,
+          "imageMatchScore": 100,
+          "categoryImageMatchScore": 100,
+          "imageSourceContext": "0001-01-01T00:00:00 2026-02-03T05:55:40.717 tcm:0-115-1 tcm:115-58-2 Multimedia Schemas undefined tcm:0-115-1 060 USJ Website - Japanese tcm:115-400-8 Image - Global alt スーパースター・アニバーサリープレート ～マッシュルーム・ラザニア＆フライドチキン～​ 0 tcm:Metadata/custom:Metadata/custom:alt overrideImage Yes 0 tcm:Metadata/custom:Metadata/custom:overrideImage 0 /usj/ja/jp/files/images/gds-images/usj-gds-food-super-star-anniversary-plate-mushroom-lasagn",
+          "imageMatchReason": "same-menu-block,context-name-match,category-url-match",
+          "imageVerified": true,
+          "isSharedTooMuch": false,
+          "priority": 1,
+          "enabled": true
+        },
+        {
           "id": "image-b71nzt",
           "foodId": "food-62sv4l",
           "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-super-star-anniversary-plate-mushroom-lasagna-and-fried-chicken-spring-2026-offercard-h.jpg",
@@ -137,23 +153,8 @@
           "imageVerified": true,
           "isSharedTooMuch": false,
           "priority": 1,
-          "enabled": true
-        },
-        {
-          "id": "image-lxp5js",
-          "foodId": "food-62sv4l",
-          "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-super-star-anniversary-plate-mushroom-lasagna-and-fried-chicken-spring-2026-gallery-a.jpg",
-          "sourceType": "official",
-          "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/seasonal-food/index.html",
-          "imageConfidenceScore": 100,
-          "imageMatchScore": 96,
-          "categoryImageMatchScore": 92,
-          "imageSourceContext": "0001-01-01T00:00:00 2026-02-03T05:55:40.717 tcm:0-115-1 tcm:115-58-2 Multimedia Schemas undefined tcm:0-115-1 060 USJ Website - Japanese tcm:115-400-8 Image - Global alt スーパースター・アニバーサリープレート ～マッシュルーム・ラザニア＆フライドチキン～​ 0 tcm:Metadata/custom:Metadata/custom:alt overrideImage Yes 0 tcm:Metadata/custom:Metadata/custom:overrideImage 0 /usj/ja/jp/files/images/gds-images/usj-gds-food-super-star-anniversary-plate-mushroom-lasagn",
-          "imageMatchReason": "same-menu-block,context-name-match,category-url-match",
-          "imageVerified": true,
-          "isSharedTooMuch": false,
-          "priority": 1,
-          "enabled": true
+          "enabled": false,
+          "imageMismatchReason": "HTTP 404 on 2026-08-25; disabled during same-food image repair"
         },
         {
           "id": "image-ly8y55",
@@ -429,10 +430,10 @@
       "trusted_placeholder": false,
       "lastCheckedAt": "2026-05-31T12:23:38.387Z",
       "last_checked_at": "2026-05-31T12:23:38.387Z",
-      "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-super-nintendo-world-anniversary-cake-for4-spring-2026-offercard-h.jpg",
-      "image_url": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-super-nintendo-world-anniversary-cake-for4-spring-2026-offercard-h.jpg",
-      "representativeImageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-super-nintendo-world-anniversary-cake-for4-spring-2026-offercard-h.jpg",
-      "representative_image_url": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-super-nintendo-world-anniversary-cake-for4-spring-2026-offercard-h.jpg",
+      "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-super-nintendo-world-anniversary-cake-for4-spring-2026-gallery-a.jpg",
+      "image_url": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-super-nintendo-world-anniversary-cake-for4-spring-2026-gallery-a.jpg",
+      "representativeImageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-super-nintendo-world-anniversary-cake-for4-spring-2026-gallery-a.jpg",
+      "representative_image_url": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-super-nintendo-world-anniversary-cake-for4-spring-2026-gallery-a.jpg",
       "sourceNames": [
         "official-complete-coverage",
         "official-restaurant-menu-coverage",
@@ -476,6 +477,22 @@
       },
       "images": [
         {
+          "id": "image-bijy9w",
+          "foodId": "food-cygfys",
+          "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-super-nintendo-world-anniversary-cake-for4-spring-2026-gallery-a.jpg",
+          "sourceType": "official",
+          "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/seasonal-food/index.html",
+          "imageConfidenceScore": 100,
+          "imageMatchScore": 100,
+          "categoryImageMatchScore": 100,
+          "imageSourceContext": "0001-01-01T00:00:00 2026-01-22T08:10:44.02 tcm:0-115-1 tcm:115-58-2 Multimedia Schemas undefined tcm:0-115-1 060 USJ Website - Japanese tcm:115-400-8 Image - Global alt スーパー・ニンテンドー・ワールド・アニバーサリーケーキ​（4名様分） 0 tcm:Metadata/custom:Metadata/custom:alt overrideImage Yes 0 tcm:Metadata/custom:Metadata/custom:overrideImage 0 /usj/ja/jp/files/images/gds-images/usj-gds-food-super-nintendo-world-anniversary-cake-for4-spring-2026",
+          "imageMatchReason": "same-menu-block,context-name-match,category-url-match",
+          "imageVerified": true,
+          "isSharedTooMuch": false,
+          "priority": 1,
+          "enabled": true
+        },
+        {
           "id": "image-ca27j9",
           "foodId": "food-cygfys",
           "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-super-nintendo-world-anniversary-cake-for4-spring-2026-offercard-h.jpg",
@@ -489,23 +506,8 @@
           "imageVerified": true,
           "isSharedTooMuch": false,
           "priority": 1,
-          "enabled": true
-        },
-        {
-          "id": "image-bijy9w",
-          "foodId": "food-cygfys",
-          "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-super-nintendo-world-anniversary-cake-for4-spring-2026-gallery-a.jpg",
-          "sourceType": "official",
-          "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/seasonal-food/index.html",
-          "imageConfidenceScore": 100,
-          "imageMatchScore": 96,
-          "categoryImageMatchScore": 92,
-          "imageSourceContext": "0001-01-01T00:00:00 2026-01-22T08:10:44.02 tcm:0-115-1 tcm:115-58-2 Multimedia Schemas undefined tcm:0-115-1 060 USJ Website - Japanese tcm:115-400-8 Image - Global alt スーパー・ニンテンドー・ワールド・アニバーサリーケーキ​（4名様分） 0 tcm:Metadata/custom:Metadata/custom:alt overrideImage Yes 0 tcm:Metadata/custom:Metadata/custom:overrideImage 0 /usj/ja/jp/files/images/gds-images/usj-gds-food-super-nintendo-world-anniversary-cake-for4-spring-2026",
-          "imageMatchReason": "same-menu-block,context-name-match,category-url-match",
-          "imageVerified": true,
-          "isSharedTooMuch": false,
-          "priority": 1,
-          "enabled": true
+          "enabled": false,
+          "imageMismatchReason": "HTTP 404 on 2026-08-25; disabled during same-food image repair"
         },
         {
           "id": "image-bj3qv9",
@@ -1302,10 +1304,10 @@
       "trusted_placeholder": false,
       "lastCheckedAt": "2026-05-31T09:49:37.235Z",
       "last_checked_at": "2026-05-31T09:49:37.235Z",
-      "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-roast-beef-three-broomsticks-gallery-a.jpg",
-      "image_url": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-roast-beef-three-broomsticks-gallery-a.jpg",
-      "representativeImageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-roast-beef-three-broomsticks-gallery-a.jpg",
-      "representative_image_url": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-roast-beef-three-broomsticks-gallery-a.jpg",
+      "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-roast-beef-three-broomsticks-gallery-b.jpg",
+      "image_url": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-roast-beef-three-broomsticks-gallery-b.jpg",
+      "representativeImageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-roast-beef-three-broomsticks-gallery-b.jpg",
+      "representative_image_url": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-roast-beef-three-broomsticks-gallery-b.jpg",
       "sourceNames": [
         "official-restaurants"
       ],
@@ -1345,6 +1347,22 @@
       },
       "images": [
         {
+          "id": "image-1npdruq",
+          "foodId": "food-up3lba",
+          "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-roast-beef-three-broomsticks-gallery-b.jpg",
+          "sourceType": "official",
+          "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/the-wizarding-world-of-harry-potter-food/index.html",
+          "imageConfidenceScore": 100,
+          "imageMatchScore": 100,
+          "categoryImageMatchScore": 100,
+          "imageSourceContext": "0001-01-01T00:00:00 2025-08-26T07:28:59.967 tcm:0-115-1 tcm:115-8144-2 Galleries GDSInlineGalleryItem tcm:0-115-1 060 USJ Website - Japanese tcm:115-75947-8 GDS - Inline - Gallery - Item image desktop tcm:115-277548 0001-01-01T00:00:00 2025-05-19T05:14:04.993 tcm:0-115-1 tcm:115-58-2 Multimedia Schemas undefined tcm:0-115-1 060 USJ Website - Japanese tcm:115-400-8 Image - Global alt ローストビーフ 0 tcm:Metadata/custom:Meta",
+          "imageMatchReason": "same-menu-block,context-name-match,category-url-match",
+          "imageVerified": true,
+          "isSharedTooMuch": false,
+          "priority": 1,
+          "enabled": true
+        },
+        {
           "id": "image-1notz9d",
           "foodId": "food-up3lba",
           "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-roast-beef-three-broomsticks-gallery-a.jpg",
@@ -1358,23 +1376,8 @@
           "imageVerified": true,
           "isSharedTooMuch": false,
           "priority": 1,
-          "enabled": true
-        },
-        {
-          "id": "image-1npdruq",
-          "foodId": "food-up3lba",
-          "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-roast-beef-three-broomsticks-gallery-b.jpg",
-          "sourceType": "official",
-          "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/the-wizarding-world-of-harry-potter-food/index.html",
-          "imageConfidenceScore": 100,
-          "imageMatchScore": 96,
-          "categoryImageMatchScore": 92,
-          "imageSourceContext": "0001-01-01T00:00:00 2025-08-26T07:28:59.967 tcm:0-115-1 tcm:115-8144-2 Galleries GDSInlineGalleryItem tcm:0-115-1 060 USJ Website - Japanese tcm:115-75947-8 GDS - Inline - Gallery - Item image desktop tcm:115-277548 0001-01-01T00:00:00 2025-05-19T05:14:04.993 tcm:0-115-1 tcm:115-58-2 Multimedia Schemas undefined tcm:0-115-1 060 USJ Website - Japanese tcm:115-400-8 Image - Global alt ローストビーフ 0 tcm:Metadata/custom:Meta",
-          "imageMatchReason": "same-menu-block,context-name-match,category-url-match",
-          "imageVerified": true,
-          "isSharedTooMuch": false,
-          "priority": 1,
-          "enabled": true
+          "enabled": false,
+          "imageMismatchReason": "HTTP 404 on 2026-08-25; disabled during same-food image repair"
         }
       ],
       "priceSource": "official",
@@ -1451,10 +1454,10 @@
       "trusted_placeholder": false,
       "lastCheckedAt": "2026-05-31T09:49:37.235Z",
       "last_checked_at": "2026-05-31T09:49:37.235Z",
-      "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-rotisserie-smoked-chicken-and-pork-ribs-plate-with-beef-onion-pie-and-potato-soup-gallery-a.jpg",
-      "image_url": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-rotisserie-smoked-chicken-and-pork-ribs-plate-with-beef-onion-pie-and-potato-soup-gallery-a.jpg",
-      "representativeImageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-rotisserie-smoked-chicken-and-pork-ribs-plate-with-beef-onion-pie-and-potato-soup-gallery-a.jpg",
-      "representative_image_url": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-rotisserie-smoked-chicken-and-pork-ribs-plate-with-beef-onion-pie-and-potato-soup-gallery-a.jpg",
+      "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-rotisserie-smoked-chicken-and-pork-ribs-plate-with-beef-onion-pie-and-potato-soup-v2-gallery-b.jpg",
+      "image_url": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-rotisserie-smoked-chicken-and-pork-ribs-plate-with-beef-onion-pie-and-potato-soup-v2-gallery-b.jpg",
+      "representativeImageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-rotisserie-smoked-chicken-and-pork-ribs-plate-with-beef-onion-pie-and-potato-soup-v2-gallery-b.jpg",
+      "representative_image_url": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-rotisserie-smoked-chicken-and-pork-ribs-plate-with-beef-onion-pie-and-potato-soup-v2-gallery-b.jpg",
       "sourceNames": [
         "official-complete-coverage",
         "official-restaurant-menu-coverage",
@@ -1498,6 +1501,22 @@
       },
       "images": [
         {
+          "id": "image-nv5zav",
+          "foodId": "food-1reufss",
+          "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-rotisserie-smoked-chicken-and-pork-ribs-plate-with-beef-onion-pie-and-potato-soup-v2-gallery-b.jpg",
+          "sourceType": "official",
+          "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/the-wizarding-world-of-harry-potter-food/index.html",
+          "imageConfidenceScore": 100,
+          "imageMatchScore": 100,
+          "categoryImageMatchScore": 100,
+          "imageSourceContext": "0001-01-01T00:00:00 2025-12-11T07:06:24.027 tcm:0-115-1 tcm:115-8144-2 Galleries GDSInlineGalleryItem tcm:0-115-1 060 USJ Website - Japanese tcm:115-75947-8 GDS - Inline - Gallery - Item image desktop tcm:115-252317 0001-01-01T00:00:00 2024-10-29T08:56:35.55 tcm:0-115-1 tcm:115-58-2 Multimedia Schemas undefined tcm:0-115-1 060 USJ Website - Japanese tcm:115-400-8 Image - Global alt ロティサリー・スモークチキン＆ポークリブ ～ビーフ＆オニオンパイとポテ",
+          "imageMatchReason": "same-menu-block,context-name-match,category-url-match",
+          "imageVerified": true,
+          "isSharedTooMuch": false,
+          "priority": 1,
+          "enabled": true
+        },
+        {
           "id": "image-8nmbxn",
           "foodId": "food-1reufss",
           "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-rotisserie-smoked-chicken-and-pork-ribs-plate-with-beef-onion-pie-and-potato-soup-gallery-a.jpg",
@@ -1511,23 +1530,8 @@
           "imageVerified": true,
           "isSharedTooMuch": false,
           "priority": 1,
-          "enabled": true
-        },
-        {
-          "id": "image-nv5zav",
-          "foodId": "food-1reufss",
-          "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-rotisserie-smoked-chicken-and-pork-ribs-plate-with-beef-onion-pie-and-potato-soup-v2-gallery-b.jpg",
-          "sourceType": "official",
-          "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/the-wizarding-world-of-harry-potter-food/index.html",
-          "imageConfidenceScore": 100,
-          "imageMatchScore": 96,
-          "categoryImageMatchScore": 92,
-          "imageSourceContext": "0001-01-01T00:00:00 2025-12-11T07:06:24.027 tcm:0-115-1 tcm:115-8144-2 Galleries GDSInlineGalleryItem tcm:0-115-1 060 USJ Website - Japanese tcm:115-75947-8 GDS - Inline - Gallery - Item image desktop tcm:115-252317 0001-01-01T00:00:00 2024-10-29T08:56:35.55 tcm:0-115-1 tcm:115-58-2 Multimedia Schemas undefined tcm:0-115-1 060 USJ Website - Japanese tcm:115-400-8 Image - Global alt ロティサリー・スモークチキン＆ポークリブ ～ビーフ＆オニオンパイとポテ",
-          "imageMatchReason": "same-menu-block,context-name-match,category-url-match",
-          "imageVerified": true,
-          "isSharedTooMuch": false,
-          "priority": 1,
-          "enabled": true
+          "enabled": false,
+          "imageMismatchReason": "HTTP 404 on 2026-08-25; disabled during same-food image repair"
         },
         {
           "id": "image-10o0yr6",
@@ -1890,10 +1894,10 @@
       "trusted_placeholder": false,
       "lastCheckedAt": "2026-05-31T12:23:38.387Z",
       "last_checked_at": "2026-05-31T12:23:38.387Z",
-      "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-butterbeer-cream-puff-three-broomsticks-gallery-a.jpg",
-      "image_url": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-butterbeer-cream-puff-three-broomsticks-gallery-a.jpg",
-      "representativeImageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-butterbeer-cream-puff-three-broomsticks-gallery-a.jpg",
-      "representative_image_url": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-butterbeer-cream-puff-three-broomsticks-gallery-a.jpg",
+      "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-butterbeer-cream-puff-three-broomsticks-gallery-b.jpg",
+      "image_url": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-butterbeer-cream-puff-three-broomsticks-gallery-b.jpg",
+      "representativeImageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-butterbeer-cream-puff-three-broomsticks-gallery-b.jpg",
+      "representative_image_url": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-butterbeer-cream-puff-three-broomsticks-gallery-b.jpg",
       "sourceNames": [
         "official-category-drinks",
         "official-restaurants"
@@ -1935,6 +1939,22 @@
       },
       "images": [
         {
+          "id": "image-10hodo2",
+          "foodId": "food-1m8i41b",
+          "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-butterbeer-cream-puff-three-broomsticks-gallery-b.jpg",
+          "sourceType": "official",
+          "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/seasonal-food/index.html",
+          "imageConfidenceScore": 100,
+          "imageMatchScore": 100,
+          "categoryImageMatchScore": 100,
+          "imageSourceContext": "0001-01-01T00:00:00 2026-03-05T06:26:45.087 tcm:0-115-1 tcm:115-8144-2 Galleries GDSInlineGalleryItem tcm:0-115-1 060 USJ Website - Japanese tcm:115-75947-8 GDS - Inline - Gallery - Item image desktop tcm:115-312189 0001-01-01T00:00:00 2026-01-26T03:10:36.133 tcm:0-115-1 tcm:115-58-2 Multimedia Schemas undefined tcm:0-115-1 060 USJ Website - Japanese tcm:115-400-8 Image - Global alt バタービール™・シュークリーム 0 tcm:Metadata/cus",
+          "imageMatchReason": "same-menu-block,context-name-match,category-url-match",
+          "imageVerified": true,
+          "isSharedTooMuch": false,
+          "priority": 1,
+          "enabled": true
+        },
+        {
           "id": "image-10h4l2p",
           "foodId": "food-1m8i41b",
           "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-butterbeer-cream-puff-three-broomsticks-gallery-a.jpg",
@@ -1948,23 +1968,8 @@
           "imageVerified": true,
           "isSharedTooMuch": false,
           "priority": 1,
-          "enabled": true
-        },
-        {
-          "id": "image-10hodo2",
-          "foodId": "food-1m8i41b",
-          "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-butterbeer-cream-puff-three-broomsticks-gallery-b.jpg",
-          "sourceType": "official",
-          "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/seasonal-food/index.html",
-          "imageConfidenceScore": 100,
-          "imageMatchScore": 96,
-          "categoryImageMatchScore": 92,
-          "imageSourceContext": "0001-01-01T00:00:00 2026-03-05T06:26:45.087 tcm:0-115-1 tcm:115-8144-2 Galleries GDSInlineGalleryItem tcm:0-115-1 060 USJ Website - Japanese tcm:115-75947-8 GDS - Inline - Gallery - Item image desktop tcm:115-312189 0001-01-01T00:00:00 2026-01-26T03:10:36.133 tcm:0-115-1 tcm:115-58-2 Multimedia Schemas undefined tcm:0-115-1 060 USJ Website - Japanese tcm:115-400-8 Image - Global alt バタービール™・シュークリーム 0 tcm:Metadata/cus",
-          "imageMatchReason": "same-menu-block,context-name-match,category-url-match",
-          "imageVerified": true,
-          "isSharedTooMuch": false,
-          "priority": 1,
-          "enabled": true
+          "enabled": false,
+          "imageMismatchReason": "HTTP 404 on 2026-08-25; disabled during same-food image repair"
         }
       ],
       "priceSource": "trusted_report",
@@ -2203,10 +2208,10 @@
       "trusted_placeholder": false,
       "lastCheckedAt": "2026-05-31T09:34:57.060Z",
       "last_checked_at": "2026-05-31T09:34:57.060Z",
-      "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-sandwich-kids-meal-summer-2025-gallery-a.jpg",
-      "image_url": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-sandwich-kids-meal-summer-2025-gallery-a.jpg",
-      "representativeImageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-sandwich-kids-meal-summer-2025-gallery-a.jpg",
-      "representative_image_url": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-sandwich-kids-meal-summer-2025-gallery-a.jpg",
+      "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-sandwich-kids-meal-summer-2025-offercard-h.jpg",
+      "image_url": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-sandwich-kids-meal-summer-2025-offercard-h.jpg",
+      "representativeImageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-sandwich-kids-meal-summer-2025-offercard-h.jpg",
+      "representative_image_url": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-sandwich-kids-meal-summer-2025-offercard-h.jpg",
       "sourceNames": [
         "official-category-burgers-and-sandwiches",
         "official-category-kids-menus",
@@ -2252,6 +2257,22 @@
       },
       "images": [
         {
+          "id": "image-1yubiwr",
+          "foodId": "food-c4k9tn",
+          "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-sandwich-kids-meal-summer-2025-offercard-h.jpg",
+          "sourceType": "official",
+          "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/three-broomsticks/index.html",
+          "imageConfidenceScore": 100,
+          "imageMatchScore": 100,
+          "categoryImageMatchScore": 100,
+          "imageSourceContext": "0001-01-01T00:00:00 2025-05-22T07:14:01.303 tcm:0-115-1 tcm:115-9072-2 Cards GDSOfferCard tcm:0-115-1 060 USJ Website - Japanese tcm:115-78524-8 GDS - Offer - Card backgroundImage desktop tcm:115-276819 0001-01-01T00:00:00 2025-05-30T05:59:53.873 tcm:0-115-1 tcm:115-58-2 Multimedia Schemas undefined tcm:0-115-1 060 USJ Website - Japanese tcm:115-400-8 Image - Global alt サンドウィッチ・キッズプレート 0 tcm:Metadata/custom:Metadata/",
+          "imageMatchReason": "same-menu-block,context-name-match,category-url-match",
+          "imageVerified": true,
+          "isSharedTooMuch": false,
+          "priority": 1,
+          "enabled": true
+        },
+        {
           "id": "image-7npyfu",
           "foodId": "food-c4k9tn",
           "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-sandwich-kids-meal-summer-2025-gallery-a.jpg",
@@ -2265,7 +2286,8 @@
           "imageVerified": true,
           "isSharedTooMuch": false,
           "priority": 1,
-          "enabled": true
+          "enabled": false,
+          "imageMismatchReason": "HTTP 404 on 2026-08-25; disabled during same-food image repair"
         },
         {
           "id": "image-7o9r17",
@@ -2277,22 +2299,6 @@
           "imageMatchScore": 96,
           "categoryImageMatchScore": 92,
           "imageSourceContext": "0001-01-01T00:00:00 2025-05-30T07:47:37.68 tcm:0-115-1 tcm:115-8144-2 Galleries GDSInlineGalleryItem tcm:0-115-1 060 USJ Website - Japanese tcm:115-75947-8 GDS - Inline - Gallery - Item image desktop tcm:115-277539 0001-01-01T00:00:00 2025-05-29T06:42:28.1 tcm:0-115-1 tcm:115-58-2 Multimedia Schemas undefined tcm:0-115-1 060 USJ Website - Japanese tcm:115-400-8 Image - Global alt サンドウィッチ・キッズプレート 0 tcm:Metadata/custom",
-          "imageMatchReason": "same-menu-block,context-name-match,category-url-match",
-          "imageVerified": true,
-          "isSharedTooMuch": false,
-          "priority": 1,
-          "enabled": true
-        },
-        {
-          "id": "image-1yubiwr",
-          "foodId": "food-c4k9tn",
-          "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-sandwich-kids-meal-summer-2025-offercard-h.jpg",
-          "sourceType": "official",
-          "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/three-broomsticks/index.html",
-          "imageConfidenceScore": 100,
-          "imageMatchScore": 96,
-          "categoryImageMatchScore": 92,
-          "imageSourceContext": "0001-01-01T00:00:00 2025-05-22T07:14:01.303 tcm:0-115-1 tcm:115-9072-2 Cards GDSOfferCard tcm:0-115-1 060 USJ Website - Japanese tcm:115-78524-8 GDS - Offer - Card backgroundImage desktop tcm:115-276819 0001-01-01T00:00:00 2025-05-30T05:59:53.873 tcm:0-115-1 tcm:115-58-2 Multimedia Schemas undefined tcm:0-115-1 060 USJ Website - Japanese tcm:115-400-8 Image - Global alt サンドウィッチ・キッズプレート 0 tcm:Metadata/custom:Metadata/",
           "imageMatchReason": "same-menu-block,context-name-match,category-url-match",
           "imageVerified": true,
           "isSharedTooMuch": false,
@@ -2374,10 +2380,10 @@
       "trusted_placeholder": false,
       "lastCheckedAt": "2026-05-31T09:34:57.060Z",
       "last_checked_at": "2026-05-31T09:34:57.060Z",
-      "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-curry-kids-plate-summer-2025-gallery-a.jpg",
-      "image_url": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-curry-kids-plate-summer-2025-gallery-a.jpg",
-      "representativeImageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-curry-kids-plate-summer-2025-gallery-a.jpg",
-      "representative_image_url": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-curry-kids-plate-summer-2025-gallery-a.jpg",
+      "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-curry-kids-plate-summer-2025-offercard-h.jpg",
+      "image_url": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-curry-kids-plate-summer-2025-offercard-h.jpg",
+      "representativeImageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-curry-kids-plate-summer-2025-offercard-h.jpg",
+      "representative_image_url": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-curry-kids-plate-summer-2025-offercard-h.jpg",
       "sourceNames": [
         "official-category-kids-menus",
         "official-restaurant-menu-coverage",
@@ -2421,6 +2427,22 @@
       },
       "images": [
         {
+          "id": "image-odldap",
+          "foodId": "food-17k66nk",
+          "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-curry-kids-plate-summer-2025-offercard-h.jpg",
+          "sourceType": "official",
+          "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/three-broomsticks/index.html",
+          "imageConfidenceScore": 100,
+          "imageMatchScore": 100,
+          "categoryImageMatchScore": 100,
+          "imageSourceContext": "0001-01-01T00:00:00 2025-05-22T07:58:11.13 tcm:0-115-1 tcm:115-9072-2 Cards GDSOfferCard tcm:0-115-1 060 USJ Website - Japanese tcm:115-78524-8 GDS - Offer - Card backgroundImage desktop tcm:115-276810 0001-01-01T00:00:00 2025-05-13T02:42:36.38 tcm:0-115-1 tcm:115-58-2 Multimedia Schemas undefined tcm:0-115-1 060 USJ Website - Japanese tcm:115-400-8 Image - Global alt カレー・キッズプレート 0 tcm:Metadata/custom:Metadata/custom",
+          "imageMatchReason": "same-menu-block,context-name-match,category-url-match",
+          "imageVerified": true,
+          "isSharedTooMuch": false,
+          "priority": 1,
+          "enabled": true
+        },
+        {
           "id": "image-89xf74",
           "foodId": "food-17k66nk",
           "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-curry-kids-plate-summer-2025-gallery-a.jpg",
@@ -2434,7 +2456,8 @@
           "imageVerified": true,
           "isSharedTooMuch": false,
           "priority": 1,
-          "enabled": true
+          "enabled": false,
+          "imageMismatchReason": "HTTP 404 on 2026-08-25; disabled during same-food image repair"
         },
         {
           "id": "image-8ah7sh",
@@ -2446,22 +2469,6 @@
           "imageMatchScore": 96,
           "categoryImageMatchScore": 92,
           "imageSourceContext": "0001-01-01T00:00:00 2025-05-30T07:54:52.443 tcm:0-115-1 tcm:115-8144-2 Galleries GDSInlineGalleryItem tcm:0-115-1 060 USJ Website - Japanese tcm:115-75947-8 GDS - Inline - Gallery - Item image desktop tcm:115-277537 0001-01-01T00:00:00 2025-05-19T04:56:02.15 tcm:0-115-1 tcm:115-58-2 Multimedia Schemas undefined tcm:0-115-1 060 USJ Website - Japanese tcm:115-400-8 Image - Global alt カレー・キッズプレート 0 tcm:Metadata/custom:M",
-          "imageMatchReason": "same-menu-block,context-name-match,category-url-match",
-          "imageVerified": true,
-          "isSharedTooMuch": false,
-          "priority": 1,
-          "enabled": true
-        },
-        {
-          "id": "image-odldap",
-          "foodId": "food-17k66nk",
-          "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-curry-kids-plate-summer-2025-offercard-h.jpg",
-          "sourceType": "official",
-          "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/three-broomsticks/index.html",
-          "imageConfidenceScore": 100,
-          "imageMatchScore": 96,
-          "categoryImageMatchScore": 92,
-          "imageSourceContext": "0001-01-01T00:00:00 2025-05-22T07:58:11.13 tcm:0-115-1 tcm:115-9072-2 Cards GDSOfferCard tcm:0-115-1 060 USJ Website - Japanese tcm:115-78524-8 GDS - Offer - Card backgroundImage desktop tcm:115-276810 0001-01-01T00:00:00 2025-05-13T02:42:36.38 tcm:0-115-1 tcm:115-58-2 Multimedia Schemas undefined tcm:0-115-1 060 USJ Website - Japanese tcm:115-400-8 Image - Global alt カレー・キッズプレート 0 tcm:Metadata/custom:Metadata/custom",
           "imageMatchReason": "same-menu-block,context-name-match,category-url-match",
           "imageVerified": true,
           "isSharedTooMuch": false,
@@ -3190,10 +3197,10 @@
       "trusted_placeholder": false,
       "lastCheckedAt": "2026-05-31T12:23:38.386Z",
       "last_checked_at": "2026-05-31T12:23:38.386Z",
-      "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-chicken-leg-curry-meal-spring-2026-offercard-h.jpg",
-      "image_url": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-chicken-leg-curry-meal-spring-2026-offercard-h.jpg",
-      "representativeImageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-chicken-leg-curry-meal-spring-2026-offercard-h.jpg",
-      "representative_image_url": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-chicken-leg-curry-meal-spring-2026-offercard-h.jpg",
+      "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-chicken-leg-curry-meal-spring-2026-gallery-b.jpg",
+      "image_url": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-chicken-leg-curry-meal-spring-2026-gallery-b.jpg",
+      "representativeImageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-chicken-leg-curry-meal-spring-2026-gallery-b.jpg",
+      "representative_image_url": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-chicken-leg-curry-meal-spring-2026-gallery-b.jpg",
       "sourceNames": [
         "official-category-kids-menus",
         "official-complete-coverage",
@@ -3239,6 +3246,22 @@
       },
       "images": [
         {
+          "id": "image-8ddftw",
+          "foodId": "food-1f1v45i",
+          "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-chicken-leg-curry-meal-spring-2026-gallery-b.jpg",
+          "sourceType": "official",
+          "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/seasonal-food/index.html",
+          "imageConfidenceScore": 100,
+          "imageMatchScore": 100,
+          "categoryImageMatchScore": 100,
+          "imageSourceContext": "0001-01-01T00:00:00 2026-02-20T03:54:48.63 tcm:0-115-1 tcm:115-8144-2 Galleries GDSInlineGalleryItem tcm:0-115-1 060 USJ Website - Japanese tcm:115-75947-8 GDS - Inline - Gallery - Item image desktop tcm:115-312953 0001-01-01T00:00:00 2026-01-29T04:12:16.883 tcm:0-115-1 tcm:115-58-2 Multimedia Schemas undefined tcm:0-115-1 060 USJ Website - Japanese tcm:115-400-8 Image - Global alt チキンレッグカレー・プレート 0 tcm:Metadata/custo",
+          "imageMatchReason": "same-menu-block,context-name-match,category-url-match",
+          "imageVerified": true,
+          "isSharedTooMuch": false,
+          "priority": 1,
+          "enabled": true
+        },
+        {
           "id": "image-umnx50",
           "foodId": "food-1f1v45i",
           "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-chicken-leg-curry-meal-spring-2026-offercard-h.jpg",
@@ -3252,7 +3275,8 @@
           "imageVerified": true,
           "isSharedTooMuch": false,
           "priority": 1,
-          "enabled": true
+          "enabled": false,
+          "imageMismatchReason": "HTTP 404 on 2026-08-25; disabled during same-food image repair"
         },
         {
           "id": "image-8ctn8j",
@@ -3264,22 +3288,6 @@
           "imageMatchScore": 96,
           "categoryImageMatchScore": 92,
           "imageSourceContext": "0001-01-01T00:00:00 2026-01-29T04:12:16.883 tcm:0-115-1 tcm:115-58-2 Multimedia Schemas undefined tcm:0-115-1 060 USJ Website - Japanese tcm:115-400-8 Image - Global alt チキンレッグカレー・プレート 0 tcm:Metadata/custom:Metadata/custom:alt overrideImage Yes 0 tcm:Metadata/custom:Metadata/custom:overrideImage 0 /usj/ja/jp/files/images/gds-images/usj-gds-food-chicken-leg-curry-meal-spring-2026-gallery-a.jpg image/jpeg usj-gds-food-",
-          "imageMatchReason": "same-menu-block,context-name-match,category-url-match",
-          "imageVerified": true,
-          "isSharedTooMuch": false,
-          "priority": 1,
-          "enabled": true
-        },
-        {
-          "id": "image-8ddftw",
-          "foodId": "food-1f1v45i",
-          "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-chicken-leg-curry-meal-spring-2026-gallery-b.jpg",
-          "sourceType": "official",
-          "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/seasonal-food/index.html",
-          "imageConfidenceScore": 100,
-          "imageMatchScore": 96,
-          "categoryImageMatchScore": 92,
-          "imageSourceContext": "0001-01-01T00:00:00 2026-02-20T03:54:48.63 tcm:0-115-1 tcm:115-8144-2 Galleries GDSInlineGalleryItem tcm:0-115-1 060 USJ Website - Japanese tcm:115-75947-8 GDS - Inline - Gallery - Item image desktop tcm:115-312953 0001-01-01T00:00:00 2026-01-29T04:12:16.883 tcm:0-115-1 tcm:115-58-2 Multimedia Schemas undefined tcm:0-115-1 060 USJ Website - Japanese tcm:115-400-8 Image - Global alt チキンレッグカレー・プレート 0 tcm:Metadata/custo",
           "imageMatchReason": "same-menu-block,context-name-match,category-url-match",
           "imageVerified": true,
           "isSharedTooMuch": false,
@@ -3858,10 +3866,10 @@
       "trusted_placeholder": false,
       "lastCheckedAt": "2026-05-31T12:23:38.386Z",
       "last_checked_at": "2026-05-31T12:23:38.386Z",
-      "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-pulled-pork-burger-and-25th-anniversary-coaster-meal-spring-2026-gallery-a.jpg",
-      "image_url": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-pulled-pork-burger-and-25th-anniversary-coaster-meal-spring-2026-gallery-a.jpg",
-      "representativeImageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-pulled-pork-burger-and-25th-anniversary-coaster-meal-spring-2026-gallery-a.jpg",
-      "representative_image_url": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-pulled-pork-burger-and-25th-anniversary-coaster-meal-spring-2026-gallery-a.jpg",
+      "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-pulled-pork-burger-and-25th-anniversary-coaster-meal-spring-2026-gallery-b.jpg",
+      "image_url": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-pulled-pork-burger-and-25th-anniversary-coaster-meal-spring-2026-gallery-b.jpg",
+      "representativeImageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-pulled-pork-burger-and-25th-anniversary-coaster-meal-spring-2026-gallery-b.jpg",
+      "representative_image_url": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-pulled-pork-burger-and-25th-anniversary-coaster-meal-spring-2026-gallery-b.jpg",
       "sourceNames": [
         "official-category-burgers-and-sandwiches",
         "official-category-kids-menus",
@@ -3907,6 +3915,22 @@
       },
       "images": [
         {
+          "id": "image-3r0zwk",
+          "foodId": "food-rvos7a",
+          "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-pulled-pork-burger-and-25th-anniversary-coaster-meal-spring-2026-gallery-b.jpg",
+          "sourceType": "official",
+          "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/seasonal-food/index.html",
+          "imageConfidenceScore": 100,
+          "imageMatchScore": 100,
+          "categoryImageMatchScore": 100,
+          "imageSourceContext": "0001-01-01T00:00:00 2026-01-22T07:12:27.917 tcm:0-115-1 tcm:115-8144-2 Galleries GDSInlineGalleryItem tcm:0-115-1 060 USJ Website - Japanese tcm:115-75947-8 GDS - Inline - Gallery - Item image desktop tcm:115-311079 0001-01-01T00:00:00 2026-01-19T03:22:54.467 tcm:0-115-1 tcm:115-58-2 Multimedia Schemas undefined tcm:0-115-1 060 USJ Website - Japanese tcm:115-400-8 Image - Global alt プルドポークバーガー 25周年コースターセット 0 tcm:Meta",
+          "imageMatchReason": "same-menu-block,context-name-match,category-url-match",
+          "imageVerified": true,
+          "isSharedTooMuch": false,
+          "priority": 1,
+          "enabled": true
+        },
+        {
           "id": "image-3qh7b7",
           "foodId": "food-rvos7a",
           "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-pulled-pork-burger-and-25th-anniversary-coaster-meal-spring-2026-gallery-a.jpg",
@@ -3920,23 +3944,8 @@
           "imageVerified": true,
           "isSharedTooMuch": false,
           "priority": 1,
-          "enabled": true
-        },
-        {
-          "id": "image-3r0zwk",
-          "foodId": "food-rvos7a",
-          "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-pulled-pork-burger-and-25th-anniversary-coaster-meal-spring-2026-gallery-b.jpg",
-          "sourceType": "official",
-          "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/seasonal-food/index.html",
-          "imageConfidenceScore": 100,
-          "imageMatchScore": 96,
-          "categoryImageMatchScore": 92,
-          "imageSourceContext": "0001-01-01T00:00:00 2026-01-22T07:12:27.917 tcm:0-115-1 tcm:115-8144-2 Galleries GDSInlineGalleryItem tcm:0-115-1 060 USJ Website - Japanese tcm:115-75947-8 GDS - Inline - Gallery - Item image desktop tcm:115-311079 0001-01-01T00:00:00 2026-01-19T03:22:54.467 tcm:0-115-1 tcm:115-58-2 Multimedia Schemas undefined tcm:0-115-1 060 USJ Website - Japanese tcm:115-400-8 Image - Global alt プルドポークバーガー 25周年コースターセット 0 tcm:Meta",
-          "imageMatchReason": "same-menu-block,context-name-match,category-url-match",
-          "imageVerified": true,
-          "isSharedTooMuch": false,
-          "priority": 1,
-          "enabled": true
+          "enabled": false,
+          "imageMismatchReason": "HTTP 404 on 2026-08-25; disabled during same-food image repair"
         },
         {
           "id": "image-1t2m8ro",
@@ -4461,10 +4470,10 @@
       "trusted_placeholder": false,
       "lastCheckedAt": "2026-05-31T09:34:57.060Z",
       "last_checked_at": "2026-05-31T09:34:57.060Z",
-      "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-kids-hamburger-meal-spring-2025-gallery-a.jpg",
-      "image_url": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-kids-hamburger-meal-spring-2025-gallery-a.jpg",
-      "representativeImageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-kids-hamburger-meal-spring-2025-gallery-a.jpg",
-      "representative_image_url": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-kids-hamburger-meal-spring-2025-gallery-a.jpg",
+      "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-kids-hamburger-meal-spring-2025-gallery-b.jpg",
+      "image_url": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-kids-hamburger-meal-spring-2025-gallery-b.jpg",
+      "representativeImageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-kids-hamburger-meal-spring-2025-gallery-b.jpg",
+      "representative_image_url": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-kids-hamburger-meal-spring-2025-gallery-b.jpg",
       "sourceNames": [
         "official-category-burgers-and-sandwiches",
         "official-category-kids-menus",
@@ -4510,6 +4519,22 @@
       },
       "images": [
         {
+          "id": "image-1geg723",
+          "foodId": "food-7yyri",
+          "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-kids-hamburger-meal-spring-2025-gallery-b.jpg",
+          "sourceType": "official",
+          "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/kids-menu/index.html",
+          "imageConfidenceScore": 100,
+          "imageMatchScore": 100,
+          "categoryImageMatchScore": 100,
+          "imageSourceContext": "0001-01-01T00:00:00 2025-02-19T03:27:21.613 tcm:0-115-1 tcm:115-8144-2 Galleries GDSInlineGalleryItem tcm:0-115-1 060 USJ Website - Japanese tcm:115-75947-8 GDS - Inline - Gallery - Item image desktop tcm:115-260865 0001-01-01T00:00:00 2025-01-10T07:20:30.793 tcm:0-115-1 tcm:115-58-2 Multimedia Schemas undefined tcm:0-115-1 060 USJ Website - Japanese tcm:115-400-8 Image - Global alt キッズ・ハンバーガーセット 0 tcm:Metadata/custo",
+          "imageMatchReason": "same-menu-block,context-name-match,category-url-match",
+          "imageVerified": true,
+          "isSharedTooMuch": false,
+          "priority": 1,
+          "enabled": true
+        },
+        {
           "id": "image-1gdwegq",
           "foodId": "food-7yyri",
           "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-kids-hamburger-meal-spring-2025-gallery-a.jpg",
@@ -4523,23 +4548,8 @@
           "imageVerified": true,
           "isSharedTooMuch": false,
           "priority": 1,
-          "enabled": true
-        },
-        {
-          "id": "image-1geg723",
-          "foodId": "food-7yyri",
-          "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-kids-hamburger-meal-spring-2025-gallery-b.jpg",
-          "sourceType": "official",
-          "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/kids-menu/index.html",
-          "imageConfidenceScore": 100,
-          "imageMatchScore": 96,
-          "categoryImageMatchScore": 92,
-          "imageSourceContext": "0001-01-01T00:00:00 2025-02-19T03:27:21.613 tcm:0-115-1 tcm:115-8144-2 Galleries GDSInlineGalleryItem tcm:0-115-1 060 USJ Website - Japanese tcm:115-75947-8 GDS - Inline - Gallery - Item image desktop tcm:115-260865 0001-01-01T00:00:00 2025-01-10T07:20:30.793 tcm:0-115-1 tcm:115-58-2 Multimedia Schemas undefined tcm:0-115-1 060 USJ Website - Japanese tcm:115-400-8 Image - Global alt キッズ・ハンバーガーセット 0 tcm:Metadata/custo",
-          "imageMatchReason": "same-menu-block,context-name-match,category-url-match",
-          "imageVerified": true,
-          "isSharedTooMuch": false,
-          "priority": 1,
-          "enabled": true
+          "enabled": false,
+          "imageMismatchReason": "HTTP 404 on 2026-08-25; disabled during same-food image repair"
         },
         {
           "id": "image-u1978m",
@@ -8936,10 +8946,10 @@
       "trusted_placeholder": false,
       "lastCheckedAt": "2026-05-29T06:51:02.897Z",
       "last_checked_at": "2026-05-29T06:51:02.897Z",
-      "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-wicked-churritos-peanut-butter-flavor-spring-2026-gallery-a.jpg",
-      "image_url": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-wicked-churritos-peanut-butter-flavor-spring-2026-gallery-a.jpg",
-      "representativeImageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-wicked-churritos-peanut-butter-flavor-spring-2026-gallery-a.jpg",
-      "representative_image_url": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-wicked-churritos-peanut-butter-flavor-spring-2026-gallery-a.jpg",
+      "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-wicked-churritos-peanut-butter-flavor-spring-2026-gallery-b.jpg",
+      "image_url": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-wicked-churritos-peanut-butter-flavor-spring-2026-gallery-b.jpg",
+      "representativeImageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-wicked-churritos-peanut-butter-flavor-spring-2026-gallery-b.jpg",
+      "representative_image_url": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-wicked-churritos-peanut-butter-flavor-spring-2026-gallery-b.jpg",
       "sourceNames": [
         "official-category-churros",
         "official-category-popcorn",
@@ -9000,6 +9010,22 @@
       },
       "images": [
         {
+          "id": "image-nrnxx4",
+          "foodId": "food-2jv220",
+          "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-wicked-churritos-peanut-butter-flavor-spring-2026-gallery-b.jpg",
+          "sourceType": "official",
+          "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/food-cart/index.html",
+          "imageConfidenceScore": 100,
+          "imageMatchScore": 100,
+          "categoryImageMatchScore": 100,
+          "imageSourceContext": "0001-01-01T00:00:00 2026-02-18T03:47:40.92 tcm:0-115-1 tcm:115-8144-2 Galleries GDSInlineGalleryItem tcm:0-115-1 060 USJ Website - Japanese tcm:115-75947-8 GDS - Inline - Gallery - Item image desktop tcm:115-312945 0001-01-01T00:00:00 2026-01-29T03:59:28.587 tcm:0-115-1 tcm:115-58-2 Multimedia Schemas undefined tcm:0-115-1 060 USJ Website - Japanese tcm:115-400-8 Image - Global alt ウィキッド・チュリトス ～ピーナッツバター・フレーバー～ 0 tcm:",
+          "imageMatchReason": "same-menu-block,context-name-match,category-url-match",
+          "imageVerified": true,
+          "isSharedTooMuch": false,
+          "priority": 1,
+          "enabled": true
+        },
+        {
           "id": "image-nr45br",
           "foodId": "food-2jv220",
           "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-wicked-churritos-peanut-butter-flavor-spring-2026-gallery-a.jpg",
@@ -9013,23 +9039,8 @@
           "imageVerified": true,
           "isSharedTooMuch": false,
           "priority": 1,
-          "enabled": true
-        },
-        {
-          "id": "image-nrnxx4",
-          "foodId": "food-2jv220",
-          "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-wicked-churritos-peanut-butter-flavor-spring-2026-gallery-b.jpg",
-          "sourceType": "official",
-          "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/food-cart/index.html",
-          "imageConfidenceScore": 100,
-          "imageMatchScore": 96,
-          "categoryImageMatchScore": 92,
-          "imageSourceContext": "0001-01-01T00:00:00 2026-02-18T03:47:40.92 tcm:0-115-1 tcm:115-8144-2 Galleries GDSInlineGalleryItem tcm:0-115-1 060 USJ Website - Japanese tcm:115-75947-8 GDS - Inline - Gallery - Item image desktop tcm:115-312945 0001-01-01T00:00:00 2026-01-29T03:59:28.587 tcm:0-115-1 tcm:115-58-2 Multimedia Schemas undefined tcm:0-115-1 060 USJ Website - Japanese tcm:115-400-8 Image - Global alt ウィキッド・チュリトス ～ピーナッツバター・フレーバー～ 0 tcm:",
-          "imageMatchReason": "same-menu-block,context-name-match,category-url-match",
-          "imageVerified": true,
-          "isSharedTooMuch": false,
-          "priority": 1,
-          "enabled": true
+          "enabled": false,
+          "imageMismatchReason": "HTTP 404 on 2026-08-25; disabled during same-food image repair"
         }
       ],
       "priceSource": "trusted_report",
@@ -9095,10 +9106,10 @@
       "trusted_placeholder": false,
       "lastCheckedAt": "2026-05-31T12:23:38.387Z",
       "last_checked_at": "2026-05-31T12:23:38.387Z",
-      "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-bob-omb-popcorn-bucket-gallery-a.jpg",
-      "image_url": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-bob-omb-popcorn-bucket-gallery-a.jpg",
-      "representativeImageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-bob-omb-popcorn-bucket-gallery-a.jpg",
-      "representative_image_url": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-bob-omb-popcorn-bucket-gallery-a.jpg",
+      "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-bob-omb-popcorn-bucket-gallery-b.jpg",
+      "image_url": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-bob-omb-popcorn-bucket-gallery-b.jpg",
+      "representativeImageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-bob-omb-popcorn-bucket-gallery-b.jpg",
+      "representative_image_url": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-bob-omb-popcorn-bucket-gallery-b.jpg",
       "sourceNames": [
         "official-category-popcorn",
         "official-complete-coverage",
@@ -9144,6 +9155,22 @@
       },
       "images": [
         {
+          "id": "image-1bdpqr6",
+          "foodId": "food-exqw6q",
+          "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-bob-omb-popcorn-bucket-gallery-b.jpg",
+          "sourceType": "official",
+          "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/food-cart/index.html",
+          "imageConfidenceScore": 100,
+          "imageMatchScore": 100,
+          "categoryImageMatchScore": 100,
+          "imageSourceContext": "0001-01-01T00:00:00 2025-10-08T16:54:46.39 tcm:0-115-1 tcm:115-8144-2 Galleries GDSInlineGalleryItem tcm:0-115-1 060 USJ Website - Japanese tcm:115-75947-8 GDS - Inline - Gallery - Item image desktop tcm:115-279297 0001-01-01T00:00:00 2025-05-29T06:38:49.783 tcm:0-115-1 tcm:115-58-2 Multimedia Schemas undefined tcm:0-115-1 060 USJ Website - Japanese tcm:115-400-8 Image - Global alt ボムへい ポップコーンバケツ 0 tcm:Metadata/custo",
+          "imageMatchReason": "same-menu-block,context-name-match,category-url-match",
+          "imageVerified": true,
+          "isSharedTooMuch": false,
+          "priority": 1,
+          "enabled": true
+        },
+        {
           "id": "image-1bd5y5t",
           "foodId": "food-exqw6q",
           "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-bob-omb-popcorn-bucket-gallery-a.jpg",
@@ -9157,23 +9184,8 @@
           "imageVerified": true,
           "isSharedTooMuch": false,
           "priority": 1,
-          "enabled": true
-        },
-        {
-          "id": "image-1bdpqr6",
-          "foodId": "food-exqw6q",
-          "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-bob-omb-popcorn-bucket-gallery-b.jpg",
-          "sourceType": "official",
-          "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/food-cart/index.html",
-          "imageConfidenceScore": 100,
-          "imageMatchScore": 96,
-          "categoryImageMatchScore": 92,
-          "imageSourceContext": "0001-01-01T00:00:00 2025-10-08T16:54:46.39 tcm:0-115-1 tcm:115-8144-2 Galleries GDSInlineGalleryItem tcm:0-115-1 060 USJ Website - Japanese tcm:115-75947-8 GDS - Inline - Gallery - Item image desktop tcm:115-279297 0001-01-01T00:00:00 2025-05-29T06:38:49.783 tcm:0-115-1 tcm:115-58-2 Multimedia Schemas undefined tcm:0-115-1 060 USJ Website - Japanese tcm:115-400-8 Image - Global alt ボムへい ポップコーンバケツ 0 tcm:Metadata/custo",
-          "imageMatchReason": "same-menu-block,context-name-match,category-url-match",
-          "imageVerified": true,
-          "isSharedTooMuch": false,
-          "priority": 1,
-          "enabled": true
+          "enabled": false,
+          "imageMismatchReason": "HTTP 404 on 2026-08-25; disabled during same-food image repair"
         }
       ],
       "priceSource": "trusted_report",
@@ -9992,10 +10004,10 @@
       "trusted_placeholder": false,
       "lastCheckedAt": "2026-05-31T12:23:38.387Z",
       "last_checked_at": "2026-05-31T12:23:38.387Z",
-      "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-wannabe-villain-dave-popcorn-bucket-2025-a.jpg",
-      "image_url": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-wannabe-villain-dave-popcorn-bucket-2025-a.jpg",
-      "representativeImageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-wannabe-villain-dave-popcorn-bucket-2025-a.jpg",
-      "representative_image_url": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-wannabe-villain-dave-popcorn-bucket-2025-a.jpg",
+      "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-wannabe-villain-dave-popcorn-bucket-2025-b.jpg",
+      "image_url": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-wannabe-villain-dave-popcorn-bucket-2025-b.jpg",
+      "representativeImageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-wannabe-villain-dave-popcorn-bucket-2025-b.jpg",
+      "representative_image_url": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-wannabe-villain-dave-popcorn-bucket-2025-b.jpg",
       "sourceNames": [
         "official-category-popcorn",
         "official-complete-coverage",
@@ -10055,6 +10067,22 @@
       },
       "images": [
         {
+          "id": "image-cs4ddv",
+          "foodId": "food-c2z2tz",
+          "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-wannabe-villain-dave-popcorn-bucket-2025-b.jpg",
+          "sourceType": "official",
+          "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/food-cart/index.html",
+          "imageConfidenceScore": 100,
+          "imageMatchScore": 100,
+          "categoryImageMatchScore": 100,
+          "imageSourceContext": "0001-01-01T00:00:00 2025-10-23T11:29:59.803 tcm:0-115-1 tcm:115-8144-2 Galleries GDSInlineGalleryItem tcm:0-115-1 060 USJ Website - Japanese tcm:115-75947-8 GDS - Inline - Gallery - Item image desktop tcm:115-273164 0001-01-01T00:00:00 2025-04-14T06:20:26.54 tcm:0-115-1 tcm:115-58-2 Multimedia Schemas undefined tcm:0-115-1 060 USJ Website - Japanese tcm:115-400-8 Image - Global alt めざせ大悪党！ デイブ・ポップコーンバケツ 0 tcm:Metadat",
+          "imageMatchReason": "same-menu-block,context-name-match,category-url-match",
+          "imageVerified": true,
+          "isSharedTooMuch": false,
+          "priority": 1,
+          "enabled": true
+        },
+        {
           "id": "image-crkksi",
           "foodId": "food-c2z2tz",
           "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-wannabe-villain-dave-popcorn-bucket-2025-a.jpg",
@@ -10068,23 +10096,8 @@
           "imageVerified": true,
           "isSharedTooMuch": false,
           "priority": 1,
-          "enabled": true
-        },
-        {
-          "id": "image-cs4ddv",
-          "foodId": "food-c2z2tz",
-          "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-wannabe-villain-dave-popcorn-bucket-2025-b.jpg",
-          "sourceType": "official",
-          "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/food-cart/index.html",
-          "imageConfidenceScore": 100,
-          "imageMatchScore": 96,
-          "categoryImageMatchScore": 92,
-          "imageSourceContext": "0001-01-01T00:00:00 2025-10-23T11:29:59.803 tcm:0-115-1 tcm:115-8144-2 Galleries GDSInlineGalleryItem tcm:0-115-1 060 USJ Website - Japanese tcm:115-75947-8 GDS - Inline - Gallery - Item image desktop tcm:115-273164 0001-01-01T00:00:00 2025-04-14T06:20:26.54 tcm:0-115-1 tcm:115-58-2 Multimedia Schemas undefined tcm:0-115-1 060 USJ Website - Japanese tcm:115-400-8 Image - Global alt めざせ大悪党！ デイブ・ポップコーンバケツ 0 tcm:Metadat",
-          "imageMatchReason": "same-menu-block,context-name-match,category-url-match",
-          "imageVerified": true,
-          "isSharedTooMuch": false,
-          "priority": 1,
-          "enabled": true
+          "enabled": false,
+          "imageMismatchReason": "HTTP 404 on 2026-08-25; disabled during same-food image repair"
         }
       ],
       "priceSource": "trusted_report",
@@ -10163,10 +10176,10 @@
       "trusted_placeholder": false,
       "lastCheckedAt": "2026-05-31T12:23:38.387Z",
       "last_checked_at": "2026-05-31T12:23:38.387Z",
-      "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-turkey-leg-gallery-a.jpg",
-      "image_url": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-turkey-leg-gallery-a.jpg",
-      "representativeImageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-turkey-leg-gallery-a.jpg",
-      "representative_image_url": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-turkey-leg-gallery-a.jpg",
+      "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-turkey-leg-gallery-b.jpg",
+      "image_url": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-turkey-leg-gallery-b.jpg",
+      "representativeImageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-turkey-leg-gallery-b.jpg",
+      "representative_image_url": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-turkey-leg-gallery-b.jpg",
       "sourceNames": [
         "official-category-churros",
         "official-category-popcorn",
@@ -10228,6 +10241,22 @@
       },
       "images": [
         {
+          "id": "image-1eyp54h",
+          "foodId": "food-1n8s9rw",
+          "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-turkey-leg-gallery-b.jpg",
+          "sourceType": "official",
+          "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/food-cart/index.html",
+          "imageConfidenceScore": 100,
+          "imageMatchScore": 100,
+          "categoryImageMatchScore": 100,
+          "imageSourceContext": "0001-01-01T00:00:00 2025-10-23T11:30:45.183 tcm:0-115-1 tcm:115-8144-2 Galleries GDSInlineGalleryItem tcm:0-115-1 060 USJ Website - Japanese tcm:115-75947-8 GDS - Inline - Gallery - Item image desktop tcm:115-256571 0001-01-01T00:00:00 2024-11-28T02:50:07.587 tcm:0-115-1 tcm:115-58-2 Multimedia Schemas undefined tcm:0-115-1 060 USJ Website - Japanese tcm:115-400-8 Image - Global alt ターキーレッグ 0 tcm:Metadata/custom:Meta",
+          "imageMatchReason": "same-menu-block,context-name-match,category-url-match",
+          "imageVerified": true,
+          "isSharedTooMuch": false,
+          "priority": 1,
+          "enabled": true
+        },
+        {
           "id": "image-1ey5cj4",
           "foodId": "food-1n8s9rw",
           "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-turkey-leg-gallery-a.jpg",
@@ -10241,23 +10270,8 @@
           "imageVerified": true,
           "isSharedTooMuch": false,
           "priority": 1,
-          "enabled": true
-        },
-        {
-          "id": "image-1eyp54h",
-          "foodId": "food-1n8s9rw",
-          "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-turkey-leg-gallery-b.jpg",
-          "sourceType": "official",
-          "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/food-cart/index.html",
-          "imageConfidenceScore": 100,
-          "imageMatchScore": 96,
-          "categoryImageMatchScore": 92,
-          "imageSourceContext": "0001-01-01T00:00:00 2025-10-23T11:30:45.183 tcm:0-115-1 tcm:115-8144-2 Galleries GDSInlineGalleryItem tcm:0-115-1 060 USJ Website - Japanese tcm:115-75947-8 GDS - Inline - Gallery - Item image desktop tcm:115-256571 0001-01-01T00:00:00 2024-11-28T02:50:07.587 tcm:0-115-1 tcm:115-58-2 Multimedia Schemas undefined tcm:0-115-1 060 USJ Website - Japanese tcm:115-400-8 Image - Global alt ターキーレッグ 0 tcm:Metadata/custom:Meta",
-          "imageMatchReason": "same-menu-block,context-name-match,category-url-match",
-          "imageVerified": true,
-          "isSharedTooMuch": false,
-          "priority": 1,
-          "enabled": true
+          "enabled": false,
+          "imageMismatchReason": "HTTP 404 on 2026-08-25; disabled during same-food image repair"
         }
       ],
       "priceSource": "trusted_report",
@@ -10667,10 +10681,10 @@
       "trusted_placeholder": false,
       "lastCheckedAt": "2026-05-31T12:23:38.386Z",
       "last_checked_at": "2026-05-31T12:23:38.386Z",
-      "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-minion-cookie-sandwich-banana-icecream-fruits-gallery-a.jpg",
-      "image_url": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-minion-cookie-sandwich-banana-icecream-fruits-gallery-a.jpg",
-      "representativeImageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-minion-cookie-sandwich-banana-icecream-fruits-gallery-a.jpg",
-      "representative_image_url": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-minion-cookie-sandwich-banana-icecream-fruits-gallery-a.jpg",
+      "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-minion-cookie-sandwich-banana-icecream-fruits-gallery-b.jpg",
+      "image_url": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-minion-cookie-sandwich-banana-icecream-fruits-gallery-b.jpg",
+      "representativeImageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-minion-cookie-sandwich-banana-icecream-fruits-gallery-b.jpg",
+      "representative_image_url": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-minion-cookie-sandwich-banana-icecream-fruits-gallery-b.jpg",
       "sourceNames": [
         "official-category-burgers-and-sandwiches",
         "official-complete-coverage",
@@ -10716,6 +10730,22 @@
       },
       "images": [
         {
+          "id": "image-123fbog",
+          "foodId": "food-1rqbb9j",
+          "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-minion-cookie-sandwich-banana-icecream-fruits-gallery-b.jpg",
+          "sourceType": "official",
+          "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/food-cart/index.html",
+          "imageConfidenceScore": 100,
+          "imageMatchScore": 100,
+          "categoryImageMatchScore": 100,
+          "imageSourceContext": "0001-01-01T00:00:00 2024-10-15T09:33:49.197 tcm:0-115-1 tcm:115-8144-2 Galleries GDSInlineGalleryItem tcm:0-115-1 060 USJ Website - Japanese tcm:115-75947-8 GDS - Inline - Gallery - Item image desktop tcm:115-249701 0001-01-01T00:00:00 2024-10-07T07:38:08.883 tcm:0-115-1 tcm:115-58-2 Multimedia Schemas undefined tcm:0-115-1 060 USJ Website - Japanese tcm:115-400-8 Image - Global alt ミニオン・クッキーサンド バナナアイス＆フルーツ 0 tcm:Met",
+          "imageMatchReason": "same-menu-block,context-name-match,category-url-match",
+          "imageVerified": true,
+          "isSharedTooMuch": false,
+          "priority": 1,
+          "enabled": true
+        },
+        {
           "id": "image-122vj33",
           "foodId": "food-1rqbb9j",
           "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-minion-cookie-sandwich-banana-icecream-fruits-gallery-a.jpg",
@@ -10729,23 +10759,8 @@
           "imageVerified": true,
           "isSharedTooMuch": false,
           "priority": 1,
-          "enabled": true
-        },
-        {
-          "id": "image-123fbog",
-          "foodId": "food-1rqbb9j",
-          "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-minion-cookie-sandwich-banana-icecream-fruits-gallery-b.jpg",
-          "sourceType": "official",
-          "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/food-cart/index.html",
-          "imageConfidenceScore": 100,
-          "imageMatchScore": 96,
-          "categoryImageMatchScore": 92,
-          "imageSourceContext": "0001-01-01T00:00:00 2024-10-15T09:33:49.197 tcm:0-115-1 tcm:115-8144-2 Galleries GDSInlineGalleryItem tcm:0-115-1 060 USJ Website - Japanese tcm:115-75947-8 GDS - Inline - Gallery - Item image desktop tcm:115-249701 0001-01-01T00:00:00 2024-10-07T07:38:08.883 tcm:0-115-1 tcm:115-58-2 Multimedia Schemas undefined tcm:0-115-1 060 USJ Website - Japanese tcm:115-400-8 Image - Global alt ミニオン・クッキーサンド バナナアイス＆フルーツ 0 tcm:Met",
-          "imageMatchReason": "same-menu-block,context-name-match,category-url-match",
-          "imageVerified": true,
-          "isSharedTooMuch": false,
-          "priority": 1,
-          "enabled": true
+          "enabled": false,
+          "imageMismatchReason": "HTTP 404 on 2026-08-25; disabled during same-food image repair"
         },
         {
           "id": "image-1b4if0f",
@@ -10855,10 +10870,10 @@
       "trusted_placeholder": false,
       "lastCheckedAt": "2026-05-29T06:51:02.897Z",
       "last_checked_at": "2026-05-29T06:51:02.897Z",
-      "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-minion-choco-banana-churritos-gallery-a.jpg",
-      "image_url": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-minion-choco-banana-churritos-gallery-a.jpg",
-      "representativeImageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-minion-choco-banana-churritos-gallery-a.jpg",
-      "representative_image_url": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-minion-choco-banana-churritos-gallery-a.jpg",
+      "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-minion-choco-banana-churritos-gallery-b.jpg",
+      "image_url": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-minion-choco-banana-churritos-gallery-b.jpg",
+      "representativeImageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-minion-choco-banana-churritos-gallery-b.jpg",
+      "representative_image_url": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-minion-choco-banana-churritos-gallery-b.jpg",
       "sourceNames": [
         "official-category-churros",
         "official-complete-coverage",
@@ -10916,6 +10931,22 @@
       },
       "images": [
         {
+          "id": "image-1cm0a51",
+          "foodId": "food-gmrx8l",
+          "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-minion-choco-banana-churritos-gallery-b.jpg",
+          "sourceType": "official",
+          "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/food-cart/index.html",
+          "imageConfidenceScore": 100,
+          "imageMatchScore": 100,
+          "categoryImageMatchScore": 100,
+          "imageSourceContext": "0001-01-01T00:00:00 2026-03-30T07:49:52.98 tcm:0-115-1 tcm:115-8144-2 Galleries GDSInlineGalleryItem tcm:0-115-1 060 USJ Website - Japanese tcm:115-75947-8 GDS - Inline - Gallery - Item image desktop tcm:115-252313 0001-01-01T00:00:00 2024-10-29T08:55:31.343 tcm:0-115-1 tcm:115-58-2 Multimedia Schemas undefined tcm:0-115-1 060 USJ Website - Japanese tcm:115-400-8 Image - Global alt ミニオンのチョコバナナ・チュリトス 0 tcm:Metadata/cu",
+          "imageMatchReason": "same-menu-block,context-name-match,category-url-match",
+          "imageVerified": true,
+          "isSharedTooMuch": false,
+          "priority": 1,
+          "enabled": true
+        },
+        {
           "id": "image-1clghjo",
           "foodId": "food-gmrx8l",
           "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-minion-choco-banana-churritos-gallery-a.jpg",
@@ -10929,23 +10960,8 @@
           "imageVerified": true,
           "isSharedTooMuch": false,
           "priority": 1,
-          "enabled": true
-        },
-        {
-          "id": "image-1cm0a51",
-          "foodId": "food-gmrx8l",
-          "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-minion-choco-banana-churritos-gallery-b.jpg",
-          "sourceType": "official",
-          "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/food-cart/index.html",
-          "imageConfidenceScore": 100,
-          "imageMatchScore": 96,
-          "categoryImageMatchScore": 92,
-          "imageSourceContext": "0001-01-01T00:00:00 2026-03-30T07:49:52.98 tcm:0-115-1 tcm:115-8144-2 Galleries GDSInlineGalleryItem tcm:0-115-1 060 USJ Website - Japanese tcm:115-75947-8 GDS - Inline - Gallery - Item image desktop tcm:115-252313 0001-01-01T00:00:00 2024-10-29T08:55:31.343 tcm:0-115-1 tcm:115-58-2 Multimedia Schemas undefined tcm:0-115-1 060 USJ Website - Japanese tcm:115-400-8 Image - Global alt ミニオンのチョコバナナ・チュリトス 0 tcm:Metadata/cu",
-          "imageMatchReason": "same-menu-block,context-name-match,category-url-match",
-          "imageVerified": true,
-          "isSharedTooMuch": false,
-          "priority": 1,
-          "enabled": true
+          "enabled": false,
+          "imageMismatchReason": "HTTP 404 on 2026-08-25; disabled during same-food image repair"
         }
       ],
       "priceSource": "trusted_report",
@@ -11016,10 +11032,10 @@
       "trusted_placeholder": false,
       "lastCheckedAt": "2026-05-31T12:23:38.387Z",
       "last_checked_at": "2026-05-31T12:23:38.387Z",
-      "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-minion-bun-hacha-mecha-curry-gallery-a.jpg",
-      "image_url": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-minion-bun-hacha-mecha-curry-gallery-a.jpg",
-      "representativeImageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-minion-bun-hacha-mecha-curry-gallery-a.jpg",
-      "representative_image_url": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-minion-bun-hacha-mecha-curry-gallery-a.jpg",
+      "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-minion-bun-hacha-mecha-curry-gallery-b.jpg",
+      "image_url": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-minion-bun-hacha-mecha-curry-gallery-b.jpg",
+      "representativeImageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-minion-bun-hacha-mecha-curry-gallery-b.jpg",
+      "representative_image_url": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-minion-bun-hacha-mecha-curry-gallery-b.jpg",
       "sourceNames": [
         "official-restaurant-menu-coverage",
         "official-restaurants"
@@ -11061,6 +11077,22 @@
       },
       "images": [
         {
+          "id": "image-v2b79g",
+          "foodId": "food-103cri5",
+          "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-minion-bun-hacha-mecha-curry-gallery-b.jpg",
+          "sourceType": "official",
+          "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/food-cart/index.html",
+          "imageConfidenceScore": 100,
+          "imageMatchScore": 100,
+          "categoryImageMatchScore": 100,
+          "imageSourceContext": "0001-01-01T00:00:00 2026-01-21T10:11:45.977 tcm:0-115-1 tcm:115-8144-2 Galleries GDSInlineGalleryItem tcm:0-115-1 060 USJ Website - Japanese tcm:115-75947-8 GDS - Inline - Gallery - Item image desktop tcm:115-225376 0001-01-01T00:00:00 2024-04-17T01:54:26.747 tcm:0-115-1 tcm:115-58-2 Multimedia Schemas undefined tcm:0-115-1 060 USJ Website - Japanese tcm:115-400-8 Image - Global alt ミニオンまん ～ハチャメチャカレー～ 0 tcm:Metadata/",
+          "imageMatchReason": "same-menu-block,context-name-match,category-url-match",
+          "imageVerified": true,
+          "isSharedTooMuch": false,
+          "priority": 1,
+          "enabled": true
+        },
+        {
           "id": "image-v1reo3",
           "foodId": "food-103cri5",
           "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-minion-bun-hacha-mecha-curry-gallery-a.jpg",
@@ -11074,23 +11106,8 @@
           "imageVerified": true,
           "isSharedTooMuch": false,
           "priority": 1,
-          "enabled": true
-        },
-        {
-          "id": "image-v2b79g",
-          "foodId": "food-103cri5",
-          "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-minion-bun-hacha-mecha-curry-gallery-b.jpg",
-          "sourceType": "official",
-          "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/food-cart/index.html",
-          "imageConfidenceScore": 100,
-          "imageMatchScore": 96,
-          "categoryImageMatchScore": 92,
-          "imageSourceContext": "0001-01-01T00:00:00 2026-01-21T10:11:45.977 tcm:0-115-1 tcm:115-8144-2 Galleries GDSInlineGalleryItem tcm:0-115-1 060 USJ Website - Japanese tcm:115-75947-8 GDS - Inline - Gallery - Item image desktop tcm:115-225376 0001-01-01T00:00:00 2024-04-17T01:54:26.747 tcm:0-115-1 tcm:115-58-2 Multimedia Schemas undefined tcm:0-115-1 060 USJ Website - Japanese tcm:115-400-8 Image - Global alt ミニオンまん ～ハチャメチャカレー～ 0 tcm:Metadata/",
-          "imageMatchReason": "same-menu-block,context-name-match,category-url-match",
-          "imageVerified": true,
-          "isSharedTooMuch": false,
-          "priority": 1,
-          "enabled": true
+          "enabled": false,
+          "imageMismatchReason": "HTTP 404 on 2026-08-25; disabled during same-food image repair"
         }
       ],
       "priceSource": "trusted_report",
@@ -11316,10 +11333,10 @@
       "trusted_placeholder": false,
       "lastCheckedAt": "2026-05-31T12:23:38.387Z",
       "last_checked_at": "2026-05-31T12:23:38.387Z",
-      "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-chinese-pork-rib-gallery-a.jpg",
-      "image_url": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-chinese-pork-rib-gallery-a.jpg",
-      "representativeImageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-chinese-pork-rib-gallery-a.jpg",
-      "representative_image_url": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-chinese-pork-rib-gallery-a.jpg",
+      "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-chinese-pork-rib-gallery-b.jpg",
+      "image_url": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-chinese-pork-rib-gallery-b.jpg",
+      "representativeImageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-chinese-pork-rib-gallery-b.jpg",
+      "representative_image_url": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-chinese-pork-rib-gallery-b.jpg",
       "sourceNames": [
         "official-category-churros",
         "official-category-popcorn",
@@ -11367,6 +11384,22 @@
       },
       "images": [
         {
+          "id": "image-xy7d4t",
+          "foodId": "food-bsvsuj",
+          "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-chinese-pork-rib-gallery-b.jpg",
+          "sourceType": "official",
+          "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/food-cart/index.html",
+          "imageConfidenceScore": 100,
+          "imageMatchScore": 100,
+          "categoryImageMatchScore": 100,
+          "imageSourceContext": "0001-01-01T00:00:00 2025-08-21T12:03:19.383 tcm:0-115-1 tcm:115-8144-2 Galleries GDSInlineGalleryItem tcm:0-115-1 060 USJ Website - Japanese tcm:115-75947-8 GDS - Inline - Gallery - Item image desktop tcm:115-249675 0001-01-01T00:00:00 2024-10-07T06:32:10.157 tcm:0-115-1 tcm:115-58-2 Multimedia Schemas undefined tcm:0-115-1 060 USJ Website - Japanese tcm:115-400-8 Image - Global alt チャイニーズ・ポークリブ 0 tcm:Metadata/custom",
+          "imageMatchReason": "same-menu-block,context-name-match,category-url-match",
+          "imageVerified": true,
+          "isSharedTooMuch": false,
+          "priority": 1,
+          "enabled": true
+        },
+        {
           "id": "image-xxnkjg",
           "foodId": "food-bsvsuj",
           "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-chinese-pork-rib-gallery-a.jpg",
@@ -11380,23 +11413,8 @@
           "imageVerified": true,
           "isSharedTooMuch": false,
           "priority": 1,
-          "enabled": true
-        },
-        {
-          "id": "image-xy7d4t",
-          "foodId": "food-bsvsuj",
-          "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-chinese-pork-rib-gallery-b.jpg",
-          "sourceType": "official",
-          "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/food-cart/index.html",
-          "imageConfidenceScore": 100,
-          "imageMatchScore": 96,
-          "categoryImageMatchScore": 92,
-          "imageSourceContext": "0001-01-01T00:00:00 2025-08-21T12:03:19.383 tcm:0-115-1 tcm:115-8144-2 Galleries GDSInlineGalleryItem tcm:0-115-1 060 USJ Website - Japanese tcm:115-75947-8 GDS - Inline - Gallery - Item image desktop tcm:115-249675 0001-01-01T00:00:00 2024-10-07T06:32:10.157 tcm:0-115-1 tcm:115-58-2 Multimedia Schemas undefined tcm:0-115-1 060 USJ Website - Japanese tcm:115-400-8 Image - Global alt チャイニーズ・ポークリブ 0 tcm:Metadata/custom",
-          "imageMatchReason": "same-menu-block,context-name-match,category-url-match",
-          "imageVerified": true,
-          "isSharedTooMuch": false,
-          "priority": 1,
-          "enabled": true
+          "enabled": false,
+          "imageMismatchReason": "HTTP 404 on 2026-08-25; disabled during same-food image repair"
         }
       ],
       "priceSource": "trusted_report",
@@ -11473,10 +11491,10 @@
       "trusted_placeholder": false,
       "lastCheckedAt": "2026-05-31T12:23:38.387Z",
       "last_checked_at": "2026-05-31T12:23:38.387Z",
-      "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-black-pepper-porkrib-gallery-a.jpg",
-      "image_url": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-black-pepper-porkrib-gallery-a.jpg",
-      "representativeImageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-black-pepper-porkrib-gallery-a.jpg",
-      "representative_image_url": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-black-pepper-porkrib-gallery-a.jpg",
+      "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-black-pepper-porkrib-gallery-b.jpg",
+      "image_url": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-black-pepper-porkrib-gallery-b.jpg",
+      "representativeImageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-black-pepper-porkrib-gallery-b.jpg",
+      "representative_image_url": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-black-pepper-porkrib-gallery-b.jpg",
       "sourceNames": [
         "official-category-churros",
         "official-category-popcorn",
@@ -11524,6 +11542,22 @@
       },
       "images": [
         {
+          "id": "image-cmpp7j",
+          "foodId": "food-84qjxm",
+          "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-black-pepper-porkrib-gallery-b.jpg",
+          "sourceType": "official",
+          "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/food-cart/index.html",
+          "imageConfidenceScore": 100,
+          "imageMatchScore": 100,
+          "categoryImageMatchScore": 100,
+          "imageSourceContext": "0001-01-01T00:00:00 2025-10-08T11:37:18.72 tcm:0-115-1 tcm:115-8144-2 Galleries GDSInlineGalleryItem tcm:0-115-1 060 USJ Website - Japanese tcm:115-75947-8 GDS - Inline - Gallery - Item image desktop tcm:115-244175 0001-01-01T00:00:00 2024-09-25T06:20:15.15 tcm:0-115-1 tcm:115-58-2 Multimedia Schemas undefined tcm:0-115-1 060 USJ Website - Japanese tcm:115-400-8 Image - Global alt ブラックペッパー・ポークリブ 0 tcm:Metadata/custom",
+          "imageMatchReason": "same-menu-block,context-name-match,category-url-match",
+          "imageVerified": true,
+          "isSharedTooMuch": false,
+          "priority": 1,
+          "enabled": true
+        },
+        {
           "id": "image-cm5wm6",
           "foodId": "food-84qjxm",
           "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-black-pepper-porkrib-gallery-a.jpg",
@@ -11537,23 +11571,8 @@
           "imageVerified": true,
           "isSharedTooMuch": false,
           "priority": 1,
-          "enabled": true
-        },
-        {
-          "id": "image-cmpp7j",
-          "foodId": "food-84qjxm",
-          "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-black-pepper-porkrib-gallery-b.jpg",
-          "sourceType": "official",
-          "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/food-cart/index.html",
-          "imageConfidenceScore": 100,
-          "imageMatchScore": 96,
-          "categoryImageMatchScore": 92,
-          "imageSourceContext": "0001-01-01T00:00:00 2025-10-08T11:37:18.72 tcm:0-115-1 tcm:115-8144-2 Galleries GDSInlineGalleryItem tcm:0-115-1 060 USJ Website - Japanese tcm:115-75947-8 GDS - Inline - Gallery - Item image desktop tcm:115-244175 0001-01-01T00:00:00 2024-09-25T06:20:15.15 tcm:0-115-1 tcm:115-58-2 Multimedia Schemas undefined tcm:0-115-1 060 USJ Website - Japanese tcm:115-400-8 Image - Global alt ブラックペッパー・ポークリブ 0 tcm:Metadata/custom",
-          "imageMatchReason": "same-menu-block,context-name-match,category-url-match",
-          "imageVerified": true,
-          "isSharedTooMuch": false,
-          "priority": 1,
-          "enabled": true
+          "enabled": false,
+          "imageMismatchReason": "HTTP 404 on 2026-08-25; disabled during same-food image repair"
         }
       ],
       "priceSource": "trusted_report",
@@ -11643,10 +11662,10 @@
       "trusted_placeholder": false,
       "lastCheckedAt": "2026-05-29T06:51:02.897Z",
       "last_checked_at": "2026-05-29T06:51:02.897Z",
-      "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-smoked-chicken-gallery-a.jpg",
-      "image_url": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-smoked-chicken-gallery-a.jpg",
-      "representativeImageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-smoked-chicken-gallery-a.jpg",
-      "representative_image_url": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-smoked-chicken-gallery-a.jpg",
+      "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-smoked-chicken-gallery-b.jpg",
+      "image_url": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-smoked-chicken-gallery-b.jpg",
+      "representativeImageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-smoked-chicken-gallery-b.jpg",
+      "representative_image_url": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-smoked-chicken-gallery-b.jpg",
       "sourceNames": [
         "official-category-churros",
         "official-category-popcorn",
@@ -11709,6 +11728,22 @@
       },
       "images": [
         {
+          "id": "image-565gav",
+          "foodId": "food-1yhw1tx",
+          "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-smoked-chicken-gallery-b.jpg",
+          "sourceType": "official",
+          "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/food-cart/index.html",
+          "imageConfidenceScore": 100,
+          "imageMatchScore": 100,
+          "categoryImageMatchScore": 100,
+          "imageSourceContext": "0001-01-01T00:00:00 2026-01-21T10:34:32.11 tcm:0-115-1 tcm:115-8144-2 Galleries GDSInlineGalleryItem tcm:0-115-1 060 USJ Website - Japanese tcm:115-75947-8 GDS - Inline - Gallery - Item image desktop tcm:115-228516 0001-01-01T00:00:00 2024-05-13T06:03:09 tcm:0-115-1 tcm:115-58-2 Multimedia Schemas undefined tcm:0-115-1 060 USJ Website - Japanese tcm:115-400-8 Image - Global alt スモークチキン 0 tcm:Metadata/custom:Metadata/",
+          "imageMatchReason": "same-menu-block,context-name-match,category-url-match",
+          "imageVerified": true,
+          "isSharedTooMuch": false,
+          "priority": 1,
+          "enabled": true
+        },
+        {
           "id": "image-55lnpi",
           "foodId": "food-1yhw1tx",
           "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-smoked-chicken-gallery-a.jpg",
@@ -11722,23 +11757,8 @@
           "imageVerified": true,
           "isSharedTooMuch": false,
           "priority": 1,
-          "enabled": true
-        },
-        {
-          "id": "image-565gav",
-          "foodId": "food-1yhw1tx",
-          "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-smoked-chicken-gallery-b.jpg",
-          "sourceType": "official",
-          "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/food-cart/index.html",
-          "imageConfidenceScore": 100,
-          "imageMatchScore": 96,
-          "categoryImageMatchScore": 92,
-          "imageSourceContext": "0001-01-01T00:00:00 2026-01-21T10:34:32.11 tcm:0-115-1 tcm:115-8144-2 Galleries GDSInlineGalleryItem tcm:0-115-1 060 USJ Website - Japanese tcm:115-75947-8 GDS - Inline - Gallery - Item image desktop tcm:115-228516 0001-01-01T00:00:00 2024-05-13T06:03:09 tcm:0-115-1 tcm:115-58-2 Multimedia Schemas undefined tcm:0-115-1 060 USJ Website - Japanese tcm:115-400-8 Image - Global alt スモークチキン 0 tcm:Metadata/custom:Metadata/",
-          "imageMatchReason": "same-menu-block,context-name-match,category-url-match",
-          "imageVerified": true,
-          "isSharedTooMuch": false,
-          "priority": 1,
-          "enabled": true
+          "enabled": false,
+          "imageMismatchReason": "HTTP 404 on 2026-08-25; disabled during same-food image repair"
         },
         {
           "id": "image-1vkkx20",
@@ -11980,10 +12000,10 @@
       "trusted_placeholder": false,
       "lastCheckedAt": "2026-05-31T12:23:38.386Z",
       "last_checked_at": "2026-05-31T12:23:38.386Z",
-      "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-pizza-danish-meal-tuna-mayonnaise-and-sakura-shrimp-gallery-a.jpg",
-      "image_url": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-pizza-danish-meal-tuna-mayonnaise-and-sakura-shrimp-gallery-a.jpg",
-      "representativeImageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-pizza-danish-meal-tuna-mayonnaise-and-sakura-shrimp-gallery-a.jpg",
-      "representative_image_url": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-pizza-danish-meal-tuna-mayonnaise-and-sakura-shrimp-gallery-a.jpg",
+      "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-pizza-danish-meal-tuna-mayonnaise-and-sakura-shrimp-gallery-b.jpg",
+      "image_url": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-pizza-danish-meal-tuna-mayonnaise-and-sakura-shrimp-gallery-b.jpg",
+      "representativeImageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-pizza-danish-meal-tuna-mayonnaise-and-sakura-shrimp-gallery-b.jpg",
+      "representative_image_url": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-pizza-danish-meal-tuna-mayonnaise-and-sakura-shrimp-gallery-b.jpg",
       "sourceNames": [
         "official-category-kids-menus",
         "official-category-pizza",
@@ -12029,6 +12049,22 @@
       },
       "images": [
         {
+          "id": "image-cmuent",
+          "foodId": "food-1kx2jev",
+          "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-pizza-danish-meal-tuna-mayonnaise-and-sakura-shrimp-gallery-b.jpg",
+          "sourceType": "official",
+          "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/food-cart/index.html",
+          "imageConfidenceScore": 100,
+          "imageMatchScore": 100,
+          "categoryImageMatchScore": 100,
+          "imageSourceContext": "0001-01-01T00:00:00 2026-02-17T03:20:24.73 tcm:0-115-1 tcm:115-8144-2 Galleries GDSInlineGalleryItem tcm:0-115-1 060 USJ Website - Japanese tcm:115-75947-8 GDS - Inline - Gallery - Item image desktop tcm:115-260887 0001-01-01T00:00:00 2025-01-10T09:04:48.943 tcm:0-115-1 tcm:115-58-2 Multimedia Schemas undefined tcm:0-115-1 060 USJ Website - Japanese tcm:115-400-8 Image - Global alt ピッツァ・デニッシュセット～ツナマヨ＆サクラエビ～ 0 tcm:Met",
+          "imageMatchReason": "same-menu-block,context-name-match,category-url-match",
+          "imageVerified": true,
+          "isSharedTooMuch": false,
+          "priority": 1,
+          "enabled": true
+        },
+        {
           "id": "image-cmam2g",
           "foodId": "food-1kx2jev",
           "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-pizza-danish-meal-tuna-mayonnaise-and-sakura-shrimp-gallery-a.jpg",
@@ -12042,23 +12078,8 @@
           "imageVerified": true,
           "isSharedTooMuch": false,
           "priority": 1,
-          "enabled": true
-        },
-        {
-          "id": "image-cmuent",
-          "foodId": "food-1kx2jev",
-          "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-pizza-danish-meal-tuna-mayonnaise-and-sakura-shrimp-gallery-b.jpg",
-          "sourceType": "official",
-          "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/food-cart/index.html",
-          "imageConfidenceScore": 100,
-          "imageMatchScore": 96,
-          "categoryImageMatchScore": 92,
-          "imageSourceContext": "0001-01-01T00:00:00 2026-02-17T03:20:24.73 tcm:0-115-1 tcm:115-8144-2 Galleries GDSInlineGalleryItem tcm:0-115-1 060 USJ Website - Japanese tcm:115-75947-8 GDS - Inline - Gallery - Item image desktop tcm:115-260887 0001-01-01T00:00:00 2025-01-10T09:04:48.943 tcm:0-115-1 tcm:115-58-2 Multimedia Schemas undefined tcm:0-115-1 060 USJ Website - Japanese tcm:115-400-8 Image - Global alt ピッツァ・デニッシュセット～ツナマヨ＆サクラエビ～ 0 tcm:Met",
-          "imageMatchReason": "same-menu-block,context-name-match,category-url-match",
-          "imageVerified": true,
-          "isSharedTooMuch": false,
-          "priority": 1,
-          "enabled": true
+          "enabled": false,
+          "imageMismatchReason": "HTTP 404 on 2026-08-25; disabled during same-food image repair"
         },
         {
           "id": "image-6y37jl",
@@ -12327,10 +12348,10 @@
       "trusted_placeholder": false,
       "lastCheckedAt": "2026-05-31T12:23:38.386Z",
       "last_checked_at": "2026-05-31T12:23:38.386Z",
-      "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-ice-cream-with-stuart-bucket-with-spoon-summer-2025-a.jpg",
-      "image_url": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-ice-cream-with-stuart-bucket-with-spoon-summer-2025-a.jpg",
-      "representativeImageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-ice-cream-with-stuart-bucket-with-spoon-summer-2025-a.jpg",
-      "representative_image_url": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-ice-cream-with-stuart-bucket-with-spoon-summer-2025-a.jpg",
+      "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-ice-cream-with-stuart-bucket-with-spoon-summer-2025-b.jpg",
+      "image_url": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-ice-cream-with-stuart-bucket-with-spoon-summer-2025-b.jpg",
+      "representativeImageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-ice-cream-with-stuart-bucket-with-spoon-summer-2025-b.jpg",
+      "representative_image_url": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-ice-cream-with-stuart-bucket-with-spoon-summer-2025-b.jpg",
       "sourceNames": [
         "official-category-popcorn",
         "official-complete-coverage",
@@ -12374,6 +12395,22 @@
       },
       "images": [
         {
+          "id": "image-yo6xci",
+          "foodId": "food-1ksr7hg",
+          "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-ice-cream-with-stuart-bucket-with-spoon-summer-2025-b.jpg",
+          "sourceType": "official",
+          "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/food-cart/index.html",
+          "imageConfidenceScore": 100,
+          "imageMatchScore": 100,
+          "categoryImageMatchScore": 100,
+          "imageSourceContext": "0001-01-01T00:00:00 2025-07-01T07:46:54.363 tcm:0-115-1 tcm:115-8144-2 Galleries GDSInlineGalleryItem tcm:0-115-1 060 USJ Website - Japanese tcm:115-75947-8 GDS - Inline - Gallery - Item image desktop tcm:115-278124 0001-01-01T00:00:00 2025-05-22T09:21:30.37 tcm:0-115-1 tcm:115-58-2 Multimedia Schemas undefined tcm:0-115-1 060 USJ Website - Japanese tcm:115-400-8 Image - Global alt アイスクリーム スチュアート・バケツ スプーン付き 0 tcm:Met",
+          "imageMatchReason": "same-menu-block,context-name-match,category-url-match",
+          "imageVerified": true,
+          "isSharedTooMuch": false,
+          "priority": 1,
+          "enabled": true
+        },
+        {
           "id": "image-ynn4r5",
           "foodId": "food-1ksr7hg",
           "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-ice-cream-with-stuart-bucket-with-spoon-summer-2025-a.jpg",
@@ -12387,23 +12424,8 @@
           "imageVerified": true,
           "isSharedTooMuch": false,
           "priority": 1,
-          "enabled": true
-        },
-        {
-          "id": "image-yo6xci",
-          "foodId": "food-1ksr7hg",
-          "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-ice-cream-with-stuart-bucket-with-spoon-summer-2025-b.jpg",
-          "sourceType": "official",
-          "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/food-cart/index.html",
-          "imageConfidenceScore": 100,
-          "imageMatchScore": 96,
-          "categoryImageMatchScore": 92,
-          "imageSourceContext": "0001-01-01T00:00:00 2025-07-01T07:46:54.363 tcm:0-115-1 tcm:115-8144-2 Galleries GDSInlineGalleryItem tcm:0-115-1 060 USJ Website - Japanese tcm:115-75947-8 GDS - Inline - Gallery - Item image desktop tcm:115-278124 0001-01-01T00:00:00 2025-05-22T09:21:30.37 tcm:0-115-1 tcm:115-58-2 Multimedia Schemas undefined tcm:0-115-1 060 USJ Website - Japanese tcm:115-400-8 Image - Global alt アイスクリーム スチュアート・バケツ スプーン付き 0 tcm:Met",
-          "imageMatchReason": "same-menu-block,context-name-match,category-url-match",
-          "imageVerified": true,
-          "isSharedTooMuch": false,
-          "priority": 1,
-          "enabled": true
+          "enabled": false,
+          "imageMismatchReason": "HTTP 404 on 2026-08-25; disabled during same-food image repair"
         },
         {
           "id": "image-ym2t13",
@@ -12504,10 +12526,10 @@
       "trusted_placeholder": false,
       "lastCheckedAt": "2026-05-31T12:23:38.387Z",
       "last_checked_at": "2026-05-31T12:23:38.387Z",
-      "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-anniversary-super-star-popcorn-bucket-spring-2026-gallery-a.jpg",
-      "image_url": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-anniversary-super-star-popcorn-bucket-spring-2026-gallery-a.jpg",
-      "representativeImageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-anniversary-super-star-popcorn-bucket-spring-2026-gallery-a.jpg",
-      "representative_image_url": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-anniversary-super-star-popcorn-bucket-spring-2026-gallery-a.jpg",
+      "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-anniversary-super-star-popcorn-bucket-spring-2026-gallery-b.jpg",
+      "image_url": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-anniversary-super-star-popcorn-bucket-spring-2026-gallery-b.jpg",
+      "representativeImageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-anniversary-super-star-popcorn-bucket-spring-2026-gallery-b.jpg",
+      "representative_image_url": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-anniversary-super-star-popcorn-bucket-spring-2026-gallery-b.jpg",
       "sourceNames": [
         "official-category-popcorn",
         "official-complete-coverage",
@@ -12553,6 +12575,22 @@
       },
       "images": [
         {
+          "id": "image-1q78lg4",
+          "foodId": "food-p0tpmw",
+          "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-anniversary-super-star-popcorn-bucket-spring-2026-gallery-b.jpg",
+          "sourceType": "official",
+          "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/food-cart/index.html",
+          "imageConfidenceScore": 100,
+          "imageMatchScore": 100,
+          "categoryImageMatchScore": 100,
+          "imageSourceContext": "0001-01-01T00:00:00 2026-03-04T02:49:09.457 tcm:0-115-1 tcm:115-8144-2 Galleries GDSInlineGalleryItem tcm:0-115-1 060 USJ Website - Japanese tcm:115-75947-8 GDS - Inline - Gallery - Item image desktop tcm:115-312578 0001-01-01T00:00:00 2026-02-03T05:46:34.54 tcm:0-115-1 tcm:115-58-2 Multimedia Schemas undefined tcm:0-115-1 060 USJ Website - Japanese tcm:115-400-8 Image - Global alt アニバーサリー・スーパースター・ポップコーンバケツ 0 tcm:Met",
+          "imageMatchReason": "same-menu-block,context-name-match,category-url-match",
+          "imageVerified": true,
+          "isSharedTooMuch": false,
+          "priority": 1,
+          "enabled": true
+        },
+        {
           "id": "image-1q6osur",
           "foodId": "food-p0tpmw",
           "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-anniversary-super-star-popcorn-bucket-spring-2026-gallery-a.jpg",
@@ -12566,23 +12604,8 @@
           "imageVerified": true,
           "isSharedTooMuch": false,
           "priority": 1,
-          "enabled": true
-        },
-        {
-          "id": "image-1q78lg4",
-          "foodId": "food-p0tpmw",
-          "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-anniversary-super-star-popcorn-bucket-spring-2026-gallery-b.jpg",
-          "sourceType": "official",
-          "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/food-cart/index.html",
-          "imageConfidenceScore": 100,
-          "imageMatchScore": 96,
-          "categoryImageMatchScore": 92,
-          "imageSourceContext": "0001-01-01T00:00:00 2026-03-04T02:49:09.457 tcm:0-115-1 tcm:115-8144-2 Galleries GDSInlineGalleryItem tcm:0-115-1 060 USJ Website - Japanese tcm:115-75947-8 GDS - Inline - Gallery - Item image desktop tcm:115-312578 0001-01-01T00:00:00 2026-02-03T05:46:34.54 tcm:0-115-1 tcm:115-58-2 Multimedia Schemas undefined tcm:0-115-1 060 USJ Website - Japanese tcm:115-400-8 Image - Global alt アニバーサリー・スーパースター・ポップコーンバケツ 0 tcm:Met",
-          "imageMatchReason": "same-menu-block,context-name-match,category-url-match",
-          "imageVerified": true,
-          "isSharedTooMuch": false,
-          "priority": 1,
-          "enabled": true
+          "enabled": false,
+          "imageMismatchReason": "HTTP 404 on 2026-08-25; disabled during same-food image repair"
         },
         {
           "id": "image-1edcxbo",
@@ -12676,10 +12699,10 @@
       "trusted_placeholder": false,
       "lastCheckedAt": "2026-05-31T12:23:38.387Z",
       "last_checked_at": "2026-05-31T12:23:38.387Z",
-      "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-dk-crush-sundae-tropical-banana-flavor-spring-2025-gallery-a.jpg",
-      "image_url": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-dk-crush-sundae-tropical-banana-flavor-spring-2025-gallery-a.jpg",
-      "representativeImageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-dk-crush-sundae-tropical-banana-flavor-spring-2025-gallery-a.jpg",
-      "representative_image_url": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-dk-crush-sundae-tropical-banana-flavor-spring-2025-gallery-a.jpg",
+      "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-dk-crush-sundae-tropical-banana-flavor-spring-2025-gallery-b.jpg",
+      "image_url": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-dk-crush-sundae-tropical-banana-flavor-spring-2025-gallery-b.jpg",
+      "representativeImageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-dk-crush-sundae-tropical-banana-flavor-spring-2025-gallery-b.jpg",
+      "representative_image_url": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-dk-crush-sundae-tropical-banana-flavor-spring-2025-gallery-b.jpg",
       "sourceNames": [
         "official-complete-coverage",
         "official-restaurants"
@@ -12721,6 +12744,22 @@
       },
       "images": [
         {
+          "id": "image-fdsfsi",
+          "foodId": "food-1yi0toj",
+          "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-dk-crush-sundae-tropical-banana-flavor-spring-2025-gallery-b.jpg",
+          "sourceType": "official",
+          "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/food-cart/index.html",
+          "imageConfidenceScore": 100,
+          "imageMatchScore": 100,
+          "categoryImageMatchScore": 100,
+          "imageSourceContext": "0001-01-01T00:00:00 2025-08-28T08:47:11.387 tcm:0-115-1 tcm:115-8144-2 Galleries GDSInlineGalleryItem tcm:0-115-1 060 USJ Website - Japanese tcm:115-75947-8 GDS - Inline - Gallery - Item image desktop tcm:115-261022 0001-01-01T00:00:00 2025-01-23T05:12:26.213 tcm:0-115-1 tcm:115-58-2 Multimedia Schemas undefined tcm:0-115-1 060 USJ Website - Japanese tcm:115-400-8 Image - Global alt DK クラッシュサンデー ～トロピカルバナナ・フレーバー～ マグカッ",
+          "imageMatchReason": "same-menu-block,context-name-match,category-url-match",
+          "imageVerified": true,
+          "isSharedTooMuch": false,
+          "priority": 1,
+          "enabled": true
+        },
+        {
           "id": "image-fd8n75",
           "foodId": "food-1yi0toj",
           "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-dk-crush-sundae-tropical-banana-flavor-spring-2025-gallery-a.jpg",
@@ -12734,23 +12773,8 @@
           "imageVerified": true,
           "isSharedTooMuch": false,
           "priority": 1,
-          "enabled": true
-        },
-        {
-          "id": "image-fdsfsi",
-          "foodId": "food-1yi0toj",
-          "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-dk-crush-sundae-tropical-banana-flavor-spring-2025-gallery-b.jpg",
-          "sourceType": "official",
-          "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/food-cart/index.html",
-          "imageConfidenceScore": 100,
-          "imageMatchScore": 96,
-          "categoryImageMatchScore": 92,
-          "imageSourceContext": "0001-01-01T00:00:00 2025-08-28T08:47:11.387 tcm:0-115-1 tcm:115-8144-2 Galleries GDSInlineGalleryItem tcm:0-115-1 060 USJ Website - Japanese tcm:115-75947-8 GDS - Inline - Gallery - Item image desktop tcm:115-261022 0001-01-01T00:00:00 2025-01-23T05:12:26.213 tcm:0-115-1 tcm:115-58-2 Multimedia Schemas undefined tcm:0-115-1 060 USJ Website - Japanese tcm:115-400-8 Image - Global alt DK クラッシュサンデー ～トロピカルバナナ・フレーバー～ マグカッ",
-          "imageMatchReason": "same-menu-block,context-name-match,category-url-match",
-          "imageVerified": true,
-          "isSharedTooMuch": false,
-          "priority": 1,
-          "enabled": true
+          "enabled": false,
+          "imageMismatchReason": "HTTP 404 on 2026-08-25; disabled during same-food image repair"
         },
         {
           "id": "image-1vm1kow",
@@ -12861,10 +12885,10 @@
       "trusted_placeholder": false,
       "lastCheckedAt": "2026-05-31T09:15:21.988Z",
       "last_checked_at": "2026-05-31T09:15:21.988Z",
-      "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-hello-kitty-churitos-strawberry-milk-gallery-a.jpg",
-      "image_url": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-hello-kitty-churitos-strawberry-milk-gallery-a.jpg",
-      "representativeImageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-hello-kitty-churitos-strawberry-milk-gallery-a.jpg",
-      "representative_image_url": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-hello-kitty-churitos-strawberry-milk-gallery-a.jpg",
+      "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-hello-kitty-churitos-strawberry-milk-gallery-b.jpg",
+      "image_url": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-hello-kitty-churitos-strawberry-milk-gallery-b.jpg",
+      "representativeImageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-hello-kitty-churitos-strawberry-milk-gallery-b.jpg",
+      "representative_image_url": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-hello-kitty-churitos-strawberry-milk-gallery-b.jpg",
       "sourceNames": [
         "official-category-churros",
         "official-complete-coverage",
@@ -12922,6 +12946,22 @@
       },
       "images": [
         {
+          "id": "image-193mk6b",
+          "foodId": "food-xpn4ok",
+          "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-hello-kitty-churitos-strawberry-milk-gallery-b.jpg",
+          "sourceType": "official",
+          "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/food-cart/index.html",
+          "imageConfidenceScore": 100,
+          "imageMatchScore": 100,
+          "categoryImageMatchScore": 100,
+          "imageSourceContext": "0001-01-01T00:00:00 2024-10-15T10:12:32.267 tcm:0-115-1 tcm:115-8144-2 Galleries GDSInlineGalleryItem tcm:0-115-1 060 USJ Website - Japanese tcm:115-75947-8 GDS - Inline - Gallery - Item image desktop tcm:115-246564 0001-01-01T00:00:00 2024-10-08T07:04:34.143 tcm:0-115-1 tcm:115-58-2 Multimedia Schemas undefined tcm:0-115-1 060 USJ Website - Japanese tcm:115-400-8 Image - Global alt ハローキティ・チュリトス ～いちごミルク～ 0 tcm:Metada",
+          "imageMatchReason": "same-menu-block,context-name-match,category-url-match",
+          "imageVerified": true,
+          "isSharedTooMuch": false,
+          "priority": 1,
+          "enabled": true
+        },
+        {
           "id": "image-1932rky",
           "foodId": "food-xpn4ok",
           "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-hello-kitty-churitos-strawberry-milk-gallery-a.jpg",
@@ -12935,23 +12975,8 @@
           "imageVerified": true,
           "isSharedTooMuch": false,
           "priority": 1,
-          "enabled": true
-        },
-        {
-          "id": "image-193mk6b",
-          "foodId": "food-xpn4ok",
-          "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-hello-kitty-churitos-strawberry-milk-gallery-b.jpg",
-          "sourceType": "official",
-          "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/food-cart/index.html",
-          "imageConfidenceScore": 100,
-          "imageMatchScore": 96,
-          "categoryImageMatchScore": 92,
-          "imageSourceContext": "0001-01-01T00:00:00 2024-10-15T10:12:32.267 tcm:0-115-1 tcm:115-8144-2 Galleries GDSInlineGalleryItem tcm:0-115-1 060 USJ Website - Japanese tcm:115-75947-8 GDS - Inline - Gallery - Item image desktop tcm:115-246564 0001-01-01T00:00:00 2024-10-08T07:04:34.143 tcm:0-115-1 tcm:115-58-2 Multimedia Schemas undefined tcm:0-115-1 060 USJ Website - Japanese tcm:115-400-8 Image - Global alt ハローキティ・チュリトス ～いちごミルク～ 0 tcm:Metada",
-          "imageMatchReason": "same-menu-block,context-name-match,category-url-match",
-          "imageVerified": true,
-          "isSharedTooMuch": false,
-          "priority": 1,
-          "enabled": true
+          "enabled": false,
+          "imageMismatchReason": "HTTP 404 on 2026-08-25; disabled during same-food image repair"
         },
         {
           "id": "image-p35mv7",
@@ -13038,10 +13063,10 @@
       "trusted_placeholder": false,
       "lastCheckedAt": "2026-05-31T12:23:38.387Z",
       "last_checked_at": "2026-05-31T12:23:38.387Z",
-      "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-hello-kitty-apple-pastry-mascarpone-gallery-a.jpg",
-      "image_url": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-hello-kitty-apple-pastry-mascarpone-gallery-a.jpg",
-      "representativeImageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-hello-kitty-apple-pastry-mascarpone-gallery-a.jpg",
-      "representative_image_url": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-hello-kitty-apple-pastry-mascarpone-gallery-a.jpg",
+      "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-hello-kitty-apple-pastry-mascarpone-gallery-b.jpg",
+      "image_url": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-hello-kitty-apple-pastry-mascarpone-gallery-b.jpg",
+      "representativeImageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-hello-kitty-apple-pastry-mascarpone-gallery-b.jpg",
+      "representative_image_url": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-hello-kitty-apple-pastry-mascarpone-gallery-b.jpg",
       "sourceNames": [
         "official-category-churros",
         "official-category-popcorn",
@@ -13091,6 +13116,22 @@
       },
       "images": [
         {
+          "id": "image-uph288",
+          "foodId": "food-mt4krf",
+          "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-hello-kitty-apple-pastry-mascarpone-gallery-b.jpg",
+          "sourceType": "official",
+          "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/food-cart/index.html",
+          "imageConfidenceScore": 100,
+          "imageMatchScore": 100,
+          "categoryImageMatchScore": 100,
+          "imageSourceContext": "0001-01-01T00:00:00 2025-10-08T18:51:12.96 tcm:0-115-1 tcm:115-8144-2 Galleries GDSInlineGalleryItem tcm:0-115-1 060 USJ Website - Japanese tcm:115-75947-8 GDS - Inline - Gallery - Item image desktop tcm:115-248072 0001-01-01T00:00:00 2024-09-25T06:21:13.29 tcm:0-115-1 tcm:115-58-2 Multimedia Schemas undefined tcm:0-115-1 060 USJ Website - Japanese tcm:115-400-8 Image - Global alt ハローキティ・アップルパイ ～マスカルポーネ～ 0 tcm:Metada",
+          "imageMatchReason": "same-menu-block,context-name-match,category-url-match",
+          "imageVerified": true,
+          "isSharedTooMuch": false,
+          "priority": 1,
+          "enabled": true
+        },
+        {
           "id": "image-uox9mv",
           "foodId": "food-mt4krf",
           "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-hello-kitty-apple-pastry-mascarpone-gallery-a.jpg",
@@ -13104,23 +13145,8 @@
           "imageVerified": true,
           "isSharedTooMuch": false,
           "priority": 1,
-          "enabled": true
-        },
-        {
-          "id": "image-uph288",
-          "foodId": "food-mt4krf",
-          "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-hello-kitty-apple-pastry-mascarpone-gallery-b.jpg",
-          "sourceType": "official",
-          "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/food-cart/index.html",
-          "imageConfidenceScore": 100,
-          "imageMatchScore": 96,
-          "categoryImageMatchScore": 92,
-          "imageSourceContext": "0001-01-01T00:00:00 2025-10-08T18:51:12.96 tcm:0-115-1 tcm:115-8144-2 Galleries GDSInlineGalleryItem tcm:0-115-1 060 USJ Website - Japanese tcm:115-75947-8 GDS - Inline - Gallery - Item image desktop tcm:115-248072 0001-01-01T00:00:00 2024-09-25T06:21:13.29 tcm:0-115-1 tcm:115-58-2 Multimedia Schemas undefined tcm:0-115-1 060 USJ Website - Japanese tcm:115-400-8 Image - Global alt ハローキティ・アップルパイ ～マスカルポーネ～ 0 tcm:Metada",
-          "imageMatchReason": "same-menu-block,context-name-match,category-url-match",
-          "imageVerified": true,
-          "isSharedTooMuch": false,
-          "priority": 1,
-          "enabled": true
+          "enabled": false,
+          "imageMismatchReason": "HTTP 404 on 2026-08-25; disabled during same-food image repair"
         }
       ],
       "priceSource": "trusted_report",
@@ -13202,10 +13228,10 @@
       "trusted_placeholder": false,
       "lastCheckedAt": "2026-05-31T12:23:38.387Z",
       "last_checked_at": "2026-05-31T12:23:38.387Z",
-      "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-hello-kitty-strawberry-and-tangy-white-drink-gallery-a.jpg",
-      "image_url": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-hello-kitty-strawberry-and-tangy-white-drink-gallery-a.jpg",
-      "representativeImageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-hello-kitty-strawberry-and-tangy-white-drink-gallery-a.jpg",
-      "representative_image_url": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-hello-kitty-strawberry-and-tangy-white-drink-gallery-a.jpg",
+      "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-hello-kitty-strawberry-and-tangy-white-drink-gallery-b.jpg",
+      "image_url": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-hello-kitty-strawberry-and-tangy-white-drink-gallery-b.jpg",
+      "representativeImageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-hello-kitty-strawberry-and-tangy-white-drink-gallery-b.jpg",
+      "representative_image_url": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-hello-kitty-strawberry-and-tangy-white-drink-gallery-b.jpg",
       "sourceNames": [
         "official-category-churros",
         "official-category-drinks",
@@ -13257,6 +13283,22 @@
       },
       "images": [
         {
+          "id": "image-1tv8r9k",
+          "foodId": "food-8wrsbw",
+          "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-hello-kitty-strawberry-and-tangy-white-drink-gallery-b.jpg",
+          "sourceType": "official",
+          "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/food-cart/index.html",
+          "imageConfidenceScore": 100,
+          "imageMatchScore": 100,
+          "categoryImageMatchScore": 100,
+          "imageSourceContext": "0001-01-01T00:00:00 2025-05-22T09:23:36.2 tcm:0-115-1 tcm:115-8144-2 Galleries GDSInlineGalleryItem tcm:0-115-1 060 USJ Website - Japanese tcm:115-75947-8 GDS - Inline - Gallery - Item image desktop tcm:115-244168 0001-01-01T00:00:00 2024-09-05T07:42:13.497 tcm:0-115-1 tcm:115-58-2 Multimedia Schemas undefined tcm:0-115-1 060 USJ Website - Japanese tcm:115-400-8 Image - Global alt ハローキティ・ドリンク ～ホワイトウォーター＆いちご～ 0 tcm:Me",
+          "imageMatchReason": "same-menu-block,context-name-match,category-url-match",
+          "imageVerified": true,
+          "isSharedTooMuch": false,
+          "priority": 1,
+          "enabled": true
+        },
+        {
           "id": "image-1tuoyo7",
           "foodId": "food-8wrsbw",
           "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-hello-kitty-strawberry-and-tangy-white-drink-gallery-a.jpg",
@@ -13270,23 +13312,8 @@
           "imageVerified": true,
           "isSharedTooMuch": false,
           "priority": 1,
-          "enabled": true
-        },
-        {
-          "id": "image-1tv8r9k",
-          "foodId": "food-8wrsbw",
-          "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-hello-kitty-strawberry-and-tangy-white-drink-gallery-b.jpg",
-          "sourceType": "official",
-          "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/food-cart/index.html",
-          "imageConfidenceScore": 100,
-          "imageMatchScore": 96,
-          "categoryImageMatchScore": 92,
-          "imageSourceContext": "0001-01-01T00:00:00 2025-05-22T09:23:36.2 tcm:0-115-1 tcm:115-8144-2 Galleries GDSInlineGalleryItem tcm:0-115-1 060 USJ Website - Japanese tcm:115-75947-8 GDS - Inline - Gallery - Item image desktop tcm:115-244168 0001-01-01T00:00:00 2024-09-05T07:42:13.497 tcm:0-115-1 tcm:115-58-2 Multimedia Schemas undefined tcm:0-115-1 060 USJ Website - Japanese tcm:115-400-8 Image - Global alt ハローキティ・ドリンク ～ホワイトウォーター＆いちご～ 0 tcm:Me",
-          "imageMatchReason": "same-menu-block,context-name-match,category-url-match",
-          "imageVerified": true,
-          "isSharedTooMuch": false,
-          "priority": 1,
-          "enabled": true
+          "enabled": false,
+          "imageMismatchReason": "HTTP 404 on 2026-08-25; disabled during same-food image repair"
         }
       ],
       "priceSource": "social_report",
@@ -13523,10 +13550,10 @@
       "trusted_placeholder": false,
       "lastCheckedAt": "2026-05-31T12:23:38.387Z",
       "last_checked_at": "2026-05-31T12:23:38.387Z",
-      "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-tim-popcorn-bucket-v2-gallery-a.jpg",
-      "image_url": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-tim-popcorn-bucket-v2-gallery-a.jpg",
-      "representativeImageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-tim-popcorn-bucket-v2-gallery-a.jpg",
-      "representative_image_url": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-tim-popcorn-bucket-v2-gallery-a.jpg",
+      "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-tim-popcorn-bucket-v2-gallery-b.jpg",
+      "image_url": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-tim-popcorn-bucket-v2-gallery-b.jpg",
+      "representativeImageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-tim-popcorn-bucket-v2-gallery-b.jpg",
+      "representative_image_url": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-tim-popcorn-bucket-v2-gallery-b.jpg",
       "sourceNames": [
         "official-category-popcorn",
         "official-complete-coverage",
@@ -13586,6 +13613,22 @@
       },
       "images": [
         {
+          "id": "image-fqipy9",
+          "foodId": "food-19w9xaa",
+          "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-tim-popcorn-bucket-v2-gallery-b.jpg",
+          "sourceType": "official",
+          "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/food-cart/index.html",
+          "imageConfidenceScore": 100,
+          "imageMatchScore": 100,
+          "categoryImageMatchScore": 100,
+          "imageSourceContext": "0001-01-01T00:00:00 2025-10-08T18:58:33.587 tcm:0-115-1 tcm:115-8144-2 Galleries GDSInlineGalleryItem tcm:0-115-1 060 USJ Website - Japanese tcm:115-75947-8 GDS - Inline - Gallery - Item image desktop tcm:115-249938 0001-01-01T00:00:00 2024-10-08T07:26:15.58 tcm:0-115-1 tcm:115-58-2 Multimedia Schemas undefined tcm:0-115-1 060 USJ Website - Japanese tcm:115-400-8 Image - Global alt ティム・ポップコーンバケツ 0 tcm:Metadata/custom",
+          "imageMatchReason": "same-menu-block,context-name-match,category-url-match",
+          "imageVerified": true,
+          "isSharedTooMuch": false,
+          "priority": 1,
+          "enabled": true
+        },
+        {
           "id": "image-fpyxcw",
           "foodId": "food-19w9xaa",
           "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-tim-popcorn-bucket-v2-gallery-a.jpg",
@@ -13599,23 +13642,8 @@
           "imageVerified": true,
           "isSharedTooMuch": false,
           "priority": 1,
-          "enabled": true
-        },
-        {
-          "id": "image-fqipy9",
-          "foodId": "food-19w9xaa",
-          "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-tim-popcorn-bucket-v2-gallery-b.jpg",
-          "sourceType": "official",
-          "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/food-cart/index.html",
-          "imageConfidenceScore": 100,
-          "imageMatchScore": 96,
-          "categoryImageMatchScore": 92,
-          "imageSourceContext": "0001-01-01T00:00:00 2025-10-08T18:58:33.587 tcm:0-115-1 tcm:115-8144-2 Galleries GDSInlineGalleryItem tcm:0-115-1 060 USJ Website - Japanese tcm:115-75947-8 GDS - Inline - Gallery - Item image desktop tcm:115-249938 0001-01-01T00:00:00 2024-10-08T07:26:15.58 tcm:0-115-1 tcm:115-58-2 Multimedia Schemas undefined tcm:0-115-1 060 USJ Website - Japanese tcm:115-400-8 Image - Global alt ティム・ポップコーンバケツ 0 tcm:Metadata/custom",
-          "imageMatchReason": "same-menu-block,context-name-match,category-url-match",
-          "imageVerified": true,
-          "isSharedTooMuch": false,
-          "priority": 1,
-          "enabled": true
+          "enabled": false,
+          "imageMismatchReason": "HTTP 404 on 2026-08-25; disabled during same-food image repair"
         }
       ],
       "priceSource": "trusted_report",
@@ -14024,10 +14052,10 @@
       "trusted_placeholder": false,
       "lastCheckedAt": "2026-05-31T12:23:38.386Z",
       "last_checked_at": "2026-05-31T12:23:38.386Z",
-      "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-chicken-and-tomato-cream-spaghetti-meal-spring-2026-gallery-a.jpg",
-      "image_url": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-chicken-and-tomato-cream-spaghetti-meal-spring-2026-gallery-a.jpg",
-      "representativeImageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-chicken-and-tomato-cream-spaghetti-meal-spring-2026-gallery-a.jpg",
-      "representative_image_url": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-chicken-and-tomato-cream-spaghetti-meal-spring-2026-gallery-a.jpg",
+      "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-chicken-and-tomato-cream-spaghetti-meal-spring-2026-gallery-b.jpg",
+      "image_url": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-chicken-and-tomato-cream-spaghetti-meal-spring-2026-gallery-b.jpg",
+      "representativeImageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-chicken-and-tomato-cream-spaghetti-meal-spring-2026-gallery-b.jpg",
+      "representative_image_url": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-chicken-and-tomato-cream-spaghetti-meal-spring-2026-gallery-b.jpg",
       "sourceNames": [
         "official-complete-coverage",
         "official-restaurant-menu-coverage",
@@ -14071,6 +14099,22 @@
       },
       "images": [
         {
+          "id": "image-qktws3",
+          "foodId": "food-11urhsj",
+          "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-chicken-and-tomato-cream-spaghetti-meal-spring-2026-gallery-b.jpg",
+          "sourceType": "official",
+          "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/seasonal-food/index.html",
+          "imageConfidenceScore": 100,
+          "imageMatchScore": 100,
+          "categoryImageMatchScore": 100,
+          "imageSourceContext": "0001-01-01T00:00:00 2026-01-22T07:20:59.59 tcm:0-115-1 tcm:115-8144-2 Galleries GDSInlineGalleryItem tcm:0-115-1 060 USJ Website - Japanese tcm:115-75947-8 GDS - Inline - Gallery - Item image desktop tcm:115-311099 0001-01-01T00:00:00 2026-01-15T10:10:48.13 tcm:0-115-1 tcm:115-58-2 Multimedia Schemas undefined tcm:0-115-1 060 USJ Website - Japanese tcm:115-400-8 Image - Global alt チキンとトマトクリーム・スパゲティセット 0 tcm:Metadata/",
+          "imageMatchReason": "same-menu-block,context-name-match,category-url-match",
+          "imageVerified": true,
+          "isSharedTooMuch": false,
+          "priority": 1,
+          "enabled": true
+        },
+        {
           "id": "image-qka46q",
           "foodId": "food-11urhsj",
           "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-chicken-and-tomato-cream-spaghetti-meal-spring-2026-gallery-a.jpg",
@@ -14084,23 +14128,8 @@
           "imageVerified": true,
           "isSharedTooMuch": false,
           "priority": 1,
-          "enabled": true
-        },
-        {
-          "id": "image-qktws3",
-          "foodId": "food-11urhsj",
-          "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-chicken-and-tomato-cream-spaghetti-meal-spring-2026-gallery-b.jpg",
-          "sourceType": "official",
-          "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/seasonal-food/index.html",
-          "imageConfidenceScore": 100,
-          "imageMatchScore": 96,
-          "categoryImageMatchScore": 92,
-          "imageSourceContext": "0001-01-01T00:00:00 2026-01-22T07:20:59.59 tcm:0-115-1 tcm:115-8144-2 Galleries GDSInlineGalleryItem tcm:0-115-1 060 USJ Website - Japanese tcm:115-75947-8 GDS - Inline - Gallery - Item image desktop tcm:115-311099 0001-01-01T00:00:00 2026-01-15T10:10:48.13 tcm:0-115-1 tcm:115-58-2 Multimedia Schemas undefined tcm:0-115-1 060 USJ Website - Japanese tcm:115-400-8 Image - Global alt チキンとトマトクリーム・スパゲティセット 0 tcm:Metadata/",
-          "imageMatchReason": "same-menu-block,context-name-match,category-url-match",
-          "imageVerified": true,
-          "isSharedTooMuch": false,
-          "priority": 1,
-          "enabled": true
+          "enabled": false,
+          "imageMismatchReason": "HTTP 404 on 2026-08-25; disabled during same-food image repair"
         },
         {
           "id": "image-1i3mw0j",
@@ -15506,10 +15535,10 @@
       "trusted_placeholder": false,
       "lastCheckedAt": "2026-05-31T12:23:38.386Z",
       "last_checked_at": "2026-05-31T12:23:38.386Z",
-      "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-woodstocks-fluffy-cake-lemon-and-apple-spring-2026-gallery-a.jpg",
-      "image_url": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-woodstocks-fluffy-cake-lemon-and-apple-spring-2026-gallery-a.jpg",
-      "representativeImageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-woodstocks-fluffy-cake-lemon-and-apple-spring-2026-gallery-a.jpg",
-      "representative_image_url": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-woodstocks-fluffy-cake-lemon-and-apple-spring-2026-gallery-a.jpg",
+      "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-woodstocks-fluffy-cake-lemon-and-apple-spring-2026-gallery-b.jpg",
+      "image_url": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-woodstocks-fluffy-cake-lemon-and-apple-spring-2026-gallery-b.jpg",
+      "representativeImageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-woodstocks-fluffy-cake-lemon-and-apple-spring-2026-gallery-b.jpg",
+      "representative_image_url": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-woodstocks-fluffy-cake-lemon-and-apple-spring-2026-gallery-b.jpg",
       "sourceNames": [
         "official-complete-coverage",
         "official-restaurant-menu-coverage",
@@ -15553,6 +15582,22 @@
       },
       "images": [
         {
+          "id": "image-b3rqti",
+          "foodId": "food-1swgjnq",
+          "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-woodstocks-fluffy-cake-lemon-and-apple-spring-2026-gallery-b.jpg",
+          "sourceType": "official",
+          "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/seasonal-food/index.html",
+          "imageConfidenceScore": 100,
+          "imageMatchScore": 100,
+          "categoryImageMatchScore": 100,
+          "imageSourceContext": "0001-01-01T00:00:00 2026-01-22T07:23:44.007 tcm:0-115-1 tcm:115-8144-2 Galleries GDSInlineGalleryItem tcm:0-115-1 060 USJ Website - Japanese tcm:115-75947-8 GDS - Inline - Gallery - Item image desktop tcm:115-311097 0001-01-01T00:00:00 2026-02-20T03:42:32.843 tcm:0-115-1 tcm:115-58-2 Multimedia Schemas undefined tcm:0-115-1 060 USJ Website - Japanese tcm:115-400-8 Image - Global alt ウッドストックのふんわりケーキ ～レモン＆リンゴ～ 0 tcm:Me",
+          "imageMatchReason": "same-menu-block,context-name-match,category-url-match",
+          "imageVerified": true,
+          "isSharedTooMuch": false,
+          "priority": 1,
+          "enabled": true
+        },
+        {
           "id": "image-b37y85",
           "foodId": "food-1swgjnq",
           "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-woodstocks-fluffy-cake-lemon-and-apple-spring-2026-gallery-a.jpg",
@@ -15566,23 +15611,8 @@
           "imageVerified": true,
           "isSharedTooMuch": false,
           "priority": 1,
-          "enabled": true
-        },
-        {
-          "id": "image-b3rqti",
-          "foodId": "food-1swgjnq",
-          "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-woodstocks-fluffy-cake-lemon-and-apple-spring-2026-gallery-b.jpg",
-          "sourceType": "official",
-          "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/seasonal-food/index.html",
-          "imageConfidenceScore": 100,
-          "imageMatchScore": 96,
-          "categoryImageMatchScore": 92,
-          "imageSourceContext": "0001-01-01T00:00:00 2026-01-22T07:23:44.007 tcm:0-115-1 tcm:115-8144-2 Galleries GDSInlineGalleryItem tcm:0-115-1 060 USJ Website - Japanese tcm:115-75947-8 GDS - Inline - Gallery - Item image desktop tcm:115-311097 0001-01-01T00:00:00 2026-02-20T03:42:32.843 tcm:0-115-1 tcm:115-58-2 Multimedia Schemas undefined tcm:0-115-1 060 USJ Website - Japanese tcm:115-400-8 Image - Global alt ウッドストックのふんわりケーキ ～レモン＆リンゴ～ 0 tcm:Me",
-          "imageMatchReason": "same-menu-block,context-name-match,category-url-match",
-          "imageVerified": true,
-          "isSharedTooMuch": false,
-          "priority": 1,
-          "enabled": true
+          "enabled": false,
+          "imageMismatchReason": "HTTP 404 on 2026-08-25; disabled during same-food image repair"
         },
         {
           "id": "image-t5d8o6",
@@ -15821,10 +15851,10 @@
       "trusted_placeholder": false,
       "lastCheckedAt": "2026-05-29T21:27:46.150Z",
       "last_checked_at": "2026-05-29T21:27:46.150Z",
-      "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-mushroom-soup-wood-gallery-a.jpg",
-      "image_url": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-mushroom-soup-wood-gallery-a.jpg",
-      "representativeImageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-mushroom-soup-wood-gallery-a.jpg",
-      "representative_image_url": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-mushroom-soup-wood-gallery-a.jpg",
+      "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-mushroom-soup-wood-gallery-b.jpg",
+      "image_url": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-mushroom-soup-wood-gallery-b.jpg",
+      "representativeImageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-mushroom-soup-wood-gallery-b.jpg",
+      "representative_image_url": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-mushroom-soup-wood-gallery-b.jpg",
       "sourceNames": [
         "official-restaurants"
       ],
@@ -15863,6 +15893,22 @@
       },
       "images": [
         {
+          "id": "image-1y8jj9",
+          "foodId": "food-it27lt",
+          "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-mushroom-soup-wood-gallery-b.jpg",
+          "sourceType": "official",
+          "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/super-nintendo-world-food/index.html",
+          "imageConfidenceScore": 100,
+          "imageMatchScore": 100,
+          "categoryImageMatchScore": 100,
+          "imageSourceContext": "0001-01-01T00:00:00 2024-09-05T07:10:22.02 tcm:0-115-1 tcm:115-8144-2 Galleries GDSInlineGalleryItem tcm:0-115-1 060 USJ Website - Japanese tcm:115-75947-8 GDS - Inline - Gallery - Item image desktop tcm:115-229188 0001-01-01T00:00:00 2024-05-16T03:04:04.27 tcm:0-115-1 tcm:115-58-2 Multimedia Schemas undefined tcm:0-115-1 060 USJ Website - Japanese tcm:115-400-8 Image - Global alt マッシュルームスープ 0 tcm:Metadata/custom:Met",
+          "imageMatchReason": "same-menu-block,context-name-match,category-url-match",
+          "imageVerified": true,
+          "isSharedTooMuch": false,
+          "priority": 1,
+          "enabled": true
+        },
+        {
           "id": "image-1xoqxw",
           "foodId": "food-it27lt",
           "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-mushroom-soup-wood-gallery-a.jpg",
@@ -15876,23 +15922,8 @@
           "imageVerified": true,
           "isSharedTooMuch": false,
           "priority": 1,
-          "enabled": true
-        },
-        {
-          "id": "image-1y8jj9",
-          "foodId": "food-it27lt",
-          "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-mushroom-soup-wood-gallery-b.jpg",
-          "sourceType": "official",
-          "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/super-nintendo-world-food/index.html",
-          "imageConfidenceScore": 100,
-          "imageMatchScore": 86,
-          "categoryImageMatchScore": 45,
-          "imageSourceContext": "0001-01-01T00:00:00 2024-09-05T07:10:22.02 tcm:0-115-1 tcm:115-8144-2 Galleries GDSInlineGalleryItem tcm:0-115-1 060 USJ Website - Japanese tcm:115-75947-8 GDS - Inline - Gallery - Item image desktop tcm:115-229188 0001-01-01T00:00:00 2024-05-16T03:04:04.27 tcm:0-115-1 tcm:115-58-2 Multimedia Schemas undefined tcm:0-115-1 060 USJ Website - Japanese tcm:115-400-8 Image - Global alt マッシュルームスープ 0 tcm:Metadata/custom:Met",
-          "imageMatchReason": "same-menu-block,context-name-match,category-url-match",
-          "imageVerified": true,
-          "isSharedTooMuch": false,
-          "priority": 1,
-          "enabled": true
+          "enabled": false,
+          "imageMismatchReason": "HTTP 404 on 2026-08-25; disabled during same-food image repair"
         }
       ],
       "price": 900,
@@ -15986,10 +16017,10 @@
       "trusted_placeholder": false,
       "lastCheckedAt": "2026-05-29T06:51:02.897Z",
       "last_checked_at": "2026-05-29T06:51:02.897Z",
-      "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-hamburger-kids-set-with-mario-pick-wood-gallery-a.jpg",
-      "image_url": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-hamburger-kids-set-with-mario-pick-wood-gallery-a.jpg",
-      "representativeImageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-hamburger-kids-set-with-mario-pick-wood-gallery-a.jpg",
-      "representative_image_url": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-hamburger-kids-set-with-mario-pick-wood-gallery-a.jpg",
+      "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-hamburger-kids-set-with-mario-pick-wood-gallery-b.jpg",
+      "image_url": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-hamburger-kids-set-with-mario-pick-wood-gallery-b.jpg",
+      "representativeImageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-hamburger-kids-set-with-mario-pick-wood-gallery-b.jpg",
+      "representative_image_url": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-hamburger-kids-set-with-mario-pick-wood-gallery-b.jpg",
       "sourceNames": [
         "official-category-burgers-and-sandwiches",
         "official-category-kids-menus",
@@ -16035,6 +16066,22 @@
       },
       "images": [
         {
+          "id": "image-1d02xwf",
+          "foodId": "food-1eqmspw",
+          "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-hamburger-kids-set-with-mario-pick-wood-gallery-b.jpg",
+          "sourceType": "official",
+          "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/super-nintendo-world-food/index.html",
+          "imageConfidenceScore": 100,
+          "imageMatchScore": 100,
+          "categoryImageMatchScore": 100,
+          "imageSourceContext": "0001-01-01T00:00:00 2026-01-21T08:43:21.96 tcm:0-115-1 tcm:115-8144-2 Galleries GDSInlineGalleryItem tcm:0-115-1 060 USJ Website - Japanese tcm:115-75947-8 GDS - Inline - Gallery - Item image desktop tcm:115-229192 0001-01-01T00:00:00 2024-05-16T03:06:08.337 tcm:0-115-1 tcm:115-58-2 Multimedia Schemas undefined tcm:0-115-1 060 USJ Website - Japanese tcm:115-400-8 Image - Global alt ハンバーガー・キッズセット（マリオのピック付） 0 tcm:Metad",
+          "imageMatchReason": "same-menu-block,context-name-match,category-url-match",
+          "imageVerified": true,
+          "isSharedTooMuch": false,
+          "priority": 1,
+          "enabled": true
+        },
+        {
           "id": "image-1czj5b2",
           "foodId": "food-1eqmspw",
           "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-hamburger-kids-set-with-mario-pick-wood-gallery-a.jpg",
@@ -16048,23 +16095,8 @@
           "imageVerified": true,
           "isSharedTooMuch": false,
           "priority": 1,
-          "enabled": true
-        },
-        {
-          "id": "image-1d02xwf",
-          "foodId": "food-1eqmspw",
-          "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-hamburger-kids-set-with-mario-pick-wood-gallery-b.jpg",
-          "sourceType": "official",
-          "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/super-nintendo-world-food/index.html",
-          "imageConfidenceScore": 100,
-          "imageMatchScore": 96,
-          "categoryImageMatchScore": 92,
-          "imageSourceContext": "0001-01-01T00:00:00 2026-01-21T08:43:21.96 tcm:0-115-1 tcm:115-8144-2 Galleries GDSInlineGalleryItem tcm:0-115-1 060 USJ Website - Japanese tcm:115-75947-8 GDS - Inline - Gallery - Item image desktop tcm:115-229192 0001-01-01T00:00:00 2024-05-16T03:06:08.337 tcm:0-115-1 tcm:115-58-2 Multimedia Schemas undefined tcm:0-115-1 060 USJ Website - Japanese tcm:115-400-8 Image - Global alt ハンバーガー・キッズセット（マリオのピック付） 0 tcm:Metad",
-          "imageMatchReason": "same-menu-block,context-name-match,category-url-match",
-          "imageVerified": true,
-          "isSharedTooMuch": false,
-          "priority": 1,
-          "enabled": true
+          "enabled": false,
+          "imageMismatchReason": "HTTP 404 on 2026-08-25; disabled during same-food image repair"
         },
         {
           "id": "image-ey875z",
@@ -16164,10 +16196,10 @@
       "trusted_placeholder": false,
       "lastCheckedAt": "2026-05-31T09:15:21.988Z",
       "last_checked_at": "2026-05-31T09:15:21.988Z",
-      "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-jungle-beat-shakes-a.jpg",
-      "image_url": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-jungle-beat-shakes-a.jpg",
-      "representativeImageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-jungle-beat-shakes-a.jpg",
-      "representative_image_url": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-jungle-beat-shakes-a.jpg",
+      "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-jungle-beat-shakes-b.jpg",
+      "image_url": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-jungle-beat-shakes-b.jpg",
+      "representativeImageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-jungle-beat-shakes-b.jpg",
+      "representative_image_url": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-jungle-beat-shakes-b.jpg",
       "sourceNames": [
         "official-category-popcorn",
         "official-restaurants"
@@ -16208,6 +16240,22 @@
       },
       "images": [
         {
+          "id": "image-1pr0ps5",
+          "foodId": "food-1nxl32b",
+          "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-jungle-beat-shakes-b.jpg",
+          "sourceType": "official",
+          "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/super-nintendo-world-food/index.html",
+          "imageConfidenceScore": 100,
+          "imageMatchScore": 100,
+          "categoryImageMatchScore": 100,
+          "imageSourceContext": "0001-01-01T00:00:00 2025-03-03T07:57:22 tcm:0-115-1 tcm:115-9071-2 Generic Schemas GDSMediaDetail tcm:0-115-1 060 USJ Website - Japanese tcm:115-130859-8 GDS - Media Detail heading ジャングル・ビート・シェイク 2 image desktop tcm:115-233519 0001-01-01T00:00:00 2024-11-08T02:53:51.067 tcm:0-115-1 tcm:115-58-2 Multimedia Schemas undefined tcm:0-115-1 060 USJ Website - Japanese tcm:115-400-8 Image - Global alt ジャングル・ビート・シェイク 0 tcm:Me",
+          "imageMatchReason": "same-menu-block,context-name-match,category-url-match",
+          "imageVerified": true,
+          "isSharedTooMuch": false,
+          "priority": 1,
+          "enabled": true
+        },
+        {
           "id": "image-1pqgx6s",
           "foodId": "food-1nxl32b",
           "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-jungle-beat-shakes-a.jpg",
@@ -16221,23 +16269,8 @@
           "imageVerified": true,
           "isSharedTooMuch": false,
           "priority": 1,
-          "enabled": true
-        },
-        {
-          "id": "image-1pr0ps5",
-          "foodId": "food-1nxl32b",
-          "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-jungle-beat-shakes-b.jpg",
-          "sourceType": "official",
-          "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/super-nintendo-world-food/index.html",
-          "imageConfidenceScore": 100,
-          "imageMatchScore": 96,
-          "categoryImageMatchScore": 92,
-          "imageSourceContext": "0001-01-01T00:00:00 2025-03-03T07:57:22 tcm:0-115-1 tcm:115-9071-2 Generic Schemas GDSMediaDetail tcm:0-115-1 060 USJ Website - Japanese tcm:115-130859-8 GDS - Media Detail heading ジャングル・ビート・シェイク 2 image desktop tcm:115-233519 0001-01-01T00:00:00 2024-11-08T02:53:51.067 tcm:0-115-1 tcm:115-58-2 Multimedia Schemas undefined tcm:0-115-1 060 USJ Website - Japanese tcm:115-400-8 Image - Global alt ジャングル・ビート・シェイク 0 tcm:Me",
-          "imageMatchReason": "same-menu-block,context-name-match,category-url-match",
-          "imageVerified": true,
-          "isSharedTooMuch": false,
-          "priority": 1,
-          "enabled": true
+          "enabled": false,
+          "imageMismatchReason": "HTTP 404 on 2026-08-25; disabled during same-food image repair"
         },
         {
           "id": "image-1e1bqsj",
@@ -16777,10 +16810,10 @@
       "trusted_placeholder": false,
       "lastCheckedAt": "2026-05-29T06:51:02.897Z",
       "last_checked_at": "2026-05-29T06:51:02.897Z",
-      "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-kids-sandwich-meal-spring-2025-gallery-a.jpg",
-      "image_url": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-kids-sandwich-meal-spring-2025-gallery-a.jpg",
-      "representativeImageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-kids-sandwich-meal-spring-2025-gallery-a.jpg",
-      "representative_image_url": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-kids-sandwich-meal-spring-2025-gallery-a.jpg",
+      "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-kids-sandwich-meal-spring-2025-offercard-h.jpg",
+      "image_url": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-kids-sandwich-meal-spring-2025-offercard-h.jpg",
+      "representativeImageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-kids-sandwich-meal-spring-2025-offercard-h.jpg",
+      "representative_image_url": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-kids-sandwich-meal-spring-2025-offercard-h.jpg",
       "sourceNames": [
         "official-category-burgers-and-sandwiches",
         "official-category-kids-menus",
@@ -16826,6 +16859,22 @@
       },
       "images": [
         {
+          "id": "image-1eh0bwy",
+          "foodId": "food-4n0ipg",
+          "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-kids-sandwich-meal-spring-2025-offercard-h.jpg",
+          "sourceType": "official",
+          "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/park-side-grille/index.html",
+          "imageConfidenceScore": 100,
+          "imageMatchScore": 100,
+          "categoryImageMatchScore": 100,
+          "imageSourceContext": "0001-01-01T00:00:00 2025-02-07T08:02:12.763 tcm:0-115-1 tcm:115-9072-2 Cards GDSOfferCard tcm:0-115-1 060 USJ Website - Japanese tcm:115-78524-8 GDS - Offer - Card backgroundImage desktop tcm:115-265498 0001-01-01T00:00:00 2025-02-07T08:00:32.737 tcm:0-115-1 tcm:115-58-2 Multimedia Schemas undefined tcm:0-115-1 060 USJ Website - Japanese tcm:115-400-8 Image - Global alt キッズ・サンドウィッチセット 0 tcm:Metadata/custom:Metadata/c",
+          "imageMatchReason": "same-menu-block,context-name-match,category-url-match",
+          "imageVerified": true,
+          "isSharedTooMuch": false,
+          "priority": 1,
+          "enabled": true
+        },
+        {
           "id": "image-1jrhjfs",
           "foodId": "food-4n0ipg",
           "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-kids-sandwich-meal-spring-2025-gallery-a.jpg",
@@ -16839,7 +16888,8 @@
           "imageVerified": true,
           "isSharedTooMuch": false,
           "priority": 1,
-          "enabled": true
+          "enabled": false,
+          "imageMismatchReason": "HTTP 404 on 2026-08-25; disabled during same-food image repair"
         },
         {
           "id": "image-1js1c15",
@@ -16851,22 +16901,6 @@
           "imageMatchScore": 96,
           "categoryImageMatchScore": 92,
           "imageSourceContext": "0001-01-01T00:00:00 2025-02-17T08:23:33.09 tcm:0-115-1 tcm:115-8144-2 Galleries GDSInlineGalleryItem tcm:0-115-1 060 USJ Website - Japanese tcm:115-75947-8 GDS - Inline - Gallery - Item image desktop tcm:115-264217 0001-01-01T00:00:00 2025-01-31T08:38:54.41 tcm:0-115-1 tcm:115-58-2 Multimedia Schemas undefined tcm:0-115-1 060 USJ Website - Japanese tcm:115-400-8 Image - Global alt キッズ・サンドウィッチセット 0 tcm:Metadata/custom",
-          "imageMatchReason": "same-menu-block,context-name-match,category-url-match",
-          "imageVerified": true,
-          "isSharedTooMuch": false,
-          "priority": 1,
-          "enabled": true
-        },
-        {
-          "id": "image-1eh0bwy",
-          "foodId": "food-4n0ipg",
-          "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-kids-sandwich-meal-spring-2025-offercard-h.jpg",
-          "sourceType": "official",
-          "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/park-side-grille/index.html",
-          "imageConfidenceScore": 100,
-          "imageMatchScore": 96,
-          "categoryImageMatchScore": 92,
-          "imageSourceContext": "0001-01-01T00:00:00 2025-02-07T08:02:12.763 tcm:0-115-1 tcm:115-9072-2 Cards GDSOfferCard tcm:0-115-1 060 USJ Website - Japanese tcm:115-78524-8 GDS - Offer - Card backgroundImage desktop tcm:115-265498 0001-01-01T00:00:00 2025-02-07T08:00:32.737 tcm:0-115-1 tcm:115-58-2 Multimedia Schemas undefined tcm:0-115-1 060 USJ Website - Japanese tcm:115-400-8 Image - Global alt キッズ・サンドウィッチセット 0 tcm:Metadata/custom:Metadata/c",
           "imageMatchReason": "same-menu-block,context-name-match,category-url-match",
           "imageVerified": true,
           "isSharedTooMuch": false,
@@ -17640,10 +17674,10 @@
       "trusted_placeholder": false,
       "lastCheckedAt": "2026-05-29T06:51:02.897Z",
       "last_checked_at": "2026-05-29T06:51:02.897Z",
-      "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-snoopy-kids-set-christmas-2024-gallery-a.jpg",
-      "image_url": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-snoopy-kids-set-christmas-2024-gallery-a.jpg",
-      "representativeImageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-snoopy-kids-set-christmas-2024-gallery-a.jpg",
-      "representative_image_url": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-snoopy-kids-set-christmas-2024-gallery-a.jpg",
+      "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-snoopy-kids-set-2024-offercard-h.jpg",
+      "image_url": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-snoopy-kids-set-2024-offercard-h.jpg",
+      "representativeImageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-snoopy-kids-set-2024-offercard-h.jpg",
+      "representative_image_url": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-snoopy-kids-set-2024-offercard-h.jpg",
       "sourceNames": [
         "official-category-kids-menus",
         "official-restaurant-menu-coverage",
@@ -17687,6 +17721,22 @@
       },
       "images": [
         {
+          "id": "image-1mf75qu",
+          "foodId": "food-p6f1q5",
+          "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-snoopy-kids-set-2024-offercard-h.jpg",
+          "sourceType": "official",
+          "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/snoopys-backlot-cafe/index.html",
+          "imageConfidenceScore": 100,
+          "imageMatchScore": 100,
+          "categoryImageMatchScore": 100,
+          "imageSourceContext": "0001-01-01T00:00:00 2025-01-21T08:58:17.763 tcm:0-115-1 tcm:115-9072-2 Cards GDSOfferCard tcm:0-115-1 060 USJ Website - Japanese tcm:115-78524-8 GDS - Offer - Card backgroundImage desktop tcm:115-248182 0001-01-01T00:00:00 2024-09-26T06:46:27.69 tcm:0-115-1 tcm:115-58-2 Multimedia Schemas undefined tcm:0-115-1 060 USJ Website - Japanese tcm:115-400-8 Image - Global alt スヌーピー・キッズセット 0 tcm:Metadata/custom:Metadata/cust",
+          "imageMatchReason": "same-menu-block,context-name-match,category-url-match",
+          "imageVerified": true,
+          "isSharedTooMuch": false,
+          "priority": 1,
+          "enabled": true
+        },
+        {
           "id": "image-1qme78h",
           "foodId": "food-p6f1q5",
           "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-snoopy-kids-set-christmas-2024-gallery-a.jpg",
@@ -17700,7 +17750,8 @@
           "imageVerified": true,
           "isSharedTooMuch": false,
           "priority": 1,
-          "enabled": true
+          "enabled": false,
+          "imageMismatchReason": "HTTP 404 on 2026-08-25; disabled during same-food image repair"
         },
         {
           "id": "image-1qmxztu",
@@ -17712,22 +17763,6 @@
           "imageMatchScore": 96,
           "categoryImageMatchScore": 92,
           "imageSourceContext": "0001-01-01T00:00:00 2025-02-17T06:55:54.44 tcm:0-115-1 tcm:115-8144-2 Galleries GDSInlineGalleryItem tcm:0-115-1 060 USJ Website - Japanese tcm:115-75947-8 GDS - Inline - Gallery - Item image desktop tcm:115-248805 0001-01-01T00:00:00 2024-09-30T02:40:07.083 tcm:0-115-1 tcm:115-58-2 Multimedia Schemas undefined tcm:0-115-1 060 USJ Website - Japanese tcm:115-400-8 Image - Global alt スヌーピー・キッズセット 0 tcm:Metadata/custom:",
-          "imageMatchReason": "same-menu-block,context-name-match,category-url-match",
-          "imageVerified": true,
-          "isSharedTooMuch": false,
-          "priority": 1,
-          "enabled": true
-        },
-        {
-          "id": "image-1mf75qu",
-          "foodId": "food-p6f1q5",
-          "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-food-snoopy-kids-set-2024-offercard-h.jpg",
-          "sourceType": "official",
-          "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/snoopys-backlot-cafe/index.html",
-          "imageConfidenceScore": 100,
-          "imageMatchScore": 96,
-          "categoryImageMatchScore": 92,
-          "imageSourceContext": "0001-01-01T00:00:00 2025-01-21T08:58:17.763 tcm:0-115-1 tcm:115-9072-2 Cards GDSOfferCard tcm:0-115-1 060 USJ Website - Japanese tcm:115-78524-8 GDS - Offer - Card backgroundImage desktop tcm:115-248182 0001-01-01T00:00:00 2024-09-26T06:46:27.69 tcm:0-115-1 tcm:115-58-2 Multimedia Schemas undefined tcm:0-115-1 060 USJ Website - Japanese tcm:115-400-8 Image - Global alt スヌーピー・キッズセット 0 tcm:Metadata/custom:Metadata/cust",
           "imageMatchReason": "same-menu-block,context-name-match,category-url-match",
           "imageVerified": true,
           "isSharedTooMuch": false,
@@ -36319,8 +36354,8 @@
       "trusted_placeholder": false,
       "lastCheckedAt": "2026-05-31T12:23:38.387Z",
       "last_checked_at": "2026-05-31T12:23:38.387Z",
-      "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-american-hot-dog-gallery-a.jpg",
-      "image_url": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-american-hot-dog-gallery-a.jpg",
+      "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-american-hot-dog-gallery-b.jpg",
+      "image_url": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-american-hot-dog-gallery-b.jpg",
       "sourceNames": [
         "official-restaurant-menu-supplement"
       ],
@@ -36345,8 +36380,8 @@
           "price": 600
         }
       ],
-      "representativeImageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-american-hot-dog-gallery-a.jpg",
-      "representative_image_url": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-american-hot-dog-gallery-a.jpg",
+      "representativeImageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-american-hot-dog-gallery-b.jpg",
+      "representative_image_url": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-american-hot-dog-gallery-b.jpg",
       "area": {
         "id": "area-yeysd1",
         "name": "サンフランシスコ・エリア",
@@ -36361,6 +36396,24 @@
         "isActive": true
       },
       "images": [
+        {
+          "id": "food-1tt1au7-img-2",
+          "foodId": "food-1tt1au7",
+          "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-american-hot-dog-gallery-b.jpg",
+          "sourceType": "official",
+          "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/food-cart/index.html",
+          "imageConfidenceScore": 90,
+          "imageMatchScore": 100,
+          "categoryImageMatchScore": 100,
+          "imageSourceContext": "0001-01-01T00:00:00 2025-10-23T10:07:48.827 tcm:0-115-1 tcm:115-8144-2 Galleries GDSInlineGalleryItem tcm:0-115-1 060 USJ Website - Japanese tcm:115-75947-8 GDS - Inline - Gallery - Item image desktop tcm:115-228522 0001-01-01T00:00:00 2024-05-30T03:09:49.61 tcm:0-115-1 tcm:115-58-2 Multimedia Schemas undefined tcm:0-115-1 060 USJ Website - Japanese tcm:115-400-8 Image - Global alt アメリカン・ホットドッグ 0 tcm:Metadata/custom:",
+          "imageMatchReason": "same-tcm-component",
+          "imageVerified": true,
+          "imageApproved": true,
+          "officialConfirmed": true,
+          "imageCandidateScore": 90,
+          "priority": 2,
+          "enabled": true
+        },
         {
           "id": "food-1tt1au7-img-1",
           "foodId": "food-1tt1au7",
@@ -36377,25 +36430,8 @@
           "officialConfirmed": true,
           "imageCandidateScore": 90,
           "priority": 1,
-          "enabled": true
-        },
-        {
-          "id": "food-1tt1au7-img-2",
-          "foodId": "food-1tt1au7",
-          "imageUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/files/images/gds-images/usj-gds-american-hot-dog-gallery-b.jpg",
-          "sourceType": "official",
-          "sourceUrl": "https://www.usj.co.jp/tridiondata/usj/ja/jp/restaurants/food-cart/index.html",
-          "imageConfidenceScore": 90,
-          "imageMatchScore": 90,
-          "categoryImageMatchScore": 90,
-          "imageSourceContext": "0001-01-01T00:00:00 2025-10-23T10:07:48.827 tcm:0-115-1 tcm:115-8144-2 Galleries GDSInlineGalleryItem tcm:0-115-1 060 USJ Website - Japanese tcm:115-75947-8 GDS - Inline - Gallery - Item image desktop tcm:115-228522 0001-01-01T00:00:00 2024-05-30T03:09:49.61 tcm:0-115-1 tcm:115-58-2 Multimedia Schemas undefined tcm:0-115-1 060 USJ Website - Japanese tcm:115-400-8 Image - Global alt アメリカン・ホットドッグ 0 tcm:Metadata/custom:",
-          "imageMatchReason": "same-tcm-component",
-          "imageVerified": true,
-          "imageApproved": true,
-          "officialConfirmed": true,
-          "imageCandidateScore": 90,
-          "priority": 2,
-          "enabled": true
+          "enabled": false,
+          "imageMismatchReason": "HTTP 404 on 2026-08-25; disabled during same-food image repair"
         }
       ],
       "priceSource": "trusted_report",
