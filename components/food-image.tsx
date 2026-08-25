@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { getCategoryPlaceholder, getFoodImage, normalizeImageUrl } from "@/lib/utils/image";
 import type { FoodWithRelations } from "@/types/domain";
 
@@ -22,13 +22,21 @@ export function FoodImage({
   const fallback = getCategoryPlaceholder(food.category);
   const resolvedSrc = useMemo(() => normalizeImageUrl(getFoodImage(food)) ?? fallback, [fallback, food]);
   const [failedSrc, setFailedSrc] = useState<string | null>(null);
+  const imageRef = useRef<HTMLImageElement | null>(null);
   const src = failedSrc === resolvedSrc ? fallback : resolvedSrc;
   const real = src !== fallback;
   const imageClass = getImageClass(variant, !real);
 
+  useEffect(() => {
+    const image = imageRef.current;
+    if (!image || src === fallback) return;
+    if (image.complete && image.naturalWidth === 0) setFailedSrc(src);
+  }, [fallback, src]);
+
   return (
     // eslint-disable-next-line @next/next/no-img-element
     <img
+      ref={imageRef}
       src={src}
       alt={alt ?? food.name}
       loading={eager ? "eager" : "lazy"}
